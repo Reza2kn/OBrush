@@ -1,0 +1,8 @@
+# Independently authored CC0 fixture. Zero central raw normal; no shared edges.
+v 0 0 0
+v 4 -4 0
+v 4 4 0
+v -8 2 0
+v -8 -2 0
+f 1 2 3
+f 1 5 4

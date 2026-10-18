@@ -1,0 +1,147 @@
+{
+  "origin": "independent author fields/scalars; no OBrush/reference consumer output",
+  "source_scene": {
+    "version": 3,
+    "byte_order": "little_endian",
+    "display": {
+      "show_grid": true,
+      "show_symmetry_line": true,
+      "show_contour": false
+    },
+    "camera": {
+      "projection": 0,
+      "mode": 1,
+      "fov_degrees": 1.0,
+      "use_pivot": true
+    },
+    "meshes": [
+      {
+        "render": {
+          "shader": 0,
+          "matcap": 3,
+          "show_wireframe": false,
+          "flat_shading": false,
+          "opacity": 1.0
+        },
+        "center": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "matrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": 1.0,
+        "positions": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "colors": null,
+        "materials": null,
+        "faces": [
+          [
+            0,
+            1,
+            2,
+            4294967295
+          ]
+        ],
+        "uv": null
+      },
+      {
+        "render": {
+          "shader": 0,
+          "matcap": 3,
+          "show_wireframe": false,
+          "flat_shading": false,
+          "opacity": 1.0
+        },
+        "center": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "matrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": 1.0,
+        "positions": [
+          [
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            1.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "colors": null,
+        "materials": null,
+        "faces": [
+          [
+            0,
+            1,
+            999,
+            4294967295
+          ]
+        ],
+        "uv": null
+      }
+    ]
+  },
+  "expectation": {
+    "must_reject_before_any_object_or_view_install": true,
+    "original_document_history_camera_display_ids_unchanged": true,
+    "missing_face_vertex_index": 999
+  }
+}

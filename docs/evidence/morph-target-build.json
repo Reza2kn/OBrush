@@ -1,0 +1,603 @@
+{
+  "schema_version": 1,
+  "version": "0.1.9",
+  "recorded_at_utc": "2026-10-13T03:52:42.603563+00:00",
+  "status": "Required source checks/builds and eight scoped browser workflows with48explicit gates pass; full reference parity/nativeGUI remain unverified",
+  "git": "Unborn main; source hashes identify this build",
+  "test_totals": {
+    "core": 188,
+    "app": 20,
+    "total": 208
+  },
+  "checks": [
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791861960.32087,
+      "end_epoch": 1791861960.521622,
+      "log": {
+        "path": ".artifacts/morph-build/validation-c71dbe61-2740-4eeb-9e4e-265c6fa6788b/fmt.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "tests",
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--workspace"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791861960.52202,
+      "end_epoch": 1791862085.084874,
+      "log": {
+        "path": ".artifacts/morph-build/validation-c71dbe61-2740-4eeb-9e4e-265c6fa6788b/tests.log",
+        "bytes": 20842,
+        "sha256": "4a1ac221a78f9483f5e815c5975d5148443f0e6aa71245c830e83237b26e3beb"
+      }
+    },
+    {
+      "name": "clippy-native",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--workspace",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791862085.085232,
+      "end_epoch": 1791862087.438316,
+      "log": {
+        "path": ".artifacts/morph-build/validation-c71dbe61-2740-4eeb-9e4e-265c6fa6788b/clippy-native.log",
+        "bytes": 220,
+        "sha256": "c1e553ff04e2186cdc280eba2958c3c912f29dc8db06976c3e0548fbc149f81e"
+      }
+    },
+    {
+      "name": "clippy-wasm",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "-p",
+        "obrush-app",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791862087.438654,
+      "end_epoch": 1791862089.391104,
+      "log": {
+        "path": ".artifacts/morph-build/validation-c71dbe61-2740-4eeb-9e4e-265c6fa6788b/clippy-wasm.log",
+        "bytes": 220,
+        "sha256": "2e96d9543b4075cee25ea6fd2ce55608711a0872694d3ffa3cd4c9f61b76a3c5"
+      }
+    },
+    {
+      "name": "core-wasm",
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "-p",
+        "obrush-core",
+        "--target",
+        "wasm32-unknown-unknown"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791862089.3915362,
+      "end_epoch": 1791862090.2238662,
+      "log": {
+        "path": ".artifacts/morph-build/validation-c71dbe61-2740-4eeb-9e4e-265c6fa6788b/core-wasm.log",
+        "bytes": 147,
+        "sha256": "46cd89ef4941101f2873bd456d03c175f553fe87d3ffdc89e528591d50ea42a2"
+      }
+    },
+    {
+      "name": "web-build",
+      "command": [
+        "bash",
+        "scripts/build-web.sh"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791862090.224213,
+      "end_epoch": 1791862095.494407,
+      "log": {
+        "path": ".artifacts/morph-build/validation-c71dbe61-2740-4eeb-9e4e-265c6fa6788b/web-build.log",
+        "bytes": 276,
+        "sha256": "8f9b590e0497e18bfc576a3933b25ae8f290435a9ba0d59dc30f908ca4ea471a"
+      }
+    },
+    {
+      "name": "native-package",
+      "command": [
+        "bash",
+        "scripts/package-macos.sh"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791862095.49476,
+      "end_epoch": 1791862102.129138,
+      "log": {
+        "path": ".artifacts/morph-build/validation-c71dbe61-2740-4eeb-9e4e-265c6fa6788b/native-package.log",
+        "bytes": 404,
+        "sha256": "30a5cb7f93d42ef3c4141cb6bfe910a006c079eb72776cc2271cfd23aadf5cd3"
+      }
+    }
+  ],
+  "environment": {
+    "os": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "cpu": "Apple M2",
+    "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+    "wasm_bindgen_cli": "wasm-bindgen 0.2.129"
+  },
+  "frozen_build_record": {
+    "path": ".artifacts/morph-release-0.1.9-scroll-final/build-record.json",
+    "bytes": 9820,
+    "sha256": "c292f522f3bff1cbe8d2d53b5c4e50e9f0648132233b179ba23eb8fab9aaa05c"
+  },
+  "source_manifest": {
+    "path": ".artifacts/morph-release-0.1.9-scroll-final/source-manifest.json",
+    "bytes": 11409,
+    "sha256": "115227bd5aeca189cac4f4dceaa0877fff2fb5c0300942a9ab04abc2d5a8ec9c"
+  },
+  "source_files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "bytes": 874,
+      "sha256": "18a21786db96c1b0920517261105517287dcac547f488db4250140fbf50f9926"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 1312,
+      "sha256": "b9aebf717528d1887a30f15d23ca492cac78e86542f0f7f77e72ee21545cebd4"
+    },
+    {
+      "path": "Cargo.lock",
+      "bytes": 92204,
+      "sha256": "bcd13f200d36928ca1600c10874e4789a3f3605f427b66f73b611226ab51aef0"
+    },
+    {
+      "path": "Cargo.toml",
+      "bytes": 683,
+      "sha256": "7ee03d3cb3c72ba2f2a112ccb33ab223efa246ab65719a682fa42e7cd16b4641"
+    },
+    {
+      "path": "crates/obrush-app/Cargo.toml",
+      "bytes": 853,
+      "sha256": "2657ec47882e0ea05630a373214f88fff7b2be142304d09550febca7d99d5088"
+    },
+    {
+      "path": "crates/obrush-app/src/app.rs",
+      "bytes": 98106,
+      "sha256": "9aeb0ca2e845270af80c000816299b88408677fdf636e9a320309f707c2169e7"
+    },
+    {
+      "path": "crates/obrush-app/src/dab_queue.rs",
+      "bytes": 18294,
+      "sha256": "3e296fa9155d08e82a25564f354a829353bcc09c06fcf5390f690f810b6432b8"
+    },
+    {
+      "path": "crates/obrush-app/src/lib.rs",
+      "bytes": 3216,
+      "sha256": "3185d0a8971ab8cfb22a7825dda5dd43feafabd9dab4f35c005468b69cb28815"
+    },
+    {
+      "path": "crates/obrush-app/src/main.rs",
+      "bytes": 676,
+      "sha256": "59f837631d853d5d431139fa10dfd2c07667f8dbf2b8a3cc7ff771d3068b7819"
+    },
+    {
+      "path": "crates/obrush-app/src/move_drag.rs",
+      "bytes": 2455,
+      "sha256": "62b34e4e74086b403a03ce67d319854fa99a2680cd5637e0a7e6a39d270bc3dd"
+    },
+    {
+      "path": "crates/obrush-app/src/pressure.rs",
+      "bytes": 1872,
+      "sha256": "9ca20656608c0b32800d7438ae75276878d6ddb43de238221b526f4cc5c2dafa"
+    },
+    {
+      "path": "crates/obrush-app/src/renderer.rs",
+      "bytes": 44613,
+      "sha256": "3ccf212965fcffe457ad672c0430caf2abfe40f3128bae0547e783977d46e205"
+    },
+    {
+      "path": "crates/obrush-app/src/stroke.rs",
+      "bytes": 4880,
+      "sha256": "0a0298b462f22399e18b1a54502f73f805f8c4ad3b9ecbaa105c3f46178f2407"
+    },
+    {
+      "path": "crates/obrush-core/Cargo.toml",
+      "bytes": 250,
+      "sha256": "05bde7e131c4bc2f53709cfc3d5fcc12f2363105fba5f65ee18fa8c34e8039ce"
+    },
+    {
+      "path": "crates/obrush-core/README.md",
+      "bytes": 8470,
+      "sha256": "c28422da6a029292588bd1b657cd02433f3a9fecd0b3bf91867ebf0aa8f6addc"
+    },
+    {
+      "path": "crates/obrush-core/examples/core_performance_probe.rs",
+      "bytes": 5426,
+      "sha256": "ecbbaf2697a627aade994847b8481da753417eb8279ff90201f1dd6f0f9a76a2"
+    },
+    {
+      "path": "crates/obrush-core/examples/core_timing.rs",
+      "bytes": 3524,
+      "sha256": "df4dee7deaced269cc87d8f18786ab96b0e9d7407d1b6b8456fb62d1484b3f17"
+    },
+    {
+      "path": "crates/obrush-core/examples/crease_stability_probe.rs",
+      "bytes": 11682,
+      "sha256": "f90b8334b2ade954dfa3ac9c545866c5b40bb34c6af2e5d415f475599099b461"
+    },
+    {
+      "path": "crates/obrush-core/examples/decimation_probe.rs",
+      "bytes": 10173,
+      "sha256": "3ad53ee4c8120f094ade5558b8ee5193ba2dfc854c607855add9d40c42cb54a8"
+    },
+    {
+      "path": "crates/obrush-core/examples/draw_overlap_probe.rs",
+      "bytes": 15078,
+      "sha256": "a2c2e388c3273dfef9096098878aaa55899841df17a8dd6b3890fc9e0a11fd26"
+    },
+    {
+      "path": "crates/obrush-core/examples/inspect_obj.rs",
+      "bytes": 1548,
+      "sha256": "555070d52b662cbf5eb6a7fde8e97b7b6995aaefb61c341901b681f63342c90d"
+    },
+    {
+      "path": "crates/obrush-core/examples/long_stroke_probe.rs",
+      "bytes": 4733,
+      "sha256": "ef94ce9c6c9fc47702bfbcd9da7f79e34664a71cac57f3b5a343748b60a1e136"
+    },
+    {
+      "path": "crates/obrush-core/examples/move_surface_probe.rs",
+      "bytes": 5003,
+      "sha256": "50ee95c527b2645b9d77973b5844b32be8948816c7a445054f57c2f69e4883d7"
+    },
+    {
+      "path": "crates/obrush-core/examples/remesh_probe.rs",
+      "bytes": 5440,
+      "sha256": "18b1fb1a4c11e112015525d9afb55c814a28e8fcf3e43e094a126dbca3289b19"
+    },
+    {
+      "path": "crates/obrush-core/examples/smooth_subdivision_probe.rs",
+      "bytes": 2520,
+      "sha256": "e32ea2146cbaed387614909998814868054eccacf1966cbedeb8fa58f3a707aa"
+    },
+    {
+      "path": "crates/obrush-core/src/alpha.rs",
+      "bytes": 6380,
+      "sha256": "bad9797511f1a98befd43ae4f8f29408fa594b30ee8bdbe0b639bb885d39c597"
+    },
+    {
+      "path": "crates/obrush-core/src/brush.rs",
+      "bytes": 51258,
+      "sha256": "1502094318ba59c7aecd43a029c4a2623ef287a19f3f8ba50ec8226756562979"
+    },
+    {
+      "path": "crates/obrush-core/src/decimate.rs",
+      "bytes": 25685,
+      "sha256": "93a8ddc7b245f7a77f667c659726cad8f8d4710b59b3316c8776b853d218f763"
+    },
+    {
+      "path": "crates/obrush-core/src/document.rs",
+      "bytes": 43209,
+      "sha256": "cfb31b633571e8de25ef10ee7c8917081c0fd0adbd414dadb403343bd52aedd8"
+    },
+    {
+      "path": "crates/obrush-core/src/layers.rs",
+      "bytes": 32260,
+      "sha256": "92d9d1061bef52b9969fb32b9dc9493c153cc74a586ac74b0936ed4ab5d6e1a8"
+    },
+    {
+      "path": "crates/obrush-core/src/lib.rs",
+      "bytes": 1130,
+      "sha256": "b72020160f623da879bb7b6e9f9582f5fc72b2989b8e3c8e9705e7e9275aa2c7"
+    },
+    {
+      "path": "crates/obrush-core/src/mesh.rs",
+      "bytes": 58776,
+      "sha256": "c044c5423dd224bf3962bf0ad8f3c9e6b840fe170971a3b17397a3969016d420"
+    },
+    {
+      "path": "crates/obrush-core/src/morph.rs",
+      "bytes": 8907,
+      "sha256": "73e5ca5e7773b3f28da82111d6497e5fefe5a570c391878b6019a709781ffc88"
+    },
+    {
+      "path": "crates/obrush-core/src/multires.rs",
+      "bytes": 12162,
+      "sha256": "04c1ace2b6e5e92119893d5acfad060ce22f2b21d9d8fcf6f558d565cfe1097f"
+    },
+    {
+      "path": "crates/obrush-core/src/refinement.rs",
+      "bytes": 31744,
+      "sha256": "6c0d5e56e74bc71b363070f60e8468762c1a683bff347eb96255d37ed9721d87"
+    },
+    {
+      "path": "crates/obrush-core/src/remesh.rs",
+      "bytes": 33706,
+      "sha256": "410889f5371caa435bfc960b3312d661de1c13aefcc3a02e9ed0be80ffda8d36"
+    },
+    {
+      "path": "crates/obrush-core/src/tests.rs",
+      "bytes": 27671,
+      "sha256": "44f5f1a910a899a6a03c96a1431a4cf83cf8c3592cebc74a07b18b4a1f4c4bc5"
+    },
+    {
+      "path": "crates/obrush-core/src/topology.rs",
+      "bytes": 2625,
+      "sha256": "58644e234745acdb2af4178b5725435dd7e4e9aab07a67155e7c9c4f8ed852dd"
+    },
+    {
+      "path": "crates/obrush-core/tests/brush_inputs.rs",
+      "bytes": 14814,
+      "sha256": "f69b24e32ea04122dfd53fa56d1be47eb006db58456f569a68c16e9462f22a32"
+    },
+    {
+      "path": "crates/obrush-core/tests/brush_stability.rs",
+      "bytes": 22358,
+      "sha256": "0e29dcbe1efefa96af57e0c8a1679e4f6483850611a8bbbc88fdd5bab065f8f4"
+    },
+    {
+      "path": "crates/obrush-core/tests/crease_detail.rs",
+      "bytes": 7249,
+      "sha256": "3745006623aa534f33f9877961c1378f82b392b196e3e7854046f8ba542ceb73"
+    },
+    {
+      "path": "crates/obrush-core/tests/decimate.rs",
+      "bytes": 12265,
+      "sha256": "d7b8f539fb6a8fd42175a563caf6e664a91bf1f28ccb74dce184b85699eda2a1"
+    },
+    {
+      "path": "crates/obrush-core/tests/draw_surface.rs",
+      "bytes": 5789,
+      "sha256": "c9fa089743ebd82b734745be1e5afb06bc5d82c4abc0cf5b9f3b0408166cc5ff"
+    },
+    {
+      "path": "crates/obrush-core/tests/fixtures/zbrush_mrgb.obj",
+      "bytes": 303,
+      "sha256": "9f75bcbc98ddfcb570d9087c5f6b3f6acb02fa6fe5b73e610abd670e0edc5c84"
+    },
+    {
+      "path": "crates/obrush-core/tests/layer_contract.rs",
+      "bytes": 23679,
+      "sha256": "2ab0c78474933a3fdef0bc8372e5d0b8ff619740d4088ccb2ea30984514a956c"
+    },
+    {
+      "path": "crates/obrush-core/tests/layers.rs",
+      "bytes": 3147,
+      "sha256": "10905a929d1e19664e01e9c07d3aef9b02109fc0e45645dd1076ed6d1ab5c8eb"
+    },
+    {
+      "path": "crates/obrush-core/tests/morph.rs",
+      "bytes": 5851,
+      "sha256": "5ef7716e15f3f527de5748ff895376e08ec0d5a0d299bfd3e6c0ecccbdcb4b16"
+    },
+    {
+      "path": "crates/obrush-core/tests/morph_contract.rs",
+      "bytes": 28225,
+      "sha256": "61321f8d8167e8dee2bf68cff0be43161d35a3103b3e02610aba4dc37113fcf2"
+    },
+    {
+      "path": "crates/obrush-core/tests/move_surface.rs",
+      "bytes": 21551,
+      "sha256": "e4d796bee50fefc154e4a443abb0b7e2f53c7b52423320ce3b3492467259b3b5"
+    },
+    {
+      "path": "crates/obrush-core/tests/mrgb_import.rs",
+      "bytes": 2631,
+      "sha256": "4794fe0c95fdfe6f48e619b8db018400ae2313cd02e76368d41a2ed85ef25c2c"
+    },
+    {
+      "path": "crates/obrush-core/tests/multires.rs",
+      "bytes": 11034,
+      "sha256": "1fa1aab0414dae2fc3c9768236399e5220f9cc1ac6f5015bf74df77a4160d803"
+    },
+    {
+      "path": "crates/obrush-core/tests/patch_refinement.rs",
+      "bytes": 16645,
+      "sha256": "90e0beb74aaa1d4b7b6aebffcc9d6de0692e38c7ad882379048a1a822f9993db"
+    },
+    {
+      "path": "crates/obrush-core/tests/remesh.rs",
+      "bytes": 8786,
+      "sha256": "4076ca7c8282014c1389f9881b0f5235c1c982eae7b6e5a6f03ad8ff25e17779"
+    },
+    {
+      "path": "crates/obrush-core/tests/sculpt_workflow.rs",
+      "bytes": 6368,
+      "sha256": "1d2298a44f2aea8f038e37c5a00bc21a4713f2b3a37d600981c41ef640415929"
+    },
+    {
+      "path": "crates/obrush-core/tests/topology_workflow.rs",
+      "bytes": 2643,
+      "sha256": "3bf2577510dd2d6848e09daee061bd1da50c8444491b22284862c9984e088fbf"
+    },
+    {
+      "path": "scripts/build-web.sh",
+      "bytes": 810,
+      "sha256": "68eafa60a841cbde3ee2104521d466c7ec7c8c09a3c017cbb6a1be4338305b99"
+    },
+    {
+      "path": "scripts/check-brush-inputs.mjs",
+      "bytes": 29961,
+      "sha256": "7c70f032bc75a72c5d1aa53ceba5c0757ee9accbaee8642194424970940975e6"
+    },
+    {
+      "path": "scripts/check-layers.mjs",
+      "bytes": 43449,
+      "sha256": "a38ae1e4cf9f6effe56b1b1ca8416e42eb2b214ff586fd134402c8aaeea01d5d"
+    },
+    {
+      "path": "scripts/check-morph.mjs",
+      "bytes": 50921,
+      "sha256": "e9f148fa7502cc9bdd87cc2a870cd7a5126ab36c28bf4329364c763a8d7dea4f"
+    },
+    {
+      "path": "scripts/check-move.mjs",
+      "bytes": 38944,
+      "sha256": "81df7bfe474739b3fee5c51350a4288cc9f5d745dc3129d4bab2844331ea387d"
+    },
+    {
+      "path": "scripts/check-multires.mjs",
+      "bytes": 31163,
+      "sha256": "f4ba9eb60279ebfc6dfedc660336b1e0a02167757701c8fb861b02c2be81e210"
+    },
+    {
+      "path": "scripts/check-topology.mjs",
+      "bytes": 31420,
+      "sha256": "c36916d08845e764d185c70b9f73e776f5a05bb1824a319acca6cf8645959b9f"
+    },
+    {
+      "path": "scripts/compare-obj.py",
+      "bytes": 2371,
+      "sha256": "a249c861d98415f664bd53583a45443c4fb96a5d94f4ff96b98263f5e8ab112e"
+    },
+    {
+      "path": "scripts/package-macos.sh",
+      "bytes": 1336,
+      "sha256": "0541abbf687a90edfa379164cbb6c62241f7216587999d5ef1406139734a526a"
+    },
+    {
+      "path": "scripts/serve-web.py",
+      "bytes": 758,
+      "sha256": "ca9125f60f4f99537b04d97eafc05d90b580eeb4c885976540397a2d44676d1e"
+    },
+    {
+      "path": "web/index.html",
+      "bytes": 6509,
+      "sha256": "f94e458b842644f3cf003f915d26464987c8639392c848cfb333508974eb4956"
+    },
+    {
+      "path": "web/topology-worker.js",
+      "bytes": 448,
+      "sha256": "3318e34033bd56bee4c8cd7a0cbe140f2ab40731a788d1dc909ebd23da90a9c2"
+    }
+  ],
+  "artifacts": {
+    "wasm": {
+      "path": ".artifacts/morph-release-0.1.9-scroll-final/web/pkg/obrush_app_bg.wasm",
+      "bytes": 3946530,
+      "sha256": "9391e86690f0320224f789626f56043a757dc8b111008635ff17297aa6d5de86"
+    },
+    "native": {
+      "path": ".artifacts/morph-release-0.1.9-scroll-final/OBrush.app/Contents/MacOS/OBrush",
+      "bytes": 6891744,
+      "sha256": "87a3e2a0818dd63b85d0b9fdb36bdff0ec40768b08abedfe3c4588062237662e"
+    }
+  },
+  "compiled_source_check_origin": {
+    "path": ".artifacts/morph-release-0.1.9-candidate-1/build-record.json",
+    "bytes": 6033,
+    "sha256": "7d8c6bbc8272aa4bceee93ffb122cfa6d43c32a49183c6413e69cd61a619431b"
+  },
+  "harness_only_correction": {
+    "helper": {
+      "path": "scripts/check-morph.mjs",
+      "bytes": 50921,
+      "sha256": "e9f148fa7502cc9bdd87cc2a870cd7a5126ab36c28bf4329364c763a8d7dea4f"
+    },
+    "syntax_check": "node --check passes",
+    "scope": "Keep corrected local contact and active-level oracle. Before scrolling, move actual pointer to observed panel midpoint, wait40ms, then send wheel and verify controlrect moves toward visibility. Preserve trusted pointer/wheel diagnostics. No gates/thresholds/production changed; compiled Rust/build inputs and artifacts unchanged."
+  },
+  "documentation_only_correction": {
+    "file": {
+      "path": "crates/obrush-core/README.md",
+      "bytes": 8470,
+      "sha256": "c28422da6a029292588bd1b657cd02433f3a9fecd0b3bf91867ebf0aa8f6addc"
+    },
+    "scope": "Clarify that version3 describes layers without MorphTarget; version4 may include both. Documentation is outside compiled inputs."
+  },
+  "reference_scope": {
+    "target_version": "ZBrush2026.2.1",
+    "historical_identity_record": {
+      "path": "docs/evidence/zbrush-native-inspection.json",
+      "bytes": 11282,
+      "sha256": "02de46853a20df3fd70d39fb986574fd555f15fb6b1eeefb2948d9309706f692"
+    },
+    "morph_fixture_execution": false
+  },
+  "core_evidence": {
+    "path": "docs/evidence/morph-target-core.json",
+    "bytes": 12102,
+    "sha256": "63da695fd2ab7082ceed1fbcbde59d676152d19f34409da8329932dc39b5b0f3"
+  },
+  "browser_evidence": {
+    "path": "docs/evidence/morph-target-browser.json",
+    "bytes": 92493,
+    "sha256": "71a263c042411758576e1a34c91cba81a0c4d2b79f32a1c9e6e71e7e2b7e37ef"
+  },
+  "retained_previous_release": {
+    "path": ".artifacts/layers-release-0.1.8-layout-helper-final/build-record.json",
+    "bytes": 7313,
+    "sha256": "126d7b6466a39a5ef95d31c2d1205b391f36c1ebd66e660d5d33c8af2081e088"
+  },
+  "retained_failures": [
+    {
+      "runtime": {
+        "path": ".artifacts/morph-browser-0.1.9/candidate-1-480faa16-1fdc-4218-a734-c960e24de76a/result.json",
+        "bytes": 227781,
+        "sha256": "69658009fef8552c0f9ea0d8e6edef72cfa16cfef5f32ab342cf5b6fe8164b13"
+      },
+      "diagnosis": {
+        "path": ".artifacts/morph-browser-0.1.9/candidate-1-480faa16-1fdc-4218-a734-c960e24de76a/diagnosis.json",
+        "bytes": 1290,
+        "sha256": "ab7e60b9a0dda850fb8fdd7d4919c462fe61386df2a4558c14ccad7e5a0492fb"
+      },
+      "failure": "Masked Morph trace used positive screen offsets while the intended displaced unmasked patch projected near negative offsets;57points changed with0.0001846769 squared-error reduction, below unchanged1% usefulness gate."
+    },
+    {
+      "runtime": {
+        "path": ".artifacts/morph-browser-0.1.9/fixture-final-b3348715-13ab-4555-b61f-b212891e7e5d/result.json",
+        "bytes": 485917,
+        "sha256": "cb2387f5167727d32974edf764e9eb35c9c8b83435bf42f271742826f1007c15"
+      },
+      "diagnosis": {
+        "path": ".artifacts/morph-browser-0.1.9/fixture-final-b3348715-13ab-4555-b61f-b212891e7e5d/diagnosis.json",
+        "bytes": 1823,
+        "sha256": "1caa2bef4b6d8ee54ea52c02a9d125a828bb1d2a146cfad77692c690b5f2a223"
+      },
+      "failure": "Sevenworkflows passed. Fine-level target oracle wrongly required a non-null levels[1]; the established multires format stores its active mesh in document.mesh."
+    },
+    {
+      "runtime": {
+        "path": ".artifacts/morph-browser-0.1.9/oracle-final-e357db29-98bb-448b-a286-5d6eea84d392/result.json",
+        "bytes": 638886,
+        "sha256": "e85a753de7a3db84209802502809a70ed74150a9e18889d76d7cb34611b2b3c3"
+      },
+      "diagnosis": {
+        "path": ".artifacts/morph-browser-0.1.9/oracle-final-e357db29-98bb-448b-a286-5d6eea84d392/diagnosis.json",
+        "bytes": 1242,
+        "sha256": "97f9189aea1db1ee44eb38d592b3d51da73d317f056af19c4a86c77626b84483"
+      },
+      "failure": "Seven workflows passed. The helper sent wheel coordinates without moving the actual pointer from the sculpt into the inspector, so egui zoomed the sculpt instead of scrolling the intended panel."
+    }
+  ],
+  "raw_record_note": "Immutable build receipts predate final runtime and retain their browser-pending statement. This later receipt binds the final runtime without rewriting them. Only test-helper contact/oracle/scroll setup and coreREADME wording changed after compiled-source checks; no compiled Rust/build input or artifact changed. Failed gates/inputs/logs and diagnoses are preserved; thresholds were not relaxed.",
+  "limitations": [
+    "One geometry-only target on its creation level; masks/RGB remain ordinary document channels.",
+    "Exact local invariants and synthetic browser behavior are verified on named fixtures; nativeGUI/physical devices, other browsers/OS, longsessions/large-target latency and ZBrush response are unverified.",
+    "Full Restore/Swap validate endpoints, not their continuous path or global intersections.",
+    "ProjectMorph, difference meshes, MorphDist, SubTools, MorphUV and completeS07parity remain gaps."
+  ]
+}

@@ -1,0 +1,234 @@
+{
+  "id": "sculptgl-two-level-frame-c106-0.1.20",
+  "scope": "Two retained smooth levels, independent UV-seamed tetra/cube/pyramid fixtures, direct coarse vertex edit and scoped normal browser delivery; not full SculptGL or ZBrush parity",
+  "reference": {
+    "source_revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "hosted_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "initial_run": {
+      "path": ".artifacts/sculptgl-reference-runtime/uv-two-level-c106-f98a23e6-a57a-4ed7-8eaa-e041a94a9bdd/result.json",
+      "sha256": "e54115fcc50caf044566e68b7a190b552ac7f8f630be87f91dbdfa51d56b307a",
+      "bytes": 248502
+    },
+    "final_run": {
+      "path": ".artifacts/sculptgl-reference-runtime/uv-two-level-ring-c106-58f40a18-660c-406d-80da-80378594ee2d/result.json",
+      "sha256": "ec32c4cf604c192360746526a903a9bc3b02ff51085ac58058b07f4f1df4f9a3",
+      "bytes": 253082
+    },
+    "status": "completed reference-only controlled two-level edit fixtures",
+    "chrome": "Chrome/155.0.8059.80",
+    "exceptions": 0,
+    "console_errors": 0,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "method": "GUI import, two Subdivide controls, Lower to base, one deterministic direct coarse typed-array edit (0.125,-0.09375,0.0625), Higher through two levels; no brush or history claim"
+  },
+  "implementation": {
+    "source_manifest": [
+      {
+        "path": "crates/obrush-core/src/source_ring.rs",
+        "sha256": "305b5da4e70d41dd384b345d53a7d83fe7165170a6efc1b1b947529cf2d4bd59"
+      },
+      {
+        "path": "crates/obrush-core/src/multires.rs",
+        "sha256": "663ca2b8d1d7cbfc02cc81de8931ebf6da4c781d47834faa866b628d1b27b4d6"
+      },
+      {
+        "path": "crates/obrush-core/src/document.rs",
+        "sha256": "4d9171e0f38a64b99307ccc9ab44eb9ec2ea3fda94a9cbed495a9a5afd51d1c7"
+      },
+      {
+        "path": "crates/obrush-core/tests/source_static_ring.rs",
+        "sha256": "6285d408e5db3c5d172962adec8881f54a173843b459cda3543f2e813f6a2130"
+      },
+      {
+        "path": "crates/obrush-core/tests/static_subdivision.rs",
+        "sha256": "0abfc8e384db51d670618c5f0ee8a976a0dac931b35b75155e0072e5eb72c934"
+      },
+      {
+        "path": "crates/obrush-core/examples/uv_two_level_probe.rs",
+        "sha256": "e6690713ffa1f6a9af0f9a3cc81c5742019a7da171a59c8abc44f8f90581810e"
+      },
+      {
+        "path": "scripts/check-sculptgl-reference.mjs",
+        "sha256": "a8b47cb147b633ea5956340bc1696223f1d216618e85c5fc5ae887d2f90fd403"
+      },
+      {
+        "path": "scripts/check-sculptgl-paint-static.mjs",
+        "sha256": "e21af8fbf099785bca2dc21851ca2ac62ff4e18ca98549ebf180eb2096c15d1b"
+      },
+      {
+        "path": "scripts/compare-uv-two-level.py",
+        "sha256": "dd35788956b207146a7818f271bb58fe0d7a902ccf26472786ed0d3237acacc6"
+      }
+    ],
+    "source_manifest_sha256": "350347676f62848f6a587c1548a1c3497aa724d79e9d43dac5debcff1d506ac9",
+    "git_state": "Unborn checkout; no resolvable HEAD. Source file SHA-256 manifest binds implementation.",
+    "saved_source_root_order": "Optional bounded and validated v3 .obrush JSON field; source-generated face order and cyclic orientation survive deleting lower levels and reload.",
+    "legacy_policy": "Existing v1/v2 world-offset hierarchy behavior retained; old v3 without field loads with original-root reconstruction."
+  },
+  "comparison": {
+    "initial": {
+      "path": ".artifacts/sculptgl-uv-two-level-c106/comparison-before.json",
+      "sha256": "36cdba56ad2be950022a88be961859f05fd5f32197eac3591bd5d0e6302cce55",
+      "bytes": 3706
+    },
+    "final": {
+      "path": ".artifacts/sculptgl-uv-two-level-c106/comparison-final.json",
+      "sha256": "1881b90e504cc3a92e6a8f2df968d3137cdbdb60d839c6851dd6bd69c64b51cd",
+      "bytes": 3706
+    },
+    "fixture_cases": [
+      {
+        "fixture": "tetra",
+        "fixture_sha256": "f038d1990b21472c2f2970b59950c12801219716f298bb991a260bed1c87dcc2",
+        "host_probe_sha256": "f1b4dbf6ddd54d90a1efb17f8d57c96022b49ea65cf5a8b2c54e033dafb1522f",
+        "second_level_vertices": 34,
+        "before_fix_max_component_error": 0.0009953975677490234,
+        "final_max_component_error": 2.9802322387695312e-08,
+        "final_rms_component_error": 4.442843368730697e-09
+      },
+      {
+        "fixture": "quad-cube",
+        "fixture_sha256": "8b76a6ee950a7cf29701aa01c267772c023f668d67c66514885092bab0fdc4c0",
+        "host_probe_sha256": "6f5b1a0df38ae603cd7172c96782a9ad5fd6ff895c7b4f32cedc19b6d6bb51a5",
+        "second_level_vertices": 98,
+        "before_fix_max_component_error": 0.00015163421630859375,
+        "final_max_component_error": 5.960464477539063e-08,
+        "final_rms_component_error": 1.459041124370744e-08
+      },
+      {
+        "fixture": "pyramid",
+        "fixture_sha256": "8a4bb88bf941a1f88e882c0b769da1369549e5ef6c96dc1c928b7987d5c78081",
+        "host_probe_sha256": "ef0b4fe40e4e55ee398e5ff0a41c6209df31b64e7e3961f448bc7355295c9245",
+        "second_level_vertices": 50,
+        "before_fix_max_component_error": 0.010241102427244186,
+        "final_max_component_error": 2.9802322387695312e-08,
+        "final_rms_component_error": 9.850690048796209e-09
+      }
+    ],
+    "first_neighbor_ids_matched": 182,
+    "edit_delta": [
+      0.125,
+      -0.09375,
+      0.0625
+    ],
+    "normal_brush_response_compared": false,
+    "reference_snapshot_fixture": {
+      "path": "crates/obrush-core/tests/fixtures/source-two-level-ring-reference.json",
+      "sha256": "a42760c1e43e8bf275354591aee924fe2acfd7a9c8e32926b8d25c8809960a2d",
+      "bytes": 23400
+    }
+  },
+  "browser": {
+    "result": {
+      "path": ".artifacts/sculptgl-paint-static-runtime/c106-two-level-final-aa561d53-7baa-4375-bca6-ce49a97d581c/result.json",
+      "sha256": "3b8ef513e085a5d5057042d2c0400a468ea879405207a1f483ba6c586a476855",
+      "bytes": 9290148
+    },
+    "status": "passed scoped local host gates; reference parity unverified",
+    "chrome": "Chrome/155.0.8059.80",
+    "wasm_sha256": "a9d8f9370c8ccb00d8004e8a450546fcf1661be93489a98d6edd983c18fd0d9a",
+    "cases": 8,
+    "all_declared_gates": true,
+    "downloads": 51,
+    "gpu_checks": 51,
+    "exceptions": 0,
+    "console_errors": 0,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "two_level_draw": {
+      "coarse_changed": 18,
+      "coarse_total": 1538,
+      "second_changed": 939,
+      "second_total": 24578,
+      "coarse_max_displacement": 0.01595562197393095,
+      "second_max_displacement": 0.013041638906586975,
+      "gates": {
+        "new_v3_scheme": true,
+        "three_retained_levels": true,
+        "useful_coarse_draw": true,
+        "useful_second_level_transport": true,
+        "brush_undo_redo_exact": true,
+        "normal_project_reload_exact": true,
+        "release_quiet": true,
+        "visible_gpu_save_exact": true
+      }
+    },
+    "downloads_completed": 51,
+    "gpu_checks_matching": 51
+  },
+  "builds": {
+    "wasm": {
+      "path": "web/dist/pkg/obrush_app_bg.wasm",
+      "sha256": "a9d8f9370c8ccb00d8004e8a450546fcf1661be93489a98d6edd983c18fd0d9a",
+      "bytes": 23457211
+    },
+    "wasm_bindgen_cli": "0.2.129",
+    "macos_executable": {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/OBrush",
+      "sha256": "531362ec5dfe4cc937546424a12e6943b37db232c812b0c75abd8f28df6abf8b",
+      "bytes": 26814640
+    },
+    "macos_codesign_verified": true
+  },
+  "checks": {
+    "cargo_fmt": {
+      "path": ".artifacts/sculptgl-uv-two-level-c106/fmt-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "workspace_tests": {
+      "log": {
+        "path": ".artifacts/sculptgl-uv-two-level-c106/workspace-tests-final.log",
+        "sha256": "30f50990a5135ea365e89407ee1321b824d0ea4cbe30bffcb99d0ff8030cf0aa",
+        "bytes": 230086
+      },
+      "groups": 71,
+      "passed": 2403,
+      "failed": 0,
+      "ignored": 1
+    },
+    "strict_native_clippy": {
+      "path": ".artifacts/sculptgl-uv-two-level-c106/clippy-native-final.log",
+      "sha256": "8b2af05a3526b661fcfa322c343c9a96d78d7f1c15296936098f8b2b1629d90c",
+      "bytes": 223
+    },
+    "wasm_target_check": {
+      "path": ".artifacts/sculptgl-uv-two-level-c106/check-wasm-final.log",
+      "sha256": "799be9434eb07ea49ee5aaf3dc3e8a51029820d20748af80106e4d86cc7ea5b4",
+      "bytes": 222
+    },
+    "strict_wasm_clippy": {
+      "path": ".artifacts/sculptgl-uv-two-level-c106/clippy-wasm-final.log",
+      "sha256": "d92ae63ac82d21942ad36d5ed2bc50434d9fd633e2168f06222b9f27440d7767",
+      "bytes": 223
+    },
+    "official_web_build": {
+      "path": ".artifacts/sculptgl-uv-two-level-c106/build-web-final.log",
+      "sha256": "aeba133bc924da34de5c9cd9eca7f1d1f8b7800ea74540e15c84359a46c23390",
+      "bytes": 279
+    },
+    "official_macos_package": {
+      "path": ".artifacts/sculptgl-uv-two-level-c106/package-macos-final.log",
+      "sha256": "5331fe3b13c1502250b33b164bdb47de0d5d42e059365bb8cfc8323a10ec597b",
+      "bytes": 407
+    },
+    "node_syntax_and_python_compile": "Passed for both changed browser scripts and two-level comparator"
+  },
+  "retained_failed_checks": {
+    "path": ".artifacts/sculptgl-uv-two-level-c106/failed-checks.json",
+    "sha256": "10e435dc1d1e9e2cc3255214f840e8de7e56cf57b74325c66b29f7cfd3c43ab0",
+    "bytes": 1594
+  },
+  "limitations": [
+    "Only three small UV-seamed reference geometries and one controlled coarse edit; no matched normal brush behavior",
+    "Linear-edge two-level reference response, arbitrary topology, repeated/fine edits, texture pixels, native GUI and physical stylus remain open",
+    "No sustained million-vertex latency improvement or complete SculptGL inventory parity; WebGPU integration remains separate"
+  ]
+}

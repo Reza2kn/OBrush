@@ -1,0 +1,433 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-10-16T16:12:27.612849+00:00",
+  "status": "Delivered C57 resourcepolicy/portableLegacycornerangle; fullSculptGL parity remainsopen",
+  "preview": "http://127.0.0.1:8818/",
+  "source_manifest": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate57/source/manifest.json",
+    "bytes": 92357,
+    "sha256": "a373ce8b6f4d45b64516c8a87a966416d6bc14df3d69c441c5e65105521d0a9c"
+  },
+  "source_rows": 513,
+  "product_rows": 386,
+  "build": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate57/build-record.json",
+    "bytes": 9367,
+    "sha256": "68aa21dd47e9d1472b250856ae43cb01f40b4f41cd07b3e9d4af56fbf6f68516"
+  },
+  "checked_receipt": {
+    "path": ".artifacts/sculptgl-portable-normals-c57-stage/FINAL_CHECKED_RECEIPT.json",
+    "bytes": 3762,
+    "sha256": "03f8f1ff333d5338685f912853e9f4e66bd6dbbcade0a0d9df1aaf7f77a2df5d"
+  },
+  "source_checks": {
+    "path": ".artifacts/sculptgl-portable-normals-c57-stage/CHECKS02.json",
+    "bytes": 2026,
+    "sha256": "e6a17156462f53fe7587030f0cbdefb9ec864deacd04a5d474ebdf80ae04bbea"
+  },
+  "tests": {
+    "workspace": 2341,
+    "core": 1620,
+    "app": 721,
+    "ignored": 1
+  },
+  "wasm": {
+    "path": "pkg/obrush_app_bg.wasm",
+    "bytes": 23251280,
+    "sha256": "f0e5bb1f5c82bb9657f36a91e348557923985494844358eaf5af21cd02191dcd"
+  },
+  "implementation": {
+    "resource_policy": {
+      "path": ".artifacts/sculptgl-release-0.1.20-candidate57/source/crates/obrush-core/src/resource_limits.rs",
+      "bytes": 3520,
+      "sha256": "a429941e246ad944582d17474c2222944f222a29847e0c09d75bf1d9c961e773"
+    },
+    "resource_changes_identity": {
+      "path": ".artifacts/sculptgl-resource-policy-c55-stage/PRODUCTION_IDENTITY.json",
+      "bytes": 2064,
+      "sha256": "f1109d8e8c8e17a64980d7a9c42015ec72bdbb9a392d1e33118be3a806e1fdbe"
+    },
+    "C56_identity": {
+      "path": ".artifacts/sculptgl-render-resource-c56-stage/PRODUCTION_IDENTITY.json",
+      "bytes": 2227,
+      "sha256": "0b380d44e61f0afafd4f5e5d8b85155626ffcc9ca88c3376c754e0f67b47c405"
+    },
+    "C57_identity": {
+      "path": ".artifacts/sculptgl-portable-normals-c57-stage/PRODUCTION_IDENTITY.json",
+      "bytes": 1002,
+      "sha256": "c9266fcaf70cc0155406ff38ad7cb7eabbed460042f0347c36f64f04092b79c0"
+    },
+    "portableangle_declaration": {
+      "path": ".artifacts/sculptgl-portable-normals-c57-stage/DECLARED_CHANGES02.json",
+      "bytes": 849,
+      "sha256": "e5627c07d243476d6baa693edb4cc5e67ef892a0928afa85e99be98b2ce9da17"
+    },
+    "fixture_versioning": {
+      "path": ".artifacts/sculptgl-portable-normals-c57-stage/PORTABLE_FIXTURE_PROVENANCE01.json",
+      "bytes": 942,
+      "sha256": "b57917bcf545cbdb5bb0fe39c9c22e19ab16c7eb8102174a7dac7a7827fad9fb"
+    },
+    "scope": "Encodedproject512MiB/staticScene256MiB/retainedDoc512MiB/history512MiB/state256MiB/tree128MiB/scratch768MiB/operation2048MiB/aggregateRendererSourceNormal512MiB. Mesh/SGLinput andindividualfreshnormal128MiB and1Mvertex/2Mtriangle countlimits unchanged. Sharedpre-readfilenamepolicy, combinedstatic/derivedchecks andrenderold/newoverlapremainbounded. Legacywhole/local cornerangles useportablelibm0.2.16 onnative/WASM; Source rawnormal/brush math unchanged. No globalsafeRSS/worstcasepromise."
+  },
+  "million_vertex": {
+    "protocol": {
+      "path": ".artifacts/sculptgl-large-workflow-c57-stage/PREREGISTRATION.json",
+      "bytes": 3667,
+      "sha256": "ae07159d232c3d2f6656e0d35ea9f1cda82248d900c83e0cb17f775b6b27ddb3"
+    },
+    "helper": {
+      "path": ".artifacts/sculptgl-large-workflow-c57-stage/HELPER_MANIFEST01.json",
+      "bytes": 7134,
+      "sha256": "592d8517d88eac6fac933d9c3b5e9a2b11ca7f5232b7c8ba582599db7d1a28be"
+    },
+    "actual_result": {
+      "path": ".artifacts/sculptgl-large-workflow-c57-stage/actual/large1M-bc388a79-1cef-4a55-a77f-8f6ab670a11f/result.json",
+      "bytes": 6456036,
+      "sha256": "d089b77bdca233ead64bf1970784093aa6efcb93834eb16c77223573aea68ddb"
+    },
+    "independent_audit": {
+      "path": ".artifacts/sculptgl-large-workflow-c57-stage/INDEPENDENT_LARGE_AUDIT01.json",
+      "bytes": 61434,
+      "sha256": "cbde9f30cfd53fe12119b12af4f0ec51dc1572734c4a80905ef7092ff091c762"
+    },
+    "whole_image_review": {
+      "path": ".artifacts/sculptgl-large-workflow-c57-stage/WHOLE_IMAGE_REVIEW01.json",
+      "bytes": 6169,
+      "sha256": "ace490d5ef906d3dd648f6588c0aff0d353543012e53fcc04e6262944bca38cb"
+    },
+    "native_replay_launch": {
+      "path": ".artifacts/sculptgl-large-workflow-c57-stage/NATIVE_REPLAY_LAUNCH01.json",
+      "bytes": 269842,
+      "sha256": "62b05d12debc91ede5b7b39f0f81eea523918104ce7b43261b8bdd8084bca092"
+    },
+    "native_replay_result": {
+      "path": ".artifacts/sculptgl-large-workflow-c57-stage/native-replay01/result.json",
+      "bytes": 14903,
+      "sha256": "d523cf9bea7e999a5d8df436d8f3cdda22e3deeb4b7365ba6742169748af3329"
+    },
+    "native_output_retention": {
+      "path": ".artifacts/sculptgl-portable-normals-c57-stage/OWNED_NATIVE_RETENTION.json",
+      "bytes": 6035,
+      "sha256": "7c07fb2a45e6524083aff8d6e9d29ec7dad7c3182be3337d310cb03ff96f0ccf"
+    },
+    "vertices": 999002,
+    "triangles": 1998000,
+    "complete_browser_projects": 6,
+    "complete_GPU_snapshots": 6,
+    "actual_useful_dabs": 2,
+    "changed_vertices": 10929,
+    "maximum_coordinate_change": 0.01197803020477295,
+    "whole_Native_WASM_files_exact_all5states": true,
+    "whole_original_SGL_and_non_geometry_attributes_exact": true,
+    "all6completeGPUstreams_exact_native_replay": true,
+    "cold2states_independent_NumPy_raw_normal_math_exact": true,
+    "GPU_attribute_layout_and_identity": "Actual0/1/2/3/4/6 binding/size/type/normalized/stride/offset, wholevertex/material/source-mask/index bytes and restoredreadbackbindings verified",
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_servers_closed": 1
+    },
+    "memory": {
+      "max_exported_main_WASM_committed_bytes": 2393702400,
+      "max_asynchronous_owned_sum_RSS_KiB": 4621248,
+      "scope": "CommittedWASM andasynchronoussummedRSS mayincludeobserver/copies/sharedpages; notlive/private/worstcase/leakproof"
+    },
+    "scope": "Onefullindependent1Mfixture, ordinarySourceDraw64CSSpx/.25, exactly2acknowledgedmotions, noalpha/mirror/culling/Continuous/pressurefactor/guard, DPR1. Capacity/history/persistence/data/GPU proof, notsustained1Mperformance/fullquality/nativeGUI/deviceparity."
+  },
+  "normal20": {
+    "audit": {
+      "path": ".artifacts/sculptgl-normal-c57-consumer-stage/POST_AUDIT01.json",
+      "bytes": 231257,
+      "sha256": "52c8b04cf7ae806e97bf6acc8dd66c0bdbc8a518f2615ec04a37e7a974f4ed9d"
+    },
+    "image_identity": {
+      "path": ".artifacts/sculptgl-portable-normals-c57-stage/NORMAL_IMAGE_IDENTITY01.json",
+      "bytes": 4911,
+      "sha256": "084210ee370c4223940b6d7356a318d5f38e2e0f1cb478653a157440e06ebb07"
+    },
+    "cases": 20,
+    "whole_downloads": 126,
+    "saved_GPU_comparisons": 118,
+    "whole_PNGs": 17,
+    "scope": "Actualscopednormalediting/interchange/UIcases, notfull317+5parity"
+  },
+  "paired_reference": [
+    {
+      "case": "CW03",
+      "helper": {
+        "path": ".artifacts/sculptgl-crease-history-c57-stage/MANIFEST.json",
+        "bytes": 31138,
+        "sha256": "669bb9e97e5f720facfa0fc18fd6107de407eb6ebed6f3c05b6e3afe0250291a"
+      },
+      "post": {
+        "path": ".artifacts/sculptgl-crease-history-c57-stage/actual-CW03/POST.json",
+        "bytes": 726,
+        "sha256": "7b0ab4e0a3e77351d238e9d0d4724902f7107ebf73396dc11f93614fbe696cda"
+      },
+      "audit": {
+        "path": ".artifacts/sculptgl-crease-history-c57-stage/ROOT_HISTORY_AUDIT.json",
+        "bytes": 34936,
+        "sha256": "e09d0f700dc10643db0a790ade643d7362f4613f15fc16aa651776d7fb5024db"
+      },
+      "independent_math": {
+        "path": ".artifacts/sculptgl-crease-history-c57-stage/ROOT_INDEPENDENT_HISTORY_MATH.json",
+        "bytes": 13069,
+        "sha256": "d37562339686693248f81415cbb84cc73a4be25bd10c5bf1f4f27a73204b6b53"
+      },
+      "GPU_snapshots": 24,
+      "scope": "One independent6vertex mirrored static None-alpha/DPR1 reference cohort; no fullbrush/physical/native/HiDPI/performance completion."
+    },
+    {
+      "case": "HP01",
+      "helper": {
+        "path": ".artifacts/sculptgl-crease-paint-history-c57-stage/MANIFEST.json",
+        "bytes": 32010,
+        "sha256": "f66df38dbb0408500630c03339b01cc0eb262d83dc82f604300da53e4e7ea1ea"
+      },
+      "post": {
+        "path": ".artifacts/sculptgl-crease-paint-history-c57-stage/actual-HP01/POST.json",
+        "bytes": 727,
+        "sha256": "885a766489fa8a160ce9bc0df418038c88e9bbe2015c6e21694154082a7d8ff2"
+      },
+      "audit": {
+        "path": ".artifacts/sculptgl-crease-paint-history-c57-stage/ROOT_PAINT_HISTORY_AUDIT.json",
+        "bytes": 36824,
+        "sha256": "69271032c9c835b6826b47f30a19b7253b5ecd779843b97e2e1e25566ec6d519"
+      },
+      "independent_math": {
+        "path": ".artifacts/sculptgl-crease-paint-history-c57-stage/ROOT_INDEPENDENT_PAINT_HISTORY_MATH.json",
+        "bytes": 19836,
+        "sha256": "0dd37bd9454d9b688589142625326b6de661a87037cb78ee88165daddf143de3"
+      },
+      "GPU_snapshots": 24,
+      "scope": "One independent6vertex mirrored static None-alpha/DPR1 reference cohort; no fullbrush/physical/native/HiDPI/performance completion."
+    }
+  ],
+  "performance": {
+    "protocol": {
+      "path": ".artifacts/sculptgl-sustained-performance-c57-stage/SUSTAINED_PREREGISTRATION.json",
+      "bytes": 6286,
+      "sha256": "fe5c802442f50c5d6f7b831167b5b6a4308e35c9d1c209946cf07de9b370d439"
+    },
+    "helper": {
+      "path": ".artifacts/sculptgl-sustained-performance-c57-stage/HELPER_MANIFEST01.json",
+      "bytes": 5876,
+      "sha256": "1e8a329bf7a68a43c0008c8f2c3beb34a4b4940e44b307ad3931b1f1bb6b204b"
+    },
+    "input_identity": {
+      "path": ".artifacts/sculptgl-sustained-performance-c57-stage/INPUT_IDENTITY01.json",
+      "bytes": 2031,
+      "sha256": "7cc758ad9cb4d3df633a77dc0cd3aecb790153cee031a16e96b4aca7c0513640"
+    },
+    "terminal": {
+      "path": ".artifacts/sculptgl-sustained-performance-c57-stage/TERMINAL_100K_60.json",
+      "bytes": 958,
+      "sha256": "050aa15722bfee7caee3d91287a281138891887b8eea4f56dc9deeb1afe909f6"
+    },
+    "audit": {
+      "path": ".artifacts/sculptgl-sustained-performance-c57-stage/ROOT_100K_60S_AUDIT01.json",
+      "bytes": 6795,
+      "sha256": "187dfdac7f7098b8333dde2c8056f3fffe87dee32ca48ccc8e5fdf57da16e4a3"
+    },
+    "qualification": {
+      "path": ".artifacts/sculptgl-sustained-performance-c57-stage/CURRENT_100K60_QUALIFICATION.json",
+      "bytes": 5566,
+      "sha256": "9ba9c593bac387c94b99d7b465d6c5fe8d7e80de06fe3e3f0514a30632212299"
+    },
+    "whole_PNG_review": {
+      "path": ".artifacts/sculptgl-sustained-performance-c57-stage/WHOLE_PNG_REVIEW01.json",
+      "bytes": 1152,
+      "sha256": "c364a438fe899db71329fef417a018b5c5b4b2fb58e8e70f80be978b068cf465"
+    },
+    "status": "PASS named local data/scalar gates",
+    "checks": {
+      "original_runtime_admission_pass": true,
+      "whole_attributes_topology_history": true,
+      "finite_useful": true,
+      "zero_degenerate_faces": true,
+      "zero_original_orientation_reversals": true,
+      "maximum_edge_stretch_le4": true,
+      "pacing_P99_le25ms": true,
+      "pacing_max_le100ms": true,
+      "independentRAF_P95_le33_34ms": true,
+      "independentRAF_max_le250ms": true,
+      "appRAF_summed_CPU_P95_le16_667ms": true,
+      "Root_queue_zero_by100ms": true,
+      "Root_applied_stable_after100ms": true,
+      "memory_samples_no_errors": true,
+      "Root_exported_WASM_memory_measured": true
+    },
+    "metrics": {
+      "actual_pointer_contact_ms": 60096.10000002384,
+      "scheduled_motion_requests": 24000,
+      "delivered_pointer_moves": 14169,
+      "motion_send_lateness_ms": {
+        "count": 24000,
+        "minimum": 0,
+        "P50": 0.0,
+        "P95": 0.776666000001569,
+        "P99": 1.1096250000009604,
+        "maximum": 1.8221660000017437
+      },
+      "motion_ack_elapsed_ms": {
+        "count": 24000,
+        "minimum": 0.18666600000142353,
+        "P50": 2.943020999999135,
+        "P95": 12.63066699999763,
+        "P99": 15.06395799999882,
+        "maximum": 46.696625000000495
+      },
+      "independentRAF_active_interval_ms": {
+        "count": 3601,
+        "minimum": 4.699999988079071,
+        "P50": 16.400000035762787,
+        "P95": 28.100000023841858,
+        "P99": 28.899999976158142,
+        "maximum": 54.5
+      },
+      "independentRAF_active_timestamp_interval_ms": {
+        "count": 3601,
+        "minimum": 16.5,
+        "P50": 16.69999999999709,
+        "P95": 16.700000000004366,
+        "P99": 16.80000000000291,
+        "maximum": 66.69999999999982
+      },
+      "appRAF_active_callback_CPU_ms": {
+        "count": 3603,
+        "minimum": 0,
+        "P50": 4.699999988079071,
+        "P95": 14.899999976158142,
+        "P99": 15.299999952316284,
+        "maximum": 45.69999998807907
+      },
+      "appRAF_active_sum_CPU_per_shared_timestamp_ms": {
+        "count": 3602,
+        "minimum": 4.100000023841858,
+        "P50": 4.699999988079071,
+        "P95": 14.899999976158142,
+        "P99": 15.299999952316284,
+        "maximum": 45.69999998807907
+      },
+      "Source_original_Brush_callback_CPU_ms": {
+        "count": 0
+      },
+      "Source_original_Brush_callbacks": 0,
+      "longtasks": [
+        [
+          7618.599999964237,
+          63
+        ]
+      ],
+      "seen": {
+        "events": 28342,
+        "draws": 79332,
+        "uploads": 135546,
+        "appRAF": 3727,
+        "pumpRAF": 3726,
+        "sourceDabs": 0,
+        "longtasks": 1
+      },
+      "Root_before_queue": {
+        "applied_dabs": 0,
+        "coalesced_dabs": 0,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 0,
+        "pending_dabs": 0,
+        "processed_dabs": 0,
+        "released_strokes": 0
+      },
+      "Root_tail_first": {
+        "applied_dabs": 1145,
+        "coalesced_dabs": 0,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 1,
+        "pending_dabs": 0,
+        "processed_dabs": 1145,
+        "released_strokes": 1
+      },
+      "Root_tail_last": {
+        "applied_dabs": 1145,
+        "coalesced_dabs": 0,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 1,
+        "pending_dabs": 0,
+        "processed_dabs": 1145,
+        "released_strokes": 1
+      },
+      "last_candidate_upload_after_pointerup_ms": 40.799999952316284,
+      "scope": "DOM/CPU/RAF/upload submission only; upload last is all-buffer metadata, not actual last position edit or GPU completion"
+    },
+    "geometry": {
+      "changed_original_vertices": 4067,
+      "maximum_position_change": 0.22027933597564697,
+      "RMS_position_change": 0.013352925393678685,
+      "before_minimum_normalized_quality": 0.0007395786042558039,
+      "after_minimum_normalized_quality": 0.0007395786042558039,
+      "after_degenerate_faces": 0,
+      "faces_reversed_against_original_cross": 0,
+      "maximum_original_edge_stretch_ratio": 2.2228668710223007,
+      "minimum_face_normal_original_alignment": 0.49826709101478306,
+      "complete_adjacent_face_pairs": 298800,
+      "before_maximum_adjacent_angle_degrees": 0.9002909196599697,
+      "after_maximum_adjacent_angle_degrees": 30.986707924247444,
+      "new_adjacent_pairs_over90degrees": 0,
+      "scope": "Whole original triangle/edge/closed-adjacency metrics; no global self-intersection, visual or retained-normal-field equivalence proof. Adjacent angles are descriptive supplemental metrics, not a retroactive new acceptance gate"
+    },
+    "scope": "OnecurrentRoot100K60original400Hzrequestedmotiontrace. All15namedlocaldata/scalargatespass; notfull12hostmatrix/referencecadence/performance/physicalqualification. OriginalC53passandC50/C46pacingfailuresremainhistorical."
+  },
+  "retained_failures": [
+    {
+      "path": "docs/evidence/sculptgl-capacity-c56-0.1.20.json",
+      "bytes": 7563,
+      "sha256": "cd61fc0777edb766c9872da1edfa7a1b791d0fa8f53ce552a9fb14269b434a40"
+    },
+    {
+      "path": "docs/evidence/sculptgl-capacity-c56-followup-0.1.20.json",
+      "bytes": 3144,
+      "sha256": "b5f702c411fdbce2bfb68ba641df8378503a41dfaa148a45a2d991891ee4cf75"
+    },
+    {
+      "path": ".artifacts/sculptgl-portable-normals-c57-stage/failed-source01/CHECKS01.json",
+      "bytes": 787,
+      "sha256": "72f5c8e4c7c3fa416e9b7a870db349de01fc91452efd4d84a9dc6ba31f58065b"
+    },
+    {
+      "path": ".artifacts/sculptgl-portable-normals-c57-stage/failed-source01/check01-01.log",
+      "bytes": 121361,
+      "sha256": "b10cf2226ee110f3bdeb6622dcb152ee8d054e30f6be989c2dfe71ee8904a035"
+    },
+    {
+      "path": ".artifacts/sculptgl-portable-normals-c57-stage/PROMOTION_ADMISSION01_FAILURE.log",
+      "bytes": 482,
+      "sha256": "a77a2f5a7fb530e024da8df781b82d038dd0680b663f2f9da186e6570aecf09c"
+    },
+    {
+      "path": ".artifacts/sculptgl-sustained-performance-c57-stage/PREFLIGHT_FIXTURE_CORRECTION01.json",
+      "bytes": 1518,
+      "sha256": "a250d5b38dd4c84811f0973710652108ce0144ba46fad72c6061a3fd78f74864"
+    }
+  ],
+  "promotion": {
+    "path": ".artifacts/sculptgl-portable-normals-c57-stage/PROMOTION.json",
+    "bytes": 4216,
+    "sha256": "7362c3ab36c6907fff5c6958875920f57b477114246ba5f52076c239bd309e48"
+  },
+  "HTTP": {
+    "path": ".artifacts/sculptgl-portable-normals-c57-stage/HTTP_BINDING.json",
+    "bytes": 4672,
+    "sha256": "1c90ef6ad3145c651bf004c327b8299566c643305fe7dcc05ca1dd4068e5c69d"
+  },
+  "native": "OfficialmacOSscript/ad-hocsignatureverified; nativeGUIunopened/uninstalled. No userbrowser/nativeaccessibility/VoiceOver or existingpreview was touched.",
+  "remaining": [
+    "Full317stableworkflowIDs+5hostedcontrols andZBrushdesktop2026.2.1 remainactive; no familyparitypromoted.",
+    "Sustainedmillionvertex/complete12hostmatrix/defaultStudio/otherbrush/arbitrarymesh/globalintersection/nativephysical/HiDPIqualityandperformance remainopen.",
+    "Fulltopology/dynamicdecimation/Reverse/multiresdetailandattributecontinuity/transforms/interchange/appearance/input/languages/theme workflowsandbroaderreferencegates remainopen."
+  ]
+}

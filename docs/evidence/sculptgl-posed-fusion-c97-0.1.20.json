@@ -1,0 +1,330 @@
+{
+  "feature": "C97 selected affine/source-origin fusion",
+  "reference": {
+    "upstream_revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "hosted_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "result_status": "passed reference selected-fusion mc workflows"
+  },
+  "parameters": {
+    "source_selected_order": "right then left",
+    "source_left_shear_x_by_y": 0.15,
+    "source_left_translation_x": -0.3,
+    "source_right_translation_x": 0.3,
+    "resolution": 16,
+    "relax": [
+      false,
+      true
+    ],
+    "mode": "Marching Cubes",
+    "colors": [
+      "red",
+      "blue"
+    ],
+    "roughness": 0.4,
+    "metalness": 0.6,
+    "unmasked_weight": 1.0
+  },
+  "paired_comparison": {
+    "unrelaxed_face_mapping": {
+      "mapped_vertices": 1034,
+      "oriented_reference_faces": 2064,
+      "oriented_obrush_faces": 2064,
+      "oriented_intersection": 2064,
+      "unoriented_intersection": 2064
+    },
+    "relaxed_face_mapping": {
+      "oriented_reference_faces": 2064,
+      "oriented_obrush_faces": 2064,
+      "oriented_intersection": 2064
+    },
+    "cases": [
+      {
+        "relaxed": false,
+        "reference": {
+          "vertices": 1034,
+          "triangles": 2064,
+          "signed_world_volume": 10.296275338922344
+        },
+        "obrush": {
+          "vertices": 1034,
+          "triangles": 2064,
+          "signed_world_volume": 10.29627712144214
+        },
+        "reference_to_obrush_nearest_world": {
+          "maximum": 3.024473999737947e-07,
+          "rms": 1.1739439540319887e-07,
+          "median": 1.1140827300974145e-07,
+          "p95": 1.4746086701851854e-07,
+          "exact_within_1e_6": 1034
+        },
+        "obrush_to_reference_nearest_world": {
+          "maximum": 3.024473999737947e-07,
+          "rms": 1.1739439540319887e-07,
+          "median": 1.1140827300974145e-07,
+          "p95": 1.4746086701851854e-07,
+          "exact_within_1e_6": 1034
+        }
+      },
+      {
+        "relaxed": true,
+        "reference": {
+          "vertices": 1034,
+          "triangles": 2064,
+          "signed_world_volume": 10.281394331658255
+        },
+        "obrush": {
+          "vertices": 1034,
+          "triangles": 2064,
+          "signed_world_volume": 10.281395881433046
+        },
+        "reference_to_obrush_nearest_world": {
+          "maximum": 2.937137064957254e-07,
+          "rms": 1.2810208639205657e-07,
+          "median": 1.1309668909217894e-07,
+          "p95": 2.092115299061428e-07,
+          "exact_within_1e_6": 1034
+        },
+        "obrush_to_reference_nearest_world": {
+          "maximum": 2.937137064957254e-07,
+          "rms": 1.2810208639205657e-07,
+          "median": 1.1309668909217894e-07,
+          "p95": 2.092115299061428e-07,
+          "exact_within_1e_6": 1034
+        }
+      }
+    ],
+    "relaxed_mapped_position_difference": {
+      "maximum": 2.937137064957254e-07,
+      "rms": 1.2810208639205657e-07
+    },
+    "attribute_differences": [
+      {
+        "relaxed": false,
+        "rgb": {
+          "values_compared": 3102,
+          "maximum_abs_difference": 1.0,
+          "rms_abs_difference": 0.3311066261708568
+        },
+        "roughness_metallic": {
+          "values_compared": 2068,
+          "maximum_abs_difference": 2.384185793236071e-08,
+          "rms_abs_difference": 1.737759083115635e-08
+        },
+        "unmasked_weight": {
+          "values_compared": 1034,
+          "maximum_abs_difference": 0.0,
+          "rms_abs_difference": 0.0
+        }
+      },
+      {
+        "relaxed": true,
+        "rgb": {
+          "values_compared": 3102,
+          "maximum_abs_difference": 1.0,
+          "rms_abs_difference": 0.3311066261708568
+        },
+        "roughness_metallic": {
+          "values_compared": 2068,
+          "maximum_abs_difference": 2.384185793236071e-08,
+          "rms_abs_difference": 1.737759083115635e-08
+        },
+        "unmasked_weight": {
+          "values_compared": 1034,
+          "maximum_abs_difference": 0.0,
+          "rms_abs_difference": 0.0
+        }
+      }
+    ]
+  },
+  "browser": {
+    "status": "passed Marching Cubes browser workflow",
+    "case_gates": [
+      {
+        "name": "marching-cubes-posed-fusion-relaxed-false-visible-workflow",
+        "gates": {
+          "visible_selection": true,
+          "explicit_mixed_uv_loss": true,
+          "explicit_pose_loss": true,
+          "closed_solid": true,
+          "history_exact": true,
+          "visible_gpu_save_exact": true
+        }
+      },
+      {
+        "name": "marching-cubes-posed-fusion-relaxed-true-visible-workflow",
+        "gates": {
+          "visible_selection": true,
+          "explicit_mixed_uv_loss": true,
+          "explicit_pose_loss": true,
+          "closed_solid": true,
+          "history_exact": true,
+          "visible_gpu_save_exact": true
+        }
+      }
+    ],
+    "exceptions": [],
+    "console_errors": [],
+    "runtime_errors": {
+      "gl": [],
+      "js": []
+    },
+    "wasm": {
+      "sha256": "d80420d4be32cbab5d298fae179f3b443e73b8aac4c0939491d2b219349ceb90",
+      "served_sha256": "d80420d4be32cbab5d298fae179f3b443e73b8aac4c0939491d2b219349ceb90",
+      "bytes": 23428215
+    },
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    }
+  },
+  "failed_checks": [
+    "The initial browser run falsely failed complete GPU/save agreement because its diagnostic captured GPU words only for buffers <=4096 bytes; the full-buffer hash rerun passed. Original failure retained.",
+    "Paired RGB overlap transfer remains unmatched, max absolute error 1.0, RMS 0.3311. Reversed-order diagnostic did not match either.",
+    "Initial strict native Clippy failed large_enum_variant on TopologyWorkerResult; boxing the report made the rerun pass. Original failure log retained."
+  ],
+  "limitations": [
+    "One independently authored pair at one resolution and two smoothing states",
+    "No arbitrary affine, UV preservation, full attribute or remeshing parity",
+    "No sustained responsiveness or GPU backend performance claim",
+    "No native GUI or physical pen check"
+  ],
+  "files": {
+    "fixture": {
+      "path": "crates/obrush-core/tests/fixtures/independent-posed-fusion.sgl",
+      "sha256": "b7c3ad813abfa4f22c0bbe8ab93598b923e9472b19eed943457f337ffa25bbb9",
+      "bytes": 1244
+    },
+    "fixture_generator": {
+      "path": "crates/obrush-core/examples/posed_fusion_fixture.rs",
+      "sha256": "f4c33187bc398559cc01cc224929118472dab0f62366d3e5647da57cc1608753",
+      "bytes": 2538
+    },
+    "core_remesh": {
+      "path": "crates/obrush-core/src/remesh.rs",
+      "sha256": "265374943829d745f0a2f49aeb3b0b42d001544758afa36d65739dd1be85d6ee",
+      "bytes": 71520
+    },
+    "core_document": {
+      "path": "crates/obrush-core/src/document.rs",
+      "sha256": "af6931c278d277b3d066f5f93e2726b2c3c49f32be688ba240dd9713ba405f46",
+      "bytes": 170237
+    },
+    "app": {
+      "path": "crates/obrush-app/src/app.rs",
+      "sha256": "3e183e8d9c25cdbf66b5743ec83eecda208eb80e5f7466698ab02fe6eca6e23c",
+      "bytes": 497606
+    },
+    "reference_harness": {
+      "path": "scripts/check-sculptgl-mc.mjs",
+      "sha256": "26f9bbe8994eaed597372225c3bc2734cb9f75a0fab8f7ab4818dba871d8bd4c",
+      "bytes": 63726
+    },
+    "browser_harness": {
+      "path": "scripts/check-mc-browser.mjs",
+      "sha256": "abcee4007d1bfa4fe43e4f286867b6a3f497283a58c29787db83ac4cf1ec619b",
+      "bytes": 128461
+    },
+    "comparison_script": {
+      "path": "scripts/compare-mc-remesh.py",
+      "sha256": "4fb93e96960b3e0d5dd2987773857afc3e18cf414b8bfd95425da45d59428c4a",
+      "bytes": 8384
+    },
+    "browser_comparison": {
+      "path": ".artifacts/posed-fusion-c97-final-comparison.json",
+      "sha256": "70fd9e6150c94ab32380cc1699dfcb73c8ecba7969db46885686531216cf068f",
+      "bytes": 4220
+    },
+    "native_order_21_comparison": {
+      "path": ".artifacts/posed-fusion-c97-order-21-comparison.json",
+      "sha256": "9ad32ff46946f17ee5c6027afef666e91abdc40dfe3c8cc8280755de35d2afce",
+      "bytes": 3600
+    },
+    "native_order_12_comparison": {
+      "path": ".artifacts/posed-fusion-c97-order-12-comparison.json",
+      "sha256": "e66a7d981911509992c29ba0b26092754ad4402d5dc8fc4a87836a6754679aea",
+      "bytes": 3630
+    },
+    "reference_run": {
+      "path": ".artifacts/sculptgl-reference-runtime/posed-fusion-c97-98261ac7-2088-486a-b2b0-95dda60f3fd3/result.json",
+      "sha256": "be71e108f831bdb6b5e12276aa4a04de3cbe85c2fe6a6968ea1cc9c9536e2ad0",
+      "bytes": 91611
+    },
+    "browser_run": {
+      "path": ".artifacts/mask-filter-browser/posed-fusion-c97-final-b0ee16d8-b176-4572-8547-c21f0fb294a1/result.json",
+      "sha256": "948a0db4c7313a1bebb059459d8912a5cb6741138297867047909bb5e787d769",
+      "bytes": 2234149
+    },
+    "initial_browser_failure": {
+      "path": ".artifacts/mask-filter-browser/posed-fusion-c97-390fd829-8e0f-4ca0-82d7-e3d783856e06/result.json",
+      "sha256": "ddf13aeb01b416b159d0c27d2333fce8c6677c78e96750ac1d32e75524e72d3f",
+      "bytes": 1561040
+    },
+    "wasm": {
+      "path": "web/dist/pkg/obrush_app_bg.wasm",
+      "sha256": "d80420d4be32cbab5d298fae179f3b443e73b8aac4c0939491d2b219349ceb90",
+      "bytes": 23428215
+    },
+    "macos_binary": {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/OBrush",
+      "sha256": "3045e303580ee160d04cb845b9b812c8639038a8034201f05c97dc21950a1bab",
+      "bytes": 26742736
+    },
+    "workspace_test_final": {
+      "path": ".artifacts/c97-workspace-test-final.log",
+      "sha256": "d8c36e1a58d488d42b1c6c69f34eab98df7fef5804f871a21cf2c0db7e63ddb5",
+      "bytes": 228923
+    },
+    "clippy_native_initial_failure": {
+      "path": ".artifacts/c97-clippy-native.log",
+      "sha256": "ee333305036a10146c8ee90134e01ddd95c5e218fb3b24b063e40153a684230d",
+      "bytes": 1318
+    },
+    "clippy_native_final": {
+      "path": ".artifacts/c97-clippy-native-rerun.log",
+      "sha256": "bccaa2edf515f8583ab84d34d9d32e2e5073747ccec9f2d73228b85c11c43f2f",
+      "bytes": 223
+    },
+    "clippy_wasm": {
+      "path": ".artifacts/c97-clippy-wasm.log",
+      "sha256": "3a0680c8debb9a9133b74e23c91f305cf8ddbb1690804448fd8efb6e6d0b5588",
+      "bytes": 223
+    },
+    "wasm_check": {
+      "path": ".artifacts/c97-wasm-check.log",
+      "sha256": "f8ddd1d1347e7f504dba43331ff2b4b519bc43f2105336245ce2d94ea922db5d",
+      "bytes": 222
+    },
+    "official_web_build": {
+      "path": ".artifacts/c97-build-web.log",
+      "sha256": "82cca35a5771deaeb84470ac2539cde7a3b183e49287b6d2fd639698c7a09f7f",
+      "bytes": 203
+    },
+    "official_macos_package": {
+      "path": ".artifacts/c97-package-macos.log",
+      "sha256": "27b27f9a7608d63e791573551e677174fe1c6bcf74fc8501b3791510b30bd8b5",
+      "bytes": 407
+    },
+    "browser_run_stdout": {
+      "path": ".artifacts/c97-browser-final.log",
+      "sha256": "910164cb25c901b3489e9190a092327b493e6e5b0d2eb806d8a9505f98d81056",
+      "bytes": 1319
+    }
+  },
+  "checks": {
+    "format": "cargo fmt --all passed",
+    "workspace_tests": {
+      "passed": 2391,
+      "ignored": 1,
+      "sections": 70,
+      "failed": 0
+    },
+    "native_clippy": "passed after boxing topology worker report",
+    "wasm_clippy": "passed",
+    "wasm_target_check": "passed",
+    "official_web_build": "passed",
+    "official_macos_package": "passed with ad-hoc signature verified",
+    "isolated_browser": "passed named C97 workflow; RGB comparison remains failed reference parity"
+  }
+}

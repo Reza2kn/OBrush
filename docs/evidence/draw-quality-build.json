@@ -1,0 +1,555 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-12T20:31:34.111265+00:00",
+  "version": "0.1.3",
+  "core_and_app_version": "0.1.3",
+  "feature_ids": [
+    "F01",
+    "F11",
+    "F12",
+    "F16",
+    "T02"
+  ],
+  "status": "Local Draw-quality checks passed; reference parity and full host/device coverage remain unverified",
+  "platform": {
+    "system": "Darwin",
+    "machine": "arm64",
+    "macos_version": "26.5.1",
+    "cpu": "Apple M2",
+    "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+    "wasm_bindgen_cli": "wasm-bindgen 0.2.129",
+    "wasm_bindgen_lock_version": "0.2.129"
+  },
+  "reference_identity": {
+    "name": "ZBrush",
+    "version": "2026.2.1",
+    "previously_recorded_sha256": "a56a4bcd0a842cdcdf103f9e5b4e13b277e7806b91396ad54a9fb7e7d14e460a",
+    "record": "docs/evidence/zbrush-native-inspection.json",
+    "scope": "Historical reference identity only; no reference sculpt or appearance run in this update"
+  },
+  "source": {
+    "git_commit": null,
+    "state": "Uncommitted source with no resolved HEAD; implementation identified by file hashes",
+    "scope": "Rust source/manifests/tests/fixtures, scripts, static web host, AGENTS instructions and CI; excludes documentation, built web/dist and ignored tooling/output",
+    "manifest": {
+      "path": ".artifacts/draw-quality-source-manifest.json",
+      "sha256": "31176abc359edc26590d80a68f06d2f9533c19ab6e7fe416738107814703d27d",
+      "size_bytes": 5735
+    },
+    "files": [
+      {
+        "path": ".github/workflows/ci.yml",
+        "sha256": "18a21786db96c1b0920517261105517287dcac547f488db4250140fbf50f9926",
+        "size_bytes": 874
+      },
+      {
+        "path": "AGENTS.md",
+        "sha256": "b9aebf717528d1887a30f15d23ca492cac78e86542f0f7f77e72ee21545cebd4",
+        "size_bytes": 1312
+      },
+      {
+        "path": "Cargo.lock",
+        "sha256": "33cc39ce4f4afb1a1d3622ab94a2c4697615eddf65d4019a8ac709186a46dc79",
+        "size_bytes": 92181
+      },
+      {
+        "path": "Cargo.toml",
+        "sha256": "b4904805b86ba1f3189a1499f49cb2da861295620203e95e0466e093f51cedd4",
+        "size_bytes": 639
+      },
+      {
+        "path": "crates/obrush-app/Cargo.toml",
+        "sha256": "e5fcff6d8b1d3bee9115edcf0c4d0c6d27c01ecd1ace0890a3475ebaf8221f75",
+        "size_bytes": 754
+      },
+      {
+        "path": "crates/obrush-app/src/app.rs",
+        "sha256": "c63c15315540d0284c58027c06207039f9a8306b1e012327bc9ea706f0b793f4",
+        "size_bytes": 49049
+      },
+      {
+        "path": "crates/obrush-app/src/lib.rs",
+        "sha256": "22fd526801566c556f653a3291411ad51eea5ddf5ff0db270ec2232515a2b2ed",
+        "size_bytes": 1558
+      },
+      {
+        "path": "crates/obrush-app/src/main.rs",
+        "sha256": "59f837631d853d5d431139fa10dfd2c07667f8dbf2b8a3cc7ff771d3068b7819",
+        "size_bytes": 676
+      },
+      {
+        "path": "crates/obrush-app/src/renderer.rs",
+        "sha256": "3ccf212965fcffe457ad672c0430caf2abfe40f3128bae0547e783977d46e205",
+        "size_bytes": 44613
+      },
+      {
+        "path": "crates/obrush-app/src/stroke.rs",
+        "sha256": "0a0298b462f22399e18b1a54502f73f805f8c4ad3b9ecbaa105c3f46178f2407",
+        "size_bytes": 4880
+      },
+      {
+        "path": "crates/obrush-core/Cargo.toml",
+        "sha256": "05bde7e131c4bc2f53709cfc3d5fcc12f2363105fba5f65ee18fa8c34e8039ce",
+        "size_bytes": 250
+      },
+      {
+        "path": "crates/obrush-core/examples/core_timing.rs",
+        "sha256": "df4dee7deaced269cc87d8f18786ab96b0e9d7407d1b6b8456fb62d1484b3f17",
+        "size_bytes": 3524
+      },
+      {
+        "path": "crates/obrush-core/examples/crease_stability_probe.rs",
+        "sha256": "a945f9d77ba4053aadee5b90a45adb2bd95ac53678dbc3e102b86bd2e75068d6",
+        "size_bytes": 11044
+      },
+      {
+        "path": "crates/obrush-core/examples/draw_overlap_probe.rs",
+        "sha256": "a2c2e388c3273dfef9096098878aaa55899841df17a8dd6b3890fc9e0a11fd26",
+        "size_bytes": 15078
+      },
+      {
+        "path": "crates/obrush-core/examples/inspect_obj.rs",
+        "sha256": "555070d52b662cbf5eb6a7fde8e97b7b6995aaefb61c341901b681f63342c90d",
+        "size_bytes": 1548
+      },
+      {
+        "path": "crates/obrush-core/examples/smooth_subdivision_probe.rs",
+        "sha256": "8e70150d11e660962767363f9af07a47a4001bfe15029f8eda345c42c11ecb03",
+        "size_bytes": 2487
+      },
+      {
+        "path": "crates/obrush-core/src/brush.rs",
+        "sha256": "71c35edb4b5b14ed949023f9dbf362efcb6f042432980d15f9d40a5298d091fa",
+        "size_bytes": 23478
+      },
+      {
+        "path": "crates/obrush-core/src/document.rs",
+        "sha256": "65e7aef9818482ba06529d75916cd76f5a8e71787905ec16e99fe4d1c658d879",
+        "size_bytes": 8597
+      },
+      {
+        "path": "crates/obrush-core/src/lib.rs",
+        "sha256": "8ccbd35d907490d6ebc8b5c4dd1f699ab1e6ae5ced427ca3158d94558d6037db",
+        "size_bytes": 508
+      },
+      {
+        "path": "crates/obrush-core/src/mesh.rs",
+        "sha256": "398d30149f2356937e20658ee121471f77d0dd6f2c7e263c4ff4a6c71a91a841",
+        "size_bytes": 43135
+      },
+      {
+        "path": "crates/obrush-core/src/refinement.rs",
+        "sha256": "0314010c82baff395c6e313b79fb2eacdb7b71b8b2f9108fa47adc620352c814",
+        "size_bytes": 17087
+      },
+      {
+        "path": "crates/obrush-core/src/tests.rs",
+        "sha256": "4debef74124f958cabb9993eb39832153e46cbc4f6aa7da904d6eaf24a3a01b9",
+        "size_bytes": 26255
+      },
+      {
+        "path": "crates/obrush-core/tests/brush_stability.rs",
+        "sha256": "8699428962c8fb4939985160c2f6ad69b3b62028cde1def81924561cd992f4eb",
+        "size_bytes": 21636
+      },
+      {
+        "path": "crates/obrush-core/tests/draw_surface.rs",
+        "sha256": "c9fa089743ebd82b734745be1e5afb06bc5d82c4abc0cf5b9f3b0408166cc5ff",
+        "size_bytes": 5789
+      },
+      {
+        "path": "crates/obrush-core/tests/fixtures/zbrush_mrgb.obj",
+        "sha256": "9f75bcbc98ddfcb570d9087c5f6b3f6acb02fa6fe5b73e610abd670e0edc5c84",
+        "size_bytes": 303
+      },
+      {
+        "path": "crates/obrush-core/tests/mrgb_import.rs",
+        "sha256": "4794fe0c95fdfe6f48e619b8db018400ae2313cd02e76368d41a2ed85ef25c2c",
+        "size_bytes": 2631
+      },
+      {
+        "path": "crates/obrush-core/tests/patch_refinement.rs",
+        "sha256": "02ad625a61cc42b6eba52a951301ee09f4017015eadaab7a9e7454b5bf5a72c7",
+        "size_bytes": 12749
+      },
+      {
+        "path": "crates/obrush-core/tests/sculpt_workflow.rs",
+        "sha256": "676ad74bdbb44998fcffd44f11fe92aff3792551722dfceaa8d04fa3ecd47ab5",
+        "size_bytes": 6339
+      },
+      {
+        "path": "scripts/build-web.sh",
+        "sha256": "72a2dc23d8d7d17d87258a2bf5c03d6eda1e8e0f883301ff8e49cf3697229cf6",
+        "size_bytes": 756
+      },
+      {
+        "path": "scripts/compare-obj.py",
+        "sha256": "a249c861d98415f664bd53583a45443c4fb96a5d94f4ff96b98263f5e8ab112e",
+        "size_bytes": 2371
+      },
+      {
+        "path": "scripts/package-macos.sh",
+        "sha256": "29efca491f0420850590a90a331c24d6807d2bfaad7dd716aa8c1ebc0fd94952",
+        "size_bytes": 1336
+      },
+      {
+        "path": "scripts/serve-web.py",
+        "sha256": "ca9125f60f4f99537b04d97eafc05d90b580eeb4c885976540397a2d44676d1e",
+        "size_bytes": 758
+      },
+      {
+        "path": "web/index.html",
+        "sha256": "861ca383b725316161e4c7cda5913874e4d10fd50e4b9bbc288bdbfc176d50e7",
+        "size_bytes": 3253
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "target/release/obrush",
+      "sha256": "a40dc16d49a4b4bc696c6b2ea7737cbb513b1a8a0ab853c6290736bb4ced0adb",
+      "size_bytes": 6059792
+    },
+    {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/OBrush",
+      "sha256": "ce89c25f867751ba269a871244fc6557551de7e59ad0e276c261ad1005aea4ba",
+      "size_bytes": 6042688
+    },
+    {
+      "path": ".artifacts/OBrush.app/Contents/Info.plist",
+      "sha256": "1fc64c0259a5209290a829f1ab5becd4a54e5d8bed67e332fa0396178c49f3fc",
+      "size_bytes": 607
+    },
+    {
+      "path": "web/dist/pkg/obrush_app_bg.wasm",
+      "sha256": "8337208356bfbec933a74f4eb4d8f37170faf1ab96b73afda50a9decb8059c88",
+      "size_bytes": 3003622
+    },
+    {
+      "path": "web/dist/pkg/obrush_app.js",
+      "sha256": "71025e3c5f88c93df85e7d70ea9fb5827c97b356510a837451129da517df574e",
+      "size_bytes": 88904
+    },
+    {
+      "path": "web/dist/index.html",
+      "sha256": "861ca383b725316161e4c7cda5913874e4d10fd50e4b9bbc288bdbfc176d50e7",
+      "size_bytes": 3253
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "33cc39ce4f4afb1a1d3622ab94a2c4697615eddf65d4019a8ac709186a46dc79",
+      "size_bytes": 92181
+    }
+  ],
+  "checks": [
+    {
+      "command": "cargo fmt --all -- --check",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "cargo check --workspace",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "cargo test --locked --workspace",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "cargo clippy --locked --workspace --all-targets -- -D warnings",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "cargo clippy --locked -p obrush-app --target wasm32-unknown-unknown -- -D warnings",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "cargo check --locked -p obrush-core --target wasm32-unknown-unknown",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "scripts/build-web.sh",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "scripts/package-macos.sh",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "/usr/bin/codesign --verify --deep --strict .artifacts/OBrush.app",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "result": "passed"
+    }
+  ],
+  "tests": {
+    "passed": 75,
+    "failed": 0,
+    "app": 8,
+    "core_total": 67,
+    "core_unit": 32,
+    "brush_stability": 13,
+    "draw_surface": 4,
+    "patch_refinement": 11,
+    "mrgb_import": 5,
+    "core_workflow": 2
+  },
+  "evidence_records": [
+    {
+      "path": "docs/evidence/draw-overlap-comparison.json",
+      "sha256": "2611e8a853b54848b23ff6367211eeb98d4246470a625acf5fe47b53ef62a351",
+      "size_bytes": 964672
+    },
+    {
+      "path": "docs/evidence/draw-visual-comparison.json",
+      "sha256": "2e1e9338f0d8691a9fbaf34f11673f9d1c9b050ecfe2cd5b0a629523b88f8c84",
+      "size_bytes": 37595
+    },
+    {
+      "path": "docs/evidence/draw-browser-runtime.json",
+      "sha256": "7761ae3109313b15a674a17aaaa2c50155c77ae85cc09f5640e2faa5ced93784",
+      "size_bytes": 33120
+    }
+  ],
+  "user_report": {
+    "record": {
+      "path": ".artifacts/draw-user-report.json",
+      "sha256": "c2c6bc9e767c3647ddc7dc026a1409d07ca146187a93cc0b84d718c9ca2ea05a",
+      "size_bytes": 607
+    },
+    "confirmed": {
+      "fresh_sphere_version": "0.1.2",
+      "radius": 0.18,
+      "strength": 0.35,
+      "saved_project_available": false
+    },
+    "exact_damaged_project_and_input_trace_available": false,
+    "scope": "Independent fixtures at reported settings; no reconstruction of the exact user sculpt"
+  },
+  "delivered_behavior": {
+    "draw_direction": "Coherent area-weighted patch normal; falloff-weighted mirrored direction blending with max scalar influence",
+    "draw_fairing": "Previous-state one-ring fairing, weight amount*0.3, mask/footprint protected",
+    "draw_geometry_guard": {
+      "quality_cross_over_max_edge_squared_floor": 0.1,
+      "new_adjacent_fold_limit_degrees": 60,
+      "relative_projected_face_area_floor": 0.05,
+      "max_step_halvings": 12,
+      "preexisting_sharp_geometry": "Preserve previous bounds; not automatic repair"
+    },
+    "other_geometric_brush_guard": {
+      "quality_floor": 0.02,
+      "new_adjacent_fold_limit_degrees": 150
+    },
+    "detail": {
+      "brush": "Draw only, after accepted displacement",
+      "target_edge_length_over_radius": 0.12,
+      "maximum_rounds_per_call": 2,
+      "maximum_new_vertices_per_call": 1024,
+      "maximum_mesh_vertices": 1000000,
+      "maximum_mesh_triangles": 2000000,
+      "operation": "Conforming linear edge splits; exact symmetric pairs preserved; masks/colors interpolated; atomic refinement rejection at unsupported topology/allocation limits"
+    },
+    "normals": "Corner-angle-weighted unit face normals, double precision accumulation",
+    "history": "Whole stroke, including local refinement, is one exact undoable entry"
+  },
+  "numerical_comparison": {
+    "case_count": 12,
+    "parameters": {
+      "brush": "Draw",
+      "radius": 0.18,
+      "strength": 0.35,
+      "symmetry_x": true,
+      "invert": false
+    },
+    "local_gates_all_passed": true,
+    "gate_provenance": "Local thresholds selected after inspecting baseline/candidate output, before this final source run. Not preregistered ZBrush-quality tolerances or universal mesh guarantees.",
+    "final_edges_above_60_degrees": 0,
+    "final_edges_above_90_degrees": 0,
+    "maximum_roughness_p95": 0.09770082520726155,
+    "minimum_triangle_quality": 0.1986754244546394,
+    "maximum_edge_world": 0.021599746789611494,
+    "minimum_height_retention": 0.8169227180182687,
+    "scope": "Same recorded rays on independent fresh spheres; local geometry metrics, not universal artifact detection/global intersection safety/ZBrush comparison"
+  },
+  "gpu_visual_check": {
+    "matched_final_case_count": 6,
+    "method": "Windowless macOS CGL; exact renderer sculpt/composite GLSL; real indexed OBJ geometry/normals; RGBA8/depth24, actual4xMSAA, transparent resolve/composite onto samebackground. No screenshot editing, desktop/browserUI or accessibility control.",
+    "record": "docs/evidence/draw-visual-comparison.json",
+    "scope": "Windowless actual-shader CGL renders with exact final OBJ hashes; not native eframe interaction"
+  },
+  "browser_check": {
+    "record": "docs/evidence/draw-browser-runtime.json",
+    "wasm_sha256": "8337208356bfbec933a74f4eb4d8f37170faf1ab96b73afda50a9decb8059c88",
+    "draw_smoke": {
+      "strokes": 3,
+      "screen_pointer_events": 105,
+      "default_radius": 0.18,
+      "default_strength": 0.35,
+      "symmetry_x": true,
+      "initial_vertices": 40962,
+      "sculpted_vertices": 42502,
+      "changed_original_vertices": 2976
+    },
+    "history_smoke": {
+      "undo_changes_geometry": true,
+      "redo_restores_exact_geometry_masks_colors_normals_and_topology": true
+    },
+    "saved_mesh_diagnostics": {
+      "source": ".artifacts/headless-browser-runtime/final-0.1.3-c52c989e-392f-448f-b48f-79ed2b03d0fb/after-draw.obrush",
+      "source_sha256": "36e7007bda40136ba0190f9eb64a376596de76b6f3987f0d745e2b73d972dd02",
+      "vertices": 42502,
+      "triangles": 85000,
+      "finite_positions_and_normals": true,
+      "indices_within_bounds": true,
+      "degenerate_triangles": 0,
+      "repeated_index_triangles": 0,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "max_adjacent_normal_angle_degrees": 36.82124676095582,
+      "adjacent_angle_over_60_edges": 0,
+      "minimum_triangle_quality": 0.5919847520074858,
+      "mask_range": [
+        0.0,
+        0.0
+      ],
+      "limitation": "Numerical check of saved headless-browser mesh only; no global self-intersection test or ZBrush reference comparison."
+    },
+    "observed_console_errors": 0,
+    "observed_js_exceptions": 0,
+    "observed_gl_errors": 0,
+    "cleanup": {
+      "isolated_chrome_exit_code": 0,
+      "isolated_chrome_signal": null,
+      "owned_pid_no_longer_present": true,
+      "existing_localhost_server_preserved": true,
+      "existing_user_profiles_and_tabs_not_targeted": true
+    },
+    "scope": "Isolated headless Chrome155, WebGL2/ANGLE Metal Apple M2, actual 4x samples; GUI Draw/Save/Undo/Redo callbacks; saved bytes captured at public download bridge; not OS download picker, full browser matrix or native GUI"
+  },
+  "static_http_delivery": {
+    "url": "http://127.0.0.1:8787/",
+    "checks": [
+      {
+        "path": "/",
+        "status": 200,
+        "content_type": "text/html",
+        "sha256": "861ca383b725316161e4c7cda5913874e4d10fd50e4b9bbc288bdbfc176d50e7",
+        "matches_local_bytes": true
+      },
+      {
+        "path": "/pkg/obrush_app.js",
+        "status": 200,
+        "content_type": "text/javascript",
+        "sha256": "71025e3c5f88c93df85e7d70ea9fb5827c97b356510a837451129da517df574e",
+        "matches_local_bytes": true
+      },
+      {
+        "path": "/pkg/obrush_app_bg.wasm",
+        "status": 200,
+        "content_type": "application/wasm",
+        "sha256": "8337208356bfbec933a74f4eb4d8f37170faf1ab96b73afda50a9decb8059c88",
+        "matches_local_bytes": true
+      }
+    ],
+    "scope": "Static byte delivery; runtime execution separately recorded above"
+  },
+  "performance": {
+    "source_metadata": {
+      "stage": "deferred Draw normal rebuild plus exact symmetry preservation and refined2-edge budget fixes",
+      "source_sha256": {
+        "crates/obrush-core/src/brush.rs": "71c35edb4b5b14ed949023f9dbf362efcb6f042432980d15f9d40a5298d091fa",
+        "crates/obrush-core/src/document.rs": "65e7aef9818482ba06529d75916cd76f5a8e71787905ec16e99fe4d1c658d879",
+        "crates/obrush-core/src/lib.rs": "8ccbd35d907490d6ebc8b5c4dd1f699ab1e6ae5ced427ca3158d94558d6037db",
+        "crates/obrush-core/src/mesh.rs": "398d30149f2356937e20658ee121471f77d0dd6f2c7e263c4ff4a6c71a91a841",
+        "crates/obrush-core/src/refinement.rs": "0314010c82baff395c6e313b79fb2eacdb7b71b8b2f9108fa47adc620352c814",
+        "crates/obrush-core/src/tests.rs": "4debef74124f958cabb9993eb39832153e46cbc4f6aa7da904d6eaf24a3a01b9"
+      },
+      "timing_driver_sha256": "6aec3576971f895c3bf8feabbc3a18e8d55b8bf1908680cd4e995dd313e2e158",
+      "scope": "one fresh-sphere nativeCPU pass; core Draw+automaticrefine+raycast only; excludes external diagnostics/snapshots/history/GPU/UI; flipchecks NOT run(null)"
+    },
+    "raw_results_sha256": "9e17079c4edeeb0cfe0b52158c7dd876f60e02dc42d0eb889bfecc9784fcb214",
+    "scope": "One Apple M2,24GiB,aarch64,macOS release opt-level2 pass. Includes core Draw/raycast/automatic refinement. Excludes per-dab external diagnostics/snapshots, history, UI, GPU. Not FPS or input-to-display latency. Flip checks not run(null).",
+    "cases": [
+      {
+        "case": "line_overlap",
+        "rounds": 4,
+        "requested_dabs": 164,
+        "elapsed_ms": 5349.795209,
+        "mean_ms_per_requested_dab": 32.620702493902435
+      },
+      {
+        "case": "loops",
+        "rounds": 8,
+        "requested_dabs": 520,
+        "elapsed_ms": 16199.221333000001,
+        "mean_ms_per_requested_dab": 31.152348717307696
+      },
+      {
+        "case": "repeated_point_tip",
+        "rounds": 128,
+        "requested_dabs": 128,
+        "elapsed_ms": 3651.140417,
+        "mean_ms_per_requested_dab": 28.5245345078125
+      }
+    ]
+  },
+  "failed_checks_retained": {
+    "geometry_stages": [
+      ".artifacts/draw-overlap-baseline",
+      ".artifacts/draw-overlap-coherent-normal",
+      ".artifacts/draw-overlap-candidate1"
+    ],
+    "browser_harness_attempts": [
+      {
+        "path": ".artifacts/headless-browser-runtime/final-0.1.3-749a3944-a1f7-4036-bbed-abd93c6b1e3b/result.json",
+        "sha256": "13e7a9a2225a53d310a9338c20943047cb5d5e5e1d25a6420317bbfb1e017f34",
+        "status": "failed isolated headless browser smoke",
+        "failure": "Error: CDP timeout:Runtime.evaluate",
+        "retained_screenshot_paths": [
+          ".artifacts/headless-browser-runtime/final-0.1.3-749a3944-a1f7-4036-bbed-abd93c6b1e3b/startup.png"
+        ],
+        "scope": "Retained harness attempt; startup itself rendered final0.1.3/WebGL2/4xMSAA. Does not establish a general app failure."
+      },
+      {
+        "path": ".artifacts/headless-browser-runtime/final-0.1.3-81ef493b-4816-4bad-9c02-42bfd0ff286d/result.json",
+        "sha256": "1261936f9b6cc60e88d1881e04c53d3f11fd9808229e76564fe5c5096868d364",
+        "status": "failed isolated headless browser smoke",
+        "failure": "Error: Save callback missing:initial",
+        "retained_screenshot_paths": [
+          ".artifacts/headless-browser-runtime/final-0.1.3-81ef493b-4816-4bad-9c02-42bfd0ff286d/startup.png"
+        ],
+        "scope": "Retained harness attempt; startup itself rendered final0.1.3/WebGL2/4xMSAA. Does not establish a general app failure."
+      },
+      {
+        "path": ".artifacts/headless-browser-runtime/final-0.1.3-c4b0cfe8-7201-47ed-bdb8-257239d450e6/result.json",
+        "sha256": "65b7fe5c1c687db96684f36b5315d25566a998db6c54f50212d758497aa0ed55",
+        "status": "failed isolated headless browser smoke",
+        "failure": "Error: Save callback missing:initial",
+        "retained_screenshot_paths": [
+          ".artifacts/headless-browser-runtime/final-0.1.3-c4b0cfe8-7201-47ed-bdb8-257239d450e6/startup.png"
+        ],
+        "scope": "Retained harness attempt; startup itself rendered final0.1.3/WebGL2/4xMSAA. Does not establish a general app failure."
+      }
+    ],
+    "scope": "Prior failed geometry candidates and three headless driver/capture attempts remain identified; final successful checks do not erase earlier failures"
+  },
+  "limitations": [
+    "Independent OBrush fixture quality, not ZBrush brush/appearance parity. Historical ZBrush identity only; no new reference sculpt run.",
+    "Exact user damaged geometry/input trace unavailable; already damaged sculptures are not automatically repaired.",
+    "Global intersections, thin-feature preservation and arbitrary imported topology remain unverified.",
+    "Native GUI, tablet/pressure, OS download picker/load/OBJ in this update, browser matrix, HiDPI/resize/camera/toggle matrix remain unverified.",
+    "Draw-only split refinement; no decimation, remeshing, persistent multiresolution or Sculptris Pro parity.",
+    "Native core timing around29-33ms/dab is one measured pass excluding history/UI/GPU; multiple dabs per frame may stall. No FPS/input-latency or million-vertex browser capacity claim."
+  ]
+}

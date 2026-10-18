@@ -1,0 +1,73 @@
+{
+  "origin": "independent author fields/scalars; no OBrush/reference consumer output",
+  "source_scene": {
+    "version": 0,
+    "byte_order": "little_endian",
+    "display": null,
+    "camera": null,
+    "meshes": [
+      {
+        "render": null,
+        "center": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "matrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": 1.0,
+        "positions": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "colors": null,
+        "materials": null,
+        "faces": [
+          [
+            0,
+            1,
+            2,
+            4294967293
+          ]
+        ],
+        "uv": null
+      }
+    ]
+  },
+  "expectation": {
+    "camera_display_render_absent_not_invented": true,
+    "rgb_material_uv_absence_retained": true,
+    "source_triangle_marker": 4294967293,
+    "explicit_byte_order_required": true,
+    "big_endian_actual_reference_consumer_support_not_claimed": false
+  }
+}

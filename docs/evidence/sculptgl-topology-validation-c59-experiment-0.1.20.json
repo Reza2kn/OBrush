@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "status": "REJECTED performance candidate; C58 main and all previews unchanged",
+  "candidate": "C59 experiment only",
+  "reason": "No observable browser improvement on original full1M topology; no reason to promote speculative complexity. Native small observed savings not sufficient evidence of browser or interaction speedup.",
+  "hypothesis": "Replace dynamic face-corner prefix loops with explicit fixed triangle/quad checks; retain all validation and error precedence.",
+  "changed_unpromoted_source": [
+    {
+      "path": "crates/obrush-core/src/attributes_validation_tests.rs",
+      "sha256": "946fe7acebd06e5b0d683ba38503d7068e9df7fa001291841b9be06e4f116d6f",
+      "bytes": 7078
+    },
+    {
+      "path": "crates/obrush-core/src/attributes.rs",
+      "sha256": "3aff73558a472a568f4837122a686a3ce913752535513cd354e666e0ba057f7c",
+      "bytes": 22834
+    }
+  ],
+  "checks": {
+    "malformed_geometry_UV_exhaustive_comparisons": "2 tests pass; public Result and error strings match frozen C58 over geometry/UV combinations, missing/repeated/canonical order/oversized inputs",
+    "log": ".artifacts/sculptgl-topology-validation-c59-stage/equivalence01.log",
+    "log_sha256": "e28011d843118cf9878a5a5bf8d90c1a2ec0b13ebbbc266c93411f80f84db4c1",
+    "workspace_checks_and_official_product_builds": "Not run for promotion: rejected before delivery; no shipped source changed"
+  },
+  "measurements": [
+    {
+      "runtime": "native",
+      "file": ".artifacts/sculptgl-topology-validation-c59-stage/NATIVE_DIAGNOSTIC01.json",
+      "sha256": "9a4d5a0cf31fea3aba8a655d48805f14b611917b034711835e3cd0790fbe3185",
+      "samples_per_route": 32,
+      "frozen_C58_median_ms": 5.1858955,
+      "candidate_median_ms": 4.9702085,
+      "median_paired_saving_ms": 0.4011459999999998,
+      "faster_pairs": 21,
+      "all_fullsize_validation_results_success": true
+    },
+    {
+      "runtime": "browser",
+      "file": ".artifacts/sculptgl-topology-validation-c59-stage/browser-diagnostic01/result.json",
+      "sha256": "c2c6bb3708922d4d4f44c107d332adbb539c8b74b00e20945023d0baf87312fd",
+      "samples_per_route": 32,
+      "frozen_C58_median_ms": 3.899999976158142,
+      "candidate_median_ms": 3.900000035762787,
+      "median_paired_saving_ms": -2.9802322387695312e-08,
+      "faster_pairs": 12,
+      "all_fullsize_validation_results_success": true
+    }
+  ],
+  "fixture": {
+    "vertices": 999002,
+    "triangles": 1998000,
+    "sha256": "dfb5316f62e392e633f03cb662dcb12215ed165a71a9ae72a3fd639528731afe"
+  },
+  "browser_owned_closure": {
+    "observed_owned_process_absent": true,
+    "owned_pid": 43022,
+    "actual_exit_code": 0,
+    "actual_signal": null,
+    "actual_servers_closed": 1,
+    "exit_status": "Actual exit0 recorded",
+    "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+  },
+  "native_diagnostic_binary": {
+    "path": ".artifacts/sculptgl-topology-validation-c59-stage/benchmark-native01",
+    "sha256": "f84c6457d6882e6b960f15dbedb92fcb57e7f89c887d8dd6ef84209baea34008"
+  },
+  "next_action": "Investigate architecture-level GPU compute feasibility with real default browser adapter, transfer costs and numerical comparison; remaining full validation/picking/tree/history bottlenecks still required.",
+  "limits": "Standalone topology validator only. No wholeMesh, application frame, reference, GPU, full317+5 or ZBrush parity inference. All original timing failures retained."
+}

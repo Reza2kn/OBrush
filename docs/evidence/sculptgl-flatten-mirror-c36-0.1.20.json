@@ -1,0 +1,211 @@
+{
+  "status": "Compared / gaps remain; scoped FM00 only",
+  "utc": "2026-10-15T12:13:27.780528+00:00",
+  "candidate": "C36 / OBrush 0.1.20",
+  "product_build_sha256": "65ffac65b5efd4b805bba2657f873205be71e22a5c340e5b1391462a49be6abc",
+  "source_checks_sha256": "e4ff63514af28e617b5057e7c7bc7f2a2addd5d19764c56a07c617069d6333ae",
+  "helper_sha256": "ebd2bea6318cab9088f2fecbca26d4abd7ef76eb07af32926b490ea490391c7a",
+  "protocol_sha256": "c3a66e560f3c24d96a766daa9d5421c80aa5bc2a1765ccaa4bca1af3cd0e96d9",
+  "preregistration_sha256": "c167e1641edbccd72d6bd297d33ffa3817d155fc54abb3a3382ee8461a75cc54",
+  "module_checks": {
+    "count": 20,
+    "all_exit_zero": true,
+    "sha256": "7dab877f95feeeef1dafcd7401b73578b57219ecd0dc8a08e1e9c4599780027f"
+  },
+  "execution": {
+    "exit": 0,
+    "seconds": 45.344393458013656,
+    "result": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-runtime/candidate36-mirror-FM00-04d8eea1-2611-409d-92b8-146ac1551f8e/result.json",
+    "result_sha256": "18923b15d3f77a1eb846532f19fdfb576f026c763fca91994bd6d7e53c4f9a8c",
+    "status": "Completed scoped boundedpartition; otherpartition/native/physical/reference differences remain pending",
+    "names": [
+      "FM00"
+    ],
+    "failure": null,
+    "required_unexercised": [],
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_servers_closed": 2
+    },
+    "cleanup_errors": [],
+    "exceptions": [],
+    "console_errors": [],
+    "log_sha256": "75aed521d4d372eb4d822907ffa0226fa3d236b4b6c658c3dfb65a71d233e36f"
+  },
+  "independent_byte_audit_sha256": "1c3fa2f7b098ebed0d7387593dd453df1c928262992114c47ff35a787ffda196",
+  "observations": {
+    "status": "PASS scoped actual overlapping X mirror Flatten comparison; own per-pass candidates/normals/GPU, pre-primary mirror contact, whole Undo/Redo and quiet verified",
+    "result": "18923b15d3f77a1eb846532f19fdfb576f026c763fca91994bd6d7e53c4f9a8c",
+    "raw_records": 270,
+    "raw_bytes": 73861446,
+    "gzip_bytes": 8245131,
+    "downloads": 16,
+    "quiet": [
+      {
+        "side": "source",
+        "samples": 32,
+        "milliseconds": 516.5999999940395
+      },
+      {
+        "side": "root",
+        "samples": 32,
+        "milliseconds": 516.6999999880791
+      }
+    ],
+    "prefixes": [
+      {
+        "side": "source",
+        "frames": 28,
+        "bytes": 1793550
+      },
+      {
+        "side": "root",
+        "frames": 52,
+        "bytes": 2409454
+      }
+    ],
+    "mirror_witnesses": [
+      {
+        "side": "source",
+        "witness": {
+          "captured_center": [
+            0.010039159096777439,
+            0.2515308354049921,
+            0.5
+          ],
+          "postprimary_repick_Z": 0.48471199687628674,
+          "gap": 0.015288003123713256,
+          "weights": [
+            0.36921500274911523,
+            0.37925416184589267,
+            0.2515308354049921
+          ],
+          "scope": "Independent originaltriangle rayheight counterfactual; never used to choose or alter contact"
+        }
+      },
+      {
+        "side": "root",
+        "witness": {
+          "captured_center": [
+            0.01003915878540517,
+            0.2515308390921468,
+            0.5
+          ],
+          "postprimary_repick_Z": 0.4847119967879717,
+          "gap": 0.015288003212028278,
+          "weights": [
+            0.369215001061224,
+            0.3792541598466292,
+            0.25153083909214674
+          ],
+          "scope": "Independent originaltriangle rayheight counterfactual; never used to choose or alter contact"
+        }
+      }
+    ],
+    "paired": {
+      "label": "Actual paired Flatten final original positions",
+      "rows": 6,
+      "words": 18,
+      "word_difference_count": 3,
+      "max_absolute_difference": 2.9103830456733704e-11,
+      "RMS": 9.703645005647086e-12,
+      "differences": [
+        {
+          "row": 0,
+          "column": 1,
+          "expected_word": 3100814501,
+          "actual_word": 3100814497,
+          "expected": -0.00010045737872133031,
+          "actual": -0.00010045734961749986,
+          "absolute_difference": 2.9103830456733704e-11
+        },
+        {
+          "row": 1,
+          "column": 1,
+          "expected_word": 3103115006,
+          "actual_word": 3103115002,
+          "expected": -0.00011719575559254736,
+          "actual": -0.0001171957264887169,
+          "absolute_difference": 2.9103830456733704e-11
+        },
+        {
+          "row": 2,
+          "column": 0,
+          "expected_word": 926259862,
+          "actual_word": 926259861,
+          "expected": 1.0824433047673665e-05,
+          "actual": 1.0824432138178963e-05,
+          "absolute_difference": 9.094947017729282e-13
+        }
+      ],
+      "exact_words": false,
+      "expected_sha256": "a8c8098bab26c27be3e7594cf3772666866de7a7c8e7a4bee70f9cca48989254",
+      "actual_sha256": "01384b68075e7fc8a4cca0842774211c1b77406d6d70beed280ae7e5b6f97216"
+    },
+    "images": [
+      {
+        "side": "source",
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-runtime/candidate36-mirror-FM00-04d8eea1-2611-409d-92b8-146ac1551f8e/source-FM00 completed source normal Flatten-shot1.png",
+        "bytes": 64701,
+        "sha256": "016944d18e1d1a7cfc98cba6f18159fd1210ceec9e1603edb7cef49bc0b7d7b2",
+        "original_label": "FM00 completed source normal Flatten",
+        "owned_serial": 1,
+        "complete_identity": {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-runtime/candidate36-mirror-FM00-04d8eea1-2611-409d-92b8-146ac1551f8e/source-FM00 completed source normal Flatten-shot1.png",
+          "kind": "complete-PNG",
+          "bytes": 64701,
+          "sha256": "016944d18e1d1a7cfc98cba6f18159fd1210ceec9e1603edb7cef49bc0b7d7b2",
+          "before": {
+            "dev": "16777231",
+            "ino": "87359452",
+            "bytes": 64701,
+            "mtime_ms": 1792066292401.181
+          },
+          "deduplicated": false,
+          "after": {
+            "dev": "16777231",
+            "ino": "87359452",
+            "bytes": 64701,
+            "mtime_ms": 1792066292401.181
+          }
+        },
+        "scope": "Complete ordinary browser surface; exact bytes retained, no crop/pixel substitute"
+      },
+      {
+        "side": "root",
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-runtime/candidate36-mirror-FM00-04d8eea1-2611-409d-92b8-146ac1551f8e/root-FM00 completed root normal Flatten-shot1.png",
+        "bytes": 157260,
+        "sha256": "bae7d365b9403973decd5842ba94443548471b0127d3114b2f7217febd7518da",
+        "original_label": "FM00 completed root normal Flatten",
+        "owned_serial": 1,
+        "complete_identity": {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-runtime/candidate36-mirror-FM00-04d8eea1-2611-409d-92b8-146ac1551f8e/root-FM00 completed root normal Flatten-shot1.png",
+          "kind": "complete-PNG",
+          "bytes": 157260,
+          "sha256": "bae7d365b9403973decd5842ba94443548471b0127d3114b2f7217febd7518da",
+          "before": {
+            "dev": "16777231",
+            "ino": "87359783",
+            "bytes": 157260,
+            "mtime_ms": 1792066318812.1091
+          },
+          "deduplicated": false,
+          "after": {
+            "dev": "16777231",
+            "ino": "87359783",
+            "bytes": 157260,
+            "mtime_ms": 1792066318812.1091
+          }
+        },
+        "scope": "Complete ordinary browser surface; exact bytes retained, no crop/pixel substitute"
+      }
+    ],
+    "scope": "Independent six-vertex two-sheet fixture, radius500/I.25/Negative true/cullfalse/None/Xmirror true/offset0/factors0/guardfalse/DPR1. No alpha, nonzerooffset, transformed pose, continuous, physical/native or fullFlatten/317+5 parity claim."
+  },
+  "image_review_sha256": "6d3b6192645e213e1d0ab48a584f70ba35101dc5ef643e60a42f64bee247f45f",
+  "remaining": [
+    "Nonzero mirror offset, alphas, transformed poses, continuous strokes and broader Flatten matrix.",
+    "Native GUI, physical pressure/touch, long sessions, calibrated latency and full SculptGL 317+5/ZBrush parity."
+  ]
+}

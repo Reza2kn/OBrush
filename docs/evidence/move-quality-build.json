@@ -1,0 +1,507 @@
+{
+  "version": "0.1.7",
+  "status": "Required source checks, native packaging, WASM build and fourteen scoped browser interaction cases pass. Four stronger native tiny-brush movement-range thresholds remain failed; reference parity remains unverified.",
+  "test_totals": {
+    "core": 138,
+    "app": 18,
+    "total": 156
+  },
+  "checks": [
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791853471.425558,
+      "end_epoch": 1791853471.604767,
+      "log": {
+        "path": ".artifacts/move-build/validation-d6041c0c-07ca-41c9-b8eb-b40a0d8a5f61/fmt.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "tests",
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--workspace"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791853471.6051588,
+      "end_epoch": 1791853581.988799,
+      "log": {
+        "path": ".artifacts/move-build/validation-d6041c0c-07ca-41c9-b8eb-b40a0d8a5f61/tests.log",
+        "bytes": 15806,
+        "sha256": "7fdcc32d853007fb6668418ae110cc3ab7cdee186295949b9cdd4f70c671b05d"
+      }
+    },
+    {
+      "name": "clippy-native",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--workspace",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791853581.989181,
+      "end_epoch": 1791853582.7138062,
+      "log": {
+        "path": ".artifacts/move-build/validation-d6041c0c-07ca-41c9-b8eb-b40a0d8a5f61/clippy-native.log",
+        "bytes": 220,
+        "sha256": "6d59822ad8a821356fd3116d40f5928b62e3bef551fc6fe3d621d27d7a3a6413"
+      }
+    },
+    {
+      "name": "clippy-wasm",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "-p",
+        "obrush-app",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791853582.7141309,
+      "end_epoch": 1791853583.895453,
+      "log": {
+        "path": ".artifacts/move-build/validation-d6041c0c-07ca-41c9-b8eb-b40a0d8a5f61/clippy-wasm.log",
+        "bytes": 220,
+        "sha256": "3015ec7cfed74ab3e085bf36f82da702bfdc9239e9a311093058785187de6f93"
+      }
+    },
+    {
+      "name": "core-wasm",
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "-p",
+        "obrush-core",
+        "--target",
+        "wasm32-unknown-unknown"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791853583.895815,
+      "end_epoch": 1791853584.285368,
+      "log": {
+        "path": ".artifacts/move-build/validation-d6041c0c-07ca-41c9-b8eb-b40a0d8a5f61/core-wasm.log",
+        "bytes": 147,
+        "sha256": "37036d32c91bca62ed51fe326feccf8d2cb91935a138b2b65db3dd6f318d3639"
+      }
+    },
+    {
+      "name": "web-build",
+      "command": [
+        "bash",
+        "scripts/build-web.sh"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791853584.28575,
+      "end_epoch": 1791853584.683559,
+      "log": {
+        "path": ".artifacts/move-build/validation-d6041c0c-07ca-41c9-b8eb-b40a0d8a5f61/web-build.log",
+        "bytes": 128,
+        "sha256": "9cf44a685a89f22cc7fbfd56816a8f56e9e722ac4d0ba4bd1e05c326ee9b77f2"
+      }
+    },
+    {
+      "name": "native-package",
+      "command": [
+        "bash",
+        "scripts/package-macos.sh"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791853584.6838982,
+      "end_epoch": 1791853590.122999,
+      "log": {
+        "path": ".artifacts/move-build/validation-d6041c0c-07ca-41c9-b8eb-b40a0d8a5f61/native-package.log",
+        "bytes": 404,
+        "sha256": "5b8161cae324247f8a39b95437f0e8ea33a30c4aed52f9b3855247e630d755bd"
+      }
+    }
+  ],
+  "environment": {
+    "os": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+    "wasm_bindgen_cli": "wasm-bindgen 0.2.129"
+  },
+  "source_manifest": {
+    "path": ".artifacts/move-release-0.1.7-final/source-manifest.json",
+    "bytes": 8950,
+    "sha256": "263a169cad9d666b372ebfac96b07d58f94f9a32e19ef99135402d03ff4607cd"
+  },
+  "artifacts": {
+    "wasm": {
+      "path": ".artifacts/move-release-0.1.7-final/web/pkg/obrush_app_bg.wasm",
+      "bytes": 3744950,
+      "sha256": "7632d4e47f03f69b6cd8428060e34071385db3aaf21291b9aaddce47831af4bb"
+    },
+    "native": {
+      "path": ".artifacts/move-release-0.1.7-final/OBrush.app/Contents/MacOS/OBrush",
+      "bytes": 6671728,
+      "sha256": "cd9cfd2c5a571363f102766d1021590cc69403076ab3278635f187214e9a2edc"
+    }
+  },
+  "retained_prior_build": {
+    "path": ".artifacts/move-release-0.1.7-candidate-1/build-record.json",
+    "bytes": 4861,
+    "sha256": "394ea75e9301249e857aef783adf3e646ecf7d5d2fd50ffa069120ef906a18fa"
+  },
+  "limitations": [
+    "No ZBrush/SculptGL reference stroke or parity claim",
+    "Native GUI and physical tablet unverified",
+    "Existing damaged geometry/global intersections not repaired",
+    "Four independently proposed tiny-brush movement-range gates remain failed; useful but bounded pulls verified separately",
+    "Owned headless Chrome synthetic input; final short traces ran after native diagnostic/build work exited. Timings are scheduling observations, not physical input-to-display or matched baseline performance.",
+    "The repeated eight-contact browser trace has seven effective history states and one exact no-op; no all-strokes movement guarantee.",
+    "52 final source/helper paths and both served/generated artifacts matched their frozen build identities before this receipt was written. Documentation/evidence prose is separate from compiled source identity.",
+    "Raw probe.at is captured before gpuDigest begins. The 2.7\u20138.1 ms aggregate measures DOM pointer-up to probe-start, not GPU readback completion, upload latency or display latency.",
+    "requestAnimationFrame observations come from an independent instrumentation callback and include drag plus post-release idle. They do not measure sculpt-render FPS.",
+    "GPU/save equality covers packed float32 position, normal, mask and color vertex-buffer bytes. The GPU index buffer was not independently captured; saved topology and history were checked separately."
+  ],
+  "schema": 1,
+  "immutable_build_receipt": {
+    "path": ".artifacts/move-release-0.1.7-final/build-record.json",
+    "bytes": 5139,
+    "sha256": "2a5f112337c3a7ed37bbf9c6f62db04bb2aca48bdb2746cc301eabcaf02368cf"
+  },
+  "source_files": [
+    {
+      "path": "Cargo.lock",
+      "bytes": 92204,
+      "sha256": "fac31c195a143d78f919d6626c3765acfd096fdfcf5166814f40d19a556f8007"
+    },
+    {
+      "path": "Cargo.toml",
+      "bytes": 637,
+      "sha256": "3115f8d649d5508ad2def41973fac28c4dc5011c82f533a3b8b1fa1b2014e1ca"
+    },
+    {
+      "path": "crates/obrush-app/Cargo.toml",
+      "bytes": 853,
+      "sha256": "2657ec47882e0ea05630a373214f88fff7b2be142304d09550febca7d99d5088"
+    },
+    {
+      "path": "crates/obrush-app/src/app.rs",
+      "bytes": 76645,
+      "sha256": "45f4c6d0d84cbd3f6f8688ccbe2097962a8a35628b48e1c886502942ceb7d472"
+    },
+    {
+      "path": "crates/obrush-app/src/dab_queue.rs",
+      "bytes": 14679,
+      "sha256": "38c71e0fcc000c28473035d7170a1c57b9e2b682f37252df032f24098c078d04"
+    },
+    {
+      "path": "crates/obrush-app/src/lib.rs",
+      "bytes": 3216,
+      "sha256": "3185d0a8971ab8cfb22a7825dda5dd43feafabd9dab4f35c005468b69cb28815"
+    },
+    {
+      "path": "crates/obrush-app/src/main.rs",
+      "bytes": 676,
+      "sha256": "59f837631d853d5d431139fa10dfd2c07667f8dbf2b8a3cc7ff771d3068b7819"
+    },
+    {
+      "path": "crates/obrush-app/src/move_drag.rs",
+      "bytes": 2455,
+      "sha256": "62b34e4e74086b403a03ce67d319854fa99a2680cd5637e0a7e6a39d270bc3dd"
+    },
+    {
+      "path": "crates/obrush-app/src/pressure.rs",
+      "bytes": 1872,
+      "sha256": "9ca20656608c0b32800d7438ae75276878d6ddb43de238221b526f4cc5c2dafa"
+    },
+    {
+      "path": "crates/obrush-app/src/renderer.rs",
+      "bytes": 44613,
+      "sha256": "3ccf212965fcffe457ad672c0430caf2abfe40f3128bae0547e783977d46e205"
+    },
+    {
+      "path": "crates/obrush-app/src/stroke.rs",
+      "bytes": 4880,
+      "sha256": "0a0298b462f22399e18b1a54502f73f805f8c4ad3b9ecbaa105c3f46178f2407"
+    },
+    {
+      "path": "crates/obrush-core/Cargo.toml",
+      "bytes": 250,
+      "sha256": "05bde7e131c4bc2f53709cfc3d5fcc12f2363105fba5f65ee18fa8c34e8039ce"
+    },
+    {
+      "path": "crates/obrush-core/examples/core_performance_probe.rs",
+      "bytes": 5426,
+      "sha256": "ecbbaf2697a627aade994847b8481da753417eb8279ff90201f1dd6f0f9a76a2"
+    },
+    {
+      "path": "crates/obrush-core/examples/core_timing.rs",
+      "bytes": 3524,
+      "sha256": "df4dee7deaced269cc87d8f18786ab96b0e9d7407d1b6b8456fb62d1484b3f17"
+    },
+    {
+      "path": "crates/obrush-core/examples/crease_stability_probe.rs",
+      "bytes": 11682,
+      "sha256": "f90b8334b2ade954dfa3ac9c545866c5b40bb34c6af2e5d415f475599099b461"
+    },
+    {
+      "path": "crates/obrush-core/examples/decimation_probe.rs",
+      "bytes": 10173,
+      "sha256": "3ad53ee4c8120f094ade5558b8ee5193ba2dfc854c607855add9d40c42cb54a8"
+    },
+    {
+      "path": "crates/obrush-core/examples/draw_overlap_probe.rs",
+      "bytes": 15078,
+      "sha256": "a2c2e388c3273dfef9096098878aaa55899841df17a8dd6b3890fc9e0a11fd26"
+    },
+    {
+      "path": "crates/obrush-core/examples/inspect_obj.rs",
+      "bytes": 1548,
+      "sha256": "555070d52b662cbf5eb6a7fde8e97b7b6995aaefb61c341901b681f63342c90d"
+    },
+    {
+      "path": "crates/obrush-core/examples/long_stroke_probe.rs",
+      "bytes": 4733,
+      "sha256": "ef94ce9c6c9fc47702bfbcd9da7f79e34664a71cac57f3b5a343748b60a1e136"
+    },
+    {
+      "path": "crates/obrush-core/examples/move_surface_probe.rs",
+      "bytes": 5003,
+      "sha256": "50ee95c527b2645b9d77973b5844b32be8948816c7a445054f57c2f69e4883d7"
+    },
+    {
+      "path": "crates/obrush-core/examples/remesh_probe.rs",
+      "bytes": 5440,
+      "sha256": "18b1fb1a4c11e112015525d9afb55c814a28e8fcf3e43e094a126dbca3289b19"
+    },
+    {
+      "path": "crates/obrush-core/examples/smooth_subdivision_probe.rs",
+      "bytes": 2520,
+      "sha256": "e32ea2146cbaed387614909998814868054eccacf1966cbedeb8fa58f3a707aa"
+    },
+    {
+      "path": "crates/obrush-core/src/alpha.rs",
+      "bytes": 6380,
+      "sha256": "bad9797511f1a98befd43ae4f8f29408fa594b30ee8bdbe0b639bb885d39c597"
+    },
+    {
+      "path": "crates/obrush-core/src/brush.rs",
+      "bytes": 44820,
+      "sha256": "f247ec648f5f0cb258881a2c95829fc7bc11b6d94f9f6c57302cb78d7e3233e1"
+    },
+    {
+      "path": "crates/obrush-core/src/decimate.rs",
+      "bytes": 25685,
+      "sha256": "93a8ddc7b245f7a77f667c659726cad8f8d4710b59b3316c8776b853d218f763"
+    },
+    {
+      "path": "crates/obrush-core/src/document.rs",
+      "bytes": 16310,
+      "sha256": "142f8a4d67da85fca8edb171a6e2738c567edb9d7ae59c54ef0df037aa5e21c3"
+    },
+    {
+      "path": "crates/obrush-core/src/lib.rs",
+      "bytes": 917,
+      "sha256": "3efd7aa7670911f10d842930e6bf7e593f23928ddbafc541eecd75327a68e036"
+    },
+    {
+      "path": "crates/obrush-core/src/mesh.rs",
+      "bytes": 58776,
+      "sha256": "c044c5423dd224bf3962bf0ad8f3c9e6b840fe170971a3b17397a3969016d420"
+    },
+    {
+      "path": "crates/obrush-core/src/multires.rs",
+      "bytes": 12162,
+      "sha256": "04c1ace2b6e5e92119893d5acfad060ce22f2b21d9d8fcf6f558d565cfe1097f"
+    },
+    {
+      "path": "crates/obrush-core/src/refinement.rs",
+      "bytes": 31744,
+      "sha256": "6c0d5e56e74bc71b363070f60e8468762c1a683bff347eb96255d37ed9721d87"
+    },
+    {
+      "path": "crates/obrush-core/src/remesh.rs",
+      "bytes": 33706,
+      "sha256": "410889f5371caa435bfc960b3312d661de1c13aefcc3a02e9ed0be80ffda8d36"
+    },
+    {
+      "path": "crates/obrush-core/src/tests.rs",
+      "bytes": 27671,
+      "sha256": "44f5f1a910a899a6a03c96a1431a4cf83cf8c3592cebc74a07b18b4a1f4c4bc5"
+    },
+    {
+      "path": "crates/obrush-core/src/topology.rs",
+      "bytes": 2322,
+      "sha256": "4190dea8003ca3a53c553ae7bd4861109073c8d5c3245ebeddab43da2deda17c"
+    },
+    {
+      "path": "crates/obrush-core/tests/brush_inputs.rs",
+      "bytes": 14814,
+      "sha256": "f69b24e32ea04122dfd53fa56d1be47eb006db58456f569a68c16e9462f22a32"
+    },
+    {
+      "path": "crates/obrush-core/tests/brush_stability.rs",
+      "bytes": 22358,
+      "sha256": "0e29dcbe1efefa96af57e0c8a1679e4f6483850611a8bbbc88fdd5bab065f8f4"
+    },
+    {
+      "path": "crates/obrush-core/tests/crease_detail.rs",
+      "bytes": 7249,
+      "sha256": "3745006623aa534f33f9877961c1378f82b392b196e3e7854046f8ba542ceb73"
+    },
+    {
+      "path": "crates/obrush-core/tests/decimate.rs",
+      "bytes": 12265,
+      "sha256": "d7b8f539fb6a8fd42175a563caf6e664a91bf1f28ccb74dce184b85699eda2a1"
+    },
+    {
+      "path": "crates/obrush-core/tests/draw_surface.rs",
+      "bytes": 5789,
+      "sha256": "c9fa089743ebd82b734745be1e5afb06bc5d82c4abc0cf5b9f3b0408166cc5ff"
+    },
+    {
+      "path": "crates/obrush-core/tests/fixtures/zbrush_mrgb.obj",
+      "bytes": 303,
+      "sha256": "9f75bcbc98ddfcb570d9087c5f6b3f6acb02fa6fe5b73e610abd670e0edc5c84"
+    },
+    {
+      "path": "crates/obrush-core/tests/move_surface.rs",
+      "bytes": 21551,
+      "sha256": "e4d796bee50fefc154e4a443abb0b7e2f53c7b52423320ce3b3492467259b3b5"
+    },
+    {
+      "path": "crates/obrush-core/tests/mrgb_import.rs",
+      "bytes": 2631,
+      "sha256": "4794fe0c95fdfe6f48e619b8db018400ae2313cd02e76368d41a2ed85ef25c2c"
+    },
+    {
+      "path": "crates/obrush-core/tests/multires.rs",
+      "bytes": 11034,
+      "sha256": "1fa1aab0414dae2fc3c9768236399e5220f9cc1ac6f5015bf74df77a4160d803"
+    },
+    {
+      "path": "crates/obrush-core/tests/patch_refinement.rs",
+      "bytes": 16645,
+      "sha256": "90e0beb74aaa1d4b7b6aebffcc9d6de0692e38c7ad882379048a1a822f9993db"
+    },
+    {
+      "path": "crates/obrush-core/tests/remesh.rs",
+      "bytes": 8786,
+      "sha256": "4076ca7c8282014c1389f9881b0f5235c1c982eae7b6e5a6f03ad8ff25e17779"
+    },
+    {
+      "path": "crates/obrush-core/tests/sculpt_workflow.rs",
+      "bytes": 6368,
+      "sha256": "1d2298a44f2aea8f038e37c5a00bc21a4713f2b3a37d600981c41ef640415929"
+    },
+    {
+      "path": "crates/obrush-core/tests/topology_workflow.rs",
+      "bytes": 2643,
+      "sha256": "3bf2577510dd2d6848e09daee061bd1da50c8444491b22284862c9984e088fbf"
+    },
+    {
+      "path": "scripts/build-web.sh",
+      "bytes": 810,
+      "sha256": "68eafa60a841cbde3ee2104521d466c7ec7c8c09a3c017cbb6a1be4338305b99"
+    },
+    {
+      "path": "scripts/check-move.mjs",
+      "bytes": 38944,
+      "sha256": "81df7bfe474739b3fee5c51350a4288cc9f5d745dc3129d4bab2844331ea387d"
+    },
+    {
+      "path": "scripts/package-macos.sh",
+      "bytes": 1336,
+      "sha256": "be015776b07535227a7956b79cb52a79812615323c189757ebbca499f9cf3b18"
+    },
+    {
+      "path": "scripts/serve-web.py",
+      "bytes": 758,
+      "sha256": "ca9125f60f4f99537b04d97eafc05d90b580eeb4c885976540397a2d44676d1e"
+    },
+    {
+      "path": "web/index.html",
+      "bytes": 6509,
+      "sha256": "f94e458b842644f3cf003f915d26464987c8639392c848cfb333508974eb4956"
+    },
+    {
+      "path": "web/topology-worker.js",
+      "bytes": 448,
+      "sha256": "3318e34033bd56bee4c8cd7a0cbe140f2ab40731a788d1dc909ebd23da90a9c2"
+    }
+  ],
+  "runtime_evidence": {
+    "path": "docs/evidence/move-quality-comparison.json",
+    "bytes": 182795,
+    "sha256": "4b0b0eeb821bcf80790e51509751174ada6e0ac8d0a492c80d21757b3cd61055"
+  },
+  "browser_raw_receipt": {
+    "path": ".artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/result.json",
+    "bytes": 1285844,
+    "sha256": "d742f4c6bfbca2df05ddac47791ce0e248053a358415f48380da2c7e57e2f624"
+  },
+  "browser_summary_receipt": {
+    "path": ".artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/comparison.json",
+    "bytes": 130041,
+    "sha256": "a4b32619c6274949d06d0ce49d1de89d9ec423ba23ea292957b79531e962eaba"
+  },
+  "current_local_artifacts": {
+    "wasm": {
+      "path": "web/dist/pkg/obrush_app_bg.wasm",
+      "bytes": 3744950,
+      "sha256": "7632d4e47f03f69b6cd8428060e34071385db3aaf21291b9aaddce47831af4bb"
+    },
+    "native": {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/OBrush",
+      "bytes": 6671728,
+      "sha256": "cd9cfd2c5a571363f102766d1021590cc69403076ab3278635f187214e9a2edc"
+    }
+  },
+  "prior_validation": {
+    "receipt": {
+      "path": ".artifacts/move-build/validation-cf30fffe-b2af-4ffa-a4e5-745dd539d1af/checks.json",
+      "bytes": 1010,
+      "sha256": "0d287f682d9c313e2ef7f1e7fd1397141ea4376aeb9867e4dfa4ec1b460ebdbb"
+    },
+    "scope": "All 156 workspace tests passed; strict native Clippy failed excessive_precision in a new test literal. The correction has identical f32 bits, and the complete required pipeline then passed in the final build receipt."
+  },
+  "test_literal_proof": {
+    "path": ".artifacts/move-build/test-literal-proof.json",
+    "bytes": 191,
+    "sha256": "0eee501ceb2dc0fdaeb1046ee2ec6c8f6fabd63cb905c0ef03e39422369277e6"
+  },
+  "unmodified_user_inputs": [
+    {
+      "path": "/Users/Ajab/Downloads/Untitled_sculpture (1).obrush",
+      "bytes": 8000012,
+      "sha256": "4adc8aa9333903ab0684c1f2e54a995dc6a4e7a3b85fc6e911df9d7deb0c4786"
+    },
+    {
+      "path": "/Users/Ajab/Downloads/Untitled_sculpture (1).obj",
+      "bytes": 10211247,
+      "sha256": "282d72002460d692c1444abd9480a11f16958ce660ca86d1352875778cced40e"
+    }
+  ],
+  "local_http_verification": {
+    "url": "http://127.0.0.1:8787/pkg/obrush_app_bg.wasm",
+    "http_status": 200,
+    "bytes": 3744950,
+    "sha256": "7632d4e47f03f69b6cd8428060e34071385db3aaf21291b9aaddce47831af4bb",
+    "cache_control": null
+  }
+}

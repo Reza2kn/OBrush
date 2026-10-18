@@ -1,0 +1,257 @@
+{
+  "schema_version": 1,
+  "reviewed_local_date": "2026-10-12",
+  "retrieved_utc": "2026-10-13T00:04:28.947706+00:00",
+  "purpose": "ZBrush capabilities beyond the SculptGL intermediate checkpoint remain in OBrush scope",
+  "reference": {
+    "product": "ZBrush desktop",
+    "version": "2026.2.1",
+    "evidence_level": "Public primary documentation and existing pinned local-version metadata; no new reference execution or behavior comparison"
+  },
+  "sculptgl": {
+    "repository": "https://github.com/stephomi/sculptgl",
+    "commit": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "current_master_verified": true,
+    "sources": [
+      {
+        "file": "src/gui/GuiSculptingTools.js",
+        "url": "https://raw.githubusercontent.com/stephomi/sculptgl/8e45dafc0f7906e5238dfffc1a2df742bd25f29d/src/gui/GuiSculptingTools.js",
+        "bytes": 10798,
+        "sha256": "1440a49252a6a95ac912ea5ad6b6ce0235d82e09813c94b16690794c7a96e0bf"
+      },
+      {
+        "file": "src/gui/GuiTopology.js",
+        "url": "https://raw.githubusercontent.com/stephomi/sculptgl/8e45dafc0f7906e5238dfffc1a2df742bd25f29d/src/gui/GuiTopology.js",
+        "bytes": 9344,
+        "sha256": "db0253fea0bad1fbfa14b081a530ed226dcc72b295ddf98078082091ca1b96ad"
+      },
+      {
+        "file": "src/gui/GuiRendering.js",
+        "url": "https://raw.githubusercontent.com/stephomi/sculptgl/8e45dafc0f7906e5238dfffc1a2df742bd25f29d/src/gui/GuiRendering.js",
+        "bytes": 9122,
+        "sha256": "af2ac44cff1ace87eeeea8a352b5b5dd197feaa36684a6a585526b719d9bbc95"
+      },
+      {
+        "file": "src/gui/GuiFiles.js",
+        "url": "https://raw.githubusercontent.com/stephomi/sculptgl/8e45dafc0f7906e5238dfffc1a2df742bd25f29d/src/gui/GuiFiles.js",
+        "bytes": 6765,
+        "sha256": "d7e4055e0cb20ff47fd29da9bd8380bf8d17020197c0b19f4cc2a9364d34263a"
+      },
+      {
+        "file": "src/gui/GuiTablet.js",
+        "url": "https://raw.githubusercontent.com/stephomi/sculptgl/8e45dafc0f7906e5238dfffc1a2df742bd25f29d/src/gui/GuiTablet.js",
+        "bytes": 533,
+        "sha256": "efe3442856916bbcffd31c2db25eafaafa1364aa0ebc52ecdf7045ac8defa067"
+      },
+      {
+        "file": "src/gui/GuiScene.js",
+        "url": "https://raw.githubusercontent.com/stephomi/sculptgl/8e45dafc0f7906e5238dfffc1a2df742bd25f29d/src/gui/GuiScene.js",
+        "bytes": 7728,
+        "sha256": "c609fc4416a6f20cb0407f8ce431a4f1220512296681afe899096de520998f88"
+      },
+      {
+        "file": "src/gui/GuiSculpting.js",
+        "url": "https://raw.githubusercontent.com/stephomi/sculptgl/8e45dafc0f7906e5238dfffc1a2df742bd25f29d/src/gui/GuiSculpting.js",
+        "bytes": 9141,
+        "sha256": "63c8dda5f3ecbb0e62c4e32f4bd804b7673db3784983f5ac200a1396f27f0cf5"
+      },
+      {
+        "file": "src/editing/Subdivision.js",
+        "url": "https://raw.githubusercontent.com/stephomi/sculptgl/8e45dafc0f7906e5238dfffc1a2df742bd25f29d/src/editing/Subdivision.js",
+        "bytes": 21448,
+        "sha256": "2ba2b8a13e13acfda33cdc46ec04f9604ee2e99538526fbc9cb25f00fae4532c"
+      },
+      {
+        "file": "src/editing/SurfaceNets.js",
+        "url": "https://raw.githubusercontent.com/stephomi/sculptgl/8e45dafc0f7906e5238dfffc1a2df742bd25f29d/src/editing/SurfaceNets.js",
+        "bytes": 6484,
+        "sha256": "0fc8c1f6a17a766d3c44d21c08f43512f54b0ef70f42dcc234a8e68cf4fcef15"
+      },
+      {
+        "file": "src/editing/Remesh.js",
+        "url": "https://raw.githubusercontent.com/stephomi/sculptgl/8e45dafc0f7906e5238dfffc1a2df742bd25f29d/src/editing/Remesh.js",
+        "bytes": 15315,
+        "sha256": "38b879669cc075392153f32c28d8c3a1e9b67fc12670fecffac91355744e5439"
+      },
+      {
+        "file": "src/editing/Sculpt.js",
+        "url": "https://raw.githubusercontent.com/stephomi/sculptgl/8e45dafc0f7906e5238dfffc1a2df742bd25f29d/src/editing/Sculpt.js",
+        "error": "HTTP Error 404: Not Found"
+      },
+      {
+        "file": "src/misc/Enums.js",
+        "url": "https://raw.githubusercontent.com/stephomi/sculptgl/8e45dafc0f7906e5238dfffc1a2df742bd25f29d/src/misc/Enums.js",
+        "bytes": 1540,
+        "sha256": "5e14df16835b72ce2135561a57974c494f016344318c1566140a91e3f916538d"
+      },
+      {
+        "file": "src/mesh/multiresolution/Multimesh.js",
+        "url": "https://raw.githubusercontent.com/stephomi/sculptgl/8e45dafc0f7906e5238dfffc1a2df742bd25f29d/src/mesh/multiresolution/Multimesh.js",
+        "bytes": 5645,
+        "sha256": "65cb494b2286c7c5fdc44a1f9cdd84f8ed414693ce25b5e6820a54e69e95bfc3"
+      },
+      {
+        "file": "src/render/shaders/ShaderPaintUV.js",
+        "url": "https://raw.githubusercontent.com/stephomi/sculptgl/8e45dafc0f7906e5238dfffc1a2df742bd25f29d/src/render/shaders/ShaderPaintUV.js",
+        "bytes": 1632,
+        "sha256": "6d52b6228aa5f8c5595c6a9e7ec5c2f22bc6387fe74ebb38fd40609f4fd2ba72"
+      },
+      {
+        "file": "src/editing/SculptManager.js",
+        "url": "https://raw.githubusercontent.com/stephomi/sculptgl/8e45dafc0f7906e5238dfffc1a2df742bd25f29d/src/editing/SculptManager.js",
+        "bytes": 2295,
+        "sha256": "336eaf9a667a8f48d75c28acf7f066cdaf678dd50183f5b15dfe8bcd8e9f3447"
+      },
+      {
+        "file": "src/editing/tools/Tools.js",
+        "url": "https://raw.githubusercontent.com/stephomi/sculptgl/8e45dafc0f7906e5238dfffc1a2df742bd25f29d/src/editing/tools/Tools.js",
+        "bytes": 1776,
+        "sha256": "e73d205748c499e279050db87b79eaf38a7e053f52c617d371ea18baf0ba5bc8"
+      }
+    ],
+    "tree": {
+      "url": "https://api.github.com/repos/stephomi/sculptgl/git/trees/8e45dafc0f7906e5238dfffc1a2df742bd25f29d?recursive=1",
+      "truncated": false,
+      "file_count": 193
+    },
+    "hosted_html": {
+      "url": "https://stephaneginier.com/sculptgl/",
+      "html_bytes": 1777,
+      "html_sha256": "ef620c4f9903760a1235717e93b17f96dfce4c093426c8bf2dfeebb16ffc0cb9",
+      "script_urls": [
+        "https://www.googletagmanager.com/gtag/js?id=G-FPR5XYHC13",
+        "sculptgl.js",
+        "//cdn.webglstats.com/stat.js"
+      ],
+      "note": "Read-only source inventory, not execution, quality comparison or reference parity"
+    },
+    "hosted_script": {
+      "url": "https://stephaneginier.com/sculptgl/sculptgl.js",
+      "bytes": 471154,
+      "sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+      "execution": "Not executed; no GUI or analytics used",
+      "relation_to_upstream_commit": "Not established; upstream source and deployed source are separate evidence"
+    },
+    "deployment_revision_relationship": "Not established; hosted asset is separately hashed and not executed"
+  },
+  "coverage_document": "docs/FEATURE_PARITY.md",
+  "absence_rule": "No corresponding exposed workflow found in audited registered tools, GUI, geometry, shader and file modules; this is not an exhaustive runtime/menu/parameter audit",
+  "shared_basics": [
+    "brushes/raster alphas",
+    "pen pressure",
+    "masking/blur/sharpen/extraction",
+    "local mirror symmetry and offset",
+    "multiple meshes/duplicate/isolate/transform/merge",
+    "ordinary multiresolution",
+    "dynamic subdivision/decimation",
+    "voxel remesh/fusion",
+    "quad faces/subdivision/surface nets",
+    "MatCap/PBR viewport",
+    "UV display/interchange",
+    "UV-space color/roughness/metalness texture export"
+  ],
+  "advanced_gap_families": [
+    {
+      "ids": "S07",
+      "capability": "sculpt/paint/mask layers, morph targets, HistoryRecall/Thick Skin"
+    },
+    {
+      "ids": "T03/T07/T08/T13",
+      "capability": "guided/manual retopology and polygon/hard-surface modeling"
+    },
+    {
+      "ids": "T06/T10/T11",
+      "capability": "folder operations, live Boolean operator stack, Stager/advanced transform workflows"
+    },
+    {
+      "ids": "T09/S06",
+      "capability": "persistent PolyGroups and advanced group/UV/draft masks"
+    },
+    {
+      "ids": "S01/S02/S04",
+      "capability": "IMM/VDM/curve libraries and richer stroke editing"
+    },
+    {
+      "ids": "T04/T05",
+      "capability": "regional HD editing, dynamic preview/thickness/MicroPoly"
+    },
+    {
+      "ids": "S05",
+      "capability": "radial/multi-axis/posable symmetry"
+    },
+    {
+      "ids": "P02/P03",
+      "capability": "general unwrap/control painting/packing, MorphUV and high-to-low normal/displacement baking"
+    },
+    {
+      "ids": "P04/S03/S08/R05",
+      "capability": "Spotlight/procedural noise/relief/pixol projection"
+    },
+    {
+      "ids": "G01/G03/G04",
+      "capability": "fibers/grooming, cloth, skins/rigging/posing"
+    },
+    {
+      "ids": "G02/T12",
+      "capability": "procedural instances and named richer mesh/text/vector generation workflows"
+    },
+    {
+      "ids": "R01/R02/R03/R04/R05",
+      "capability": "advanced lighting/render passes/integrations, keyed timelines and 2.5D documents"
+    },
+    {
+      "ids": "I01/I02/I03/E01/E02",
+      "capability": "native formats, application bridges, ZScript/Python and plugin workflows"
+    },
+    {
+      "ids": "U01/U02/U03/I04",
+      "capability": "custom studio workflows, recovery/version policies and print/scale utilities"
+    }
+  ],
+  "scope_corrections": [
+    "Quads and UV texture baking are supported in SculptGL; missing guided retopology and production high-to-low map workflows are narrower claims",
+    "SculptGL supports voxel fusion; a live Boolean addition/subtraction/intersection operator stack is a distinct gap",
+    "UV Master does not provide manual seam placement",
+    "SubTool folders are documented as non-nested",
+    "Documented initial ZBrush Python support bridges ZScript commands and does not expose unrestricted internal mesh data",
+    "USD capability must be assessed per supported field; a mesh format does not imply full scenes",
+    "Text3D editability/fonts/languages must be compared to actual reference restrictions; no permanent editable-object or RTL support assumption"
+  ],
+  "primary_zbrush_sources": [
+    "https://help.maxon.net/zbr/en-us/Content/html/zbrush-online-help.html",
+    "https://www.maxon.net/en/zbrush/new",
+    "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/sculpting/3d-layers/3d-layers.html",
+    "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/sculpting/morph-targets/morph-targets.html",
+    "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/topology/zremesher/introduction/introduction.html",
+    "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/topology/Retopo/01-retopo.html",
+    "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/modeling-basics/stager/stager.html",
+    "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/modeling-basics/align-distribute/align-distribute.html",
+    "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/modeling-basics/creating-meshes/quick-mesh/quick-mesh.html",
+    "https://help.maxon.net/zbr/en-us/Content/html/user-guide/zbrush-plugins/text-3d-vector-shapes/text-3d-vector-shapes.html",
+    "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/sculpting/sculpt-paint-in-morph-uv/sculpt-paint-in-morph-uv.html",
+    "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/drop-3d/drop-3d.html",
+    "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/hard-surface/bevelpro/bevelpro.html",
+    "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/sculpting/sculpting-brushes/vector-displacement-meshes/vector-displacement-meshes.html",
+    "https://help.maxon.net/zbr/en-us/Content/html/user-guide/zbrush-plugins/uv-master/uv-master.html",
+    "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/fibermesh/fibermesh.html",
+    "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/cloth-simulation/cloth-simulation.html",
+    "https://help.maxon.net/zbr/en-us/Content/html/user-guide/materials-lights-rendering/rendering/bpr/bpr.html",
+    "https://help.maxon.net/zbr/en-us/Content/html/reference-guide/zscript/zscript-python.html"
+  ],
+  "limits": [
+    "Feature-family crosswalk, not an exhaustive list of every shipped command, parameter, preset, integration or plugin",
+    "No numerical performance, polycount capacity or quality advantage inferred",
+    "No new ZBrush/SculptGL runtime comparison or parity percentage",
+    "No implementation status promoted and no feature removed because SculptGL lacks it",
+    "Only repository documentation/evidence changed; OBrush0.1.6 application/core artifacts remain unchanged"
+  ],
+  "manifest": {
+    "path": ".artifacts/sculptgl-scope-audit/upstream-source-manifest.json",
+    "sha256": "fbe370ea1f8b467b67bcadd45e7cc160c517a553588970c43d5231b919039cd5"
+  },
+  "shared_basics_subjects": [
+    "SculptGL",
+    "ZBrush"
+  ],
+  "obrush_current_scope": "OBrush0.1.6 implements only the documented foundations; it still has one mesh and unverified physical-tablet behavior. This crosswalk does not claim OBrush supports every shared or advanced capability."
+}

@@ -1,0 +1,2681 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-10-16T20:39:18.536607+00:00",
+  "status": "Delivered C58 scopedprepared-document admission optimization; fullSculptGLparity remainsopen",
+  "preview": "http://127.0.0.1:8819/",
+  "source_manifest": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate58/source/manifest.json",
+    "bytes": 92546,
+    "sha256": "97d91a99bd9a5e68fda6ef95a7ce1ff311fb414ab0a76936f56e256b168298d2"
+  },
+  "source_rows": 514,
+  "product_rows": 387,
+  "build": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate58/build-record.json",
+    "bytes": 9377,
+    "sha256": "541793b3cfb49a5130e4f25acc3e8c782db528ad59a76adc2fc248565a19f6d2"
+  },
+  "checked_receipt": {
+    "path": ".artifacts/sculptgl-prepared-dab-c58-stage/FINAL_CHECKED_RECEIPT.json",
+    "bytes": 2726,
+    "sha256": "418e4ae1d2bc2ad60a2e7d303e845e7c5b53c95b52e7fb59be41fea38da65118"
+  },
+  "source_checks": {
+    "path": ".artifacts/sculptgl-prepared-dab-c58-stage/CHECKS02.json",
+    "bytes": 2025,
+    "sha256": "26231848929d5f1a237a5cf617515a20c0d483c604b09673dc7de9cbea86d869"
+  },
+  "tests": {
+    "core": 1626,
+    "app": 721,
+    "ignored": 1,
+    "doc": 2,
+    "workspace": 2347
+  },
+  "wasm": {
+    "path": "pkg/obrush_app_bg.wasm",
+    "bytes": 23224325,
+    "sha256": "c972ebc6e8fc64b848e4d5b36ee08849ec788986ea63b31b55ffe84b2b5cc466"
+  },
+  "implementation": {
+    "identity": {
+      "path": ".artifacts/sculptgl-prepared-dab-c58-stage/PRODUCTION_IDENTITY02.json",
+      "bytes": 1559,
+      "sha256": "7973a2141df035db442676e24ccb14060001701eaa5b2cb5269b3aa8ec6296ed"
+    },
+    "literal_kernel_continuation": {
+      "path": ".artifacts/sculptgl-prepared-dab-c58-stage/LITERAL_KERNEL_CONTINUATION01.json",
+      "bytes": 1544,
+      "sha256": "6d7db7789cfa185f8a57aa4d759d8296f8263eec627c522b6b72f6193189f0e5"
+    },
+    "scope": "PreparedSourceGeometryDab owns exclusive&mutDocument/&mutStroke fromcompletepubliccontactMeshvalidation untilconsumingapply/drop. Warmordinarynonmirror preparation+application performs1fullMeshvalidationinsteadof2. No retainedpointer/epoch/flag orskippedcross-dabcheck. Existingpublicstandalone APIs fullyvalidate; privateapplycontinuation/kernel/math/limits/atomicrollback/history unchanged. Conventionalmask/options/state/domain/generation/binding/pressure/track/pose/storage checks remain. Native/browserordinaryhost usesnewborrow. No newUIfeature/schema/default change."
+  },
+  "native_million_vertex": {
+    "launch": {
+      "path": ".artifacts/sculptgl-prepared-dab-c58-stage/NATIVE_REPLAY_LAUNCH01.json",
+      "bytes": 8233,
+      "sha256": "56fb13437c9828df04828cb3b7c10351079cefeae01ac980e5dc05c4a6c93099"
+    },
+    "terminal": {
+      "path": ".artifacts/sculptgl-prepared-dab-c58-stage/NATIVE_REPLAY_TERMINAL01.json",
+      "bytes": 333,
+      "sha256": "51804623448e512b94b3ca4006d635e9cf6ca737b37af35025ca231a11f47101"
+    },
+    "result": {
+      "path": ".artifacts/sculptgl-prepared-dab-c58-stage/native-replay01/result.json",
+      "bytes": 20454,
+      "sha256": "6b8b029bdfb15a4f23f381fa2f2baaa612557a2910fc73761e24199781c5c70e"
+    },
+    "scope": "ActualpriorC57browser1M2usefuldabs, capturedf64view/screen/pressure. CurrentC58preparedguard recomputes exactcontacts; all5computedpublicprojects before/after/Undo/Redo/reload compareeverybyte toactualC57browserfiles. No new1MGPU/nativeGUI/reference-math/performance claim."
+  },
+  "normal20": {
+    "actual_result": {
+      "path": ".artifacts/sculptgl-normal-consumer-runtime/candidate58-normal-6543c353-5ec2-4c9d-8321-b41802b8636f/result.json",
+      "bytes": 27496558,
+      "sha256": "412d306a76ff6992b15fffaaffa809f8eb15bb028cb16b95aef14b7430947030"
+    },
+    "audit": {
+      "path": ".artifacts/sculptgl-normal-c58-consumer-stage/POST_AUDIT01.json",
+      "bytes": 231257,
+      "sha256": "aa3abc53984bb0f64733d88b3ae3853b3845ba7dd847c7670424de205cf6cfbe"
+    },
+    "cases": 20,
+    "actual_downloads": 126,
+    "saved_GPU_snapshots": 118,
+    "whole_PNGs": 17,
+    "image_identity": {
+      "path": ".artifacts/sculptgl-prepared-dab-c58-stage/NORMAL_IMAGE_IDENTITY01.json",
+      "bytes": 9409,
+      "sha256": "534ff7c0e190d8273909aeb0302be700baaa14599895eb07a828537290a4ba94"
+    },
+    "changed_image_review": {
+      "path": ".artifacts/sculptgl-prepared-dab-c58-stage/NORMAL_CHANGED_IMAGE_REVIEW02.json",
+      "bytes": 3584,
+      "sha256": "9c5c7c4d92d8cf403461a69caacc42c5dc1c71683ad235fc8e05dd6212a20fa8"
+    },
+    "scope": "14wholeimages literalC57;3fullpairs viewed, differencesonlyrightinspector/scrollbar, viewportpixels unchanged. Originalfullframe differencesreported, no croppedgate substitution orfullappearance claim."
+  },
+  "paired_reference": {
+    "CW03_audit": {
+      "path": ".artifacts/sculptgl-crease-history-c58-stage/ROOT_HISTORY_AUDIT.json",
+      "bytes": 34950,
+      "sha256": "c004ac34a62866443192721d46a61d30b095736f5130528139be0ece6d885eba"
+    },
+    "CW03_independent_math": {
+      "path": ".artifacts/sculptgl-crease-history-c58-stage/ROOT_INDEPENDENT_HISTORY_MATH.json",
+      "bytes": 13070,
+      "sha256": "957997d8caf9e9c3639c658dc4d7d41b45c16c75bca4302badcd2e0f0244b54b"
+    },
+    "HP01_audit": {
+      "path": ".artifacts/sculptgl-crease-paint-history-c58-stage/ROOT_PAINT_HISTORY_AUDIT.json",
+      "bytes": 36804,
+      "sha256": "e7bd2570b79990c48f8c6a03412028e90d06b8a7c49444a9a171d36ca2460473"
+    },
+    "HP01_independent_math": {
+      "path": ".artifacts/sculptgl-crease-paint-history-c58-stage/ROOT_INDEPENDENT_PAINT_HISTORY_MATH.json",
+      "bytes": 19837,
+      "sha256": "8cb665bedb17d1a612c21de410706aba4ad3585b10be1ec941dc3e93eb8f49af"
+    },
+    "whole_history_images": {
+      "path": ".artifacts/sculptgl-prepared-dab-c58-stage/HISTORY_IMAGE_REVIEW01.json",
+      "bytes": 3527,
+      "sha256": "306a9ae3043e8da538ebd938e29a877d2b124e3e89f5707700665e4a92f51128"
+    },
+    "complete_GPU_snapshots": 48,
+    "scope": "Sameoriginalsmall6vertexstaticfixture, pairedthreeCrease/interleavedPaint/history; independentPythonfullarithmetic/fields/GPU, fivewholePNGs literalprior. No broadbrush/alpha/pressure/hierarchy/dense/physical/familyparity claim."
+  },
+  "performance": [
+    {
+      "cohort": "100K60",
+      "audit": {
+        "path": ".artifacts/sculptgl-large-sustained-c58-stage/ROOT_100K_60S_AUDIT01.json",
+        "bytes": 8488,
+        "sha256": "3c5df4ba440020549ecd1c6f7c47b5b761be14b4bef97582f0e23eb83586159c"
+      },
+      "actual_result": {
+        "path": ".artifacts/sculptgl-large-sustained-c58-stage/actual/SP-LONG00-100k-60s-root-9ea6342f-9ddc-4a46-88d7-1ee5503fbd94/result.json",
+        "bytes": 13737998,
+        "sha256": "c1d56e3be2d59bccb1c157fd7eaddbbe6954fd3a8f92a0bc5ae957d39f008978"
+      },
+      "status": "PASS named local data/scalar gates",
+      "checks": {
+        "original_runtime_admission_pass": true,
+        "whole_attributes_topology_history": true,
+        "finite_useful": true,
+        "zero_degenerate_faces": true,
+        "zero_original_orientation_reversals": true,
+        "maximum_edge_stretch_le4": true,
+        "pacing_P99_le25ms": true,
+        "pacing_max_le100ms": true,
+        "independentRAF_P95_le33_34ms": true,
+        "independentRAF_max_le250ms": true,
+        "appRAF_summed_CPU_P95_le16_667ms": true,
+        "Root_queue_zero_by100ms": true,
+        "Root_applied_stable_after100ms": true,
+        "memory_samples_no_errors": true,
+        "Root_exported_WASM_memory_measured": true
+      },
+      "metrics": {
+        "actual_pointer_contact_ms": 60094.69999998808,
+        "scheduled_motion_requests": 24000,
+        "delivered_pointer_moves": 14697,
+        "motion_send_lateness_ms": {
+          "count": 24000,
+          "minimum": 0,
+          "P50": 0.0,
+          "P95": 0.5255419999994047,
+          "P99": 0.8261249999995925,
+          "maximum": 8.604083999998693
+        },
+        "motion_ack_elapsed_ms": {
+          "count": 24000,
+          "minimum": 0.2029999999995198,
+          "P50": 2.781791500001418,
+          "P95": 11.246375000002445,
+          "P99": 13.675666999995883,
+          "maximum": 45.410499999999956
+        },
+        "independentRAF_active_interval_ms": {
+          "count": 3601,
+          "minimum": 5.399999976158142,
+          "P50": 16.399999976158142,
+          "P95": 25.80000001192093,
+          "P99": 26.399999976158142,
+          "maximum": 55.299999952316284
+        },
+        "independentRAF_active_timestamp_interval_ms": {
+          "count": 3601,
+          "minimum": 16.5,
+          "P50": 16.69999999999709,
+          "P95": 16.700000000004366,
+          "P99": 16.80000000000291,
+          "maximum": 66.69999999999982
+        },
+        "appRAF_active_callback_CPU_ms": {
+          "count": 3603,
+          "minimum": 0,
+          "P50": 4.899999976158142,
+          "P95": 13.699999988079071,
+          "P99": 13.900000035762787,
+          "maximum": 45.89999997615814
+        },
+        "appRAF_active_sum_CPU_per_shared_timestamp_ms": {
+          "count": 3602,
+          "minimum": 4.100000023841858,
+          "P50": 4.899999976158142,
+          "P95": 13.699999988079071,
+          "P99": 13.900000035762787,
+          "maximum": 45.89999997615814
+        },
+        "Source_original_Brush_callback_CPU_ms": {
+          "count": 0
+        },
+        "Source_original_Brush_callbacks": 0,
+        "longtasks": [
+          [
+            7698.099999964237,
+            69
+          ]
+        ],
+        "seen": {
+          "events": 29398,
+          "draws": 79332,
+          "uploads": 135556,
+          "appRAF": 3727,
+          "pumpRAF": 3726,
+          "sourceDabs": 0,
+          "longtasks": 1
+        },
+        "Root_before_queue": {
+          "applied_dabs": 0,
+          "coalesced_dabs": 0,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 0,
+          "pending_dabs": 0,
+          "processed_dabs": 0,
+          "released_strokes": 0
+        },
+        "Root_tail_first": {
+          "applied_dabs": 1147,
+          "coalesced_dabs": 0,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 1,
+          "pending_dabs": 0,
+          "processed_dabs": 1147,
+          "released_strokes": 1
+        },
+        "Root_tail_last": {
+          "applied_dabs": 1147,
+          "coalesced_dabs": 0,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 1,
+          "pending_dabs": 0,
+          "processed_dabs": 1147,
+          "released_strokes": 1
+        },
+        "last_candidate_upload_after_pointerup_ms": 42.40000003576279,
+        "scope": "DOM/CPU/RAF/upload submission only; upload last is all-buffer metadata, not actual last position edit or GPU completion"
+      },
+      "geometry": {
+        "changed_original_vertices": 4064,
+        "maximum_position_change": 0.2202831506729126,
+        "RMS_position_change": 0.013353970821899234,
+        "before_minimum_normalized_quality": 0.0007395786042558039,
+        "after_minimum_normalized_quality": 0.0007395786042558039,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.221364252658868,
+        "minimum_face_normal_original_alignment": 0.4971966772214068,
+        "complete_adjacent_face_pairs": 298800,
+        "before_maximum_adjacent_angle_degrees": 0.9002909196599697,
+        "after_maximum_adjacent_angle_degrees": 30.855340476356552,
+        "new_adjacent_pairs_over90degrees": 0,
+        "scope": "Whole original triangle/edge/closed-adjacency metrics; no global self-intersection, visual or retained-normal-field equivalence proof. Adjacent angles are descriptive supplemental metrics, not a retroactive new acceptance gate"
+      },
+      "first_tail_observation_after_pointerup_ms": 42.60000002384186,
+      "scope": "Oneactualoriginal60second/24000requested400Hz trace. Originalthresholds/caps/inputroster unchanged. No full12matrix/nativephysical/otherbrush/defaultStudio/reference-quality inference."
+    },
+    {
+      "cohort": "1M60",
+      "audit": {
+        "path": ".artifacts/sculptgl-large-sustained-c58-stage/ROOT_1M_60S_AUDIT01.json",
+        "bytes": 46733,
+        "sha256": "465a2f719b9001a7c5fc64b5061e33006547872576c17e7bb128fc33851efb84"
+      },
+      "actual_result": {
+        "path": ".artifacts/sculptgl-large-sustained-c58-stage/actual/SP-LONG00-1m-60s-root-cf8bf2c7-9793-4a42-a0a7-52de66127318/result.json",
+        "bytes": 13436521,
+        "sha256": "bca56dc2ff7722b4c51c41fa96cda1a21bd8ff61fb401764695c07984356d5fb"
+      },
+      "status": "FAIL one or more named local data/scalar gates",
+      "checks": {
+        "original_runtime_admission_pass": true,
+        "whole_attributes_topology_history": true,
+        "finite_useful": true,
+        "zero_degenerate_faces": true,
+        "zero_original_orientation_reversals": true,
+        "maximum_edge_stretch_le4": true,
+        "pacing_P99_le25ms": true,
+        "pacing_max_le100ms": true,
+        "independentRAF_P95_le33_34ms": false,
+        "independentRAF_max_le250ms": false,
+        "appRAF_summed_CPU_P95_le16_667ms": false,
+        "Root_queue_zero_by100ms": false,
+        "Root_applied_stable_after100ms": true,
+        "memory_samples_no_errors": true,
+        "Root_exported_WASM_memory_measured": true
+      },
+      "metrics": {
+        "actual_pointer_contact_ms": 60768.59999996424,
+        "scheduled_motion_requests": 24000,
+        "delivered_pointer_moves": 600,
+        "motion_send_lateness_ms": {
+          "count": 24000,
+          "minimum": 0,
+          "P50": 0.0,
+          "P95": 0.367459000000963,
+          "P99": 0.5095000000001164,
+          "maximum": 23.370584000003873
+        },
+        "motion_ack_elapsed_ms": {
+          "count": 24000,
+          "minimum": 1.1202079999929992,
+          "P50": 56.688124999993306,
+          "P95": 105.98258300000452,
+          "P99": 113.84683400000358,
+          "maximum": 418.5684170000022
+        },
+        "independentRAF_active_interval_ms": {
+          "count": 545,
+          "minimum": 0.30000001192092896,
+          "P50": 109.30000001192093,
+          "P95": 114.60000002384186,
+          "P99": 120.70000004768372,
+          "maximum": 418.0999999642372
+        },
+        "independentRAF_active_timestamp_interval_ms": {
+          "count": 545,
+          "minimum": 16.599999999998545,
+          "P50": 116.59999999999854,
+          "P95": 116.70000000001164,
+          "P99": 116.80000000000291,
+          "maximum": 649.9000000000015
+        },
+        "appRAF_active_callback_CPU_ms": {
+          "count": 547,
+          "minimum": 0,
+          "P50": 108.80000001192093,
+          "P95": 114.19999998807907,
+          "P99": 120.10000002384186,
+          "maximum": 417.60000002384186
+        },
+        "appRAF_active_sum_CPU_per_shared_timestamp_ms": {
+          "count": 546,
+          "minimum": 0,
+          "P50": 108.80000001192093,
+          "P95": 114.19999998807907,
+          "P99": 120.10000002384186,
+          "maximum": 417.60000002384186
+        },
+        "Source_original_Brush_callback_CPU_ms": {
+          "count": 0
+        },
+        "Source_original_Brush_callbacks": 0,
+        "longtasks": [
+          [
+            36562.30000001192,
+            68
+          ],
+          [
+            36630.60000002384,
+            618
+          ],
+          [
+            37278.90000003576,
+            54
+          ],
+          [
+            37333.30000001192,
+            54
+          ],
+          [
+            37398.80000001192,
+            55
+          ],
+          [
+            37454.700000047684,
+            417
+          ],
+          [
+            37873,
+            120
+          ],
+          [
+            37993.80000001192,
+            112
+          ],
+          [
+            38106.40000003576,
+            111
+          ],
+          [
+            38218.40000003576,
+            112
+          ],
+          [
+            38330.700000047684,
+            111
+          ],
+          [
+            38442.30000001192,
+            111
+          ],
+          [
+            38553.80000001192,
+            111
+          ],
+          [
+            38665.200000047684,
+            111
+          ],
+          [
+            38777.30000001192,
+            112
+          ],
+          [
+            38890.30000001192,
+            113
+          ],
+          [
+            39003.90000003576,
+            114
+          ],
+          [
+            39118.60000002384,
+            114
+          ],
+          [
+            39233.40000003576,
+            113
+          ],
+          [
+            39347.30000001192,
+            114
+          ],
+          [
+            39461.90000003576,
+            114
+          ],
+          [
+            39576.700000047684,
+            113
+          ],
+          [
+            39690.80000001192,
+            112
+          ],
+          [
+            39803.60000002384,
+            112
+          ],
+          [
+            39916.80000001192,
+            114
+          ],
+          [
+            40031.200000047684,
+            113
+          ],
+          [
+            40144.5,
+            113
+          ],
+          [
+            40258.200000047684,
+            114
+          ],
+          [
+            40373.40000003576,
+            113
+          ],
+          [
+            40487.200000047684,
+            113
+          ],
+          [
+            40601.30000001192,
+            111
+          ],
+          [
+            40713,
+            111
+          ],
+          [
+            40825,
+            111
+          ],
+          [
+            40937.10000002384,
+            111
+          ],
+          [
+            41049.200000047684,
+            112
+          ],
+          [
+            41162,
+            111
+          ],
+          [
+            41274.10000002384,
+            112
+          ],
+          [
+            41386.60000002384,
+            113
+          ],
+          [
+            41500,
+            113
+          ],
+          [
+            41613.60000002384,
+            113
+          ],
+          [
+            41727.10000002384,
+            114
+          ],
+          [
+            41841.40000003576,
+            112
+          ],
+          [
+            41953.80000001192,
+            113
+          ],
+          [
+            42067.5,
+            111
+          ],
+          [
+            42179.10000002384,
+            111
+          ],
+          [
+            42291.200000047684,
+            111
+          ],
+          [
+            42402.90000003576,
+            112
+          ],
+          [
+            42515.200000047684,
+            112
+          ],
+          [
+            42628.30000001192,
+            112
+          ],
+          [
+            42741.5,
+            114
+          ],
+          [
+            42856.30000001192,
+            114
+          ],
+          [
+            42970.80000001192,
+            114
+          ],
+          [
+            43086,
+            114
+          ],
+          [
+            43200.60000002384,
+            112
+          ],
+          [
+            43313.5,
+            112
+          ],
+          [
+            43426.60000002384,
+            111
+          ],
+          [
+            43538.10000002384,
+            111
+          ],
+          [
+            43649.700000047684,
+            113
+          ],
+          [
+            43763.10000002384,
+            112
+          ],
+          [
+            43876,
+            113
+          ],
+          [
+            43990.200000047684,
+            114
+          ],
+          [
+            44104.80000001192,
+            114
+          ],
+          [
+            44219.200000047684,
+            113
+          ],
+          [
+            44332.700000047684,
+            113
+          ],
+          [
+            44446.30000001192,
+            111
+          ],
+          [
+            44558.5,
+            110
+          ],
+          [
+            44669.700000047684,
+            111
+          ],
+          [
+            44781.30000001192,
+            111
+          ],
+          [
+            44892.60000002384,
+            111
+          ],
+          [
+            45004.700000047684,
+            112
+          ],
+          [
+            45117.200000047684,
+            111
+          ],
+          [
+            45228.90000003576,
+            111
+          ],
+          [
+            45341,
+            111
+          ],
+          [
+            45452.90000003576,
+            111
+          ],
+          [
+            45565,
+            112
+          ],
+          [
+            45677.5,
+            112
+          ],
+          [
+            45790.10000002384,
+            111
+          ],
+          [
+            45901.80000001192,
+            111
+          ],
+          [
+            46013.60000002384,
+            111
+          ],
+          [
+            46125.5,
+            111
+          ],
+          [
+            46237.40000003576,
+            111
+          ],
+          [
+            46349.30000001192,
+            111
+          ],
+          [
+            46460.60000002384,
+            125
+          ],
+          [
+            46586.200000047684,
+            146
+          ],
+          [
+            46733.200000047684,
+            121
+          ],
+          [
+            46855.200000047684,
+            122
+          ],
+          [
+            46978,
+            120
+          ],
+          [
+            47098.40000003576,
+            116
+          ],
+          [
+            47215.30000001192,
+            119
+          ],
+          [
+            47335.10000002384,
+            120
+          ],
+          [
+            47455.30000001192,
+            119
+          ],
+          [
+            47574.80000001192,
+            118
+          ],
+          [
+            47694,
+            116
+          ],
+          [
+            47811.10000002384,
+            114
+          ],
+          [
+            47926.40000003576,
+            113
+          ],
+          [
+            48039.90000003576,
+            111
+          ],
+          [
+            48151.40000003576,
+            110
+          ],
+          [
+            48262.5,
+            110
+          ],
+          [
+            48373.10000002384,
+            112
+          ],
+          [
+            48486.200000047684,
+            118
+          ],
+          [
+            48605.30000001192,
+            117
+          ],
+          [
+            48723.40000003576,
+            112
+          ],
+          [
+            48836.10000002384,
+            110
+          ],
+          [
+            48947,
+            112
+          ],
+          [
+            49059.90000003576,
+            112
+          ],
+          [
+            49172.40000003576,
+            112
+          ],
+          [
+            49285.40000003576,
+            113
+          ],
+          [
+            49398.80000001192,
+            113
+          ],
+          [
+            49512.90000003576,
+            113
+          ],
+          [
+            49626.5,
+            112
+          ],
+          [
+            49739.90000003576,
+            115
+          ],
+          [
+            49855.700000047684,
+            114
+          ],
+          [
+            49970.5,
+            112
+          ],
+          [
+            50083.60000002384,
+            113
+          ],
+          [
+            50196.90000003576,
+            110
+          ],
+          [
+            50307.80000001192,
+            110
+          ],
+          [
+            50418.200000047684,
+            109
+          ],
+          [
+            50528.40000003576,
+            110
+          ],
+          [
+            50638.700000047684,
+            111
+          ],
+          [
+            50750.700000047684,
+            111
+          ],
+          [
+            50862.200000047684,
+            111
+          ],
+          [
+            50973.80000001192,
+            110
+          ],
+          [
+            51084.90000003576,
+            110
+          ],
+          [
+            51195.10000002384,
+            110
+          ],
+          [
+            51306.10000002384,
+            109
+          ],
+          [
+            51415.90000003576,
+            110
+          ],
+          [
+            51527,
+            110
+          ],
+          [
+            51637.40000003576,
+            110
+          ],
+          [
+            51748.10000002384,
+            110
+          ],
+          [
+            51858.5,
+            112
+          ],
+          [
+            51970.80000001192,
+            111
+          ],
+          [
+            52082.10000002384,
+            110
+          ],
+          [
+            52193,
+            110
+          ],
+          [
+            52303.90000003576,
+            109
+          ],
+          [
+            52413.700000047684,
+            110
+          ],
+          [
+            52524,
+            110
+          ],
+          [
+            52634.40000003576,
+            110
+          ],
+          [
+            52745.80000001192,
+            111
+          ],
+          [
+            52857.5,
+            112
+          ],
+          [
+            52969.90000003576,
+            111
+          ],
+          [
+            53081.30000001192,
+            110
+          ],
+          [
+            53192,
+            109
+          ],
+          [
+            53302.200000047684,
+            109
+          ],
+          [
+            53411.90000003576,
+            109
+          ],
+          [
+            53522.10000002384,
+            109
+          ],
+          [
+            53632.10000002384,
+            109
+          ],
+          [
+            53742,
+            110
+          ],
+          [
+            53852.700000047684,
+            110
+          ],
+          [
+            53963.5,
+            110
+          ],
+          [
+            54074.200000047684,
+            109
+          ],
+          [
+            54184.200000047684,
+            110
+          ],
+          [
+            54294.60000002384,
+            109
+          ],
+          [
+            54404,
+            109
+          ],
+          [
+            54513.700000047684,
+            110
+          ],
+          [
+            54624.200000047684,
+            109
+          ],
+          [
+            54733.700000047684,
+            110
+          ],
+          [
+            54844.10000002384,
+            110
+          ],
+          [
+            54954.5,
+            110
+          ],
+          [
+            55064.90000003576,
+            109
+          ],
+          [
+            55174.60000002384,
+            109
+          ],
+          [
+            55284.700000047684,
+            109
+          ],
+          [
+            55394.200000047684,
+            109
+          ],
+          [
+            55503.60000002384,
+            109
+          ],
+          [
+            55613.5,
+            109
+          ],
+          [
+            55723.5,
+            109
+          ],
+          [
+            55833,
+            110
+          ],
+          [
+            55943.30000001192,
+            110
+          ],
+          [
+            56053.700000047684,
+            109
+          ],
+          [
+            56163.60000002384,
+            109
+          ],
+          [
+            56273.60000002384,
+            109
+          ],
+          [
+            56383.200000047684,
+            109
+          ],
+          [
+            56493,
+            109
+          ],
+          [
+            56602.80000001192,
+            109
+          ],
+          [
+            56712.40000003576,
+            109
+          ],
+          [
+            56822.5,
+            110
+          ],
+          [
+            56932.80000001192,
+            109
+          ],
+          [
+            57042.80000001192,
+            109
+          ],
+          [
+            57152.80000001192,
+            109
+          ],
+          [
+            57262.80000001192,
+            109
+          ],
+          [
+            57372.40000003576,
+            110
+          ],
+          [
+            57482.90000003576,
+            109
+          ],
+          [
+            57592.700000047684,
+            109
+          ],
+          [
+            57702.40000003576,
+            110
+          ],
+          [
+            57812.60000002384,
+            110
+          ],
+          [
+            57923.40000003576,
+            112
+          ],
+          [
+            58035.90000003576,
+            109
+          ],
+          [
+            58146.10000002384,
+            110
+          ],
+          [
+            58256.80000001192,
+            110
+          ],
+          [
+            58367.30000001192,
+            109
+          ],
+          [
+            58477.30000001192,
+            111
+          ],
+          [
+            58589.40000003576,
+            110
+          ],
+          [
+            58700.80000001192,
+            109
+          ],
+          [
+            58810.90000003576,
+            110
+          ],
+          [
+            58921.60000002384,
+            109
+          ],
+          [
+            59031.40000003576,
+            109
+          ],
+          [
+            59141,
+            109
+          ],
+          [
+            59250.60000002384,
+            110
+          ],
+          [
+            59361.60000002384,
+            109
+          ],
+          [
+            59470.80000001192,
+            109
+          ],
+          [
+            59580.700000047684,
+            109
+          ],
+          [
+            59690.30000001192,
+            109
+          ],
+          [
+            59799.700000047684,
+            109
+          ],
+          [
+            59909.80000001192,
+            109
+          ],
+          [
+            60019.90000003576,
+            109
+          ],
+          [
+            60129.60000002384,
+            109
+          ],
+          [
+            60239,
+            109
+          ],
+          [
+            60348.5,
+            109
+          ],
+          [
+            60458.200000047684,
+            109
+          ],
+          [
+            60567.700000047684,
+            108
+          ],
+          [
+            60676.60000002384,
+            109
+          ],
+          [
+            60786.10000002384,
+            108
+          ],
+          [
+            60895.200000047684,
+            109
+          ],
+          [
+            61004.60000002384,
+            109
+          ],
+          [
+            61114.5,
+            109
+          ],
+          [
+            61224.200000047684,
+            108
+          ],
+          [
+            61333.30000001192,
+            108
+          ],
+          [
+            61442.40000003576,
+            108
+          ],
+          [
+            61551.700000047684,
+            109
+          ],
+          [
+            61661.700000047684,
+            110
+          ],
+          [
+            61772.10000002384,
+            109
+          ],
+          [
+            61881.90000003576,
+            109
+          ],
+          [
+            61991.700000047684,
+            110
+          ],
+          [
+            62102,
+            109
+          ],
+          [
+            62211.30000001192,
+            109
+          ],
+          [
+            62321,
+            109
+          ],
+          [
+            62430.200000047684,
+            108
+          ],
+          [
+            62538.80000001192,
+            108
+          ],
+          [
+            62647.80000001192,
+            108
+          ],
+          [
+            62757.10000002384,
+            108
+          ],
+          [
+            62866.10000002384,
+            109
+          ],
+          [
+            62975.80000001192,
+            109
+          ],
+          [
+            63085.5,
+            109
+          ],
+          [
+            63195.30000001192,
+            109
+          ],
+          [
+            63304.80000001192,
+            108
+          ],
+          [
+            63413.30000001192,
+            108
+          ],
+          [
+            63522.60000002384,
+            108
+          ],
+          [
+            63631.60000002384,
+            108
+          ],
+          [
+            63740.40000003576,
+            108
+          ],
+          [
+            63849.30000001192,
+            109
+          ],
+          [
+            63959.10000002384,
+            109
+          ],
+          [
+            64068.80000001192,
+            109
+          ],
+          [
+            64178.30000001192,
+            108
+          ],
+          [
+            64287.5,
+            108
+          ],
+          [
+            64396.40000003576,
+            108
+          ],
+          [
+            64505,
+            109
+          ],
+          [
+            64614.60000002384,
+            109
+          ],
+          [
+            64724.30000001192,
+            108
+          ],
+          [
+            64833.30000001192,
+            109
+          ],
+          [
+            64942.60000002384,
+            109
+          ],
+          [
+            65052.10000002384,
+            109
+          ],
+          [
+            65161.30000001192,
+            109
+          ],
+          [
+            65270.60000002384,
+            109
+          ],
+          [
+            65379.90000003576,
+            109
+          ],
+          [
+            65489.60000002384,
+            109
+          ],
+          [
+            65599.10000002384,
+            108
+          ],
+          [
+            65707.90000003576,
+            108
+          ],
+          [
+            65816.70000004768,
+            109
+          ],
+          [
+            65926.30000001192,
+            109
+          ],
+          [
+            66035.90000003576,
+            109
+          ],
+          [
+            66145.80000001192,
+            109
+          ],
+          [
+            66255.80000001192,
+            108
+          ],
+          [
+            66364.80000001192,
+            108
+          ],
+          [
+            66473.90000003576,
+            108
+          ],
+          [
+            66582.30000001192,
+            108
+          ],
+          [
+            66691.20000004768,
+            109
+          ],
+          [
+            66800.40000003576,
+            108
+          ],
+          [
+            66908.90000003576,
+            109
+          ],
+          [
+            67018.40000003576,
+            108
+          ],
+          [
+            67127.5,
+            109
+          ],
+          [
+            67236.70000004768,
+            109
+          ],
+          [
+            67345.90000003576,
+            109
+          ],
+          [
+            67455.30000001192,
+            108
+          ],
+          [
+            67564.10000002384,
+            109
+          ],
+          [
+            67673.40000003576,
+            108
+          ],
+          [
+            67782.70000004768,
+            108
+          ],
+          [
+            67891.90000003576,
+            108
+          ],
+          [
+            68001,
+            109
+          ],
+          [
+            68111.10000002384,
+            109
+          ],
+          [
+            68220.40000003576,
+            108
+          ],
+          [
+            68329.40000003576,
+            108
+          ],
+          [
+            68438.20000004768,
+            108
+          ],
+          [
+            68546.70000004768,
+            108
+          ],
+          [
+            68655.40000003576,
+            108
+          ],
+          [
+            68764.40000003576,
+            108
+          ],
+          [
+            68873.30000001192,
+            109
+          ],
+          [
+            68982.90000003576,
+            108
+          ],
+          [
+            69092.10000002384,
+            108
+          ],
+          [
+            69200.90000003576,
+            108
+          ],
+          [
+            69309.60000002384,
+            107
+          ],
+          [
+            69417.70000004768,
+            108
+          ],
+          [
+            69526.80000001192,
+            108
+          ],
+          [
+            69635.80000001192,
+            108
+          ],
+          [
+            69744.40000003576,
+            108
+          ],
+          [
+            69853.40000003576,
+            109
+          ],
+          [
+            69963,
+            109
+          ],
+          [
+            70072.30000001192,
+            108
+          ],
+          [
+            70181.40000003576,
+            108
+          ],
+          [
+            70290.40000003576,
+            108
+          ],
+          [
+            70398.80000001192,
+            108
+          ],
+          [
+            70507.40000003576,
+            108
+          ],
+          [
+            70616.60000002384,
+            108
+          ],
+          [
+            70725.30000001192,
+            108
+          ],
+          [
+            70833.90000003576,
+            109
+          ],
+          [
+            70943.20000004768,
+            108
+          ],
+          [
+            71052.30000001192,
+            108
+          ],
+          [
+            71161.5,
+            108
+          ],
+          [
+            71270.5,
+            108
+          ],
+          [
+            71379,
+            108
+          ],
+          [
+            71488.20000004768,
+            108
+          ],
+          [
+            71597.10000002384,
+            108
+          ],
+          [
+            71705.80000001192,
+            108
+          ],
+          [
+            71814.60000002384,
+            109
+          ],
+          [
+            71924.40000003576,
+            108
+          ],
+          [
+            72033.30000001192,
+            108
+          ],
+          [
+            72142.5,
+            108
+          ],
+          [
+            72251.60000002384,
+            108
+          ],
+          [
+            72360.10000002384,
+            108
+          ],
+          [
+            72469.30000001192,
+            108
+          ],
+          [
+            72577.90000003576,
+            108
+          ],
+          [
+            72686.70000004768,
+            108
+          ],
+          [
+            72795.80000001192,
+            108
+          ],
+          [
+            72904.90000003576,
+            110
+          ],
+          [
+            73015.40000003576,
+            109
+          ],
+          [
+            73124.90000003576,
+            108
+          ],
+          [
+            73233.60000002384,
+            108
+          ],
+          [
+            73342.60000002384,
+            108
+          ],
+          [
+            73451,
+            109
+          ],
+          [
+            73560.20000004768,
+            108
+          ],
+          [
+            73669.30000001192,
+            108
+          ],
+          [
+            73778.20000004768,
+            109
+          ],
+          [
+            73887.5,
+            108
+          ],
+          [
+            73996.80000001192,
+            109
+          ],
+          [
+            74106.20000004768,
+            108
+          ],
+          [
+            74215,
+            108
+          ],
+          [
+            74323.70000004768,
+            108
+          ],
+          [
+            74432.60000002384,
+            107
+          ],
+          [
+            74540.60000002384,
+            108
+          ],
+          [
+            74649.20000004768,
+            108
+          ],
+          [
+            74757.90000003576,
+            108
+          ],
+          [
+            74866.10000002384,
+            108
+          ],
+          [
+            74975,
+            108
+          ],
+          [
+            75084,
+            108
+          ],
+          [
+            75192.40000003576,
+            108
+          ],
+          [
+            75301,
+            107
+          ],
+          [
+            75409,
+            108
+          ],
+          [
+            75517.90000003576,
+            108
+          ],
+          [
+            75626.80000001192,
+            108
+          ],
+          [
+            75735.30000001192,
+            108
+          ],
+          [
+            75844.20000004768,
+            109
+          ],
+          [
+            75953.5,
+            109
+          ],
+          [
+            76062.70000004768,
+            108
+          ],
+          [
+            76171.60000002384,
+            108
+          ],
+          [
+            76280.40000003576,
+            108
+          ],
+          [
+            76388.90000003576,
+            108
+          ],
+          [
+            76497.60000002384,
+            109
+          ],
+          [
+            76607,
+            107
+          ],
+          [
+            76715.10000002384,
+            109
+          ],
+          [
+            76824.40000003576,
+            108
+          ],
+          [
+            76933.40000003576,
+            108
+          ],
+          [
+            77042,
+            108
+          ],
+          [
+            77150.90000003576,
+            108
+          ],
+          [
+            77260,
+            108
+          ],
+          [
+            77368.70000004768,
+            108
+          ],
+          [
+            77477.90000003576,
+            108
+          ],
+          [
+            77586.60000002384,
+            108
+          ],
+          [
+            77695.10000002384,
+            108
+          ],
+          [
+            77804,
+            108
+          ],
+          [
+            77912.70000004768,
+            109
+          ],
+          [
+            78022.5,
+            108
+          ],
+          [
+            78131.60000002384,
+            108
+          ],
+          [
+            78240.40000003576,
+            107
+          ],
+          [
+            78348.5,
+            108
+          ],
+          [
+            78457.10000002384,
+            109
+          ],
+          [
+            78566.40000003576,
+            108
+          ],
+          [
+            78674.80000001192,
+            108
+          ],
+          [
+            78783.40000003576,
+            108
+          ],
+          [
+            78892,
+            108
+          ],
+          [
+            79000.80000001192,
+            108
+          ],
+          [
+            79109.90000003576,
+            108
+          ],
+          [
+            79218.20000004768,
+            109
+          ],
+          [
+            79327.5,
+            108
+          ],
+          [
+            79436.30000001192,
+            108
+          ],
+          [
+            79544.90000003576,
+            108
+          ],
+          [
+            79653.5,
+            108
+          ],
+          [
+            79762.20000004768,
+            108
+          ],
+          [
+            79871,
+            109
+          ],
+          [
+            79980.80000001192,
+            109
+          ],
+          [
+            80091,
+            109
+          ],
+          [
+            80200.30000001192,
+            108
+          ],
+          [
+            80309.10000002384,
+            108
+          ],
+          [
+            80418.30000001192,
+            109
+          ],
+          [
+            80527.70000004768,
+            108
+          ],
+          [
+            80636.90000003576,
+            108
+          ],
+          [
+            80745.5,
+            109
+          ],
+          [
+            80854.80000001192,
+            108
+          ],
+          [
+            80963.60000002384,
+            108
+          ],
+          [
+            81072.40000003576,
+            108
+          ],
+          [
+            81181.40000003576,
+            108
+          ],
+          [
+            81290.20000004768,
+            107
+          ],
+          [
+            81398.20000004768,
+            109
+          ],
+          [
+            81507.70000004768,
+            108
+          ],
+          [
+            81616.90000003576,
+            108
+          ],
+          [
+            81726.10000002384,
+            108
+          ],
+          [
+            81834.90000003576,
+            108
+          ],
+          [
+            81943.80000001192,
+            108
+          ],
+          [
+            82053.20000004768,
+            108
+          ],
+          [
+            82161.90000003576,
+            108
+          ],
+          [
+            82270.5,
+            108
+          ],
+          [
+            82379.30000001192,
+            108
+          ],
+          [
+            82488.10000002384,
+            108
+          ],
+          [
+            82597,
+            108
+          ],
+          [
+            82705.5,
+            108
+          ],
+          [
+            82814.5,
+            109
+          ],
+          [
+            82923.70000004768,
+            108
+          ],
+          [
+            83032.40000003576,
+            108
+          ],
+          [
+            83141,
+            108
+          ],
+          [
+            83249.60000002384,
+            108
+          ],
+          [
+            83358,
+            108
+          ],
+          [
+            83466.70000004768,
+            108
+          ],
+          [
+            83575,
+            107
+          ],
+          [
+            83683.20000004768,
+            107
+          ],
+          [
+            83791.5,
+            108
+          ],
+          [
+            83900.20000004768,
+            108
+          ],
+          [
+            84009.30000001192,
+            108
+          ],
+          [
+            84118,
+            108
+          ],
+          [
+            84226.30000001192,
+            108
+          ],
+          [
+            84334.80000001192,
+            107
+          ],
+          [
+            84442.5,
+            107
+          ],
+          [
+            84550.60000002384,
+            108
+          ],
+          [
+            84659.10000002384,
+            108
+          ],
+          [
+            84767.70000004768,
+            108
+          ],
+          [
+            84876.10000002384,
+            108
+          ],
+          [
+            84985,
+            108
+          ],
+          [
+            85093.70000004768,
+            109
+          ],
+          [
+            85203.10000002384,
+            108
+          ],
+          [
+            85311.90000003576,
+            107
+          ],
+          [
+            85420,
+            108
+          ],
+          [
+            85528.90000003576,
+            108
+          ],
+          [
+            85637.40000003576,
+            109
+          ],
+          [
+            85747.40000003576,
+            108
+          ],
+          [
+            85856.20000004768,
+            109
+          ],
+          [
+            85965.60000002384,
+            108
+          ],
+          [
+            86074.80000001192,
+            108
+          ],
+          [
+            86183.10000002384,
+            108
+          ],
+          [
+            86291.90000003576,
+            108
+          ],
+          [
+            86400.5,
+            108
+          ],
+          [
+            86509.40000003576,
+            114
+          ],
+          [
+            86624,
+            117
+          ],
+          [
+            86742.20000004768,
+            114
+          ],
+          [
+            86857,
+            110
+          ],
+          [
+            86968.10000002384,
+            109
+          ],
+          [
+            87077.80000001192,
+            108
+          ],
+          [
+            87186.20000004768,
+            108
+          ],
+          [
+            87295.10000002384,
+            108
+          ],
+          [
+            87404,
+            108
+          ],
+          [
+            87513.20000004768,
+            108
+          ],
+          [
+            87622.5,
+            108
+          ],
+          [
+            87731.5,
+            108
+          ],
+          [
+            87840.5,
+            108
+          ],
+          [
+            87949.20000004768,
+            109
+          ],
+          [
+            88059,
+            108
+          ],
+          [
+            88167.70000004768,
+            108
+          ],
+          [
+            88276.40000003576,
+            108
+          ],
+          [
+            88384.70000004768,
+            107
+          ],
+          [
+            88492.90000003576,
+            108
+          ],
+          [
+            88601.5,
+            107
+          ],
+          [
+            88709.80000001192,
+            108
+          ],
+          [
+            88818.70000004768,
+            108
+          ],
+          [
+            88927.30000001192,
+            108
+          ],
+          [
+            89036.30000001192,
+            108
+          ],
+          [
+            89145.20000004768,
+            108
+          ],
+          [
+            89254.30000001192,
+            108
+          ],
+          [
+            89363.10000002384,
+            108
+          ],
+          [
+            89472.10000002384,
+            108
+          ],
+          [
+            89581,
+            108
+          ],
+          [
+            89689.60000002384,
+            108
+          ],
+          [
+            89798.30000001192,
+            108
+          ],
+          [
+            89906.80000001192,
+            108
+          ],
+          [
+            90016.10000002384,
+            109
+          ],
+          [
+            90125.70000004768,
+            108
+          ],
+          [
+            90234.40000003576,
+            108
+          ],
+          [
+            90343.30000001192,
+            108
+          ],
+          [
+            90452,
+            108
+          ],
+          [
+            90560.70000004768,
+            108
+          ],
+          [
+            90669.5,
+            108
+          ],
+          [
+            90778.40000003576,
+            108
+          ],
+          [
+            90887.40000003576,
+            108
+          ],
+          [
+            90995.70000004768,
+            108
+          ],
+          [
+            91104.90000003576,
+            108
+          ],
+          [
+            91213.20000004768,
+            108
+          ],
+          [
+            91322.20000004768,
+            108
+          ],
+          [
+            91430.90000003576,
+            109
+          ],
+          [
+            91540.20000004768,
+            108
+          ],
+          [
+            91648.70000004768,
+            108
+          ],
+          [
+            91757.90000003576,
+            108
+          ],
+          [
+            91866.90000003576,
+            109
+          ],
+          [
+            91976.30000001192,
+            108
+          ],
+          [
+            92085.5,
+            108
+          ],
+          [
+            92193.80000001192,
+            108
+          ],
+          [
+            92302.60000002384,
+            108
+          ],
+          [
+            92411.10000002384,
+            108
+          ],
+          [
+            92519.5,
+            108
+          ],
+          [
+            92628.40000003576,
+            107
+          ],
+          [
+            92736.40000003576,
+            108
+          ],
+          [
+            92844.80000001192,
+            108
+          ],
+          [
+            92953.30000001192,
+            108
+          ],
+          [
+            93062.40000003576,
+            108
+          ],
+          [
+            93170.70000004768,
+            108
+          ],
+          [
+            93279.20000004768,
+            108
+          ],
+          [
+            93387.70000004768,
+            108
+          ],
+          [
+            93496.30000001192,
+            108
+          ],
+          [
+            93605.5,
+            107
+          ],
+          [
+            93713.80000001192,
+            108
+          ],
+          [
+            93822.80000001192,
+            108
+          ],
+          [
+            93932,
+            108
+          ],
+          [
+            94040.30000001192,
+            108
+          ],
+          [
+            94148.60000002384,
+            108
+          ],
+          [
+            94257.10000002384,
+            108
+          ],
+          [
+            94365.90000003576,
+            108
+          ],
+          [
+            94474.20000004768,
+            108
+          ],
+          [
+            94582.60000002384,
+            107
+          ],
+          [
+            94690.90000003576,
+            107
+          ],
+          [
+            94798.90000003576,
+            107
+          ],
+          [
+            94907.10000002384,
+            107
+          ],
+          [
+            95014.90000003576,
+            107
+          ],
+          [
+            95123,
+            107
+          ],
+          [
+            95231.20000004768,
+            107
+          ],
+          [
+            95339.40000003576,
+            107
+          ],
+          [
+            95447.60000002384,
+            108
+          ],
+          [
+            95556.60000002384,
+            107
+          ],
+          [
+            95664.60000002384,
+            107
+          ],
+          [
+            95772.70000004768,
+            107
+          ],
+          [
+            95880.80000001192,
+            108
+          ],
+          [
+            95989.40000003576,
+            108
+          ],
+          [
+            96098.40000003576,
+            108
+          ],
+          [
+            96206.80000001192,
+            107
+          ],
+          [
+            96314.70000004768,
+            108
+          ],
+          [
+            96423.60000002384,
+            107
+          ],
+          [
+            96531.80000001192,
+            108
+          ],
+          [
+            96640.30000001192,
+            107
+          ],
+          [
+            96748.60000002384,
+            108
+          ],
+          [
+            96857.70000004768,
+            108
+          ],
+          [
+            96966.60000002384,
+            108
+          ],
+          [
+            97075.10000002384,
+            107
+          ],
+          [
+            97182.90000003576,
+            108
+          ],
+          [
+            97291.30000001192,
+            107
+          ],
+          [
+            97399.10000002384,
+            286
+          ]
+        ],
+        "seen": {
+          "events": 1204,
+          "draws": 16470,
+          "uploads": 31258,
+          "appRAF": 666,
+          "pumpRAF": 665,
+          "sourceDabs": 0,
+          "longtasks": 547
+        },
+        "Root_before_queue": {
+          "applied_dabs": 0,
+          "coalesced_dabs": 0,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 0,
+          "pending_dabs": 0,
+          "processed_dabs": 0,
+          "released_strokes": 0
+        },
+        "Root_tail_first": {
+          "applied_dabs": 542,
+          "coalesced_dabs": 554,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 9,
+          "pending_dabs": 0,
+          "processed_dabs": 542,
+          "released_strokes": 1
+        },
+        "Root_tail_last": {
+          "applied_dabs": 542,
+          "coalesced_dabs": 554,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 9,
+          "pending_dabs": 0,
+          "processed_dabs": 542,
+          "released_strokes": 1
+        },
+        "last_candidate_upload_after_pointerup_ms": 399.80000001192093,
+        "scope": "DOM/CPU/RAF/upload submission only; upload last is all-buffer metadata, not actual last position edit or GPU completion"
+      },
+      "geometry": {
+        "changed_original_vertices": 40269,
+        "maximum_position_change": 0.20583534240722656,
+        "RMS_position_change": 0.012594605461306741,
+        "before_minimum_normalized_quality": 0.00011841791657651968,
+        "after_minimum_normalized_quality": 0.00011841791657651968,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.1425108324003275,
+        "minimum_face_normal_original_alignment": 0.5560222586103919,
+        "complete_adjacent_face_pairs": 2997000,
+        "before_maximum_adjacent_angle_degrees": 0.36085473777860616,
+        "after_maximum_adjacent_angle_degrees": 9.630387237523786,
+        "new_adjacent_pairs_over90degrees": 0,
+        "scope": "Whole original triangle/edge/closed-adjacency metrics; no global self-intersection, visual or retained-normal-field equivalence proof. Adjacent angles are descriptive supplemental metrics, not a retroactive new acceptance gate"
+      },
+      "first_tail_observation_after_pointerup_ms": 307.5,
+      "scope": "Oneactualoriginal60second/24000requested400Hz trace. Originalthresholds/caps/inputroster unchanged. No full12matrix/nativephysical/otherbrush/defaultStudio/reference-quality inference."
+    }
+  ],
+  "performance_images": {
+    "path": ".artifacts/sculptgl-prepared-dab-c58-stage/PERFORMANCE_IMAGE_REVIEW01.json",
+    "bytes": 1524,
+    "sha256": "bd40ccc5e0faf0de96f3eae77ad776936999f1caf34a40ca3af30d14216006b4"
+  },
+  "comparison": {
+    "C57_1M60_audit": {
+      "path": ".artifacts/sculptgl-large-sustained-c57-stage/ROOT_1M_60S_AUDIT01.json",
+      "bytes": 42954,
+      "sha256": "79f98a847f29a06e6eaccb9b47f36deaf6bcb200403e99f049b672329daf0ed9"
+    },
+    "C57_1M60_CPU95_ms": 124.09999996423721,
+    "C58_1M60_CPU95_ms": 114.19999998807907,
+    "C57_100K60_CPU95_ms": 14.899999976158142,
+    "C58_100K60_CPU95_ms": 13.699999988079071,
+    "scope": "Singleobservedtrials only, notstatistical/general speedup proof. Fouroriginal1Mperformance/release-observation gates remainFAILED; no waiver."
+  },
+  "retained_failures": [
+    {
+      "path": ".artifacts/sculptgl-prepared-dab-c58-stage/prepared-tests01.log",
+      "bytes": 647,
+      "sha256": "e21d634e9dd87a49b9ed0b3e6bfb03d6ec99efdbf93ae3065db33b668d559fd4"
+    },
+    {
+      "path": ".artifacts/sculptgl-prepared-dab-c58-stage/check01-02.log",
+      "bytes": 2016,
+      "sha256": "bc084be362326584d35cd8e7a7e8f1152537ceaadeeec86c7ae4fc58683c5e26"
+    },
+    {
+      "path": ".artifacts/sculptgl-prepared-dab-c58-stage/CLIPPY_REPAIR01.json",
+      "bytes": 505,
+      "sha256": "c5a2ac4f52605c7c62e1f697b818ca5725d39af0fef1e2eb8fe1640452f7ad22"
+    },
+    {
+      "path": ".artifacts/sculptgl-prepared-dab-c58-stage/NORMAL_CHANGED_IMAGE_REVIEW01.json",
+      "bytes": 2825,
+      "sha256": "c43fd7fbd5385d3417f9aa6449c1915bd008ac20e435f777f693bbea9868faba"
+    }
+  ],
+  "promotion": {
+    "path": ".artifacts/sculptgl-prepared-dab-c58-stage/PROMOTION.json",
+    "bytes": 3851,
+    "sha256": "dce6bff682324f5e66955756cbe8566ae80cc78f43b67e9fe5b2feb730d384c3"
+  },
+  "HTTP": {
+    "path": ".artifacts/sculptgl-prepared-dab-c58-stage/HTTP_BINDING.json",
+    "bytes": 3597,
+    "sha256": "8e3f2f8f46c19d3f2a5f12d5be8ec11da045755db628f6eccb5731e31a628bc8"
+  },
+  "native": "OfficialmacOSpackagebuildandad-hocsignatureverify pass; nativeGUIunopened/uninstalled.",
+  "remaining": [
+    "Full317stableIDs+5hostedcontrols andZBrushdesktop2026.2.1 remainactive; no featurefamilypromoted.",
+    "1M60 frameCPU95=114.2ms vs16.667target;RAF95=114.6ms/max418.1ms; firstemptyqueueobservation307.5msafterpointerupmisses100msgate. Allfourremainfailed despitegeometry/history/data passing.",
+    "Full12hostmatrix/repetitions/defaultStudio/otherbrush/arbitrarymesh/globalintersection/nativephysical/HiDPIquality/performance remainopen.",
+    "Fulltopology/dynamicdecimation/Reverse/multiresdetail/attributecontinuity/transforms/interchange/appearance/input/languages/themes andbroadreferenceworkflows remainopen."
+  ]
+}

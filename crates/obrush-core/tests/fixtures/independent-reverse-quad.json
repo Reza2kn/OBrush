@@ -1,0 +1,84 @@
+{
+  "origin": "independently authored explicit fine connectivity; no Rust subdivision output used",
+  "positions": [
+    [
+      1,
+      1,
+      0
+    ],
+    [
+      2,
+      2,
+      0
+    ],
+    [
+      1,
+      2,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      2,
+      1,
+      0
+    ],
+    [
+      2,
+      0,
+      0
+    ],
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      2,
+      0
+    ]
+  ],
+  "faces": [
+    [
+      0,
+      4,
+      1,
+      2
+    ],
+    [
+      3,
+      6,
+      0,
+      7
+    ],
+    [
+      7,
+      0,
+      2,
+      8
+    ],
+    [
+      6,
+      5,
+      4,
+      0
+    ]
+  ],
+  "expected_even_fine_ids": [
+    1,
+    3,
+    5,
+    8
+  ],
+  "expected_coarse_faces": 1,
+  "expected_coarse_quads": 1
+}

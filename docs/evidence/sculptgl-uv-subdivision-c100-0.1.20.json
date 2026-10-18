@@ -1,0 +1,254 @@
+{
+  "id": "SGL-UV-SUBDIVISION-C100",
+  "target": "SculptGL pinned upstream 8e45dafc0f7906e5238dfffc1a2df742bd25f29d; OBrush 0.1.20",
+  "scope": "One static smooth level; all-seamed tetra (four triangles), quad cube (six quads), and mixed pyramid (one quad, four triangles); identical OBJ bytes in both real browser UIs; native Rust core probe",
+  "reference": {
+    "bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "mirror_html_sha256": "a87cc1246a6bc39cebf81b78dcf6d6c5c6201ef72710dab7f177d1fe4acd11f0",
+    "result_path": ".artifacts/sculptgl-reference-runtime/uv-subdivision-c100-0fcc99ee-04ba-4439-8e77-a9891c24990e/result.json",
+    "result_sha256": "c9f17e844ba0176a052e22d30868b35afd7dfd3de8e75ef462f0ebe9288e8dfb",
+    "status": "completed reference-only UV subdivision comparison fixtures",
+    "browser": "Chrome/155.0.8059.80",
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "navigation_gates": [
+      {
+        "reference-uv-subdivision-independent-seamed-tetra": {
+          "coarse_exact": false,
+          "fine_return_exact": false
+        }
+      },
+      {
+        "reference-uv-subdivision-independent-seamed-quad-cube": {
+          "coarse_exact": false,
+          "fine_return_exact": false
+        }
+      },
+      {
+        "reference-uv-subdivision-independent-seamed-pyramid": {
+          "coarse_exact": false,
+          "fine_return_exact": false
+        }
+      }
+    ]
+  },
+  "obrush": {
+    "wasm_sha256": "a7a166a926d1484023b983f6af60558d0c1f589fea5ec5e06c35ceab132a9a84",
+    "browser_result_path": ".artifacts/sculptgl-paint-static-runtime/uv-subdivision-c100-fa31293c-167f-47aa-a962-e5aac12860a6/result.json",
+    "browser_result_sha256": "620b5c19b6c49e8a6dca79a1737e88454e118b1a87acd8dfddea8b181e4e3d23",
+    "status": "passed scoped local host gates; reference parity unverified",
+    "browser": "Chrome/155.0.8059.80",
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "downloads": 19,
+    "gpu_checks": 19
+  },
+  "comparison": {
+    "path": ".artifacts/sculptgl-reference-runtime/uv-subdivision-c100-0fcc99ee-04ba-4439-8e77-a9891c24990e/paired-comparison.json",
+    "sha256": "571c283803de99b0afcc37809044da9d18558e0757b66cf7c5d66ef8e39c7025",
+    "cases": [
+      {
+        "name": "paired-uv-independent-seamed-tetra",
+        "fixture_sha256": "f038d1990b21472c2f2970b59950c12801219716f298bb991a260bed1c87dcc2",
+        "input": {
+          "faces": 4,
+          "corners": 12,
+          "reference_uv_coordinates": 12,
+          "host_uv_coordinates": 12,
+          "max_position_component_error": 0.0,
+          "max_uv_component_error": 2.5272369419404583e-08
+        },
+        "child": {
+          "faces": 16,
+          "corners": 48,
+          "reference_uv_coordinates": 24,
+          "host_uv_coordinates": 24,
+          "max_position_component_error": 0.0,
+          "max_uv_component_error": 2.5272369419404583e-08
+        },
+        "reference_navigation": {
+          "lower_positions": {
+            "different_components": 12,
+            "max_component_error": 0.75
+          },
+          "return_positions": {
+            "different_components": 12,
+            "max_component_error": 1.4901161193847656e-08
+          },
+          "lower_uv_exact": true,
+          "return_uv_exact": true
+        },
+        "host_gates": {
+          "source_uv_count": true,
+          "child_uv_count": true,
+          "child_face_count": true,
+          "coarse_mesh_exact": true,
+          "fine_return_exact": true,
+          "whole_history_exact": true,
+          "visible_gpu_save_exact": true
+        },
+        "native_probe_sha256": "16efc567e2eb42ca81e9081c19022f5085c23e46b8c994750eb55c8cbc0a8bfa",
+        "native_browser": {
+          "parent": {
+            "positions_f32_words_exact": true,
+            "uvs_f32_words_exact": true,
+            "faces_indices_exact": true,
+            "face_uvs_indices_exact": true
+          },
+          "child": {
+            "positions_f32_words_exact": true,
+            "uvs_f32_words_exact": true,
+            "faces_indices_exact": true,
+            "face_uvs_indices_exact": true
+          }
+        }
+      },
+      {
+        "name": "paired-uv-independent-seamed-quad-cube",
+        "fixture_sha256": "8b76a6ee950a7cf29701aa01c267772c023f668d67c66514885092bab0fdc4c0",
+        "input": {
+          "faces": 6,
+          "corners": 24,
+          "reference_uv_coordinates": 24,
+          "host_uv_coordinates": 24,
+          "max_position_component_error": 0.0,
+          "max_uv_component_error": 0.0
+        },
+        "child": {
+          "faces": 24,
+          "corners": 96,
+          "reference_uv_coordinates": 54,
+          "host_uv_coordinates": 54,
+          "max_position_component_error": 1.7953491249222964e-08,
+          "max_uv_component_error": 0.0
+        },
+        "reference_navigation": {
+          "lower_positions": {
+            "different_components": 24,
+            "max_component_error": 0.4444444179534912
+          },
+          "return_positions": {
+            "different_components": 6,
+            "max_component_error": 2.997601623857441e-17
+          },
+          "lower_uv_exact": true,
+          "return_uv_exact": true
+        },
+        "host_gates": {
+          "source_uv_count": true,
+          "child_uv_count": true,
+          "child_face_count": true,
+          "coarse_mesh_exact": true,
+          "fine_return_exact": true,
+          "whole_history_exact": true,
+          "visible_gpu_save_exact": true
+        },
+        "native_probe_sha256": "a677f5dabea61e842cdd426a82f4856878c9bda53760ebac6279dc7601ad621d",
+        "native_browser": {
+          "parent": {
+            "positions_f32_words_exact": true,
+            "uvs_f32_words_exact": true,
+            "faces_indices_exact": true,
+            "face_uvs_indices_exact": true
+          },
+          "child": {
+            "positions_f32_words_exact": true,
+            "uvs_f32_words_exact": true,
+            "faces_indices_exact": true,
+            "face_uvs_indices_exact": true
+          }
+        }
+      },
+      {
+        "name": "paired-uv-independent-seamed-pyramid",
+        "fixture_sha256": "8a4bb88bf941a1f88e882c0b769da1369549e5ef6c96dc1c928b7987d5c78081",
+        "input": {
+          "faces": 5,
+          "corners": 16,
+          "reference_uv_coordinates": 16,
+          "host_uv_coordinates": 16,
+          "max_position_component_error": 0.0,
+          "max_uv_component_error": 2.6702880906448456e-08
+        },
+        "child": {
+          "faces": 20,
+          "corners": 64,
+          "reference_uv_coordinates": 33,
+          "host_uv_coordinates": 33,
+          "max_position_component_error": 2.763214101975109e-09,
+          "max_uv_component_error": 2.6702880906448456e-08
+        },
+        "reference_navigation": {
+          "lower_positions": {
+            "different_components": 13,
+            "max_component_error": 0.7272727191448212
+          },
+          "return_positions": {
+            "different_components": 8,
+            "max_component_error": 8.578715515739077e-09
+          },
+          "lower_uv_exact": true,
+          "return_uv_exact": true
+        },
+        "host_gates": {
+          "source_uv_count": true,
+          "child_uv_count": true,
+          "child_face_count": true,
+          "coarse_mesh_exact": true,
+          "fine_return_exact": true,
+          "whole_history_exact": true,
+          "visible_gpu_save_exact": true
+        },
+        "native_probe_sha256": "15c936aa5ace880809fec197480810684306599b96096157106b5369fcc11d28",
+        "native_browser": {
+          "parent": {
+            "positions_f32_words_exact": true,
+            "uvs_f32_words_exact": true,
+            "faces_indices_exact": true,
+            "face_uvs_indices_exact": true
+          },
+          "child": {
+            "positions_f32_words_exact": true,
+            "uvs_f32_words_exact": true,
+            "faces_indices_exact": true,
+            "face_uvs_indices_exact": true
+          }
+        }
+      }
+    ]
+  },
+  "source_hashes": {
+    "scripts/check-sculptgl-reference.mjs": "380fb07a9ef54d110630464f8ff3462c86d3e3ed8099249f1434a2e6db20dac9",
+    "scripts/check-sculptgl-paint-static.mjs": "4366461d5307cf8e8b00ee517834ddec3d8ad33ab44b75a0d8aaaf4832fa8d17",
+    "scripts/compare-uv-subdivision.py": "b3e6c553aef464613a09af57f4cfbc4b311e2281f638c4423eb831864ea5a99b",
+    "crates/obrush-core/examples/uv_subdivision_probe.rs": "9e185797a77842e2504b025f3a20694f430c562a69530959ca9d75264fd84d8e",
+    "crates/obrush-core/src/static_subdivision.rs": "74f112da9ddce9e19ff65f797aa3f2fcf70510027e27a83d9b9002a3f68e78c8",
+    "crates/obrush-core/src/multires.rs": "6244c5f9c5dfb7380354c96c00af06a7f230f9f5a72ac45a53e8d0da6bc73fcf",
+    "Cargo.lock": "42b7e17d68fa40ac3cdf147581afaaa571cb6c6436b9b62486d30fd0a728db3d"
+  },
+  "limits": [
+    "No preregistered numerical acceptance tolerance; numbers are observations",
+    "Source and OBrush UV coordinate/index arrays have different order; physical-corner mapping used",
+    "SculptGL lowering rewrites coarse positions; OBrush coarse remains exact; full navigation parity open",
+    "No actual checker-texture pixel comparison, multiple subdivision levels, arbitrary UV charts, native GUI, physical pen, or sustained performance"
+  ],
+  "checks": {
+    "node_syntax": "passed both harnesses",
+    "web_build": "passed official bash scripts/build-web.sh",
+    "browser_reference": "completed with preserved false exact-navigation gates",
+    "browser_obrush": "passed four cases, 19 downloads and 19 GPU/save checks",
+    "native_core_probe": "parent and child f32/index words exact versus browser on three fixtures",
+    "workspace_tests": "passed (cargo test --workspace; two compile-fail doctests)",
+    "strict_native_clippy": "passed (all targets, -D warnings)",
+    "strict_wasm_clippy": "passed (all targets, -D warnings)",
+    "wasm_check": "passed",
+    "cargo_fmt_all_check": "passed",
+    "macos_package": "passed official bash scripts/package-macos.sh; ad-hoc signature valid"
+  }
+}

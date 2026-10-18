@@ -1,0 +1,73 @@
+{
+  "feature_id": "SGL-TOPO-REVERSE",
+  "scope": "two repeated Reverse commands on one independently authored 5x5 nonplanar quad grid, no UV",
+  "fixture_sha256": "5dd968cb2ac58f5e04802e3360e0226962085752a6c57b2805f25272965607e5",
+  "fixture_reference_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-reference-runtime/reverse-c109-grid-2d74c7c6-ec42-47d4-8800-8b89cbba472f/independent-reverse-two-step-grid.obj",
+  "fixture_obrush_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-paint-static-runtime/reverse-c109-441bd0e9-842a-407d-9da7-2465ee4466e6/independent-reverse-two-step-grid.obj",
+  "reference_kernel_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+  "reference_result_path": ".artifacts/sculptgl-reference-runtime/reverse-c109-grid-2d74c7c6-ec42-47d4-8800-8b89cbba472f/result.json",
+  "reference_result_sha256": "ee14a53e9a2d994b742f1b40eb794f537d64bf2b87674b35d7eae31f254843d6",
+  "obrush_result_path": ".artifacts/sculptgl-paint-static-runtime/reverse-c109-441bd0e9-842a-407d-9da7-2465ee4466e6/result.json",
+  "obrush_result_sha256": "28b106665c663b6d0057264e39ff6509f48bc26c60208364c5741343de9b7ac9",
+  "obrush_wasm_sha256": "736f4619c5b45335b62a20700260171313012ae0d310d80c98ff2202a2df7901",
+  "comparison_method": "Map unique vertices by nearest original integer x/y grid coordinate, rejecting x/y drift above 0.001; compare full 3D Euclidean distances and cyclically normalized oriented face coordinate-key multisets, preserving winding",
+  "comparison": {
+    "before": {
+      "reference_snapshot_sha256": "04024f18359c4f90b6f7f2f2e71ed33f367e31b5fbf70e3087be3df0e9028ff3",
+      "obrush_project_sha256": "b61484065fa71e06137442578f8602f40348b023c1723eff9f77601c0b06763a",
+      "vertices": 25,
+      "oriented_faces": 16,
+      "oriented_face_multiset_exact": true,
+      "max_mapped_world_distance": 0.0,
+      "vertices_with_different_coordinates": 0
+    },
+    "first": {
+      "reference_snapshot_sha256": "5739356a75918ac92c4910932962526488e5543553feb2347dbd098a08b4d896",
+      "obrush_project_sha256": "84a074151b6c7cbc13262cb2f4f45d7d33f0bef26c46f3dd1a665c71c5654926",
+      "vertices": 9,
+      "oriented_faces": 4,
+      "oriented_face_multiset_exact": true,
+      "max_mapped_world_distance": 0.0,
+      "vertices_with_different_coordinates": 0
+    },
+    "second": {
+      "reference_snapshot_sha256": "4c1adf568adebd5f9227d6e2500231ce5061134896c98c03d915904450c7f3e2",
+      "obrush_project_sha256": "697082f0804bc23ae4aafe03d13c3c059b75781b22b381c9b8af632513061ec6",
+      "vertices": 4,
+      "oriented_faces": 1,
+      "oriented_face_multiset_exact": true,
+      "max_mapped_world_distance": 0.0,
+      "vertices_with_different_coordinates": 0
+    },
+    "returned": {
+      "reference_snapshot_sha256": "09b48cc6b15af5169e1e9ba6a3af1069b4d988d89f4861fef99c6ec8f044011d",
+      "obrush_project_sha256": "62bcda96f65513cc9b2629b71d76e52b5e551ca8a1da505fdfd75e76e95aed98",
+      "vertices": 25,
+      "oriented_faces": 16,
+      "oriented_face_multiset_exact": true,
+      "max_mapped_world_distance": 7.450580596923828e-09,
+      "vertices_with_different_coordinates": 8
+    }
+  },
+  "reference_gates": {
+    "first_level_added": true,
+    "second_level_added": true,
+    "coarse_face_recovered": true,
+    "fine_returned": true
+  },
+  "obrush_browser_gates": {
+    "two_new_lower_levels": true,
+    "coarse_one_face": true,
+    "fine_physical_positions_exact": true,
+    "levels_middle_and_fine": true,
+    "lower_exact": true,
+    "second_reverse_history_exact": true,
+    "project_reload_exact": true,
+    "visible_gpu_save_exact": true
+  },
+  "core_test": "independent_two_step_grid_has_two_recoverable_structural_levels: first and second structural solve, nonidentity root mapping, edited upper positions/color/mask/material, exact physical retention, serialization, lower/higher and second-step undo/redo; later coarse position edit propagates through both recovered levels",
+  "limits": [
+    "One nonplanar quad grid; triangle/mixed repeated Reverse, UV aliases, larger scenes, pressure, performance, and native GUI are unverified.",
+    "Reference and OBrush were separate isolated browser runs; maximum returned fine position difference is observed and not a general numerical tolerance."
+  ]
+}

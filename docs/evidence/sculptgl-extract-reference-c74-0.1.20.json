@@ -1,0 +1,73 @@
+{
+  "candidate": "C74 paired SculptGL mask extraction and opt-in surface offset",
+  "date": "2026-10-17",
+  "reference": {
+    "source_commit": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "source_file": ".tools/sculptgl-reference/upstream/src/editing/tools/Masking.js",
+    "bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "mirror_manifest_sha256": "7fa92424973f8450963821c2fc8680381fac23196e66865f273294deb50c4697",
+    "runtime_result": ".artifacts/sculptgl-reference-runtime/extract-c74-paired-52a94733-2e98-4317-b919-47c1da3075f3/result.json",
+    "runtime_result_sha256": "a5eb6e5f565305d3959999432231b938fbe3a9caba0cf00362b3f0694bb0e85c",
+    "geometry_audit": ".artifacts/sculptgl-reference-runtime/extract-c74-paired-52a94733-2e98-4317-b919-47c1da3075f3/geometry-audit.json",
+    "geometry_audit_sha256": "19b1033677218b7a0fe5cf720b3a7ac9831fae72a0d5b6a7b552fcdcd292c9c5",
+    "cases": 6,
+    "normal_ui_route": "Actual OBJ input, Masking selector, Thickness field, Extract button",
+    "original_source_active_and_exact": true,
+    "fresh_white_and_default_materials": true,
+    "owned_chrome_exit_code": 0,
+    "owned_server_closed": true,
+    "browser_exceptions": 0,
+    "hosted_bundle_equivalence_to_pinned_source": "unestablished"
+  },
+  "fixtures": {
+    "independent_open_sheet_obj_sha256": "b006c1ff87af60f78dd9979281d3df363afa1cb880167c6f36a50dc7c810907e",
+    "independent_closed_cube_obj_sha256": "e00073b9c82dd16d1281999ce9e2926ddb450971cef487042e43e10e328f05c5",
+    "threshold": 0.5,
+    "thickness_values": [0, -0.125, 0.125]
+  },
+  "paired_comparison": {
+    "file": ".artifacts/sculptgl-reference-runtime/extract-c74-paired-52a94733-2e98-4317-b919-47c1da3075f3/paired-comparison.json",
+    "sha256": "7095ed1a002217a7ff72fe346601f5da8435d486cff93668d7eb4a2f43fc6a68",
+    "zero_open_sheet_unordered_point_max_error": 0,
+    "zero_closed_cube_reference_to_obrush_nearest_max_error": 0.0033821188386436796,
+    "reference_open_sheet_nonzero_boundary_edges": 6,
+    "reference_open_sheet_nonzero_collapsed_triangles": 4,
+    "obrush_open_sheet_nonzero_boundary_edges": 0,
+    "obrush_open_sheet_nonzero_collapsed_triangles": 0,
+    "nearest_point_limitation": "Ignores face correspondence and cannot establish shape parity"
+  },
+  "checks": {
+    "cargo_fmt": "passed",
+    "workspace_tests": {"passed": 2356, "failed": 0, "ignored": 1, "log_sha256": "bc52bfc8b6a8fdac1ea8821a74d937e9d9e851e4c5d47a9bfb76832cc1c4d600"},
+    "native_workspace_strict_clippy": "passed",
+    "wasm_core_strict_clippy": "passed",
+    "official_web_build": "passed",
+    "official_macos_package_and_signature": "passed",
+    "browser_status": "passed mask filter browser workflows",
+    "browser_cases": 12,
+    "browser_saved_snapshots": 123,
+    "browser_actual_4x_msaa": true,
+    "browser_visible_control_checks": 9640,
+    "browser_visible_control_failures": 0,
+    "browser_gl_errors": 0,
+    "browser_js_errors": 0,
+    "browser_result": ".artifacts/mask-filter-browser/surface-offset-c74-final-a4cc265e-68cc-4d50-99f8-f1f427f15d0b/result.json",
+    "browser_result_sha256": "0975c0c03e5a0abb5cf2a5d1466638a2c14a319649417856401fd796ae1c83f2"
+  },
+  "retained_failed_checks": [
+    {"path": ".artifacts/sculptgl-reference-runtime/extract-c74-203df1d1-0c6e-4c77-a207-e37bca0bf6fc/result.json", "cause": "Harness compared stored f32 default materials to unrounded JavaScript literals; source run itself completed"},
+    {"path": ".artifacts/mask-filter-browser/surface-offset-c74-f0df2431-e9b7-49e8-b78d-c6c7cc592655/result.json", "cause": "Browser harness expected scene project version 5; the new material channel correctly saved as version 6"}
+  ],
+  "sha256": {
+    "extract_rs": "039c4ac19150685a730d9064ca9b8a54ffa4d9f0543439bf3909d7ec249314cc",
+    "document_rs": "fac5d1679b2014168ace292d8e6e4a8f0ea7c287e0d8ff7df05cd4ba26a572b1",
+    "app_rs": "1fb2c6d3804a8218c4fc559f287239c0772636693f05d409d8505a7d6bdd57eb",
+    "core_fixture": "66242e48fec145b5ba07aecb50280ccf17ff4bfee0fedb51e38e8e0b24d69cc8",
+    "reference_harness": "01a2500b300b5058e0dbfde36a240bf520e1a0a2be7e700e2449a55d5cf3c7ba",
+    "browser_harness": "fc9d6be2c56e5d11b34baa2104b4cb939415df71e6479922e3b49df736a0a33b",
+    "paired_comparison_tool": "f05a5b0390034b62934bb123405f211ccaec4a85421de7122431cb68d39f8bf8",
+    "built_and_served_wasm": "5a3127c85f9912a76e13b647786eda2f7db81ba35371eda1d1ff81345b9175ad",
+    "signed_macos_executable": "cd7c6be50faf4b20241a104fa0c9e1d710f62564bbbe745e2221797a33054fe4"
+  },
+  "limitations": ["Full nonzero extraction geometry and SculptGL brush/workflow parity remain open", "OBRush retains checked manifold policy where the reference open sheet collapses", "Native GUI and physical input unverified", "No million-vertex responsiveness improvement", "No ZBrush extraction comparison"]
+}

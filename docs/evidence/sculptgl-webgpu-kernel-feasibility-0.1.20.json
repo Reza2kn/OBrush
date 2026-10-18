@@ -1,0 +1,284 @@
+{
+  "schema_version": 1,
+  "status": "Completed real default-hardware WebGPU kernel feasibility experiment; C58 delivery unchanged; full parity active/unachieved",
+  "utc": "2026-10-16T21:02:58.078868+00:00",
+  "delivered_baseline": {
+    "candidate": "C58",
+    "source_manifest_sha256": "97d91a99bd9a5e68fda6ef95a7ce1ff311fb414ab0a76936f56e256b168298d2",
+    "preview": "http://127.0.0.1:8819/"
+  },
+  "fixture": {
+    "vertices": 999002,
+    "triangles": 1998000,
+    "bytes": 67932232,
+    "sha256": "dfb5316f62e392e633f03cb662dcb12215ed165a71a9ae72a3fd639528731afe"
+  },
+  "parameters": {
+    "passes": 32,
+    "paired_trials": 8,
+    "center": [
+      0,
+      0,
+      1
+    ],
+    "radius": 0.5,
+    "intensity": 0.25,
+    "raw_U": 1,
+    "normal_policy": "Fresh Source raw field captured once and held fixed, no refresh"
+  },
+  "adapter": {
+    "vendor": "apple",
+    "architecture": "metal-3",
+    "isFallbackAdapter": false
+  },
+  "timings": {
+    "0": {
+      "route": "Rust/WASM f64",
+      "n": 8,
+      "median_32pass_ms": 84.64999997615814,
+      "min_32pass_ms": 84.10000002384186,
+      "max_32pass_ms": 95.5
+    },
+    "1": {
+      "route": "WebGPU f32 queue completion",
+      "n": 8,
+      "median_32pass_ms": 9.0,
+      "min_32pass_ms": 6.399999976158142,
+      "max_32pass_ms": 12.300000011920929
+    }
+  },
+  "point_kernel_ratio_only": 9.40555555290646,
+  "initial_upload": {
+    "bytes": 27972056,
+    "queue_completion_ms": 21.5
+  },
+  "final_readback": {
+    "bytes": 11988024,
+    "milliseconds": 7.5
+  },
+  "setup_compile_ms": 191.10000002384186,
+  "numerical_comparisons": {
+    "independent_f64_vs_wasm": {
+      "different_f32_words": 0,
+      "different_vertices": 0,
+      "maximum_absolute_coordinate_error": 0.0,
+      "RMS_coordinate_error": 0.0,
+      "maximum_point_distance": 0.0,
+      "maximum_error_vertex": 0,
+      "maximum_error_axis": 0
+    },
+    "native_f64_vs_wasm": {
+      "different_f32_words": 0,
+      "different_vertices": 0,
+      "maximum_absolute_coordinate_error": 0.0,
+      "RMS_coordinate_error": 0.0,
+      "maximum_point_distance": 0.0,
+      "maximum_error_vertex": 0,
+      "maximum_error_axis": 0
+    },
+    "webgpu_f32_vs_wasm_f64": {
+      "different_f32_words": 21419,
+      "different_vertices": 17044,
+      "maximum_absolute_coordinate_error": 2.384185791015625e-07,
+      "RMS_coordinate_error": 4.763311596862317e-09,
+      "maximum_point_distance": 2.457562461863554e-07,
+      "maximum_error_vertex": 383281,
+      "maximum_error_axis": 2
+    }
+  },
+  "all_input_positions_U_and_static_normals_independently_bit_verified": true,
+  "outside_footprint": {
+    "count": 957897,
+    "cpu_unchanged_words": true,
+    "gpu_unchanged_words": true
+  },
+  "useful_changed_vertices_each": 41065,
+  "native_reference_timing_scope": "Initialization overlaps browser initialization; native elapsed is not compared as a benchmark. Native output file written before all browser paired timed samples.",
+  "native_output_completed_before_first_browser_timed_pair_seconds": 4.934724569320679,
+  "outputs": [
+    {
+      "name": "initial-positions.bin",
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-webgpu-kernel-feasibility-stage/point-kernel01/initial-positions.bin",
+      "bytes": 11988024,
+      "sha256": "81d94308aa132f297267b51a26c6fdfdeb92eca754738203b561aa90d96fa66e",
+      "event": {
+        "frameId": "8BD9E8FDD6B5B3A2F424F9C6B0A96FEC",
+        "guid": "2246a6c1-dc04-4200-b95d-dc3d6ecfa932",
+        "url": "blob:http://127.0.0.1:62839/f62acc8c-27b1-4361-a46f-4a45ee1ed550",
+        "suggestedFilename": "initial-positions.bin",
+        "state": "completed",
+        "totalBytes": 11988024,
+        "receivedBytes": 11988024,
+        "filePath": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-webgpu-kernel-feasibility-stage/point-kernel01/downloads/2246a6c1-dc04-4200-b95d-dc3d6ecfa932"
+      }
+    },
+    {
+      "name": "captured-source-normals.bin",
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-webgpu-kernel-feasibility-stage/point-kernel01/captured-source-normals.bin",
+      "bytes": 11988024,
+      "sha256": "3794d33a7d446d7b81815d9d9ce179f5ee134008ef9712844709e189d91e3cb8",
+      "event": {
+        "frameId": "8BD9E8FDD6B5B3A2F424F9C6B0A96FEC",
+        "guid": "8ac421ac-a98e-4853-b8f8-045cd5feae98",
+        "url": "blob:http://127.0.0.1:62839/2b95b27e-38db-4d1b-92df-41c58ad97bb1",
+        "suggestedFilename": "captured-source-normals.bin",
+        "state": "completed",
+        "totalBytes": 11988024,
+        "receivedBytes": 11988024,
+        "filePath": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-webgpu-kernel-feasibility-stage/point-kernel01/downloads/8ac421ac-a98e-4853-b8f8-045cd5feae98"
+      }
+    },
+    {
+      "name": "diagnostic-U1.bin",
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-webgpu-kernel-feasibility-stage/point-kernel01/diagnostic-U1.bin",
+      "bytes": 3996008,
+      "sha256": "a76b6659a61be6eb8c26929cd424bd5198c4fcc6c850308e0bf7d46911a57b3b",
+      "event": {
+        "frameId": "8BD9E8FDD6B5B3A2F424F9C6B0A96FEC",
+        "guid": "efc91b2c-fea9-4339-a3cd-f52816f2254e",
+        "url": "blob:http://127.0.0.1:62839/77e0b216-0512-44b2-9f94-c2205c488941",
+        "suggestedFilename": "diagnostic-U1.bin",
+        "state": "completed",
+        "totalBytes": 3996008,
+        "receivedBytes": 3996008,
+        "filePath": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-webgpu-kernel-feasibility-stage/point-kernel01/downloads/efc91b2c-fea9-4339-a3cd-f52816f2254e"
+      }
+    },
+    {
+      "name": "wasm-f64-output.bin",
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-webgpu-kernel-feasibility-stage/point-kernel01/wasm-f64-output.bin",
+      "bytes": 11988024,
+      "sha256": "1bcbda9dc88abb71a4b9a2a20c20aa312dee207f4476f586ba507b9c7d3a2b21",
+      "event": {
+        "frameId": "8BD9E8FDD6B5B3A2F424F9C6B0A96FEC",
+        "guid": "f82c58b8-1151-46f6-a0a7-e7912951a0cc",
+        "url": "blob:http://127.0.0.1:62839/c6a7d741-346a-4cad-8dc0-b63c45cbda1c",
+        "suggestedFilename": "wasm-f64-output.bin",
+        "state": "completed",
+        "totalBytes": 11988024,
+        "receivedBytes": 11988024,
+        "filePath": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-webgpu-kernel-feasibility-stage/point-kernel01/downloads/f82c58b8-1151-46f6-a0a7-e7912951a0cc"
+      }
+    },
+    {
+      "name": "webgpu-f32-output.bin",
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-webgpu-kernel-feasibility-stage/point-kernel01/webgpu-f32-output.bin",
+      "bytes": 11988024,
+      "sha256": "7d3faeccf933e7829f5adf45d227db74d78e99fb1536822059b996d738af4ab8",
+      "event": {
+        "frameId": "8BD9E8FDD6B5B3A2F424F9C6B0A96FEC",
+        "guid": "cfdafd48-dd23-4b0f-b2a0-b7bebe7cb52f",
+        "url": "blob:http://127.0.0.1:62839/5d83ff89-c072-493d-a91b-0b02c70c4ed2",
+        "suggestedFilename": "webgpu-f32-output.bin",
+        "state": "completed",
+        "totalBytes": 11988024,
+        "receivedBytes": 11988024,
+        "filePath": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-webgpu-kernel-feasibility-stage/point-kernel01/downloads/cfdafd48-dd23-4b0f-b2a0-b7bebe7cb52f"
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "path": ".artifacts/sculptgl-webgpu-kernel-feasibility-stage/PREREGISTRATION.json",
+      "bytes": 1237,
+      "sha256": "e2a80a6680ea9de5d3d24d3264244879739f4b95fefe2a8dec2973abc68b7c41"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-kernel-feasibility-stage/EXPERIMENT_MANIFEST02.json",
+      "bytes": 1553,
+      "sha256": "776aa91eae93d30a7aa8f62155aa647904d592b041a94a54847246d78788cc6f"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-kernel-feasibility-stage/adapter-probe01/result.json",
+      "bytes": 6306,
+      "sha256": "032b0bd314a17911d2a031434facd1794a42872dfd63c12e2f1adccb537da2cc"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-kernel-feasibility-stage/point-kernel01/result.json",
+      "bytes": 28741,
+      "sha256": "492d28c1a6a67851877a652196d80533052512b56312aae393ffb05a290557c3"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-kernel-feasibility-stage/NUMERICAL_AUDIT01.json",
+      "bytes": 3126,
+      "sha256": "92f910d8910646726faa87b93e1f5017b41deb89db3dfdb81e30bbe3dae0089b"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-kernel-feasibility-stage/INPUT_NORMALS_AUDIT01.json",
+      "bytes": 1488,
+      "sha256": "f34193f5d0c8b26474a229edf2e08b14026dc355ea2289aad04d27b4573369c2"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-kernel-feasibility-stage/AUDIT_POINT_KERNEL.py",
+      "bytes": 5201,
+      "sha256": "0f6c959d855f65733c4793af3c543bcd8ddb86a8d0cead446d419d9dc8115754"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-kernel-feasibility-stage/AUDIT_INPUT_AND_NORMALS.py",
+      "bytes": 3544,
+      "sha256": "c516ea2f15676e99bc383b6259f2532eb1abea86d8ae6508db8c23e4ed4361ea"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-kernel-feasibility-stage/NATIVE_KERNEL01.json",
+      "bytes": 176,
+      "sha256": "8ce3bf22b4505d9e16779a7de6200cf6d3242d8e3528dd03e0c6e191b0584f2d"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-kernel-feasibility-stage/native-kernel-diagnostic",
+      "bytes": 995152,
+      "sha256": "af21b9c0eb04079da3f8834497db2e7329855d79d88c5dbf4e44cab5829df810"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-kernel-feasibility-stage/native-f64-output.bin",
+      "bytes": 11988024,
+      "sha256": "1bcbda9dc88abb71a4b9a2a20c20aa312dee207f4476f586ba507b9c7d3a2b21"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-kernel-feasibility-stage/native-build01.log",
+      "bytes": 1805,
+      "sha256": "6473f6615c8067511d7d9696787d543cca58ea5719ff4082e9756186815beebc"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-kernel-feasibility-stage/failed-build01/lib.rs",
+      "bytes": 2824,
+      "sha256": "725cf743435a7ad7ffb2976074a440185541eb1bdcf95b245fd9ead7a95f1add"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-kernel-feasibility-stage/native-build02.log",
+      "bytes": 203,
+      "sha256": "fd918e137a83570c885edc8469b8d0bb0c8d5efd5a4399619a4110eb4148cffa"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-kernel-feasibility-stage/wasm-build02.log",
+      "bytes": 334,
+      "sha256": "8f22cb8e411f10c971f42475e5c4fbe7300d57735ad671a34c48796eae1395b7"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-kernel-feasibility-stage/point-kernel01/public/kernel.wasm",
+      "bytes": 509322,
+      "sha256": "ea165a2f24b0f6af5b2add9ec23aa9d0e4268d2a32e3e8aecc0be0735047ecba"
+    }
+  ],
+  "owned_closure": {
+    "observed_owned_process_absent": true,
+    "owned_pid": 44709,
+    "actual_exit_code": 0,
+    "actual_signal": null,
+    "actual_servers_closed": 1,
+    "exit_status": "Actual exit0 recorded",
+    "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+  },
+  "limits": [
+    "Fixed captured Source raw normals only; no normal refresh between passes",
+    "Full-array pointwise loop, whereas production CPU gathers a local selected patch; ratio is not a production brush speedup",
+    "No picking/front/order/normal update/topology/alpha/mirror/fold guard/history/rendering/physical pen comparison",
+    "No original60/120s gate closure or full317+5/SculptGL/ZBrush parity inference",
+    "GPU f32 arithmetic is not assumed bit-equivalent to Rust f64; every final coordinate compared",
+    "Default Chrome/Mac Metal adapter only, not all devices/browsers",
+    "No GPU renderer or sculpting backend delivered; current WebGL2/CPU path remains",
+    "No claimed visual quality, refreshed-normal equality, device loss or native GPU execution",
+    "This diagnostic has a copied standalone arithmetic loop; it does not exercise complete production Source brush mutation",
+    "Required workspace checks/official builds not repeated for a product release: no shipped product source changed"
+  ],
+  "next": "Implement and validate GPU residency/rendering/operation ownership before claiming any application speedup; preserve original exact picking/history/field/cap contracts or document and compare any new numerical policy."
+}

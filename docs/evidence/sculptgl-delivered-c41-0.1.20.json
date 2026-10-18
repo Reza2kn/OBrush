@@ -1,0 +1,337 @@
+{
+  "status": "Scoped delivered C41 shared static Crease response and actual paired CR00 comparison; full SculptGL/ZBrush parity remains open",
+  "date_utc": "2026-10-15T19:48:04.593997+00:00",
+  "version": "0.1.20",
+  "candidate": "C41",
+  "parent": {
+    "candidate": "C40",
+    "delivery_evidence": "sculptgl-delivered-c40-0.1.20.json",
+    "build_sha256": "6791d5c64083b8a12d6078e81511b63b1f49d2f4e9b81b83a96d15e25508af9b"
+  },
+  "candidate_source_manifest_sha256": "e98448957fd4fc4e79a17922f21ef3d210feb7cf8e22a77b2dff8549647c232f",
+  "release_source_manifest_sha256": "24dd4d8a06c204a68cb68f7520b1d411e40d8b3a9e90f5a4386591751d2dc7fa",
+  "source_files": 507,
+  "product_files": 380,
+  "build_sha256": "d49bbb5437a757f025c23e1683aae44601d2aa1a20718756a88cbaca09bd18c8",
+  "checked_receipt_sha256": "1cb9cc5b6c3d9258be1f1df2755efe2dada941ae6d774cdc77610ecc9f960679",
+  "wasm": {
+    "path": "pkg/obrush_app_bg.wasm",
+    "bytes": 23237373,
+    "sha256": "94cd82596e5fc4d132ab05e4694343de1b7f586511da4a34051cba1808b61dde"
+  },
+  "required_checks": {
+    "sha256": "e3426a80e881217f439a80fd5bbd75580b687e67900431497f925d764cbed416",
+    "names": [
+      "fmt",
+      "native_strict",
+      "workspace",
+      "wasm_alltargets",
+      "wasm_strict"
+    ],
+    "workspace_tests": 2271,
+    "core_tests": 1568,
+    "app_tests": 703,
+    "ignored": 1
+  },
+  "official_builds": [
+    {
+      "key": "web",
+      "argv": [
+        "bash",
+        "scripts/build-web.sh"
+      ],
+      "exit_code": 0,
+      "seconds": 31.536631291004596,
+      "log": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.20-candidate41/web.log",
+      "log_sha256": "1c6275805a1b00339d62ad36283f216f7e26b7eefcd354792a6d630cbdb07903",
+      "owned_process_closed": true
+    },
+    {
+      "key": "macos",
+      "argv": [
+        "bash",
+        "scripts/package-macos.sh"
+      ],
+      "exit_code": 0,
+      "seconds": 32.58817133298726,
+      "log": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.20-candidate41/macos.log",
+      "log_sha256": "d942ee5e57340ec9b15e64becf9df1464f7b1ed92fb70aa2e2b9509d55cf39cc",
+      "owned_process_closed": true
+    }
+  ],
+  "implementation": [
+    "Display/GPU-free shared Rust static Crease: first-touch proxy pinch plus picked-normal displacement, radius-scaled .07 intensity and fifth-power depth falloff after raw U/alpha",
+    "Static primary/mirror contacts, selections and picked directions prepared before either pass; live positions and retained normals updated sequentially",
+    "Seventh genuine per-tool preference/editor row, radius25/intensity.75/negative true/culling false; Legacy remains initial choice and Prevent folds remains enabled by default",
+    "Captured ordinary alpha/mirror/pressure controls reuse existing exclusive session/queue/document transaction and full rollback/history behavior; unsupported dynamic/Lock/manual rotation/hierarchy domains remain explicit"
+  ],
+  "new_tests": {
+    "core": 11,
+    "host": 6,
+    "coverage": [
+      "Literal signed quarter-radius coordinates",
+      "Fifth-power soft-mask/gray-alpha policy",
+      "First-touch proxy reuse and new-stroke recapture",
+      "Independent mirror pre/post direction discriminator",
+      "Optional backface culling and zero-direction pinch",
+      "Explicit fold guard/full-response distinction",
+      "Atomic invalid mirror rollback and whole useful/no-op prior-redo history",
+      "Actual per-tool defaults/widgets/captured queue/failed-input cancellation/alpha-mirror host integration"
+    ],
+    "existing_test_changes": "Two obsolete Crease-is-absent assertions now use unsupported Twist; complete old six-row defaults and histories remain tested. Original C40 test bodies remain preserved in parent immutable source."
+  },
+  "paired_CR00": {
+    "reference_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "reference_revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "source_deployment_equivalence": "not established; actual original hosted callback measured separately",
+    "helper_manifest_sha256": "d1ae74782aff0b5b0fa53d184e7313546fd0c3ce2b3788eb05b896674520bc74",
+    "recipe_sha256": "81b671a7d862bd24353b4d9051a3f3993c52b8458a05fec19f9d43760876086b",
+    "protocol_manifest_sha256": "11bc263ce9639bf4c31f3690beac2b6f00b5c3f382efd885443fdce3c04401cc",
+    "result_sha256": "4a93e2602bd8a27e92ab4237430302e539805879c25d3538f6216099b97ee0b2",
+    "artifact_audit_sha256": "1b77aea23f0abec6d2e5f241bb543e0b5372fcaa8059714fbda3598907f0e1e1",
+    "independent_python_math_sha256": "23b4354ddcdc0f87157301f324ea7ca4acda2f227ab9d51e916248ae5d69ebe2",
+    "whole_image_review_sha256": "b66ef8a40c2ddf13a0cb5c1362b5c513251d748af52341408723ad022d2fc95f",
+    "independent_fixture_sha256": "a006bc08371ba9aaa7ac5424e3af464660519d1e5385d28fb237b37f0c3b6fcc",
+    "parameters": {
+      "fixture": "Independent CC0 six-vertex two-sheet SGL",
+      "radius_viewport_points": 500,
+      "intensity": 0.25,
+      "negative": true,
+      "mirror": true,
+      "mirror_offset": 0,
+      "alpha": "None",
+      "culling": false,
+      "prevent_folds": false,
+      "radius_pressure_factor": 0,
+      "intensity_pressure_factor": 0,
+      "DPR": 1,
+      "fixed_contact_rule": "Project fixed original worldseed[-.25,.25,.5], floor viewport-local once, move96CSSpx horizontally; no outcome-based alternative"
+    },
+    "actual_original_Source_callbacks": 2,
+    "Root_atomic_dabs": 1,
+    "Root_ordered_passes": 2,
+    "changed_vertices_per_pass": [
+      6,
+      6
+    ],
+    "own_position_and_raw_normal_words": "All exact against independent JavaScript and separate Python calculations",
+    "Source_proxy_words": "Complete original getter bytes exact to independent frozen first-touch positions for both passes",
+    "Root_proxy_proof": "Independent frozen-vs-fresh candidate discriminator plus exact saved output; not direct browser internal proxy byte inspection",
+    "paired_positions": {
+      "label": "Actual paired Flatten final original positions",
+      "rows": 6,
+      "words": 18,
+      "word_difference_count": 11,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "RMS": 1.986948675659414e-08,
+      "differences": [
+        {
+          "row": 0,
+          "column": 0,
+          "expected_word": 3212749693,
+          "actual_word": 3212749694,
+          "expected": -0.9948042035102844,
+          "actual": -0.9948042631149292,
+          "absolute_difference": 5.960464477539063e-08
+        },
+        {
+          "row": 0,
+          "column": 1,
+          "expected_word": 984313230,
+          "actual_word": 984313228,
+          "expected": 0.0013078914489597082,
+          "actual": 0.0013078912161290646,
+          "absolute_difference": 2.3283064365386963e-10
+        },
+        {
+          "row": 1,
+          "column": 0,
+          "expected_word": 1065266045,
+          "actual_word": 1065266046,
+          "expected": 0.9948042035102844,
+          "actual": 0.9948042631149292,
+          "absolute_difference": 5.960464477539063e-08
+        },
+        {
+          "row": 1,
+          "column": 1,
+          "expected_word": 984313231,
+          "actual_word": 984313228,
+          "expected": 0.00130789156537503,
+          "actual": 0.0013078912161290646,
+          "absolute_difference": 3.4924596548080444e-10
+        },
+        {
+          "row": 2,
+          "column": 0,
+          "expected_word": 2871965646,
+          "actual_word": 2878069240,
+          "expected": -6.207229825624938e-13,
+          "actual": -9.937042508290084e-13,
+          "absolute_difference": 3.7298126826651457e-13
+        },
+        {
+          "row": 3,
+          "column": 1,
+          "expected_word": 968500080,
+          "actual_word": 968500073,
+          "expected": 0.0003550308756530285,
+          "actual": 0.0003550306719262153,
+          "absolute_difference": 2.0372681319713593e-10
+        },
+        {
+          "row": 3,
+          "column": 2,
+          "expected_word": 976814347,
+          "actual_word": 976814339,
+          "expected": 0.0007057345355860889,
+          "actual": 0.0007057340699248016,
+          "absolute_difference": 4.656612873077393e-10
+        },
+        {
+          "row": 4,
+          "column": 1,
+          "expected_word": 968500080,
+          "actual_word": 968500073,
+          "expected": 0.0003550308756530285,
+          "actual": 0.0003550306719262153,
+          "absolute_difference": 2.0372681319713593e-10
+        },
+        {
+          "row": 4,
+          "column": 2,
+          "expected_word": 976814347,
+          "actual_word": 976814339,
+          "expected": 0.0007057345355860889,
+          "actual": 0.0007057340699248016,
+          "absolute_difference": 4.656612873077393e-10
+        },
+        {
+          "row": 5,
+          "column": 0,
+          "expected_word": 720519898,
+          "actual_word": 2855198158,
+          "expected": 4.3034223103435854e-13,
+          "actual": -1.553125846247977e-13,
+          "absolute_difference": 5.856548156591562e-13
+        },
+        {
+          "row": 5,
+          "column": 2,
+          "expected_word": 1001495963,
+          "actual_word": 1001495962,
+          "expected": 0.005420399364084005,
+          "actual": 0.005420398898422718,
+          "absolute_difference": 4.656612873077393e-10
+        }
+      ],
+      "exact_words": false,
+      "expected_sha256": "64b121e5e777e57231ef28051bd04aaf8060eedfdd936f6947aafa6097ad954b",
+      "actual_sha256": "a1b6b7fc275a4eb045941a89e8c6c9cb17fe7650814bbf494995f0c8548bdf66"
+    },
+    "predeclared_pair_max_and_RMS_tolerance": 1e-06,
+    "wrong_postprimary_direction_counterfactuals": [
+      {
+        "side": "source",
+        "max_absolute_difference": 8.940696716308594e-07
+      },
+      {
+        "side": "root",
+        "max_absolute_difference": 8.940696716308594e-07
+      }
+    ],
+    "contact_witnesses": [
+      {
+        "side": "source",
+        "witness": {
+          "captured_center": [
+            0.010039159096777439,
+            0.2515308354049921,
+            0.5
+          ],
+          "postprimary_repick_Z": 0.4997647104790074,
+          "gap": 0.0002352895209926098,
+          "weights": [
+            0.36861895746539336,
+            0.37858057665848827,
+            0.25280046587611843
+          ],
+          "scope": "Independent originaltriangle rayheight counterfactual; never used to choose or alter contact"
+        }
+      },
+      {
+        "side": "root",
+        "witness": {
+          "captured_center": [
+            0.01003915878540517,
+            0.2515308390921468,
+            0.5
+          ],
+          "postprimary_repick_Z": 0.4997647104754395,
+          "gap": 0.00023528952456047802,
+          "weights": [
+            0.36861896701098856,
+            0.3785805632671363,
+            0.2528004697218752
+          ],
+          "scope": "Independent originaltriangle rayheight counterfactual; never used to choose or alter contact"
+        }
+      }
+    ],
+    "raw_records": 260,
+    "whole_public_downloads": 16,
+    "independent_GPU_snapshots": 8,
+    "whole_Undo_Redo": "Exact whole saved bytes for each application, Root retained producer restored",
+    "quiet": [
+      {
+        "side": "source",
+        "samples": 31,
+        "milliseconds": 500.0
+      },
+      {
+        "side": "root",
+        "samples": 32,
+        "milliseconds": 516.5
+      }
+    ],
+    "full_GPU_recording_prefixes": [
+      {
+        "side": "source",
+        "frames": 27,
+        "bytes": 1730436
+      },
+      {
+        "side": "root",
+        "frames": 53,
+        "bytes": 2455742
+      }
+    ],
+    "original_caps": "Single256frame/32MiB GPU recording per side,192MiB owned,512MiB raw,32MiB/item unchanged",
+    "cleanup": "Owned Chrome exit0 and PID absent; both owned servers closed, no errors"
+  },
+  "promotion": {
+    "receipt_sha256": "06304436a3673c6935b9047ca2d399dc40a58c9fa37f83f4ed5150780267ce17",
+    "backed_up_replacements": 6,
+    "new_files": 3,
+    "git_index_AGENTS_README_preserved": true
+  },
+  "preview": {
+    "url": "http://127.0.0.1:8806/",
+    "HTTP19_sha256": "e8e5ba17e1ae7aadad16a606d71c101b78e266dcb0dd4fabdd001f3ddbb4b4ad",
+    "old_previews_and_user_sessions": "Untouched"
+  },
+  "preserved_failures": {
+    "compiler_checks_index_sha256": "abdae48dc7b0ce38ad75eb3c10d39939583412f501f5e75e02a2a389b71a523c",
+    "rejected_schedule_sha256": "9fa258c05a19c7e151aa2899ec9ad3e2ff0db7d1db6143c7cca4e12e1ff2d36b",
+    "description": "Initial new-test compiler errors and the wrong post-primary mirror-normal hypothesis, including its misleading eight-test pass, retained. The actual first paired CR00 run passed without changing tolerances/contacts/caps."
+  },
+  "limitations": [
+    "No full Crease, SculptGL317IDs+5appearance or ZBrush family parity promotion",
+    "One small static fixture; broader repeated strokes/alpha/culling/nonzero offsets/poses/continuous/Lock/dynamic/hierarchy interactions remain unverified or unsupported in Source mode",
+    "Source and Root paired positions differ in11words max5.960464477539063e-8; own exact calculations do not establish exact camera/picking equality",
+    "PNG review shows cursor, edge/shading, panel and framing presentation differences; no appearance or dense-sculpt surface-quality claim",
+    "Source GL1 forwarded uploads are distinct from Root GL2 GPU readback",
+    "Native app built and ad-hoc signature verified but unopened/uninstalled; physical pen/touch/HiDPI and sustained latency/memory/performance remain unverified",
+    "Historical C40/C38/C36 checks retain their original build bindings; they are not automatically rerun or promoted by C41"
+  ]
+}

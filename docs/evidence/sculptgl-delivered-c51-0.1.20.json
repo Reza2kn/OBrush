@@ -1,0 +1,564 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-10-15T22:25:21.282008-07:00",
+  "status": "DeliveredC51warmfirst-touchproxy/touchedownershipreuse; scopedfunctional/nativeallocationchecksPASS; fullparity and sustainedperformance qualification unfinished",
+  "preview": "http://127.0.0.1:8814/",
+  "source_manifest": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate51/source/manifest.json",
+    "bytes": 92131,
+    "sha256": "62fcbf7cc412cc6633f64c5507ea6c50d27d9d8974b880d9481f1464e84dcb0a"
+  },
+  "build": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate51/build-record.json",
+    "bytes": 9352,
+    "sha256": "185f2173453efb3d2c91c343d7b30b99451eadd98c4940c31375bab6cfda8691"
+  },
+  "checked_receipt": {
+    "path": ".artifacts/sculptgl-proxy-reuse-c51-stage/FINAL_CHECKED_RECEIPT.json",
+    "bytes": 2871,
+    "sha256": "dc57d540994f97eca474c423efbc828841482d6132770009e8505a95d2f39271"
+  },
+  "source_checks": {
+    "path": ".artifacts/sculptgl-proxy-reuse-c51-stage/CHECKS01.json",
+    "bytes": 2024,
+    "sha256": "3fc739238c8303255ff8d1bbdbed417e7c13ae7996de91f19f6a3f586415352b"
+  },
+  "source_rows": 511,
+  "product_rows": 384,
+  "tests": {
+    "workspace": 2322,
+    "core": 1602,
+    "app": 720,
+    "ignored": 1
+  },
+  "wasm": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate51/source/web/dist/pkg/obrush_app_bg.wasm",
+    "bytes": 23249923,
+    "sha256": "44da4617c862097822f6cad0d1e51074e0abc4a1d1669f04f3370b7538c79a8e"
+  },
+  "implementation": {
+    "path": "crates/obrush-core/src/source_geometry.rs",
+    "bytes": 108125,
+    "sha256": "011b2fc047154173d4f1152c761624b373cee07bcc1bb0549f9b47534e6d6d4f"
+  },
+  "changed_files": [
+    "crates/obrush-core/src/source_geometry.rs"
+  ],
+  "scope": "Warmproxytools retain ownedwholeproxy/touchedarrays. Temporaryplan reservesonlynewfirsttouchIDs; reads previouslytouchedstoredproxy anduntouchedpre-dabposition. Deferredpublication afterallfalliblegeometry/cache/budget/normalwork. Coldoriginalcopy/capturepolicy, pre-cullingcaptureunion, duplicateIDsemantics, reportedcounts, guardedrejection, disabledclear, controlledouterdeepownedstaging, allpublicvalidation, scalarbrushmath andallcaps unchanged.",
+  "production_identity": {
+    "path": ".artifacts/sculptgl-proxy-reuse-c51-stage/PRODUCTION_IDENTITY.json",
+    "bytes": 642,
+    "sha256": "20c57c3e2b1e797cf3f05c0d5bfeeb9abda2e0f8e6a044145bb14916ae1869c6"
+  },
+  "native_matrix": {
+    "protocol": {
+      "path": ".artifacts/sculptgl-proxy-reuse-c51-stage/NATIVE_MATRIX_PREREGISTRATION.json",
+      "bytes": 2330,
+      "sha256": "1f611b454f0fe8af923d1590334d6e10a89daa59b5e79f1161ca9ed38af2468c"
+    },
+    "complete": {
+      "path": ".artifacts/sculptgl-proxy-reuse-c51-stage/NATIVE_MATRIX.json",
+      "bytes": 277124,
+      "sha256": "41b6f46232a153c0d87d4cf3339be004e64e8601466091de510380db125080ff"
+    },
+    "audit": {
+      "path": ".artifacts/sculptgl-proxy-reuse-c51-stage/NATIVE_MATRIX_AUDIT.json",
+      "bytes": 13616,
+      "sha256": "b9e17c383f7050c3f8ce4cbe754b47bad9806f0614baadd735927e8d3f8f715d"
+    },
+    "pairs": [
+      {
+        "route": "bare",
+        "mode": "clay_proxy",
+        "level": 5,
+        "vertices": 10242,
+        "cold_before": 4465850,
+        "cold_after": 4465850,
+        "warm_before_median": 2303068,
+        "warm_after_median": 2169922,
+        "warm_saved_median": 133146,
+        "warm_percent_reduction": 5.781244843834398,
+        "whole_output_sha256": "f87ed02586d2977bc928d7b42c8a78467ab957b5bc104a5af3a96dffa578f622"
+      },
+      {
+        "route": "bare",
+        "mode": "clay_proxy",
+        "level": 6,
+        "vertices": 40962,
+        "cold_before": 17640730,
+        "cold_after": 17640730,
+        "warm_before_median": 8990124,
+        "warm_after_median": 8457618,
+        "warm_saved_median": 532506,
+        "warm_percent_reduction": 5.9232330944489755,
+        "whole_output_sha256": "44c8fe6fd8b2f0c55e780df534a704658983bcb9750839d4ca49b8bec7d5ddbc"
+      },
+      {
+        "route": "bare",
+        "mode": "clay_proxy",
+        "level": 7,
+        "vertices": 163842,
+        "cold_before": 70340298,
+        "cold_after": 70340298,
+        "warm_before_median": 35738324,
+        "warm_after_median": 33608378,
+        "warm_saved_median": 2129946,
+        "warm_percent_reduction": 5.959837400321291,
+        "whole_output_sha256": "a29180fa2b3fa984342fbcb53b56d599458cb8cbd3a20b5b4539dcef8294430f"
+      },
+      {
+        "route": "bare",
+        "mode": "crease",
+        "level": 5,
+        "vertices": 10242,
+        "cold_before": 4465850,
+        "cold_after": 4465850,
+        "warm_before_median": 2303036,
+        "warm_after_median": 2169890,
+        "warm_saved_median": 133146,
+        "warm_percent_reduction": 5.781325172511416,
+        "whole_output_sha256": "fc5bf3588e67e8ec760eb3c01cfbca58b334b2832af0859e6994f5184812320c"
+      },
+      {
+        "route": "bare",
+        "mode": "crease",
+        "level": 6,
+        "vertices": 40962,
+        "cold_before": 17640738,
+        "cold_after": 17640738,
+        "warm_before_median": 8990040,
+        "warm_after_median": 8457534,
+        "warm_saved_median": 532506,
+        "warm_percent_reduction": 5.923288439206055,
+        "whole_output_sha256": "17dc95f54dab4b2dfd99670ac4a3c65a4d86655efc0aa855cd19033eab865d2c"
+      },
+      {
+        "route": "bare",
+        "mode": "crease",
+        "level": 7,
+        "vertices": 163842,
+        "cold_before": 70340214,
+        "cold_after": 70340214,
+        "warm_before_median": 35738032,
+        "warm_after_median": 33608086,
+        "warm_saved_median": 2129946,
+        "warm_percent_reduction": 5.959886095574597,
+        "whole_output_sha256": "5ea02e8d59e3da9cb217d6fa41d694452354d299c991c590622f5dbeeaeceb46"
+      },
+      {
+        "route": "bare",
+        "mode": "draw_live",
+        "level": 5,
+        "vertices": 10242,
+        "cold_before": 4332704,
+        "cold_after": 4332704,
+        "warm_before_median": 2169946,
+        "warm_after_median": 2169946,
+        "warm_saved_median": 0,
+        "warm_percent_reduction": 0.0,
+        "whole_output_sha256": "3c40b4c154a99b369a0a2148091eddd95670437d46bd87f3772b9fa78bdabde0"
+      },
+      {
+        "route": "bare",
+        "mode": "draw_live",
+        "level": 6,
+        "vertices": 40962,
+        "cold_before": 17108224,
+        "cold_after": 17108224,
+        "warm_before_median": 8457682,
+        "warm_after_median": 8457682,
+        "warm_saved_median": 0,
+        "warm_percent_reduction": 0.0,
+        "whole_output_sha256": "a08cb02ad02693197ab2eeb1ace782e39e4a9ec6d755b881f4b74ecbbf814a56"
+      },
+      {
+        "route": "bare",
+        "mode": "draw_live",
+        "level": 7,
+        "vertices": 163842,
+        "cold_before": 68210392,
+        "cold_after": 68210392,
+        "warm_before_median": 33608594,
+        "warm_after_median": 33608594,
+        "warm_saved_median": 0,
+        "warm_percent_reduction": 0.0,
+        "whole_output_sha256": "46e12d9bbabdde1a49418e5713b1a830c620ff7674d9f6db0e6ec6d32d8c3f77"
+      },
+      {
+        "route": "bare",
+        "mode": "draw_proxy",
+        "level": 5,
+        "vertices": 10242,
+        "cold_before": 4465850,
+        "cold_after": 4465850,
+        "warm_before_median": 2303092,
+        "warm_after_median": 2169946,
+        "warm_saved_median": 133146,
+        "warm_percent_reduction": 5.781184598791538,
+        "whole_output_sha256": "841487b7db39d9e60490108628fc3bae09c8463b62b77849070d6c187b225dab"
+      },
+      {
+        "route": "bare",
+        "mode": "draw_proxy",
+        "level": 6,
+        "vertices": 40962,
+        "cold_before": 17640730,
+        "cold_after": 17640730,
+        "warm_before_median": 8990196,
+        "warm_after_median": 8457690,
+        "warm_saved_median": 532506,
+        "warm_percent_reduction": 5.9231856569089265,
+        "whole_output_sha256": "f02e22a5b752af7c89dc0f4c0ae7aae5ddae6c5d30c1dc5c856257056600015a"
+      },
+      {
+        "route": "bare",
+        "mode": "draw_proxy",
+        "level": 7,
+        "vertices": 163842,
+        "cold_before": 70340338,
+        "cold_after": 70340338,
+        "warm_before_median": 35738548,
+        "warm_after_median": 33608602,
+        "warm_saved_median": 2129946,
+        "warm_percent_reduction": 5.959800045597824,
+        "whole_output_sha256": "1a4f831333e68d998101803d8f797fcb43284e7465a4c34b2fa49a9f8fbe04a8"
+      },
+      {
+        "route": "bare",
+        "mode": "inflate",
+        "level": 5,
+        "vertices": 10242,
+        "cold_before": 4465850,
+        "cold_after": 4465850,
+        "warm_before_median": 2303100,
+        "warm_after_median": 2169954,
+        "warm_saved_median": 133146,
+        "warm_percent_reduction": 5.781164517389605,
+        "whole_output_sha256": "a907e5b8519da18470cfd7fad0fca7e6265ac378bc9bf1ca2e729f395210cca5"
+      },
+      {
+        "route": "bare",
+        "mode": "inflate",
+        "level": 6,
+        "vertices": 40962,
+        "cold_before": 17640730,
+        "cold_after": 17640730,
+        "warm_before_median": 8990188,
+        "warm_after_median": 8457682,
+        "warm_saved_median": 532506,
+        "warm_percent_reduction": 5.923190927709187,
+        "whole_output_sha256": "11ee19b0d1cf4e4aae592e4ba855e57f41bf688dce85e46294b0233b8cb65b6e"
+      },
+      {
+        "route": "bare",
+        "mode": "inflate",
+        "level": 7,
+        "vertices": 163842,
+        "cold_before": 70340350,
+        "cold_after": 70340350,
+        "warm_before_median": 35738636,
+        "warm_after_median": 33608690,
+        "warm_saved_median": 2129946,
+        "warm_percent_reduction": 5.959785370656004,
+        "whole_output_sha256": "834bc45d22950a40b6e44c3188a5424fc72f1e7b080ce1d7f55d5d57d53b2ce3"
+      },
+      {
+        "route": "controlled_mirror",
+        "mode": "clay_proxy",
+        "level": 5,
+        "vertices": 10242,
+        "cold_before": 6396566,
+        "cold_after": 6264052,
+        "warm_before_median": 4578174,
+        "warm_after_median": 4445028,
+        "warm_saved_median": 133146,
+        "warm_percent_reduction": 2.9082774049217,
+        "whole_output_sha256": "6b89431bf02e8282fe925803e1520a00dca0878b194d2fb926bbb3f93fe80466"
+      },
+      {
+        "route": "controlled_mirror",
+        "mode": "clay_proxy",
+        "level": 6,
+        "vertices": 40962,
+        "cold_before": 25109542,
+        "cold_after": 24579556,
+        "warm_before_median": 17835966,
+        "warm_after_median": 17303460,
+        "warm_saved_median": 532506,
+        "warm_percent_reduction": 2.9855742043912845,
+        "whole_output_sha256": "4875749806c56812de2bd7a9565984a5afce968a6206da5fdb2dc850ff6318c5"
+      },
+      {
+        "route": "controlled_mirror",
+        "mode": "clay_proxy",
+        "level": 7,
+        "vertices": 163842,
+        "cold_before": 99961398,
+        "cold_after": 97841668,
+        "warm_before_median": 70866830,
+        "warm_after_median": 68736884,
+        "warm_saved_median": 2129946,
+        "warm_percent_reduction": 3.0055612759876515,
+        "whole_output_sha256": "ce5548adfe08c24b9f42974527b9e82576b2ef93f115edcd449155d4350e6613"
+      },
+      {
+        "route": "controlled_mirror",
+        "mode": "crease",
+        "level": 5,
+        "vertices": 10242,
+        "cold_before": 6396566,
+        "cold_after": 6264052,
+        "warm_before_median": 4578078,
+        "warm_after_median": 4444932,
+        "warm_saved_median": 133146,
+        "warm_percent_reduction": 2.908338390040537,
+        "whole_output_sha256": "4927f24d3877fa350fdb19d6b7fdafe8368e316ae3552488f63ecb4c3b1d85f0"
+      },
+      {
+        "route": "controlled_mirror",
+        "mode": "crease",
+        "level": 6,
+        "vertices": 40962,
+        "cold_before": 25109558,
+        "cold_after": 24579572,
+        "warm_before_median": 17835766,
+        "warm_after_median": 17303260,
+        "warm_saved_median": 532506,
+        "warm_percent_reduction": 2.98560768289963,
+        "whole_output_sha256": "e67b488afe23716a2a89c8a937df496720bb3706d20c1da159d45bf15918f0a7"
+      },
+      {
+        "route": "controlled_mirror",
+        "mode": "crease",
+        "level": 7,
+        "vertices": 163842,
+        "cold_before": 99961230,
+        "cold_after": 97841500,
+        "warm_before_median": 70866150,
+        "warm_after_median": 68736204,
+        "warm_saved_median": 2129946,
+        "warm_percent_reduction": 3.0055901160144867,
+        "whole_output_sha256": "a3ac330fb5beb13aef69a1623e885e26893e4cc37ab0691d75b9b47927aa4960"
+      },
+      {
+        "route": "controlled_mirror",
+        "mode": "draw_live",
+        "level": 5,
+        "vertices": 10242,
+        "cold_before": 6130274,
+        "cold_after": 6130274,
+        "warm_before_median": 4311906,
+        "warm_after_median": 4311906,
+        "warm_saved_median": 0,
+        "warm_percent_reduction": 0.0,
+        "whole_output_sha256": "d49b485daea1ed5671145b8abbe26fb7cf800de39475cdb428648de3b291b944"
+      },
+      {
+        "route": "controlled_mirror",
+        "mode": "draw_live",
+        "level": 6,
+        "vertices": 40962,
+        "cold_before": 24044530,
+        "cold_after": 24044530,
+        "warm_before_median": 16771098,
+        "warm_after_median": 16771098,
+        "warm_saved_median": 0,
+        "warm_percent_reduction": 0.0,
+        "whole_output_sha256": "2dde2605aa0d4f04d9b3efb7bae8ed2526cf70f834c054ad32135997ddbb1092"
+      },
+      {
+        "route": "controlled_mirror",
+        "mode": "draw_live",
+        "level": 7,
+        "vertices": 163842,
+        "cold_before": 95701586,
+        "cold_after": 95701586,
+        "warm_before_median": 66607386,
+        "warm_after_median": 66607386,
+        "warm_saved_median": 0,
+        "warm_percent_reduction": 0.0,
+        "whole_output_sha256": "701ffc9e21528592e675e0f37f4f8a1ee6a5148c903f8a5551ff5ff8dc8ccba4"
+      },
+      {
+        "route": "controlled_mirror",
+        "mode": "draw_proxy",
+        "level": 5,
+        "vertices": 10242,
+        "cold_before": 6396566,
+        "cold_after": 6264052,
+        "warm_before_median": 4578206,
+        "warm_after_median": 4445060,
+        "warm_saved_median": 133146,
+        "warm_percent_reduction": 2.9082570771171063,
+        "whole_output_sha256": "df73eb37339884cacd1a227aa5e88b439acdcac7f78361cb78543a7efb5cec95"
+      },
+      {
+        "route": "controlled_mirror",
+        "mode": "draw_proxy",
+        "level": 6,
+        "vertices": 40962,
+        "cold_before": 25109542,
+        "cold_after": 24579556,
+        "warm_before_median": 17836110,
+        "warm_after_median": 17303604,
+        "warm_saved_median": 532506,
+        "warm_percent_reduction": 2.985550100330173,
+        "whole_output_sha256": "f5a997006663ddc9973184823cc3c2dffb356ce762a555727eec181bb3ab5217"
+      },
+      {
+        "route": "controlled_mirror",
+        "mode": "draw_proxy",
+        "level": 7,
+        "vertices": 163842,
+        "cold_before": 99961478,
+        "cold_after": 97841748,
+        "warm_before_median": 70867278,
+        "warm_after_median": 68737332,
+        "warm_saved_median": 2129946,
+        "warm_percent_reduction": 3.0055422758018167,
+        "whole_output_sha256": "7d680c036c782e58dcaecefbd964ac89095e1295187aa44497ae4b3614025cb7"
+      },
+      {
+        "route": "controlled_mirror",
+        "mode": "inflate",
+        "level": 5,
+        "vertices": 10242,
+        "cold_before": 6396566,
+        "cold_after": 6264052,
+        "warm_before_median": 4578238,
+        "warm_after_median": 4445092,
+        "warm_saved_median": 133146,
+        "warm_percent_reduction": 2.908236749596679,
+        "whole_output_sha256": "6437b3beb34b5848fcc1b14d34e966704d2b39fc087891a1e6dfea620a4e0f08"
+      },
+      {
+        "route": "controlled_mirror",
+        "mode": "inflate",
+        "level": 6,
+        "vertices": 40962,
+        "cold_before": 25109542,
+        "cold_after": 24579556,
+        "warm_before_median": 17836110,
+        "warm_after_median": 17303604,
+        "warm_saved_median": 532506,
+        "warm_percent_reduction": 2.985550100330173,
+        "whole_output_sha256": "2fa2b56c7fdf1167c80d0374cf30b9b89ce56245e1c6d6420d80765e1a7315af"
+      },
+      {
+        "route": "controlled_mirror",
+        "mode": "inflate",
+        "level": 7,
+        "vertices": 163842,
+        "cold_before": 99961502,
+        "cold_after": 97841772,
+        "warm_before_median": 70867470,
+        "warm_after_median": 68737524,
+        "warm_saved_median": 2129946,
+        "warm_percent_reduction": 3.005534132938568,
+        "whole_output_sha256": "e422d8dbe8a39437ce41aa9017c37ef21151f0b17f91b3f5f0dfba4dce961c6e"
+      }
+    ],
+    "scope": "All30pairaxes:3spherelevels x5modes(draw_livecontrol,draw_proxy,clay_proxy,inflate,crease)x2routes(bare,controlledmirror).480usefuldabs,60actualcompleteoutputsretainedlosslesslyinverifiedgzip. EveryMesh/normal/tree/report/proxy/generation/center/track/failureword matchesimmutableC50literalbytes. ResolvedCargo dependency andactualcompiledembeddedmanifest/binary hashes checked.",
+    "limits": "Requestednativeallocatorbytes excludingpreexistingMesh/allocatoroverhead/RSS/browser/GPU/latency. Warm163Kproxytoolpeak about5.96%lowerbare/3.01%lowercontrolledmirror; accumulatingDrawcontrolunchanged. No1Mediting admission orend-to-endperformance claim."
+  },
+  "normal_browser": {
+    "helper": {
+      "path": ".artifacts/sculptgl-normal-c51-consumer-stage2/manifest.json",
+      "bytes": 2340,
+      "sha256": "0c3cb9e827d59dfccb67acc93484b6106eac291badcdfbe4e379bd90ec05634d"
+    },
+    "checks": {
+      "path": ".artifacts/sculptgl-normal-c51-consumer-stage2/root-check01/RESULT.json",
+      "bytes": 5718,
+      "sha256": "08623618130bdbefbc602c56b828581b24b8fb8f52bacb410b517e99bcc1c3c7"
+    },
+    "audit": {
+      "path": ".artifacts/sculptgl-normal-c51-consumer-stage2/POST_AUDIT01.json",
+      "bytes": 231257,
+      "sha256": "221f9bc206d56f973be24b1e7906b4ad0a7dbd8c191c66c4bb832423cfb46e53"
+    },
+    "result": {
+      "path": ".artifacts/sculptgl-normal-consumer-runtime/candidate51-normal-82e7c6cd-a5b4-4128-acb6-d7e659732645/result.json",
+      "bytes": 27502144,
+      "sha256": "32afdb23f53a82ce5d5195a83472dbe60bba1948c277c558a6e155ae581c00bc"
+    },
+    "cases": 20,
+    "actual_complete_downloads": 126,
+    "saved_GPU_comparisons": 118,
+    "wholePNGs": 17,
+    "closure": "ActualChromeexit0/one serverclosed/noexceptionsconsoleerrors; ownedPIDabsenceaudited"
+  },
+  "paired_crease_history": {
+    "helper": {
+      "path": ".artifacts/sculptgl-crease-history-c51-stage2/MANIFEST.json",
+      "bytes": 31138,
+      "sha256": "32b39b88d37802d7335f6790bd4071b9adbda1bdd2eb39aa42e2b4eff50fb25b"
+    },
+    "helper_contracts": {
+      "path": ".artifacts/sculptgl-crease-history-c51-stage2/root-check01/RESULT.json",
+      "bytes": 59011,
+      "sha256": "572418a058bf5aa0856c64291985cad32d3394580a6deca22ccd642a52610fb3"
+    },
+    "audit": {
+      "path": ".artifacts/sculptgl-crease-history-c51-stage2/ROOT_HISTORY_AUDIT.json",
+      "bytes": 34949,
+      "sha256": "94cbf9445e103e446805861a6a2476cc5cf6b5673de6bd65fe96906354b1c917"
+    },
+    "independent_math": {
+      "path": ".artifacts/sculptgl-crease-history-c51-stage2/ROOT_INDEPENDENT_HISTORY_MATH.json",
+      "bytes": 13071,
+      "sha256": "f9f7d8434ed5f8bcbae752b9f19f0274cdcb9edbf89a9f7d3e557c6486c8ebc1"
+    },
+    "result": {
+      "path": ".artifacts/sculptgl-crease-runtime/candidate51-history-CW03-096d7d7a-bcf7-459b-a609-01f5cd2f047d/result.json",
+      "bytes": 41830096,
+      "sha256": "74aee8953e44faf1761445da06b63f223b28593e0fe704c28051c5d6dcd9585b"
+    },
+    "raw_records": 548,
+    "whole_downloads": 36,
+    "actual_GPU_snapshots": 24,
+    "independent_own_math_passes": 12,
+    "scope": "OriginalCW03threeactualmirroredCreasestrokesand sixselected-current-fieldhistory steps,bothpinnedhostedreferenceandC51. Original1e-6/256frames/32MiBcaps unchanged. Oneindependent6vertexfixture,not fullCrease/referencequality/native/physical/dense/performanceparity.",
+    "closure": "ActualChromeexit0/bothserversclosed/noexceptionsconsoleerrors"
+  },
+  "image_identity": {
+    "path": ".artifacts/sculptgl-proxy-reuse-c51-stage/IMAGE_IDENTITY_CHECK.json",
+    "bytes": 2055,
+    "sha256": "10794d9516a4bf0f6d05a5b7b86950c3c664df89fdfd65d5230f74e2c32634cc"
+  },
+  "visual_scope": "Threecompletecurrentnormal/CW03PNGsbyte-identicaltoreviewedC50. Noimageequivalence/beauty/globalintersectionclaim.",
+  "retained_timing_failures": {
+    "prior_evidence": {
+      "path": "docs/evidence/sculptgl-delivered-c50-0.1.20.json",
+      "bytes": 34184,
+      "sha256": "bd011b6a11ae6d0cd349b739f293ffdff70e44a3f9522442420c36141a45ba83"
+    },
+    "scope": "No newC51timedcohort. OriginalC50sendermax317.263ms andpassiveGC/phase106.431/123.663ms failuresremainfailedagainst100ms. Theirmath/data/CPUsubpassesdo notqualifycompleteperformance. No greenretry,nogaterelaxation,noOS/systemcauseassignment."
+  },
+  "retained_helper_failure": {
+    "path": ".artifacts/sculptgl-proxy-reuse-c51-stage/BINDING_ATTEMPT01_FAILURE.json",
+    "bytes": 678,
+    "sha256": "299fad9adbdb6da42ce3add405fdd155894354313794d0ec69cf17915e5dc7e6"
+  },
+  "promotion": {
+    "path": ".artifacts/sculptgl-main-c51-promotion-stage/PROMOTED.json",
+    "bytes": 1620,
+    "sha256": "6631a45b6ac1da32ab2c30404bd5d8400e7cf4c1a903ba91eca2d0d720e9c282"
+  },
+  "promotion_decision": {
+    "path": ".artifacts/sculptgl-main-c51-promotion-stage/DECISION.json",
+    "bytes": 590,
+    "sha256": "79b583ea538047fb874566a2fa06a7a499791a583cc5332c48b36e33e6961aa0"
+  },
+  "HTTP": {
+    "path": ".artifacts/sculptgl-main-c51-promotion-stage/HTTP_VERIFIED.json",
+    "bytes": 5031,
+    "sha256": "fcbfcee54617a46aecac1d85fa6ae7e20df0236079226bf0bc4906f166bfd8b0"
+  },
+  "native": "Both officialscriptsandad-hocsignatureverify; nativeGUIunopened/uninstalled.",
+  "remaining": [
+    "Original317stableworkflowIDs+5hostedcontrolsremainactive; nofamilyparitypromoted.",
+    "1Mraw/editablestaging/tree/state/scratchadmissionfailures,default/adaptivequality,completetopology/Reverse/dynamicdecimation,materialinterchange/UV,localization/input/nativephysical/HiDPI/reference/performance remainopen.",
+    "Controlledprimary/mirrorproducerduplicates andoldwhole-mesh editingbudgetformula remain; measure/phasedledger andprivateuniquely-ownedstate reusebeforecapacitypromotion."
+  ]
+}

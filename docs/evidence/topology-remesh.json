@@ -1,0 +1,1422 @@
+{
+  "feature_ids": [
+    "T01",
+    "H02"
+  ],
+  "status": "Locally verified purecore solid-remesh foundation; not DynaMesh, quad retopology or SculptGL parity.",
+  "reference": {
+    "zbrush": "2026.2.1",
+    "reference_executed": false,
+    "sculptgl_executed": false
+  },
+  "commit": null,
+  "created_utc": "2026-10-12T22:58:18.245182+00:00",
+  "algorithm": "Independent oriented scanline solid occupancy; truncated two-voxel unsigned distance via triangle BVH; consistent six-tetrahedra cube extraction; bounded paired local shrink/expand smoothing; nearest-original-surface barycentric mask/RGB interpolation.",
+  "solid_policy": "Each consistently wound closed component is treated as a filled solid, inward orientation normalized, positive-winding union of components. Cavities represented by inward nested components are filled; not a general shell/void interpretation.",
+  "default_settings": {
+    "resolution": 64,
+    "max_cells": 2500000,
+    "max_work": 150000000,
+    "smoothing_steps": 2
+  },
+  "limits": {
+    "resolution": [
+      16,
+      128
+    ],
+    "hard_max_cells": 2500000,
+    "default_max_work": 150000000,
+    "hard_max_work": 500000000,
+    "max_source_triangles": 500000,
+    "global_max_vertices": 1000000,
+    "global_max_triangles": 2000000,
+    "smoothing_steps": [
+      0,
+      4
+    ],
+    "distance_floor_voxels": 0.02
+  },
+  "hardware": {
+    "cpu": "Apple M2",
+    "memory_bytes": 25769803776,
+    "rust": "1.96.0 ac68faa20c58cbccd01ee7208bf3b6e93a7d7f96",
+    "host": "aarch64-apple-darwin"
+  },
+  "sources": [
+    {
+      "path": "crates/obrush-core/src/remesh.rs",
+      "bytes": 33706,
+      "sha256": "410889f5371caa435bfc960b3312d661de1c13aefcc3a02e9ed0be80ffda8d36"
+    },
+    {
+      "path": "crates/obrush-core/tests/remesh.rs",
+      "bytes": 8786,
+      "sha256": "4076ca7c8282014c1389f9881b0f5235c1c982eae7b6e5a6f03ad8ff25e17779"
+    },
+    {
+      "path": "crates/obrush-core/examples/remesh_probe.rs",
+      "bytes": 5440,
+      "sha256": "18b1fb1a4c11e112015525d9afb55c814a28e8fcf3e43e094a126dbca3289b19"
+    },
+    {
+      "path": "crates/obrush-core/src/mesh.rs",
+      "bytes": 58738,
+      "sha256": "4db1884082d155c81c5acbcf154046370cdca2fa7d087f293c71f12802320f98"
+    },
+    {
+      "path": "crates/obrush-core/src/lib.rs",
+      "bytes": 880,
+      "sha256": "f686269efc28bb02640e2016f7cce99e06045541d9e9ca8fae902b91cb6d909b"
+    },
+    {
+      "path": "Cargo.toml",
+      "bytes": 637,
+      "sha256": "cba2e0cd91a2854c420fe9d97218a3df7596fc3e01595beed9334fe6df16497e"
+    },
+    {
+      "path": "Cargo.lock",
+      "bytes": 92204,
+      "sha256": "69412564938f9bf8483783760d6af736688fcb175c1736289193485de54fc098"
+    }
+  ],
+  "input_user_project": {
+    "path": "/Users/Ajab/Downloads/Untitled_sculpture (1).obrush",
+    "bytes": 8000012,
+    "sha256": "4adc8aa9333903ab0684c1f2e54a995dc6a4e7a3b85fc6e911df9d7deb0c4786"
+  },
+  "user_original_metrics": {
+    "vertices": 61580,
+    "triangles": 123156,
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "max": [
+        1.0,
+        1.0,
+        2.4449723
+      ]
+    },
+    "signed_volume": 4.336145272925479,
+    "minimum_cross_over_max_edge_squared": 0.019999775055619572,
+    "maximum_adjacent_fold_degrees": 149.99995737796684,
+    "adjacent_folds_over_90": 78,
+    "folds_over_90_total_world_length": 1.019206480111727,
+    "fold_excess_radians_world_length": 0.832537630348737
+  },
+  "original_preservation": "Original project SHA256 unchanged after all operations; all remesh outputs are separate ignored files.",
+  "independent_fixture_definitions": {
+    "sphere-4": "Unit icosphere with4linear-projection refinements,2562V/5120T; authored by OBrush primitive.",
+    "sharp-box": "Unit halfextent cube linearly subdivided4times; analyticvolume8.",
+    "overlapping-boxes": "Two such cubes translated by +/-0.5 onX; expectedunionvolume12; input componentvolumes total16.",
+    "face-touching-boxes": "Two such cubes translated by +/-1 onX; expectedunionvolume16."
+  },
+  "acceptance_tolerances": {
+    "sphere_max_radial_error": 0.04,
+    "sphere_relative_volume_error": 0.02,
+    "sharp_box_absolute_volume_error": 0.15,
+    "union_relative_volume_error": 0.03,
+    "healthy_folds_above_90_degrees": 0,
+    "barycentric_spatial_attribute_error": "Less than1voxel on analytical linear scalar/RGB box fixture. Constantchannel tolerance1e-6.",
+    "closed_manifold": "Each edge has exactly2faces with opposite winding; each vertex link is oneconnectedfan; every triangle has nonzero area; allmeshfieldsfinite/valid."
+  },
+  "checks": {
+    "remesh_focused_tests": 8,
+    "focused_tests_exit": 0,
+    "purecore_wasm_check_exit": 0,
+    "strict_core_lib_probe_test_clippy_exit": 0,
+    "format_owned_files": "rustfmt edition2021"
+  },
+  "commands": [
+    "cargo run --locked --release -p obrush-core --example remesh_probe -- .artifacts/remesh-final /Users/Ajab/Downloads/Untitled_sculpture (1).obrush",
+    "cargo test --locked -p obrush-core --test remesh -- --nocapture",
+    "cargo check --locked -p obrush-core --target wasm32-unknown-unknown",
+    "cargo clippy --locked -p obrush-core --lib --test remesh --example remesh_probe -- -D warnings"
+  ],
+  "native_results": [
+    {
+      "adjacent_folds_over_90": 0,
+      "fixture": "sphere-4",
+      "fold_excess_radians_world_length": 0.0,
+      "folds_over_90_total_world_length": 0.0,
+      "maximum_adjacent_fold_degrees": 10.816430754864292,
+      "minimum_cross_over_max_edge_squared": 0.10767668489946902,
+      "output": ".artifacts/remesh-final/sphere-4-32.obrush",
+      "report": {
+        "distance_floor_voxels": 0.02,
+        "grid_cells": [
+          36,
+          36,
+          36
+        ],
+        "input_component_volume": 4.179739111956684,
+        "input_components": 1,
+        "input_triangles": 5120,
+        "input_vertices": 2562,
+        "maximum_attribute_projection_distance": 0.0015583241027034333,
+        "output_components": 1,
+        "output_triangles": 28584,
+        "output_vertices": 14294,
+        "output_volume": 4.17243659646448,
+        "resolution": 32,
+        "reversed_input_components": 0,
+        "sampled_nodes": 50653,
+        "voxel_size": 0.0625,
+        "work": 2773340
+      },
+      "seconds": 0.069702084,
+      "settings": {
+        "max_cells": 2500000,
+        "max_work": 150000000,
+        "resolution": 32,
+        "smoothing_steps": 2
+      }
+    },
+    {
+      "adjacent_folds_over_90": 0,
+      "fixture": "sphere-4",
+      "fold_excess_radians_world_length": 0.0,
+      "folds_over_90_total_world_length": 0.0,
+      "maximum_adjacent_fold_degrees": 11.922269668011515,
+      "minimum_cross_over_max_edge_squared": 0.08815732921889553,
+      "output": ".artifacts/remesh-final/sphere-4-64.obrush",
+      "report": {
+        "distance_floor_voxels": 0.02,
+        "grid_cells": [
+          68,
+          68,
+          68
+        ],
+        "input_component_volume": 4.179739111956684,
+        "input_components": 1,
+        "input_triangles": 5120,
+        "input_vertices": 2562,
+        "maximum_attribute_projection_distance": 0.0008605337648214194,
+        "output_components": 1,
+        "output_triangles": 115320,
+        "output_vertices": 57662,
+        "output_volume": 4.177919492609621,
+        "resolution": 64,
+        "reversed_input_components": 0,
+        "sampled_nodes": 328509,
+        "voxel_size": 0.03125,
+        "work": 13202967
+      },
+      "seconds": 0.281315833,
+      "settings": {
+        "max_cells": 2500000,
+        "max_work": 150000000,
+        "resolution": 64,
+        "smoothing_steps": 2
+      }
+    },
+    {
+      "adjacent_folds_over_90": 0,
+      "fixture": "sphere-4",
+      "fold_excess_radians_world_length": 0.0,
+      "folds_over_90_total_world_length": 0.0,
+      "maximum_adjacent_fold_degrees": 11.913292938902504,
+      "minimum_cross_over_max_edge_squared": 0.07988896594583919,
+      "output": ".artifacts/remesh-final/sphere-4-96.obrush",
+      "report": {
+        "distance_floor_voxels": 0.02,
+        "grid_cells": [
+          100,
+          100,
+          100
+        ],
+        "input_component_volume": 4.179739111956684,
+        "input_components": 1,
+        "input_triangles": 5120,
+        "input_vertices": 2562,
+        "maximum_attribute_projection_distance": 0.000546594721170758,
+        "output_components": 1,
+        "output_triangles": 259128,
+        "output_vertices": 129566,
+        "output_volume": 4.178868457365743,
+        "resolution": 96,
+        "reversed_input_components": 0,
+        "sampled_nodes": 1030301,
+        "voxel_size": 0.020833333333333332,
+        "work": 33685545
+      },
+      "seconds": 0.703456834,
+      "settings": {
+        "max_cells": 2500000,
+        "max_work": 150000000,
+        "resolution": 96,
+        "smoothing_steps": 2
+      }
+    },
+    {
+      "adjacent_folds_over_90": 0,
+      "fixture": "sharp-box",
+      "fold_excess_radians_world_length": 0.0,
+      "folds_over_90_total_world_length": 0.0,
+      "maximum_adjacent_fold_degrees": 90.0,
+      "minimum_cross_over_max_edge_squared": 0.009302669694604762,
+      "output": ".artifacts/remesh-final/sharp-box-32.obrush",
+      "report": {
+        "distance_floor_voxels": 0.02,
+        "grid_cells": [
+          36,
+          36,
+          36
+        ],
+        "input_component_volume": 8.000000000000362,
+        "input_components": 1,
+        "input_triangles": 3072,
+        "input_vertices": 1538,
+        "maximum_attribute_projection_distance": 0.03125,
+        "output_components": 1,
+        "output_triangles": 48384,
+        "output_vertices": 24194,
+        "output_volume": 7.986236289828085,
+        "resolution": 32,
+        "reversed_input_components": 0,
+        "sampled_nodes": 50653,
+        "voxel_size": 0.0625,
+        "work": 10313068
+      },
+      "seconds": 0.192509834,
+      "settings": {
+        "max_cells": 2500000,
+        "max_work": 150000000,
+        "resolution": 32,
+        "smoothing_steps": 2
+      }
+    },
+    {
+      "adjacent_folds_over_90": 0,
+      "fixture": "sharp-box",
+      "fold_excess_radians_world_length": 0.0,
+      "folds_over_90_total_world_length": 0.0,
+      "maximum_adjacent_fold_degrees": 90.0,
+      "minimum_cross_over_max_edge_squared": 0.009302669694604762,
+      "output": ".artifacts/remesh-final/sharp-box-64.obrush",
+      "report": {
+        "distance_floor_voxels": 0.02,
+        "grid_cells": [
+          68,
+          68,
+          68
+        ],
+        "input_component_volume": 8.000000000000362,
+        "input_components": 1,
+        "input_triangles": 3072,
+        "input_vertices": 1538,
+        "maximum_attribute_projection_distance": 0.015625,
+        "output_components": 1,
+        "output_triangles": 195072,
+        "output_vertices": 97538,
+        "output_volume": 7.996535151064884,
+        "resolution": 64,
+        "reversed_input_components": 0,
+        "sampled_nodes": 328509,
+        "voxel_size": 0.03125,
+        "work": 42545764
+      },
+      "seconds": 0.9546145,
+      "settings": {
+        "max_cells": 2500000,
+        "max_work": 150000000,
+        "resolution": 64,
+        "smoothing_steps": 2
+      }
+    },
+    {
+      "adjacent_folds_over_90": 0,
+      "fixture": "sharp-box",
+      "fold_excess_radians_world_length": 0.0,
+      "folds_over_90_total_world_length": 0.0,
+      "maximum_adjacent_fold_degrees": 90.0,
+      "minimum_cross_over_max_edge_squared": 0.009302223301486796,
+      "output": ".artifacts/remesh-final/sharp-box-96.obrush",
+      "report": {
+        "distance_floor_voxels": 0.02,
+        "grid_cells": [
+          100,
+          100,
+          100
+        ],
+        "input_component_volume": 8.000000000000362,
+        "input_components": 1,
+        "input_triangles": 3072,
+        "input_vertices": 1538,
+        "maximum_attribute_projection_distance": 0.010416686534881592,
+        "output_components": 1,
+        "output_triangles": 440064,
+        "output_vertices": 220034,
+        "output_volume": 7.9984572292858465,
+        "resolution": 96,
+        "reversed_input_components": 0,
+        "sampled_nodes": 1030301,
+        "voxel_size": 0.020833333333333332,
+        "work": 97483398
+      },
+      "seconds": 1.895821875,
+      "settings": {
+        "max_cells": 2500000,
+        "max_work": 150000000,
+        "resolution": 96,
+        "smoothing_steps": 2
+      }
+    },
+    {
+      "adjacent_folds_over_90": 0,
+      "fixture": "overlapping-boxes",
+      "fold_excess_radians_world_length": 0.0,
+      "folds_over_90_total_world_length": 0.0,
+      "maximum_adjacent_fold_degrees": 89.9047085420846,
+      "minimum_cross_over_max_edge_squared": 0.015172625293535618,
+      "output": ".artifacts/remesh-final/overlapping-boxes-32.obrush",
+      "report": {
+        "distance_floor_voxels": 0.02,
+        "grid_cells": [
+          36,
+          26,
+          26
+        ],
+        "input_component_volume": 16.000000000000384,
+        "input_components": 2,
+        "input_triangles": 6144,
+        "input_vertices": 3076,
+        "maximum_attribute_projection_distance": 0.006762146949768066,
+        "output_components": 1,
+        "output_triangles": 29664,
+        "output_vertices": 14834,
+        "output_volume": 12.00149566362471,
+        "resolution": 32,
+        "reversed_input_components": 0,
+        "sampled_nodes": 26973,
+        "voxel_size": 0.09375,
+        "work": 6340038
+      },
+      "seconds": 0.101752709,
+      "settings": {
+        "max_cells": 2500000,
+        "max_work": 150000000,
+        "resolution": 32,
+        "smoothing_steps": 2
+      }
+    },
+    {
+      "adjacent_folds_over_90": 0,
+      "fixture": "overlapping-boxes",
+      "fold_excess_radians_world_length": 0.0,
+      "folds_over_90_total_world_length": 0.0,
+      "maximum_adjacent_fold_degrees": 89.9047085420846,
+      "minimum_cross_over_max_edge_squared": 0.01437037628978544,
+      "output": ".artifacts/remesh-final/overlapping-boxes-64.obrush",
+      "report": {
+        "distance_floor_voxels": 0.02,
+        "grid_cells": [
+          68,
+          47,
+          47
+        ],
+        "input_component_volume": 16.000000000000384,
+        "input_components": 2,
+        "input_triangles": 6144,
+        "input_vertices": 3076,
+        "maximum_attribute_projection_distance": 0.011833727359771729,
+        "output_components": 1,
+        "output_triangles": 116448,
+        "output_vertices": 58226,
+        "output_volume": 11.999531123425118,
+        "resolution": 64,
+        "reversed_input_components": 0,
+        "sampled_nodes": 158976,
+        "voxel_size": 0.046875,
+        "work": 25518662
+      },
+      "seconds": 0.397586084,
+      "settings": {
+        "max_cells": 2500000,
+        "max_work": 150000000,
+        "resolution": 64,
+        "smoothing_steps": 2
+      }
+    },
+    {
+      "adjacent_folds_over_90": 0,
+      "fixture": "overlapping-boxes",
+      "fold_excess_radians_world_length": 0.0,
+      "folds_over_90_total_world_length": 0.0,
+      "maximum_adjacent_fold_degrees": 90.0,
+      "minimum_cross_over_max_edge_squared": 0.009302669694604762,
+      "output": ".artifacts/remesh-final/overlapping-boxes-96.obrush",
+      "report": {
+        "distance_floor_voxels": 0.02,
+        "grid_cells": [
+          100,
+          68,
+          68
+        ],
+        "input_component_volume": 16.000000000000384,
+        "input_components": 2,
+        "input_triangles": 6144,
+        "input_vertices": 3076,
+        "maximum_attribute_projection_distance": 0.015625,
+        "output_components": 1,
+        "output_triangles": 260352,
+        "output_vertices": 130178,
+        "output_volume": 11.992994377300013,
+        "resolution": 96,
+        "reversed_input_components": 0,
+        "sampled_nodes": 480861,
+        "voxel_size": 0.03125,
+        "work": 60466676
+      },
+      "seconds": 1.043154708,
+      "settings": {
+        "max_cells": 2500000,
+        "max_work": 150000000,
+        "resolution": 96,
+        "smoothing_steps": 2
+      }
+    },
+    {
+      "adjacent_folds_over_90": 0,
+      "fixture": "face-touching-boxes",
+      "fold_excess_radians_world_length": 0.0,
+      "folds_over_90_total_world_length": 0.0,
+      "maximum_adjacent_fold_degrees": 90.0,
+      "minimum_cross_over_max_edge_squared": 0.009302783524748533,
+      "output": ".artifacts/remesh-final/face-touching-boxes-32.obrush",
+      "report": {
+        "distance_floor_voxels": 0.02,
+        "grid_cells": [
+          36,
+          20,
+          20
+        ],
+        "input_component_volume": 16.000000000000377,
+        "input_components": 2,
+        "input_triangles": 6144,
+        "input_vertices": 3076,
+        "maximum_attribute_projection_distance": 0.0625,
+        "output_components": 1,
+        "output_triangles": 19968,
+        "output_vertices": 9986,
+        "output_volume": 15.900843251974575,
+        "resolution": 32,
+        "reversed_input_components": 0,
+        "sampled_nodes": 16317,
+        "voxel_size": 0.125,
+        "work": 4508760
+      },
+      "seconds": 0.076094167,
+      "settings": {
+        "max_cells": 2500000,
+        "max_work": 150000000,
+        "resolution": 32,
+        "smoothing_steps": 2
+      }
+    },
+    {
+      "adjacent_folds_over_90": 0,
+      "fixture": "face-touching-boxes",
+      "fold_excess_radians_world_length": 0.0,
+      "folds_over_90_total_world_length": 0.0,
+      "maximum_adjacent_fold_degrees": 90.0,
+      "minimum_cross_over_max_edge_squared": 0.009302669694604762,
+      "output": ".artifacts/remesh-final/face-touching-boxes-64.obrush",
+      "report": {
+        "distance_floor_voxels": 0.02,
+        "grid_cells": [
+          68,
+          36,
+          36
+        ],
+        "input_component_volume": 16.000000000000377,
+        "input_components": 2,
+        "input_triangles": 6144,
+        "input_vertices": 3076,
+        "maximum_attribute_projection_distance": 0.03125,
+        "output_components": 1,
+        "output_triangles": 80896,
+        "output_vertices": 40450,
+        "output_volume": 15.974849263322756,
+        "resolution": 64,
+        "reversed_input_components": 0,
+        "sampled_nodes": 94461,
+        "voxel_size": 0.0625,
+        "work": 17983858
+      },
+      "seconds": 0.3022465,
+      "settings": {
+        "max_cells": 2500000,
+        "max_work": 150000000,
+        "resolution": 64,
+        "smoothing_steps": 2
+      }
+    },
+    {
+      "adjacent_folds_over_90": 0,
+      "fixture": "face-touching-boxes",
+      "fold_excess_radians_world_length": 0.0,
+      "folds_over_90_total_world_length": 0.0,
+      "maximum_adjacent_fold_degrees": 90.0,
+      "minimum_cross_over_max_edge_squared": 0.00930255809638044,
+      "output": ".artifacts/remesh-final/face-touching-boxes-96.obrush",
+      "report": {
+        "distance_floor_voxels": 0.02,
+        "grid_cells": [
+          100,
+          52,
+          52
+        ],
+        "input_component_volume": 16.000000000000377,
+        "input_components": 2,
+        "input_triangles": 6144,
+        "input_vertices": 3076,
+        "maximum_attribute_projection_distance": 0.020833313465118408,
+        "output_components": 1,
+        "output_triangles": 182784,
+        "output_vertices": 91394,
+        "output_volume": 15.988767842966885,
+        "resolution": 96,
+        "reversed_input_components": 0,
+        "sampled_nodes": 283709,
+        "voxel_size": 0.041666666666666664,
+        "work": 40612292
+      },
+      "seconds": 0.694820375,
+      "settings": {
+        "max_cells": 2500000,
+        "max_work": 150000000,
+        "resolution": 96,
+        "smoothing_steps": 2
+      }
+    },
+    {
+      "adjacent_folds_over_90": 85,
+      "fixture": "user-sculpt",
+      "fold_excess_radians_world_length": 1.612586919426799,
+      "folds_over_90_total_world_length": 4.551634586668818,
+      "maximum_adjacent_fold_degrees": 162.50063987794675,
+      "minimum_cross_over_max_edge_squared": 0.015130478919946153,
+      "output": ".artifacts/remesh-final/user-sculpt-32.obrush",
+      "report": {
+        "distance_floor_voxels": 0.02,
+        "grid_cells": [
+          23,
+          23,
+          36
+        ],
+        "input_component_volume": 4.336145272804665,
+        "input_components": 1,
+        "input_triangles": 123156,
+        "input_vertices": 61580,
+        "maximum_attribute_projection_distance": 0.07193595248526984,
+        "output_components": 2,
+        "output_triangles": 11128,
+        "output_vertices": 5566,
+        "output_volume": 4.2812392660732606,
+        "resolution": 32,
+        "reversed_input_components": 0,
+        "sampled_nodes": 21312,
+        "voxel_size": 0.10765538364648819,
+        "work": 3647652
+      },
+      "seconds": 0.127555833,
+      "settings": {
+        "max_cells": 2500000,
+        "max_work": 150000000,
+        "resolution": 32,
+        "smoothing_steps": 2
+      }
+    },
+    {
+      "adjacent_folds_over_90": 96,
+      "fixture": "user-sculpt",
+      "fold_excess_radians_world_length": 0.808606648976365,
+      "folds_over_90_total_world_length": 2.25800528418749,
+      "maximum_adjacent_fold_degrees": 153.7980116518262,
+      "minimum_cross_over_max_edge_squared": 0.013778670993678984,
+      "output": ".artifacts/remesh-final/user-sculpt-64.obrush",
+      "report": {
+        "distance_floor_voxels": 0.02,
+        "grid_cells": [
+          42,
+          42,
+          68
+        ],
+        "input_component_volume": 4.336145272804665,
+        "input_components": 1,
+        "input_triangles": 123156,
+        "input_vertices": 61580,
+        "maximum_attribute_projection_distance": 0.03564551232484484,
+        "output_components": 1,
+        "output_triangles": 45836,
+        "output_vertices": 22916,
+        "output_volume": 4.323785678259236,
+        "resolution": 64,
+        "reversed_input_components": 0,
+        "sampled_nodes": 127581,
+        "voxel_size": 0.053827691823244095,
+        "work": 13536571
+      },
+      "seconds": 0.268998375,
+      "settings": {
+        "max_cells": 2500000,
+        "max_work": 150000000,
+        "resolution": 64,
+        "smoothing_steps": 2
+      }
+    },
+    {
+      "adjacent_folds_over_90": 63,
+      "fixture": "user-sculpt",
+      "fold_excess_radians_world_length": 0.4030867414647759,
+      "folds_over_90_total_world_length": 1.1567083832820109,
+      "maximum_adjacent_fold_degrees": 156.03079594698545,
+      "minimum_cross_over_max_edge_squared": 0.010994221269334123,
+      "output": ".artifacts/remesh-final/user-sculpt-96.obrush",
+      "report": {
+        "distance_floor_voxels": 0.02,
+        "grid_cells": [
+          60,
+          60,
+          100
+        ],
+        "input_component_volume": 4.336145272804665,
+        "input_components": 1,
+        "input_triangles": 123156,
+        "input_vertices": 61580,
+        "maximum_attribute_projection_distance": 0.020169796973790073,
+        "output_components": 1,
+        "output_triangles": 103520,
+        "output_vertices": 51760,
+        "output_volume": 4.331259609915385,
+        "resolution": 96,
+        "reversed_input_components": 0,
+        "sampled_nodes": 375821,
+        "voxel_size": 0.03588512788216273,
+        "work": 30416392
+      },
+      "seconds": 0.516061791,
+      "settings": {
+        "max_cells": 2500000,
+        "max_work": 150000000,
+        "resolution": 96,
+        "smoothing_steps": 2
+      }
+    }
+  ],
+  "native_scope": "Single release CLI timing per fixture/resolution; excludes JSON input/output. Not browser latency, hardwareinput or nativeGUI evidence.",
+  "failure_receipts": [
+    {
+      "directory": ".artifacts/remesh-first",
+      "failure": "Unconstrained paired geometry smoothing inverted healthy sphere triangles (sphere64:120 edges over90 degrees). Both sphere/user96 exceeded initial work budget before two-voxel distance truncation."
+    },
+    {
+      "directory": ".artifacts/remesh-bounded-smoothing",
+      "limitation": "Healthy sphere fold fix passed, but .002voxel distance floor left needle faces on user sculpt; raised floor to.02voxel."
+    },
+    {
+      "path": ".artifacts/remesh-final-clippy.log",
+      "failure": "Concurrent decimation source strict warning; own files no warnings reported."
+    },
+    {
+      "directory": ".artifacts/remesh-field-trial",
+      "source": [
+        {
+          "path": ".artifacts/remesh-field-trial/source/remesh.rs",
+          "bytes": 36144,
+          "sha256": "81a1d2c2c4b106da803170d430789fa89e6b8c92759fab4485598b3019dabbf9"
+        },
+        {
+          "path": ".artifacts/remesh-field-trial/source/remesh_probe.rs",
+          "bytes": 5587,
+          "sha256": "3d7047a838b1922771aae26a1188cb22595642728b7875a6b0b56f78e06a9549"
+        },
+        {
+          "path": ".artifacts/remesh-field-trial/source/remesh_tests.rs",
+          "bytes": 8786,
+          "sha256": "4076ca7c8282014c1389f9881b0f5235c1c982eae7b6e5a6f03ad8ff25e17779"
+        }
+      ],
+      "predeclared_gates": {
+        "path": ".artifacts/remesh-field-trial/predeclared-gates.json",
+        "bytes": 932,
+        "sha256": "3e5fd678eba28e84d402e8f018129a6ea3b805cb2f3d2ce3e16c91ec0cdf7866"
+      },
+      "trial": "Exactly one six-neighbor signed-field smoothing pass, with a maximum field-value change of 0.25 voxel. The experimental setting and algorithm were removed from production after failing the actual user-model quality and weighted-fold gates.",
+      "results": [
+        {
+          "adjacent_folds_over_90": 0,
+          "fixture": "sphere-4",
+          "fold_excess_radians_world_length": 0.0,
+          "folds_over_90_total_world_length": 0.0,
+          "maximum_adjacent_fold_degrees": 9.781061988747863,
+          "minimum_cross_over_max_edge_squared": 0.09966282244719432,
+          "output": ".artifacts/remesh-field-trial/sphere-4-32.obrush",
+          "report": {
+            "distance_floor_voxels": 0.02,
+            "field_smoothing_steps": 1,
+            "grid_cells": [
+              36,
+              36,
+              36
+            ],
+            "input_component_volume": 4.179739111956684,
+            "input_components": 1,
+            "input_triangles": 5120,
+            "input_vertices": 2562,
+            "maximum_attribute_projection_distance": 0.002108851105981774,
+            "maximum_signed_field_change": 0.008572569737831756,
+            "output_components": 1,
+            "output_triangles": 28560,
+            "output_vertices": 14282,
+            "output_volume": 4.164241788778978,
+            "resolution": 32,
+            "reversed_input_components": 0,
+            "sampled_nodes": 50653,
+            "voxel_size": 0.0625,
+            "work": 3059006
+          },
+          "seconds": 0.072330833,
+          "settings": {
+            "field_smoothing_steps": 1,
+            "max_cells": 2500000,
+            "max_work": 150000000,
+            "resolution": 32,
+            "smoothing_steps": 2
+          }
+        },
+        {
+          "adjacent_folds_over_90": 0,
+          "fixture": "sphere-4",
+          "fold_excess_radians_world_length": 0.0,
+          "folds_over_90_total_world_length": 0.0,
+          "maximum_adjacent_fold_degrees": 9.69945421067442,
+          "minimum_cross_over_max_edge_squared": 0.08550008705113074,
+          "output": ".artifacts/remesh-field-trial/sphere-4-64.obrush",
+          "report": {
+            "distance_floor_voxels": 0.02,
+            "field_smoothing_steps": 1,
+            "grid_cells": [
+              68,
+              68,
+              68
+            ],
+            "input_component_volume": 4.179739111956684,
+            "input_components": 1,
+            "input_triangles": 5120,
+            "input_vertices": 2562,
+            "maximum_attribute_projection_distance": 0.001052030651855238,
+            "maximum_signed_field_change": 0.004460427910089493,
+            "output_components": 1,
+            "output_triangles": 115296,
+            "output_vertices": 57650,
+            "output_volume": 4.176000423645703,
+            "resolution": 64,
+            "reversed_input_components": 0,
+            "sampled_nodes": 328509,
+            "voxel_size": 0.03125,
+            "work": 15505098
+          },
+          "seconds": 0.281909833,
+          "settings": {
+            "field_smoothing_steps": 1,
+            "max_cells": 2500000,
+            "max_work": 150000000,
+            "resolution": 64,
+            "smoothing_steps": 2
+          }
+        },
+        {
+          "adjacent_folds_over_90": 0,
+          "fixture": "sphere-4",
+          "fold_excess_radians_world_length": 0.0,
+          "folds_over_90_total_world_length": 0.0,
+          "maximum_adjacent_fold_degrees": 12.115921756232297,
+          "minimum_cross_over_max_edge_squared": 0.07740874072131293,
+          "output": ".artifacts/remesh-field-trial/sphere-4-96.obrush",
+          "report": {
+            "distance_floor_voxels": 0.02,
+            "field_smoothing_steps": 1,
+            "grid_cells": [
+              100,
+              100,
+              100
+            ],
+            "input_component_volume": 4.179739111956684,
+            "input_components": 1,
+            "input_triangles": 5120,
+            "input_vertices": 2562,
+            "maximum_attribute_projection_distance": 0.0006631316088264246,
+            "maximum_signed_field_change": 0.0030339683095614092,
+            "output_components": 1,
+            "output_triangles": 259104,
+            "output_vertices": 129554,
+            "output_volume": 4.177988774532187,
+            "resolution": 96,
+            "reversed_input_components": 0,
+            "sampled_nodes": 1030301,
+            "voxel_size": 0.020833333333333332,
+            "work": 40900625
+          },
+          "seconds": 0.66735175,
+          "settings": {
+            "field_smoothing_steps": 1,
+            "max_cells": 2500000,
+            "max_work": 150000000,
+            "resolution": 96,
+            "smoothing_steps": 2
+          }
+        },
+        {
+          "adjacent_folds_over_90": 0,
+          "fixture": "sharp-box",
+          "fold_excess_radians_world_length": 0.0,
+          "folds_over_90_total_world_length": 0.0,
+          "maximum_adjacent_fold_degrees": 57.79192311072477,
+          "minimum_cross_over_max_edge_squared": 0.17601202940389596,
+          "output": ".artifacts/remesh-field-trial/sharp-box-32.obrush",
+          "report": {
+            "distance_floor_voxels": 0.02,
+            "field_smoothing_steps": 1,
+            "grid_cells": [
+              36,
+              36,
+              36
+            ],
+            "input_component_volume": 8.000000000000362,
+            "input_components": 1,
+            "input_triangles": 3072,
+            "input_vertices": 1538,
+            "maximum_attribute_projection_distance": 0.03048020601272583,
+            "maximum_signed_field_change": 0.015625,
+            "output_components": 1,
+            "output_triangles": 47848,
+            "output_vertices": 23926,
+            "output_volume": 7.960917120329136,
+            "resolution": 32,
+            "reversed_input_components": 0,
+            "sampled_nodes": 50653,
+            "voxel_size": 0.0625,
+            "work": 5092075
+          },
+          "seconds": 0.08613675,
+          "settings": {
+            "field_smoothing_steps": 1,
+            "max_cells": 2500000,
+            "max_work": 150000000,
+            "resolution": 32,
+            "smoothing_steps": 2
+          }
+        },
+        {
+          "adjacent_folds_over_90": 0,
+          "fixture": "sharp-box",
+          "fold_excess_radians_world_length": 0.0,
+          "folds_over_90_total_world_length": 0.0,
+          "maximum_adjacent_fold_degrees": 57.79182118277502,
+          "minimum_cross_over_max_edge_squared": 0.17600964321014276,
+          "output": ".artifacts/remesh-field-trial/sharp-box-64.obrush",
+          "report": {
+            "distance_floor_voxels": 0.02,
+            "field_smoothing_steps": 1,
+            "grid_cells": [
+              68,
+              68,
+              68
+            ],
+            "input_component_volume": 8.000000000000362,
+            "input_components": 1,
+            "input_triangles": 3072,
+            "input_vertices": 1538,
+            "maximum_attribute_projection_distance": 0.015240073204040527,
+            "maximum_signed_field_change": 0.0078125,
+            "output_components": 1,
+            "output_triangles": 194024,
+            "output_vertices": 97014,
+            "output_volume": 7.990116224140616,
+            "resolution": 64,
+            "reversed_input_components": 0,
+            "sampled_nodes": 328509,
+            "voxel_size": 0.03125,
+            "work": 22634787
+          },
+          "seconds": 0.35779925,
+          "settings": {
+            "field_smoothing_steps": 1,
+            "max_cells": 2500000,
+            "max_work": 150000000,
+            "resolution": 64,
+            "smoothing_steps": 2
+          }
+        },
+        {
+          "adjacent_folds_over_90": 0,
+          "fixture": "sharp-box",
+          "fold_excess_radians_world_length": 0.0,
+          "folds_over_90_total_world_length": 0.0,
+          "maximum_adjacent_fold_degrees": 57.79105699008565,
+          "minimum_cross_over_max_edge_squared": 0.17601552194976364,
+          "output": ".artifacts/remesh-field-trial/sharp-box-96.obrush",
+          "report": {
+            "distance_floor_voxels": 0.02,
+            "field_smoothing_steps": 1,
+            "grid_cells": [
+              100,
+              100,
+              100
+            ],
+            "input_component_volume": 8.000000000000362,
+            "input_components": 1,
+            "input_triangles": 3072,
+            "input_vertices": 1538,
+            "maximum_attribute_projection_distance": 0.01016002893447876,
+            "maximum_signed_field_change": 0.005208333333333336,
+            "output_components": 1,
+            "output_triangles": 438504,
+            "output_vertices": 219254,
+            "output_volume": 7.995590171387933,
+            "resolution": 96,
+            "reversed_input_components": 0,
+            "sampled_nodes": 1030301,
+            "voxel_size": 0.020833333333333332,
+            "work": 54799517
+          },
+          "seconds": 0.843843709,
+          "settings": {
+            "field_smoothing_steps": 1,
+            "max_cells": 2500000,
+            "max_work": 150000000,
+            "resolution": 96,
+            "smoothing_steps": 2
+          }
+        },
+        {
+          "adjacent_folds_over_90": 0,
+          "fixture": "overlapping-boxes",
+          "fold_excess_radians_world_length": 0.0,
+          "folds_over_90_total_world_length": 0.0,
+          "maximum_adjacent_fold_degrees": 59.7685560157096,
+          "minimum_cross_over_max_edge_squared": 0.13339158222251973,
+          "output": ".artifacts/remesh-field-trial/overlapping-boxes-32.obrush",
+          "report": {
+            "distance_floor_voxels": 0.02,
+            "field_smoothing_steps": 1,
+            "grid_cells": [
+              36,
+              26,
+              26
+            ],
+            "input_component_volume": 16.000000000000384,
+            "input_components": 2,
+            "input_triangles": 6144,
+            "input_vertices": 3076,
+            "maximum_attribute_projection_distance": 0.03920102119445801,
+            "maximum_signed_field_change": 0.0234375,
+            "output_components": 1,
+            "output_triangles": 29312,
+            "output_vertices": 14658,
+            "output_volume": 11.92954946280594,
+            "resolution": 32,
+            "reversed_input_components": 0,
+            "sampled_nodes": 26973,
+            "voxel_size": 0.09375,
+            "work": 2395435
+          },
+          "seconds": 0.05141975,
+          "settings": {
+            "field_smoothing_steps": 1,
+            "max_cells": 2500000,
+            "max_work": 150000000,
+            "resolution": 32,
+            "smoothing_steps": 2
+          }
+        },
+        {
+          "adjacent_folds_over_90": 0,
+          "fixture": "overlapping-boxes",
+          "fold_excess_radians_world_length": 0.0,
+          "folds_over_90_total_world_length": 0.0,
+          "maximum_adjacent_fold_degrees": 59.01359694106392,
+          "minimum_cross_over_max_edge_squared": 0.13290837176397255,
+          "output": ".artifacts/remesh-field-trial/overlapping-boxes-64.obrush",
+          "report": {
+            "distance_floor_voxels": 0.02,
+            "field_smoothing_steps": 1,
+            "grid_cells": [
+              68,
+              47,
+              47
+            ],
+            "input_component_volume": 16.000000000000384,
+            "input_components": 2,
+            "input_triangles": 6144,
+            "input_vertices": 3076,
+            "maximum_attribute_projection_distance": 0.019497931003570557,
+            "maximum_signed_field_change": 0.01171875,
+            "output_components": 1,
+            "output_triangles": 115920,
+            "output_vertices": 57962,
+            "output_volume": 11.982944774178693,
+            "resolution": 64,
+            "reversed_input_components": 0,
+            "sampled_nodes": 158976,
+            "voxel_size": 0.046875,
+            "work": 9362124
+          },
+          "seconds": 0.1873435,
+          "settings": {
+            "field_smoothing_steps": 1,
+            "max_cells": 2500000,
+            "max_work": 150000000,
+            "resolution": 64,
+            "smoothing_steps": 2
+          }
+        },
+        {
+          "adjacent_folds_over_90": 0,
+          "fixture": "overlapping-boxes",
+          "fold_excess_radians_world_length": 0.0,
+          "folds_over_90_total_world_length": 0.0,
+          "maximum_adjacent_fold_degrees": 57.791851559386046,
+          "minimum_cross_over_max_edge_squared": 0.15453111475535006,
+          "output": ".artifacts/remesh-field-trial/overlapping-boxes-96.obrush",
+          "report": {
+            "distance_floor_voxels": 0.02,
+            "field_smoothing_steps": 1,
+            "grid_cells": [
+              100,
+              68,
+              68
+            ],
+            "input_component_volume": 16.000000000000384,
+            "input_components": 2,
+            "input_triangles": 6144,
+            "input_vertices": 3076,
+            "maximum_attribute_projection_distance": 0.015968739986419678,
+            "maximum_signed_field_change": 0.0078125,
+            "output_components": 1,
+            "output_triangles": 261240,
+            "output_vertices": 130622,
+            "output_volume": 11.98520851413152,
+            "resolution": 96,
+            "reversed_input_components": 0,
+            "sampled_nodes": 480861,
+            "voxel_size": 0.03125,
+            "work": 34283567
+          },
+          "seconds": 0.559748458,
+          "settings": {
+            "field_smoothing_steps": 1,
+            "max_cells": 2500000,
+            "max_work": 150000000,
+            "resolution": 96,
+            "smoothing_steps": 2
+          }
+        },
+        {
+          "adjacent_folds_over_90": 0,
+          "fixture": "face-touching-boxes",
+          "fold_excess_radians_world_length": 0.0,
+          "folds_over_90_total_world_length": 0.0,
+          "maximum_adjacent_fold_degrees": 57.791711092075175,
+          "minimum_cross_over_max_edge_squared": 0.15453119523577627,
+          "output": ".artifacts/remesh-field-trial/face-touching-boxes-32.obrush",
+          "report": {
+            "distance_floor_voxels": 0.02,
+            "field_smoothing_steps": 1,
+            "grid_cells": [
+              36,
+              20,
+              20
+            ],
+            "input_component_volume": 16.000000000000377,
+            "input_components": 2,
+            "input_triangles": 6144,
+            "input_vertices": 3076,
+            "maximum_attribute_projection_distance": 0.06387472152709961,
+            "maximum_signed_field_change": 0.03125,
+            "output_components": 1,
+            "output_triangles": 19888,
+            "output_vertices": 9946,
+            "output_volume": 15.770110758458317,
+            "resolution": 32,
+            "reversed_input_components": 0,
+            "sampled_nodes": 16317,
+            "voxel_size": 0.125,
+            "work": 2280473
+          },
+          "seconds": 0.0438195,
+          "settings": {
+            "field_smoothing_steps": 1,
+            "max_cells": 2500000,
+            "max_work": 150000000,
+            "resolution": 32,
+            "smoothing_steps": 2
+          }
+        },
+        {
+          "adjacent_folds_over_90": 0,
+          "fixture": "face-touching-boxes",
+          "fold_excess_radians_world_length": 0.0,
+          "folds_over_90_total_world_length": 0.0,
+          "maximum_adjacent_fold_degrees": 57.791910238863515,
+          "minimum_cross_over_max_edge_squared": 0.15453061438126445,
+          "output": ".artifacts/remesh-field-trial/face-touching-boxes-64.obrush",
+          "report": {
+            "distance_floor_voxels": 0.02,
+            "field_smoothing_steps": 1,
+            "grid_cells": [
+              68,
+              36,
+              36
+            ],
+            "input_component_volume": 16.000000000000377,
+            "input_components": 2,
+            "input_triangles": 6144,
+            "input_vertices": 3076,
+            "maximum_attribute_projection_distance": 0.031937360763549805,
+            "maximum_signed_field_change": 0.015625,
+            "output_components": 1,
+            "output_triangles": 80816,
+            "output_vertices": 40410,
+            "output_volume": 15.94163342772688,
+            "resolution": 64,
+            "reversed_input_components": 0,
+            "sampled_nodes": 94461,
+            "voxel_size": 0.0625,
+            "work": 9372347
+          },
+          "seconds": 0.160146125,
+          "settings": {
+            "field_smoothing_steps": 1,
+            "max_cells": 2500000,
+            "max_work": 150000000,
+            "resolution": 64,
+            "smoothing_steps": 2
+          }
+        },
+        {
+          "adjacent_folds_over_90": 0,
+          "fixture": "face-touching-boxes",
+          "fold_excess_radians_world_length": 0.0,
+          "folds_over_90_total_world_length": 0.0,
+          "maximum_adjacent_fold_degrees": 57.791666305903995,
+          "minimum_cross_over_max_edge_squared": 0.15453233919855844,
+          "output": ".artifacts/remesh-field-trial/face-touching-boxes-96.obrush",
+          "report": {
+            "distance_floor_voxels": 0.02,
+            "field_smoothing_steps": 1,
+            "grid_cells": [
+              100,
+              52,
+              52
+            ],
+            "input_component_volume": 16.000000000000377,
+            "input_components": 2,
+            "input_triangles": 6144,
+            "input_vertices": 3076,
+            "maximum_attribute_projection_distance": 0.021291613578796387,
+            "maximum_signed_field_change": 0.010416666666666671,
+            "output_components": 1,
+            "output_triangles": 182704,
+            "output_vertices": 91354,
+            "output_volume": 15.9739274769653,
+            "resolution": 96,
+            "reversed_input_components": 0,
+            "sampled_nodes": 283709,
+            "voxel_size": 0.041666666666666664,
+            "work": 21776985
+          },
+          "seconds": 0.343791958,
+          "settings": {
+            "field_smoothing_steps": 1,
+            "max_cells": 2500000,
+            "max_work": 150000000,
+            "resolution": 96,
+            "smoothing_steps": 2
+          }
+        },
+        {
+          "adjacent_folds_over_90": 72,
+          "fixture": "user-sculpt",
+          "fold_excess_radians_world_length": 1.5572268299705305,
+          "folds_over_90_total_world_length": 3.703994360161921,
+          "maximum_adjacent_fold_degrees": 155.38601537897534,
+          "minimum_cross_over_max_edge_squared": 0.012149809979942163,
+          "output": ".artifacts/remesh-field-trial/user-sculpt-32.obrush",
+          "report": {
+            "distance_floor_voxels": 0.02,
+            "field_smoothing_steps": 1,
+            "grid_cells": [
+              23,
+              23,
+              36
+            ],
+            "input_component_volume": 4.336145272804665,
+            "input_components": 1,
+            "input_triangles": 123156,
+            "input_vertices": 61580,
+            "maximum_attribute_projection_distance": 0.07183232173967793,
+            "maximum_signed_field_change": 0.026913845911622047,
+            "output_components": 5,
+            "output_triangles": 10656,
+            "output_vertices": 5338,
+            "output_volume": 4.230567437790627,
+            "resolution": 32,
+            "reversed_input_components": 0,
+            "sampled_nodes": 21312,
+            "voxel_size": 0.10765538364648819,
+            "work": 3749783
+          },
+          "seconds": 0.127521459,
+          "settings": {
+            "field_smoothing_steps": 1,
+            "max_cells": 2500000,
+            "max_work": 150000000,
+            "resolution": 32,
+            "smoothing_steps": 2
+          }
+        },
+        {
+          "adjacent_folds_over_90": 86,
+          "fixture": "user-sculpt",
+          "fold_excess_radians_world_length": 1.0422896419156977,
+          "folds_over_90_total_world_length": 2.295962254389329,
+          "maximum_adjacent_fold_degrees": 167.26473791293762,
+          "minimum_cross_over_max_edge_squared": 0.013623793864865655,
+          "output": ".artifacts/remesh-field-trial/user-sculpt-64.obrush",
+          "report": {
+            "distance_floor_voxels": 0.02,
+            "field_smoothing_steps": 1,
+            "grid_cells": [
+              42,
+              42,
+              68
+            ],
+            "input_component_volume": 4.336145272804665,
+            "input_components": 1,
+            "input_triangles": 123156,
+            "input_vertices": 61580,
+            "maximum_attribute_projection_distance": 0.03968519090604399,
+            "maximum_signed_field_change": 0.013456922955811024,
+            "output_components": 1,
+            "output_triangles": 45276,
+            "output_vertices": 22640,
+            "output_volume": 4.309827542113275,
+            "resolution": 64,
+            "reversed_input_components": 0,
+            "sampled_nodes": 127581,
+            "voxel_size": 0.053827691823244095,
+            "work": 14377179
+          },
+          "seconds": 0.288000167,
+          "settings": {
+            "field_smoothing_steps": 1,
+            "max_cells": 2500000,
+            "max_work": 150000000,
+            "resolution": 64,
+            "smoothing_steps": 2
+          }
+        },
+        {
+          "adjacent_folds_over_90": 58,
+          "fixture": "user-sculpt",
+          "fold_excess_radians_world_length": 0.4221251691239661,
+          "folds_over_90_total_world_length": 1.1563995156693447,
+          "maximum_adjacent_fold_degrees": 148.39143632999946,
+          "minimum_cross_over_max_edge_squared": 0.013758654381840183,
+          "output": ".artifacts/remesh-field-trial/user-sculpt-96.obrush",
+          "report": {
+            "distance_floor_voxels": 0.02,
+            "field_smoothing_steps": 1,
+            "grid_cells": [
+              60,
+              60,
+              100
+            ],
+            "input_component_volume": 4.336145272804665,
+            "input_components": 1,
+            "input_triangles": 123156,
+            "input_vertices": 61580,
+            "maximum_attribute_projection_distance": 0.021060433648475273,
+            "maximum_signed_field_change": 0.00897128197054068,
+            "output_components": 1,
+            "output_triangles": 103148,
+            "output_vertices": 51572,
+            "output_volume": 4.325683700747785,
+            "resolution": 96,
+            "reversed_input_components": 0,
+            "sampled_nodes": 375821,
+            "voxel_size": 0.03588512788216273,
+            "work": 33030666
+          },
+          "seconds": 0.550891666,
+          "settings": {
+            "field_smoothing_steps": 1,
+            "max_cells": 2500000,
+            "max_work": 150000000,
+            "resolution": 96,
+            "smoothing_steps": 2
+          }
+        }
+      ],
+      "result": "Rejected. User model at resolution64: fold length2.2580 to2.2960, severity0.80861 to1.04229, maximum fold153.8 to167.3 degrees. Resolution32 split2components into5. Improved healthy-box corners do not override the actual-model regression. The symmetric distance audit was not run after the geometry gate had already failed."
+    }
+  ],
+  "limitations": [
+    "Voxel resolution changes shape and may erase thin features or merge close solids. User sculpt32 splits a tiny component;64/96 remain connected.",
+    "Source has holes/nonmanifold/inconsistent winding/zero area/pathological triangles: operation rejects atomically rather than repairing unknown solids.",
+    "Marching tetrahedra returns triangles, not quads or persistent subdivision; density and quality differ by surface orientation.",
+    "User damaged sculpt remains imperfect: default64 foldworldlength2.258 vs original1.019, so no damage-repair promotion.",
+    "Nearest-surface attributes interpolate existing values; mask values transfer but topology/positions of protected vertices do not remain fixed.",
+    "Tests do not establish global self-intersection absence after smoothing, thin-surface preservation, peak memory, physical latency or reference parity.",
+    "Input component volume includes overlapping regions multiply; it is not expected union volume.",
+    "Time is one native release CLI measurement per fixture/resolution, excludes input JSON parsing/output JSON saving, not browser benchmark."
+  ],
+  "raw_receipts": [
+    {
+      "path": ".artifacts/remesh-final/results.json",
+      "bytes": 16946,
+      "sha256": "839fe582782aa3737b4cfb29b4d4f94cfaee06666e5f4b4e96ca1479899d8064"
+    },
+    {
+      "path": ".artifacts/remesh-restored-tests.log",
+      "bytes": 920,
+      "sha256": "3aa3a8a020b8991feb5163c19c8fb5925788c155826eef2bc395281c3f72b409"
+    },
+    {
+      "path": ".artifacts/remesh-restored-clippy.log",
+      "bytes": 147,
+      "sha256": "9f1e20d17f03f0781e96f3a5cb207caeef7a32b099b5a043686a3c83c5e87c0a"
+    },
+    {
+      "path": ".artifacts/remesh-restored-wasm-check.log",
+      "bytes": 147,
+      "sha256": "11345ab3f84f549cd91efe24ad1b82cea7392d847d6d4b60c179ef40833e21f5"
+    },
+    {
+      "path": ".artifacts/remesh-final/receipt.json",
+      "note": "Frozen pre-trial matrix/source receipt, source hashes restored exactly."
+    }
+  ],
+  "current_production_source_hashes": [
+    {
+      "path": "crates/obrush-core/src/remesh.rs",
+      "bytes": 33706,
+      "sha256": "410889f5371caa435bfc960b3312d661de1c13aefcc3a02e9ed0be80ffda8d36"
+    },
+    {
+      "path": "crates/obrush-core/tests/remesh.rs",
+      "bytes": 8786,
+      "sha256": "4076ca7c8282014c1389f9881b0f5235c1c982eae7b6e5a6f03ad8ff25e17779"
+    },
+    {
+      "path": "crates/obrush-core/examples/remesh_probe.rs",
+      "bytes": 5440,
+      "sha256": "18b1fb1a4c11e112015525d9afb55c814a28e8fcf3e43e094a126dbca3289b19"
+    }
+  ]
+}

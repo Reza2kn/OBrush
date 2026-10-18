@@ -1,0 +1,1064 @@
+{
+  "schema_version": 1,
+  "version": "0.1.12",
+  "recorded_at_utc": "2026-10-13T18:31:02.719709+00:00",
+  "status": "Scoped shared-core extraction contracts and all323workspace tests pass on final source; no reference execution",
+  "git": "Unborn main; source hashes identify checks",
+  "reference": {
+    "version": "ZBrush desktop 2026.2.1",
+    "execution": false,
+    "primary_scope": [
+      "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/modeling-basics/creating-meshes/mesh-extract/mesh-extract.html",
+      "https://help.maxon.net/zbr/en-us/Content/html/reference-guide/tool/polymesh/subtool/subtool.html"
+    ]
+  },
+  "owner_receipt": {
+    "path": ".artifacts/mask-extract-core/receipt.json",
+    "bytes": 28380,
+    "sha256": "8871e3b21be8ae1dbcc209ddc85bdd1004ef97338f703ebcf1c6825a61bcadad"
+  },
+  "independent_receipt": {
+    "path": ".artifacts/mask-extract-contract-audit/final-receipt.json",
+    "bytes": 27013,
+    "sha256": "2670775fc65f3339738b3d5a21e099d6d6aeed38374e82f49ccd5ddfa8db5912"
+  },
+  "independent_audit": {
+    "created_utc": "2026-10-13T18:15:25.214991+00:00",
+    "feature": "OBrush 0.1.12 mask extraction",
+    "scope": "Independent executable OBrush core acceptance contracts and bounded source review; no measured ZBrush reference behavior",
+    "status": "32 tests pass and focused strict Clippy passes on frozen production source",
+    "reference_execution": false,
+    "platform": {
+      "os": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+      "architecture": "arm64",
+      "host": "native Rust CPU tests only"
+    },
+    "preregistered": {
+      "path": ".artifacts/mask-extract-contract-audit/preregistered.json",
+      "sha256": "8933c48ee8065a7f5a8da8d9a44abc9489c49b34d3a8aa2879e8268061f4908d",
+      "bytes": 1969
+    },
+    "source_files": [
+      {
+        "path": "AGENTS.md",
+        "sha256": "b9aebf717528d1887a30f15d23ca492cac78e86542f0f7f77e72ee21545cebd4",
+        "bytes": 1312
+      },
+      {
+        "path": "Cargo.toml",
+        "sha256": "41711ee5eeab0284c66e7fd57cd1fd157d00339ea44e570238fc2aa7de79aad2",
+        "bytes": 684
+      },
+      {
+        "path": "Cargo.lock",
+        "sha256": "befc1d8a9d4a9376d6a5693d39cc3fba5364f4795c0d15001aa2d2f6e4abadd7",
+        "bytes": 92206
+      },
+      {
+        "path": "crates/obrush-core/Cargo.toml",
+        "sha256": "05bde7e131c4bc2f53709cfc3d5fcc12f2363105fba5f65ee18fa8c34e8039ce",
+        "bytes": 250
+      },
+      {
+        "path": "crates/obrush-core/src/extract.rs",
+        "sha256": "5acda3c15e6497b2093aea37a0d7de7edb5b83b109eef10ed0165c5145597f06",
+        "bytes": 20085
+      },
+      {
+        "path": "crates/obrush-core/src/document.rs",
+        "sha256": "838a6bce1b23b59c98ebf69630d8769557fd313704931684d94b59d1d1b5a23e",
+        "bytes": 70071
+      },
+      {
+        "path": "crates/obrush-core/src/lib.rs",
+        "sha256": "ecce98c15eb664b40c20ded844a4c6339d3dba9cd3b7660ac79cdde3b5c01335",
+        "bytes": 1402
+      },
+      {
+        "path": "crates/obrush-core/src/mesh.rs",
+        "sha256": "7e9027e1aff2c2a1d3744e7d1c27df4c0aed27f9ef104b70ef83454d9fa791ae",
+        "bytes": 60899
+      },
+      {
+        "path": "crates/obrush-core/src/subtools.rs",
+        "sha256": "e5697432bfb40a6c4fe35e4557cd8bd5fadfac604dcd7ca584c4817e8122ab6c",
+        "bytes": 15459
+      },
+      {
+        "path": "crates/obrush-core/src/multires.rs",
+        "sha256": "bb4282a9b558161be5297eed9c2b3dd6bc0e1849d898598caaebd52afae04a36",
+        "bytes": 13536
+      },
+      {
+        "path": "crates/obrush-core/src/layers.rs",
+        "sha256": "03f745e11208ba529d34c7b9ab8d974cf6cefeb1d80ebbeb14645e3b1a42f6fc",
+        "bytes": 35026
+      },
+      {
+        "path": "crates/obrush-core/src/morph.rs",
+        "sha256": "408b99c714e318617fa814a152ca76c52265b5519968afe8d4d0783f81c2925a",
+        "bytes": 10108
+      },
+      {
+        "path": "crates/obrush-core/tests/mask_extract_contract.rs",
+        "sha256": "79373f14533edf3ef5579a085b668e2d3c7d5f31c25f28c7cc05a3d5ef73e1da",
+        "bytes": 36265
+      }
+    ],
+    "fixture": {
+      "origin": "Independently authored analytical triangle/square/annulus/wedge/island coordinates and mask/RGB inputs embedded in the hashed test source; generated icosphere symmetry and independent scalar oracle; no commercial files",
+      "license": "MIT repository fixtures",
+      "source": {
+        "path": "crates/obrush-core/tests/mask_extract_contract.rs",
+        "sha256": "79373f14533edf3ef5579a085b668e2d3c7d5f31c25f28c7cc05a3d5ef73e1da",
+        "bytes": 36265
+      },
+      "case_names": [
+        "defaults_and_report_preserve_exact_requested_parameters",
+        "one_selected_corner_clips_to_analytic_triangle_and_rgb",
+        "two_selected_corners_clip_to_analytic_quadrilateral",
+        "shared_diagonal_cut_is_welded_and_runs_are_deterministic",
+        "exact_threshold_vertex_is_reused_without_duplicate_cuts",
+        "full_exact_threshold_face_is_kept_but_zero_area_touches_are_empty",
+        "threshold_and_thickness_boundaries_follow_analytic_patch_area",
+        "disconnected_patches_form_separate_closed_solid_components",
+        "annulus_keeps_inner_hole_and_closes_both_boundary_loops",
+        "full_closed_sphere_has_nested_skin_components_and_no_side_faces",
+        "selected_geometric_normals_ignore_stale_source_shading_normals",
+        "right_angle_patch_offsets_shared_vertices_by_angle_weighted_normal",
+        "reversing_source_winding_reverses_offset_direction_but_keeps_positive_volume",
+        "invalid_nonfinite_and_out_of_range_settings_preserve_scene_and_redo",
+        "empty_selected_area_preserves_scene_and_redo",
+        "nonmanifold_shared_edge_and_inconsistent_winding_reject_atomically",
+        "disconnected_source_vertex_fan_and_branching_threshold_boundary_are_rejected",
+        "duplicate_and_geometrically_degenerate_faces_are_rejected",
+        "invalid_source_channels_indices_and_face_ids_do_not_mutate_mesh",
+        "f32_thickness_collapse_is_rejected_with_scene_and_redo_intact",
+        "positive_f64_cut_that_collapses_in_f32_is_rejected",
+        "world_coordinate_overflow_is_rejected_before_document_installation",
+        "malformed_over_limit_source_counts_reject_without_output_allocation",
+        "full_subtool_count_rejects_extraction_without_consuming_redo_or_identity",
+        "extracted_part_preserves_rich_source_inactive_arc_and_exact_scene_history",
+        "later_edits_to_extracted_part_are_independent_of_source",
+        "solo_selection_is_retained_and_new_part_becomes_effectively_visible",
+        "hidden_active_source_rejects_extraction_without_changing_redo",
+        "pending_invalid_stroke_restores_complete_scene_and_preserves_redo",
+        "nonbinary_masks_use_general_scalar_interpolation_with_barycentric_rgb",
+        "unselected_degenerate_component_still_rejects_the_complete_source",
+        "pending_valid_stroke_finishes_before_one_separate_extraction_undo_step"
+      ]
+    },
+    "gates": {
+      "unit_scale_max_component_point_error": 2e-06,
+      "max_component_rgb_error": 1e-06,
+      "unit_scale_absolute_signed_volume_error": 2e-06,
+      "topology_winding_welding_source_channels_scene_metadata_history": "exact; connected vertex fans, edge count two with opposite winding, no duplicate unordered triangles"
+    },
+    "maxima": {
+      "signed-volume": {
+        "case": "closed-sphere",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 3.235957782288246e-08
+      },
+      "positions": {
+        "case": "nonbinary-masks",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 1.1874361327546268e-08
+      },
+      "colors": {
+        "case": "nonbinary-masks",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 2.6153060384004334e-08
+      },
+      "radial-offset-positions": {
+        "case": "closed-sphere",
+        "family": "radial-offset-positions",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      "angle-weighted-positions": {
+        "case": "right-angle-patch",
+        "family": "angle-weighted-positions",
+        "gate": 2e-06,
+        "max_absolute_error": 1.494483946318237e-10
+      }
+    },
+    "metric_rows": [
+      {
+        "case": "annulus",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "disconnected-islands",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "threshold-endpoint",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "threshold-endpoint",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "threshold-endpoint",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "closed-sphere",
+        "family": "radial-offset-positions",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "closed-sphere",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 3.235957782288246e-08
+      },
+      {
+        "case": "nonbinary-masks",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 1.1874361327546268e-08
+      },
+      {
+        "case": "nonbinary-masks",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 2.6153060384004334e-08
+      },
+      {
+        "case": "nonbinary-masks",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 7.426107081695554e-11
+      },
+      {
+        "case": "one-corner",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "one-corner",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "one-corner",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "reversed-source",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "right-angle-patch",
+        "family": "angle-weighted-positions",
+        "gate": 2e-06,
+        "max_absolute_error": 1.494483946318237e-10
+      },
+      {
+        "case": "geometric-not-shading-normals",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "geometric-not-shading-normals",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "welded-square",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "welded-square",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "welded-square",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 1.734723475976807e-18
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 9.220093289655402e-13
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 9.313225746154785e-09
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 9.313225746154785e-09
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 1.8440186530521707e-10
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 9.313225746154785e-09
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 9.313225746154785e-09
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 9.220093521999928e-09
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 9.313225746154785e-09
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 9.313225746154785e-09
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "parameter-boundaries",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "two-corners",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "two-corners",
+        "family": "colors",
+        "gate": 1e-06,
+        "max_absolute_error": 0.0
+      },
+      {
+        "case": "two-corners",
+        "family": "signed-volume",
+        "gate": 2e-06,
+        "max_absolute_error": 0.0
+      }
+    ],
+    "rejection_observations": [
+      {
+        "case": "disconnected-vertex-fan",
+        "error": "Extraction refuses branching/ambiguous boundary vertices",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "threshold-touching-regions",
+        "error": "Extraction refuses branching/ambiguous boundary vertices",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "duplicate-face",
+        "error": "Extraction requires consistently oriented manifold edges",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "zero-area-source-face",
+        "error": "Mask extraction source face 0 is collapsed",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "empty-mask",
+        "error": "The mask contains no selected surface area",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "rounded-thickness-collapse",
+        "error": "Extraction thickness collapses at f32 coordinate precision",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "subtool-count-cap",
+        "error": "At most 32 SubTools are supported",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "hidden-active-source",
+        "error": "Show the active SubTool before extracting its mask",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-threshold",
+        "error": "Mask extraction threshold must be finite in 0.01\u20130.99",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-threshold",
+        "error": "Mask extraction threshold must be finite in 0.01\u20130.99",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-threshold",
+        "error": "Mask extraction threshold must be finite in 0.01\u20130.99",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-threshold",
+        "error": "Mask extraction threshold must be finite in 0.01\u20130.99",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-threshold",
+        "error": "Mask extraction threshold must be finite in 0.01\u20130.99",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-threshold",
+        "error": "Mask extraction threshold must be finite in 0.01\u20130.99",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-threshold",
+        "error": "Mask extraction threshold must be finite in 0.01\u20130.99",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-threshold",
+        "error": "Mask extraction threshold must be finite in 0.01\u20130.99",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-thickness",
+        "error": "Mask extraction thickness must be finite in 0.0001\u20131 world units",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-thickness",
+        "error": "Mask extraction thickness must be finite in 0.0001\u20131 world units",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-thickness",
+        "error": "Mask extraction thickness must be finite in 0.0001\u20131 world units",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-thickness",
+        "error": "Mask extraction thickness must be finite in 0.0001\u20131 world units",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-thickness",
+        "error": "Mask extraction thickness must be finite in 0.0001\u20131 world units",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-thickness",
+        "error": "Mask extraction thickness must be finite in 0.0001\u20131 world units",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-thickness",
+        "error": "Mask extraction thickness must be finite in 0.0001\u20131 world units",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "three-face-edge",
+        "error": "Extraction refuses nonmanifold edges with more than two faces",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "same-direction-shared-edge",
+        "error": "Extraction requires consistently oriented manifold edges",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "rounded-cut-collapse",
+        "error": "Mask extraction refuses collapsed/flipped clipped patch geometry",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "unselected-zero-area-source-face",
+        "error": "Mask extraction source face 1 is collapsed",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "outward-coordinate-overflow",
+        "error": "Extracted shell exceeds finite world-coordinate bounds",
+        "redo_preserved": true,
+        "scene_exact": true
+      }
+    ],
+    "runs": [
+      {
+        "name": "run-1",
+        "command": "cargo test -p obrush-core --test mask_extract_contract -- --nocapture",
+        "exit_code": 0,
+        "passed_tests": 29,
+        "duration_seconds": 0.16,
+        "log": {
+          "path": ".artifacts/mask-extract-contract-audit/run-1.log",
+          "sha256": "91c4a87a4ae49f4a61e1fc8a4420c66722b2c8b7e242472b30398677fb764b1d",
+          "bytes": 15149
+        },
+        "manifest": {
+          "path": ".artifacts/mask-extract-contract-audit/run-1-source.json",
+          "sha256": "5df11b581aff824adf3acce6f5a724a1461d7148ba825ede678d22eb85c2890f",
+          "bytes": 1665
+        },
+        "note": "First diagnostic suite; parallel nocapture metric lines interleaved, preserved verbatim."
+      },
+      {
+        "name": "run-2",
+        "command": "cargo test -p obrush-core --test mask_extract_contract -- --nocapture --test-threads=1",
+        "exit_code": 0,
+        "passed_tests": 32,
+        "duration_seconds": 0.21,
+        "log": {
+          "path": ".artifacts/mask-extract-contract-audit/run-2.log",
+          "sha256": "896ff095a1167fa9b762276ff7f9483467fce2b956531cf56f6f3baa12f4ca45",
+          "bytes": 15963
+        },
+        "manifest": {
+          "path": ".artifacts/mask-extract-contract-audit/run-2-source.json",
+          "sha256": "983a06b57a22f029675bd9c88dc12d6e35c20b6b8b445311cab86fd68b7ed78b",
+          "bytes": 1056
+        },
+        "coverage_addition": {
+          "path": ".artifacts/mask-extract-contract-audit/run-2-added-coverage.json",
+          "sha256": "f422561b94a8928ec25409fce5d15c82abe8861a61e9c6bfe7001181a205a897",
+          "bytes": 602
+        },
+        "note": "Added nonbinary analytic mask oracle, unselected invalid-source validation, pending valid-stroke history separation and extraction-specific source caps. No original gate changed."
+      },
+      {
+        "name": "initial-strict-lint",
+        "command": "cargo clippy -p obrush-core --test mask_extract_contract -- -D warnings",
+        "exit_code": 101,
+        "log": {
+          "path": ".artifacts/mask-extract-contract-audit/clippy-focused.log",
+          "sha256": "2ca0c7df49fa5e82c24332217641f0084ade90b646882c59d04a2f3a88a36c68",
+          "bytes": 751
+        },
+        "failure": "Independent helper type_complexity warning on nested map; production unaffected."
+      },
+      {
+        "name": "final-strict-lint",
+        "command": "cargo clippy -p obrush-core --test mask_extract_contract -- -D warnings",
+        "exit_code": 0,
+        "log": {
+          "path": ".artifacts/mask-extract-contract-audit/clippy-final.log",
+          "sha256": "f01be628d9b4991c80e5b02eed201d44939a899cd98eb9a3c2101102712ac2ea",
+          "bytes": 148
+        },
+        "note": "Factored identical map/tuple into EdgeUses/DirectedFaceUse aliases, no gate change."
+      },
+      {
+        "name": "run-3",
+        "command": "cargo test -p obrush-core --test mask_extract_contract -- --nocapture --test-threads=1",
+        "exit_code": 0,
+        "passed_tests": 32,
+        "duration_seconds": 0.2,
+        "log": {
+          "path": ".artifacts/mask-extract-contract-audit/run-3.log",
+          "sha256": "24ac95306309c6dea49e0e1c34f1b2cfe0c4601225e7b31d1bc6ebed5ced530c",
+          "bytes": 15963
+        },
+        "manifest": {
+          "path": ".artifacts/mask-extract-contract-audit/run-3-source.json",
+          "sha256": "87af90a2eec9ffc3c84b4705cd1b719719e1e2b81de2f874ffb5a059a10cdbf8",
+          "bytes": 1209
+        },
+        "note": "Final helper hash after strict-lint alias fix, same frozen production hashes and unchanged numerical gates."
+      }
+    ],
+    "source_review": [
+      {
+        "path": "crates/obrush-core/src/extract.rs",
+        "lines": [
+          68,
+          85
+        ],
+        "finding": "Finite/range settings and extraction-specific source count limits precede validation and topology scratch allocation. Entire source validated including unselected faces."
+      },
+      {
+        "path": "crates/obrush-core/src/extract.rs",
+        "lines": [
+          124,
+          150
+        ],
+        "finding": "Patch data is bounded; checked output counts precede outer skin allocations. Coordinate overflow and representational thickness collapse reject."
+      },
+      {
+        "path": "crates/obrush-core/src/extract.rs",
+        "lines": [
+          339,
+          450
+        ],
+        "finding": "Ordered edge incidence, orientation and union/find vertex fans reject edge/nonmanifold/branching ambiguity. Directed boundary loops and output closure are checked."
+      },
+      {
+        "path": "crates/obrush-core/src/document.rs",
+        "lines": [
+          655,
+          708
+        ],
+        "finding": "Pending stroke finish/reject, hidden-active and object count guards precede extraction; add_subtool captures full source and validates aggregate candidate before installation/history mutation."
+      }
+    ],
+    "capacity": {
+      "extraction_source_vertices": 250000,
+      "extraction_source_triangles": 500000,
+      "general_output_vertices": 1000000,
+      "general_output_triangles": 2000000,
+      "subtools": 32,
+      "input_guard_runtime": "Exact extraction cap+1 and general cap+1 malformed public meshes rejected; 32-object scene rejected extraction preserving serialized scene and redo",
+      "review_only": "Valid near-cap output and aggregate vertex/face/layer/Morph/storage/serialized output limits inspected in source, not exercised with near-cap valid fixtures"
+    },
+    "limitations": [
+      "No ZBrush extraction fixture or parity conclusion",
+      "No native GUI, physical input, browser/WASM execution or user file persistence check in this audit",
+      "No large-mesh latency, peak memory or general maximum-capacity benchmark",
+      "No global self-intersection/offset collision prevention established",
+      "Unit-scale fixture tolerances are not global precision bounds"
+    ]
+  },
+  "owner_checks": [
+    {
+      "artifact": {
+        "bytes": 0,
+        "path": ".artifacts/mask-extract-core/fmt-final.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exit_code": 0,
+      "finished_at_epoch": 1791915344.581119,
+      "log": ".artifacts/mask-extract-core/fmt-final.log",
+      "name": "fmt-final",
+      "started_at_epoch": 1791915344.3251462
+    },
+    {
+      "artifact": {
+        "bytes": 148,
+        "path": ".artifacts/mask-extract-core/clippy-native-final.log",
+        "sha256": "c268619efbaaa319f8c4a78e53cbb5de0ac312345b7c9e57f0562c47898bf93c"
+      },
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "-p",
+        "obrush-core",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "finished_at_epoch": 1791915345.784995,
+      "log": ".artifacts/mask-extract-core/clippy-native-final.log",
+      "name": "clippy-native-final",
+      "started_at_epoch": 1791915344.581541
+    },
+    {
+      "artifact": {
+        "bytes": 148,
+        "path": ".artifacts/mask-extract-core/check-wasm-final.log",
+        "sha256": "16f98297fd455ef60ff19334873ff68c8aa06f99dfeeba0df7b4385e9f2b180a"
+      },
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "-p",
+        "obrush-core",
+        "--target",
+        "wasm32-unknown-unknown"
+      ],
+      "exit_code": 0,
+      "finished_at_epoch": 1791915346.9807801,
+      "log": ".artifacts/mask-extract-core/check-wasm-final.log",
+      "name": "check-wasm-final",
+      "started_at_epoch": 1791915345.78531
+    },
+    {
+      "artifact": {
+        "bytes": 148,
+        "path": ".artifacts/mask-extract-core/clippy-wasm-final.log",
+        "sha256": "5764a0034826a533eda371f4cb100df7d54cc50ea0d79426ee0b48bd3f08b6f9"
+      },
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "-p",
+        "obrush-core",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "finished_at_epoch": 1791915348.27312,
+      "log": ".artifacts/mask-extract-core/clippy-wasm-final.log",
+      "name": "clippy-wasm-final",
+      "started_at_epoch": 1791915346.981119
+    }
+  ],
+  "owner_geometry_policy": {
+    "attributes": "Source is nonmutating. Extracted masks are zero; source RGB is retained at originals and interpolated along cuts. New part has no layers, target or levels.",
+    "clipping": "Ordered triangles clipped at linear mask >= threshold. f64 canonical edge interpolation rounded to f32; exact-threshold intersections use original endpoint IDs. Zero-area point/edge touches are discarded.",
+    "normal": "Corner-angle-weighted f64 geometric normals computed from the selected rounded patch. Stored source normals are ignored; source winding defines outward. Every incident face must see positive normal/rounded outward displacement.",
+    "precision": "Every source/clipped/outer/side face must be finite and nonzero area; clip and extrusion orientations must remain positive relative to their local expected face directions. f32 thickness collapse/world overflow rejects.",
+    "shell": "Reversed original inner skin, same-winding outer skin displaced by thickness, two outward side triangles per boundary edge. Closed patches can form two disconnected nested closed surfaces.",
+    "topology": "Entire source, selected patch and result checked for ordered edge incidence, connected vertex-corner fans and directed unambiguous boundary loops. Result must have no boundary edges.",
+    "welding": "Original vertex IDs and canonical undirected source-edge cut IDs; deterministic first triangle/corner encounter output ordering, with no spatial-coordinate welding."
+  },
+  "owner_transaction_policy": "Finish/reject pending stroke before preparation; reject hidden active/max32 objects; compute nonmutating shell, then checked add_subtool appends one whole-scene transaction. Original full mesh/attributes/layers/target/levels and inactive Arc state remain retained. Failed extraction/aggregate budget checks preserve scene and redo.",
+  "owner_limits": {
+    "aggregate_scene_geometry": "Existing 1M vertices/2M triangles, including retained levels, enforced by checked append.",
+    "complexity": "Ordered topology sorting plus union/find; bounded by hard source/patch/output counts. No repeated per-vertex full-face scans.",
+    "memory_scope": "Hard array/count budgets bound retained structures and scratch inputs; this is not a measured or universal peak process-memory limit.",
+    "output_triangles": 2000000,
+    "output_vertices": 1000000,
+    "patch_triangles": 1000000,
+    "patch_vertices": 500000,
+    "project_history_limits": "Existing bounded 128MiB project/output/history rules retained.",
+    "source_triangles": 500000,
+    "source_vertices": 250000,
+    "subtools": 32
+  },
+  "retained_owner_failures": [
+    {
+      "artifact": {
+        "bytes": 1155,
+        "path": ".artifacts/mask-extract-core/owner-first.log",
+        "sha256": "24db59e5f3525cd220d11ab8f4613b5192a87f5c08b2071adb38f2c45a107cf9"
+      },
+      "cause": "Owner helper compile referenced two guessed existing API names; changed to set_layer_visibility and level_count.",
+      "exit_code": 101
+    },
+    {
+      "artifact": {
+        "bytes": 1788,
+        "path": ".artifacts/mask-extract-core/owner-second.log",
+        "sha256": "5f5e83fa44ac0017b46666fe4c9b685f7994efc76a19e2f66d053852cae9b51c"
+      },
+      "cause": "Owner full-mask helper incorrectly assumed source IDs retain original ordering after compact extraction; helper now compares exact coordinate bits and remapped winding. Owner redo helper inspected another active object and expected earlier navigation state; it now returns to extracted state before undo.",
+      "exit_code": 101
+    },
+    {
+      "artifact": {
+        "bytes": 838,
+        "path": ".artifacts/mask-extract-core/clippy-native.log",
+        "sha256": "c09b2e3dc49bc5460a6b63487e479bcb633a18b851fe08f11a8d48d143053194"
+      },
+      "cause": "Owner precision fixture literal triggered excessive_precision lint; replaced with exact same f32 next-ULP via from_bits. No geometry gate/value changed.",
+      "exit_code": 101
+    }
+  ],
+  "host_receipt": {
+    "path": ".artifacts/mask-extract-host/receipt.json",
+    "bytes": 5010,
+    "sha256": "dab483badc5e9d439fbc6fde6fbd00ad53900e95a2a9d0f0ad5b5a847be9723f"
+  },
+  "limitations": [
+    "Global self-intersections, collisions and overlaps are unverified; correspondence validation does not spatially weld coincident distinct IDs.",
+    "No smoothing, preview, negative or symmetric thickness, visibility-region selection, PolyGroups, UVs or material extraction.",
+    "This operation is not a repair of damaged input and can reject ambiguous/ill-conditioned source or extrusion geometry.",
+    "No browser latency, native interaction, commercial reference fixture or ZBrush parity result is asserted here. Parent owns final workspace/build/host/browser release checks.",
+    "No ZBrush extraction fixture or parity conclusion",
+    "No native GUI, physical input, browser/WASM execution or user file persistence check in this audit",
+    "No large-mesh latency, peak memory or general maximum-capacity benchmark",
+    "No global self-intersection/offset collision prevention established",
+    "Unit-scale fixture tolerances are not global precision bounds"
+  ],
+  "final_source_manifest": {
+    "path": ".artifacts/mask-extract-release-0.1.12-final/source-manifest.json",
+    "bytes": 13500,
+    "sha256": "cf85b0415b58491d3c97f8d2ef07a3c95ef29a1646d70f46dbb6bd26849f9f93"
+  }
+}

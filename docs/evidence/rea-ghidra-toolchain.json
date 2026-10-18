@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-12T18:18:18.399194+00:00",
+  "rea_source_commit": "ec2d251c0ad8382e0665546be5ec8f5f1c175962",
+  "readiness": {
+    "command": "GHIDRA_INSTALL_DIR=<workspace>/.tools/ghidra/ghidra_12.1.4_PUBLIC JAVA_HOME=<workspace>/.tools/jdk/jdk-21.0.12.1+1/Contents/Home node .tools/rea/scripts/rea.mjs doctor --provider ghidra --json",
+    "exit_code": 0,
+    "healthy": true,
+    "scope": {
+      "mode": "explicit",
+      "clients": [],
+      "providers": [
+        "ghidra"
+      ],
+      "skill": false,
+      "target": null
+    },
+    "passed_checks": [
+      "node",
+      "ghidra",
+      "ghidra-platform",
+      "ghidra-architecture",
+      "ghidra-installation",
+      "ghidra-version",
+      "ghidra-headless",
+      "ghidra-native_decompiler",
+      "ghidra-java"
+    ]
+  },
+  "downloads": [
+    {
+      "product": "Ghidra",
+      "version": "12.1.4",
+      "source_url": "https://github.com/NationalSecurityAgency/ghidra/releases/tag/Ghidra_12.1.4_build",
+      "archive_name": "ghidra_12.1.4_PUBLIC_20260921.zip",
+      "bytes": 569649598,
+      "sha256": "ddac49f903da9d5bac833e5cc79395098b9c33cfd3279be5f31bd00387d2d4db",
+      "vendor_digest_verified": true,
+      "directory": ".tools/ghidra/ghidra_12.1.4_PUBLIC"
+    },
+    {
+      "product": "Temurin OpenJDK",
+      "version": "21.0.12.1+1",
+      "architecture": "macOS ARM64",
+      "source_url": "https://github.com/adoptium/temurin21-binaries/releases/tag/jdk-21.0.12.1%2B1",
+      "archive_name": "OpenJDK21U-jdk_aarch64_mac_hotspot_21.0.12.1_1.tar.gz",
+      "bytes": 200073404,
+      "sha256": "3623232f33a9c3baadf304480b2535f9a3cba8a58d42ecbb438ba267315d9998",
+      "vendor_digest_verified": true,
+      "java_home": ".tools/jdk/jdk-21.0.12.1+1/Contents/Home"
+    }
+  ],
+  "native_decompiler": {
+    "source": "C++ source included in official Ghidra release ZIP",
+    "command": "make -j4 ghidra_opt ARCH_TYPE='-arch arm64' ADDITIONAL_FLAGS='-mmacosx-version-min=11.0 -w'",
+    "binary_directory": "Ghidra/Features/Decompiler/os/mac_arm_64/decompile",
+    "file_type": "Mach-O 64-bit executable arm64",
+    "bytes": 3207640,
+    "sha256": "c5e9775345e6841c717995a85f0bc33a972acc84b0990ad0d6fbccd6db0ae77d"
+  },
+  "limitations": [
+    "Readiness is not proof that a large target import/analysis has completed.",
+    "No global REA agent registration, system JDK update, Hopper installation or commercial-license modification was performed."
+  ]
+}

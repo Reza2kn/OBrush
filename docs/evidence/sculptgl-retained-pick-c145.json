@@ -1,0 +1,182 @@
+{
+  "id": "C145",
+  "scope": "Retained-geometry validation optimization in ordinary shared-core Source contact preparation, with independent real-browser audit; no controlled speedup or parity claim",
+  "protocol_sha256": "234870ed03a240931a22f421968917efaeed8becc1df834c998bbe3e9c101a33",
+  "parameters": {
+    "fixture_vertices": 999002,
+    "seconds": 60,
+    "motion_requests_per_second": 400,
+    "radius_css_px": 64,
+    "intensity": 0.25,
+    "fixed_topology": true,
+    "alpha": null,
+    "mirror": false,
+    "clay": false,
+    "accumulate": false,
+    "prevent_folds": false
+  },
+  "source_sha256": {
+    "crates/obrush-core/src/mesh.rs": "417a5ec549b921669d15587cd08054256184c410cdd49375e458b02fdb08f09f",
+    "crates/obrush-core/src/paint_preparation.rs": "82bce47bfe0df8fd60343ba95647fea411e4b9f9dd78ee2916b8d2f70c451e0e"
+  },
+  "rows": [
+    {
+      "id": "C144",
+      "app_wasm_sha256": "a929f1912c3b5d9a26549d42657727205f00c2cc9f767d306acd9bfc363eff3b",
+      "fixture_sha256": "dfb5316f62e392e633f03cb662dcb12215ed165a71a9ae72a3fd639528731afe",
+      "runtime_path": ".artifacts/sculptgl-sparse-guard-c69-stage/bench/actual/SP-LONG00-1m-60s-root-c5bd8e51-1d17-44d4-a956-cc42edc1a6c5/result.json",
+      "runtime_sha256": "0d470647acfc84559b2a7dadff4775cbc5fcb8a39c382c5ac73a580f1e74fcfb",
+      "audit_path": ".artifacts/sculptgl-sparse-guard-c69-stage/bench/actual/SP-LONG00-1m-60s-root-c5bd8e51-1d17-44d4-a956-cc42edc1a6c5/audit-c144.json",
+      "audit_sha256": "4a8b26183edcd7ec7a085442cd0e1393d8772e20034e6ba71ad2b972b9f5b235",
+      "scheduled_motion_requests": 24000,
+      "delivered_pointer_moves": 708,
+      "applied_source_dabs": 658,
+      "stage_timing_ms": {
+        "source_geometry": {
+          "samples": 658,
+          "mean_ms": 40.86048632218845,
+          "total_ms": 26886.2,
+          "max_ms": 351.4
+        },
+        "source_geometry_contact_prepare": {
+          "samples": 658,
+          "mean_ms": 12.25759878419453,
+          "total_ms": 8065.5,
+          "max_ms": 32.6
+        },
+        "source_geometry_deformation": {
+          "samples": 658,
+          "mean_ms": 23.27796352583587,
+          "total_ms": 15316.9,
+          "max_ms": 318.6
+        },
+        "source_geometry_other": {
+          "samples": 658,
+          "mean_ms": 0.006686930091185411,
+          "total_ms": 4.4,
+          "max_ms": 0.2
+        },
+        "source_geometry_preparation": {
+          "samples": 658,
+          "mean_ms": 17.575835866261396,
+          "total_ms": 11564.9,
+          "max_ms": 32.6
+        },
+        "source_geometry_retained_match": {
+          "samples": 658,
+          "mean_ms": 5.316413373860183,
+          "total_ms": 3498.2,
+          "max_ms": 7
+        }
+      },
+      "frame_cpu_p95_ms": 92.5,
+      "independent_raf_p95_ms": 93.0,
+      "independent_raf_max_ms": 405.30000001192093,
+      "changed_original_vertices": 40551,
+      "checks": {
+        "original_runtime_admission_pass": true,
+        "whole_attributes_topology_history": true,
+        "finite_useful": true,
+        "zero_degenerate_faces": true,
+        "zero_original_orientation_reversals": true,
+        "maximum_edge_stretch_le4": true,
+        "pacing_P99_le25ms": true,
+        "pacing_max_le100ms": true,
+        "independentRAF_P95_le33_34ms": false,
+        "independentRAF_max_le250ms": false,
+        "appRAF_summed_CPU_P95_le16_667ms": false,
+        "Root_queue_zero_by100ms": false,
+        "Root_applied_stable_after100ms": true,
+        "memory_samples_no_errors": true,
+        "Root_exported_WASM_memory_measured": true
+      },
+      "failed_checks": [
+        "independentRAF_P95_le33_34ms",
+        "independentRAF_max_le250ms",
+        "appRAF_summed_CPU_P95_le16_667ms",
+        "Root_queue_zero_by100ms"
+      ],
+      "owned_chrome_exit_code": 0
+    },
+    {
+      "id": "C145",
+      "app_wasm_sha256": "35689ce96cb53dd594a82bc4ac9e03f583c3f4e940f4eb2037ed0d30e0e9f248",
+      "fixture_sha256": "dfb5316f62e392e633f03cb662dcb12215ed165a71a9ae72a3fd639528731afe",
+      "runtime_path": ".artifacts/sculptgl-sparse-guard-c69-stage/bench/actual/SP-LONG00-1m-60s-root-af90b37e-2ecd-4ae1-9d55-68629c549d98/result.json",
+      "runtime_sha256": "916d23aa89d9f953e51da0d12cc680bc9da7d5398c11a515971f9ae5d856a932",
+      "audit_path": ".artifacts/sculptgl-sparse-guard-c69-stage/bench/actual/SP-LONG00-1m-60s-root-af90b37e-2ecd-4ae1-9d55-68629c549d98/audit-c145.json",
+      "audit_sha256": "48d8195db87fd01a09b64c26d64c3559a0a943ed7a9511db1a0859631825aae7",
+      "scheduled_motion_requests": 24000,
+      "delivered_pointer_moves": 747,
+      "applied_source_dabs": 684,
+      "stage_timing_ms": {
+        "source_geometry": {
+          "samples": 684,
+          "mean_ms": 37.35014619883041,
+          "total_ms": 25547.5,
+          "max_ms": 350.8
+        },
+        "source_geometry_contact_prepare": {
+          "samples": 684,
+          "mean_ms": 8.802631578947368,
+          "total_ms": 6021,
+          "max_ms": 32.7
+        },
+        "source_geometry_deformation": {
+          "samples": 684,
+          "mean_ms": 23.215058479532164,
+          "total_ms": 15879.1,
+          "max_ms": 318
+        },
+        "source_geometry_other": {
+          "samples": 684,
+          "mean_ms": 0.0043859649122807015,
+          "total_ms": 3,
+          "max_ms": 0.1
+        },
+        "source_geometry_preparation": {
+          "samples": 684,
+          "mean_ms": 14.130701754385965,
+          "total_ms": 9665.4,
+          "max_ms": 32.7
+        },
+        "source_geometry_retained_match": {
+          "samples": 684,
+          "mean_ms": 5.325730994152047,
+          "total_ms": 3642.8,
+          "max_ms": 7
+        }
+      },
+      "frame_cpu_p95_ms": 89.20000004768372,
+      "independent_raf_p95_ms": 89.69999998807907,
+      "independent_raf_max_ms": 405.39999997615814,
+      "changed_original_vertices": 40630,
+      "checks": {
+        "original_runtime_admission_pass": true,
+        "whole_attributes_topology_history": true,
+        "finite_useful": true,
+        "zero_degenerate_faces": true,
+        "zero_original_orientation_reversals": true,
+        "maximum_edge_stretch_le4": true,
+        "pacing_P99_le25ms": true,
+        "pacing_max_le100ms": true,
+        "independentRAF_P95_le33_34ms": false,
+        "independentRAF_max_le250ms": false,
+        "appRAF_summed_CPU_P95_le16_667ms": false,
+        "Root_queue_zero_by100ms": false,
+        "Root_applied_stable_after100ms": true,
+        "memory_samples_no_errors": true,
+        "Root_exported_WASM_memory_measured": true
+      },
+      "failed_checks": [
+        "independentRAF_P95_le33_34ms",
+        "independentRAF_max_le250ms",
+        "appRAF_summed_CPU_P95_le16_667ms",
+        "Root_queue_zero_by100ms"
+      ],
+      "owned_chrome_exit_code": 0
+    }
+  ],
+  "validation": "Focused stale geometry and malformed normal, mask, color and UV checks pass; full workspace tests and strict native/WASM Clippy pass. First focused invocation used --exact with an incomplete test path and selected zero tests; interrupted and reran correctly.",
+  "limitation": "Different delivered moves and applied dabs prohibit a controlled speedup claim. Four responsiveness gates remain failed; normal browser still uses WASM CPU geometry and WebGL2 draw."
+}

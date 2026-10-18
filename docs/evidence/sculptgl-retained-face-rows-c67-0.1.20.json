@@ -1,0 +1,194 @@
+{
+  "scope": "C67 verified retained Source primary face-to-triangle row lookup; no sustained speedup or reference parity claim",
+  "version": "0.1.20",
+  "code": [
+    {
+      "path": ".artifacts/sculptgl-retained-face-rows-c67-stage/source_geometry_before_sparse.rs",
+      "bytes": 126039,
+      "sha256": "1469e084d02a4fc19db85739ad91dd8f668304bfd7eae91360ebef74edb6b0f4"
+    },
+    {
+      "path": "crates/obrush-core/src/paint_preparation.rs",
+      "bytes": 20751,
+      "sha256": "6992f9a5ac7e0c08df3650c3aad9b0c4a6913ce683623d0465088708b4cbf131"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".artifacts/sculptgl-retained-face-rows-c67-stage/web-final/pkg/obrush_app_bg.wasm",
+      "bytes": 23224568,
+      "sha256": "a59ca69a1edae52e8a86fae9a8e53ebcd7cccec7b5300084c50f15bff5125521"
+    },
+    {
+      "path": ".artifacts/sculptgl-retained-face-rows-c67-stage/OBrush-C67.app/Contents/MacOS/OBrush",
+      "bytes": 26396752,
+      "sha256": "d5d2a357af6238d068e7642e0bc4f20161410061cd8ad922fbdc0e12d9f97a00"
+    }
+  ],
+  "checks": {
+    "cargo_fmt_check": "passed",
+    "workspace": {
+      "groups": 77,
+      "passed": 2350,
+      "failed": 0,
+      "ignored": 1
+    },
+    "native_strict_clippy": "passed",
+    "wasm_core_strict_clippy": "passed",
+    "official_web_build": "passed",
+    "official_macos_package": "passed",
+    "git_diff_check": "passed"
+  },
+  "browser": {
+    "harness": "scripts/check-sculptgl-host.mjs --groups=brushes",
+    "result": {
+      "path": ".artifacts/sculptgl-host-runtime/c67-final-face-rows-4a18ce55-35a4-42fb-a33d-914930aa941c/result.json",
+      "bytes": 10368242,
+      "sha256": "8ff338c598058a16935e110b6ce440bdb589388653afedf4f830b064b0405249"
+    },
+    "status": "passed scoped local host gates; reference parity unverified",
+    "cases": 15,
+    "downloads": 58,
+    "gpu_checks": 58,
+    "owned_chrome_exit_code": 0,
+    "scope_limit": "Scoped host brush/save/undo path, not exhaustive Source picking or long-session timing."
+  },
+  "local_logs": [
+    {
+      "path": ".artifacts/C67_FINAL_WORKSPACE_TESTS.log",
+      "bytes": 227414,
+      "sha256": "3f31d8741c95129edca901df4209c8014987c3bfaba89ca1007e055b5f9ec091"
+    },
+    {
+      "path": ".artifacts/C67_FINAL_NATIVE_CLIPPY.log",
+      "bytes": 222,
+      "sha256": "f1de73655f4acb4e344e4b6e69a851764804c943099f790d464280477117e181"
+    },
+    {
+      "path": ".artifacts/C67_FINAL_WASM_CLIPPY.log",
+      "bytes": 148,
+      "sha256": "096849df090149dc25db353936474e2539ecbda5f7d341d19c325f5babc2e08d"
+    },
+    {
+      "path": ".artifacts/C67_FINAL_WEB_BUILD.log",
+      "bytes": 279,
+      "sha256": "f7a23225ed522fa31418493621a9909c5b06a49822e769fdb3e4e1793cda7a63"
+    },
+    {
+      "path": ".artifacts/C67_FINAL_MACOS_PACKAGE.log",
+      "bytes": 407,
+      "sha256": "21e58685c693263d65a17875562b096adf00259114a86e4a879cfcc70a6e7e3f"
+    },
+    {
+      "path": ".artifacts/C67_FINAL_BROWSER_HOST_BRUSHES.log",
+      "bytes": 3470,
+      "sha256": "f0393b6902753776a930b1d6759f0872536d5ba9f19d3b36c461aa178c7b4184"
+    }
+  ],
+  "retained_failures": [
+    {
+      "path": ".artifacts/C67_BROWSER_CONTINUOUS.log",
+      "reason": "Immutable candidate manifest/build record required; no browser case started."
+    },
+    {
+      "path": ".artifacts/C67_BROWSER_BRUSH_INPUTS.log",
+      "reason": "Auxiliary pressure/alpha harness stopped at Alpha import request is stale after early pressure cases; not a passed final-source check."
+    },
+    {
+      "path": ".artifacts/C67_WORKSPACE_TESTS.log",
+      "reason": "First new mixed-face test fixture used incompatible default mask convention; corrected fixture and full final workspace rerun pass."
+    }
+  ],
+  "open_gates": [
+    "C67 999,002-vertex 60-second cohort completed data/history but failed four responsiveness gates; 120-second C67 cohort unrun.",
+    "Per-contact full mesh validation and retained-state comparison remain O(mesh).",
+    "Mirrored picking remains separate.",
+    "Isolated WebGPU point program is not connected to shipped brush/document/undo.",
+    "Pinned SculptGL 317 IDs plus five hosted controls and ZBrush 2026.2.1 parity remain open."
+  ],
+  "sustained_1m_60s": {
+    "fixture_vertices": 999002,
+    "fixture_triangles": 1998000,
+    "motions_scheduled": 24000,
+    "protocol_sha256": "234870ed03a240931a22f421968917efaeed8becc1df834c998bbe3e9c101a33",
+    "driver": {
+      "path": ".artifacts/sculptgl-retained-face-rows-c67-stage/bench/workspace/large-perf-sustained.mjs",
+      "bytes": 13176,
+      "sha256": "bd93d550451e2f612a951c039577ef3b787c33e254533823455c65a68c14a73e"
+    },
+    "runtime": {
+      "path": ".artifacts/sculptgl-retained-face-rows-c67-stage/bench/actual/SP-LONG00-1m-60s-root-4fff2bcf-83d4-43b1-add4-b9a6de1955c3/result.json",
+      "bytes": 13643881,
+      "sha256": "5d95306f96710ab54bc66cb6a396955c96d0ddba26f4fdb56a25f0ce5c1ed597"
+    },
+    "independent_audit": {
+      "path": ".artifacts/sculptgl-retained-face-rows-c67-stage/C67_1M_60_AUDIT.json",
+      "bytes": 50365,
+      "sha256": "65b3d9a083f7df50d9bc8e2597230b36772c87fc3dc3e8bd01acf15b4d10d95b"
+    },
+    "status": "FAIL one or more named local data/scalar gates",
+    "failed_checks": [
+      "independentRAF_P95_le33_34ms",
+      "independentRAF_max_le250ms",
+      "appRAF_summed_CPU_P95_le16_667ms",
+      "Root_queue_zero_by100ms"
+    ],
+    "frame_cpu_p95_ms": 106.89999997615814,
+    "independent_raf_p95_ms": 107.69999998807907,
+    "independent_raf_max_ms": 451.4000000357628,
+    "delivered_pointer_moves": 657,
+    "changed_original_vertices": 40377,
+    "memory_samples": 65,
+    "whole_project_history": true,
+    "geometry_gates": {
+      "finite_useful": true,
+      "zero_degenerate_faces": true,
+      "zero_original_orientation_reversals": true,
+      "maximum_edge_stretch_le4": true
+    },
+    "comparison_limit": "C66 and C67 had different delivered/coalesced moves; their P95 difference is observational, not a controlled speedup or regression."
+  },
+  "native_scan_profile": {
+    "log": {
+      "path": ".artifacts/sculptgl-retained-face-rows-c67-stage/NATIVE_SCAN_PROFILE.log",
+      "bytes": 934,
+      "sha256": "34510ed7d680176ee54ef7c7b040e08099a8fc905b5997008145d144662d6e83"
+    },
+    "fixture": "same independently authored 999,002-vertex SGL fixture",
+    "release_build_median_mesh_validate_ms": 13.211,
+    "release_build_median_state_matches_ms": 3.274,
+    "scope_limit": "Native M2 scalar scan timing only; not a WASM browser attribution or complete frame profile."
+  },
+  "native_dab_profile": {
+    "source": {
+      "path": ".artifacts/sculptgl-retained-face-rows-c67-stage/native-scan-profile/src/main.rs",
+      "bytes": 2714,
+      "sha256": "be12c33e17a53707b406e49d43830f462defde9f54b391ba4ef90cd3987ca2a0"
+    },
+    "log": {
+      "path": ".artifacts/sculptgl-retained-face-rows-c67-stage/NATIVE_DAB_PROFILE.log",
+      "bytes": 972,
+      "sha256": "0b7454a275b1624797e91bcc63fea68ac45197c2e28824cfb421c8dc494492ab"
+    },
+    "fixture_vertices": 999002,
+    "fixture_triangles": 1998000,
+    "changed_vertices": 20470,
+    "preparation_ms": [
+      24.72,
+      17.087,
+      17.549,
+      15.672,
+      16.125
+    ],
+    "application_ms": [
+      353.509,
+      58.157,
+      42.476,
+      43.235,
+      40.458
+    ],
+    "median_mesh_validate_ms": 12.692,
+    "median_state_matches_ms": 3.13,
+    "scope_limit": "Standalone release-mode native M2 probe with independently chosen identity view/Brush inputs; not the browser C67 stroke trace, GPU timing, or a matched SculptGL comparison."
+  }
+}

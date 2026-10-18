@@ -1,0 +1,220 @@
+{
+  "scope": "C117 isolated browser WebGPU position result to shared WASM document; normal OBrush studio remains CPU/WASM plus WebGL2",
+  "fixture": {
+    "source": "independent OBrush Rust Mesh::sphere(2) saved as versioned .obrush JSON",
+    "version": 2,
+    "bytes": 17845,
+    "vertices": 162,
+    "triangles": 320,
+    "sha256": "ab16459719d55e25d49fa8c2cc0fd16809749a991a6d08e960f6a822d34afe0a"
+  },
+  "parameters": {
+    "center": [
+      0,
+      0,
+      1
+    ],
+    "radius": 0.5,
+    "intensity_f32": 0.10000000149011612,
+    "passes": 1,
+    "canvas": [
+      512,
+      512
+    ],
+    "world_to_gl_clip_columns": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      -1,
+      0,
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  "source_files": {
+    "crates/obrush-gpu/src/lib.rs": {
+      "sha256": "d922d0003376e5aaa5760d9989a6caf9fd3eae6f41d40a27f57c4c49b8fc1b85",
+      "bytes": 53597
+    },
+    "crates/obrush-gpu/src/bin/resident_commit_probe.rs": {
+      "sha256": "ab3d492178f73a9ed25a2ec83a45ce164ca85453ac6ccea19ba98dbe30308fd0",
+      "bytes": 4156
+    },
+    "crates/obrush-gpu/tests/fixtures/resident-sphere-162.obrush": {
+      "sha256": "ab16459719d55e25d49fa8c2cc0fd16809749a991a6d08e960f6a822d34afe0a",
+      "bytes": 17845
+    },
+    "crates/obrush-core/src/resident_point_program.rs": {
+      "sha256": "d14ad025fa65fdc2135b97309f7fb6755c84536ef0e286920de6326eff66f502",
+      "bytes": 34894
+    },
+    "Cargo.lock": {
+      "sha256": "f69168207ba050479da66aa0d04a379eeeab63e3b24c5ac39421db357d441f2c",
+      "bytes": 102247
+    },
+    ".artifacts/gpu-commit-c117/RUN_BROWSER_COMMIT.mjs": {
+      "sha256": "f7f44dc48843173889582a171a615c11634e4405cc987f9de65a3051be05ba91",
+      "bytes": 8867
+    },
+    ".artifacts/gpu-promotion/GPU_OBSERVER.js": {
+      "sha256": "4e3cbe0c63466e4c570a44050a228843e647a9d6023d431ef9306d7007a0bcb6",
+      "bytes": 3352
+    },
+    ".artifacts/sculptgl-large-sustained-c58-stage/workspace/paired-driver.mjs": {
+      "sha256": "9edd700caee7c9dfc291781f0ff071e3a2a1e0a204f88580454c2a1338bf77f1",
+      "bytes": 41611
+    },
+    ".gitignore": {
+      "sha256": "bbd09ede3eb4dad3475b425283c94f0532995d5708174a53fabcbca368f2fb35",
+      "bytes": 464
+    }
+  },
+  "build": {
+    "gpu_wasm_sha256": "415249f1848f180b11b9f1aeb462560541df4b72b1a4e648fc19ce6b3f41ecaf",
+    "bound_gpu_wasm_sha256": "5629aee150d7076f982bb52bcc9f2613439d1a2e6542e91d76d1aa8b66a4cce2",
+    "wasm_bindgen_cli": "0.2.129",
+    "build_log_sha256": "19d907e9e9439f6f6232aa6a607caca01800e4d82ac87ab755fa997fb7a0b476",
+    "bindgen_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "runtime": {
+    "native_changed_vertices": 7,
+    "native_max_gpu_scalar_reference_component_error": 0.0,
+    "browser_native_positions_exact": true,
+    "position_bytes": 2592,
+    "position_sha256": "602ae3297642001c1249fb6d953b8c7b4bcf87eb69897410d8df826ac2d20337",
+    "browser_native_accepted_project_exact": true,
+    "accepted_project_sha256": "78ee164193035562df3690cd6c399dd9a1f8fa8c1aefc132eb986a86d4cc47c5",
+    "invalid_rejected": true,
+    "stale_rejected": true,
+    "undo_exact": true,
+    "redo_exact": true,
+    "offscreen_changed_pixels": 20146,
+    "offscreen_changed_channels": 27357,
+    "offscreen_max_channel_change": 113,
+    "canvas_changed_pixels": 20146,
+    "browser_gpu_errors": [],
+    "browser_exceptions": [],
+    "browser_console_errors": [],
+    "browser_blocked_external_requests": [],
+    "browser_owned_cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_servers_closed": 1
+    },
+    "observed_compute_dispatches": 6,
+    "observed_indexed_draws": 4,
+    "observed_gpu_maps": [
+      1048576,
+      4,
+      2592,
+      1048576
+    ]
+  },
+  "validation": {
+    "fmt_all_check": "PASS",
+    "workspace_tests": {
+      "status": "PASS",
+      "passed": 2453,
+      "failed": 0,
+      "suites": 78,
+      "log_sha256": "e7fac9403478ca86592ce4513ea7c14bba0f6de7f0767f216ebf5a0ca7c8659a"
+    },
+    "native_strict_clippy": {
+      "status": "PASS",
+      "log_sha256": "fb77e1761e162da33543c21f1986b52143a1aa6a102a4c8d112719383b136991"
+    },
+    "wasm_strict_clippy": {
+      "status": "PASS",
+      "log_sha256": "d889db60e6753a9ed211e513519b483df54e8d718f6233207b9e87a8476818f0"
+    },
+    "wasm_release_build_and_bindgen": "PASS",
+    "owned_browser_runtime": "PASS"
+  },
+  "failed_checks": [
+    {
+      "stage": "identity camera immediate canvas image",
+      "outcome": "Error: GPU deformation did not change visible canvas\n    at file:///Users/Ajab/AI/OBrush/.artifacts/gpu-commit-c117/RUN_BROWSER_COMMIT.mjs:65:67",
+      "result_sha256": "9d4368fe6a9ef2bbcf887e0870a15cf342078275447137e0b70fb6119086c5a5",
+      "before_png_sha256": "3730c4d5c31914565ceccf998423186f1859f52b19ec6cbbcffe633d147ccdbc",
+      "after_png_sha256": "3730c4d5c31914565ceccf998423186f1859f52b19ec6cbbcffe633d147ccdbc"
+    },
+    {
+      "stage": "identity camera synchronized offscreen image",
+      "outcome": "Error: GPU deformation did not change synchronized offscreen image\n    at file:///Users/Ajab/AI/OBrush/.artifacts/gpu-commit-c117/RUN_BROWSER_COMMIT.mjs:73:79",
+      "result_sha256": "a383514b95647a9e98ece203caedf0d1ea71895c8702aaad59804c1e78b8f07c",
+      "before_offscreen_sha256": "45e2d6f20ae5ddecd6d28b07cbf9fdf1b2f56ecabf211e632b67e2294e9c6168",
+      "after_offscreen_sha256": "45e2d6f20ae5ddecd6d28b07cbf9fdf1b2f56ecabf211e632b67e2294e9c6168"
+    }
+  ],
+  "output_files": {
+    ".artifacts/gpu-commit-c117/native/result.json": {
+      "sha256": "9bfeda5a4c8e9c56497cd5b6551c08239f2f4581dbf9a58b7f9edcc2adeed63f",
+      "bytes": 1351
+    },
+    ".artifacts/gpu-commit-c117/native/positions.bin": {
+      "sha256": "602ae3297642001c1249fb6d953b8c7b4bcf87eb69897410d8df826ac2d20337",
+      "bytes": 2592
+    },
+    ".artifacts/gpu-commit-c117/native/accepted.obrush": {
+      "sha256": "78ee164193035562df3690cd6c399dd9a1f8fa8c1aefc132eb986a86d4cc47c5",
+      "bytes": 17859
+    },
+    ".artifacts/gpu-commit-c117/browser-front/result.json": {
+      "sha256": "272988c75900b93db11a146b9310ea7991d5ed37979bb35b88aec561322e3993",
+      "bytes": 51079
+    },
+    ".artifacts/gpu-commit-c117/browser-front/positions.bin": {
+      "sha256": "602ae3297642001c1249fb6d953b8c7b4bcf87eb69897410d8df826ac2d20337",
+      "bytes": 2592
+    },
+    ".artifacts/gpu-commit-c117/browser-front/accepted.obrush": {
+      "sha256": "78ee164193035562df3690cd6c399dd9a1f8fa8c1aefc132eb986a86d4cc47c5",
+      "bytes": 17859
+    },
+    ".artifacts/gpu-commit-c117/browser-front/before.png": {
+      "sha256": "f49354974d6c5016ab3c12842ab785e9c1cacc7a6ba3992f809f257c080fa4ae",
+      "bytes": 64348
+    },
+    ".artifacts/gpu-commit-c117/browser-front/after.png": {
+      "sha256": "ca86fee3d25ac7ae13097ce1fbc4f2c9cae11f9c1a2771eb134ea95e86898c3f",
+      "bytes": 64675
+    },
+    ".artifacts/gpu-commit-c117/browser-front/before-offscreen.png": {
+      "sha256": "ae8a238981474270246340b2299930cb785cd7a6518e461598a49b63908aa343",
+      "bytes": 149226
+    },
+    ".artifacts/gpu-commit-c117/browser-front/after-offscreen.png": {
+      "sha256": "63915222056b6b74c6f8ca97823cbb4a12bf8a6c47daa4e3a1134eb6dd6f7762",
+      "bytes": 149464
+    },
+    ".artifacts/gpu-commit-c117/browser-front/gpu-api-trace.json": {
+      "sha256": "cbf77248d159e9d179c85c9cab96467e73bdc8e6ac58eecb97320d836d7602cc",
+      "bytes": 31579
+    },
+    ".artifacts/gpu-commit-c117/browser/result.json": {
+      "sha256": "9d4368fe6a9ef2bbcf887e0870a15cf342078275447137e0b70fb6119086c5a5",
+      "bytes": 46870
+    },
+    ".artifacts/gpu-commit-c117/browser-retry/result.json": {
+      "sha256": "a383514b95647a9e98ece203caedf0d1ea71895c8702aaad59804c1e78b8f07c",
+      "bytes": 51288
+    }
+  },
+  "limitations": [
+    "separate GPU canvas/document authority; not normal OBrush studio",
+    "full GPU position readback per diagnostic commit",
+    "small procedural fixture; no sustained browser latency result",
+    "point program not SculptGL or ZBrush brush",
+    "viewport does not automatically follow session undo/redo",
+    "no multi-subtool, physical pen, native GUI or reference comparison"
+  ]
+}

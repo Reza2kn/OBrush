@@ -1,0 +1,49 @@
+{
+  "scope": "SGL-RENDER-GRID normal studio implementation; not SculptGL parity",
+  "reference": {
+    "revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "primitives_sha256": "2b9b10126d5e689a518c74a8c2b0e3024891de7a589530341965ef3f57bd0836",
+    "scene_sha256": "092d17a08278700d6d85d3f8b9880e9152ce8c71be607fbe1584d0c5b5602f52",
+    "line_segments": 44,
+    "floor_y": -0.45,
+    "extent_xz": [-1.25, 1.25],
+    "flat_color": 0.04
+  },
+  "build": {
+    "browser_snapshot": ".artifacts/grid-c122/web-dist",
+    "browser_wasm_sha256": "e3576c47e61a11d42f4e007391f1246867ce2c3a0ed0eecfd9e2ec0dd4f7aafa",
+    "index_sha256": "5bb7b62046597e363b5ec96107a41dfbfd2089c2309ce853f9cde86d786d815f",
+    "native_package": ".artifacts/OBrush.app",
+    "native_signature_valid": true
+  },
+  "browser": {
+    "run": ".artifacts/grid-c122/probe-1792279519416/startup.json",
+    "viewport_crop_xyxy": [225, 56, 1365, 882],
+    "grid_on_changed_rgb_pixels": 16239,
+    "grid_off_again_changed_rgb_pixels": 0,
+    "saved_project_bytes": 5317105,
+    "saved_project_sha256_off_on_off": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+    "exceptions": 0,
+    "console_errors": 0,
+    "blocked_external_requests": 0
+  },
+  "gates": {
+    "workspace_tests": "2457 pass",
+    "source_display_tests": "8 pass",
+    "strict_native_clippy": "pass",
+    "strict_wasm_clippy": "pass",
+    "format_check": "pass after formatting",
+    "official_web_build": "pass",
+    "official_macos_package": "pass",
+    "hosted_reference_pixel_comparison": "open",
+    "native_gui_visual_comparison": "open",
+    "contour": "absent",
+    "full_sculptgl_parity": "open"
+  },
+  "retained_failures": [
+    "Direct scripts/build-web.sh invocation permission denied; bash scripts/build-web.sh passed.",
+    "Reusing an owned CDP profile returned EEXIST; subsequent fresh profiles passed.",
+    "Initial CDP click omitted buttons: 1 and did not toggle; actual press/release passed.",
+    "Initial cargo fmt --check identified formatting; final check passed."
+  ]
+}

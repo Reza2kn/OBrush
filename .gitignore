@@ -1,0 +1,14 @@
+/target/
+/web/dist/
+/.tools/
+/.artifacts/
+*.obrush
+!crates/obrush-core/tests/fixtures/independent-material-uv-seam-v6.obrush
+!crates/obrush-core/tests/fixtures/independent-legacy-loop-v2.obrush
+!crates/obrush-core/tests/fixtures/independent-unprotected-v7.obrush
+!crates/obrush-gpu/tests/fixtures/reflected-shear-v7.obrush
+!crates/obrush-gpu/tests/fixtures/reflected-shear-nonplanar-v7.obrush
+!crates/obrush-gpu/tests/fixtures/resident-sphere-162.obrush
+.DS_Store
+__pycache__/
+*.pyc

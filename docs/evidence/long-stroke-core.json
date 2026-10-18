@@ -1,0 +1,746 @@
+{
+  "schema_version": 1,
+  "captured_date": "2026-10-12",
+  "purpose": "Final0.1.5 native core continuation on the supplied0.1.4 sculpt with independent sustained Draw/Crease trajectories. Separate application evidence covers queue coalescing and browser release responsiveness.",
+  "host": {
+    "cpu": "Apple M2",
+    "memory_gib": 24,
+    "os": "macOS26.5.1",
+    "rustc": "1.96.0",
+    "architecture": "aarch64-apple-darwin"
+  },
+  "profile": "native release opt-level2",
+  "fixture": {
+    "private_user_project_sha256": "4adc8aa9333903ab0684c1f2e54a995dc6a4e7a3b85fc6e911df9d7deb0c4786",
+    "original_vertices": 61580,
+    "original_triangles": 123156,
+    "private_mesh_retained_ignored": true,
+    "exact_original_user_input_trace_available": false
+  },
+  "input_contract": {
+    "radius": 0.18,
+    "strength": 0.35,
+    "symmetry_x": true,
+    "invert": false,
+    "dabs_per_brush": 1200,
+    "nominal_input_duration_seconds": 20,
+    "nominal_sample_rate_hz": 60,
+    "path": "Front-facing -Z rays from z4; x=.28cos(TAU*i/180),y=.1+.27sin(TAU*i/180); each dab re-picks the current surface. This independent trajectory is not the original user gesture.",
+    "exact_world_ray_arrays_preserved_in_raw_results": true
+  },
+  "final_source_metadata": {
+    "stage": "Final formatted0.1.5 runtime with normalized child quality preflight min(parent,0.15)",
+    "captured_utc": "2026-10-12T22:08:42.086684+00:00",
+    "source_sha256": {
+      "crates/obrush-core/src/brush.rs": "22c47de749152d2f8591da4592164e413bdd5ab1ccb318b22df6b68f594c9e5c",
+      "crates/obrush-core/src/document.rs": "65e7aef9818482ba06529d75916cd76f5a8e71787905ec16e99fe4d1c658d879",
+      "crates/obrush-core/src/lib.rs": "8ccbd35d907490d6ebc8b5c4dd1f699ab1e6ae5ced427ca3158d94558d6037db",
+      "crates/obrush-core/src/mesh.rs": "4db1884082d155c81c5acbcf154046370cdca2fa7d087f293c71f12802320f98",
+      "crates/obrush-core/src/refinement.rs": "26eec51be37a104e439fea9d7075e5557a60a662e156146a8566f40a84a42935",
+      "crates/obrush-core/src/tests.rs": "c835a43ae938ab1a03c1d994a49ca69f2d94eb460203892c7ef70bb82951bd42"
+    },
+    "probe_sha256": "ef94ce9c6c9fc47702bfbcd9da7f79e34664a71cac57f3b5a343748b60a1e136",
+    "private_user_fixture_sha256": "4adc8aa9333903ab0684c1f2e54a995dc6a4e7a3b85fc6e911df9d7deb0c4786",
+    "profile": "native release opt-level2",
+    "scope": "1,200 exact world-ray samples per brush,20s nominal at60Hz; compute runtime separate from nominal duration/browser frames"
+  },
+  "baseline_source_metadata": {
+    "captured_utc": "2026-10-12T21:36:52.346288+00:00",
+    "source_sha256": {
+      "crates/obrush-core/src/brush.rs": "4ee45652f8cdf276f9a7d2226e40b784b3655c077e4272588b29336a9bd86b62",
+      "crates/obrush-core/src/document.rs": "65e7aef9818482ba06529d75916cd76f5a8e71787905ec16e99fe4d1c658d879",
+      "crates/obrush-core/src/lib.rs": "8ccbd35d907490d6ebc8b5c4dd1f699ab1e6ae5ced427ca3158d94558d6037db",
+      "crates/obrush-core/src/mesh.rs": "81090a6f4bc4d0fd99ab1f21f3c705b59ceb12e5d358d0917b4a7cef9d55decc",
+      "crates/obrush-core/src/refinement.rs": "22a2353c01e4c95243839104b34902d2a653f5307a8ed7d31d40c0b74be8d8d4",
+      "crates/obrush-core/src/tests.rs": "c835a43ae938ab1a03c1d994a49ca69f2d94eb460203892c7ef70bb82951bd42"
+    },
+    "private_user_fixture_sha256": {
+      "user.obj": "282d72002460d692c1444abd9480a11f16958ce660ca86d1352875778cced40e",
+      "user.png": "23696d7323ff8d6fda70f9b1772ac8ac308f4665cb10dd68c923240c543f3051",
+      "user.obrush": "4adc8aa9333903ab0684c1f2e54a995dc6a4e7a3b85fc6e911df9d7deb0c4786",
+      "manifest.json": "0936e69ee21bd27247cb8718afd18adc11de2e188ec94507206138bee904f02a"
+    },
+    "scope": "Frozen source before long-stroke mesh acceleration; private fixture stays ignored."
+  },
+  "run_command": "OBRUSH_LONG_PROJECT=<private project> OBRUSH_LONG_EXPORT_DIR=<ignored output> cargo run --locked -p obrush-core --release --example long_stroke_probe",
+  "timing_scope": {
+    "included": "Current-surface raycast and core brush/refinement, individually measured by native Instant. Combined is sum; total CPU wall includes loop overhead.",
+    "excluded": "Project loading/initial normal rebuild, history/UI/input-queue scheduling, renderer/GPU upload, final metrics and mesh export.",
+    "quantiles": "Sorted samples; upper median index floor(n/2); p95 index min(floor(.95*n),n-1).",
+    "controls": "Final native timing scheduled after parent validation/build jobs and before browser measurement to avoid heavy-job overlap. One matched final run, not an aggregate benchmark.",
+    "limits": "Nominal20s input duration differs from compute runtime. Native CPU cost is not application FPS/browser latency or a hard real-time bound; OS/background/thermal variation remains."
+  },
+  "timing_and_fields": [
+    {
+      "brush": "Draw",
+      "baseline": {
+        "brush": "Draw",
+        "changed_vertices_total": 490670,
+        "combined": {
+          "max_ms": 135.894334,
+          "mean_ms": 7.912224869166659,
+          "p50_ms": 4.7082500000000005,
+          "p95_ms": 17.019292,
+          "samples": 1200
+        },
+        "cpu_wall_ms": 9494.964666,
+        "initial_triangles": 123156,
+        "initial_vertices": 61580,
+        "input_samples_per_second": 60,
+        "invert": false,
+        "missed_rays": 0,
+        "nominal_input_seconds": 20,
+        "pick": {
+          "max_ms": 42.939541,
+          "mean_ms": 0.7404486249999994,
+          "p50_ms": 0.612708,
+          "p95_ms": 1.1383750000000001,
+          "samples": 1200
+        },
+        "radius": 0.18,
+        "refined_vertices_total": 7068,
+        "requested_dabs": 1200,
+        "scope": "Native CPU raycast+core sculpt/refinement, no history/UI/render/export inside timing; 20s nominal input duration is distinct from measured compute runtime, not browser FPS.",
+        "sculpt": {
+          "max_ms": 112.070292,
+          "mean_ms": 7.171776244166662,
+          "p50_ms": 4.0727910000000005,
+          "p95_ms": 16.149791999999998,
+          "samples": 1200
+        },
+        "strength": 0.35,
+        "symmetry_x": true,
+        "triangles": 137292,
+        "valid_structure": true,
+        "vertices": 68648,
+        "windows": [
+          {
+            "combined": {
+              "max_ms": 66.572166,
+              "mean_ms": 9.831986936666668,
+              "p50_ms": 4.975292,
+              "p95_ms": 25.498166,
+              "samples": 300
+            },
+            "nominal_input_seconds": 5.0,
+            "triangles": 127740,
+            "vertices": 63872
+          },
+          {
+            "combined": {
+              "max_ms": 135.894334,
+              "mean_ms": 7.495614650000001,
+              "p50_ms": 4.942042,
+              "p95_ms": 16.407916999999998,
+              "samples": 300
+            },
+            "nominal_input_seconds": 10.0,
+            "triangles": 129692,
+            "vertices": 64848
+          },
+          {
+            "combined": {
+              "max_ms": 19.203959,
+              "mean_ms": 8.24963014,
+              "p50_ms": 4.833791,
+              "p95_ms": 15.796125000000002,
+              "samples": 300
+            },
+            "nominal_input_seconds": 15.0,
+            "triangles": 135096,
+            "vertices": 67550
+          },
+          {
+            "combined": {
+              "max_ms": 16.330708,
+              "mean_ms": 6.07166775,
+              "p50_ms": 4.254333,
+              "p95_ms": 15.507417,
+              "samples": 300
+            },
+            "nominal_input_seconds": 20.0,
+            "triangles": 137292,
+            "vertices": 68648
+          }
+        ]
+      },
+      "final": {
+        "brush": "Draw",
+        "changed_vertices_total": 582262,
+        "combined": {
+          "max_ms": 22.051666,
+          "mean_ms": 5.519676820000009,
+          "p50_ms": 3.679293,
+          "p95_ms": 11.715791,
+          "samples": 1200
+        },
+        "cpu_wall_ms": 6623.823791999999,
+        "initial_triangles": 123156,
+        "initial_vertices": 61580,
+        "input_samples_per_second": 60,
+        "invert": false,
+        "missed_rays": 0,
+        "nominal_input_seconds": 20,
+        "pick": {
+          "max_ms": 1.197542,
+          "mean_ms": 0.6005917691666671,
+          "p50_ms": 0.59375,
+          "p95_ms": 0.655125,
+          "samples": 1200
+        },
+        "radius": 0.18,
+        "refined_vertices_total": 7388,
+        "requested_dabs": 1200,
+        "scope": "Native CPU raycast+core sculpt/refinement, no history/UI/render/export inside timing; 20s nominal input duration is distinct from measured compute runtime, not browser FPS.",
+        "sculpt": {
+          "max_ms": 21.225875000000002,
+          "mean_ms": 4.9190850508333295,
+          "p50_ms": 3.083292,
+          "p95_ms": 11.119625,
+          "samples": 1200
+        },
+        "strength": 0.35,
+        "symmetry_x": true,
+        "triangles": 137932,
+        "valid_structure": true,
+        "vertices": 68968,
+        "windows": [
+          {
+            "combined": {
+              "max_ms": 22.051666,
+              "mean_ms": 6.025976499999997,
+              "p50_ms": 3.830833,
+              "p95_ms": 11.903082999999999,
+              "samples": 300
+            },
+            "nominal_input_seconds": 5.0,
+            "triangles": 127784,
+            "vertices": 63894
+          },
+          {
+            "combined": {
+              "max_ms": 12.293959000000001,
+              "mean_ms": 4.791155239999997,
+              "p50_ms": 3.5642080000000003,
+              "p95_ms": 11.450583,
+              "samples": 300
+            },
+            "nominal_input_seconds": 10.0,
+            "triangles": 129836,
+            "vertices": 64920
+          },
+          {
+            "combined": {
+              "max_ms": 11.698500000000001,
+              "mean_ms": 6.075175099999998,
+              "p50_ms": 3.8302919999999996,
+              "p95_ms": 11.380459,
+              "samples": 300
+            },
+            "nominal_input_seconds": 15.0,
+            "triangles": 135116,
+            "vertices": 67560
+          },
+          {
+            "combined": {
+              "max_ms": 13.088415999999999,
+              "mean_ms": 5.186400440000002,
+              "p50_ms": 3.6568330000000002,
+              "p95_ms": 11.9525,
+              "samples": 300
+            },
+            "nominal_input_seconds": 20.0,
+            "triangles": 137932,
+            "vertices": 68968
+          }
+        ]
+      },
+      "same_exact_world_rays": true,
+      "ray_inputs_sha256": "5a4d1d57a285f158436fc9fc5225ce3578d02df61ba592a9bbaa898585a3cb05",
+      "baseline_mesh_sha256": "8e0903f1643ff3d7d41117aba2ff1caa09f4a75409be75fd8218052c1ac11a83",
+      "final_mesh_sha256": "e119c539a2f982777764a471e7030903a2be35c7980978a225bfca17940a752b",
+      "final_mesh_byte_identical_to_baseline": false,
+      "field_comparison": {
+        "positions": {
+          "baseline_count": 68648,
+          "updated_count": 68968,
+          "original_vertex_count_compared": 61580,
+          "original_vertex_f32_bit_differences": 4622,
+          "original_vertex_max_displacement_difference_world": 0.031344733318445984,
+          "original_vertex_rms_displacement_difference_world": 0.0007643695679933712
+        },
+        "normals": {
+          "baseline_count": 68648,
+          "updated_count": 68968,
+          "original_vertex_count_compared": 61580,
+          "original_vertex_f32_bit_differences": 5187
+        },
+        "masks": {
+          "baseline_count": 68648,
+          "updated_count": 68968,
+          "original_vertex_count_compared": 61580,
+          "original_vertex_f32_bit_differences": 0
+        },
+        "colors": {
+          "baseline_count": 68648,
+          "updated_count": 68968,
+          "original_vertex_count_compared": 61580,
+          "original_vertex_f32_bit_differences": 0
+        },
+        "triangles": {
+          "baseline_count": 137292,
+          "updated_count": 137932,
+          "arrays_exactly_equal": false
+        },
+        "original_attribute_preservation": {
+          "masks": {
+            "updated_equals_initial_f32_bits": true
+          },
+          "colors": {
+            "updated_equals_initial_f32_bits": true
+          }
+        }
+      },
+      "combined_mean_speedup": 1.433457995311879,
+      "combined_p95_speedup": 1.4526797208997668
+    },
+    {
+      "brush": "Crease",
+      "baseline": {
+        "brush": "Crease",
+        "changed_vertices_total": 157092,
+        "combined": {
+          "max_ms": 23.015291,
+          "mean_ms": 2.35754292583333,
+          "p50_ms": 2.263917,
+          "p95_ms": 2.6832499999999997,
+          "samples": 1200
+        },
+        "cpu_wall_ms": 2829.227041,
+        "initial_triangles": 123156,
+        "initial_vertices": 61580,
+        "input_samples_per_second": 60,
+        "invert": false,
+        "missed_rays": 0,
+        "nominal_input_seconds": 20,
+        "pick": {
+          "max_ms": 20.610500000000002,
+          "mean_ms": 0.5874321241666661,
+          "p50_ms": 0.552916,
+          "p95_ms": 0.620458,
+          "samples": 1200
+        },
+        "radius": 0.18,
+        "refined_vertices_total": 0,
+        "requested_dabs": 1200,
+        "scope": "Native CPU raycast+core sculpt/refinement, no history/UI/render/export inside timing; 20s nominal input duration is distinct from measured compute runtime, not browser FPS.",
+        "sculpt": {
+          "max_ms": 11.364709000000001,
+          "mean_ms": 1.7701108016666676,
+          "p50_ms": 1.689167,
+          "p95_ms": 2.0891249999999997,
+          "samples": 1200
+        },
+        "strength": 0.35,
+        "symmetry_x": true,
+        "triangles": 123156,
+        "valid_structure": true,
+        "vertices": 61580,
+        "windows": [
+          {
+            "combined": {
+              "max_ms": 23.015291,
+              "mean_ms": 2.5072987900000006,
+              "p50_ms": 2.296375,
+              "p95_ms": 3.031375,
+              "samples": 300
+            },
+            "nominal_input_seconds": 5.0,
+            "triangles": 123156,
+            "vertices": 61580
+          },
+          {
+            "combined": {
+              "max_ms": 3.1704160000000003,
+              "mean_ms": 2.351638213333334,
+              "p50_ms": 2.2928319999999998,
+              "p95_ms": 2.714166,
+              "samples": 300
+            },
+            "nominal_input_seconds": 10.0,
+            "triangles": 123156,
+            "vertices": 61580
+          },
+          {
+            "combined": {
+              "max_ms": 2.860499,
+              "mean_ms": 2.307074166666667,
+              "p50_ms": 2.249375,
+              "p95_ms": 2.618792,
+              "samples": 300
+            },
+            "nominal_input_seconds": 15.0,
+            "triangles": 123156,
+            "vertices": 61580
+          },
+          {
+            "combined": {
+              "max_ms": 2.699249,
+              "mean_ms": 2.2641605333333334,
+              "p50_ms": 2.2197910000000003,
+              "p95_ms": 2.536417,
+              "samples": 300
+            },
+            "nominal_input_seconds": 20.0,
+            "triangles": 123156,
+            "vertices": 61580
+          }
+        ]
+      },
+      "final": {
+        "brush": "Crease",
+        "changed_vertices_total": 649002,
+        "combined": {
+          "max_ms": 48.767875,
+          "mean_ms": 4.867248106666675,
+          "p50_ms": 3.307166,
+          "p95_ms": 11.783667,
+          "samples": 1200
+        },
+        "cpu_wall_ms": 5840.908083,
+        "initial_triangles": 123156,
+        "initial_vertices": 61580,
+        "input_samples_per_second": 60,
+        "invert": false,
+        "missed_rays": 0,
+        "nominal_input_seconds": 20,
+        "pick": {
+          "max_ms": 1.576375,
+          "mean_ms": 0.5935962233333346,
+          "p50_ms": 0.5870829999999999,
+          "p95_ms": 0.6334160000000001,
+          "samples": 1200
+        },
+        "radius": 0.18,
+        "refined_vertices_total": 3906,
+        "requested_dabs": 1200,
+        "scope": "Native CPU raycast+core sculpt/refinement, no history/UI/render/export inside timing; 20s nominal input duration is distinct from measured compute runtime, not browser FPS.",
+        "sculpt": {
+          "max_ms": 48.180833,
+          "mean_ms": 4.273651883333336,
+          "p50_ms": 2.70275,
+          "p95_ms": 11.197667,
+          "samples": 1200
+        },
+        "strength": 0.35,
+        "symmetry_x": true,
+        "triangles": 130968,
+        "valid_structure": true,
+        "vertices": 65486,
+        "windows": [
+          {
+            "combined": {
+              "max_ms": 48.767875,
+              "mean_ms": 7.461903363333333,
+              "p50_ms": 5.334041,
+              "p95_ms": 12.226500999999999,
+              "samples": 300
+            },
+            "nominal_input_seconds": 5.0,
+            "triangles": 130210,
+            "vertices": 65107
+          },
+          {
+            "combined": {
+              "max_ms": 13.464167,
+              "mean_ms": 4.88614579666667,
+              "p50_ms": 3.3745,
+              "p95_ms": 12.019625,
+              "samples": 300
+            },
+            "nominal_input_seconds": 10.0,
+            "triangles": 130932,
+            "vertices": 65468
+          },
+          {
+            "combined": {
+              "max_ms": 12.853625,
+              "mean_ms": 3.6688078566666635,
+              "p50_ms": 3.319,
+              "p95_ms": 5.514041999999999,
+              "samples": 300
+            },
+            "nominal_input_seconds": 15.0,
+            "triangles": 130956,
+            "vertices": 65480
+          },
+          {
+            "combined": {
+              "max_ms": 12.316125,
+              "mean_ms": 3.4521354099999986,
+              "p50_ms": 3.1902500000000003,
+              "p95_ms": 5.297874,
+              "samples": 300
+            },
+            "nominal_input_seconds": 20.0,
+            "triangles": 130968,
+            "vertices": 65486
+          }
+        ]
+      },
+      "same_exact_world_rays": true,
+      "ray_inputs_sha256": "5a4d1d57a285f158436fc9fc5225ce3578d02df61ba592a9bbaa898585a3cb05",
+      "baseline_mesh_sha256": "b5bec719dc886bfe29bc3aef80f738cfdf2b732fbc9dc4f106bf1509e3db8bf3",
+      "final_mesh_sha256": "6a88d49f8b8b9e13c4b6f159f28a4bba5d11c88b0ef411ed4c8f8df4b7a903a6",
+      "final_mesh_byte_identical_to_baseline": false,
+      "field_comparison": {
+        "positions": {
+          "baseline_count": 61580,
+          "updated_count": 65486,
+          "original_vertex_count_compared": 61580,
+          "original_vertex_f32_bit_differences": 6891,
+          "original_vertex_max_displacement_difference_world": 0.07582907287567028,
+          "original_vertex_rms_displacement_difference_world": 0.008578276244050867
+        },
+        "normals": {
+          "baseline_count": 61580,
+          "updated_count": 65486,
+          "original_vertex_count_compared": 61580,
+          "original_vertex_f32_bit_differences": 7500
+        },
+        "masks": {
+          "baseline_count": 61580,
+          "updated_count": 65486,
+          "original_vertex_count_compared": 61580,
+          "original_vertex_f32_bit_differences": 0
+        },
+        "colors": {
+          "baseline_count": 61580,
+          "updated_count": 65486,
+          "original_vertex_count_compared": 61580,
+          "original_vertex_f32_bit_differences": 0
+        },
+        "triangles": {
+          "baseline_count": 123156,
+          "updated_count": 130968,
+          "arrays_exactly_equal": false
+        },
+        "original_attribute_preservation": {
+          "masks": {
+            "updated_equals_initial_f32_bits": true
+          },
+          "colors": {
+            "updated_equals_initial_f32_bits": true
+          }
+        }
+      },
+      "combined_mean_speedup": 0.4843687591360303,
+      "combined_p95_speedup": 0.22770925213687723
+    }
+  ],
+  "quality_metrics": [
+    {
+      "metrics": {
+        "adjacent_angle_over_30_edges": 639,
+        "adjacent_angle_over_60_edges": 210,
+        "adjacent_angle_over_90_edges": 78,
+        "edited_patch_adjacent_angle_p95_degrees": 0.0,
+        "edited_patch_edge_length_p95_world": 0.0,
+        "edited_patch_normal_laplacian_mean": -0.0,
+        "edited_patch_normal_laplacian_p95": 0.0,
+        "edited_vertices": 0,
+        "max_adjacent_normal_angle_degrees": 149.9999813835879,
+        "max_edge_length_over_initial_median": 3.1194271366069386,
+        "max_edge_length_world": 0.05588338761575919,
+        "max_normalized_normal_laplacian": 0.8371041281363231,
+        "max_radial_height": 0.0,
+        "max_vertex_displacement": 0.0,
+        "min_edge_length_world": 0.000448720848361861,
+        "min_triangle_quality": 0.04055303360347116,
+        "nonfinite_vertices": 0,
+        "original_vertex_edge_max_stretch": 1.0
+      },
+      "stage": "initial"
+    },
+    {
+      "height_warning": "Existing sphere-probe radial height for appended vertices uses unit radius and is not a depth measurement for this raised imported sculpt.",
+      "metrics": {
+        "adjacent_angle_over_30_edges": 701,
+        "adjacent_angle_over_60_edges": 232,
+        "adjacent_angle_over_90_edges": 84,
+        "edited_patch_adjacent_angle_p95_degrees": 10.989053223915636,
+        "edited_patch_edge_length_p95_world": 0.019784752617551683,
+        "edited_patch_normal_laplacian_mean": 0.026930880518477265,
+        "edited_patch_normal_laplacian_p95": 0.0828122247203841,
+        "edited_vertices": 12608,
+        "max_adjacent_normal_angle_degrees": 149.99994920069938,
+        "max_edge_length_over_initial_median": 2.534939943961079,
+        "max_edge_length_world": 0.0454125149482207,
+        "max_normalized_normal_laplacian": 0.8371041281363231,
+        "max_radial_height": 0.7485075891709587,
+        "max_vertex_displacement": 0.5929952966070012,
+        "min_edge_length_world": 0.00046865712715011664,
+        "min_triangle_quality": 0.04055303360347116,
+        "nonfinite_vertices": 0,
+        "original_vertex_edge_max_stretch": 5.7914416087209215
+      },
+      "original_vertex_displacement_on_initial_normal": {
+        "changed_vertices": 6252,
+        "maximum_world": 0.4417193013142847,
+        "minimum_world": -2.420073330188352e-07,
+        "p05_world": 2.5747727712449227e-07,
+        "p95_world": 0.15597648574618422
+      },
+      "stage": "old_draw",
+      "triangles": 137292,
+      "vertices": 68648
+    },
+    {
+      "height_warning": "Existing sphere-probe radial height for appended vertices uses unit radius and is not a depth measurement for this raised imported sculpt.",
+      "metrics": {
+        "adjacent_angle_over_30_edges": 701,
+        "adjacent_angle_over_60_edges": 230,
+        "adjacent_angle_over_90_edges": 84,
+        "edited_patch_adjacent_angle_p95_degrees": 10.986470726054783,
+        "edited_patch_edge_length_p95_world": 0.01977644182894925,
+        "edited_patch_normal_laplacian_mean": 0.026765644680658996,
+        "edited_patch_normal_laplacian_p95": 0.08416766192044144,
+        "edited_vertices": 13335,
+        "max_adjacent_normal_angle_degrees": 149.99994920069938,
+        "max_edge_length_over_initial_median": 2.534939943961079,
+        "max_edge_length_world": 0.0454125149482207,
+        "max_normalized_normal_laplacian": 0.8371041281363231,
+        "max_radial_height": 0.7774916565165129,
+        "max_vertex_displacement": 0.6212339612262867,
+        "min_edge_length_world": 0.0004698883783428661,
+        "min_triangle_quality": 0.04055303360347116,
+        "nonfinite_vertices": 0,
+        "original_vertex_edge_max_stretch": 5.684488207042407
+      },
+      "original_vertex_displacement_on_initial_normal": {
+        "changed_vertices": 6356,
+        "maximum_world": 0.4480776256254896,
+        "minimum_world": -2.734034514971787e-07,
+        "p05_world": 5.674757039436574e-07,
+        "p95_world": 0.15584344888735907
+      },
+      "stage": "updated_draw",
+      "triangles": 137932,
+      "vertices": 68968
+    },
+    {
+      "height_warning": "Existing sphere-probe radial height for appended vertices uses unit radius and is not a depth measurement for this raised imported sculpt.",
+      "metrics": {
+        "adjacent_angle_over_30_edges": 704,
+        "adjacent_angle_over_60_edges": 250,
+        "adjacent_angle_over_90_edges": 138,
+        "edited_patch_adjacent_angle_p95_degrees": 15.742772878728445,
+        "edited_patch_edge_length_p95_world": 0.028669198828899508,
+        "edited_patch_normal_laplacian_mean": 0.03681372697514526,
+        "edited_patch_normal_laplacian_p95": 0.11426327741630656,
+        "edited_vertices": 5205,
+        "max_adjacent_normal_angle_degrees": 149.9999813835879,
+        "max_edge_length_over_initial_median": 3.6279573259000997,
+        "max_edge_length_world": 0.06499351855906321,
+        "max_normalized_normal_laplacian": 0.8371041281363231,
+        "max_radial_height": 0.005909186834800906,
+        "max_vertex_displacement": 0.15027209192983523,
+        "min_edge_length_world": 0.000448720848361861,
+        "min_triangle_quality": 0.04055303360347116,
+        "nonfinite_vertices": 0,
+        "original_vertex_edge_max_stretch": 3.9629144222513792
+      },
+      "original_vertex_displacement_on_initial_normal": {
+        "changed_vertices": 6453,
+        "maximum_world": 8.433719535708657e-09,
+        "minimum_world": -0.1454285447003929,
+        "p05_world": -0.08398247081308786,
+        "p95_world": -7.649354292503886e-08
+      },
+      "stage": "old_crease",
+      "triangles": 123156,
+      "vertices": 61580
+    },
+    {
+      "height_warning": "Existing sphere-probe radial height for appended vertices uses unit radius and is not a depth measurement for this raised imported sculpt.",
+      "metrics": {
+        "adjacent_angle_over_30_edges": 683,
+        "adjacent_angle_over_60_edges": 206,
+        "adjacent_angle_over_90_edges": 78,
+        "edited_patch_adjacent_angle_p95_degrees": 10.903027144950764,
+        "edited_patch_edge_length_p95_world": 0.019511662079387298,
+        "edited_patch_normal_laplacian_mean": 0.026744066850234893,
+        "edited_patch_normal_laplacian_p95": 0.07130538643603104,
+        "edited_vertices": 8635,
+        "max_adjacent_normal_angle_degrees": 149.9999813835879,
+        "max_edge_length_over_initial_median": 3.1194271366069386,
+        "max_edge_length_world": 0.05588338761575919,
+        "max_normalized_normal_laplacian": 0.8371041281363231,
+        "max_radial_height": 0.4018753580668657,
+        "max_vertex_displacement": 0.14177386140882,
+        "min_edge_length_world": 0.000448720848361861,
+        "min_triangle_quality": 0.04055303360347116,
+        "nonfinite_vertices": 0,
+        "original_vertex_edge_max_stretch": 2.6431107176996114
+      },
+      "original_vertex_displacement_on_initial_normal": {
+        "changed_vertices": 4809,
+        "maximum_world": 0.01078722038375099,
+        "minimum_world": -0.1342703180792974,
+        "p05_world": -0.10772287263276611,
+        "p95_world": 4.668766048576521e-05
+      },
+      "stage": "updated_crease",
+      "triangles": 130968,
+      "vertices": 65486
+    }
+  ],
+  "quality_scope": {
+    "definitions": "Same geometric angle, normalized normal-projection roughness and normalized standard triangle quality definitions as draw-overlap-comparison.json. Signed depth uses original vertices projected onto the initial imported normals.",
+    "imported_damage": "Supplied mesh already has sharp folds/low-quality triangles. Counts above fresh-sphere thresholds are not automatically new damage and this update does not repair existing imported geometry.",
+    "height_limitation": "Inherited sphere-probe max_radial_height uses unit radius for appended vertices and is unsuitable as groove depth on this raised imported sculpt; prefer original_vertex_displacement_on_initial_normal.",
+    "topology_comparison": "Original vertex indices stay comparable; appended indices can represent different samples after safer selection. Triangle array and appended-index differences are intentional behavior differences, not geometric-error estimates.",
+    "proof_limits": "Final metrics do not constitute per-dab reversal counts/global self-intersection prevention or ZBrush reference parity."
+  },
+  "raw_evidence": {
+    "artifact_directory": ".artifacts/long-stroke-core-standard-quality-0.1.5",
+    "native_results_sha256": "4e9c8fe0a859e212ad6faaba77f0a309a747ebd1d2ba26c13696ae97b53f1e51",
+    "quality_results_sha256": "3f4ff596cbd3ef37cf05684978688938fc3c39ebb60137ec90ce0a3c1d4c7c0c",
+    "native_probe_sha256": "ef94ce9c6c9fc47702bfbcd9da7f79e34664a71cac57f3b5a343748b60a1e136",
+    "quality_probe_sha256": "518e35554e7eef0dd3f8bede89cf502ab68fc15e684c15533051c8984ad328ed"
+  },
+  "preserved_intermediates": [
+    {
+      "artifact_directory": ".artifacts/long-stroke-mesh-counting",
+      "note": "Stable whole-edge counting/CSR intermediate barely improved throughput; preserved before vertex-local edge grouping.",
+      "source_metadata_sha256": "fbf5e5256c230bd60e896964d183cbcdcd2063a0eb748f329d1c30281a8273c8",
+      "raw_native_output_sha256": "631ef94a24cbb6c912e1276c31b97705fa76630f9161352aa6fa3147b97b71d6"
+    },
+    {
+      "artifact_directory": ".artifacts/long-stroke-mesh-local",
+      "note": "Vertex-local CSR intermediate before trusted fingerprint reuse and safer child selection.",
+      "source_metadata_sha256": "48c4427d6dac8597f22fa5219cdfe173c88ea93d04c7978e3741e2e516c2f6a2",
+      "raw_native_output_sha256": "2d293e4061bf39f0007ac5aa2b6769f48eec4c1fa2c9bfa25517e21a17bd22d1"
+    },
+    {
+      "artifact_directory": ".artifacts/long-stroke-mesh-final",
+      "note": "Earlier native comparison had bit-identical Draw fields but is superseded; its speed/shape claims are not final-source results.",
+      "source_metadata_sha256": "80ed44e5457236e09a1451badf0866ef22ff160eeaf1bd2b4d69386b50084e29",
+      "raw_native_output_sha256": "4b347b635bc573ce263eb8a8e70bda7fd9c5d3dfd61e3f8215510d16232b6602"
+    },
+    {
+      "artifact_directory": ".artifacts/long-stroke-core-final-0.1.5",
+      "note": "First preflight candidate superseded after independent healthy-sphere5 gate found child normalized quality0.126 below intended0.15 floor.",
+      "source_metadata_sha256": "78435934b395bcee2d463da607c68b19c160efd09d97f0cf5af1a95276597b78",
+      "raw_native_output_sha256": "e12cd4cce7eba2b9c85d6fee5a3cfc28d4be338404d58f9c4c57edf3361594fc"
+    }
+  ],
+  "preserved_failed_checks": [
+    {
+      "path": ".artifacts/long-stroke-mesh-final/workspace-tests.log",
+      "sha256": "e747749c46bc86dbc701fa86db7b2a25740026cf7a6aac5c1122b1ceded7fa3f",
+      "failure": "Three older Crease integration tests asserted unchanged triangle arrays; adaptive detail now changes topology. Geometry agent revised tests to retain old-face safety/original-prefix attributes/interpolation invariants."
+    }
+  ],
+  "validation_scope": "Parent owns final full workspace/native/WASM Clippy/build/signature/runtime receipts. This record binds native continuation to the exact final production core hashes and leaves private mesh exports ignored."
+}

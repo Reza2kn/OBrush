@@ -1,0 +1,98 @@
+{
+  "pinned_commit": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+  "scope": "Translation text data only; static literal/typed template transcode; no executed/copied JS logic/vendor/font. Runtime V8/string/glyph/GUI gates pending.",
+  "files": [
+    {
+      "locale": "english",
+      "source_path": "src/gui/tr/english.js",
+      "source_sha256": "9fe10fafa58ad6ac59c894decaecd5819ae9960c9231f7c832af04cab9fd8cf4",
+      "keys": 168,
+      "source_duplicate_keys": [],
+      "output_bytes": 6677,
+      "output_sha256": "77bbf116c11293937d81c174f98e5b1514e255d8de991bb91d28f50d610d9410"
+    },
+    {
+      "locale": "japanese",
+      "source_path": "src/gui/tr/japanese.js",
+      "source_sha256": "f3878125bfea5173f397d3d2626c446880621bc6afd92dcf8c25d9b838af038c",
+      "keys": 163,
+      "source_duplicate_keys": [],
+      "output_bytes": 4895,
+      "output_sha256": "2e423e978deab2f377c042c2e05a4787735f91819b3ac7854b4dc19963f4e6ca"
+    },
+    {
+      "locale": "chinese",
+      "source_path": "src/gui/tr/chinese.js",
+      "source_sha256": "c3e5d8d7f112633bafdd5b632430c47a3a0b6e67d7377e208d93fe29443e526c",
+      "keys": 164,
+      "source_duplicate_keys": [
+        "sceneDuplicate"
+      ],
+      "output_bytes": 6533,
+      "output_sha256": "9b9664d28d9a4dfaf2800698a7efec8c7bea5b161f7d476381b16f437c56518f"
+    },
+    {
+      "locale": "korean",
+      "source_path": "src/gui/tr/korean.js",
+      "source_sha256": "52efba33b3f0b53a7e0b59281bd706069347f7280cce458fc4197a3d8d856ad4",
+      "keys": 165,
+      "source_duplicate_keys": [],
+      "output_bytes": 6749,
+      "output_sha256": "a11c4209a08a8c5bb55c9c82691288661d4283d8ba799e8ff1c8d3cdd47765a5"
+    },
+    {
+      "locale": "russian",
+      "source_path": "src/gui/tr/russian.js",
+      "source_sha256": "90bd69bee848c502ee2ba50adf7cd4db36c6fb0baf9dbe7eca20c40a27c9451c",
+      "keys": 165,
+      "source_duplicate_keys": [],
+      "output_bytes": 8344,
+      "output_sha256": "e682e119e679a5f5b8e2b054bb22291d64544284d6a5ad7e1dbce029719794e9"
+    },
+    {
+      "locale": "turkish",
+      "source_path": "src/gui/tr/turkish.js",
+      "source_sha256": "1296ae023f0dc37ebc32e7bd1a0501ad69b04f8b513270a8793fbac049081398",
+      "keys": 165,
+      "source_duplicate_keys": [],
+      "output_bytes": 6793,
+      "output_sha256": "89d3a2a076cf4b7e108818fcf10f3bfb086cfe44ce7195b0339b31c0ea42cfd3"
+    },
+    {
+      "locale": "swedish",
+      "source_path": "src/gui/tr/swedish.js",
+      "source_sha256": "094ce38df9c9cd5b5900a7fca7853f85d7680b94f7b02aecab75b5f7f42b67fd",
+      "keys": 165,
+      "source_duplicate_keys": [],
+      "output_bytes": 6683,
+      "output_sha256": "d8d93539c9eb31c2c19ffa8cfcbffeabe0ce02f20dbbb475d30d37c53cfed6ed"
+    },
+    {
+      "locale": "french",
+      "source_path": "src/gui/tr/french.js",
+      "source_sha256": "a52478fc63cd21b798cb36c7104cbc1bdfcb9f45b428bb2f51f77317c6619365",
+      "keys": 168,
+      "source_duplicate_keys": [],
+      "output_bytes": 6984,
+      "output_sha256": "989863c6c2cee87807af5848957b184c38faa864303c85f911260fd885000b2c"
+    },
+    {
+      "locale": "german",
+      "source_path": "src/gui/tr/german.js",
+      "source_sha256": "6ba4df1ee611f44c26d51da3bb0b58c541dc8fd7bcbf91eea4572210c0f702eb",
+      "keys": 168,
+      "source_duplicate_keys": [],
+      "output_bytes": 7152,
+      "output_sha256": "e8ce7aa2950c4a7c9b0d2c044944b3d00c933f52036e70bf413ab229099b9cc6"
+    },
+    {
+      "locale": "italian",
+      "source_path": "src/gui/tr/italian.js",
+      "source_sha256": "bacd528241bc3d209c2eb049ce996b175a53e447301ef3029fe683af96362fe4",
+      "keys": 168,
+      "source_duplicate_keys": [],
+      "output_bytes": 7032,
+      "output_sha256": "182c6f78e9af83fbf33766e84ec2daad903a76044703a07100deb1480cbd6d31"
+    }
+  ]
+}

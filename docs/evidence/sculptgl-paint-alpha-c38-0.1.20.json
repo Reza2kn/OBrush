@@ -1,0 +1,165 @@
+{
+  "status": "Compared scoped C38 PA00; broader Paint-alpha and full SculptGL/ZBrush parity open",
+  "utc": "2026-10-15T17:19:42.807700+00:00",
+  "case": "PA00",
+  "build_sha256": "a23c52a66792bb92180c02562361e474efacf927af0fd4d9561d5d3dda62203d",
+  "source_manifest_sha256": "bc30a9d934e135e263c235db9eebc428838ef4c6057422b6903d986761af545e",
+  "wasm_sha256": "4a5a329c307a871094a59299df48452ee450925ad36379eb613762124e8641e4",
+  "reference": {
+    "commit": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "actual_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "actual_wrapper_sha256": "a87cc1246a6bc39cebf81b78dcf6d6c5c6201ef72710dab7f177d1fe4acd11f0",
+    "unchanged": true
+  },
+  "protocol_sha256": "02759b6b5030f493ccd2808d89505b64a71643fb9e431b609d452a39017de8cc",
+  "runner_sha256": "a04d797ebff55f11741be62deb4085985ca07d1cf7e40ef51a188af94a5b62de",
+  "result_sha256": "e33950072187f71889dade150a0843edbaba9dea71f024988b946e04ec4804da",
+  "independent_audit_sha256": "423cf824ca292ee008e57a35426c1f2654abebb515f7d1c85568b8f3498ade8f",
+  "fixture_sha256": "a006bc08371ba9aaa7ac5424e3af464660519d1e5385d28fb237b37f0c3b6fcc",
+  "alpha_asset_sha256": "407cd04a7f930a226f09f5545e87acad8714ee3e1442534ef25c06a92bac695f",
+  "parameters": {
+    "screen_radius": 500,
+    "intensity": 0.25,
+    "hardness": 0.75,
+    "pressure_factors": 0,
+    "symmetry": false,
+    "culling": false,
+    "alpha": "independently authored gray4x4PNG MeanRGB",
+    "DPR": 1,
+    "viewport": [
+      1024,
+      768
+    ],
+    "seed": [
+      -0.25,
+      0.25,
+      0.5
+    ],
+    "endpoint_delta": [
+      96,
+      0
+    ],
+    "contact_policy": "Same per-host independently predicted integer local coordinates before Root press; no pick/outcome search"
+  },
+  "results": {
+    "actual_original_source_Paint_callbacks": 1,
+    "root_changed_vertices": 2,
+    "reference_changed_vertices": 2,
+    "all_16_alpha_frame_words_exact_each_own_independent_cardinal_prediction": true,
+    "frame_words_between_hosts_exact": true,
+    "all_saved_RGB_RM_words_match_independent_JS_and_Python_calculations": true,
+    "paired_saved_RGB_RM_words_different": 0,
+    "paired_maximum_difference": 0,
+    "declared_envelope": 1e-06,
+    "no_alpha_counterfactual_RGB_words_different_each_host": 18,
+    "complete_own_UndoRedo_files_exact_each_host": true,
+    "quiet_frames_each_host": 32,
+    "complete_quiet_saved_files_exact": true,
+    "raw_original_files_rehashed": 122,
+    "complete_public_files_rehashed": 10,
+    "actual_completed_GUID_files_rehashed": 10,
+    "actual_owned_chrome_exit": 0,
+    "actual_owned_servers_closed": 2,
+    "owned_PID_absence_verified": true
+  },
+  "own_preparation_differences": [
+    {
+      "side": "source",
+      "pass64": {
+        "center": [
+          -0.010039159096777439,
+          0.2515308354049921,
+          0.5
+        ],
+        "radius_squared": 1.574761178480051
+      },
+      "integer_local_contact": [
+        412,
+        483
+      ],
+      "alpha_frame_words": [
+        2147483648,
+        1065353216,
+        0,
+        0,
+        1065353216,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3212836864,
+        0,
+        3196111014,
+        1009023817,
+        1056964608,
+        1065353216
+      ]
+    },
+    {
+      "side": "root",
+      "pass64": {
+        "center": [
+          -0.01003915878540517,
+          0.2515308390921468,
+          0.5
+        ],
+        "eye": [
+          0,
+          0,
+          -1
+        ],
+        "radius_squared": 1.5747610799777778
+      },
+      "integer_local_contact": [
+        412,
+        483
+      ],
+      "alpha_frame_words": [
+        2147483648,
+        1065353216,
+        0,
+        0,
+        1065353216,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3212836864,
+        0,
+        3196111014,
+        1009023817,
+        1056964608,
+        1065353216
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "side": "source",
+      "bytes": 65578,
+      "sha256": "70a0532487f42836398579164558e1145f9cd408ca16ee2dc953908bd3ea50ef"
+    },
+    {
+      "side": "root",
+      "bytes": 141497,
+      "sha256": "edc9fcea46654e1d698c778ac2b876897954c8241c4358921298e794e893b241"
+    }
+  ],
+  "whole_PNG_review": "Both complete screenshots manually viewed. Blue triangular fixture visible in each. Original Source Files menu overlaps canvas and red contour/cursor differ from Root orange cursor and panels. No pixel/appearance parity asserted.",
+  "preserved_failures": [
+    "PA00 initial: Source import appended to startup scene and failed exact member count before press",
+    "PA00 second: missing required passive focused Tool observers before selection; exact original helper modules added",
+    "PA00 third: custom trace packet role rejected before press; use unchanged supported trace role with separate label; no role/cap relaxed"
+  ],
+  "limits": [
+    "One cold static six-vertex/two-sheet Paint-alpha case; no warm geometry-to-Paint alpha handoff",
+    "One meanRGB gray4x4bitmap with two actual sampled nonzero pixel lookups, not all alpha pixel/boundary/orientation cases",
+    "Primary only, no mirror/offset/Lock/dynamic/continuous/physical/pen cohort",
+    "No GPU buffer readback or broad rendering/lifecycle/native/performance gate",
+    "32RAF quiet whole saved output exact; no latency guarantee",
+    "All first three actual setup failures retained: append-to-starter-scene count, missing passive Tool observers, undeclared trace transport role; all occurred before Paint press. No stroke/tolerance/role/cap relaxation."
+  ],
+  "current_preview": "http://127.0.0.1:8803/"
+}

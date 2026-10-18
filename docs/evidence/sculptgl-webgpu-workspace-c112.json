@@ -1,0 +1,129 @@
+{
+  "scope": "Promote independently written C65 resident GPU prototype into current Rust workspace; product app still CPU/WASM plus WebGL2",
+  "workspace_crate": "crates/obrush-gpu",
+  "core_input_modules": [
+    "crates/obrush-core/src/resident_point_program.rs",
+    "crates/obrush-core/src/resident_normal_program.rs"
+  ],
+  "source_sha256": {
+    "crates/obrush-core/src/resident_normal_contract_tests.rs": "27c70ce82621d5a9598a442f93774d84ad836a7b29a8719e5c4b442b37a70818",
+    "crates/obrush-core/src/resident_normal_cross.wgsl": "cd23dffd3ebb9f6b3aa95488480fa56d329460b4dd8a8cd600a7de1c2c746a81",
+    "crates/obrush-core/src/resident_normal_face.wgsl": "5f595592ed013ea304efaeb1871beb3366e3b9270692af8176662a9e90a8c64b",
+    "crates/obrush-core/src/resident_normal_face_commit.wgsl": "e04aefc44aefefab627a39de4fb3c3310b1694cbec862ec839ad7ba9d7364e41",
+    "crates/obrush-core/src/resident_normal_mean.wgsl": "4052eddd8f6a6177c767af4496aa07f3bc43176eee176098835391b6360f09f0",
+    "crates/obrush-core/src/resident_normal_mean_preflight.wgsl": "7b85cca70d7794a263e350bb19adbd6d7c051abf361491660683ce341aa7e7f7",
+    "crates/obrush-core/src/resident_normal_preflight.wgsl": "adb5952f5c032284e1c4c919271786e0fcf76dd77c099d96675fb456ba0089b5",
+    "crates/obrush-core/src/resident_normal_program.rs": "449034b1dded9703667f0a6be474f0bb25f3fa49e75ecdcd3a91e4c9d661e24b",
+    "crates/obrush-core/src/resident_normal_vertex_commit.wgsl": "2c5d69a337b783902be49b70c724c7bf591414fd31e64cc06a42fdef9953c8b0",
+    "crates/obrush-core/src/resident_point_commit.wgsl": "888b288aaf69034848005861b8a4750725b478d7f4251aaed9780096e416a65f",
+    "crates/obrush-core/src/resident_point_program.rs": "5a5b5c9f3192fc5d8a830b9fe5b525312e9d174a1896235fe6b4a994d2d311c2",
+    "crates/obrush-core/src/resident_point_program.wgsl": "1e08abf78738ca278ef40258b3d15fbd75e184d9b4ada48e5d89e52ad6d58d74",
+    "crates/obrush-gpu/src/bin/camera_probe.rs": "e1a00b6d48551f8986960803473b7b690192b1f112f70ae23452f73dfd42a18e",
+    "crates/obrush-gpu/src/bin/pick_probe.rs": "6f6f8ec570223de6113a8a6a79f64a229b1267c55f51a85b415c3c55c470e039",
+    "crates/obrush-gpu/src/draw.wgsl": "ab2946aed670b7f6bc7471278c0e8d34ebbd4ccc00845a7a3c693b805e2e01c7",
+    "crates/obrush-gpu/src/lib.rs": "d461da6fdcfab38a635b4531f9d946df8c7ea0e2b5177d4e46a17fac32576aa3",
+    "crates/obrush-gpu/src/main.rs": "d74e8489e671c1d59c13c9a42c5db642ab9acacd8c27b7237a92f6399f3d3919",
+    "crates/obrush-gpu/src/normals.rs": "cdc4c8a94205a1efa1aaf939719cff68f990e86e0a26e44701c29f93252fd9fc",
+    "crates/obrush-gpu/src/pick.wgsl": "f03fbbbf91bb607974455baac361c8202a89d8c23644e1315360829a270fd4a7",
+    "crates/obrush-gpu/src/picker.rs": "f39981a8b6025a85cf855598fc9cbc273aeef5ed99526eb69ba66768f617ae4a",
+    "crates/obrush-gpu/src/surface.rs": "b7912cb8fd0b8a1fda15d3f311621937bd2a8ee077ecd61dd144fb38e5a1dbd4",
+    "crates/obrush-gpu/src/view.rs": "2cf8671d926fe6deffd48027704cb2f6799bb1e9b913766e93ba2ea805080c88"
+  },
+  "cargo_lock_sha256": "86fc5c0d5577b2cae689b69b2e211ecfd56c972b8a3a553abef5ca5623916d6a",
+  "wasm_bindgen_cli_version": "0.2.129",
+  "root_gpu_browser_audit_path": ".artifacts/gpu-promotion/ROOT_AUDIT.json",
+  "root_gpu_browser_audit_sha256": "8e4211daf1949e6d4d96aaad12b76f8dfbfca7c2a6c28a5857d095a2bf0d8d9d",
+  "root_gpu_browser": {
+    "scope": "Root workspace GPU bridge; still separate from production studio",
+    "fixture_sha256": "dfb5316f62e392e633f03cb662dcb12215ed165a71a9ae72a3fd639528731afe",
+    "gpu_wasm_sha256": "a53bc6d4bf77b4be3d37d6371763bf051c5db1ae9a377c1e27a534120a614ed7",
+    "browser_result_sha256": "79a2045e9754217647546d3e3d39d14b3f5e60690bb3ec96f12b3925ee7a5014",
+    "native_oracle_sha256": "4e0a8d172915630b9b93db308ce32813715300fe01308b215d55a12818a0c4c0",
+    "cameras": [
+      {
+        "camera": "perspective",
+        "sample_hits_exact": [
+          true,
+          true,
+          true
+        ],
+        "pixels_exact": true,
+        "browser_png_sha256": "7364b0b4d2361aac2b2a34e02f350fc495fdcb2affd793d976f8d55b36ac4026",
+        "native_png_sha256": "5b2d9d6cc8df7c56a9c4d28af53b944e626dea8d918eff59a83f4b565ba85b57",
+        "position_readbacks_before_present": 0
+      },
+      {
+        "camera": "orthographic",
+        "sample_hits_exact": [
+          true,
+          true,
+          true
+        ],
+        "pixels_exact": true,
+        "browser_png_sha256": "3445506755d3ac807464d95779badfeda57352b841e84ba39edcdbdbd22f7bf8",
+        "native_png_sha256": "556fba60439cd51f5e09723cd9601d42e6eb3039974f42c982cf7bbe87cb1f74",
+        "position_readbacks_before_present": 0
+      }
+    ],
+    "invalid_matrix_rejected": true,
+    "mismatched_extent_rejected": true,
+    "invalid_camera_kept_previous_image": true,
+    "resized_hit_face": 961428,
+    "browser_device_errors": [],
+    "owned_chrome_exit_code": 0,
+    "owned_server_closed": true,
+    "actual_gpu_trace": {
+      "sha256": "579ada549e0693c89404d634e001e71e5d709ff5b3e5e9850090eb19aa31b079",
+      "maps_after_first_present_marker_bytes": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "draw_index_counts": [
+        5994000,
+        5994000,
+        5994000,
+        5994000
+      ],
+      "no_whole_mesh_readback": true
+    },
+    "native_root_result_path": ".artifacts/gpu-promotion/native-root/result.json",
+    "native_root_result_sha256": "fa38b3fb034a4d2c22740f9abbcdefe374e8c35a8257144021a1c9755e79eb50",
+    "native_root_matches_frozen_oracle_except_source_label": true
+  },
+  "normal_studio_wasm_sha256": "7046684c99f3af5bbc689d2f7bf29541c5fc67cdac7389bd32fac4e7dbcdb4b1",
+  "normal_studio_browser_result_path": ".artifacts/sculptgl-paint-static-runtime/gpu-promotion-smoke-4583b261-be0b-4442-bdef-33413ba32e75/result.json",
+  "normal_studio_browser_result_sha256": "b1487ce139c5da6efd86050d6e8f93d2ef23597b2328c74e5b2f6d144c993479",
+  "normal_studio_browser": {
+    "status": "passed scoped local host gates; reference parity unverified",
+    "cases": 6,
+    "downloads": 36,
+    "gpu_checks": 36,
+    "owned_chrome_exit_code": 0,
+    "owned_server_closed": true
+  },
+  "validation": {
+    "cargo_fmt": "pass",
+    "workspace_test_results": 76,
+    "workspace_passed_tests": 2431,
+    "workspace_failures": 0,
+    "strict_native_workspace_clippy": "pass",
+    "strict_wasm_core_clippy": "pass",
+    "strict_wasm_gpu_clippy": "pass",
+    "wasm_app_check": "pass",
+    "wasm_gpu_check": "pass",
+    "official_web_build": "pass",
+    "official_macos_package": "pass"
+  },
+  "retained_failed_check": "A first whole-native-result byte comparison rejected because the camera source path label changed from staged source/crates/... to current crates/...; every other JSON field, six sampled hits and both full images matched. No numerical tolerance was relaxed.",
+  "limits": [
+    "Standalone point program is not any production Source brush",
+    "Normal studio remains WASM CPU geometry plus WebGL2 drawing",
+    "No normal studio document/undo/save, transformed subtools, CPU fallback or device recovery is connected to GPU crate",
+    "No 60/120-second consumer responsiveness or SculptGL feature parity claim"
+  ]
+}

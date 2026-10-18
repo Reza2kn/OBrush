@@ -1,0 +1,1802 @@
+{
+  "schema_version": 1,
+  "date_utc": "2026-10-12T23:23:57.266510+00:00",
+  "obrush_version": "0.1.6",
+  "feature_ids": [
+    "S02",
+    "S03",
+    "H02"
+  ],
+  "status": "Locally verified pressure and raster-alpha foundations; final nine-case browser correctness suite passed.",
+  "parity": {
+    "reference": "ZBrush desktop 2026.2.1",
+    "measured_reference_run": false,
+    "claim": "No ZBrush brush, pressure-response, alpha-projection, native-device, or complete feature-family parity claim. No proprietary source or bundled alpha assets used."
+  },
+  "implementation_contract": {
+    "pressure_default": 1.0,
+    "mouse_default": "Full pressure; browser mouse pressure 0.5 is ignored.",
+    "pressure_strength_default": true,
+    "pressure_radius_default": false,
+    "pressure_response": "Linear strength scaling; optional linear radius scaling; finite samples clamp to 0..1; zero pressure makes every brush an exact no-op.",
+    "alpha": "Immutable shared grayscale 8-bit bitmap; white weight 1, black/transparent weight 0, bilinear sampling, top-left row origin, scalar multiplication within the existing radial footprint.",
+    "alpha_limits": {
+      "maximum_side": 1024,
+      "maximum_pixels": 1048576,
+      "host_png_input_bytes": 16777216
+    },
+    "rgba_to_grayscale": "Rounded (77R+150G+29B)/256, then rounded multiplication by opacity/255. Weights operate directly in supplied channel space.",
+    "orientation": "Surface plane based on coherent brush normal and projected camera-right tangent. Counterclockwise rotation; mirror both original axes across X.",
+    "adaptive_detail_default": true,
+    "persistent_level_integration": "Host disables automatic local refinement when more than one persistent subdivision level exists; all five surface geometry tools still deform under shared guards."
+  },
+  "final_build": {
+    "wasm": {
+      "sha256": "dfe8de34af906a26a80bac2bcf6e523e95a9f5df9f3549f7890230feb8cb22c4",
+      "served_sha256": "dfe8de34af906a26a80bac2bcf6e523e95a9f5df9f3549f7890230feb8cb22c4",
+      "bytes": 3736829
+    },
+    "web_directory": ".artifacts/topology-inputs-final/web",
+    "source_manifest": {
+      "path": ".artifacts/topology-inputs-final/source-manifest.json",
+      "bytes": 8394,
+      "sha256": "59d5053a2db4dd1bc30eaa69444c9120d39cb87bd695d53528938cb441217d9a"
+    },
+    "build_record": {
+      "path": ".artifacts/topology-inputs-final/build-record.json",
+      "bytes": 4788,
+      "sha256": "b7f6a5b130d9cab760736a92509eac97bd114958e34b94d80df88aa87e2d0a2f"
+    },
+    "relevant_source_files": [
+      {
+        "path": "web/index.html",
+        "bytes": 6509,
+        "sha256": "f94e458b842644f3cf003f915d26464987c8639392c848cfb333508974eb4956"
+      },
+      {
+        "path": "crates/obrush-app/src/app.rs",
+        "bytes": 72906,
+        "sha256": "2a8cf6ede4f3ef216bdce2df99618763e8f344bec402e93a3446b78612d54a4d"
+      },
+      {
+        "path": "crates/obrush-app/src/dab_queue.rs",
+        "bytes": 14679,
+        "sha256": "38c71e0fcc000c28473035d7170a1c57b9e2b682f37252df032f24098c078d04"
+      },
+      {
+        "path": "crates/obrush-app/src/lib.rs",
+        "bytes": 3201,
+        "sha256": "4b60333b29c986186fcf968d1ebcc6542e4a9f80f3c03237e519082b79f265d2"
+      },
+      {
+        "path": "crates/obrush-app/src/pressure.rs",
+        "bytes": 1872,
+        "sha256": "9ca20656608c0b32800d7438ae75276878d6ddb43de238221b526f4cc5c2dafa"
+      },
+      {
+        "path": "crates/obrush-app/src/renderer.rs",
+        "bytes": 44613,
+        "sha256": "3ccf212965fcffe457ad672c0430caf2abfe40f3128bae0547e783977d46e205"
+      },
+      {
+        "path": "crates/obrush-core/src/alpha.rs",
+        "bytes": 6380,
+        "sha256": "bad9797511f1a98befd43ae4f8f29408fa594b30ee8bdbe0b639bb885d39c597"
+      },
+      {
+        "path": "crates/obrush-core/src/brush.rs",
+        "bytes": 31940,
+        "sha256": "4737dcef0621815042bf8394d65dc7a9c01cbc9cccda692767b4621f02fa9b17"
+      },
+      {
+        "path": "crates/obrush-core/src/document.rs",
+        "bytes": 16310,
+        "sha256": "142f8a4d67da85fca8edb171a6e2738c567edb9d7ae59c54ef0df037aa5e21c3"
+      },
+      {
+        "path": "crates/obrush-core/src/mesh.rs",
+        "bytes": 58738,
+        "sha256": "4db1884082d155c81c5acbcf154046370cdca2fa7d087f293c71f12802320f98"
+      },
+      {
+        "path": "crates/obrush-core/src/refinement.rs",
+        "bytes": 30089,
+        "sha256": "26eec51be37a104e439fea9d7075e5557a60a662e156146a8566f40a84a42935"
+      },
+      {
+        "path": "crates/obrush-core/tests/brush_inputs.rs",
+        "bytes": 14814,
+        "sha256": "f69b24e32ea04122dfd53fa56d1be47eb006db58456f569a68c16e9462f22a32"
+      }
+    ],
+    "harness": {
+      "path": "scripts/check-brush-inputs.mjs",
+      "bytes": 29961,
+      "sha256": "7c70f032bc75a72c5d1aa53ceba5c0757ee9accbaee8642194424970940975e6"
+    },
+    "command": "node scripts/check-brush-inputs.mjs .artifacts/topology-inputs-final/web final-correctness",
+    "raw_runtime_receipt": {
+      "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/result.json",
+      "bytes": 54968,
+      "sha256": "6e18924a2fd02183a49dd32f7540b1649fd779cab6924a836596bdf9fa924cd3"
+    }
+  },
+  "environment": {
+    "os": "macOS 26.5.1 arm64",
+    "hardware": "Apple M2; local 24 GiB host",
+    "browser": {
+      "protocolVersion": "1.3",
+      "product": "Chrome/155.0.8059.39",
+      "revision": "@3ff7ac5a9224be9156d7f8703a06e22890aafd34",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "jsVersion": "15.5.35.20"
+    },
+    "browser_control": "Fresh CLI headless Chrome process and profile, owned loopback server and tab; no CUA, desktop/accessibility, user-tab, or physical-device control.",
+    "rendering": "WebGL2 with actual 4x MSAA in every case; unmasked GPU renderer was not separately captured in this suite.",
+    "screen": {
+      "width": 1600,
+      "height": 1000,
+      "device_pixel_ratio": 1
+    },
+    "timing_scope": "Correctness run overlapped root workspace tests. No CPU/GPU latency or throughput claim is derived from these traces."
+  },
+  "fixtures": {
+    "creation": "Independently authored grayscale rows encoded by Node stdlib zlib; no downloaded artwork or commercial fixtures. PNG byte hashes here are the actual browser-tested files; earlier Python encoding of the same asymmetric rows has a different compressed-byte hash.",
+    "alpha_images": {
+      "asymmetric": {
+        "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/asymmetric-5x5.png",
+        "sha256": "141dc465de10e07a9330a97234c1b2d09e0345900f03dffed1af8b8df223bfa5",
+        "bytes": 84,
+        "width": 5,
+        "height": 5,
+        "rows": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            255,
+            192,
+            64,
+            0
+          ],
+          [
+            0,
+            192,
+            128,
+            32,
+            0
+          ],
+          [
+            0,
+            64,
+            32,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "white": {
+        "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/white-5x5.png",
+        "sha256": "524483aee69bcc91e50fd8cfb131806444a4c7e0410e04889a911c37ae16572b",
+        "bytes": 71,
+        "width": 5,
+        "height": 5,
+        "rows": [
+          [
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            255,
+            255,
+            255,
+            255,
+            255
+          ]
+        ]
+      },
+      "black": {
+        "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/black-5x5.png",
+        "sha256": "6b52fcb80cb6b07484afc0934b5a3f60d58bd5f4b663e786efc9f8b9f08eacf9",
+        "bytes": 68,
+        "width": 5,
+        "height": 5,
+        "rows": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "oversized": {
+        "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/oversized-1025x1.png",
+        "sha256": "18f761fb10b9ad4478b91cf1b688ce057228247cfa88f7203326ee243d8de794",
+        "bytes": 74,
+        "width": 1025,
+        "height": 1,
+        "expected": "Reject without replacing the current brush alpha or mesh"
+      }
+    },
+    "surface": "Fresh deterministic Mesh::sphere(6), 40,962 vertices / 81,920 triangles in each case; complete initial and final .obrush outputs are preserved and hashed in case records."
+  },
+  "preregistered_tolerances": {
+    "quarter_pressure_max_absolute_position_error": 3e-07,
+    "quarter_pressure_median_ratio_error": 0.01,
+    "mirrored_original_vertex_max_error": 1e-07
+  },
+  "summary": {
+    "all_comparison_gates": {
+      "zero_pressure_exact_noop": true,
+      "mouse_default_matches_pen_full_exactly": true,
+      "black_alpha_exact_noop": true,
+      "white_alpha_matches_no_alpha_exactly": true,
+      "asymmetric_alpha_has_distinct_nonempty_geometry": true,
+      "rotation_control_changes_alpha_geometry": true,
+      "pressure_radius_reduces_footprint": true,
+      "quarter_pressure_matches_scaled_full_displacement": true,
+      "asymmetric_alpha_preserves_mirrored_world_footprint": true
+    },
+    "cases": 9,
+    "quarter_pressure": {
+      "measured_original_vertices": 596,
+      "max_absolute_position_error": 7.499999998827889e-08,
+      "median_displacement_ratio": 0.24999933437392782,
+      "expected_ratio": 0.25
+    },
+    "pressure_radius": {
+      "full_changed_original_vertices": 630,
+      "half_radius_changed_original_vertices": 172,
+      "changed_vertex_fraction": 0.273015873015873
+    },
+    "asymmetric_alpha_symmetry": {
+      "measured_original_vertex_pairs": 20353,
+      "max_mirrored_coordinate_error": 0
+    },
+    "rotation_radians": 3.1415927410125732,
+    "viewport_identical_across_all_cases": true,
+    "actual_gpu_equals_saved_mesh_all_cases": true,
+    "pending_dabs_after_release_all_zero": true,
+    "asymmetric_alpha_history": {
+      "undo_exact_initial": true,
+      "redo_exact_final": true
+    },
+    "oversized_png_rejection": {
+      "notice": "Alpha import failed: Error: Alpha dimensions must be between 1 and 1024 pixels.",
+      "retained_alpha": "asymmetric-5x5.png",
+      "mesh_exact": true
+    },
+    "javascript_exceptions": 0,
+    "console_errors": 0,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    }
+  },
+  "case_records": [
+    {
+      "name": "pen-zero",
+      "pointer_type": "pen",
+      "force": 0,
+      "alpha": null,
+      "viewport": {
+        "left": 212,
+        "bottom": 31,
+        "width": 1153,
+        "height": 912,
+        "pointer": [
+          703.5,
+          483
+        ]
+      },
+      "initial_settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Draw",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "settings_during_contact": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Draw",
+        "message": "Download requested: Untitled_sculpture.obrush",
+        "pressure": 0,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "changed_original_vertices": 0,
+      "gpu_before_save": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 127.5
+      },
+      "gpu_matches_saved_mesh": true,
+      "metrics_after_release": {
+        "applied_dabs": 0,
+        "coalesced_dabs": 0,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 1,
+        "pending_dabs": 0,
+        "processed_dabs": 1,
+        "released_strokes": 1
+      },
+      "actual_dom_pen_events": [
+        {
+          "type": "pointermove",
+          "pointer_type": "pen",
+          "pressure": 0,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 0,
+          "trusted": true,
+          "at": 996.4000000003725
+        },
+        {
+          "type": "pointerdown",
+          "pointer_type": "pen",
+          "pressure": 0,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 1,
+          "trusted": true,
+          "at": 1061.300000000745
+        },
+        {
+          "type": "pointerup",
+          "pointer_type": "pen",
+          "pressure": 0,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 0,
+          "trusted": true,
+          "at": 1187.0999999996275
+        }
+      ],
+      "snapshots": [
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/pen-zero-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/pen-zero-final.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        }
+      ],
+      "runtime_errors": {
+        "gl": [],
+        "js": [],
+        "notice": ""
+      }
+    },
+    {
+      "name": "pen-quarter",
+      "pointer_type": "pen",
+      "force": 0.25,
+      "alpha": null,
+      "viewport": {
+        "left": 212,
+        "bottom": 31,
+        "width": 1153,
+        "height": 912,
+        "pointer": [
+          703.5,
+          483
+        ]
+      },
+      "initial_settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Draw",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "settings_during_contact": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Draw",
+        "message": "Download requested: Untitled_sculpture.obrush",
+        "pressure": 0.25,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "changed_original_vertices": 630,
+      "gpu_before_save": {
+        "bytes": 1638480,
+        "sha256": "50bd68d66886d788cde2378cdd433f1de18aed15f12840c174cc0baa52f63613",
+        "last_upload_at": 1079
+      },
+      "gpu_matches_saved_mesh": true,
+      "metrics_after_release": {
+        "applied_dabs": 1,
+        "coalesced_dabs": 0,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 1,
+        "pending_dabs": 0,
+        "processed_dabs": 1,
+        "released_strokes": 1
+      },
+      "actual_dom_pen_events": [
+        {
+          "type": "pointermove",
+          "pointer_type": "pen",
+          "pressure": 0,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 0,
+          "trusted": true,
+          "at": 1002.0999999996275
+        },
+        {
+          "type": "pointerdown",
+          "pointer_type": "pen",
+          "pressure": 0.25,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 1,
+          "trusted": true,
+          "at": 1063.5
+        },
+        {
+          "type": "pointerup",
+          "pointer_type": "pen",
+          "pressure": 0,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 0,
+          "trusted": true,
+          "at": 1200
+        }
+      ],
+      "snapshots": [
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/pen-quarter-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/pen-quarter-final.obrush",
+          "sha256": "67353bbe3ff832a1b92616698d802989db7b38953013009e12e3e7fbf693e793",
+          "bytes": 5317195,
+          "vertices": 40962,
+          "triangles": 81920
+        }
+      ],
+      "runtime_errors": {
+        "gl": [],
+        "js": [],
+        "notice": ""
+      }
+    },
+    {
+      "name": "pen-full",
+      "pointer_type": "pen",
+      "force": 1,
+      "alpha": null,
+      "viewport": {
+        "left": 212,
+        "bottom": 31,
+        "width": 1153,
+        "height": 912,
+        "pointer": [
+          703.5,
+          483
+        ]
+      },
+      "initial_settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Draw",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "settings_during_contact": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Draw",
+        "message": "Download requested: Untitled_sculpture.obrush",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "changed_original_vertices": 630,
+      "gpu_before_save": {
+        "bytes": 1638480,
+        "sha256": "c67809aa499d84e22675b051bbfd5e438cfd0b2c31e06994440fbb5aa2a09fff",
+        "last_upload_at": 1040.7000000011176
+      },
+      "gpu_matches_saved_mesh": true,
+      "metrics_after_release": {
+        "applied_dabs": 1,
+        "coalesced_dabs": 0,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 1,
+        "pending_dabs": 0,
+        "processed_dabs": 1,
+        "released_strokes": 1
+      },
+      "actual_dom_pen_events": [
+        {
+          "type": "pointermove",
+          "pointer_type": "pen",
+          "pressure": 0,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 0,
+          "trusted": true,
+          "at": 966.4000000003725
+        },
+        {
+          "type": "pointerdown",
+          "pointer_type": "pen",
+          "pressure": 1,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 1,
+          "trusted": true,
+          "at": 1029.5999999996275
+        },
+        {
+          "type": "pointerup",
+          "pointer_type": "pen",
+          "pressure": 0,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 0,
+          "trusted": true,
+          "at": 1161.800000000745
+        }
+      ],
+      "snapshots": [
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/pen-full-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/pen-full-final.obrush",
+          "sha256": "1ef80314717c7aac7dd1e2e2345ec1c9cff565ab7eaa59f4d532b7d6ee3c8360",
+          "bytes": 5317237,
+          "vertices": 40962,
+          "triangles": 81920
+        }
+      ],
+      "runtime_errors": {
+        "gl": [],
+        "js": [],
+        "notice": ""
+      }
+    },
+    {
+      "name": "mouse-default",
+      "pointer_type": "mouse",
+      "force": 0.5,
+      "alpha": null,
+      "viewport": {
+        "left": 212,
+        "bottom": 31,
+        "width": 1153,
+        "height": 912,
+        "pointer": [
+          703.5,
+          483
+        ]
+      },
+      "initial_settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Draw",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "settings_during_contact": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Draw",
+        "message": "Download requested: Untitled_sculpture.obrush",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "changed_original_vertices": 630,
+      "gpu_before_save": {
+        "bytes": 1638480,
+        "sha256": "c67809aa499d84e22675b051bbfd5e438cfd0b2c31e06994440fbb5aa2a09fff",
+        "last_upload_at": 1132.3999999985099
+      },
+      "gpu_matches_saved_mesh": true,
+      "metrics_after_release": {
+        "applied_dabs": 1,
+        "coalesced_dabs": 0,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 1,
+        "pending_dabs": 0,
+        "processed_dabs": 1,
+        "released_strokes": 1
+      },
+      "actual_dom_pen_events": [
+        {
+          "type": "pointermove",
+          "pointer_type": "mouse",
+          "pressure": 0,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 0,
+          "trusted": true,
+          "at": 1058
+        },
+        {
+          "type": "pointerdown",
+          "pointer_type": "mouse",
+          "pressure": 0.5,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 1,
+          "trusted": true,
+          "at": 1120.8999999985099
+        },
+        {
+          "type": "pointerup",
+          "pointer_type": "mouse",
+          "pressure": 0,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 0,
+          "trusted": true,
+          "at": 1257.199999999255
+        }
+      ],
+      "snapshots": [
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/mouse-default-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/mouse-default-final.obrush",
+          "sha256": "1ef80314717c7aac7dd1e2e2345ec1c9cff565ab7eaa59f4d532b7d6ee3c8360",
+          "bytes": 5317237,
+          "vertices": 40962,
+          "triangles": 81920
+        }
+      ],
+      "runtime_errors": {
+        "gl": [],
+        "js": [],
+        "notice": ""
+      }
+    },
+    {
+      "name": "alpha-black",
+      "pointer_type": "pen",
+      "force": 1,
+      "alpha": "black",
+      "viewport": {
+        "left": 212,
+        "bottom": 31,
+        "width": 1153,
+        "height": 912,
+        "pointer": [
+          703.5,
+          483
+        ]
+      },
+      "initial_settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Draw",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "settings_during_contact": {
+        "adaptive_detail": true,
+        "alpha": "black-5x5.png",
+        "alpha_height": 5,
+        "alpha_rotation": 0,
+        "alpha_width": 5,
+        "kind": "Draw",
+        "message": "Alpha loaded: black-5x5.png. White sculpts; black and transparent pixels protect the surface.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "changed_original_vertices": 0,
+      "gpu_before_save": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 65.79999999888241
+      },
+      "gpu_matches_saved_mesh": true,
+      "metrics_after_release": {
+        "applied_dabs": 0,
+        "coalesced_dabs": 0,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 1,
+        "pending_dabs": 0,
+        "processed_dabs": 1,
+        "released_strokes": 1
+      },
+      "actual_dom_pen_events": [
+        {
+          "type": "pointermove",
+          "pointer_type": "pen",
+          "pressure": 0,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 0,
+          "trusted": true,
+          "at": 979.1999999992549
+        },
+        {
+          "type": "pointerdown",
+          "pointer_type": "pen",
+          "pressure": 1,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 1,
+          "trusted": true,
+          "at": 1064.0999999996275
+        },
+        {
+          "type": "pointerup",
+          "pointer_type": "pen",
+          "pressure": 0,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 0,
+          "trusted": true,
+          "at": 1190
+        }
+      ],
+      "snapshots": [
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/alpha-black-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/alpha-black-final.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        }
+      ],
+      "runtime_errors": {
+        "gl": [],
+        "js": [],
+        "notice": ""
+      },
+      "alpha_import_settings": {
+        "adaptive_detail": true,
+        "alpha": "black-5x5.png",
+        "alpha_height": 5,
+        "alpha_rotation": 0,
+        "alpha_width": 5,
+        "kind": "Draw",
+        "message": "Alpha loaded: black-5x5.png. White sculpts; black and transparent pixels protect the surface.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      }
+    },
+    {
+      "name": "alpha-white",
+      "pointer_type": "pen",
+      "force": 1,
+      "alpha": "white",
+      "viewport": {
+        "left": 212,
+        "bottom": 31,
+        "width": 1153,
+        "height": 912,
+        "pointer": [
+          703.5,
+          483
+        ]
+      },
+      "initial_settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Draw",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "settings_during_contact": {
+        "adaptive_detail": true,
+        "alpha": "white-5x5.png",
+        "alpha_height": 5,
+        "alpha_rotation": 0,
+        "alpha_width": 5,
+        "kind": "Draw",
+        "message": "Alpha loaded: white-5x5.png. White sculpts; black and transparent pixels protect the surface.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "changed_original_vertices": 630,
+      "gpu_before_save": {
+        "bytes": 1638480,
+        "sha256": "c67809aa499d84e22675b051bbfd5e438cfd0b2c31e06994440fbb5aa2a09fff",
+        "last_upload_at": 1069.699999999255
+      },
+      "gpu_matches_saved_mesh": true,
+      "metrics_after_release": {
+        "applied_dabs": 1,
+        "coalesced_dabs": 0,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 1,
+        "pending_dabs": 0,
+        "processed_dabs": 1,
+        "released_strokes": 1
+      },
+      "actual_dom_pen_events": [
+        {
+          "type": "pointermove",
+          "pointer_type": "pen",
+          "pressure": 0,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 0,
+          "trusted": true,
+          "at": 997.7999999988824
+        },
+        {
+          "type": "pointerdown",
+          "pointer_type": "pen",
+          "pressure": 1,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 1,
+          "trusted": true,
+          "at": 1059.7999999988824
+        },
+        {
+          "type": "pointerup",
+          "pointer_type": "pen",
+          "pressure": 0,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 0,
+          "trusted": true,
+          "at": 1190.5999999996275
+        }
+      ],
+      "snapshots": [
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/alpha-white-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/alpha-white-final.obrush",
+          "sha256": "1ef80314717c7aac7dd1e2e2345ec1c9cff565ab7eaa59f4d532b7d6ee3c8360",
+          "bytes": 5317237,
+          "vertices": 40962,
+          "triangles": 81920
+        }
+      ],
+      "runtime_errors": {
+        "gl": [],
+        "js": [],
+        "notice": ""
+      },
+      "alpha_import_settings": {
+        "adaptive_detail": true,
+        "alpha": "white-5x5.png",
+        "alpha_height": 5,
+        "alpha_rotation": 0,
+        "alpha_width": 5,
+        "kind": "Draw",
+        "message": "Alpha loaded: white-5x5.png. White sculpts; black and transparent pixels protect the surface.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      }
+    },
+    {
+      "name": "alpha-asymmetric",
+      "pointer_type": "pen",
+      "force": 1,
+      "alpha": "asymmetric",
+      "viewport": {
+        "left": 212,
+        "bottom": 31,
+        "width": 1153,
+        "height": 912,
+        "pointer": [
+          703.5,
+          483
+        ]
+      },
+      "initial_settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Draw",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "settings_during_contact": {
+        "adaptive_detail": true,
+        "alpha": "asymmetric-5x5.png",
+        "alpha_height": 5,
+        "alpha_rotation": 0,
+        "alpha_width": 5,
+        "kind": "Draw",
+        "message": "Alpha loaded: asymmetric-5x5.png. White sculpts; black and transparent pixels protect the surface.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "changed_original_vertices": 602,
+      "gpu_before_save": {
+        "bytes": 1638480,
+        "sha256": "5f1881deea49d4599a1493b0be6ee2923ebbda649d750eb1e29a1e86ceed0931",
+        "last_upload_at": 1045.699999999255
+      },
+      "gpu_matches_saved_mesh": true,
+      "metrics_after_release": {
+        "applied_dabs": 1,
+        "coalesced_dabs": 0,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 1,
+        "pending_dabs": 0,
+        "processed_dabs": 1,
+        "released_strokes": 1
+      },
+      "actual_dom_pen_events": [
+        {
+          "type": "pointermove",
+          "pointer_type": "pen",
+          "pressure": 0,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 0,
+          "trusted": true,
+          "at": 969.9000000003725
+        },
+        {
+          "type": "pointerdown",
+          "pointer_type": "pen",
+          "pressure": 1,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 1,
+          "trusted": true,
+          "at": 1035.699999999255
+        },
+        {
+          "type": "pointerup",
+          "pointer_type": "pen",
+          "pressure": 0,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 0,
+          "trusted": true,
+          "at": 1166.4000000003725
+        }
+      ],
+      "snapshots": [
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/alpha-asymmetric-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/alpha-asymmetric-final.obrush",
+          "sha256": "f89c43eb7e5ea5f77a928e06273897eab5e28db9a77788137385ab3092c83500",
+          "bytes": 5317270,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/alpha-asymmetric-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/alpha-asymmetric-redo.obrush",
+          "sha256": "f89c43eb7e5ea5f77a928e06273897eab5e28db9a77788137385ab3092c83500",
+          "bytes": 5317270,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/alpha-asymmetric-after-rejected-alpha.obrush",
+          "sha256": "f89c43eb7e5ea5f77a928e06273897eab5e28db9a77788137385ab3092c83500",
+          "bytes": 5317270,
+          "vertices": 40962,
+          "triangles": 81920
+        }
+      ],
+      "runtime_errors": {
+        "gl": [],
+        "js": [],
+        "notice": ""
+      },
+      "alpha_import_settings": {
+        "adaptive_detail": true,
+        "alpha": "asymmetric-5x5.png",
+        "alpha_height": 5,
+        "alpha_rotation": 0,
+        "alpha_width": 5,
+        "kind": "Draw",
+        "message": "Alpha loaded: asymmetric-5x5.png. White sculpts; black and transparent pixels protect the surface.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "history": {
+        "undo_exact_initial": true,
+        "redo_exact_final": true
+      },
+      "invalid_alpha": {
+        "notice": "Alpha import failed: Error: Alpha dimensions must be between 1 and 1024 pixels.",
+        "retained_alpha": "asymmetric-5x5.png",
+        "mesh_exact": true
+      },
+      "screenshot": {
+        "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/alpha-asymmetric.png",
+        "sha256": "c24814c5f7ef8c828b3d5d7417e8e0704404d94f25de88d92e9bba8638e985b9",
+        "bytes": 205746
+      }
+    },
+    {
+      "name": "pen-radius-half",
+      "pointer_type": "pen",
+      "force": 0.5,
+      "alpha": null,
+      "viewport": {
+        "left": 212,
+        "bottom": 31,
+        "width": 1153,
+        "height": 912,
+        "pointer": [
+          703.5,
+          483
+        ]
+      },
+      "initial_settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Draw",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "settings_during_contact": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Draw",
+        "message": "Download requested: Untitled_sculpture.obrush",
+        "pressure": 0.5,
+        "pressure_radius": true,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 82944,
+        "vertices": 41474
+      },
+      "changed_original_vertices": 172,
+      "gpu_before_save": {
+        "bytes": 1658960,
+        "sha256": "35a266374fc0692af995113ef9d29de64f62c2a5d28cee57d6f65fbf31ae2d03",
+        "last_upload_at": 1323.5
+      },
+      "gpu_matches_saved_mesh": true,
+      "metrics_after_release": {
+        "applied_dabs": 1,
+        "coalesced_dabs": 0,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 1,
+        "pending_dabs": 0,
+        "processed_dabs": 1,
+        "released_strokes": 1
+      },
+      "actual_dom_pen_events": [
+        {
+          "type": "pointermove",
+          "pointer_type": "pen",
+          "pressure": 0,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 0,
+          "trusted": true,
+          "at": 1244.800000000745
+        },
+        {
+          "type": "pointerdown",
+          "pointer_type": "pen",
+          "pressure": 0.5,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 1,
+          "trusted": true,
+          "at": 1306.5
+        },
+        {
+          "type": "pointerup",
+          "pointer_type": "pen",
+          "pressure": 0,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 0,
+          "trusted": true,
+          "at": 1444.4000000003725
+        }
+      ],
+      "snapshots": [
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/pen-radius-half-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/pen-radius-half-final.obrush",
+          "sha256": "809a4f2ca2649d32f7fe07f8eb766f3e5c06e4b17340ba52ee27c727b1ce8d56",
+          "bytes": 5383897,
+          "vertices": 41474,
+          "triangles": 82944
+        }
+      ],
+      "runtime_errors": {
+        "gl": [],
+        "js": [],
+        "notice": ""
+      },
+      "ui_control": {
+        "name": "pressure-radius",
+        "pointer": [
+          22,
+          653
+        ],
+        "settings": {
+          "adaptive_detail": true,
+          "alpha": null,
+          "alpha_height": null,
+          "alpha_rotation": 0,
+          "alpha_width": null,
+          "kind": "Draw",
+          "message": "Download requested: Untitled_sculpture.obrush",
+          "pressure": 1,
+          "pressure_radius": true,
+          "pressure_strength": true,
+          "radius": 0.18000000715255737,
+          "strength": 0.3499999940395355,
+          "subdivision_level": 0,
+          "subdivision_levels": 1,
+          "symmetry_x": true,
+          "topology_busy": false,
+          "topology_job_id": null,
+          "triangles": 81920,
+          "vertices": 40962
+        }
+      },
+      "screenshot": {
+        "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/pen-radius-half.png",
+        "sha256": "abe39e444b749fb5751f64e486c9aee8773be522c62357b8505791b8e7419d25",
+        "bytes": 206230
+      }
+    },
+    {
+      "name": "alpha-rotated",
+      "pointer_type": "pen",
+      "force": 1,
+      "alpha": "asymmetric",
+      "viewport": {
+        "left": 212,
+        "bottom": 31,
+        "width": 1153,
+        "height": 912,
+        "pointer": [
+          703.5,
+          483
+        ]
+      },
+      "initial_settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Draw",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "settings_during_contact": {
+        "adaptive_detail": true,
+        "alpha": "asymmetric-5x5.png",
+        "alpha_height": 5,
+        "alpha_rotation": 3.1415927410125732,
+        "alpha_width": 5,
+        "kind": "Draw",
+        "message": "Alpha loaded: asymmetric-5x5.png. White sculpts; black and transparent pixels protect the surface.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "changed_original_vertices": 620,
+      "gpu_before_save": {
+        "bytes": 1638480,
+        "sha256": "3d74e106ebffda0d729fdd7f5b2c7ee4e43eacc7d6d1d0ddf2d082a4e0ead371",
+        "last_upload_at": 1371
+      },
+      "gpu_matches_saved_mesh": true,
+      "metrics_after_release": {
+        "applied_dabs": 1,
+        "coalesced_dabs": 0,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 1,
+        "pending_dabs": 0,
+        "processed_dabs": 1,
+        "released_strokes": 1
+      },
+      "actual_dom_pen_events": [
+        {
+          "type": "pointermove",
+          "pointer_type": "pen",
+          "pressure": 0,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 0,
+          "trusted": true,
+          "at": 1298.2999999988824
+        },
+        {
+          "type": "pointerdown",
+          "pointer_type": "pen",
+          "pressure": 1,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 1,
+          "trusted": true,
+          "at": 1360.5999999996275
+        },
+        {
+          "type": "pointerup",
+          "pointer_type": "pen",
+          "pressure": 0,
+          "x": 703.5,
+          "y": 483,
+          "buttons": 0,
+          "trusted": true,
+          "at": 1491.5999999996275
+        }
+      ],
+      "snapshots": [
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/alpha-rotated-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/alpha-rotated-final.obrush",
+          "sha256": "0a937c8c49eea01d062bc2415d9b64a8b9d510076fcc7968ee085a9ae13ffae1",
+          "bytes": 5317073,
+          "vertices": 40962,
+          "triangles": 81920
+        }
+      ],
+      "runtime_errors": {
+        "gl": [],
+        "js": [],
+        "notice": ""
+      },
+      "alpha_import_settings": {
+        "adaptive_detail": true,
+        "alpha": "asymmetric-5x5.png",
+        "alpha_height": 5,
+        "alpha_rotation": 0,
+        "alpha_width": 5,
+        "kind": "Draw",
+        "message": "Alpha loaded: asymmetric-5x5.png. White sculpts; black and transparent pixels protect the surface.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "ui_control": {
+        "name": "rotation",
+        "pointer": [
+          106,
+          762
+        ],
+        "settings": {
+          "adaptive_detail": true,
+          "alpha": "asymmetric-5x5.png",
+          "alpha_height": 5,
+          "alpha_rotation": 3.1415927410125732,
+          "alpha_width": 5,
+          "kind": "Draw",
+          "message": "Alpha loaded: asymmetric-5x5.png. White sculpts; black and transparent pixels protect the surface.",
+          "pressure": 1,
+          "pressure_radius": false,
+          "pressure_strength": true,
+          "radius": 0.18000000715255737,
+          "strength": 0.3499999940395355,
+          "subdivision_level": 0,
+          "subdivision_levels": 1,
+          "symmetry_x": true,
+          "topology_busy": false,
+          "topology_job_id": null,
+          "triangles": 81920,
+          "vertices": 40962
+        }
+      },
+      "screenshot": {
+        "path": ".artifacts/brush-inputs-0.1.6/final-correctness-ca30a2b6-f65d-4d07-948f-c13ba87dd806/alpha-rotated.png",
+        "sha256": "532f8efbd1492cda2f9a5de4a3ea9d6008b5d7ea0173c8f425831959802b4fe7",
+        "bytes": 206201
+      }
+    }
+  ],
+  "core_protection_and_history": {
+    "tests": 11,
+    "command": "cargo test --locked -p obrush-core --test brush_inputs",
+    "log": {
+      "path": ".artifacts/brush-inputs-0.1.6/tests-adaptive-flag.log",
+      "bytes": 1255,
+      "sha256": "7d9f578484f8cbde8619b2334adb6c0c71cfccfccfa9f7850febd77a831186a4"
+    },
+    "checks": [
+      "Known authored bilinear pixel values and RGBA opacity.",
+      "Alpha dimension/length validation and immutable shared clone allocation.",
+      "Backward-default settings, white alpha, and no-alpha geometry equality.",
+      "Pressure 0/.25/1 measurable linear response; pressure-radius and strength toggle.",
+      "Authored X/Y gradients and 90-degree rotation with known world orientation.",
+      "Mirrored original tangent and bitangent including asymmetric vertical pixels; seam not double-strength.",
+      "Known Paint channel weights, fully protected pixels, unchanged geometry/masks.",
+      "Every brush is an exact no-op for zero/nonfinite pressure or all-black alpha without history consumption.",
+      "Mixed pressure/alpha Draw stroke keeps fully masked point and old vertex colors/masks exact; new attribute interpolation remains bounded; single whole-stroke undo/redo restores geometry, topology, normals, masks, and colors.",
+      "Draw/Clay/Inflate/Flatten/Crease remain useful with adaptive_detail=false, keep topology/attributes, and undo/redo exactly."
+    ],
+    "core_native_clippy": {
+      "path": ".artifacts/brush-inputs-0.1.6/clippy-adaptive-flag.log",
+      "bytes": 147,
+      "sha256": "0b03d5e2502405b9fcda292ed7a9f6a96b356700d57c5521ac8453a8bae0d828"
+    },
+    "pure_core_wasm_check": {
+      "path": ".artifacts/brush-inputs-0.1.6/wasm-adaptive-flag.log",
+      "bytes": 147,
+      "sha256": "1e684dffc01274de1bb8959ff64c5e1a9f3915405eec9fa152602bb6305ec67b"
+    },
+    "scope": "These scoped logs preceded root final source freeze; final workspace checks covering frozen sources are recorded in the linked build record."
+  },
+  "retained_failures": [
+    {
+      "reason": "Initial Save keyboard setup used incorrect CDP modifier bit 8 for Command. This caused trusted Shift events instead of Meta; no brush input occurred. Initial focus hypothesis was disproved by the later key trace.",
+      "receipt": {
+        "path": ".artifacts/brush-inputs-0.1.6/intermediate-db776fef-169d-43bd-be69-17979c73415a/result.json",
+        "bytes": 7386,
+        "sha256": "899fd6bb806d03b912083b086fc59dc9db7c10dcf1771d1cea5dc389c661cb28"
+      },
+      "recorded_status": "failed pressure and raster-alpha browser checks",
+      "recorded_failure": "Error: Invalid save capture for pen-zero-initial: 0",
+      "wasm": {
+        "sha256": "59b2f49331d4936fc969fbf974d3e38e5b6098ec2384de4f0f07bb901b6a6a67",
+        "served_sha256": "59b2f49331d4936fc969fbf974d3e38e5b6098ec2384de4f0f07bb901b6a6a67",
+        "bytes": 3732427
+      },
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      }
+    },
+    {
+      "reason": "Owned headless target activation did not fix Save. Added key-event diagnostics established wrong modifier flags; corrected according to the running browser protocol: Command=4, Shift=8.",
+      "receipt": {
+        "path": ".artifacts/brush-inputs-0.1.6/intermediate-focused-cbd50314-9da3-4c4f-9832-6b4566bfba60/result.json",
+        "bytes": 8317,
+        "sha256": "4a2579ce8ff8ce2ffaa4ca2d8dbbb7f152c9ef2c9f10ab385bb9d97db4797367"
+      },
+      "recorded_status": "failed pressure and raster-alpha browser checks",
+      "recorded_failure": "Error: Invalid save capture for pen-zero-initial: 0",
+      "wasm": {
+        "sha256": "59b2f49331d4936fc969fbf974d3e38e5b6098ec2384de4f0f07bb901b6a6a67",
+        "served_sha256": "59b2f49331d4936fc969fbf974d3e38e5b6098ec2384de4f0f07bb901b6a6a67",
+        "bytes": 3732427
+      },
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      }
+    },
+    {
+      "reason": "Seven input cases exercised successfully, but loading alpha exposed an over-wide Rotation slider: left panel moved from 212 to about 310 and clipped its value/label. This invalidated the matched white-alpha/no-alpha ray comparison. Root bounded slider/filename layout, then all nine final cases passed with identical viewport/pointer.",
+      "receipt": {
+        "path": ".artifacts/brush-inputs-0.1.6/intermediate-correct-key-flags-3ea98f09-5c86-4cae-ba86-d7744f34dd79/result.json",
+        "bytes": 49900,
+        "sha256": "f9d1ada34b87418d817e66f75b79eb949d7db8b90606ef9e7c81c1e80f90e5e4"
+      },
+      "recorded_status": "failed pressure and raster-alpha browser checks",
+      "recorded_failure": "Error: Brush input comparison gate failed",
+      "wasm": {
+        "sha256": "59b2f49331d4936fc969fbf974d3e38e5b6098ec2384de4f0f07bb901b6a6a67",
+        "served_sha256": "59b2f49331d4936fc969fbf974d3e38e5b6098ec2384de4f0f07bb901b6a6a67",
+        "bytes": 3732427
+      },
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      }
+    },
+    {
+      "reason": "Initial core stroke fixture incorrectly demanded unchanged full attribute array lengths after conforming refinement appended vertices. Corrected to exact existing IDs, bounded new interpolation, and full history restore; runtime geometry implementation did not change.",
+      "log": {
+        "path": ".artifacts/brush-inputs-0.1.6/initial-test-failure.log",
+        "bytes": 38788,
+        "sha256": "12a9dbb687f99b2e0bb0326e18df173bd7d76c08a084fe542f30392173a03f19"
+      }
+    }
+  ],
+  "limits": [
+    "Physical pen/tablet pressure, calibration, tilt, eraser, multi-pointer behavior, and native GUI input have not been device-tested. Native force handling is conditional on the backend supplying egui Touch force.",
+    "Nine stationary samples verify current scalar response and upload/control/history contracts. Long pressure ramps, arbitrary event rates, and complete raw-sample replay are separate gates; accepted dabs capture settings while the host may coalesce old input under load.",
+    "Alphas sample existing vertices and bounded local refinement. Accepting 1024 pixels does not establish 1024 pixels of geometric detail per stamp; high-frequency patterns can alias on sparse meshes.",
+    "Non-square raster images map to a square stamp plane; grayscale 8-bit only. No UV/textures, tiling/noise, direction-following strokes, 16-bit height preservation, vector displacement, or ZBrush preset compatibility.",
+    "Brush alpha images and brush presets are not persisted in .obrush projects by this milestone; saved geometry is persisted.",
+    "Existing masks/RGB protection is verified in shared core tests; this runtime suite uses fresh unmasked uniform-color spheres. It does not establish complete PolyPaint or material parity.",
+    "Native geometry shares the same pure core; a WASM build or synthetic browser pen event does not prove native tablet usability."
+  ]
+}

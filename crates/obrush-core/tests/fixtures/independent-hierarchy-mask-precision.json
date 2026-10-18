@@ -1,0 +1,300 @@
+{
+  "contract": "exact rational complements rounded to nearest IEEE binary32, ties to even; both representations share complement arithmetic; raw signed zero tracked separately",
+  "rows": [
+    {
+      "source_bits": 0,
+      "converted_bits": 1065353216,
+      "roundtrip_bits": 0,
+      "changed": false,
+      "signed_zero_only": false,
+      "abs_error": 0.0,
+      "relative_error": 0.0
+    },
+    {
+      "source_bits": 2147483648,
+      "converted_bits": 1065353216,
+      "roundtrip_bits": 0,
+      "changed": true,
+      "signed_zero_only": true,
+      "abs_error": 0.0,
+      "relative_error": 0.0
+    },
+    {
+      "source_bits": 1,
+      "converted_bits": 1065353216,
+      "roundtrip_bits": 0,
+      "changed": true,
+      "signed_zero_only": false,
+      "abs_error": 1.401298464324817e-45,
+      "relative_error": 1.0
+    },
+    {
+      "source_bits": 2,
+      "converted_bits": 1065353216,
+      "roundtrip_bits": 0,
+      "changed": true,
+      "signed_zero_only": false,
+      "abs_error": 2.802596928649634e-45,
+      "relative_error": 1.0
+    },
+    {
+      "source_bits": 8388607,
+      "converted_bits": 1065353216,
+      "roundtrip_bits": 0,
+      "changed": true,
+      "signed_zero_only": false,
+      "abs_error": 1.1754942106924411e-38,
+      "relative_error": 1.0
+    },
+    {
+      "source_bits": 8388608,
+      "converted_bits": 1065353216,
+      "roundtrip_bits": 0,
+      "changed": true,
+      "signed_zero_only": false,
+      "abs_error": 1.1754943508222875e-38,
+      "relative_error": 1.0
+    },
+    {
+      "source_bits": 8388609,
+      "converted_bits": 1065353216,
+      "roundtrip_bits": 0,
+      "changed": true,
+      "signed_zero_only": false,
+      "abs_error": 1.175494490952134e-38,
+      "relative_error": 1.0
+    },
+    {
+      "source_bits": 855638016,
+      "converted_bits": 1065353216,
+      "roundtrip_bits": 0,
+      "changed": true,
+      "signed_zero_only": false,
+      "abs_error": 2.9802322387695312e-08,
+      "relative_error": 1.0
+    },
+    {
+      "source_bits": 864026624,
+      "converted_bits": 1065353215,
+      "roundtrip_bits": 864026624,
+      "changed": false,
+      "signed_zero_only": false,
+      "abs_error": 0.0,
+      "relative_error": 0.0
+    },
+    {
+      "source_bits": 864026625,
+      "converted_bits": 1065353215,
+      "roundtrip_bits": 864026624,
+      "changed": true,
+      "signed_zero_only": false,
+      "abs_error": 7.105427357601002e-15,
+      "relative_error": 1.1920927533992823e-07
+    },
+    {
+      "source_bits": 872415231,
+      "converted_bits": 1065353214,
+      "roundtrip_bits": 872415232,
+      "changed": true,
+      "signed_zero_only": false,
+      "abs_error": 7.105427357601002e-15,
+      "relative_error": 5.960464832810452e-08
+    },
+    {
+      "source_bits": 872415232,
+      "converted_bits": 1065353214,
+      "roundtrip_bits": 872415232,
+      "changed": false,
+      "signed_zero_only": false,
+      "abs_error": 0.0,
+      "relative_error": 0.0
+    },
+    {
+      "source_bits": 1006632961,
+      "converted_bits": 1065222144,
+      "roundtrip_bits": 1006632960,
+      "changed": true,
+      "signed_zero_only": false,
+      "abs_error": 9.313225746154785e-10,
+      "relative_error": 1.1920927533992823e-07
+    },
+    {
+      "source_bits": 1023410176,
+      "converted_bits": 1064828928,
+      "roundtrip_bits": 1023410176,
+      "changed": false,
+      "signed_zero_only": false,
+      "abs_error": 0.0,
+      "relative_error": 0.0
+    },
+    {
+      "source_bits": 1023410177,
+      "converted_bits": 1064828928,
+      "roundtrip_bits": 1023410176,
+      "changed": true,
+      "signed_zero_only": false,
+      "abs_error": 3.725290298461914e-09,
+      "relative_error": 1.1920927533992823e-07
+    },
+    {
+      "source_bits": 1036831949,
+      "converted_bits": 1063675494,
+      "roundtrip_bits": 1036831952,
+      "changed": true,
+      "signed_zero_only": false,
+      "abs_error": 2.2351741790771484e-08,
+      "relative_error": 2.2351741457704582e-07
+    },
+    {
+      "source_bits": 1040187392,
+      "converted_bits": 1063256064,
+      "roundtrip_bits": 1040187392,
+      "changed": false,
+      "signed_zero_only": false,
+      "abs_error": 0.0,
+      "relative_error": 0.0
+    },
+    {
+      "source_bits": 1040187393,
+      "converted_bits": 1063256064,
+      "roundtrip_bits": 1040187392,
+      "changed": true,
+      "signed_zero_only": false,
+      "abs_error": 1.4901161193847656e-08,
+      "relative_error": 1.1920927533992823e-07
+    },
+    {
+      "source_bits": 1048576000,
+      "converted_bits": 1061158912,
+      "roundtrip_bits": 1048576000,
+      "changed": false,
+      "signed_zero_only": false,
+      "abs_error": 0.0,
+      "relative_error": 0.0
+    },
+    {
+      "source_bits": 1048576001,
+      "converted_bits": 1061158912,
+      "roundtrip_bits": 1048576000,
+      "changed": true,
+      "signed_zero_only": false,
+      "abs_error": 2.9802322387695312e-08,
+      "relative_error": 1.1920927533992823e-07
+    },
+    {
+      "source_bits": 1051372203,
+      "converted_bits": 1059760810,
+      "roundtrip_bits": 1051372204,
+      "changed": true,
+      "signed_zero_only": false,
+      "abs_error": 2.9802322387695312e-08,
+      "relative_error": 8.940696449855076e-08
+    },
+    {
+      "source_bits": 1056964607,
+      "converted_bits": 1056964608,
+      "roundtrip_bits": 1056964608,
+      "changed": true,
+      "signed_zero_only": false,
+      "abs_error": 2.9802322387695312e-08,
+      "relative_error": 5.960464832810452e-08
+    },
+    {
+      "source_bits": 1056964608,
+      "converted_bits": 1056964608,
+      "roundtrip_bits": 1056964608,
+      "changed": false,
+      "signed_zero_only": false,
+      "abs_error": 0.0,
+      "relative_error": 0.0
+    },
+    {
+      "source_bits": 1056964609,
+      "converted_bits": 1056964606,
+      "roundtrip_bits": 1056964609,
+      "changed": false,
+      "signed_zero_only": false,
+      "abs_error": 0.0,
+      "relative_error": 0.0
+    },
+    {
+      "source_bits": 1059061760,
+      "converted_bits": 1052770304,
+      "roundtrip_bits": 1059061760,
+      "changed": false,
+      "signed_zero_only": false,
+      "abs_error": 0.0,
+      "relative_error": 0.0
+    },
+    {
+      "source_bits": 1061158912,
+      "converted_bits": 1048576000,
+      "roundtrip_bits": 1061158912,
+      "changed": false,
+      "signed_zero_only": false,
+      "abs_error": 0.0,
+      "relative_error": 0.0
+    },
+    {
+      "source_bits": 1061158913,
+      "converted_bits": 1048575996,
+      "roundtrip_bits": 1061158913,
+      "changed": false,
+      "signed_zero_only": false,
+      "abs_error": 0.0,
+      "relative_error": 0.0
+    },
+    {
+      "source_bits": 1063256064,
+      "converted_bits": 1040187392,
+      "roundtrip_bits": 1063256064,
+      "changed": false,
+      "signed_zero_only": false,
+      "abs_error": 0.0,
+      "relative_error": 0.0
+    },
+    {
+      "source_bits": 1065353214,
+      "converted_bits": 872415232,
+      "roundtrip_bits": 1065353214,
+      "changed": false,
+      "signed_zero_only": false,
+      "abs_error": 0.0,
+      "relative_error": 0.0
+    },
+    {
+      "source_bits": 1065353215,
+      "converted_bits": 864026624,
+      "roundtrip_bits": 1065353215,
+      "changed": false,
+      "signed_zero_only": false,
+      "abs_error": 0.0,
+      "relative_error": 0.0
+    },
+    {
+      "source_bits": 1065353216,
+      "converted_bits": 0,
+      "roundtrip_bits": 1065353216,
+      "changed": false,
+      "signed_zero_only": false,
+      "abs_error": 0.0,
+      "relative_error": 0.0
+    },
+    {
+      "source_bits": 1041385765,
+      "converted_bits": 1062956471,
+      "roundtrip_bits": 1041385764,
+      "changed": true,
+      "signed_zero_only": false,
+      "abs_error": 1.4901161193847656e-08,
+      "relative_error": 1.043081236939971e-07
+    }
+  ],
+  "report": {
+    "vertices": 32,
+    "roundtrip_changed_words": 17,
+    "signed_zero_only_changes": 1,
+    "max_abs_roundtrip_error": 2.9802322387695312e-08,
+    "max_relative_roundtrip_error": 1.0
+  }
+}

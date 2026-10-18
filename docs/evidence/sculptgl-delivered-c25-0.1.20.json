@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "checked_utc": "2026-10-15T04:54:23.958740+00:00",
+  "status": "Delivered local verified foundations; fullSculptGLgoalactive, no parity status or percentage",
+  "version": "0.1.20",
+  "candidate": "C25",
+  "shared_source_manifest": "dceb70731cea9c1269a837c247b773a3733cbc45615b57ba82fc926a7f71dbbb",
+  "build_record": "16f0867b9490d943dd8231435a5129c963a25805d69b6f17a122154b7fad1e87",
+  "required_source_checks": "7eb39beabc7708d3d5ba70a52c00a30917608a8d334f9baac8e3dfb4f8b03d3b",
+  "workspace_tests": {
+    "core": 1461,
+    "app": 664,
+    "passed": 2125,
+    "ignored": 1
+  },
+  "wasm": {
+    "bytes": 22937240,
+    "sha256": "5a389adbe0a90bd363f4a6315d21d614a9986ea785b7efaee9eed50e8dc92d6b"
+  },
+  "macos": "Officialpackage/ad-hocverificationPASS; unopened/uninstalled, nativeGUI/physicalinput unverified",
+  "browser": {
+    "original_normal20_result": "7e0241846d7c3b8e608a978f53aec5ce98af80ca3c499bd2f9741f881476bda8",
+    "new_lock3_result": "1ee277598a503eea9a180cf3fa509db7aec61a5c11df55bd8b47d6ce88e67e2b",
+    "lock_scope": "Independent386vertex/384quad staticalphaNone/symmetryoff absoluteLock press/preview/release/repeat/origin/priorRedo;7savedGPUcomparisons/7downloads/2wholePNGreviewed. Remaining7plannedLockcases and Source/reference/native/dense/performance are gaps.",
+    "process_closure": "BothChrome0/signalnull/serverclosed/errors[]"
+  },
+  "working_source_transfer": {
+    "product_rows": 367,
+    "receipt": "59107b968a582975f19b28b49815b0437903f4ed5c8cd86cedc4713e601a6eb2",
+    "replaced": 22,
+    "new_paths": 51,
+    "before_bytes_backed_up": true,
+    "git_index_unchanged": true,
+    "existing_docs_userfiles_and_previews_preserved": true
+  },
+  "preview": {
+    "url": "http://127.0.0.1:8793/",
+    "HTTP_receipt": "3e71c35996e941a0ef6e5e74ce583061f62f56eb0b5a39f3a144f668c61c2683",
+    "all19_build_bytes_verified": true
+  },
+  "separate_historical_C23_results": {
+    "normal20": "5526f7fc5d189ad7e8acddf665489e9d7de85dd60c7c83c9f565c7b1f2859aca",
+    "locale31": "00721959b1c7169512f27459c67dbcac7814ea9e9b975c70d8ea2ef67f9c5c61",
+    "AA7_independent_units": "cce925306c59c76daa4a9d69bce6c774ec8f7ed532295ac304b4c77647e07e21",
+    "render37_subset": "993469031f9abf3e050e7ba8f4577c342b0037a0a8ac351df1e24ba594f8ae90",
+    "render_pixel_scope_correction": "6e7106fe10da3d6e801ae170ca30391833c89cbccd1e0abfe5c8b06ef4cd3cc0",
+    "render_limits": "Original heterogeneous ROI/background gatesPASS; first15geometry fullfinalmax154 remainsgap. One pair localizes119Sourcecursorpixels absentfromRootGLcallback. Threecursor supplementsPASS;default+resize2requiredgapsunexercised. No fullviewforall37/max2 or fullrenderparity claim."
+  },
+  "next_work": [
+    "Defaultdense Source picking test-only Morton shadow, no productionpruning beforeproof/completion/caps",
+    "RemainingLock/Flatten/modal/lifecycle/reference matrix",
+    "NativeGUI/physicaltablet/touch and measured sustained latency",
+    "Full317pinned SculptGL IDs plus5hostedappearance controls; ZBrush2026.2.1 longerterm"
+  ]
+}

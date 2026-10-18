@@ -1,0 +1,29 @@
+{
+  "status": "Scoped isolated C62 WebGPU canvas presentation validated; C58 remains the delivered browser app and SculptGL parity is open",
+  "stage": ".artifacts/sculptgl-webgpu-surface-c62-stage",
+  "audit": "WHOLE_SURFACE_AUDIT02.json",
+  "audit_sha256": "36832bfff8e036b04957ee67e061bd0590ec6bac1b375ad74766a5b03a5d9de3",
+  "preserved_failed_audit": "WHOLE_SURFACE_AUDIT01_FAILURE.json",
+  "fixture_sha256": "dfb5316f62e392e633f03cb662dcb12215ed165a71a9ae72a3fd639528731afe",
+  "fixture_vertices": 999002,
+  "fixture_triangles": 1998000,
+  "passes": 32,
+  "checks": [
+    "C61 product source exact across 526 paths; core geometry code unchanged",
+    "24 complete native outputs unchanged from C61, including positions, selected normal fields and 512x512 PNGs",
+    "Owned Chrome browser rendered the complete fixture directly into a 1920x1080 WebGPU canvas from canonical position/normal buffers",
+    "Actual browser GPU trace shows a 5,994,000-index draw from the surface bind group after 192 compute dispatches, without mapAsync or mappedRange in the update-to-present interval",
+    "Actual updated 512x512 canvas screenshot pixels exactly match native Metal after.png; recreated original 512x512 screenshot exactly matches native before.png",
+    "Oversize dimensions rejected without canvas mutation; zero size suspends; 960x540 resumes",
+    "Explicit destruction of the owned test GPUDevice reaches Rust device-loss callback and rejects further drawing; a fresh device redraws the immutable original fixture",
+    "GPU crate formatting, two unit tests and strict native/WASM all-target Clippy passed; WASM release built with aligned wasm-bindgen 0.2.129"
+  ],
+  "requested_explicit_allocation_bytes": 267789240,
+  "allocation_cap_bytes": 268435456,
+  "limitations": [
+    "This is a standalone point-program prototype. The shipped OBrush studio still uses WebGL2 and CPU geometry.",
+    "Canvas and point arithmetic do not establish full brush, document, history, reference or SculptGL parity.",
+    "Original 60/120-second consumer performance and physical memory checks remain open; driver/compositor allocations are not covered by explicit resource accounting.",
+    "Device recreation reloads only the original fixture and does not preserve uncommitted GPU edits."
+  ]
+}

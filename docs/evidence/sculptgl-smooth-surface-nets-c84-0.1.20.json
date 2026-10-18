@@ -1,0 +1,255 @@
+{
+  "feature": "Paired SculptGL Smooth Surface Nets cube and sphere comparison",
+  "status": "Core and visible browser saves match paired cell topology and oriented triangles within 2e-7 world-position tolerance; full remesh parity open",
+  "reference_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+  "tolerance_provenance": "2e-7 world units selected after initial core diagnostic and before browser runs; not preregistered for initial core exploration",
+  "source": [
+    {
+      "path": "crates/obrush-core/src/remesh.rs",
+      "sha256": "76cb608c230bb6b9de84094564c47482369654b6077ff0ffc39d8e2b9eae0efd",
+      "bytes": 44008
+    },
+    {
+      "path": "crates/obrush-core/tests/remesh.rs",
+      "sha256": "d2717af735573142feb2eb08565ce0de5488dcd976ded6b27a8b5adf82a53b31",
+      "bytes": 14987
+    },
+    {
+      "path": "crates/obrush-core/examples/block_remesh_fixture.rs",
+      "sha256": "f8d1333acf2312abc841dcb3d4c5217e4884a37342081be4b6cee0f710924606",
+      "bytes": 928
+    },
+    {
+      "path": "crates/obrush-core/tests/fixtures/independent-filter-cube.obj",
+      "sha256": "c9038e8adcbe5649273871feba73699753fa9abee0984575e14f41c9d610dde7",
+      "bytes": 252
+    },
+    {
+      "path": "crates/obrush-core/tests/fixtures/independent-reference-sphere.obj",
+      "sha256": "165e2cfacb2f0d99312fd3f4f3f79c2696be3eee9b05047ac7f57c891783ba9b",
+      "bytes": 24272
+    },
+    {
+      "path": "crates/obrush-app/src/app.rs",
+      "sha256": "5d9e3e7e40f713923a08f0cd5bc350939bd9b448e31a474deddef323ec3b2092",
+      "bytes": 487690
+    },
+    {
+      "path": "crates/obrush-app/src/preferences_host.rs",
+      "sha256": "053eb0fb0948cd41da111722f484ff08bf85ca96f4a42aa239d708859859c659",
+      "bytes": 44862
+    },
+    {
+      "path": "scripts/check-mask-filters.mjs",
+      "sha256": "ebce03134e52a6859c9cdda3a096c270bb051b3ded6eef3ba513b6f5f44a613a",
+      "bytes": 110200
+    },
+    {
+      "path": "scripts/compare-surface-nets.py",
+      "sha256": "d074132243b90f753b6ff444caf3d3a15fdaa9c665f681b57ceb95f93f1488b7",
+      "bytes": 5254
+    },
+    {
+      "path": "README.md",
+      "sha256": "9b8e4686d9a0ea59748105b730042073bb8dd2340f2234ced82a60b8ba891441",
+      "bytes": 30354
+    },
+    {
+      "path": "docs/SCULPTGL_SMOOTH_SURFACE_NETS_C84.md",
+      "sha256": "761162e4e47d1d7483256e96f9dbf67d1d0589a9bc81a8603c43aba0d3797370",
+      "bytes": 2881
+    },
+    {
+      "path": "docs/FEATURE_PARITY.md",
+      "sha256": "754a1da7fbd5f3b9bc3e3ed655f039e3b422dd6c4a992a9792b26cca99361177",
+      "bytes": 67833
+    },
+    {
+      "path": "docs/SCULPTGL_PARITY.md",
+      "sha256": "496016b6d8f54301981a4681ff7b12bb9f58e7b61f99ce966d064718614c90b7",
+      "bytes": 173679
+    }
+  ],
+  "reference_runtime": {
+    "cube": {
+      "path": ".artifacts/sculptgl-reference-runtime/block-remesh-c82-cube64-3fa10208-7504-40ed-9ff4-e25fabbd61ab/result.json",
+      "sha256": "bea5e80256f87bbde99e5d00731d2401704507f7beb280ed1d9016f03f85a6ab",
+      "bytes": 5860371
+    },
+    "sphere": {
+      "path": ".artifacts/sculptgl-reference-runtime/block-remesh-c82-corrected-2923614b-5274-4721-994f-79785d4a1278/result.json",
+      "sha256": "3c9014f9b942133c0e10a823db030b31a25992a59ee5cab10fd8751efcdf4765",
+      "bytes": 1254802
+    }
+  },
+  "core_output": {
+    "cube": {
+      "path": ".artifacts/smooth-nets-c84-cube-final-core.json",
+      "sha256": "3fe08b33f5009a1732bb410a9b4174d4af3d1776dd267ccce31ff95f86f4bd16",
+      "bytes": 4360713
+    },
+    "sphere": {
+      "path": ".artifacts/smooth-nets-c84-sphere-final-core.json",
+      "sha256": "f96289583f458085ee5d42ffa243555f7015186b793b68a384d1d7e99ae7c2b5",
+      "bytes": 887897
+    }
+  },
+  "core_comparison": {
+    "cube": {
+      "path": ".artifacts/smooth-nets-c84-cube-final-core-comparison.json",
+      "sha256": "3939ba11b5a63b26b83cbf4bc2a9a136153a19c0749dc75aec5f62569b0b4a02",
+      "bytes": 1141,
+      "world_max_error": 1.2957478663202103e-07,
+      "world_rms_error": 5.1605339547135966e-08,
+      "unmatched_cells": 0,
+      "unmatched_oriented_triangles": 0
+    },
+    "sphere": {
+      "path": ".artifacts/smooth-nets-c84-sphere-final-core-comparison.json",
+      "sha256": "c1f97d9a3e1aaa3d9167ab6dff1c500c81235b0e77147166998371f57aee2a2c",
+      "bytes": 1145,
+      "world_max_error": 1.0360239792647688e-07,
+      "world_rms_error": 6.045750665871949e-08,
+      "unmatched_cells": 0,
+      "unmatched_oriented_triangles": 0
+    }
+  },
+  "browser_runtime": {
+    "cube": {
+      "path": ".artifacts/mask-filter-browser/smooth-nets-c84-verified-cube-8aaee503-fe11-4089-867b-328f464f24a2/result.json",
+      "sha256": "2ce90194b5b6f8666034b590e68f69f6c155ef23afe3ac064b528a0a28642828",
+      "bytes": 856326,
+      "status": "passed smooth Surface Nets browser workflow",
+      "resolution": 64,
+      "web_wasm_sha256": "76dc9be268d4559bf550b06a93d1d6e4075ca58581d29787b31da499a269caa3",
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      }
+    },
+    "sphere": {
+      "path": ".artifacts/mask-filter-browser/smooth-nets-c84-verified-sphere-381be96f-7da8-459f-b6c2-441a4abf6f78/result.json",
+      "sha256": "ee3b714066d18d7d7ffc23be0f6127c3eea62f921c04b01192751ed0ca6708fa",
+      "bytes": 852111,
+      "status": "passed smooth Surface Nets browser workflow",
+      "resolution": 32,
+      "web_wasm_sha256": "76dc9be268d4559bf550b06a93d1d6e4075ca58581d29787b31da499a269caa3",
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      }
+    },
+    "block_sphere_regression": {
+      "path": ".artifacts/mask-filter-browser/smooth-nets-c84-verified-block-rerun-6eefb0dc-a2f6-41f2-8588-25c826ecdfa7/result.json",
+      "sha256": "946241776617d7ce98251e287eaeb289f45db6a01a3a1d96ae9fc8f3f77bbba9",
+      "bytes": 840236,
+      "status": "passed block remesh browser workflow",
+      "resolution": 32,
+      "web_wasm_sha256": "76dc9be268d4559bf550b06a93d1d6e4075ca58581d29787b31da499a269caa3",
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      }
+    }
+  },
+  "browser_saved_comparison": {
+    "cube": {
+      "path": ".artifacts/smooth-nets-c84-cube-verified-browser-comparison.json",
+      "sha256": "28df475a79046168cff1938d84e0a2e13afce881f6c768d012b59e9888ebbfd6",
+      "bytes": 1151,
+      "world_max_error": 1.446379940856306e-07,
+      "world_rms_error": 4.9272032114252327e-08,
+      "unmatched_cells": 0,
+      "unmatched_oriented_triangles": 0
+    },
+    "sphere": {
+      "path": ".artifacts/smooth-nets-c84-sphere-verified-browser-comparison.json",
+      "sha256": "9806aaa28e68f0f75b6787b8251ef96f205db1335e0781826b0d636a5a49a287",
+      "bytes": 1156,
+      "world_max_error": 1.2356228941052182e-07,
+      "world_rms_error": 6.253577301501749e-08,
+      "unmatched_cells": 0,
+      "unmatched_oriented_triangles": 0
+    }
+  },
+  "retained_diagnostics": {
+    "sphere_distance_floor_output": {
+      "path": ".artifacts/smooth-nets-c84-sphere-own.json",
+      "sha256": "cc7392fa002b7f2bab400484792fdd892abda735af747e5d0550c72819ef58e5",
+      "bytes": 887903
+    },
+    "sphere_no_floor_output": {
+      "path": ".artifacts/smooth-nets-c84-sphere-no-floor.json",
+      "sha256": "3c1e14bd0459ba5677f7698b01dd137873ef6c05d466f8ff3f7819f260694273",
+      "bytes": 887898
+    },
+    "interrupted_pre_final_workspace_log": {
+      "path": ".artifacts/smooth-nets-c84-workspace-tests.log",
+      "sha256": "f3359f8c721eaa2ff3e9d10738c2741fa614426a084ae63382233b1f1dd19ec3",
+      "bytes": 125629
+    },
+    "first_block_cleanup_unknown_exit": {
+      "path": ".artifacts/mask-filter-browser/smooth-nets-c84-verified-block-32052e73-b7b8-4fe3-9f20-62d91ba5ec52/result.json",
+      "sha256": "42446deb0439e5f42de4efb76b02e9f82b56f5f471f3b656d9cdb085310d9f1f",
+      "bytes": 840544
+    }
+  },
+  "validation": {
+    "cargo_fmt_check": "passed",
+    "workspace_tests": {
+      "path": ".artifacts/smooth-nets-c84-final-workspace-tests.log",
+      "sha256": "38c7ee4f5742a74caab3e27d80974a33e388d5e38b17511affe4190327ab9c3f",
+      "bytes": 230451,
+      "passed": 2372,
+      "failed": 0,
+      "ignored": 1,
+      "test_binaries": 83
+    },
+    "native_workspace_strict_clippy": {
+      "path": ".artifacts/smooth-nets-c84-final-clippy-native.log",
+      "sha256": "3edcbdbdbedcc2a481d095b8a73127a4bef68a9da15d266ea12280582a3e1412",
+      "bytes": 223
+    },
+    "wasm_workspace_strict_clippy": {
+      "path": ".artifacts/smooth-nets-c84-final-clippy-wasm.log",
+      "sha256": "fa0e2061aebfad88c3e552bf06db50ffe1d6e3f82bda3e6f7a641b081c6fb644",
+      "bytes": 223
+    },
+    "wasm_workspace_check": {
+      "path": ".artifacts/smooth-nets-c84-final-check-wasm.log",
+      "sha256": "ee57b9b65078e3cdc71a1bb2fc67805a8cd56957bd1016a79740f5584a6ae157",
+      "bytes": 223
+    },
+    "javascript_syntax": "passed",
+    "python_syntax": "passed",
+    "official_web_build": {
+      "path": ".artifacts/smooth-nets-c84-final-build-web.log",
+      "sha256": "05589489197163b28ccf412abed6dd5f8217ab43a6a4e293feade67beeb0e92c",
+      "bytes": 279
+    },
+    "official_macos_package": {
+      "path": ".artifacts/smooth-nets-c84-final-package-macos.log",
+      "sha256": "af1a750a0ab516b91a4f925815c48dcb7f5d73240b37038818f77da68a6ae527",
+      "bytes": 407
+    },
+    "built_wasm": {
+      "path": "web/dist/pkg/obrush_app_bg.wasm",
+      "sha256": "76dc9be268d4559bf550b06a93d1d6e4075ca58581d29787b31da499a269caa3",
+      "bytes": 23280794
+    },
+    "signed_macos_executable": {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/OBrush",
+      "sha256": "bc3151a851a7492dd39ee887807e88f508925fc676d0c15955cccbaf6064facb",
+      "bytes": 26448560
+    }
+  },
+  "limits": [
+    "Only paired closed cube64 and sphere32; arbitrary/open sources and selected multi-mesh fusion not established",
+    "Reference quads are split in OBrush and face-corner UVs omitted from sphere input",
+    "Reference voxel RGB/material response, Marching Cubes, full resolution range 8-400, native GUI and sustained performance not established",
+    "Complete SculptGL and ZBrush parity remain open"
+  ]
+}

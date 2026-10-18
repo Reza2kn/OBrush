@@ -1,0 +1,4371 @@
+{
+  "schema_version": 1,
+  "captured_local_date": "2026-10-12",
+  "purpose": "Bounded matched isolated headless Chrome comparison of OBrush0.1.3 browser lag and final0.1.4; normal continuous/crossing Draw and a separate pending Save/history barrier check.",
+  "claim_scope": "Actual WASM/WebGL2 headless host and synthetic pointer dispatch; this is neither physical human input-to-photon latency, a guaranteed FPS target, native GUI certification nor ZBrush parity.",
+  "host": {
+    "cpu": "Apple M2",
+    "model": "Mac14,2",
+    "memory_gib": 24,
+    "architecture": "aarch64-apple-darwin",
+    "os": "macOS26.5.1 build25F80"
+  },
+  "method": {
+    "ownership": "Only spawned headless Chrome processes, dedicated isolated profiles, owned loopback HTTP/CDP listeners; no visible window, desktop/accessibility, user tabs or user Chrome process control. Only loopback page requests allowed.",
+    "browser": "Chrome155.0.8059.39, ANGLE Metal Apple M2",
+    "node": "v22.22.3",
+    "canvas_css_size": [
+      1600,
+      1000
+    ],
+    "device_pixel_ratio": 1,
+    "msaa_actual_samples": 4,
+    "initial_document": "Fresh level-6 sphere,40,962vertices/81,920triangles; Draw,radius0.180,strength0.35,Xsymmetrytrue,noinvert,defaultcamera. Orbit check uses right drag then reloads before all sculpt measurements.",
+    "timing": "Node sends independent fixed schedules without awaiting individual CDP acknowledgements. Phases include input and an observed drain interval: all acknowledgements, >250ms since last DOM pointer and mesh buffer upload, last callback <50ms. Save/undo/redo/serialization and screenshots are excluded from normal measured phases.",
+    "drain_limit": "This is an observed inactivity heuristic, not direct inspection of the private Rust queue. Subsequent save/history and the separate pending-command check establish completed edits and command ordering.",
+    "statistics": "Sort finite samples ascending; pX is element floor((n-1)*X). Null maximum denotes no samples, not an observed zero duration.",
+    "raf": "Independent scheduling pump and app rAF callback timings; idle pump runs even when no mesh frame is submitted. No idle rendering FPS claim.",
+    "long_tasks": "PerformanceObserver longtask entries (>50ms) whose start falls within the measured phase.",
+    "mesh_submissions": "WebGL drawElements(TRIANGLES) count>=200000, selecting these 81k+triangle meshes. Raw harness geometry_draws also includes some egui draws with count>10000; comparison recomputes mesh counts instead of using raw geometry_frames.",
+    "mesh_submission_intervals": "CPU timestamps between actual mesh drawElements submissions, not GPU completion/presentation. Crossing max intervals include the intentional200ms inter-stroke pause.",
+    "webgl_timers": "CPU duration of large bufferData calls and getParameter/isEnabled; these are instrumented submission/possible-stall times, not independent GPU timer queries or total GPU transfer/render cost.",
+    "input_timers": "DOM handling minus event timestamp and CDP acknowledgement minus send time include synthetic dispatch/browser/IPC scheduling; no hardware pen/mouse latency claim.",
+    "instrumentation_overhead": "Both baseline and final use the exact same instrumented harness; instrumentation overhead, headless behavior, OS load and thermal variation remain.",
+    "run_commands": [
+      "node .artifacts/browser-performance/perf.mjs .artifacts/browser-lag-baseline/web baseline-0.1.3",
+      "node .artifacts/browser-performance/perf.mjs .artifacts/browser-lag-final-release/web release-0.1.4",
+      "node .artifacts/browser-performance/same-frame-command.mjs .artifacts/browser-lag-final-release/web release-0.1.4-same-frame"
+    ],
+    "harness": {
+      "path": ".artifacts/browser-performance/perf.mjs",
+      "sha256": "78cf469e499ab447b165828138a46da0a015e4d9d00a5c21d7f020f929db48c4",
+      "bytes": 18453
+    },
+    "comparison_script": {
+      "path": ".artifacts/browser-performance/compare.py",
+      "sha256": "dbb034d66a6e3c2ae0211b7286db71685434329fdbeaf56dcefc1579b8da348c",
+      "bytes": 14636
+    }
+  },
+  "builds": {
+    "baseline": {
+      "version": "0.1.3",
+      "frozen_manifest": {
+        "path": ".artifacts/browser-lag-baseline/manifest.json",
+        "sha256": "97397377233dce70a96d511edf54fc75bbc6b409d70fb603e12f7d981625e742",
+        "bytes": 2217
+      },
+      "wasm": {
+        "path": ".artifacts/browser-lag-baseline/web/pkg/obrush_app_bg.wasm",
+        "sha256": "8337208356bfbec933a74f4eb4d8f37170faf1ab96b73afda50a9decb8059c88",
+        "bytes": 3003622
+      },
+      "javascript": {
+        "path": ".artifacts/browser-lag-baseline/web/pkg/obrush_app.js",
+        "sha256": "71025e3c5f88c93df85e7d70ea9fb5827c97b356510a837451129da517df574e",
+        "bytes": 88904
+      }
+    },
+    "final": {
+      "version": "0.1.4",
+      "frozen_manifest": {
+        "path": ".artifacts/browser-lag-final-release/manifest.json",
+        "sha256": "d5ce519af5916a9306392c7e54765d1d122b146b77543a74fb7babe97e802dc0",
+        "bytes": 2104
+      },
+      "wasm": {
+        "path": ".artifacts/browser-lag-final-release/web/pkg/obrush_app_bg.wasm",
+        "sha256": "a74998f7a85de0b5e95846535552485e38a86a26bc5f8b14f1b8d79f1275fd8c",
+        "bytes": 3418213
+      },
+      "javascript": {
+        "path": ".artifacts/browser-lag-final-release/web/pkg/obrush_app.js",
+        "sha256": "d883d338a4346ac66df90be98961924727207ff7a6607702e9e267289fbd9e8c",
+        "bytes": 88904
+      },
+      "input_queue_source": {
+        "path": "crates/obrush-app/src/dab_queue.rs",
+        "sha256": "e078e76fdd4ccdb10e0193a5248bef2989254500afad59974dca69d36a6078df",
+        "bytes": 5837
+      }
+    }
+  },
+  "scheduler_contract": "FIFO captured world rays, brush settings and delta with ordered Begin/End history markers; at most2dabs/frame,8ms checked between atomic dabs, repaint requested until queue empty. An individual dab can exceed8ms. Commands and starting Move synchronously flush pending work; Save latency with a large backlog is demonstrated separately below.",
+  "matching": {
+    "harness_bytes_identical": true,
+    "scheduled_inputs_identical_all_four_trials": true,
+    "viewport_identical_all_four_trials": true,
+    "actual_4x_msaa_all_four_trials": true,
+    "final_saved_snapshots_identical_between_trials": true
+  },
+  "scheduled_inputs": {
+    "camera_orbit": [
+      {
+        "offset_ms": 0,
+        "params": {
+          "type": "mouseMoved",
+          "x": 663.5,
+          "y": 513,
+          "button": "none",
+          "buttons": 0,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 40,
+        "params": {
+          "type": "mousePressed",
+          "x": 663.5,
+          "y": 513,
+          "button": "right",
+          "buttons": 2,
+          "pointerType": "mouse",
+          "clickCount": 1
+        }
+      },
+      {
+        "offset_ms": 60,
+        "params": {
+          "type": "mouseMoved",
+          "x": 670.444444,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 80,
+        "params": {
+          "type": "mouseMoved",
+          "x": 677.388889,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 100,
+        "params": {
+          "type": "mouseMoved",
+          "x": 684.333333,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 120,
+        "params": {
+          "type": "mouseMoved",
+          "x": 691.277778,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 140,
+        "params": {
+          "type": "mouseMoved",
+          "x": 698.222222,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 160,
+        "params": {
+          "type": "mouseMoved",
+          "x": 705.166667,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 180,
+        "params": {
+          "type": "mouseMoved",
+          "x": 712.111111,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 200,
+        "params": {
+          "type": "mouseMoved",
+          "x": 719.055556,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 220,
+        "params": {
+          "type": "mouseMoved",
+          "x": 726,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 240,
+        "params": {
+          "type": "mouseMoved",
+          "x": 732.944444,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 260,
+        "params": {
+          "type": "mouseMoved",
+          "x": 739.888889,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 280,
+        "params": {
+          "type": "mouseMoved",
+          "x": 746.833333,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 300,
+        "params": {
+          "type": "mouseMoved",
+          "x": 753.777778,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 320,
+        "params": {
+          "type": "mouseMoved",
+          "x": 760.722222,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 340,
+        "params": {
+          "type": "mouseMoved",
+          "x": 767.666667,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 360,
+        "params": {
+          "type": "mouseMoved",
+          "x": 774.611111,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 380,
+        "params": {
+          "type": "mouseMoved",
+          "x": 781.555556,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 400,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 420,
+        "params": {
+          "type": "mouseMoved",
+          "x": 795.444444,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 440,
+        "params": {
+          "type": "mouseMoved",
+          "x": 802.388889,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 460,
+        "params": {
+          "type": "mouseMoved",
+          "x": 809.333333,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 480,
+        "params": {
+          "type": "mouseMoved",
+          "x": 816.277778,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 500,
+        "params": {
+          "type": "mouseMoved",
+          "x": 823.222222,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 520,
+        "params": {
+          "type": "mouseMoved",
+          "x": 830.166667,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 540,
+        "params": {
+          "type": "mouseMoved",
+          "x": 837.111111,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 560,
+        "params": {
+          "type": "mouseMoved",
+          "x": 844.055556,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 580,
+        "params": {
+          "type": "mouseMoved",
+          "x": 851,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 600,
+        "params": {
+          "type": "mouseMoved",
+          "x": 857.944444,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 620,
+        "params": {
+          "type": "mouseMoved",
+          "x": 864.888889,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 640,
+        "params": {
+          "type": "mouseMoved",
+          "x": 871.833333,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 660,
+        "params": {
+          "type": "mouseMoved",
+          "x": 878.777778,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 680,
+        "params": {
+          "type": "mouseMoved",
+          "x": 885.722222,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 700,
+        "params": {
+          "type": "mouseMoved",
+          "x": 892.666667,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 720,
+        "params": {
+          "type": "mouseMoved",
+          "x": 899.611111,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 740,
+        "params": {
+          "type": "mouseMoved",
+          "x": 906.555556,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 760,
+        "params": {
+          "type": "mouseMoved",
+          "x": 913.5,
+          "y": 513,
+          "button": "none",
+          "buttons": 2,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 800,
+        "params": {
+          "type": "mouseReleased",
+          "x": 913.5,
+          "y": 513,
+          "button": "right",
+          "buttons": 0,
+          "pointerType": "mouse",
+          "clickCount": 1
+        }
+      }
+    ],
+    "continuous_draw": [
+      {
+        "offset_ms": 0,
+        "params": {
+          "type": "mouseMoved",
+          "x": 663.5,
+          "y": 488,
+          "button": "none",
+          "buttons": 0,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 40,
+        "params": {
+          "type": "mousePressed",
+          "x": 663.5,
+          "y": 488,
+          "button": "left",
+          "buttons": 1,
+          "pointerType": "mouse",
+          "clickCount": 1
+        }
+      },
+      {
+        "offset_ms": 60,
+        "params": {
+          "type": "mouseMoved",
+          "x": 670.444444,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 80,
+        "params": {
+          "type": "mouseMoved",
+          "x": 677.388889,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 100,
+        "params": {
+          "type": "mouseMoved",
+          "x": 684.333333,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 120,
+        "params": {
+          "type": "mouseMoved",
+          "x": 691.277778,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 140,
+        "params": {
+          "type": "mouseMoved",
+          "x": 698.222222,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 160,
+        "params": {
+          "type": "mouseMoved",
+          "x": 705.166667,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 180,
+        "params": {
+          "type": "mouseMoved",
+          "x": 712.111111,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 200,
+        "params": {
+          "type": "mouseMoved",
+          "x": 719.055556,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 220,
+        "params": {
+          "type": "mouseMoved",
+          "x": 726,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 240,
+        "params": {
+          "type": "mouseMoved",
+          "x": 732.944444,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 260,
+        "params": {
+          "type": "mouseMoved",
+          "x": 739.888889,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 280,
+        "params": {
+          "type": "mouseMoved",
+          "x": 746.833333,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 300,
+        "params": {
+          "type": "mouseMoved",
+          "x": 753.777778,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 320,
+        "params": {
+          "type": "mouseMoved",
+          "x": 760.722222,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 340,
+        "params": {
+          "type": "mouseMoved",
+          "x": 767.666667,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 360,
+        "params": {
+          "type": "mouseMoved",
+          "x": 774.611111,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 380,
+        "params": {
+          "type": "mouseMoved",
+          "x": 781.555556,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 400,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 420,
+        "params": {
+          "type": "mouseMoved",
+          "x": 795.444444,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 440,
+        "params": {
+          "type": "mouseMoved",
+          "x": 802.388889,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 460,
+        "params": {
+          "type": "mouseMoved",
+          "x": 809.333333,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 480,
+        "params": {
+          "type": "mouseMoved",
+          "x": 816.277778,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 500,
+        "params": {
+          "type": "mouseMoved",
+          "x": 823.222222,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 520,
+        "params": {
+          "type": "mouseMoved",
+          "x": 830.166667,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 540,
+        "params": {
+          "type": "mouseMoved",
+          "x": 837.111111,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 560,
+        "params": {
+          "type": "mouseMoved",
+          "x": 844.055556,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 580,
+        "params": {
+          "type": "mouseMoved",
+          "x": 851,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 600,
+        "params": {
+          "type": "mouseMoved",
+          "x": 857.944444,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 620,
+        "params": {
+          "type": "mouseMoved",
+          "x": 864.888889,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 640,
+        "params": {
+          "type": "mouseMoved",
+          "x": 871.833333,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 660,
+        "params": {
+          "type": "mouseMoved",
+          "x": 878.777778,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 680,
+        "params": {
+          "type": "mouseMoved",
+          "x": 885.722222,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 700,
+        "params": {
+          "type": "mouseMoved",
+          "x": 892.666667,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 720,
+        "params": {
+          "type": "mouseMoved",
+          "x": 899.611111,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 740,
+        "params": {
+          "type": "mouseMoved",
+          "x": 906.555556,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 760,
+        "params": {
+          "type": "mouseMoved",
+          "x": 913.5,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 800,
+        "params": {
+          "type": "mouseReleased",
+          "x": 913.5,
+          "y": 488,
+          "button": "left",
+          "buttons": 0,
+          "pointerType": "mouse",
+          "clickCount": 1
+        }
+      }
+    ],
+    "crossing_draw": [
+      {
+        "offset_ms": 0,
+        "params": {
+          "type": "mouseMoved",
+          "x": 663.5,
+          "y": 488,
+          "button": "none",
+          "buttons": 0,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 40,
+        "params": {
+          "type": "mousePressed",
+          "x": 663.5,
+          "y": 488,
+          "button": "left",
+          "buttons": 1,
+          "pointerType": "mouse",
+          "clickCount": 1
+        }
+      },
+      {
+        "offset_ms": 60,
+        "params": {
+          "type": "mouseMoved",
+          "x": 673.916667,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 80,
+        "params": {
+          "type": "mouseMoved",
+          "x": 684.333333,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 100,
+        "params": {
+          "type": "mouseMoved",
+          "x": 694.75,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 120,
+        "params": {
+          "type": "mouseMoved",
+          "x": 705.166667,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 140,
+        "params": {
+          "type": "mouseMoved",
+          "x": 715.583333,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 160,
+        "params": {
+          "type": "mouseMoved",
+          "x": 726,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 180,
+        "params": {
+          "type": "mouseMoved",
+          "x": 736.416667,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 200,
+        "params": {
+          "type": "mouseMoved",
+          "x": 746.833333,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 220,
+        "params": {
+          "type": "mouseMoved",
+          "x": 757.25,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 240,
+        "params": {
+          "type": "mouseMoved",
+          "x": 767.666667,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 260,
+        "params": {
+          "type": "mouseMoved",
+          "x": 778.083333,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 280,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 300,
+        "params": {
+          "type": "mouseMoved",
+          "x": 798.916667,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 320,
+        "params": {
+          "type": "mouseMoved",
+          "x": 809.333333,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 340,
+        "params": {
+          "type": "mouseMoved",
+          "x": 819.75,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 360,
+        "params": {
+          "type": "mouseMoved",
+          "x": 830.166667,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 380,
+        "params": {
+          "type": "mouseMoved",
+          "x": 840.583333,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 400,
+        "params": {
+          "type": "mouseMoved",
+          "x": 851,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 420,
+        "params": {
+          "type": "mouseMoved",
+          "x": 861.416667,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 440,
+        "params": {
+          "type": "mouseMoved",
+          "x": 871.833333,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 460,
+        "params": {
+          "type": "mouseMoved",
+          "x": 882.25,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 480,
+        "params": {
+          "type": "mouseMoved",
+          "x": 892.666667,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 500,
+        "params": {
+          "type": "mouseMoved",
+          "x": 903.083333,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 520,
+        "params": {
+          "type": "mouseMoved",
+          "x": 913.5,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 560,
+        "params": {
+          "type": "mouseReleased",
+          "x": 913.5,
+          "y": 488,
+          "button": "left",
+          "buttons": 0,
+          "pointerType": "mouse",
+          "clickCount": 1
+        }
+      },
+      {
+        "offset_ms": 760,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 388,
+          "button": "none",
+          "buttons": 0,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 800,
+        "params": {
+          "type": "mousePressed",
+          "x": 788.5,
+          "y": 388,
+          "button": "left",
+          "buttons": 1,
+          "pointerType": "mouse",
+          "clickCount": 1
+        }
+      },
+      {
+        "offset_ms": 820,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 398.416667,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 840,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 408.833333,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 860,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 419.25,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 880,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 429.666667,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 900,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 440.083333,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 920,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 450.5,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 940,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 460.916667,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 960,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 471.333333,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 980,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 481.75,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 1000,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 492.166667,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 1020,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 502.583333,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 1040,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 513,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 1060,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 523.416667,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 1080,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 533.833333,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 1100,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 544.25,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 1120,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 554.666667,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 1140,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 565.083333,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 1160,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 575.5,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 1180,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 585.916667,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 1200,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 596.333333,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 1220,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 606.75,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 1240,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 617.166667,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 1260,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 627.583333,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 1280,
+        "params": {
+          "type": "mouseMoved",
+          "x": 788.5,
+          "y": 638,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        }
+      },
+      {
+        "offset_ms": 1320,
+        "params": {
+          "type": "mouseReleased",
+          "x": 788.5,
+          "y": 638,
+          "button": "left",
+          "buttons": 0,
+          "pointerType": "mouse",
+          "clickCount": 1
+        }
+      }
+    ]
+  },
+  "baseline": {
+    "label": "baseline-0.1.3",
+    "status": "completed bounded browser performance measurement",
+    "raw_result": {
+      "path": ".artifacts/browser-performance/baseline-0.1.3-c4cb318c-d750-4d91-b413-7039f69009ad/result.json",
+      "sha256": "2ff9c71c03cc6aeb7be23bcf92f5baf7f710166ac50871f52bc93856637e6132",
+      "bytes": 1241096
+    },
+    "wasm": {
+      "sha256": "8337208356bfbec933a74f4eb4d8f37170faf1ab96b73afda50a9decb8059c88",
+      "served_sha256": "8337208356bfbec933a74f4eb4d8f37170faf1ab96b73afda50a9decb8059c88",
+      "bytes": 3003622
+    },
+    "browser": {
+      "protocolVersion": "1.3",
+      "product": "Chrome/155.0.8059.39",
+      "revision": "@3ff7ac5a9224be9156d7f8703a06e22890aafd34",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "jsVersion": "15.5.35.20"
+    },
+    "harness_sha256": "78cf469e499ab447b165828138a46da0a015e4d9d00a5c21d7f020f929db48c4",
+    "trials": [
+      {
+        "index": 1,
+        "viewport": {
+          "left": 212,
+          "bottom": 31,
+          "width": 1153,
+          "height": 912,
+          "cx": 788.5,
+          "cy": 513
+        },
+        "context": {
+          "contexts": [
+            {
+              "kind": "webgl2",
+              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+              "max_samples": 4
+            }
+          ],
+          "allocations": [
+            {
+              "samples": 4,
+              "actual_samples": 4,
+              "format": 32856,
+              "width": 1153,
+              "height": 912
+            },
+            {
+              "samples": 4,
+              "actual_samples": 4,
+              "format": 33190,
+              "width": 1153,
+              "height": 912
+            }
+          ],
+          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+          "viewports": {
+            "0,0,300,150": 1,
+            "0,0,1600,1000": 9,
+            "212,31,1153,912": 9,
+            "0,0,1153,912": 3
+          }
+        },
+        "phases": [
+          {
+            "start": 526.2,
+            "end": 2027.8,
+            "duration_ms": 1501.6,
+            "raf_gap_ms": {
+              "count": 90,
+              "min": 16.5,
+              "p50": 16.7,
+              "p95": 16.7,
+              "p99": 16.8,
+              "max": 16.8,
+              "sum": 1500
+            },
+            "raf_scheduling_delay_ms": {
+              "count": 90,
+              "min": 0.1,
+              "p50": 1.1,
+              "p95": 1.2,
+              "p99": 1.2,
+              "max": 1.3,
+              "sum": 91.8
+            },
+            "raf_callback_ms": {
+              "count": 90,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.1,
+              "max": 0.3,
+              "sum": 1.7
+            },
+            "longtask_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "dom_pointer_queue_delay_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "mesh_upload_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "mesh_upload_bytes": 0,
+            "webgl_query_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "name": "startup_idle",
+            "mesh_draw_submissions": 0,
+            "mesh_draw_submission_gap_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "sent_pointer_events": 0,
+            "handled_dom_pointer_events": 0,
+            "all_handled_pointer_events_trusted": true
+          },
+          {
+            "start": 2029.9,
+            "end": 3090.5,
+            "duration_ms": 1060.6,
+            "raf_gap_ms": {
+              "count": 63,
+              "min": 16.6,
+              "p50": 16.7,
+              "p95": 16.7,
+              "p99": 16.8,
+              "max": 16.8,
+              "sum": 1049.9
+            },
+            "raf_scheduling_delay_ms": {
+              "count": 63,
+              "min": 0.3,
+              "p50": 1.1,
+              "p95": 1.3,
+              "p99": 1.3,
+              "max": 1.5,
+              "sum": 70.3
+            },
+            "raf_callback_ms": {
+              "count": 63,
+              "min": 0,
+              "p50": 2,
+              "p95": 2.2,
+              "p99": 2.4,
+              "max": 3.3,
+              "sum": 104.6
+            },
+            "longtask_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "dom_pointer_queue_delay_ms": {
+              "count": 39,
+              "min": 0.3,
+              "p50": 8.8,
+              "p95": 15.6,
+              "p99": 15.6,
+              "max": 15.6,
+              "sum": 319.4
+            },
+            "mesh_upload_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "mesh_upload_bytes": 0,
+            "webgl_query_ms": {
+              "count": 1173,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.2,
+              "max": 0.3,
+              "sum": 43.8
+            },
+            "name": "camera_orbit",
+            "scheduled_duration_ms": 800,
+            "dispatch_ack_all_ms": 802.599375,
+            "node_input_plus_drain_ms": 1065.721708,
+            "synthetic_ack_delay_ms": {
+              "count": 39,
+              "min": 0.983167,
+              "p50": 8.661,
+              "p95": 15.260208,
+              "p99": 15.278875,
+              "max": 15.28775,
+              "sum": 315.913292
+            },
+            "mesh_draw_submissions": 51,
+            "mesh_draw_submission_gap_ms": {
+              "count": 50,
+              "min": 14.8,
+              "p50": 16.7,
+              "p95": 17.2,
+              "p99": 17.5,
+              "max": 18.2,
+              "sum": 831.7
+            },
+            "sent_pointer_events": 39,
+            "handled_dom_pointer_events": 39,
+            "all_handled_pointer_events_trusted": true,
+            "node_scheduled_dispatch_slip_ms": {
+              "count": 39,
+              "min": 0.004708,
+              "p50": 0.31275,
+              "p95": 0.87325,
+              "p99": 1.092833,
+              "max": 1.146208,
+              "sum": 15.331694
+            }
+          },
+          {
+            "start": 1330.7,
+            "end": 2768.6,
+            "duration_ms": 1437.9,
+            "raf_gap_ms": {
+              "count": 42,
+              "min": 16.6,
+              "p50": 16.7,
+              "p95": 100,
+              "p99": 166.7,
+              "max": 333.4,
+              "sum": 1433.3
+            },
+            "raf_scheduling_delay_ms": {
+              "count": 42,
+              "min": 0.3,
+              "p50": 1.1,
+              "p95": 16.5,
+              "p99": 32.4,
+              "max": 172.3,
+              "sum": 319.7
+            },
+            "raf_callback_ms": {
+              "count": 42,
+              "min": 0,
+              "p50": 2.1,
+              "p95": 50.1,
+              "p99": 145.2,
+              "max": 325.4,
+              "sum": 834.0
+            },
+            "longtask_ms": {
+              "count": 5,
+              "min": 50,
+              "p50": 145,
+              "p95": 170,
+              "p99": 170,
+              "max": 325,
+              "sum": 786
+            },
+            "dom_pointer_queue_delay_ms": {
+              "count": 22,
+              "min": 1.1,
+              "p50": 7.3,
+              "p95": 39.1,
+              "p99": 191.8,
+              "max": 231.6,
+              "sum": 590.4
+            },
+            "mesh_upload_ms": {
+              "count": 34,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.1,
+              "max": 0.1,
+              "sum": 1.3
+            },
+            "mesh_upload_bytes": 44584400,
+            "webgl_query_ms": {
+              "count": 621,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.2,
+              "p99": 0.3,
+              "max": 0.4,
+              "sum": 23.2
+            },
+            "name": "continuous_draw",
+            "scheduled_duration_ms": 800,
+            "dispatch_ack_all_ms": 1162.934708,
+            "node_input_plus_drain_ms": 1436.937333,
+            "synthetic_ack_delay_ms": {
+              "count": 39,
+              "min": 1.455375,
+              "p50": 27.731625,
+              "p95": 292.298167,
+              "p99": 312.122416,
+              "max": 361.985916,
+              "sum": 2956.806624
+            },
+            "mesh_draw_submissions": 27,
+            "mesh_draw_submission_gap_ms": {
+              "count": 26,
+              "min": 2.2,
+              "p50": 16.7,
+              "p95": 145.8,
+              "p99": 172.5,
+              "max": 325.8,
+              "sum": 1166.7
+            },
+            "sent_pointer_events": 39,
+            "handled_dom_pointer_events": 22,
+            "all_handled_pointer_events_trusted": true,
+            "node_scheduled_dispatch_slip_ms": {
+              "count": 39,
+              "min": 0.005541,
+              "p50": 0.736958,
+              "p95": 9.555875,
+              "p99": 11.435333,
+              "max": 31.316,
+              "sum": 75.556947
+            }
+          },
+          {
+            "start": 3555.5,
+            "end": 6375,
+            "duration_ms": 2819.5,
+            "raf_gap_ms": {
+              "count": 26,
+              "min": 16.6,
+              "p50": 16.7,
+              "p95": 200,
+              "p99": 500,
+              "max": 1699.8,
+              "sum": 2816.6
+            },
+            "raf_scheduling_delay_ms": {
+              "count": 26,
+              "min": 0.1,
+              "p50": 1.1,
+              "p95": 14.2,
+              "p99": 16.6,
+              "max": 1706.1,
+              "sum": 1774.4
+            },
+            "raf_callback_ms": {
+              "count": 26,
+              "min": 0,
+              "p50": 0.1,
+              "p95": 52.2,
+              "p99": 188.7,
+              "max": 496.4,
+              "sum": 797.3
+            },
+            "longtask_ms": {
+              "count": 5,
+              "min": 52,
+              "p50": 496,
+              "p95": 535,
+              "p99": 535,
+              "max": 1170,
+              "sum": 2441
+            },
+            "dom_pointer_queue_delay_ms": {
+              "count": 13,
+              "min": 0.7,
+              "p50": 15,
+              "p95": 550.3,
+              "p99": 550.3,
+              "max": 590.2,
+              "sum": 1986.0
+            },
+            "mesh_upload_ms": {
+              "count": 14,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.1,
+              "max": 0.1,
+              "sum": 0.6
+            },
+            "mesh_upload_bytes": 18550320,
+            "webgl_query_ms": {
+              "count": 276,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.3,
+              "max": 1.4,
+              "sum": 13.3
+            },
+            "name": "crossing_draw",
+            "scheduled_duration_ms": 1320,
+            "dispatch_ack_all_ms": 2556.100292,
+            "node_input_plus_drain_ms": 2817.997958,
+            "synthetic_ack_delay_ms": {
+              "count": 54,
+              "min": 0.725709,
+              "p50": 287.906875,
+              "p95": 586.745333,
+              "p99": 790.156292,
+              "max": 1235.351583,
+              "sum": 16006.020874
+            },
+            "mesh_draw_submissions": 12,
+            "mesh_draw_submission_gap_ms": {
+              "count": 11,
+              "min": 4.0,
+              "p50": 25.3,
+              "p95": 496.7,
+              "p99": 496.7,
+              "max": 1705.7,
+              "sum": 2566.4
+            },
+            "sent_pointer_events": 54,
+            "handled_dom_pointer_events": 13,
+            "all_handled_pointer_events_trusted": true,
+            "node_scheduled_dispatch_slip_ms": {
+              "count": 54,
+              "min": 0.002458,
+              "p50": 0.514042,
+              "p95": 0.967333,
+              "p99": 1.066583,
+              "max": 1.080417,
+              "sum": 27.80475
+            }
+          }
+        ],
+        "snapshots": [
+          {
+            "sha256": "b030d791a7f3c30fb8676e26f554ef3e0c0423b3aefa937ad3cd212517df8ed8",
+            "bytes": 5317105,
+            "vertices": 40962,
+            "triangles": 81920,
+            "path": ".artifacts/browser-performance/baseline-0.1.3-c4cb318c-d750-4d91-b413-7039f69009ad/trial1-initial.obrush"
+          },
+          {
+            "sha256": "48efd0a96d477bf80a4b21312aea8d54414da8fd914c3b9e1c2bc2f30d8f4f31",
+            "bytes": 5331703,
+            "vertices": 41068,
+            "triangles": 82132,
+            "path": ".artifacts/browser-performance/baseline-0.1.3-c4cb318c-d750-4d91-b413-7039f69009ad/trial1-continuous.obrush"
+          },
+          {
+            "sha256": "dfe2069eb402dbd03f10be6f3d13d2b9bb114fcc97aa1434b2789a9bb857660f",
+            "bytes": 5521466,
+            "vertices": 42526,
+            "triangles": 85048,
+            "path": ".artifacts/browser-performance/baseline-0.1.3-c4cb318c-d750-4d91-b413-7039f69009ad/trial1-crossing.obrush"
+          },
+          {
+            "sha256": "d8e529def8c90f8e8e29498642f71982d07e446295398edccdfdbc9184cda962",
+            "bytes": 5458458,
+            "vertices": 42048,
+            "triangles": 84092,
+            "path": ".artifacts/browser-performance/baseline-0.1.3-c4cb318c-d750-4d91-b413-7039f69009ad/trial1-undo.obrush"
+          },
+          {
+            "sha256": "dfe2069eb402dbd03f10be6f3d13d2b9bb114fcc97aa1434b2789a9bb857660f",
+            "bytes": 5521466,
+            "vertices": 42526,
+            "triangles": 85048,
+            "path": ".artifacts/browser-performance/baseline-0.1.3-c4cb318c-d750-4d91-b413-7039f69009ad/trial1-redo.obrush"
+          }
+        ],
+        "history": {
+          "undo_changes_mesh": true,
+          "redo_exact_mesh": true
+        },
+        "changed_original_vertices": 2976,
+        "screenshot": {
+          "path": ".artifacts/browser-performance/baseline-0.1.3-c4cb318c-d750-4d91-b413-7039f69009ad/trial1-after-redo.png",
+          "sha256": "a4b116619991e1612a7706fcc67446a90b1b16e351d417b2701b3a2bf1ff0f35",
+          "bytes": 215738
+        },
+        "final_errors": {
+          "gl": [],
+          "js": [],
+          "notice": ""
+        },
+        "phase_raw_artifacts": [
+          {
+            "path": ".artifacts/browser-performance/baseline-0.1.3-c4cb318c-d750-4d91-b413-7039f69009ad/trial1-camera_orbit.json",
+            "sha256": "2df9b12d10c45d8f8ec681a12382068184443a29c54ac7bf3c2e12ace42b7421",
+            "bytes": 220004
+          },
+          {
+            "path": ".artifacts/browser-performance/baseline-0.1.3-c4cb318c-d750-4d91-b413-7039f69009ad/trial1-continuous_draw.json",
+            "sha256": "6f70007e998229c3b3574e0fa75571f28df634208c07b3abf7fc781305626a58",
+            "bytes": 133323
+          },
+          {
+            "path": ".artifacts/browser-performance/baseline-0.1.3-c4cb318c-d750-4d91-b413-7039f69009ad/trial1-crossing_draw.json",
+            "sha256": "05fc400012262f827278032a0953fadd943747c51d60384eb0c1f5fff9fe1f39",
+            "bytes": 77652
+          }
+        ]
+      },
+      {
+        "index": 2,
+        "viewport": {
+          "left": 212,
+          "bottom": 31,
+          "width": 1153,
+          "height": 912,
+          "cx": 788.5,
+          "cy": 513
+        },
+        "context": {
+          "contexts": [
+            {
+              "kind": "webgl2",
+              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+              "max_samples": 4
+            }
+          ],
+          "allocations": [
+            {
+              "samples": 4,
+              "actual_samples": 4,
+              "format": 32856,
+              "width": 1153,
+              "height": 912
+            },
+            {
+              "samples": 4,
+              "actual_samples": 4,
+              "format": 33190,
+              "width": 1153,
+              "height": 912
+            }
+          ],
+          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+          "viewports": {
+            "0,0,300,150": 1,
+            "0,0,1600,1000": 9,
+            "212,31,1153,912": 9,
+            "0,0,1153,912": 3
+          }
+        },
+        "phases": [
+          {
+            "start": 514.8,
+            "end": 2016.3,
+            "duration_ms": 1501.5,
+            "raf_gap_ms": {
+              "count": 90,
+              "min": 16.6,
+              "p50": 16.7,
+              "p95": 16.7,
+              "p99": 16.8,
+              "max": 16.8,
+              "sum": 1499.9
+            },
+            "raf_scheduling_delay_ms": {
+              "count": 90,
+              "min": 0.2,
+              "p50": 1.1,
+              "p95": 1.2,
+              "p99": 1.2,
+              "max": 1.2,
+              "sum": 93.0
+            },
+            "raf_callback_ms": {
+              "count": 90,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.1,
+              "max": 0.1,
+              "sum": 1.1
+            },
+            "longtask_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "dom_pointer_queue_delay_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "mesh_upload_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "mesh_upload_bytes": 0,
+            "webgl_query_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "name": "startup_idle",
+            "mesh_draw_submissions": 0,
+            "mesh_draw_submission_gap_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "sent_pointer_events": 0,
+            "handled_dom_pointer_events": 0,
+            "all_handled_pointer_events_trusted": true
+          },
+          {
+            "start": 2018.1,
+            "end": 3090,
+            "duration_ms": 1071.9,
+            "raf_gap_ms": {
+              "count": 65,
+              "min": 16.6,
+              "p50": 16.7,
+              "p95": 16.8,
+              "p99": 16.8,
+              "max": 16.8,
+              "sum": 1083.3
+            },
+            "raf_scheduling_delay_ms": {
+              "count": 65,
+              "min": 0.2,
+              "p50": 1.2,
+              "p95": 1.3,
+              "p99": 1.3,
+              "max": 1.4,
+              "sum": 70.3
+            },
+            "raf_callback_ms": {
+              "count": 65,
+              "min": 0,
+              "p50": 1.9,
+              "p95": 2.1,
+              "p99": 2.4,
+              "max": 2.6,
+              "sum": 99.4
+            },
+            "longtask_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "dom_pointer_queue_delay_ms": {
+              "count": 39,
+              "min": 0.6,
+              "p50": 9.2,
+              "p95": 16.9,
+              "p99": 16.9,
+              "max": 16.9,
+              "sum": 355.7
+            },
+            "mesh_upload_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "mesh_upload_bytes": 0,
+            "webgl_query_ms": {
+              "count": 1173,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.2,
+              "max": 0.4,
+              "sum": 41.5
+            },
+            "name": "camera_orbit",
+            "scheduled_duration_ms": 800,
+            "dispatch_ack_all_ms": 802.551625,
+            "node_input_plus_drain_ms": 1077.390375,
+            "synthetic_ack_delay_ms": {
+              "count": 39,
+              "min": 1.707667,
+              "p50": 9.330959,
+              "p95": 16.495,
+              "p99": 16.511667,
+              "max": 16.586541,
+              "sum": 348.488251
+            },
+            "mesh_draw_submissions": 51,
+            "mesh_draw_submission_gap_ms": {
+              "count": 50,
+              "min": 15.1,
+              "p50": 16.6,
+              "p95": 17.6,
+              "p99": 17.8,
+              "max": 18.4,
+              "sum": 832.7
+            },
+            "sent_pointer_events": 39,
+            "handled_dom_pointer_events": 39,
+            "all_handled_pointer_events_trusted": true,
+            "node_scheduled_dispatch_slip_ms": {
+              "count": 39,
+              "min": 0.00225,
+              "p50": 0.361542,
+              "p95": 1.082333,
+              "p99": 1.103,
+              "max": 1.1095,
+              "sum": 18.600206
+            }
+          },
+          {
+            "start": 1367.2,
+            "end": 2790.4,
+            "duration_ms": 1423.2,
+            "raf_gap_ms": {
+              "count": 44,
+              "min": 16.6,
+              "p50": 16.7,
+              "p95": 100,
+              "p99": 183.3,
+              "max": 316.7,
+              "sum": 1433.2
+            },
+            "raf_scheduling_delay_ms": {
+              "count": 44,
+              "min": 0.3,
+              "p50": 1.2,
+              "p95": 11.2,
+              "p99": 25.2,
+              "max": 143.3,
+              "sum": 265.6
+            },
+            "raf_callback_ms": {
+              "count": 44,
+              "min": 0,
+              "p50": 2.1,
+              "p95": 49.4,
+              "p99": 186,
+              "max": 323.5,
+              "sum": 861.4
+            },
+            "longtask_ms": {
+              "count": 4,
+              "min": 93,
+              "p50": 128,
+              "p95": 186,
+              "p99": 186,
+              "max": 323,
+              "sum": 730
+            },
+            "dom_pointer_queue_delay_ms": {
+              "count": 23,
+              "min": 0.6,
+              "p50": 9.2,
+              "p95": 21.1,
+              "p99": 234.2,
+              "max": 274.1,
+              "sum": 693.3
+            },
+            "mesh_upload_ms": {
+              "count": 34,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.1,
+              "max": 0.1,
+              "sum": 1.6
+            },
+            "mesh_upload_bytes": 44585424,
+            "webgl_query_ms": {
+              "count": 667,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.3,
+              "max": 0.4,
+              "sum": 23.8
+            },
+            "name": "continuous_draw",
+            "scheduled_duration_ms": 800,
+            "dispatch_ack_all_ms": 1163.136208,
+            "node_input_plus_drain_ms": 1426.78675,
+            "synthetic_ack_delay_ms": {
+              "count": 39,
+              "min": 0.678792,
+              "p50": 21.065417,
+              "p95": 293.48975,
+              "p99": 313.961667,
+              "max": 362.940541,
+              "sum": 2566.577585
+            },
+            "mesh_draw_submissions": 29,
+            "mesh_draw_submission_gap_ms": {
+              "count": 28,
+              "min": 2.4,
+              "p50": 16.7,
+              "p95": 130.7,
+              "p99": 186.3,
+              "max": 323.8,
+              "sum": 1166.4
+            },
+            "sent_pointer_events": 39,
+            "handled_dom_pointer_events": 23,
+            "all_handled_pointer_events_trusted": true,
+            "node_scheduled_dispatch_slip_ms": {
+              "count": 39,
+              "min": 0.002166,
+              "p50": 0.269708,
+              "p95": 0.908458,
+              "p99": 0.945041,
+              "max": 1.104291,
+              "sum": 15.824028
+            }
+          },
+          {
+            "start": 3608.4,
+            "end": 6480.1,
+            "duration_ms": 2871.7,
+            "raf_gap_ms": {
+              "count": 26,
+              "min": 16.6,
+              "p50": 16.7,
+              "p95": 183.3,
+              "p99": 500,
+              "max": 1749.9,
+              "sum": 2866.5
+            },
+            "raf_scheduling_delay_ms": {
+              "count": 26,
+              "min": 0.4,
+              "p50": 1.2,
+              "p95": 6.9,
+              "p99": 16.3,
+              "max": 1750.9,
+              "sum": 1804.7
+            },
+            "raf_callback_ms": {
+              "count": 26,
+              "min": 0,
+              "p50": 0,
+              "p95": 52.5,
+              "p99": 187.5,
+              "max": 504.2,
+              "sum": 805.3
+            },
+            "longtask_ms": {
+              "count": 5,
+              "min": 52,
+              "p50": 504,
+              "p95": 555,
+              "p99": 555,
+              "max": 1186,
+              "sum": 2484
+            },
+            "dom_pointer_queue_delay_ms": {
+              "count": 13,
+              "min": 1,
+              "p50": 18.4,
+              "p95": 578.6,
+              "p99": 578.6,
+              "max": 619.6,
+              "sum": 2142.8
+            },
+            "mesh_upload_ms": {
+              "count": 14,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.1,
+              "max": 0.1,
+              "sum": 0.5
+            },
+            "mesh_upload_bytes": 18550320,
+            "webgl_query_ms": {
+              "count": 276,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.4,
+              "max": 1.5,
+              "sum": 12.9
+            },
+            "name": "crossing_draw",
+            "scheduled_duration_ms": 1320,
+            "dispatch_ack_all_ms": 2602.844625,
+            "node_input_plus_drain_ms": 2864.397583,
+            "synthetic_ack_delay_ms": {
+              "count": 54,
+              "min": 4.075667,
+              "p50": 318.642458,
+              "p95": 617.206041,
+              "p99": 818.803958,
+              "max": 1282.0285,
+              "sum": 17024.756834
+            },
+            "mesh_draw_submissions": 12,
+            "mesh_draw_submission_gap_ms": {
+              "count": 11,
+              "min": 3.9,
+              "p50": 26.4,
+              "p95": 504.5,
+              "p99": 504.5,
+              "max": 1741.4,
+              "sum": 2617.1
+            },
+            "sent_pointer_events": 54,
+            "handled_dom_pointer_events": 13,
+            "all_handled_pointer_events_trusted": true,
+            "node_scheduled_dispatch_slip_ms": {
+              "count": 54,
+              "min": 0.001042,
+              "p50": 0.635083,
+              "p95": 1.097208,
+              "p99": 1.139625,
+              "max": 1.148625,
+              "sum": 31.764249
+            }
+          }
+        ],
+        "snapshots": [
+          {
+            "sha256": "b030d791a7f3c30fb8676e26f554ef3e0c0423b3aefa937ad3cd212517df8ed8",
+            "bytes": 5317105,
+            "vertices": 40962,
+            "triangles": 81920,
+            "path": ".artifacts/browser-performance/baseline-0.1.3-c4cb318c-d750-4d91-b413-7039f69009ad/trial2-initial.obrush"
+          },
+          {
+            "sha256": "571a32134492f2f216fe2e2118f1db341af281baac62e8dd4e1f6948428f5e96",
+            "bytes": 5331715,
+            "vertices": 41068,
+            "triangles": 82132,
+            "path": ".artifacts/browser-performance/baseline-0.1.3-c4cb318c-d750-4d91-b413-7039f69009ad/trial2-continuous.obrush"
+          },
+          {
+            "sha256": "7fba8eaa102c2b9339e2c1fa0e77d3fdc890f2621434f78d85cab5f552506c83",
+            "bytes": 5521410,
+            "vertices": 42526,
+            "triangles": 85048,
+            "path": ".artifacts/browser-performance/baseline-0.1.3-c4cb318c-d750-4d91-b413-7039f69009ad/trial2-crossing.obrush"
+          },
+          {
+            "sha256": "79ffcd6e54be0b05d4e98586009dec5acc7a403b6650659d230a5688b5a7349a",
+            "bytes": 5458504,
+            "vertices": 42048,
+            "triangles": 84092,
+            "path": ".artifacts/browser-performance/baseline-0.1.3-c4cb318c-d750-4d91-b413-7039f69009ad/trial2-undo.obrush"
+          },
+          {
+            "sha256": "7fba8eaa102c2b9339e2c1fa0e77d3fdc890f2621434f78d85cab5f552506c83",
+            "bytes": 5521410,
+            "vertices": 42526,
+            "triangles": 85048,
+            "path": ".artifacts/browser-performance/baseline-0.1.3-c4cb318c-d750-4d91-b413-7039f69009ad/trial2-redo.obrush"
+          }
+        ],
+        "history": {
+          "undo_changes_mesh": true,
+          "redo_exact_mesh": true
+        },
+        "changed_original_vertices": 2976,
+        "screenshot": {
+          "path": ".artifacts/browser-performance/baseline-0.1.3-c4cb318c-d750-4d91-b413-7039f69009ad/trial2-after-redo.png",
+          "sha256": "62f546586f142d9fa8d0712cdbccf1479a3986f14e09bde38c85c2e1d19bfabc",
+          "bytes": 215749
+        },
+        "final_errors": {
+          "gl": [],
+          "js": [],
+          "notice": ""
+        },
+        "phase_raw_artifacts": [
+          {
+            "path": ".artifacts/browser-performance/baseline-0.1.3-c4cb318c-d750-4d91-b413-7039f69009ad/trial2-camera_orbit.json",
+            "sha256": "4a93ba089330a2864d21fabf5441138b95f402963fba5a6ef660a4ca80eec1cc",
+            "bytes": 220276
+          },
+          {
+            "path": ".artifacts/browser-performance/baseline-0.1.3-c4cb318c-d750-4d91-b413-7039f69009ad/trial2-continuous_draw.json",
+            "sha256": "535960b4025110e7de12f2e27047c59a01ba041398550eab8060dcdc2998b189",
+            "bytes": 140906
+          },
+          {
+            "path": ".artifacts/browser-performance/baseline-0.1.3-c4cb318c-d750-4d91-b413-7039f69009ad/trial2-crossing_draw.json",
+            "sha256": "22eb4b02cc1f89c6c479768b8e258246214b953391c7cf736db1cba3ef95405b",
+            "bytes": 77548
+          }
+        ]
+      }
+    ],
+    "runtime_errors": [],
+    "console_errors": [],
+    "exceptions": [],
+    "blocked_external_request_count": 0,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    }
+  },
+  "final": {
+    "label": "release-0.1.4",
+    "status": "completed bounded browser performance measurement",
+    "raw_result": {
+      "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/result.json",
+      "sha256": "a65c1cee47f5577c1464d4e7b35fe89f02a539dcab123b08d16e92766fd419bb",
+      "bytes": 2181628
+    },
+    "wasm": {
+      "sha256": "a74998f7a85de0b5e95846535552485e38a86a26bc5f8b14f1b8d79f1275fd8c",
+      "served_sha256": "a74998f7a85de0b5e95846535552485e38a86a26bc5f8b14f1b8d79f1275fd8c",
+      "bytes": 3418213
+    },
+    "browser": {
+      "protocolVersion": "1.3",
+      "product": "Chrome/155.0.8059.39",
+      "revision": "@3ff7ac5a9224be9156d7f8703a06e22890aafd34",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "jsVersion": "15.5.35.20"
+    },
+    "harness_sha256": "78cf469e499ab447b165828138a46da0a015e4d9d00a5c21d7f020f929db48c4",
+    "trials": [
+      {
+        "index": 1,
+        "viewport": {
+          "left": 212,
+          "bottom": 31,
+          "width": 1153,
+          "height": 912,
+          "cx": 788.5,
+          "cy": 513
+        },
+        "context": {
+          "contexts": [
+            {
+              "kind": "webgl2",
+              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+              "max_samples": 4
+            }
+          ],
+          "allocations": [
+            {
+              "samples": 4,
+              "actual_samples": 4,
+              "format": 32856,
+              "width": 1153,
+              "height": 912
+            },
+            {
+              "samples": 4,
+              "actual_samples": 4,
+              "format": 33190,
+              "width": 1153,
+              "height": 912
+            }
+          ],
+          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+          "viewports": {
+            "0,0,300,150": 1,
+            "0,0,1600,1000": 9,
+            "212,31,1153,912": 9,
+            "0,0,1153,912": 3
+          }
+        },
+        "phases": [
+          {
+            "start": 532.2,
+            "end": 2033.9,
+            "duration_ms": 1501.7,
+            "raf_gap_ms": {
+              "count": 90,
+              "min": 16.6,
+              "p50": 16.7,
+              "p95": 16.7,
+              "p99": 16.8,
+              "max": 16.8,
+              "sum": 1500
+            },
+            "raf_scheduling_delay_ms": {
+              "count": 90,
+              "min": 0.2,
+              "p50": 1.1,
+              "p95": 1.3,
+              "p99": 1.4,
+              "max": 1.5,
+              "sum": 96.3
+            },
+            "raf_callback_ms": {
+              "count": 90,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.2,
+              "max": 0.6,
+              "sum": 3.6
+            },
+            "longtask_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "dom_pointer_queue_delay_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "mesh_upload_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "mesh_upload_bytes": 0,
+            "webgl_query_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "name": "startup_idle",
+            "mesh_draw_submissions": 0,
+            "mesh_draw_submission_gap_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "sent_pointer_events": 0,
+            "handled_dom_pointer_events": 0,
+            "all_handled_pointer_events_trusted": true
+          },
+          {
+            "start": 2037,
+            "end": 3090.6,
+            "duration_ms": 1053.6,
+            "raf_gap_ms": {
+              "count": 63,
+              "min": 16.6,
+              "p50": 16.7,
+              "p95": 16.7,
+              "p99": 16.8,
+              "max": 16.8,
+              "sum": 1050
+            },
+            "raf_scheduling_delay_ms": {
+              "count": 63,
+              "min": 0.1,
+              "p50": 1.1,
+              "p95": 1.3,
+              "p99": 1.4,
+              "max": 2.4,
+              "sum": 67.5
+            },
+            "raf_callback_ms": {
+              "count": 63,
+              "min": 0,
+              "p50": 2.8,
+              "p95": 3.3,
+              "p99": 4.1,
+              "max": 5.1,
+              "sum": 147.3
+            },
+            "longtask_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "dom_pointer_queue_delay_ms": {
+              "count": 39,
+              "min": 0.6,
+              "p50": 9.1,
+              "p95": 14.8,
+              "p99": 14.9,
+              "max": 15,
+              "sum": 326.2
+            },
+            "mesh_upload_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "mesh_upload_bytes": 0,
+            "webgl_query_ms": {
+              "count": 1173,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.2,
+              "p99": 0.3,
+              "max": 0.4,
+              "sum": 60.0
+            },
+            "name": "camera_orbit",
+            "scheduled_duration_ms": 800,
+            "dispatch_ack_all_ms": 803.325,
+            "node_input_plus_drain_ms": 1058.905084,
+            "synthetic_ack_delay_ms": {
+              "count": 39,
+              "min": 1.675417,
+              "p50": 8.606667,
+              "p95": 15.13775,
+              "p99": 15.144333,
+              "max": 15.156875,
+              "sum": 321.358213
+            },
+            "mesh_draw_submissions": 51,
+            "mesh_draw_submission_gap_ms": {
+              "count": 50,
+              "min": 12.9,
+              "p50": 16.6,
+              "p95": 17.5,
+              "p99": 18.4,
+              "max": 19.5,
+              "sum": 829.9
+            },
+            "sent_pointer_events": 39,
+            "handled_dom_pointer_events": 39,
+            "all_handled_pointer_events_trusted": true,
+            "node_scheduled_dispatch_slip_ms": {
+              "count": 39,
+              "min": 0.007625,
+              "p50": 0.625584,
+              "p95": 0.913667,
+              "p99": 1.024,
+              "max": 1.151209,
+              "sum": 24.020552
+            }
+          },
+          {
+            "start": 1329.3,
+            "end": 2401.7,
+            "duration_ms": 1072.4,
+            "raf_gap_ms": {
+              "count": 64,
+              "min": 16.5,
+              "p50": 16.7,
+              "p95": 16.8,
+              "p99": 16.8,
+              "max": 16.8,
+              "sum": 1066.6
+            },
+            "raf_scheduling_delay_ms": {
+              "count": 64,
+              "min": 0.4,
+              "p50": 1.2,
+              "p95": 1.3,
+              "p99": 1.3,
+              "max": 6.6,
+              "sum": 76.6
+            },
+            "raf_callback_ms": {
+              "count": 64,
+              "min": 0,
+              "p50": 2,
+              "p95": 14.1,
+              "p99": 14.8,
+              "max": 16.3,
+              "sum": 355.4
+            },
+            "longtask_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "dom_pointer_queue_delay_ms": {
+              "count": 39,
+              "min": 1,
+              "p50": 9,
+              "p95": 15.8,
+              "p99": 15.8,
+              "max": 15.9,
+              "sum": 322.8
+            },
+            "mesh_upload_ms": {
+              "count": 58,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.1,
+              "max": 0.2,
+              "sum": 2.0
+            },
+            "mesh_upload_bytes": 76095632,
+            "webgl_query_ms": {
+              "count": 1173,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.2,
+              "max": 0.8,
+              "sum": 42.5
+            },
+            "name": "continuous_draw",
+            "scheduled_duration_ms": 800,
+            "dispatch_ack_all_ms": 802.658125,
+            "node_input_plus_drain_ms": 1077.558583,
+            "synthetic_ack_delay_ms": {
+              "count": 39,
+              "min": 0.692375,
+              "p50": 8.582792,
+              "p95": 15.314,
+              "p99": 15.415375,
+              "max": 21.138917,
+              "sum": 328.095666
+            },
+            "mesh_draw_submissions": 51,
+            "mesh_draw_submission_gap_ms": {
+              "count": 50,
+              "min": 4.7,
+              "p50": 16.5,
+              "p95": 28.7,
+              "p99": 29.4,
+              "max": 29.5,
+              "sum": 832.1
+            },
+            "sent_pointer_events": 39,
+            "handled_dom_pointer_events": 39,
+            "all_handled_pointer_events_trusted": true,
+            "node_scheduled_dispatch_slip_ms": {
+              "count": 39,
+              "min": 0.008167,
+              "p50": 0.745708,
+              "p95": 0.9985,
+              "p99": 1.020667,
+              "max": 1.064667,
+              "sum": 28.461333
+            }
+          },
+          {
+            "start": 3255.4,
+            "end": 4839.5,
+            "duration_ms": 1584.1,
+            "raf_gap_ms": {
+              "count": 95,
+              "min": 16.6,
+              "p50": 16.7,
+              "p95": 16.7,
+              "p99": 16.8,
+              "max": 16.8,
+              "sum": 1583.3
+            },
+            "raf_scheduling_delay_ms": {
+              "count": 95,
+              "min": 0.1,
+              "p50": 1.1,
+              "p95": 1.3,
+              "p99": 8.1,
+              "max": 23.3,
+              "sum": 116.1
+            },
+            "raf_callback_ms": {
+              "count": 95,
+              "min": 0,
+              "p50": 13.7,
+              "p95": 14.6,
+              "p99": 15.2,
+              "max": 16.2,
+              "sum": 782.4
+            },
+            "longtask_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "dom_pointer_queue_delay_ms": {
+              "count": 54,
+              "min": 0.6,
+              "p50": 8.9,
+              "p95": 15.6,
+              "p99": 16,
+              "max": 16.2,
+              "sum": 441.6
+            },
+            "mesh_upload_ms": {
+              "count": 114,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.1,
+              "max": 0.2,
+              "sum": 4.2
+            },
+            "mesh_upload_bytes": 152934736,
+            "webgl_query_ms": {
+              "count": 1702,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.2,
+              "max": 0.3,
+              "sum": 64.4
+            },
+            "name": "crossing_draw",
+            "scheduled_duration_ms": 1320,
+            "dispatch_ack_all_ms": 1322.559583,
+            "node_input_plus_drain_ms": 1598.897167,
+            "synthetic_ack_delay_ms": {
+              "count": 54,
+              "min": 1.455791,
+              "p50": 8.72875,
+              "p95": 15.975542,
+              "p99": 16.242166,
+              "max": 24.342875,
+              "sum": 466.365793
+            },
+            "mesh_draw_submissions": 74,
+            "mesh_draw_submission_gap_ms": {
+              "count": 73,
+              "min": 3.9,
+              "p50": 16.6,
+              "p95": 29.1,
+              "p99": 37.0,
+              "max": 169.5,
+              "sum": 1365.4
+            },
+            "sent_pointer_events": 54,
+            "handled_dom_pointer_events": 54,
+            "all_handled_pointer_events_trusted": true,
+            "node_scheduled_dispatch_slip_ms": {
+              "count": 54,
+              "min": 0.002333,
+              "p50": 0.649125,
+              "p95": 1.13175,
+              "p99": 1.142417,
+              "max": 1.213208,
+              "sum": 32.837126
+            }
+          }
+        ],
+        "snapshots": [
+          {
+            "sha256": "b030d791a7f3c30fb8676e26f554ef3e0c0423b3aefa937ad3cd212517df8ed8",
+            "bytes": 5317105,
+            "vertices": 40962,
+            "triangles": 81920,
+            "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/trial1-initial.obrush"
+          },
+          {
+            "sha256": "571a32134492f2f216fe2e2118f1db341af281baac62e8dd4e1f6948428f5e96",
+            "bytes": 5331715,
+            "vertices": 41068,
+            "triangles": 82132,
+            "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/trial1-continuous.obrush"
+          },
+          {
+            "sha256": "89c7c55329ec6491d8fc73fa872c1412b5f662284b7a286cdaee01a11357329f",
+            "bytes": 5521462,
+            "vertices": 42526,
+            "triangles": 85048,
+            "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/trial1-crossing.obrush"
+          },
+          {
+            "sha256": "79ffcd6e54be0b05d4e98586009dec5acc7a403b6650659d230a5688b5a7349a",
+            "bytes": 5458504,
+            "vertices": 42048,
+            "triangles": 84092,
+            "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/trial1-undo.obrush"
+          },
+          {
+            "sha256": "89c7c55329ec6491d8fc73fa872c1412b5f662284b7a286cdaee01a11357329f",
+            "bytes": 5521462,
+            "vertices": 42526,
+            "triangles": 85048,
+            "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/trial1-redo.obrush"
+          }
+        ],
+        "history": {
+          "undo_changes_mesh": true,
+          "redo_exact_mesh": true
+        },
+        "changed_original_vertices": 2976,
+        "screenshot": {
+          "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/trial1-after-redo.png",
+          "sha256": "92903d75ed4a81ab2a41a270b69110a80eaf32f3086974b0f428051c5c2b047e",
+          "bytes": 215745
+        },
+        "final_errors": {
+          "gl": [],
+          "js": [],
+          "notice": ""
+        },
+        "phase_raw_artifacts": [
+          {
+            "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/trial1-camera_orbit.json",
+            "sha256": "d4ca78e7333aca772e6c8d674c555814a1fff1f28e1a105e2865f554660adbf3",
+            "bytes": 222217
+          },
+          {
+            "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/trial1-continuous_draw.json",
+            "sha256": "dca394abbc68952838f0b6d4cd3edf22d2fbdb0fbdf04f08c04a2ef4cf4667e7",
+            "bytes": 229542
+          },
+          {
+            "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/trial1-crossing_draw.json",
+            "sha256": "cf89673e1cb931f962ce85e62b1d9ff21668ddda9a81361c8a05b3f888041fe0",
+            "bytes": 335191
+          }
+        ]
+      },
+      {
+        "index": 2,
+        "viewport": {
+          "left": 212,
+          "bottom": 31,
+          "width": 1153,
+          "height": 912,
+          "cx": 788.5,
+          "cy": 513
+        },
+        "context": {
+          "contexts": [
+            {
+              "kind": "webgl2",
+              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+              "max_samples": 4
+            }
+          ],
+          "allocations": [
+            {
+              "samples": 4,
+              "actual_samples": 4,
+              "format": 32856,
+              "width": 1153,
+              "height": 912
+            },
+            {
+              "samples": 4,
+              "actual_samples": 4,
+              "format": 33190,
+              "width": 1153,
+              "height": 912
+            }
+          ],
+          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+          "viewports": {
+            "0,0,300,150": 1,
+            "0,0,1600,1000": 9,
+            "212,31,1153,912": 9,
+            "0,0,1153,912": 3
+          }
+        },
+        "phases": [
+          {
+            "start": 517,
+            "end": 2020.1,
+            "duration_ms": 1503.1,
+            "raf_gap_ms": {
+              "count": 90,
+              "min": 16.5,
+              "p50": 16.7,
+              "p95": 16.8,
+              "p99": 16.8,
+              "max": 16.8,
+              "sum": 1499.9
+            },
+            "raf_scheduling_delay_ms": {
+              "count": 90,
+              "min": 0.3,
+              "p50": 1.2,
+              "p95": 1.4,
+              "p99": 1.5,
+              "max": 1.5,
+              "sum": 104.4
+            },
+            "raf_callback_ms": {
+              "count": 90,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.2,
+              "max": 0.2,
+              "sum": 3.7
+            },
+            "longtask_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "dom_pointer_queue_delay_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "mesh_upload_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "mesh_upload_bytes": 0,
+            "webgl_query_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "name": "startup_idle",
+            "mesh_draw_submissions": 0,
+            "mesh_draw_submission_gap_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "sent_pointer_events": 0,
+            "handled_dom_pointer_events": 0,
+            "all_handled_pointer_events_trusted": true
+          },
+          {
+            "start": 2027.4,
+            "end": 3089.7,
+            "duration_ms": 1062.3,
+            "raf_gap_ms": {
+              "count": 63,
+              "min": 16.6,
+              "p50": 16.7,
+              "p95": 16.7,
+              "p99": 16.8,
+              "max": 16.8,
+              "sum": 1049.9
+            },
+            "raf_scheduling_delay_ms": {
+              "count": 63,
+              "min": 0.3,
+              "p50": 1.2,
+              "p95": 1.3,
+              "p99": 1.4,
+              "max": 1.5,
+              "sum": 65.3
+            },
+            "raf_callback_ms": {
+              "count": 63,
+              "min": 0,
+              "p50": 2.8,
+              "p95": 3.4,
+              "p99": 4,
+              "max": 5.5,
+              "sum": 149.4
+            },
+            "longtask_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "dom_pointer_queue_delay_ms": {
+              "count": 39,
+              "min": 1.2,
+              "p50": 9.1,
+              "p95": 16.5,
+              "p99": 16.6,
+              "max": 16.6,
+              "sum": 341.8
+            },
+            "mesh_upload_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "mesh_upload_bytes": 0,
+            "webgl_query_ms": {
+              "count": 1173,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.2,
+              "p99": 0.3,
+              "max": 0.7,
+              "sum": 64.6
+            },
+            "name": "camera_orbit",
+            "scheduled_duration_ms": 800,
+            "dispatch_ack_all_ms": 802.797417,
+            "node_input_plus_drain_ms": 1077.38775,
+            "synthetic_ack_delay_ms": {
+              "count": 39,
+              "min": 1.52875,
+              "p50": 8.717083,
+              "p95": 16.247625,
+              "p99": 16.261625,
+              "max": 16.267042,
+              "sum": 339.209295
+            },
+            "mesh_draw_submissions": 51,
+            "mesh_draw_submission_gap_ms": {
+              "count": 50,
+              "min": 14.1,
+              "p50": 16.6,
+              "p95": 17.7,
+              "p99": 18.6,
+              "max": 19.7,
+              "sum": 830.8
+            },
+            "sent_pointer_events": 39,
+            "handled_dom_pointer_events": 39,
+            "all_handled_pointer_events_trusted": true,
+            "node_scheduled_dispatch_slip_ms": {
+              "count": 39,
+              "min": 0.008542,
+              "p50": 0.406917,
+              "p95": 1.089417,
+              "p99": 1.094625,
+              "max": 1.121,
+              "sum": 19.0205
+            }
+          },
+          {
+            "start": 1323,
+            "end": 2386.9,
+            "duration_ms": 1063.9,
+            "raf_gap_ms": {
+              "count": 64,
+              "min": 16.6,
+              "p50": 16.7,
+              "p95": 16.7,
+              "p99": 16.7,
+              "max": 16.8,
+              "sum": 1066.6
+            },
+            "raf_scheduling_delay_ms": {
+              "count": 64,
+              "min": 0.2,
+              "p50": 1.2,
+              "p95": 1.3,
+              "p99": 1.4,
+              "max": 1.6,
+              "sum": 67.7
+            },
+            "raf_callback_ms": {
+              "count": 64,
+              "min": 0,
+              "p50": 1.9,
+              "p95": 14.5,
+              "p99": 15.3,
+              "max": 17.1,
+              "sum": 355.6
+            },
+            "longtask_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "dom_pointer_queue_delay_ms": {
+              "count": 39,
+              "min": 0.6,
+              "p50": 8.4,
+              "p95": 16.8,
+              "p99": 17.4,
+              "max": 17.4,
+              "sum": 335.4
+            },
+            "mesh_upload_ms": {
+              "count": 58,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.1,
+              "max": 0.1,
+              "sum": 1.6
+            },
+            "mesh_upload_bytes": 76095632,
+            "webgl_query_ms": {
+              "count": 1173,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.2,
+              "max": 0.3,
+              "sum": 42.9
+            },
+            "name": "continuous_draw",
+            "scheduled_duration_ms": 800,
+            "dispatch_ack_all_ms": 801.438459,
+            "node_input_plus_drain_ms": 1077.662917,
+            "synthetic_ack_delay_ms": {
+              "count": 39,
+              "min": 0.857,
+              "p50": 8.197125,
+              "p95": 16.631375,
+              "p99": 17.277125,
+              "max": 17.622333,
+              "sum": 347.732294
+            },
+            "mesh_draw_submissions": 51,
+            "mesh_draw_submission_gap_ms": {
+              "count": 50,
+              "min": 3.4,
+              "p50": 16.6,
+              "p95": 28.8,
+              "p99": 29.0,
+              "max": 29.7,
+              "sum": 832.7
+            },
+            "sent_pointer_events": 39,
+            "handled_dom_pointer_events": 39,
+            "all_handled_pointer_events_trusted": true,
+            "node_scheduled_dispatch_slip_ms": {
+              "count": 39,
+              "min": 0.000875,
+              "p50": 0.760709,
+              "p95": 1.116417,
+              "p99": 1.13375,
+              "max": 1.150292,
+              "sum": 24.860552
+            }
+          },
+          {
+            "start": 3236.4,
+            "end": 4822.6,
+            "duration_ms": 1586.2,
+            "raf_gap_ms": {
+              "count": 95,
+              "min": 16.6,
+              "p50": 16.7,
+              "p95": 16.7,
+              "p99": 16.8,
+              "max": 16.8,
+              "sum": 1583.3
+            },
+            "raf_scheduling_delay_ms": {
+              "count": 95,
+              "min": 0.1,
+              "p50": 1.1,
+              "p95": 1.4,
+              "p99": 5.6,
+              "max": 6.3,
+              "sum": 98.2
+            },
+            "raf_callback_ms": {
+              "count": 95,
+              "min": 0,
+              "p50": 13.8,
+              "p95": 15.1,
+              "p99": 15.2,
+              "max": 16,
+              "sum": 775.8
+            },
+            "longtask_ms": {
+              "count": 0,
+              "min": null,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "max": null,
+              "sum": 0
+            },
+            "dom_pointer_queue_delay_ms": {
+              "count": 54,
+              "min": 1,
+              "p50": 9.3,
+              "p95": 16.4,
+              "p99": 17.3,
+              "max": 17.5,
+              "sum": 498.6
+            },
+            "mesh_upload_ms": {
+              "count": 114,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.2,
+              "max": 0.2,
+              "sum": 4.4
+            },
+            "mesh_upload_bytes": 152934736,
+            "webgl_query_ms": {
+              "count": 1679,
+              "min": 0,
+              "p50": 0,
+              "p95": 0.1,
+              "p99": 0.2,
+              "max": 0.4,
+              "sum": 65.8
+            },
+            "name": "crossing_draw",
+            "scheduled_duration_ms": 1320,
+            "dispatch_ack_all_ms": 1325.024167,
+            "node_input_plus_drain_ms": 1604.189125,
+            "synthetic_ack_delay_ms": {
+              "count": 54,
+              "min": 1.907875,
+              "p50": 9.332625,
+              "p95": 16.352708,
+              "p99": 16.998708,
+              "max": 17.163125,
+              "sum": 515.15054
+            },
+            "mesh_draw_submissions": 73,
+            "mesh_draw_submission_gap_ms": {
+              "count": 72,
+              "min": 3.2,
+              "p50": 16.5,
+              "p95": 24.6,
+              "p99": 30.2,
+              "max": 167.1,
+              "sum": 1349.2
+            },
+            "sent_pointer_events": 54,
+            "handled_dom_pointer_events": 54,
+            "all_handled_pointer_events_trusted": true,
+            "node_scheduled_dispatch_slip_ms": {
+              "count": 54,
+              "min": 0.002375,
+              "p50": 0.564709,
+              "p95": 1.040375,
+              "p99": 1.083167,
+              "max": 1.114667,
+              "sum": 28.532519
+            }
+          }
+        ],
+        "snapshots": [
+          {
+            "sha256": "b030d791a7f3c30fb8676e26f554ef3e0c0423b3aefa937ad3cd212517df8ed8",
+            "bytes": 5317105,
+            "vertices": 40962,
+            "triangles": 81920,
+            "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/trial2-initial.obrush"
+          },
+          {
+            "sha256": "571a32134492f2f216fe2e2118f1db341af281baac62e8dd4e1f6948428f5e96",
+            "bytes": 5331715,
+            "vertices": 41068,
+            "triangles": 82132,
+            "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/trial2-continuous.obrush"
+          },
+          {
+            "sha256": "89c7c55329ec6491d8fc73fa872c1412b5f662284b7a286cdaee01a11357329f",
+            "bytes": 5521462,
+            "vertices": 42526,
+            "triangles": 85048,
+            "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/trial2-crossing.obrush"
+          },
+          {
+            "sha256": "79ffcd6e54be0b05d4e98586009dec5acc7a403b6650659d230a5688b5a7349a",
+            "bytes": 5458504,
+            "vertices": 42048,
+            "triangles": 84092,
+            "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/trial2-undo.obrush"
+          },
+          {
+            "sha256": "89c7c55329ec6491d8fc73fa872c1412b5f662284b7a286cdaee01a11357329f",
+            "bytes": 5521462,
+            "vertices": 42526,
+            "triangles": 85048,
+            "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/trial2-redo.obrush"
+          }
+        ],
+        "history": {
+          "undo_changes_mesh": true,
+          "redo_exact_mesh": true
+        },
+        "changed_original_vertices": 2976,
+        "screenshot": {
+          "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/trial2-after-redo.png",
+          "sha256": "92903d75ed4a81ab2a41a270b69110a80eaf32f3086974b0f428051c5c2b047e",
+          "bytes": 215745
+        },
+        "final_errors": {
+          "gl": [],
+          "js": [],
+          "notice": ""
+        },
+        "phase_raw_artifacts": [
+          {
+            "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/trial2-camera_orbit.json",
+            "sha256": "ac88a56cc4d495a3c5fa61b1f79d6040ddec6618501000edc096c644a881308a",
+            "bytes": 221574
+          },
+          {
+            "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/trial2-continuous_draw.json",
+            "sha256": "001173af6e555d3d5fdac766148fc76b4134f03366a2b0879792ded51fd0f045",
+            "bytes": 229734
+          },
+          {
+            "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/trial2-crossing_draw.json",
+            "sha256": "3cd30ebd784649349c97b026b2f86907434a59e90858dde252de2b3d3056cac1",
+            "bytes": 333364
+          }
+        ]
+      }
+    ],
+    "runtime_errors": [],
+    "console_errors": [],
+    "exceptions": [],
+    "blocked_external_request_count": 0,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    }
+  },
+  "saved_browser_mesh_comparison": {
+    "scope": "Baseline trial2 crossing versus final trial2 crossing with identical synthetic schedules. Runtime event coalescing differs; browser floating-point results are not asserted bit-identical to native audit fixtures.",
+    "equal_field_values": {
+      "positions": false,
+      "normals": false,
+      "triangles": true,
+      "masks": true,
+      "colors": true
+    },
+    "max_corresponding_position_distance": 0.0,
+    "tolerance_preregistered": false
+  },
+  "final_saved_crossing_mesh_sanity": {
+    "snapshot": {
+      "path": ".artifacts/browser-performance/release-0.1.4-b1f14201-999b-4d8b-b9e5-e05c9fac933a/trial2-crossing.obrush",
+      "sha256": "89c7c55329ec6491d8fc73fa872c1412b5f662284b7a286cdaee01a11357329f",
+      "bytes": 5521462
+    },
+    "vertices": 42526,
+    "triangles": 85048,
+    "finite_positions": true,
+    "invalid_indices": 0,
+    "degenerate_faces_cross_length_below_1e_minus_12": 0,
+    "maximum_adjacent_face_angle_deg": 36.518792,
+    "shared_edges_over_60_deg": 0,
+    "shared_edges_over_90_deg": 0,
+    "scope": "Sanity on this one saved browser sculpt; no general self-intersection or reference-parity claim."
+  },
+  "pending_command_barrier": {
+    "status": "completed same-frame release and command barrier smoke",
+    "raw_result": {
+      "path": ".artifacts/browser-performance/release-0.1.4-same-frame-1fb38f63-2005-40db-a6f4-892212dbff57/result.json",
+      "sha256": "3107ac736fc3e71290b676646f0be5fffbe91401a1655b2bcf7a0e6919ca6224",
+      "bytes": 411005
+    },
+    "harness": {
+      "path": ".artifacts/browser-performance/same-frame-command.mjs",
+      "sha256": "03a6e23a6f3b410577f574f2fa8be8cfa38a19278913d576bd1455ce092bd42a",
+      "bytes": 22977
+    },
+    "command_batch": {
+      "events": [
+        {
+          "type": "mouseMoved",
+          "x": 913.5,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        },
+        {
+          "type": "mouseReleased",
+          "x": 913.5,
+          "y": 488,
+          "button": "left",
+          "buttons": 0,
+          "pointerType": "mouse",
+          "clickCount": 1
+        },
+        {
+          "type": "mouseMoved",
+          "x": 346,
+          "y": 26,
+          "button": "none",
+          "buttons": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "type": "mousePressed",
+          "x": 346,
+          "y": 26,
+          "button": "left",
+          "buttons": 1,
+          "pointerType": "mouse",
+          "clickCount": 1
+        },
+        {
+          "type": "mouseReleased",
+          "x": 346,
+          "y": 26,
+          "button": "left",
+          "buttons": 0,
+          "pointerType": "mouse",
+          "clickCount": 1
+        }
+      ],
+      "sent_node_ms": 206.661417,
+      "await_between_dispatches": false,
+      "raf_yield_between_dispatches": false
+    },
+    "command_order": {
+      "events": [
+        {
+          "type": "pointermove",
+          "x": 913.5,
+          "y": 488,
+          "buttons": 1,
+          "event_timestamp": 1537,
+          "handled": 1537.6,
+          "queue_delay": 0.6,
+          "trusted": true
+        },
+        {
+          "type": "pointerup",
+          "x": 913.5,
+          "y": 488,
+          "buttons": 0,
+          "event_timestamp": 1537,
+          "handled": 1537.6,
+          "queue_delay": 0.6,
+          "trusted": true
+        },
+        {
+          "type": "pointermove",
+          "x": 346,
+          "y": 26,
+          "buttons": 0,
+          "event_timestamp": 1537,
+          "handled": 1550.4,
+          "queue_delay": 13.4,
+          "trusted": true
+        },
+        {
+          "type": "pointerdown",
+          "x": 346,
+          "y": 26,
+          "buttons": 1,
+          "event_timestamp": 1537,
+          "handled": 1550.5,
+          "queue_delay": 13.5,
+          "trusted": true
+        },
+        {
+          "type": "pointerup",
+          "x": 346,
+          "y": 26,
+          "buttons": 0,
+          "event_timestamp": 1537,
+          "handled": 1562.8,
+          "queue_delay": 25.8,
+          "trusted": true
+        },
+        {
+          "type": "pointermove",
+          "x": 346,
+          "y": 26,
+          "buttons": 0,
+          "event_timestamp": 5340.3,
+          "handled": 5355.3,
+          "queue_delay": 15,
+          "trusted": true
+        },
+        {
+          "type": "pointerdown",
+          "x": 346,
+          "y": 26,
+          "buttons": 1,
+          "event_timestamp": 5417.5,
+          "handled": 5417.6,
+          "queue_delay": 0.1,
+          "trusted": true
+        },
+        {
+          "type": "pointerup",
+          "x": 346,
+          "y": 26,
+          "buttons": 0,
+          "event_timestamp": 5480.1,
+          "handled": 5480.2,
+          "queue_delay": 0.1,
+          "trusted": true
+        },
+        {
+          "type": "pointermove",
+          "x": 1407,
+          "y": 735,
+          "buttons": 0,
+          "event_timestamp": 6196.1,
+          "handled": 6204.6,
+          "queue_delay": 8.5,
+          "trusted": true
+        },
+        {
+          "type": "pointerdown",
+          "x": 1407,
+          "y": 735,
+          "buttons": 1,
+          "event_timestamp": 6266.3,
+          "handled": 6266.4,
+          "queue_delay": 0.1,
+          "trusted": true
+        },
+        {
+          "type": "pointerup",
+          "x": 1407,
+          "y": 735,
+          "buttons": 0,
+          "event_timestamp": 6328.5,
+          "handled": 6328.5,
+          "queue_delay": 0,
+          "trusted": true
+        },
+        {
+          "type": "pointermove",
+          "x": 346,
+          "y": 26,
+          "buttons": 0,
+          "event_timestamp": 6692.5,
+          "handled": 6704.6,
+          "queue_delay": 12.1,
+          "trusted": true
+        },
+        {
+          "type": "pointerdown",
+          "x": 346,
+          "y": 26,
+          "buttons": 1,
+          "event_timestamp": 6767.5,
+          "handled": 6767.8,
+          "queue_delay": 0.3,
+          "trusted": true
+        },
+        {
+          "type": "pointerup",
+          "x": 346,
+          "y": 26,
+          "buttons": 0,
+          "event_timestamp": 6830.8,
+          "handled": 6831,
+          "queue_delay": 0.2,
+          "trusted": true
+        },
+        {
+          "type": "pointermove",
+          "x": 1465,
+          "y": 735,
+          "buttons": 0,
+          "event_timestamp": 7508.3,
+          "handled": 7521.4,
+          "queue_delay": 13.1,
+          "trusted": true
+        },
+        {
+          "type": "pointerdown",
+          "x": 1465,
+          "y": 735,
+          "buttons": 1,
+          "event_timestamp": 7583,
+          "handled": 7583.2,
+          "queue_delay": 0.2,
+          "trusted": true
+        },
+        {
+          "type": "pointerup",
+          "x": 1465,
+          "y": 735,
+          "buttons": 0,
+          "event_timestamp": 7645.2,
+          "handled": 7645.4,
+          "queue_delay": 0.2,
+          "trusted": true
+        },
+        {
+          "type": "pointermove",
+          "x": 346,
+          "y": 26,
+          "buttons": 0,
+          "event_timestamp": 8009.7,
+          "handled": 8021.3,
+          "queue_delay": 11.6,
+          "trusted": true
+        },
+        {
+          "type": "pointerdown",
+          "x": 346,
+          "y": 26,
+          "buttons": 1,
+          "event_timestamp": 8084.5,
+          "handled": 8084.9,
+          "queue_delay": 0.4,
+          "trusted": true
+        },
+        {
+          "type": "pointerup",
+          "x": 346,
+          "y": 26,
+          "buttons": 0,
+          "event_timestamp": 8148.2,
+          "handled": 8148.5,
+          "queue_delay": 0.3,
+          "trusted": true
+        }
+      ],
+      "raf_callbacks_between_release_and_save_up": [],
+      "same_app_raf_window": true
+    },
+    "quiet_control_comparison": {
+      "same_final_segment_included": true,
+      "mesh_exactly_equals_command_save": true,
+      "saved_vertices": 47410,
+      "control_vertices": 47410,
+      "saved_triangles": 94816,
+      "control_triangles": 94816
+    },
+    "wasm": {
+      "sha256": "a74998f7a85de0b5e95846535552485e38a86a26bc5f8b14f1b8d79f1275fd8c",
+      "served_sha256": "a74998f7a85de0b5e95846535552485e38a86a26bc5f8b14f1b8d79f1275fd8c",
+      "bytes": 3418213
+    },
+    "trace": [
+      {
+        "offset_ms": 0,
+        "params": {
+          "type": "mouseMoved",
+          "x": 663.5,
+          "y": 488,
+          "button": "none",
+          "buttons": 0,
+          "pointerType": "mouse"
+        },
+        "sent_node_ms": 9.674792,
+        "dispatch_ack_node_ms": 21.056042
+      },
+      {
+        "offset_ms": 20,
+        "params": {
+          "type": "mousePressed",
+          "x": 663.5,
+          "y": 488,
+          "button": "left",
+          "buttons": 1,
+          "pointerType": "mouse",
+          "clickCount": 1
+        },
+        "sent_node_ms": 20.401042,
+        "dispatch_ack_node_ms": 41.340459
+      },
+      {
+        "offset_ms": 40,
+        "params": {
+          "type": "mouseMoved",
+          "x": 913.5,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        },
+        "sent_node_ms": 40.316167,
+        "dispatch_ack_node_ms": 42.382084
+      },
+      {
+        "offset_ms": 60,
+        "params": {
+          "type": "mouseMoved",
+          "x": 663.5,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        },
+        "sent_node_ms": 60.664417,
+        "dispatch_ack_node_ms": 75.250167
+      },
+      {
+        "offset_ms": 80,
+        "params": {
+          "type": "mouseMoved",
+          "x": 913.5,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        },
+        "sent_node_ms": 80.964709,
+        "dispatch_ack_node_ms": 91.86225
+      },
+      {
+        "offset_ms": 100,
+        "params": {
+          "type": "mouseMoved",
+          "x": 663.5,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        },
+        "sent_node_ms": 100.971959,
+        "dispatch_ack_node_ms": 108.500875
+      },
+      {
+        "offset_ms": 120,
+        "params": {
+          "type": "mouseMoved",
+          "x": 913.5,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        },
+        "sent_node_ms": 121.1055,
+        "dispatch_ack_node_ms": 125.109084
+      },
+      {
+        "offset_ms": 140,
+        "params": {
+          "type": "mouseMoved",
+          "x": 663.5,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        },
+        "sent_node_ms": 141.026584,
+        "dispatch_ack_node_ms": 144.808125
+      },
+      {
+        "offset_ms": 160,
+        "params": {
+          "type": "mouseMoved",
+          "x": 913.5,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        },
+        "sent_node_ms": 160.8435,
+        "dispatch_ack_node_ms": 175.3075
+      },
+      {
+        "offset_ms": 180,
+        "params": {
+          "type": "mouseMoved",
+          "x": 663.5,
+          "y": 488,
+          "button": "none",
+          "buttons": 1,
+          "pointerType": "mouse"
+        },
+        "sent_node_ms": 181.046125,
+        "dispatch_ack_node_ms": 191.814
+      }
+    ],
+    "before_save": {
+      "at": 1536.9,
+      "last_mesh_draw": {
+        "start": 1536.6,
+        "end": 1536.6,
+        "count": 245976
+      },
+      "last_pointer": {
+        "type": "pointermove",
+        "x": 663.5,
+        "y": 488,
+        "buttons": 1,
+        "event_timestamp": 1511,
+        "handled": 1522,
+        "queue_delay": 11,
+        "trusted": true
+      },
+      "last_upload": {
+        "start": 1536.6,
+        "end": 1536.6,
+        "duration": 0,
+        "target": 34963,
+        "bytes": 983904
+      },
+      "callback": {
+        "start": 1522.1,
+        "end": 1536.7,
+        "duration": 14.6
+      }
+    },
+    "command_sent_node_ms": 206.646334,
+    "save_callback_at": 4537.9,
+    "pending_work_proof": {
+      "last_drawn_triangles_before_command": 81992,
+      "saved_triangles": 94816,
+      "geometry_changed_during_save_flush": true
+    },
+    "snapshots": [
+      {
+        "sha256": "b030d791a7f3c30fb8676e26f554ef3e0c0423b3aefa937ad3cd212517df8ed8",
+        "bytes": 5317105,
+        "vertices": 40962,
+        "triangles": 81920,
+        "path": ".artifacts/browser-performance/release-0.1.4-same-frame-1fb38f63-2005-40db-a6f4-892212dbff57/barrier-initial.obrush"
+      },
+      {
+        "sha256": "715e1afc1ca72a186cd9f97215ffac2ce5b0e95f4dd49b44029a7ab6d0314ebc",
+        "bytes": 6159007,
+        "vertices": 47410,
+        "triangles": 94816,
+        "path": ".artifacts/browser-performance/release-0.1.4-same-frame-1fb38f63-2005-40db-a6f4-892212dbff57/barrier-immediate-save.obrush"
+      },
+      {
+        "sha256": "715e1afc1ca72a186cd9f97215ffac2ce5b0e95f4dd49b44029a7ab6d0314ebc",
+        "bytes": 6159007,
+        "vertices": 47410,
+        "triangles": 94816,
+        "path": ".artifacts/browser-performance/release-0.1.4-same-frame-1fb38f63-2005-40db-a6f4-892212dbff57/barrier-quiet-save.obrush"
+      },
+      {
+        "sha256": "b030d791a7f3c30fb8676e26f554ef3e0c0423b3aefa937ad3cd212517df8ed8",
+        "bytes": 5317105,
+        "vertices": 40962,
+        "triangles": 81920,
+        "path": ".artifacts/browser-performance/release-0.1.4-same-frame-1fb38f63-2005-40db-a6f4-892212dbff57/barrier-undo.obrush"
+      },
+      {
+        "sha256": "715e1afc1ca72a186cd9f97215ffac2ce5b0e95f4dd49b44029a7ab6d0314ebc",
+        "bytes": 6159007,
+        "vertices": 47410,
+        "triangles": 94816,
+        "path": ".artifacts/browser-performance/release-0.1.4-same-frame-1fb38f63-2005-40db-a6f4-892212dbff57/barrier-redo.obrush"
+      },
+      {
+        "sha256": "715e1afc1ca72a186cd9f97215ffac2ce5b0e95f4dd49b44029a7ab6d0314ebc",
+        "bytes": 6159007,
+        "vertices": 47410,
+        "triangles": 94816,
+        "path": ".artifacts/browser-performance/release-0.1.4-same-frame-1fb38f63-2005-40db-a6f4-892212dbff57/same-frame-quiet-control.obrush"
+      }
+    ],
+    "history": {
+      "save_equals_quiet": true,
+      "undo_exact_initial": true,
+      "redo_exact_mesh": true
+    },
+    "changed_original_vertices": 1812,
+    "aggregate_including_save_and_history": {
+      "start": 1330.9,
+      "end": 9038.8,
+      "duration_ms": 7707.9,
+      "raf_gap_ms": {
+        "count": 280,
+        "min": 16.5,
+        "p50": 16.7,
+        "p95": 16.8,
+        "p99": 33.3,
+        "max": 2999.9,
+        "sum": 7716.3
+      },
+      "raf_scheduling_delay_ms": {
+        "count": 280,
+        "min": -0.0,
+        "p50": 1.1,
+        "p95": 1.4,
+        "p99": 41.0,
+        "max": 3001.2,
+        "sum": 3411.8
+      },
+      "raf_callback_ms": {
+        "count": 280,
+        "min": 0,
+        "p50": 0,
+        "p95": 3.5,
+        "p99": 14.1,
+        "max": 19.2,
+        "sum": 237.7
+      },
+      "longtask_ms": {
+        "count": 3,
+        "min": 50,
+        "p50": 57,
+        "p95": 57,
+        "p99": 57,
+        "max": 3001,
+        "sum": 3108
+      },
+      "dom_pointer_queue_delay_ms": {
+        "count": 30,
+        "min": 0,
+        "p50": 3.9,
+        "p95": 14.5,
+        "p99": 15,
+        "max": 25.8,
+        "sum": 197.5
+      },
+      "mesh_upload_ms": {
+        "count": 28,
+        "min": 0,
+        "p50": 0,
+        "p95": 0.1,
+        "p99": 0.1,
+        "max": 0.1,
+        "sum": 0.7
+      },
+      "mesh_upload_bytes": 37534944,
+      "webgl_query_ms": {
+        "count": 1357,
+        "min": 0,
+        "p50": 0,
+        "p95": 0.2,
+        "p99": 0.4,
+        "max": 2.2,
+        "sum": 72.6
+      },
+      "name": "same_frame_release_and_save_and_history",
+      "mesh_draw_submissions": 59,
+      "mesh_draw_submission_gap_ms": {
+        "count": 58,
+        "min": 1.6,
+        "p50": 16.8,
+        "p95": 633.6,
+        "p99": 801.5,
+        "max": 3003.7,
+        "sum": 6848.7
+      },
+      "sent_pointer_events": 0,
+      "handled_dom_pointer_events": 30,
+      "all_handled_pointer_events_trusted": true
+    },
+    "runtime_errors": [],
+    "final_errors": {
+      "gl": [],
+      "js": [],
+      "notice": ""
+    },
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "limits": "Separate8-zigzag burst plus final250px segment and mouseup/Save real button sent as one non-awaited CDP batch. No app rAF callback occurs between sculpt mouseup and Save release. Independent quiet control retains the same final segment. Aggregate longtask timings include synchronous pending-work flush, save and history, unlike normal timing phases. Save equals later quiet Save and independent quiet control; whole stroke Undo restores fresh sphere; exact Redo restores save."
+  },
+  "preserved_intermediate_checks": [
+    {
+      "reason": "Passing measurements on intermediate0.1.4 before final pending-release command ordering change; not promoted as final release evidence.",
+      "raw_result": {
+        "path": ".artifacts/browser-performance/final-0.1.4-c69f73e7-41f7-493e-86c7-e695ca5e64b7/result.json",
+        "sha256": "f978c9b59f25c87e0efdc4436fb03b1159911267489841add464902385e00348",
+        "bytes": 2179990
+      },
+      "wasm": {
+        "sha256": "862b29c675483022febc5e3d4e55c3c801d4e2ea6404b37afa91056484251728",
+        "served_sha256": "862b29c675483022febc5e3d4e55c3c801d4e2ea6404b37afa91056484251728",
+        "bytes": 3419559
+      },
+      "status": "completed bounded browser performance measurement"
+    },
+    {
+      "reason": "Passing measurements on intermediate0.1.4 before final pending-release command ordering change; not promoted as final release evidence.",
+      "raw_result": {
+        "path": ".artifacts/browser-performance/barrier-0.1.4-f525205e-241f-4be4-82f4-3bc0c4d33521/result.json",
+        "sha256": "fde43fd1aba15a832b81f98de3ffb7a00d8b5089a798aee8cf831d2749efcec7",
+        "bytes": 429265
+      },
+      "wasm": {
+        "sha256": "862b29c675483022febc5e3d4e55c3c801d4e2ea6404b37afa91056484251728",
+        "served_sha256": "862b29c675483022febc5e3d4e55c3c801d4e2ea6404b37afa91056484251728",
+        "bytes": 3419559
+      },
+      "status": "completed pending-command barrier smoke"
+    },
+    {
+      "reason": "Passing measurements on intermediate0.1.4 before final pending-release command ordering change; not promoted as final release evidence.",
+      "raw_result": {
+        "path": ".artifacts/browser-performance/intermediate-0.1.4-same-frame-795919f1-ef81-48c0-b4c3-2b67eae104ab/result.json",
+        "sha256": "e12a96e3cabd54864d0e697d29e824f03012b47a81bab5717bc5716d4be5fd6f",
+        "bytes": 416058
+      },
+      "wasm": {
+        "sha256": "862b29c675483022febc5e3d4e55c3c801d4e2ea6404b37afa91056484251728",
+        "served_sha256": "862b29c675483022febc5e3d4e55c3c801d4e2ea6404b37afa91056484251728",
+        "bytes": 3419559
+      },
+      "status": "completed same-frame release and command barrier smoke"
+    }
+  ],
+  "preserved_failed_checks": [
+    {
+      "raw_result": {
+        "path": ".artifacts/browser-performance/baseline-0.1.3-c486b4d3-64d2-47cc-a4a3-7b87f51697fe/result.json",
+        "sha256": "27d65020b650182af497e35d7cf15db00b797e4f9bc1716c2d1ec48940fb6a81",
+        "bytes": 334324
+      },
+      "status": "failed browser performance measurement",
+      "failure": "TypeError: trial.snapshots.push(...) is not a function",
+      "classification": "Harness JavaScript statement-boundary error after initial save; corrected before successful baseline and final matched runs. Not classified as an OBrush app failure.",
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      }
+    }
+  ],
+  "native_core_evidence": {
+    "path": "docs/evidence/browser-core-performance.json",
+    "sha256": "614a459b821a972a39cecb61e7225502f370693fa7873b5cb9c35dc197e9255d",
+    "bytes": 95992
+  },
+  "limits": [
+    "Two bounded trials on one Apple M2, one Chrome version, ANGLE Metal and DPR1 only.",
+    "No nativeGUI, Safari/Firefox, alternate GPU/backend, DPR scaling/resize/context-loss, imported large meshes, long sessions, pressure/tablet or physical input/presentation measurements in this update.",
+    "Normal rAF cadence and mesh submissions improve; this does not establish hard real-time frame budgets or a maximum sculpt capacity.",
+    "Fast input can build a pending queue; individual atomic dabs and synchronous command flush can still take longer than their nominal per-frame budget.",
+    "Public file-picker/load/OBJ/persistence paths are not exercised by this performance harness; save uses the actual public browser download callback captured locally.",
+    "No commercial reference app was compared for these performance measurements; feature parity remains governed by docs/FEATURE_PARITY.md.",
+    "The input adapter samples aggregate pointer state; multiple raw paths/strokes in a frame, a new stroke on pending expanded geometry, and mid-drag commands without a release remain coverage gaps. FIFO retention covers accepted dabs; captured primary release protects the active prior-frame endpoint before commands."
+  ]
+}

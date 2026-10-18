@@ -1,0 +1,85 @@
+{
+  "name": "C94 mixed-UV selected remesh",
+  "version": "0.1.20",
+  "reference": {
+    "bundle": {
+      "path": ".tools/sculptgl-reference/host-mirror/sculptgl.js",
+      "sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600"
+    },
+    "mirror_html": {
+      "path": ".tools/sculptgl-reference/host-mirror/index.html",
+      "sha256": "a87cc1246a6bc39cebf81b78dcf6d6c5c6201ef72710dab7f177d1fe4acd11f0"
+    },
+    "run": {
+      "path": ".artifacts/sculptgl-reference-runtime/mixed-uv-c94-67bba1bb-4b11-4d4c-8768-ea94313d661c/result.json",
+      "sha256": "63cae438706a9185c34c5c38b090ec666ad8248b4195107602f4732485b4e21e"
+    }
+  },
+  "fixtures": [
+    {
+      "path": "crates/obrush-core/tests/fixtures/independent-fusion-left-uv.obj",
+      "sha256": "ee68f293a081e38c8575b62494f5a826d3b3bfc3bd3b099f7878be0e09778102"
+    },
+    {
+      "path": "crates/obrush-core/tests/fixtures/independent-fusion-right.obj",
+      "sha256": "9600c7b964ac0b35ebafda32d889f96bda59799ecc0e65092b5fa598ba924dbf"
+    }
+  ],
+  "builds": {
+    "browser_wasm": {
+      "path": "web/dist/pkg/obrush_app_bg.wasm",
+      "sha256": "b6b05475e6e4df4323ef62896e9f22243b712d25c510d8f173e31693924e9722"
+    },
+    "native_macos": {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/obrush",
+      "sha256": "a74116f860883c34bd3f82870d31e32a2483633ac10312bbdafb2f6530903fba"
+    }
+  },
+  "browser_run": {
+    "path": ".artifacts/mask-filter-browser/mixed-uv-c94-final-701841e6-92ca-4c35-b402-fa71297c5bde/result.json",
+    "sha256": "5e2b32b55556c33f901afe31515492b65e1fc6f65e914101241907361c3e8964"
+  },
+  "comparison": {
+    "path": ".artifacts/mixed-uv-c94-comparison.json",
+    "sha256": "fc66b0c98e99d8707b4529410ab423bb8013384dfa39cbca4c933fbb8cc9bc60"
+  },
+  "parameters": {
+    "selection_order": "right then left",
+    "resolution": 16,
+    "mode": "Marching Cubes",
+    "relax_topology": [
+      false,
+      true
+    ],
+    "allow_uv_loss": true
+  },
+  "measured": {
+    "vertices_each": 1056,
+    "oriented_triangles_each": 2108,
+    "oriented_triangles_matched": 2108,
+    "position_max_world_relax_off": 1.450679320281757e-07,
+    "position_max_world_relax_on": 3.2459885279663655e-07,
+    "position_rms_world_relax_on": 1.1378914541994109e-07,
+    "rgb_max_abs": 2.7055358842176247e-08,
+    "material_max_abs": 2.384185793236071e-08,
+    "unmasked_max_abs": 0.0
+  },
+  "checks": {
+    "cargo_fmt": "passed",
+    "cargo_test_workspace": "passed",
+    "cargo_clippy_workspace_all_targets_deny_warnings": "passed",
+    "cargo_check_wasm32_unknown_unknown_workspace": "passed",
+    "cargo_clippy_wasm32_unknown_unknown_workspace_all_targets_deny_warnings": "passed",
+    "official_build_web": "passed",
+    "official_package_macos": "passed signed",
+    "isolated_browser": "passed two mixed-UV Marching Cubes workflows",
+    "pinned_sculptgl": "passed two mixed-UV Marching Cubes reference workflows",
+    "core_mixed_uv": "passed all three modes, rejection, UV count and undo/redo"
+  },
+  "limitations": [
+    "One overlapping-box pair, not arbitrary meshes or UV seams",
+    "No UV-preserving fused output",
+    "Sustained browser responsiveness and production WebGPU compute/draw are open",
+    "Native GUI and physical pen input not tested in this run"
+  ]
+}

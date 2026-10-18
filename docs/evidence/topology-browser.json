@@ -1,0 +1,630 @@
+{
+  "feature": "Browser topology controls, background workers and reversible acceptance",
+  "obrush_version": "0.1.6",
+  "date": "2026-10-12",
+  "status": "Locally verified scoped Chrome workflow; native UI, physical input and reference behavior remain unverified",
+  "wasm": {
+    "sha256": "dfe8de34af906a26a80bac2bcf6e523e95a9f5df9f3549f7890230feb8cb22c4",
+    "served_sha256": "dfe8de34af906a26a80bac2bcf6e523e95a9f5df9f3549f7890230feb8cb22c4",
+    "bytes": 3736829
+  },
+  "runtime": {
+    "browser": {
+      "protocolVersion": "1.3",
+      "product": "Chrome/155.0.8059.39",
+      "revision": "@3ff7ac5a9224be9156d7f8703a06e22890aafd34",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "jsVersion": "15.5.35.20"
+    },
+    "contexts": [
+      {
+        "kind": "webgl2",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+        "vendor": "Google Inc. (Apple)",
+        "max_samples": 4
+      }
+    ],
+    "viewport": {
+      "width": 1600,
+      "height": 1000,
+      "device_pixel_ratio": 1
+    },
+    "actual_4x_msaa": true
+  },
+  "method": "Isolated CLI headless Chrome/CDP, actual canvas controls and public file inputs",
+  "harness": {
+    "command": "node scripts/check-topology.mjs .artifacts/topology-inputs-final/web final-coordinates .artifacts/topology-browser-0.1.6/coordinates-final.json",
+    "executed_source_sha256": "43a4b855acbe42d0bb9cc88774cbeb0671bf557ea0e4f5d5a556efef81333c01",
+    "executed_source_artifact": ".artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/check-topology-executed.mjs",
+    "current_script_sha256": "c36916d08845e764d185c70b9f73e776f5a05bb1824a319acca6cf8645959b9f",
+    "post_run_change": "Only default coordinates were updated to the same validated coordinates supplied explicitly in the executed run. No algorithm, host asset, instrumentation or tested input behavior changed.",
+    "coordinates": {
+      "expand": [
+        1480,
+        392
+      ],
+      "remesh": [
+        1446,
+        543
+      ],
+      "decimate": [
+        1435,
+        634
+      ],
+      "cancel": [
+        1450,
+        692
+      ],
+      "cube": [
+        1473,
+        257
+      ],
+      "resolution_max": [
+        1574,
+        506
+      ]
+    },
+    "node_version": "22.22.3",
+    "repeat_count": 1
+  },
+  "worker_provenance": {
+    "cache_policy": "Owned server sends no-store to require fresh, hash-recorded worker asset delivery",
+    "wasm_requests": 17,
+    "worker_script_requests": 8,
+    "worker_referrer_wasm_requests": 8,
+    "all_delivered_wasm_sha256_match": true,
+    "worker_script_sha256": "3318e34033bd56bee4c8cd7a0cbe140f2ab40731a788d1dc909ebd23da90a9c2",
+    "attribution": "Worker-script referrers identify the delivered WASM bytes directly"
+  },
+  "worker_delivery_log": {
+    "artifact": ".artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/result.json",
+    "field": "server_requests",
+    "responses": 49
+  },
+  "supplied_fixture": {
+    "path": "/Users/Ajab/AI/OBrush/.artifacts/user-long-stroke-0.1.4/user.obrush",
+    "sha256": "4adc8aa9333903ab0684c1f2e54a995dc6a4e7a3b85fc6e911df9d7deb0c4786"
+  },
+  "independent_open_fixture": {
+    "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/independent-open-sheet.obj",
+    "sha256": "c657ea8f1180d9a22cb9b24e126a1c143b6581f6107acf3e9f7c353b7d39a7ee"
+  },
+  "independent_masked_fixture": {
+    "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/independent-fully-masked-sphere.obrush",
+    "sha256": "247e77e66c4a053c5c3538fa92013edee4d908628bf4f1be930ea0e68a1c5524",
+    "vertices": 40962
+  },
+  "cases": [
+    {
+      "name": "sphere-decimate",
+      "kind": "decimate",
+      "message": "Surface updated: 40,960 triangles. Undo restores the previous sculpt.",
+      "history": {
+        "undo_exact_project": true,
+        "redo_exact_project": true
+      },
+      "gpu_matches_saved_mesh": true,
+      "saved_projects": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/sphere-decimate-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/sphere-decimate-final.obrush",
+          "sha256": "d827b48e3bff8665185e11d8f7c00a55947db8bc256f1f3b3af4080eb6695a78",
+          "bytes": 2648988,
+          "vertices": 20482,
+          "triangles": 40960
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/sphere-decimate-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/sphere-decimate-redo.obrush",
+          "sha256": "d827b48e3bff8665185e11d8f7c00a55947db8bc256f1f3b3af4080eb6695a78",
+          "bytes": 2648988,
+          "vertices": 20482,
+          "triangles": 40960
+        }
+      ],
+      "runtime_artifact": ".artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/sphere-decimate.json",
+      "phase_measurements": {
+        "duration_ms": 573.8000000007451,
+        "busy_raf_frames": 16,
+        "busy_raf_gap_p95_ms": 16.800000000000182,
+        "busy_raf_gap_max_ms": 16.800000000000182,
+        "distinct_camera_matrices": 24,
+        "main_thread_long_tasks_ms": [],
+        "main_thread_long_tasks_max_ms": 0,
+        "approximate_phase_epoch_ms": [
+          1791847710961.0366,
+          1791847711534.8367
+        ],
+        "epoch_uncertainty_ms": 100,
+        "parameters": {
+          "kind": "decimate",
+          "settings": {
+            "target_ratio": 0.5,
+            "max_error": 0.06928203,
+            "preserve_sharp_features": true,
+            "feature_angle_degrees": 45,
+            "max_candidate_pops": 2000000
+          }
+        }
+      },
+      "gpu_before_save": {
+        "bytes": 819280,
+        "last_upload_at": 1530.2999999988824,
+        "sha256": "4e8f336731c4664dedfe6dd0c686ccaa4a31ed9123aa8e1fc8ec7eef70ae994a"
+      },
+      "screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/sphere-decimate-after-redo.png",
+        "sha256": "4c2caf876d8e4e7b7368c3eadd91a8cf4cc1f1bb0819e1f393cb39ccc1187b47"
+      }
+    },
+    {
+      "name": "sphere-remesh",
+      "kind": "remesh",
+      "message": "Surface updated: 115,320 triangles. Undo restores the previous sculpt.",
+      "history": {
+        "undo_exact_project": true,
+        "redo_exact_project": true
+      },
+      "gpu_matches_saved_mesh": true,
+      "saved_projects": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/sphere-remesh-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/sphere-remesh-final.obrush",
+          "sha256": "7911dd5796382b4b8c1ea1b6b0d48860d6995286c3513f71eeb75a10b762fa7a",
+          "bytes": 7530932,
+          "vertices": 57662,
+          "triangles": 115320
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/sphere-remesh-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/sphere-remesh-redo.obrush",
+          "sha256": "7911dd5796382b4b8c1ea1b6b0d48860d6995286c3513f71eeb75a10b762fa7a",
+          "bytes": 7530932,
+          "vertices": 57662,
+          "triangles": 115320
+        }
+      ],
+      "runtime_artifact": ".artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/sphere-remesh.json",
+      "phase_measurements": {
+        "duration_ms": 640.1999999992549,
+        "busy_raf_frames": 31,
+        "busy_raf_gap_p95_ms": 16.700000000000045,
+        "busy_raf_gap_max_ms": 16.800000000000182,
+        "distinct_camera_matrices": 24,
+        "main_thread_long_tasks_ms": [
+          53
+        ],
+        "main_thread_long_tasks_max_ms": 53,
+        "approximate_phase_epoch_ms": [
+          1791847714646.088,
+          1791847715286.2878
+        ],
+        "epoch_uncertainty_ms": 100,
+        "parameters": {
+          "kind": "remesh",
+          "settings": {
+            "resolution": 64,
+            "max_cells": 2500000,
+            "max_work": 150000000,
+            "smoothing_steps": 2
+          }
+        }
+      },
+      "gpu_before_save": {
+        "bytes": 2306480,
+        "last_upload_at": 1719.699999999255,
+        "sha256": "7daf33dc6e68240ca364b2775386b480e51ed37fb9824d7abb94ed19bd4914ec"
+      },
+      "screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/sphere-remesh-after-redo.png",
+        "sha256": "bef170106d09a1a777bb31dc8743e8c26d4b49c997a1b1f9ebdddc4404f0d8b4"
+      }
+    },
+    {
+      "name": "user-decimate",
+      "kind": "decimate",
+      "message": "Surface updated: 61,578 triangles. Undo restores the previous sculpt.",
+      "history": {
+        "undo_exact_project": true,
+        "redo_exact_project": true
+      },
+      "gpu_matches_saved_mesh": true,
+      "saved_projects": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/user-decimate-initial.obrush",
+          "sha256": "89eac79e5d56b24560621385068e1a16c87ae4bf2a4f4b9ed23b0226bda47960",
+          "bytes": 8000012,
+          "vertices": 61580,
+          "triangles": 123156
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/user-decimate-final.obrush",
+          "sha256": "74802db41ff3616c7e53bdb75fc2e778ca2c88620c9ab886438c94a4860480ed",
+          "bytes": 4003385,
+          "vertices": 30791,
+          "triangles": 61578
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/user-decimate-undo.obrush",
+          "sha256": "89eac79e5d56b24560621385068e1a16c87ae4bf2a4f4b9ed23b0226bda47960",
+          "bytes": 8000012,
+          "vertices": 61580,
+          "triangles": 123156
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/user-decimate-redo.obrush",
+          "sha256": "74802db41ff3616c7e53bdb75fc2e778ca2c88620c9ab886438c94a4860480ed",
+          "bytes": 4003385,
+          "vertices": 30791,
+          "triangles": 61578
+        }
+      ],
+      "runtime_artifact": ".artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/user-decimate.json",
+      "phase_measurements": {
+        "duration_ms": 596.7999999988824,
+        "busy_raf_frames": 20,
+        "busy_raf_gap_p95_ms": 33.299999999999955,
+        "busy_raf_gap_max_ms": 33.299999999999955,
+        "distinct_camera_matrices": 24,
+        "main_thread_long_tasks_ms": [
+          53
+        ],
+        "main_thread_long_tasks_max_ms": 53,
+        "approximate_phase_epoch_ms": [
+          1791847719203.8357,
+          1791847719800.6357
+        ],
+        "epoch_uncertainty_ms": 100,
+        "parameters": {
+          "kind": "decimate",
+          "settings": {
+            "target_ratio": 0.5,
+            "max_error": 0.089146696,
+            "preserve_sharp_features": true,
+            "feature_angle_degrees": 45,
+            "max_candidate_pops": 2000000
+          }
+        }
+      },
+      "gpu_before_save": {
+        "bytes": 1231640,
+        "last_upload_at": 1915.2000000011176,
+        "sha256": "91aab47964b1a6ec11203405e1745ca60ebc10d3aec007ae6473f0d6fb07b4bb"
+      },
+      "screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/user-decimate-after-redo.png",
+        "sha256": "c1e66ab9a1aec01269baecab7b6e4c615c6e0ad3d93be9342dc4f89076c11e26"
+      }
+    },
+    {
+      "name": "user-remesh",
+      "kind": "remesh",
+      "message": "Surface updated: 45,836 triangles. Undo restores the previous sculpt.",
+      "history": {
+        "undo_exact_project": true,
+        "redo_exact_project": true
+      },
+      "gpu_matches_saved_mesh": true,
+      "saved_projects": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/user-remesh-initial.obrush",
+          "sha256": "89eac79e5d56b24560621385068e1a16c87ae4bf2a4f4b9ed23b0226bda47960",
+          "bytes": 8000012,
+          "vertices": 61580,
+          "triangles": 123156
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/user-remesh-final.obrush",
+          "sha256": "e4e69adcf26af7d1014de28cf763a8178645e65427585defbf8a8bca9a271936",
+          "bytes": 2944634,
+          "vertices": 22916,
+          "triangles": 45836
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/user-remesh-undo.obrush",
+          "sha256": "89eac79e5d56b24560621385068e1a16c87ae4bf2a4f4b9ed23b0226bda47960",
+          "bytes": 8000012,
+          "vertices": 61580,
+          "triangles": 123156
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/user-remesh-redo.obrush",
+          "sha256": "e4e69adcf26af7d1014de28cf763a8178645e65427585defbf8a8bca9a271936",
+          "bytes": 2944634,
+          "vertices": 22916,
+          "triangles": 45836
+        }
+      ],
+      "runtime_artifact": ".artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/user-remesh.json",
+      "phase_measurements": {
+        "duration_ms": 583.5,
+        "busy_raf_frames": 23,
+        "busy_raf_gap_p95_ms": 16.799999999999955,
+        "busy_raf_gap_max_ms": 33.40000000000009,
+        "distinct_camera_matrices": 24,
+        "main_thread_long_tasks_ms": [],
+        "main_thread_long_tasks_max_ms": 0,
+        "approximate_phase_epoch_ms": [
+          1791847723465.533,
+          1791847724049.033
+        ],
+        "epoch_uncertainty_ms": 100,
+        "parameters": {
+          "kind": "remesh",
+          "settings": {
+            "resolution": 64,
+            "max_cells": 2500000,
+            "max_work": 150000000,
+            "smoothing_steps": 2
+          }
+        }
+      },
+      "gpu_before_save": {
+        "bytes": 916640,
+        "last_upload_at": 1984,
+        "sha256": "d5876c98df5a001d1db08e89798304c368adc51007c57025de687a5e05ed41c2"
+      },
+      "screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/user-remesh-after-redo.png",
+        "sha256": "e01378fb348be3f62653b112844187a2e3b714341aadc3b051ce7e7de4a526e0"
+      }
+    },
+    {
+      "name": "cancel-and-brush-lock",
+      "project_unchanged_after_cancel": true,
+      "job_settings": {
+        "resolution": 116,
+        "max_cells": 2500000,
+        "max_work": 150000000,
+        "smoothing_steps": 2
+      },
+      "busy_at_cancel": true,
+      "saved_projects": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/cancel-and-brush-lock-initial.obrush",
+          "sha256": "89eac79e5d56b24560621385068e1a16c87ae4bf2a4f4b9ed23b0226bda47960",
+          "bytes": 8000012,
+          "vertices": 61580,
+          "triangles": 123156
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/cancel-and-brush-lock-final.obrush",
+          "sha256": "89eac79e5d56b24560621385068e1a16c87ae4bf2a4f4b9ed23b0226bda47960",
+          "bytes": 8000012,
+          "vertices": 61580,
+          "triangles": 123156
+        }
+      ],
+      "runtime_artifact": ".artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/result.json"
+    },
+    {
+      "name": "failed-open-remesh-preserves-redo",
+      "message": "Operation failed; sculpt preserved: Remesh requires a closed solid; open boundary edges are unsupported",
+      "failed_mesh_exact": true,
+      "redo_preserved": true,
+      "saved_projects": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/failed-open-remesh-preserves-redo-open.obrush",
+          "sha256": "45ada596e5d342e592872c848590ccf6403ac2070cc42c010e5168a83f1bd70c",
+          "bytes": 331,
+          "vertices": 4,
+          "triangles": 2
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/failed-open-remesh-preserves-redo-cube.obrush",
+          "sha256": "f8b5b1c50e33d736536be11b06007304d88274dbe6296fa641311c035e688b8d",
+          "bytes": 130683,
+          "vertices": 1538,
+          "triangles": 3072
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/failed-open-remesh-preserves-redo-before.obrush",
+          "sha256": "45ada596e5d342e592872c848590ccf6403ac2070cc42c010e5168a83f1bd70c",
+          "bytes": 331,
+          "vertices": 4,
+          "triangles": 2
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/failed-open-remesh-preserves-redo-rejected.obrush",
+          "sha256": "45ada596e5d342e592872c848590ccf6403ac2070cc42c010e5168a83f1bd70c",
+          "bytes": 331,
+          "vertices": 4,
+          "triangles": 2
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/failed-open-remesh-preserves-redo-redo.obrush",
+          "sha256": "f8b5b1c50e33d736536be11b06007304d88274dbe6296fa641311c035e688b8d",
+          "bytes": 130683,
+          "vertices": 1538,
+          "triangles": 3072
+        }
+      ],
+      "runtime_artifact": ".artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/result.json"
+    },
+    {
+      "name": "protected-noop-preserves-redo",
+      "message": "No safe reduction was available. Sculpt and history preserved.",
+      "redo_preserved": true,
+      "noop_exact": true,
+      "saved_projects": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/protected-noop-preserves-redo-initial.obrush",
+          "sha256": "813a58abab194c683ad8cac83118c5b146b14d182031c6928816eb6cede9161d",
+          "bytes": 5317100,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/protected-noop-preserves-redo-cube.obrush",
+          "sha256": "d8b7f020efd9648ef0d536158f89ac2b8fc580cfa7c4d0e48c95c419cd13b580",
+          "bytes": 130674,
+          "vertices": 1538,
+          "triangles": 3072
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/protected-noop-preserves-redo-before.obrush",
+          "sha256": "813a58abab194c683ad8cac83118c5b146b14d182031c6928816eb6cede9161d",
+          "bytes": 5317100,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/protected-noop-preserves-redo-final.obrush",
+          "sha256": "813a58abab194c683ad8cac83118c5b146b14d182031c6928816eb6cede9161d",
+          "bytes": 5317100,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/protected-noop-preserves-redo-redo.obrush",
+          "sha256": "d8b7f020efd9648ef0d536158f89ac2b8fc580cfa7c4d0e48c95c419cd13b580",
+          "bytes": 130674,
+          "vertices": 1538,
+          "triangles": 3072
+        }
+      ],
+      "runtime_artifact": ".artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/result.json"
+    },
+    {
+      "name": "new-primitive-cancels-old-worker",
+      "message": "Download requested: Untitled_sculpture.obrush",
+      "history": {
+        "undo_exact_project": true,
+        "redo_exact_project": true
+      },
+      "late_result_does_not_replace_new_mesh": true,
+      "worker_cancelled": true,
+      "saved_projects": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/new-primitive-cancels-old-worker-initial.obrush",
+          "sha256": "89eac79e5d56b24560621385068e1a16c87ae4bf2a4f4b9ed23b0226bda47960",
+          "bytes": 8000012,
+          "vertices": 61580,
+          "triangles": 123156
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/new-primitive-cancels-old-worker-cube.obrush",
+          "sha256": "9c72e488e5d196995d81f09b5ced146c61417c099567a2bf5779fd0d45f2d76b",
+          "bytes": 130679,
+          "vertices": 1538,
+          "triangles": 3072
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/new-primitive-cancels-old-worker-final.obrush",
+          "sha256": "9c72e488e5d196995d81f09b5ced146c61417c099567a2bf5779fd0d45f2d76b",
+          "bytes": 130679,
+          "vertices": 1538,
+          "triangles": 3072
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/new-primitive-cancels-old-worker-undo.obrush",
+          "sha256": "89eac79e5d56b24560621385068e1a16c87ae4bf2a4f4b9ed23b0226bda47960",
+          "bytes": 8000012,
+          "vertices": 61580,
+          "triangles": 123156
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/new-primitive-cancels-old-worker-redo.obrush",
+          "sha256": "9c72e488e5d196995d81f09b5ced146c61417c099567a2bf5779fd0d45f2d76b",
+          "bytes": 130679,
+          "vertices": 1538,
+          "triangles": 3072
+        }
+      ],
+      "runtime_artifact": ".artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/result.json"
+    }
+  ],
+  "timing_scope": "Each operation phase includes actual canvas clicks, document serialization, worker delivery/init/geometry, orbit input, validated result acceptance and the completion poll. It excludes Save capture, undo/redo serialization and screenshots. These are single synthetic headless observations, not independent CPU algorithm timers or physical input-to-photon measurements.",
+  "overlap_audit": {
+    "other_probe_artifact": ".artifacts/multires-browser-0.1.6/final-targeted-timing-b1d93872-a5f9-47e1-ad43-f8681f122f4b/result.json",
+    "other_probe_conservative_epoch_interval_ms": [
+      1791847695596.438,
+      1791847704848.543
+    ],
+    "topology_first_http_epoch_ms": 1791847709751,
+    "topology_first_measured_phase_approximate_epoch_ms": 1791847710961.0366,
+    "phase_epoch_uncertainty_ms": 100,
+    "minimum_gap_after_other_probe_close_ms": 6012.49365234375,
+    "overlap": false,
+    "attribution": "Other agent confirmed owned Chrome/server closed by the conservative bracket end. Phase timestamps use the immediately preceding controls screenshot file mtime, with a 100ms conservative allowance. Root declared compiles and other agent benchmarks stopped for this group; unrelated OS/user activity was not process-profiled."
+  },
+  "errors": {
+    "gl": [],
+    "js": [],
+    "runtime_exceptions": [],
+    "console_errors": [],
+    "blocked_external_requests": []
+  },
+  "cleanup": {
+    "owned_chrome_exit_code": 0,
+    "owned_chrome_signal": null,
+    "owned_server_closed": true
+  },
+  "preserved_failed_checks": [
+    {
+      "artifact": ".artifacts/topology-browser-0.1.6/intermediate-coordinates-ca2b8c66-ca1d-4c07-b86b-d96d2e8f98ae/result.json",
+      "reason": "Initial coordinates preceded the subdivision-level controls; no topology job started. A harness setup failure."
+    },
+    {
+      "artifact": ".artifacts/topology-browser-0.1.6/intermediate-expanded-d68a6387-0330-4c66-bb21-3fc50aa2d050/result.json",
+      "reason": "The second coordinate estimate missed Decimate; screenshot-derived coordinates corrected it. A harness setup failure."
+    },
+    {
+      "artifact": ".artifacts/topology-browser-0.1.6/intermediate-workflow-c4d53932-0219-452f-b28a-e206e381a86a/result.json",
+      "reason": "A default-resolution job completed before the cancellation click; no cancel event occurred. The cancel fixture now uses a higher resolution and verifies it is still busy."
+    },
+    {
+      "artifact": ".artifacts/topology-browser-0.1.6/intermediate-cancel-0a8eeb77-83d7-4f1e-a1e3-da2c7561482d/result.json",
+      "reason": "A long independent fixture name wrapped and shifted the Cube button. The shorter fixture title and explicit creation check corrected this setup; final UI also truncates long titles."
+    }
+  ],
+  "intermediate_complete_artifact": ".artifacts/topology-browser-0.1.6/intermediate-complete-d08c0f1e-525b-4447-846e-8c5d09120df4/result.json",
+  "limitations": [
+    "Synthetic CDP input and headless M2 Chrome, not physical input-to-photon latency or native GUI.",
+    "rAF and WebGL draw calls establish scheduling and submissions, not GPU timer measurements.",
+    "Actual topology preparation and acceptance serialize/validate on the main thread; phase long tasks are retained.",
+    "The user remesh result is tested for working operation/history, not repair quality or reference parity.",
+    "Each worker receives assets from an owned no-store loopback server; startup timing includes delivery and initialization rather than a warm worker pool.",
+    "The loaded user mesh already contains sharp folds; this host workflow does not establish that remeshing repaired them or preserved every detail.",
+    "World-space error limits are computed by the UI from bounding-box diagonal; browser parameters therefore differ from the separately recorded native default 0.05-world-unit decimation probe.",
+    "The output vertex-buffer hash covers positions, normals, masks and RGB; a separate GPU index-buffer hash was not captured. Saved project triangle indices and whole-project history are compared exactly.",
+    "No automatic worker pool or asynchronous main-thread serialization/validation is implemented. Remaining preparation/acceptance long tasks are measured above.",
+    "A minor expanded-topology layout overflow remains at the right edge; the control clicks and resulting settings were verified, but the entire value/slider margin is not cleanly contained."
+  ],
+  "visual_review": {
+    "screenshots": [
+      ".artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/sphere-decimate-controls.png",
+      ".artifacts/topology-browser-0.1.6/final-coordinates-67b5b4fc-c2b6-4fe4-96a4-027690b605f2/user-remesh-after-redo.png"
+    ],
+    "observations": [
+      "The expanded controls are usable, but inherited outer slider width makes their bars reach the window edge and the Keep faces value tight or clipped at the right edge.",
+      "The remeshed supplied sculpt remains visibly faceted at resolution64; this test does not establish fold repair or detail preservation."
+    ]
+  },
+  "percentile_method": "For sorted positive busy-frame gaps, p95 uses index min(n-1, floor(0.95*n)); sample counts are small and maxima are separately retained."
+}

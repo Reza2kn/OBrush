@@ -1,0 +1,51 @@
+{
+  "scope": "Three-part physical selection membership and selected-group deletion",
+  "reference_revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+  "fixture": {
+    "path": ".artifacts/scene-multiselect-c130/independent-three-closed-boxes.sgl",
+    "author": ".artifacts/scene-multiselect-c130/author.py",
+    "manifest": ".artifacts/scene-multiselect-c130/fixture.json",
+    "bytes": 1560,
+    "sha256": "939110d73dec934f0af70fb5c364eeb18f3ce18608449fe76804896c50c9c0ae"
+  },
+  "source_result": ".artifacts/scene-multiselect-c130/source-1792283453636/result.json",
+  "obrush_result": ".artifacts/scene-multiselect-c130/root-1792283710966/result.json",
+  "retained_failed_obrush_diagnostic": ".artifacts/scene-multiselect-c130/root-1792283652118/result.json",
+  "obrush_web_wasm_sha256": "5a3ad62d74e1788562f852fa053212596548634fc66cc72be7a67705823290fe",
+  "source": {
+    "selection_method": "physical Shift-click with Brush lock position",
+    "selected_indices_sequence": [[2], [2, 0], [2, 0, 1], [2, 1]],
+    "complete_vertex_arrays_unchanged_by_selection": true,
+    "delete_method": "GuiScene.deleteSelection handler",
+    "mesh_count_after_delete_undo_redo": [1, 3, 1],
+    "selected_indices_after_delete": [],
+    "selected_indices_after_undo": [1, 2]
+  },
+  "obrush": {
+    "selection_method": "normal scene-panel Ctrl-click",
+    "selected_ids_sequence": [[3], [3, 1], [3, 1, 2], [3, 2]],
+    "delete_method": "normal visible scene-panel Delete button",
+    "survivor_id": 1,
+    "mesh_count_after_delete_undo_redo": [1, 3, 1],
+    "selected_ids_after_delete": [1],
+    "selected_ids_after_undo": [3, 2],
+    "pre_delete_project": {"bytes": 7778, "sha256": "1159d48c65b426d5f407bf4085567d1b00dc8c65da38442e958e4b3e3206f0bd"},
+    "post_delete_project": {"bytes": 2912, "sha256": "e1a1ef62b5c4833d67462367f1fb0ad6eb5fcfb3a3996c4dc56d4c1167fac2bf"},
+    "undo_capture": "normal Save project UI, preserving redo branch",
+    "undo_exact_project_recovery": true,
+    "redo_exact_project_recovery": true
+  },
+  "successful_browser_errors_each": 0,
+  "checks": {
+    "format": "cargo fmt --all --check passed",
+    "workspace_all_targets": {"log": ".artifacts/scene-multiselect-c130/workspace-tests-final.log", "summaries": 100, "passed": 2456, "failed": 0, "ignored": 1, "command_exit": 0},
+    "first_test_wrapper_failure": {"log": ".artifacts/contour-pickable-c129/workspace-tests-delete.log", "reason": "zsh read-only variable status used after a completed test command"},
+    "native_clippy": ".artifacts/scene-multiselect-c130/clippy-native.log",
+    "wasm_clippy": ".artifacts/scene-multiselect-c130/clippy-wasm.log",
+    "official_web_build": ".artifacts/scene-multiselect-c130/build-web.log",
+    "official_macos_package": ".artifacts/scene-multiselect-c130/package-macos.log",
+    "macos_executable_sha256": "c77380cd048d99eea3b9d7ba22de7a91967723dca4439ad42ab26894af6c11ef",
+    "macos_codesign_verify": "passed"
+  },
+  "limitations": ["source delete called through GUI handler rather than a physical button", "OBRush survivor selection policy differs from SculptGL", "multi-part duplicate/isolate/transform/export scope open", "native GUI and large-scene behavior open", "complete SculptGL parity open"]
+}

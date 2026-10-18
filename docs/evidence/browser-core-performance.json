@@ -1,0 +1,2269 @@
+{
+  "schema_version": 1,
+  "captured_local_date": "2026-10-12",
+  "purpose": "Native core performance diagnosis after the reported OBrush0.1.3 browser lag, with exact same-input geometry preservation; no browser frame-rate measurement in this record.",
+  "host": {
+    "cpu": "Apple M2",
+    "model": "Mac14,2",
+    "memory_gib": 24,
+    "architecture": "aarch64-apple-darwin",
+    "os": "macOS26.5.1 build25F80",
+    "rustc": "1.96.0 ac68faa20",
+    "cargo": "1.96.0"
+  },
+  "profile": "native release opt-level2",
+  "run_commands": [
+    "OBRUSH_PERF_EXPORT_DIR=<output> cargo run --locked -p obrush-core --release --example core_performance_probe",
+    "OBRUSH_DRAW_PROBE_EXPORT_DIR=<output> cargo run --locked -p obrush-core --release --example draw_overlap_probe"
+  ],
+  "timing_contract": {
+    "timed": "Separate current-surface raycast and apply_brush_with_result Draw/refinement calls, measured individually by Instant; combined is their sum.",
+    "excluded": "Sphere generation, external diagnostics/snapshots, final metrics, OBJ/JSON serialization, history, app input queue, rendering, GPU upload, browser and native UI. Internal core snapshots/refinement are included.",
+    "quantiles": "Sort durations ascending; p50 is value at floor(n/2), p95 at min(floor(.95*n),n-1). Mean is arithmetic mean.",
+    "repetitions": "One initial frozen baseline native run and one optimized native run for primary pairing; one unmodified baseline export rerun retained as a repeat check. Separate instrumented and candidate1 intermediate runs are preserved.",
+    "measurement_limits": "Wall time on this M2 includes OS/background scheduling and possible thermal variation; maxima/outliers are not hard real-time guarantees. Native CPU duration is not browser frame duration or application FPS.",
+    "fixture_field_scope": "Fresh sphere defaults: all initial masks zero and colors uniform; exact field equality does not substitute for the separate painted/masked/imported-mesh regression tests."
+  },
+  "representative_fixture_contract": {
+    "line_overlap": {
+      "sphere_level": 6,
+      "rounds": 4,
+      "requested_dabs": 164,
+      "radius": 0.18,
+      "strength": 0.35,
+      "symmetry_x": true,
+      "invert": false,
+      "ray_inputs_sha256": "ae59c644e429e6f88f1119e7eeea129b7551f6a7fc9b853abe316f299bcdbb6b"
+    },
+    "crossing": {
+      "sphere_level": 6,
+      "rounds": 4,
+      "requested_dabs": 328,
+      "radius": 0.18,
+      "strength": 0.35,
+      "symmetry_x": true,
+      "invert": false,
+      "ray_inputs_sha256": "89e38b8525d94624a27c254d17a1224d1ceddbb209ed869f5fe348877f117e57"
+    },
+    "loops": {
+      "sphere_level": 6,
+      "rounds": 8,
+      "requested_dabs": 520,
+      "radius": 0.18,
+      "strength": 0.35,
+      "symmetry_x": true,
+      "invert": false,
+      "ray_inputs_sha256": "ad4c2d861915c5f045f57e4fc291f1ac3a3b6bff6ad96eb521ab74d1b3428d96"
+    },
+    "repeated_point_tip": {
+      "sphere_level": 6,
+      "rounds": 128,
+      "requested_dabs": 128,
+      "radius": 0.18,
+      "strength": 0.35,
+      "symmetry_x": true,
+      "invert": false,
+      "ray_inputs_sha256": "0382fa871dc8199fa400d3ad9e3ff22ea2302dd7f49bfb1b84b84798fb7eb7df"
+    }
+  },
+  "paired_native_timings": [
+    {
+      "case": "line_overlap",
+      "baseline": {
+        "case": "line_overlap",
+        "changed_vertices_total": 171516,
+        "combined": {
+          "max_ms": 47.56020800000001,
+          "mean_ms": 31.709696140243906,
+          "p50_ms": 35.488126,
+          "p95_ms": 41.939333,
+          "samples": 164
+        },
+        "detail_limited_dabs": 0,
+        "invert": false,
+        "missed_rays": 0,
+        "pick": {
+          "max_ms": 0.5902499999999999,
+          "mean_ms": 0.40139584146341456,
+          "p50_ms": 0.395709,
+          "p95_ms": 0.450416,
+          "samples": 164
+        },
+        "radius": 0.18,
+        "refined_vertices_total": 3376,
+        "requested_dabs": 164,
+        "rounds": 4,
+        "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+        "sculpt": {
+          "max_ms": 47.13162500000001,
+          "mean_ms": 31.30830029878048,
+          "p50_ms": 35.103167,
+          "p95_ms": 41.496417,
+          "samples": 164
+        },
+        "sphere_level": 6,
+        "strength": 0.35,
+        "symmetry_x": true,
+        "triangles": 88672,
+        "valid_structure": true,
+        "vertices": 44338
+      },
+      "optimized": {
+        "case": "line_overlap",
+        "changed_vertices_total": 171516,
+        "combined": {
+          "max_ms": 18.391917,
+          "mean_ms": 8.829376268292686,
+          "p50_ms": 9.636458,
+          "p95_ms": 10.332624999999998,
+          "samples": 164
+        },
+        "detail_limited_dabs": 0,
+        "invert": false,
+        "missed_rays": 0,
+        "pick": {
+          "max_ms": 1.343,
+          "mean_ms": 0.4093604878048783,
+          "p50_ms": 0.389917,
+          "p95_ms": 0.425667,
+          "samples": 164
+        },
+        "radius": 0.18,
+        "refined_vertices_total": 3376,
+        "requested_dabs": 164,
+        "rounds": 4,
+        "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+        "sculpt": {
+          "max_ms": 17.133042,
+          "mean_ms": 8.420015780487805,
+          "p50_ms": 9.247125,
+          "p95_ms": 9.936957999999999,
+          "samples": 164
+        },
+        "sphere_level": 6,
+        "strength": 0.35,
+        "symmetry_x": true,
+        "triangles": 88672,
+        "valid_structure": true,
+        "vertices": 44338
+      },
+      "sculpt_p50_speedup": 3.796116847128161,
+      "sculpt_p95_speedup": 4.175967836434451
+    },
+    {
+      "case": "crossing",
+      "baseline": {
+        "case": "crossing",
+        "changed_vertices_total": 279563,
+        "combined": {
+          "max_ms": 45.096959000000005,
+          "mean_ms": 24.41266156707318,
+          "p50_ms": 33.628291,
+          "p95_ms": 41.95725,
+          "samples": 328
+        },
+        "detail_limited_dabs": 0,
+        "invert": false,
+        "missed_rays": 0,
+        "pick": {
+          "max_ms": 0.48125,
+          "mean_ms": 0.4033846432926828,
+          "p50_ms": 0.399584,
+          "p95_ms": 0.442708,
+          "samples": 328
+        },
+        "radius": 0.18,
+        "refined_vertices_total": 4102,
+        "requested_dabs": 328,
+        "rounds": 4,
+        "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+        "sculpt": {
+          "max_ms": 44.690209,
+          "mean_ms": 24.009276923780472,
+          "p50_ms": 33.250833,
+          "p95_ms": 41.56725,
+          "samples": 328
+        },
+        "sphere_level": 6,
+        "strength": 0.35,
+        "symmetry_x": true,
+        "triangles": 90124,
+        "valid_structure": true,
+        "vertices": 45064
+      },
+      "optimized": {
+        "case": "crossing",
+        "changed_vertices_total": 279563,
+        "combined": {
+          "max_ms": 11.133541,
+          "mean_ms": 7.13299635060975,
+          "p50_ms": 9.227833,
+          "p95_ms": 10.404876,
+          "samples": 328
+        },
+        "detail_limited_dabs": 0,
+        "invert": false,
+        "missed_rays": 0,
+        "pick": {
+          "max_ms": 0.6628750000000001,
+          "mean_ms": 0.39839814329268297,
+          "p50_ms": 0.394958,
+          "p95_ms": 0.426709,
+          "samples": 328
+        },
+        "radius": 0.18,
+        "refined_vertices_total": 4102,
+        "requested_dabs": 328,
+        "rounds": 4,
+        "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+        "sculpt": {
+          "max_ms": 10.679625,
+          "mean_ms": 6.734598207317074,
+          "p50_ms": 8.847291,
+          "p95_ms": 9.995292,
+          "samples": 328
+        },
+        "sphere_level": 6,
+        "strength": 0.35,
+        "symmetry_x": true,
+        "triangles": 90124,
+        "valid_structure": true,
+        "vertices": 45064
+      },
+      "sculpt_p50_speedup": 3.7583066952358637,
+      "sculpt_p95_speedup": 4.158682907913046
+    },
+    {
+      "case": "loops",
+      "baseline": {
+        "case": "loops",
+        "changed_vertices_total": 578516,
+        "combined": {
+          "max_ms": 195.16345800000002,
+          "mean_ms": 31.61197412500001,
+          "p50_ms": 36.50683299999999,
+          "p95_ms": 46.324125,
+          "samples": 520
+        },
+        "detail_limited_dabs": 0,
+        "invert": false,
+        "missed_rays": 0,
+        "pick": {
+          "max_ms": 0.656208,
+          "mean_ms": 0.42816338846153834,
+          "p50_ms": 0.42645900000000003,
+          "p95_ms": 0.48208300000000004,
+          "samples": 520
+        },
+        "radius": 0.18,
+        "refined_vertices_total": 8906,
+        "requested_dabs": 520,
+        "rounds": 8,
+        "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+        "sculpt": {
+          "max_ms": 194.747791,
+          "mean_ms": 31.183810736538426,
+          "p50_ms": 36.128959,
+          "p95_ms": 45.895417,
+          "samples": 520
+        },
+        "sphere_level": 6,
+        "strength": 0.35,
+        "symmetry_x": true,
+        "triangles": 99732,
+        "valid_structure": true,
+        "vertices": 49868
+      },
+      "optimized": {
+        "case": "loops",
+        "changed_vertices_total": 578516,
+        "combined": {
+          "max_ms": 28.643666,
+          "mean_ms": 8.75101401538462,
+          "p50_ms": 9.887125,
+          "p95_ms": 11.776251000000002,
+          "samples": 520
+        },
+        "detail_limited_dabs": 0,
+        "invert": false,
+        "missed_rays": 0,
+        "pick": {
+          "max_ms": 1.539875,
+          "mean_ms": 0.42162100576923045,
+          "p50_ms": 0.422833,
+          "p95_ms": 0.46633399999999997,
+          "samples": 520
+        },
+        "radius": 0.18,
+        "refined_vertices_total": 8906,
+        "requested_dabs": 520,
+        "rounds": 8,
+        "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+        "sculpt": {
+          "max_ms": 28.18675,
+          "mean_ms": 8.32939300961538,
+          "p50_ms": 9.485499999999998,
+          "p95_ms": 11.333542,
+          "samples": 520
+        },
+        "sphere_level": 6,
+        "strength": 0.35,
+        "symmetry_x": true,
+        "triangles": 99732,
+        "valid_structure": true,
+        "vertices": 49868
+      },
+      "sculpt_p50_speedup": 3.8088618417584743,
+      "sculpt_p95_speedup": 4.0495210588181525
+    },
+    {
+      "case": "repeated_point_tip",
+      "baseline": {
+        "case": "repeated_point_tip",
+        "changed_vertices_total": 89736,
+        "combined": {
+          "max_ms": 44.17312499999999,
+          "mean_ms": 26.406187523437495,
+          "p50_ms": 34.440875,
+          "p95_ms": 40.937167,
+          "samples": 128
+        },
+        "detail_limited_dabs": 0,
+        "invert": false,
+        "missed_rays": 0,
+        "pick": {
+          "max_ms": 0.456625,
+          "mean_ms": 0.3953486015625,
+          "p50_ms": 0.3945,
+          "p95_ms": 0.426875,
+          "samples": 128
+        },
+        "radius": 0.18,
+        "refined_vertices_total": 2788,
+        "requested_dabs": 128,
+        "rounds": 128,
+        "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+        "sculpt": {
+          "max_ms": 43.778749999999995,
+          "mean_ms": 26.010838921875,
+          "p50_ms": 34.061875,
+          "p95_ms": 40.547667000000004,
+          "samples": 128
+        },
+        "sphere_level": 6,
+        "strength": 0.35,
+        "symmetry_x": true,
+        "triangles": 87496,
+        "valid_structure": true,
+        "vertices": 43750
+      },
+      "optimized": {
+        "case": "repeated_point_tip",
+        "changed_vertices_total": 89736,
+        "combined": {
+          "max_ms": 25.095875,
+          "mean_ms": 7.6126543515624965,
+          "p50_ms": 9.308834000000001,
+          "p95_ms": 10.217625,
+          "samples": 128
+        },
+        "detail_limited_dabs": 0,
+        "invert": false,
+        "missed_rays": 0,
+        "pick": {
+          "max_ms": 6.754792,
+          "mean_ms": 0.4391556171875,
+          "p50_ms": 0.39,
+          "p95_ms": 0.416,
+          "samples": 128
+        },
+        "radius": 0.18,
+        "refined_vertices_total": 2788,
+        "requested_dabs": 128,
+        "rounds": 128,
+        "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+        "sculpt": {
+          "max_ms": 24.721792,
+          "mean_ms": 7.173498734375,
+          "p50_ms": 8.930541999999999,
+          "p95_ms": 9.82075,
+          "samples": 128
+        },
+        "sphere_level": 6,
+        "strength": 0.35,
+        "symmetry_x": true,
+        "triangles": 87496,
+        "valid_structure": true,
+        "vertices": 43750
+      },
+      "sculpt_p50_speedup": 3.8140882154744924,
+      "sculpt_p95_speedup": 4.128774991726702
+    }
+  ],
+  "repeat_baseline_timings": [
+    {
+      "case": "line_overlap",
+      "changed_vertices_total": 171516,
+      "combined": {
+        "max_ms": 145.801708,
+        "mean_ms": 33.03091198170731,
+        "p50_ms": 35.690501,
+        "p95_ms": 41.911876,
+        "samples": 164
+      },
+      "detail_limited_dabs": 0,
+      "invert": false,
+      "missed_rays": 0,
+      "pick": {
+        "max_ms": 1.193625,
+        "mean_ms": 0.4006291341463415,
+        "p50_ms": 0.3925,
+        "p95_ms": 0.424792,
+        "samples": 164
+      },
+      "radius": 0.18,
+      "refined_vertices_total": 3376,
+      "requested_dabs": 164,
+      "rounds": 4,
+      "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+      "sculpt": {
+        "max_ms": 145.392833,
+        "mean_ms": 32.630282847560984,
+        "p50_ms": 35.275084,
+        "p95_ms": 41.498542,
+        "samples": 164
+      },
+      "sphere_level": 6,
+      "strength": 0.35,
+      "symmetry_x": true,
+      "triangles": 88672,
+      "valid_structure": true,
+      "vertices": 44338
+    },
+    {
+      "case": "crossing",
+      "changed_vertices_total": 279563,
+      "combined": {
+        "max_ms": 49.711417000000004,
+        "mean_ms": 23.826923283536576,
+        "p50_ms": 33.341792000000005,
+        "p95_ms": 39.960083999999995,
+        "samples": 328
+      },
+      "detail_limited_dabs": 0,
+      "invert": false,
+      "missed_rays": 0,
+      "pick": {
+        "max_ms": 0.47591700000000003,
+        "mean_ms": 0.39628797865853677,
+        "p50_ms": 0.395959,
+        "p95_ms": 0.429584,
+        "samples": 328
+      },
+      "radius": 0.18,
+      "refined_vertices_total": 4102,
+      "requested_dabs": 328,
+      "rounds": 4,
+      "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+      "sculpt": {
+        "max_ms": 49.347042,
+        "mean_ms": 23.430635304878045,
+        "p50_ms": 32.948708,
+        "p95_ms": 39.563874999999996,
+        "samples": 328
+      },
+      "sphere_level": 6,
+      "strength": 0.35,
+      "symmetry_x": true,
+      "triangles": 90124,
+      "valid_structure": true,
+      "vertices": 45064
+    },
+    {
+      "case": "loops",
+      "changed_vertices_total": 578516,
+      "combined": {
+        "max_ms": 84.769251,
+        "mean_ms": 31.689373624999988,
+        "p50_ms": 36.532416999999995,
+        "p95_ms": 47.045333,
+        "samples": 520
+      },
+      "detail_limited_dabs": 0,
+      "invert": false,
+      "missed_rays": 0,
+      "pick": {
+        "max_ms": 9.853375,
+        "mean_ms": 0.453285973076923,
+        "p50_ms": 0.424625,
+        "p95_ms": 0.470292,
+        "samples": 520
+      },
+      "radius": 0.18,
+      "refined_vertices_total": 8906,
+      "requested_dabs": 520,
+      "rounds": 8,
+      "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+      "sculpt": {
+        "max_ms": 84.365167,
+        "mean_ms": 31.236087651923086,
+        "p50_ms": 36.12975,
+        "p95_ms": 46.581083,
+        "samples": 520
+      },
+      "sphere_level": 6,
+      "strength": 0.35,
+      "symmetry_x": true,
+      "triangles": 99732,
+      "valid_structure": true,
+      "vertices": 49868
+    },
+    {
+      "case": "repeated_point_tip",
+      "changed_vertices_total": 89736,
+      "combined": {
+        "max_ms": 43.288917000000005,
+        "mean_ms": 26.520715867187505,
+        "p50_ms": 34.823375,
+        "p95_ms": 41.26045799999999,
+        "samples": 128
+      },
+      "detail_limited_dabs": 0,
+      "invert": false,
+      "missed_rays": 0,
+      "pick": {
+        "max_ms": 0.451584,
+        "mean_ms": 0.3975276640624999,
+        "p50_ms": 0.399125,
+        "p95_ms": 0.417417,
+        "samples": 128
+      },
+      "radius": 0.18,
+      "refined_vertices_total": 2788,
+      "requested_dabs": 128,
+      "rounds": 128,
+      "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+      "sculpt": {
+        "max_ms": 42.88575,
+        "mean_ms": 26.123188203125004,
+        "p50_ms": 34.433417,
+        "p95_ms": 40.861917,
+        "samples": 128
+      },
+      "sphere_level": 6,
+      "strength": 0.35,
+      "symmetry_x": true,
+      "triangles": 87496,
+      "valid_structure": true,
+      "vertices": 43750
+    }
+  ],
+  "full_mesh_field_comparison": [
+    {
+      "fixture": "crossing_level6_rounds4.mesh.json",
+      "byte_identical": true,
+      "baseline_sha256": "7628dafcebabb8ad818615ad7890f7aec2d53cf0a45df3489aa3a6086c03395b",
+      "optimized_sha256": "7628dafcebabb8ad818615ad7890f7aec2d53cf0a45df3489aa3a6086c03395b",
+      "fields": {
+        "positions": {
+          "scalar_count": 135192,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0.0
+        },
+        "normals": {
+          "scalar_count": 135192,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0.0
+        },
+        "triangles": {
+          "scalar_count": 270372,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0
+        },
+        "masks": {
+          "scalar_count": 45064,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0.0
+        },
+        "colors": {
+          "scalar_count": 135192,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0.0
+        }
+      }
+    },
+    {
+      "fixture": "line_overlap_level6_rounds4.mesh.json",
+      "byte_identical": true,
+      "baseline_sha256": "0c134fbd11805bbed9d18d018fadb9c6235a60b8213904c96bcdddb3dfc039ff",
+      "optimized_sha256": "0c134fbd11805bbed9d18d018fadb9c6235a60b8213904c96bcdddb3dfc039ff",
+      "fields": {
+        "positions": {
+          "scalar_count": 133014,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0.0
+        },
+        "normals": {
+          "scalar_count": 133014,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0.0
+        },
+        "triangles": {
+          "scalar_count": 266016,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0
+        },
+        "masks": {
+          "scalar_count": 44338,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0.0
+        },
+        "colors": {
+          "scalar_count": 133014,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0.0
+        }
+      }
+    },
+    {
+      "fixture": "loops_level6_rounds8.mesh.json",
+      "byte_identical": true,
+      "baseline_sha256": "86dbca9f3b3ee6ed72611d06b8893d73f435777e89b0d5b83542f1fad65bf508",
+      "optimized_sha256": "86dbca9f3b3ee6ed72611d06b8893d73f435777e89b0d5b83542f1fad65bf508",
+      "fields": {
+        "positions": {
+          "scalar_count": 149604,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0.0
+        },
+        "normals": {
+          "scalar_count": 149604,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0.0
+        },
+        "triangles": {
+          "scalar_count": 299196,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0
+        },
+        "masks": {
+          "scalar_count": 49868,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0.0
+        },
+        "colors": {
+          "scalar_count": 149604,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0.0
+        }
+      }
+    },
+    {
+      "fixture": "repeated_point_tip_level6_rounds128.mesh.json",
+      "byte_identical": true,
+      "baseline_sha256": "44f899c7946e90187163a5155df2528593a07694a5696079d831d4d9b9f58b81",
+      "optimized_sha256": "44f899c7946e90187163a5155df2528593a07694a5696079d831d4d9b9f58b81",
+      "fields": {
+        "positions": {
+          "scalar_count": 131250,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0.0
+        },
+        "normals": {
+          "scalar_count": 131250,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0.0
+        },
+        "triangles": {
+          "scalar_count": 262488,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0
+        },
+        "masks": {
+          "scalar_count": 43750,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0.0
+        },
+        "colors": {
+          "scalar_count": 131250,
+          "numeric_differences": 0,
+          "f32_bit_differences_or_index_differences": 0,
+          "maximum_absolute_difference": 0.0
+        }
+      }
+    }
+  ],
+  "instrumented_baseline": {
+    "preserved_local_artifact_directory": ".artifacts/browser-performance-instrumented",
+    "instrumentation_metadata": {
+      "baseline_source": {
+        "baseline_version": "0.1.3",
+        "source_evidence": ".artifacts/draw-overlap-final",
+        "original_metadata": {
+          "implementation_version": "0.1.3",
+          "captured_local_date": "2026-10-12",
+          "stage": "final Draw source before final12-fixture validation",
+          "source_sha256": {
+            "crates/obrush-core/src/brush.rs": "71c35edb4b5b14ed949023f9dbf362efcb6f042432980d15f9d40a5298d091fa",
+            "crates/obrush-core/src/document.rs": "65e7aef9818482ba06529d75916cd76f5a8e71787905ec16e99fe4d1c658d879",
+            "crates/obrush-core/src/lib.rs": "8ccbd35d907490d6ebc8b5c4dd1f699ab1e6ae5ced427ca3158d94558d6037db",
+            "crates/obrush-core/src/mesh.rs": "398d30149f2356937e20658ee121471f77d0dd6f2c7e263c4ff4a6c71a91a841",
+            "crates/obrush-core/src/refinement.rs": "0314010c82baff395c6e313b79fb2eacdb7b71b8b2f9108fa47adc620352c814",
+            "crates/obrush-core/src/tests.rs": "4debef74124f958cabb9993eb39832153e46cbc4f6aa7da904d6eaf24a3a01b9",
+            "crates/obrush-core/Cargo.toml": "05bde7e131c4bc2f53709cfc3d5fcc12f2363105fba5f65ee18fa8c34e8039ce",
+            "Cargo.toml": "b4904805b86ba1f3189a1499f49cb2da861295620203e95e0466e093f51cedd4",
+            "Cargo.lock": "33cc39ce4f4afb1a1d3622ab94a2c4697615eddf65d4019a8ac709186a46dc79"
+          },
+          "probe_sha256": "a2c2e388c3273dfef9096098878aaa55899841df17a8dd6b3890fc9e0a11fd26",
+          "case_count": 12,
+          "profile": "release opt-level2",
+          "platform": "Apple M2,24GiB,macOS,aarch64",
+          "rustc": "1.96.0",
+          "scope": "CPU same12 fresh-sphere fixtures; per-dab diagnostics; separately matched CGL/WebGL renders do not establish interactive host quality/performance or ZBrush parity"
+        },
+        "scope": "Frozen independent performance/quality baseline before lag optimizations; no shared core edits or UI actions"
+      },
+      "instrumentation_source_sha256": {
+        "core/src/brush.rs": "bf9d7ba2fdf4d21d76801377288efc6e0a552f68ff910bc84c9109d120ae0960",
+        "core/src/document.rs": "65e7aef9818482ba06529d75916cd76f5a8e71787905ec16e99fe4d1c658d879",
+        "core/src/lib.rs": "7e3925d5680c8ef342ab13ed455760c1e3cf7321a1901926d13d64056aad939e",
+        "core/src/mesh.rs": "24714128ac525d61acf16c0c53c63127f3f7392f9ce25ec26bde02544d352e81",
+        "core/src/perf_audit.rs": "fb957e69697560c7269d1d6271354b16fec393a54c6420126edb15e7a6b3dfec",
+        "core/src/refinement.rs": "70082472473db70216d0689cacb6e57df79437a7d31265a26ac03cdfd441eb3b",
+        "core/src/tests.rs": "4debef74124f958cabb9993eb39832153e46cbc4f6aa7da904d6eaf24a3a01b9"
+      },
+      "performance_probe_sha256": "a63d0de085511ed4f05b675a329e51363063115dfb779a4aa3d764ce1d1c3bad",
+      "instrumented_probe_sha256": "1c0133a41988d6ce0cbe7f797646f74366b31ca68a70f1c07f7b9e6d61367881",
+      "scope": "Timers only in ignored clone; geometry expressions/inputs unchanged. Inclusive nested stage costs are not additive. No app/native UI/browser actions."
+    },
+    "raw_output_sha256": "52a9d95b6a697321d47211ea52a1166f0803cfea61e3ee9074c92cbdd58c3ee8",
+    "instrumentation_patch_sha256": "208256f885dc69819386d7a41e0deabb904ac1eb12a19253acc60bc98d3a7bb5",
+    "reproduction_script_sha256": "ad8def3f2054ab13fea9c25a0f19c29eab22dfd96df828af762d4608272fc569",
+    "instrumentation_driver_sha256": "1c0133a41988d6ce0cbe7f797646f74366b31ca68a70f1c07f7b9e6d61367881",
+    "total_sculpt_inclusive_ms": 33608.03028899999,
+    "stage_timings": [
+      {
+        "calls": 1140,
+        "inclusive_ms": 278.987384,
+        "mean_ms_per_call": 0.2447257754385965,
+        "stage": "draw_patch_normal"
+      },
+      {
+        "calls": 1140,
+        "inclusive_ms": 17256.472061,
+        "mean_ms_per_call": 15.137256193859649,
+        "stage": "smooth_targets_total"
+      },
+      {
+        "calls": 1140,
+        "inclusive_ms": 379.918145,
+        "mean_ms_per_call": 0.33326153070175435,
+        "stage": "vertex_displacement_loop"
+      },
+      {
+        "calls": 1140,
+        "inclusive_ms": 632.564392,
+        "mean_ms_per_call": 0.5548810456140351,
+        "stage": "exact_symmetry"
+      },
+      {
+        "calls": 1140,
+        "inclusive_ms": 1159.110146,
+        "mean_ms_per_call": 1.0167632859649123,
+        "stage": "accept_deformation"
+      },
+      {
+        "calls": 1009,
+        "inclusive_ms": 12881.244548,
+        "mean_ms_per_call": 12.766347421209119,
+        "stage": "refine_brush_patch"
+      },
+      {
+        "calls": 1041,
+        "inclusive_ms": 4334.229251,
+        "mean_ms_per_call": 4.163524736791547,
+        "stage": "recompute_normals"
+      },
+      {
+        "calls": 1829,
+        "inclusive_ms": 546.184335,
+        "mean_ms_per_call": 0.2986245680699836,
+        "stage": "validate"
+      },
+      {
+        "calls": 2280,
+        "inclusive_ms": 17243.267707,
+        "mean_ms_per_call": 7.562836713596491,
+        "stage": "neighbors_total"
+      },
+      {
+        "calls": 795,
+        "inclusive_ms": 16473.335128,
+        "mean_ms_per_call": 20.721176261635218,
+        "stage": "neighbor_cache_rebuild"
+      },
+      {
+        "calls": 1801,
+        "inclusive_ms": 3436.127884,
+        "mean_ms_per_call": 1.9078999911160466,
+        "stage": "select_edges"
+      },
+      {
+        "calls": 792,
+        "inclusive_ms": 4447.26513,
+        "mean_ms_per_call": 5.61523375,
+        "stage": "refine_round"
+      },
+      {
+        "calls": 792,
+        "inclusive_ms": 46.328963,
+        "mean_ms_per_call": 0.05849616540404041,
+        "stage": "snapshot"
+      },
+      {
+        "calls": 1140,
+        "inclusive_ms": 508.659307,
+        "mean_ms_per_call": 0.44619237456140354,
+        "stage": "raycast"
+      }
+    ],
+    "warning": "RAII/atomic inclusive stage timers overlap parents and children and are not additive. Instrumentation may affect compiler/runtime costs; use the uninstrumented paired runs for absolute performance claims.",
+    "instrumented_obj_exactly_matches_baseline": {
+      "loops_level6_rounds8.obj": true,
+      "repeated_point_tip_level6_rounds128.obj": true,
+      "crossing_level6_rounds4.obj": true,
+      "line_overlap_level6_rounds4.obj": true
+    },
+    "finding": "Adjacency cache rebuilding consumed16473.335128ms across795 rebuilds (mean20.721176ms), 49.01% of instrumented total sculpt time. Smooth-target preparation included that cost; normal rebuilds totaled4334.229251ms. These are native core hot spots, not a measured browser FPS diagnosis."
+  },
+  "stages": [
+    {
+      "preserved_local_artifact_directory": ".artifacts/browser-performance-baseline",
+      "source_metadata": {
+        "baseline_version": "0.1.3",
+        "source_evidence": ".artifacts/draw-overlap-final",
+        "original_metadata": {
+          "implementation_version": "0.1.3",
+          "captured_local_date": "2026-10-12",
+          "stage": "final Draw source before final12-fixture validation",
+          "source_sha256": {
+            "crates/obrush-core/src/brush.rs": "71c35edb4b5b14ed949023f9dbf362efcb6f042432980d15f9d40a5298d091fa",
+            "crates/obrush-core/src/document.rs": "65e7aef9818482ba06529d75916cd76f5a8e71787905ec16e99fe4d1c658d879",
+            "crates/obrush-core/src/lib.rs": "8ccbd35d907490d6ebc8b5c4dd1f699ab1e6ae5ced427ca3158d94558d6037db",
+            "crates/obrush-core/src/mesh.rs": "398d30149f2356937e20658ee121471f77d0dd6f2c7e263c4ff4a6c71a91a841",
+            "crates/obrush-core/src/refinement.rs": "0314010c82baff395c6e313b79fb2eacdb7b71b8b2f9108fa47adc620352c814",
+            "crates/obrush-core/src/tests.rs": "4debef74124f958cabb9993eb39832153e46cbc4f6aa7da904d6eaf24a3a01b9",
+            "crates/obrush-core/Cargo.toml": "05bde7e131c4bc2f53709cfc3d5fcc12f2363105fba5f65ee18fa8c34e8039ce",
+            "Cargo.toml": "b4904805b86ba1f3189a1499f49cb2da861295620203e95e0466e093f51cedd4",
+            "Cargo.lock": "33cc39ce4f4afb1a1d3622ab94a2c4697615eddf65d4019a8ac709186a46dc79"
+          },
+          "probe_sha256": "a2c2e388c3273dfef9096098878aaa55899841df17a8dd6b3890fc9e0a11fd26",
+          "case_count": 12,
+          "profile": "release opt-level2",
+          "platform": "Apple M2,24GiB,macOS,aarch64",
+          "rustc": "1.96.0",
+          "scope": "CPU same12 fresh-sphere fixtures; per-dab diagnostics; separately matched CGL/WebGL renders do not establish interactive host quality/performance or ZBrush parity"
+        },
+        "scope": "Frozen independent performance/quality baseline before lag optimizations; no shared core edits or UI actions",
+        "export_driver_sha256": "ecbbaf2697a627aade994847b8481da753417eb8279ff90201f1dd6f0f9a76a2",
+        "initial_timing_output_sha256": "2c8a8871c180aa62f515076b1ec0529ae096a034d1d82ca27034f179d5d90ff8",
+        "full_field_rerun_output_sha256": "3057c9f88a16829bd25b90079026f9fd251519ceb1d01aff136fcb47a8990bf3"
+      },
+      "raw_timing_sha256": "2c8a8871c180aa62f515076b1ec0529ae096a034d1d82ca27034f179d5d90ff8",
+      "native_timings": [
+        {
+          "case": "line_overlap",
+          "changed_vertices_total": 171516,
+          "combined": {
+            "max_ms": 47.56020800000001,
+            "mean_ms": 31.709696140243906,
+            "p50_ms": 35.488126,
+            "p95_ms": 41.939333,
+            "samples": 164
+          },
+          "detail_limited_dabs": 0,
+          "invert": false,
+          "missed_rays": 0,
+          "pick": {
+            "max_ms": 0.5902499999999999,
+            "mean_ms": 0.40139584146341456,
+            "p50_ms": 0.395709,
+            "p95_ms": 0.450416,
+            "samples": 164
+          },
+          "radius": 0.18,
+          "refined_vertices_total": 3376,
+          "requested_dabs": 164,
+          "rounds": 4,
+          "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+          "sculpt": {
+            "max_ms": 47.13162500000001,
+            "mean_ms": 31.30830029878048,
+            "p50_ms": 35.103167,
+            "p95_ms": 41.496417,
+            "samples": 164
+          },
+          "sphere_level": 6,
+          "strength": 0.35,
+          "symmetry_x": true,
+          "triangles": 88672,
+          "valid_structure": true,
+          "vertices": 44338
+        },
+        {
+          "case": "crossing",
+          "changed_vertices_total": 279563,
+          "combined": {
+            "max_ms": 45.096959000000005,
+            "mean_ms": 24.41266156707318,
+            "p50_ms": 33.628291,
+            "p95_ms": 41.95725,
+            "samples": 328
+          },
+          "detail_limited_dabs": 0,
+          "invert": false,
+          "missed_rays": 0,
+          "pick": {
+            "max_ms": 0.48125,
+            "mean_ms": 0.4033846432926828,
+            "p50_ms": 0.399584,
+            "p95_ms": 0.442708,
+            "samples": 328
+          },
+          "radius": 0.18,
+          "refined_vertices_total": 4102,
+          "requested_dabs": 328,
+          "rounds": 4,
+          "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+          "sculpt": {
+            "max_ms": 44.690209,
+            "mean_ms": 24.009276923780472,
+            "p50_ms": 33.250833,
+            "p95_ms": 41.56725,
+            "samples": 328
+          },
+          "sphere_level": 6,
+          "strength": 0.35,
+          "symmetry_x": true,
+          "triangles": 90124,
+          "valid_structure": true,
+          "vertices": 45064
+        },
+        {
+          "case": "loops",
+          "changed_vertices_total": 578516,
+          "combined": {
+            "max_ms": 195.16345800000002,
+            "mean_ms": 31.61197412500001,
+            "p50_ms": 36.50683299999999,
+            "p95_ms": 46.324125,
+            "samples": 520
+          },
+          "detail_limited_dabs": 0,
+          "invert": false,
+          "missed_rays": 0,
+          "pick": {
+            "max_ms": 0.656208,
+            "mean_ms": 0.42816338846153834,
+            "p50_ms": 0.42645900000000003,
+            "p95_ms": 0.48208300000000004,
+            "samples": 520
+          },
+          "radius": 0.18,
+          "refined_vertices_total": 8906,
+          "requested_dabs": 520,
+          "rounds": 8,
+          "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+          "sculpt": {
+            "max_ms": 194.747791,
+            "mean_ms": 31.183810736538426,
+            "p50_ms": 36.128959,
+            "p95_ms": 45.895417,
+            "samples": 520
+          },
+          "sphere_level": 6,
+          "strength": 0.35,
+          "symmetry_x": true,
+          "triangles": 99732,
+          "valid_structure": true,
+          "vertices": 49868
+        },
+        {
+          "case": "repeated_point_tip",
+          "changed_vertices_total": 89736,
+          "combined": {
+            "max_ms": 44.17312499999999,
+            "mean_ms": 26.406187523437495,
+            "p50_ms": 34.440875,
+            "p95_ms": 40.937167,
+            "samples": 128
+          },
+          "detail_limited_dabs": 0,
+          "invert": false,
+          "missed_rays": 0,
+          "pick": {
+            "max_ms": 0.456625,
+            "mean_ms": 0.3953486015625,
+            "p50_ms": 0.3945,
+            "p95_ms": 0.426875,
+            "samples": 128
+          },
+          "radius": 0.18,
+          "refined_vertices_total": 2788,
+          "requested_dabs": 128,
+          "rounds": 128,
+          "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+          "sculpt": {
+            "max_ms": 43.778749999999995,
+            "mean_ms": 26.010838921875,
+            "p50_ms": 34.061875,
+            "p95_ms": 40.547667000000004,
+            "samples": 128
+          },
+          "sphere_level": 6,
+          "strength": 0.35,
+          "symmetry_x": true,
+          "triangles": 87496,
+          "valid_structure": true,
+          "vertices": 43750
+        }
+      ],
+      "obj_sha256": {
+        "obj/crossing_level6_rounds4.obj": "28d3f32eb86e3b9e244e5c19fccb6b8c8b8ea93bc489bcc2426bb1dfcccea08a",
+        "obj/line_overlap_level6_rounds4.obj": "5e957c0df2638ebba89e21e200f001517cb785196873a29be20d9893b517c8bf",
+        "obj/loops_level6_rounds8.obj": "00d5f273b2e77fe8653b19e8d98f6b7dd5e4c25339d3a330ef59b9ce3beca56e",
+        "obj/repeated_point_tip_level6_rounds128.obj": "ada9bf9620977f07a5c820ec3b16440ba15e80820dc541ff25380748978f5f09"
+      }
+    },
+    {
+      "preserved_local_artifact_directory": ".artifacts/browser-performance-candidate1",
+      "source_metadata": {
+        "stage": "localnorm/CSRfairing/footprint/refinement optimization candidate",
+        "source_sha256": {
+          "crates/obrush-core/src/brush.rs": "ab0af07026288004bd79ac099b401be52a2027e34f6382f9ca3e33fc4118fccb",
+          "crates/obrush-core/src/document.rs": "65e7aef9818482ba06529d75916cd76f5a8e71787905ec16e99fe4d1c658d879",
+          "crates/obrush-core/src/lib.rs": "8ccbd35d907490d6ebc8b5c4dd1f699ab1e6ae5ced427ca3158d94558d6037db",
+          "crates/obrush-core/src/mesh.rs": "3bcc1cf8695df486b50f67d2b98224755b3ccdf4018290b5891f86f446a486af",
+          "crates/obrush-core/src/refinement.rs": "febe5f89d98ba94aa61d84d8da8f4b50c5f8cc9aad9039fdf65632d258e7dce8",
+          "crates/obrush-core/src/tests.rs": "c835a43ae938ab1a03c1d994a49ca69f2d94eb460203892c7ef70bb82951bd42"
+        },
+        "probe_sha256": "ecbbaf2697a627aade994847b8481da753417eb8279ff90201f1dd6f0f9a76a2",
+        "scope": "representative4 exactsame worldray paths; nativeperdab walltime; mesh field exports outsidetiming; excludesUI/GPU/history/browserframe claims",
+        "isolated_workspace_lock_note": "Repository Cargo.toml had already become 0.1.4 while copied Cargo.lock required regeneration for a core-only workspace; original lock retained as Cargo.lock.from-repository. Offline dependency regeneration changed only isolated clone.",
+        "isolated_workspace_sha256": {
+          "Cargo.toml": "4a0e810d32bc80f79d154211a9e73deeb2e21ab1e08a67346f58b943c884d1af",
+          "Cargo.lock": "574dca19d6d864b4e2c38bbc091f4117c2d23f8c48e537af9a7271213d90de30",
+          "Cargo.lock.from-repository": "69614c3d09323f546dc3e78dab8c4fad70c43c7ba1597d82cf3bae35f5ed3af3"
+        }
+      },
+      "raw_timing_sha256": "fedcc647da769d15b9300740565c766532d5efe7168ea15ca51efe0fbe750d85",
+      "native_timings": [
+        {
+          "case": "line_overlap",
+          "changed_vertices_total": 171516,
+          "combined": {
+            "max_ms": 14.622667,
+            "mean_ms": 9.463683506097565,
+            "p50_ms": 10.459584,
+            "p95_ms": 11.285875,
+            "samples": 164
+          },
+          "detail_limited_dabs": 0,
+          "invert": false,
+          "missed_rays": 0,
+          "pick": {
+            "max_ms": 0.639667,
+            "mean_ms": 0.39747945121951217,
+            "p50_ms": 0.392,
+            "p95_ms": 0.432666,
+            "samples": 164
+          },
+          "radius": 0.18,
+          "refined_vertices_total": 3376,
+          "requested_dabs": 164,
+          "rounds": 4,
+          "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+          "sculpt": {
+            "max_ms": 13.983,
+            "mean_ms": 9.06620405487805,
+            "p50_ms": 10.06875,
+            "p95_ms": 10.888583,
+            "samples": 164
+          },
+          "sphere_level": 6,
+          "strength": 0.35,
+          "symmetry_x": true,
+          "triangles": 88672,
+          "valid_structure": true,
+          "vertices": 44338
+        },
+        {
+          "case": "crossing",
+          "changed_vertices_total": 279563,
+          "combined": {
+            "max_ms": 12.033001,
+            "mean_ms": 7.724353042682931,
+            "p50_ms": 9.929167,
+            "p95_ms": 11.158917,
+            "samples": 328
+          },
+          "detail_limited_dabs": 0,
+          "invert": false,
+          "missed_rays": 0,
+          "pick": {
+            "max_ms": 0.477375,
+            "mean_ms": 0.3975576920731708,
+            "p50_ms": 0.397041,
+            "p95_ms": 0.426916,
+            "samples": 328
+          },
+          "radius": 0.18,
+          "refined_vertices_total": 4102,
+          "requested_dabs": 328,
+          "rounds": 4,
+          "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+          "sculpt": {
+            "max_ms": 11.642417,
+            "mean_ms": 7.326795350609755,
+            "p50_ms": 9.540625,
+            "p95_ms": 10.752667,
+            "samples": 328
+          },
+          "sphere_level": 6,
+          "strength": 0.35,
+          "symmetry_x": true,
+          "triangles": 90124,
+          "valid_structure": true,
+          "vertices": 45064
+        },
+        {
+          "case": "loops",
+          "changed_vertices_total": 578516,
+          "combined": {
+            "max_ms": 13.899999999999999,
+            "mean_ms": 9.445458121153843,
+            "p50_ms": 10.778208,
+            "p95_ms": 12.733124,
+            "samples": 520
+          },
+          "detail_limited_dabs": 0,
+          "invert": false,
+          "missed_rays": 0,
+          "pick": {
+            "max_ms": 0.603167,
+            "mean_ms": 0.42277094038461516,
+            "p50_ms": 0.422917,
+            "p95_ms": 0.471708,
+            "samples": 520
+          },
+          "radius": 0.18,
+          "refined_vertices_total": 8906,
+          "requested_dabs": 520,
+          "rounds": 8,
+          "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+          "sculpt": {
+            "max_ms": 13.450999999999999,
+            "mean_ms": 9.022687180769234,
+            "p50_ms": 10.376625,
+            "p95_ms": 12.304083,
+            "samples": 520
+          },
+          "sphere_level": 6,
+          "strength": 0.35,
+          "symmetry_x": true,
+          "triangles": 99732,
+          "valid_structure": true,
+          "vertices": 49868
+        },
+        {
+          "case": "repeated_point_tip",
+          "changed_vertices_total": 89736,
+          "combined": {
+            "max_ms": 11.275749999999999,
+            "mean_ms": 7.971700578124999,
+            "p50_ms": 10.152333,
+            "p95_ms": 10.702457999999998,
+            "samples": 128
+          },
+          "detail_limited_dabs": 0,
+          "invert": false,
+          "missed_rays": 0,
+          "pick": {
+            "max_ms": 0.485125,
+            "mean_ms": 0.39349120312499997,
+            "p50_ms": 0.393417,
+            "p95_ms": 0.42666699999999996,
+            "samples": 128
+          },
+          "radius": 0.18,
+          "refined_vertices_total": 2788,
+          "requested_dabs": 128,
+          "rounds": 128,
+          "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+          "sculpt": {
+            "max_ms": 10.881708999999999,
+            "mean_ms": 7.5782093749999975,
+            "p50_ms": 9.771666999999999,
+            "p95_ms": 10.271042,
+            "samples": 128
+          },
+          "sphere_level": 6,
+          "strength": 0.35,
+          "symmetry_x": true,
+          "triangles": 87496,
+          "valid_structure": true,
+          "vertices": 43750
+        }
+      ],
+      "obj_sha256": {
+        "obj/crossing_level6_rounds4.obj": "28d3f32eb86e3b9e244e5c19fccb6b8c8b8ea93bc489bcc2426bb1dfcccea08a",
+        "obj/line_overlap_level6_rounds4.obj": "5e957c0df2638ebba89e21e200f001517cb785196873a29be20d9893b517c8bf",
+        "obj/loops_level6_rounds8.obj": "00d5f273b2e77fe8653b19e8d98f6b7dd5e4c25339d3a330ef59b9ce3beca56e",
+        "obj/repeated_point_tip_level6_rounds128.obj": "ada9bf9620977f07a5c820ec3b16440ba15e80820dc541ff25380748978f5f09"
+      },
+      "raw_quality_sha256": "fc176cc2d717d7ff1c7e2d23643661012567e2dc08a30bf9474bfbc4d59afda9"
+    },
+    {
+      "preserved_local_artifact_directory": ".artifacts/browser-performance-candidate2",
+      "source_metadata": {
+        "stage": "final performance candidate with refinement conservative AABB/edge/mask filters",
+        "captured_utc": "2026-10-12T21:10:03.760230+00:00",
+        "source_sha256": {
+          "crates/obrush-core/src/brush.rs": "4ee45652f8cdf276f9a7d2226e40b784b3655c077e4272588b29336a9bd86b62",
+          "crates/obrush-core/src/document.rs": "65e7aef9818482ba06529d75916cd76f5a8e71787905ec16e99fe4d1c658d879",
+          "crates/obrush-core/src/lib.rs": "8ccbd35d907490d6ebc8b5c4dd1f699ab1e6ae5ced427ca3158d94558d6037db",
+          "crates/obrush-core/src/mesh.rs": "81090a6f4bc4d0fd99ab1f21f3c705b59ceb12e5d358d0917b4a7cef9d55decc",
+          "crates/obrush-core/src/refinement.rs": "22a2353c01e4c95243839104b34902d2a653f5307a8ed7d31d40c0b74be8d8d4",
+          "crates/obrush-core/src/tests.rs": "c835a43ae938ab1a03c1d994a49ca69f2d94eb460203892c7ef70bb82951bd42"
+        },
+        "probe_sha256": "ecbbaf2697a627aade994847b8481da753417eb8279ff90201f1dd6f0f9a76a2",
+        "scope": "Native per-dab four representative traces and twelve quality fixtures; unchanged exact world-ray inputs; excludes UI/history/GPU/browser FPS.",
+        "isolated_workspace_sha256": {
+          "Cargo.toml": "4a0e810d32bc80f79d154211a9e73deeb2e21ab1e08a67346f58b943c884d1af",
+          "Cargo.lock": "574dca19d6d864b4e2c38bbc091f4117c2d23f8c48e537af9a7271213d90de30",
+          "Cargo.lock.from-repository": "69614c3d09323f546dc3e78dab8c4fad70c43c7ba1597d82cf3bae35f5ed3af3"
+        },
+        "quality_probe_sha256": "a2c2e388c3273dfef9096098878aaa55899841df17a8dd6b3890fc9e0a11fd26",
+        "native_timing_output_sha256": "74923b82908d2df47ff2c5e764a5ee039de31bd5b7f9873752932fac5b3f9e24"
+      },
+      "raw_timing_sha256": "74923b82908d2df47ff2c5e764a5ee039de31bd5b7f9873752932fac5b3f9e24",
+      "native_timings": [
+        {
+          "case": "line_overlap",
+          "changed_vertices_total": 171516,
+          "combined": {
+            "max_ms": 18.391917,
+            "mean_ms": 8.829376268292686,
+            "p50_ms": 9.636458,
+            "p95_ms": 10.332624999999998,
+            "samples": 164
+          },
+          "detail_limited_dabs": 0,
+          "invert": false,
+          "missed_rays": 0,
+          "pick": {
+            "max_ms": 1.343,
+            "mean_ms": 0.4093604878048783,
+            "p50_ms": 0.389917,
+            "p95_ms": 0.425667,
+            "samples": 164
+          },
+          "radius": 0.18,
+          "refined_vertices_total": 3376,
+          "requested_dabs": 164,
+          "rounds": 4,
+          "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+          "sculpt": {
+            "max_ms": 17.133042,
+            "mean_ms": 8.420015780487805,
+            "p50_ms": 9.247125,
+            "p95_ms": 9.936957999999999,
+            "samples": 164
+          },
+          "sphere_level": 6,
+          "strength": 0.35,
+          "symmetry_x": true,
+          "triangles": 88672,
+          "valid_structure": true,
+          "vertices": 44338
+        },
+        {
+          "case": "crossing",
+          "changed_vertices_total": 279563,
+          "combined": {
+            "max_ms": 11.133541,
+            "mean_ms": 7.13299635060975,
+            "p50_ms": 9.227833,
+            "p95_ms": 10.404876,
+            "samples": 328
+          },
+          "detail_limited_dabs": 0,
+          "invert": false,
+          "missed_rays": 0,
+          "pick": {
+            "max_ms": 0.6628750000000001,
+            "mean_ms": 0.39839814329268297,
+            "p50_ms": 0.394958,
+            "p95_ms": 0.426709,
+            "samples": 328
+          },
+          "radius": 0.18,
+          "refined_vertices_total": 4102,
+          "requested_dabs": 328,
+          "rounds": 4,
+          "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+          "sculpt": {
+            "max_ms": 10.679625,
+            "mean_ms": 6.734598207317074,
+            "p50_ms": 8.847291,
+            "p95_ms": 9.995292,
+            "samples": 328
+          },
+          "sphere_level": 6,
+          "strength": 0.35,
+          "symmetry_x": true,
+          "triangles": 90124,
+          "valid_structure": true,
+          "vertices": 45064
+        },
+        {
+          "case": "loops",
+          "changed_vertices_total": 578516,
+          "combined": {
+            "max_ms": 28.643666,
+            "mean_ms": 8.75101401538462,
+            "p50_ms": 9.887125,
+            "p95_ms": 11.776251000000002,
+            "samples": 520
+          },
+          "detail_limited_dabs": 0,
+          "invert": false,
+          "missed_rays": 0,
+          "pick": {
+            "max_ms": 1.539875,
+            "mean_ms": 0.42162100576923045,
+            "p50_ms": 0.422833,
+            "p95_ms": 0.46633399999999997,
+            "samples": 520
+          },
+          "radius": 0.18,
+          "refined_vertices_total": 8906,
+          "requested_dabs": 520,
+          "rounds": 8,
+          "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+          "sculpt": {
+            "max_ms": 28.18675,
+            "mean_ms": 8.32939300961538,
+            "p50_ms": 9.485499999999998,
+            "p95_ms": 11.333542,
+            "samples": 520
+          },
+          "sphere_level": 6,
+          "strength": 0.35,
+          "symmetry_x": true,
+          "triangles": 99732,
+          "valid_structure": true,
+          "vertices": 49868
+        },
+        {
+          "case": "repeated_point_tip",
+          "changed_vertices_total": 89736,
+          "combined": {
+            "max_ms": 25.095875,
+            "mean_ms": 7.6126543515624965,
+            "p50_ms": 9.308834000000001,
+            "p95_ms": 10.217625,
+            "samples": 128
+          },
+          "detail_limited_dabs": 0,
+          "invert": false,
+          "missed_rays": 0,
+          "pick": {
+            "max_ms": 6.754792,
+            "mean_ms": 0.4391556171875,
+            "p50_ms": 0.39,
+            "p95_ms": 0.416,
+            "samples": 128
+          },
+          "radius": 0.18,
+          "refined_vertices_total": 2788,
+          "requested_dabs": 128,
+          "rounds": 128,
+          "scope": "Native CPU only. Individual current-surface raycast and core Draw/refinement calls, no external snapshots/diagnostic scans/history/UI/GPU or browser frame-rate claim.",
+          "sculpt": {
+            "max_ms": 24.721792,
+            "mean_ms": 7.173498734375,
+            "p50_ms": 8.930541999999999,
+            "p95_ms": 9.82075,
+            "samples": 128
+          },
+          "sphere_level": 6,
+          "strength": 0.35,
+          "symmetry_x": true,
+          "triangles": 87496,
+          "valid_structure": true,
+          "vertices": 43750
+        }
+      ],
+      "obj_sha256": {
+        "obj/crossing_level6_rounds4.obj": "28d3f32eb86e3b9e244e5c19fccb6b8c8b8ea93bc489bcc2426bb1dfcccea08a",
+        "obj/line_overlap_level6_rounds4.obj": "5e957c0df2638ebba89e21e200f001517cb785196873a29be20d9893b517c8bf",
+        "obj/loops_level6_rounds8.obj": "00d5f273b2e77fe8653b19e8d98f6b7dd5e4c25339d3a330ef59b9ce3beca56e",
+        "obj/repeated_point_tip_level6_rounds128.obj": "ada9bf9620977f07a5c820ec3b16440ba15e80820dc541ff25380748978f5f09"
+      },
+      "raw_quality_sha256": "b072e1b4bc0489ed72e37194fc97ef30ca5ff63e169172d9e4642d6de3792f19"
+    }
+  ],
+  "quality_contract": {
+    "fixture_count": 12,
+    "same_probe_sha256": "a2c2e388c3273dfef9096098878aaa55899841df17a8dd6b3890fc9e0a11fd26",
+    "original_0_1_3_probe_sha256": "a2c2e388c3273dfef9096098878aaa55899841df17a8dd6b3890fc9e0a11fd26",
+    "metrics_reference": "draw-overlap-comparison.json documents geometric shared-edge angles, normalized normal-projection roughness, equilateral triangle quality, world edge lengths and radial height.",
+    "gate_provenance": "The original local surface-quality thresholds are inherited from the previous Draw investigation. This performance change adds exact final-state preservation versus frozen0.1.3 and near-unit height retention. Neither is a general visual/parity guarantee.",
+    "all_fixtures_pass": true,
+    "checks": [
+      {
+        "case": "line_control",
+        "sphere_level": 6,
+        "rounds": 1,
+        "requested_dabs": 41,
+        "identical_rays": true,
+        "ray_inputs_sha256": "fbbfa13215c5b3e71a832975cd7381ae90f88c507862565db22d16e85f4038c2",
+        "baseline_per_dab_flip_events": 0,
+        "optimized_per_dab_flip_events": 0,
+        "initial_metrics_identical": true,
+        "final_metrics_identical": true,
+        "baseline_final_metrics": {
+          "adjacent_angle_over_30_edges": 8,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 6.92648284406117,
+          "edited_patch_edge_length_p95_world": 0.021086288736194555,
+          "edited_patch_normal_laplacian_mean": 0.023557550034048306,
+          "edited_patch_normal_laplacian_p95": 0.06678648780494185,
+          "edited_vertices": 2187,
+          "max_adjacent_normal_angle_degrees": 39.26404901342479,
+          "max_edge_length_over_initial_median": 1.0999278046087724,
+          "max_edge_length_world": 0.02159662671065768,
+          "max_normalized_normal_laplacian": 0.1699339247860945,
+          "max_radial_height": 0.08682973041238384,
+          "max_vertex_displacement": 0.08688006895944471,
+          "min_edge_length_world": 0.008590643571941314,
+          "min_triangle_quality": 0.5720660230658102,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2329403838761333
+        },
+        "optimized_final_metrics": {
+          "adjacent_angle_over_30_edges": 8,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 6.92648284406117,
+          "edited_patch_edge_length_p95_world": 0.021086288736194555,
+          "edited_patch_normal_laplacian_mean": 0.023557550034048306,
+          "edited_patch_normal_laplacian_p95": 0.06678648780494185,
+          "edited_vertices": 2187,
+          "max_adjacent_normal_angle_degrees": 39.26404901342479,
+          "max_edge_length_over_initial_median": 1.0999278046087724,
+          "max_edge_length_world": 0.02159662671065768,
+          "max_normalized_normal_laplacian": 0.1699339247860945,
+          "max_radial_height": 0.08682973041238384,
+          "max_vertex_displacement": 0.08688006895944471,
+          "min_edge_length_world": 0.008590643571941314,
+          "min_triangle_quality": 0.5720660230658102,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2329403838761333
+        },
+        "baseline_height_retention": 1.0,
+        "final_obj_byte_identical": true,
+        "baseline_obj_sha256": "9f777a971be903b28659ea6ad04a8cf8c224c82e745ab0fb07c7cba0a1bb7b47",
+        "optimized_obj_sha256": "9f777a971be903b28659ea6ad04a8cf8c224c82e745ab0fb07c7cba0a1bb7b47",
+        "structure_valid": true,
+        "local_gates": {
+          "no_existing_face_inversion_events": true,
+          "no_edges_over_60_degrees": true,
+          "no_edges_over_90_degrees": true,
+          "roughness_p95_at_most_0_12": true,
+          "triangle_quality_at_least_0_15": true,
+          "max_edge_world_at_most_0_021601": true,
+          "height_world_at_least_0_05": true,
+          "height_retention_to_0_1_3_at_least_0_999999": true
+        },
+        "all_local_gates_pass": true
+      },
+      {
+        "case": "line_overlap",
+        "sphere_level": 6,
+        "rounds": 4,
+        "requested_dabs": 164,
+        "identical_rays": true,
+        "ray_inputs_sha256": "ae59c644e429e6f88f1119e7eeea129b7551f6a7fc9b853abe316f299bcdbb6b",
+        "baseline_per_dab_flip_events": 0,
+        "optimized_per_dab_flip_events": 0,
+        "initial_metrics_identical": true,
+        "final_metrics_identical": true,
+        "baseline_final_metrics": {
+          "adjacent_angle_over_30_edges": 15,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 9.593155622804897,
+          "edited_patch_edge_length_p95_world": 0.020632192941622888,
+          "edited_patch_normal_laplacian_mean": 0.02682891675701742,
+          "edited_patch_normal_laplacian_p95": 0.09561973874196047,
+          "edited_vertices": 4563,
+          "max_adjacent_normal_angle_degrees": 59.99943054796052,
+          "max_edge_length_over_initial_median": 1.099528593449454,
+          "max_edge_length_world": 0.02158878836494953,
+          "max_normalized_normal_laplacian": 0.17864889435905845,
+          "max_radial_height": 0.3033354159280659,
+          "max_vertex_displacement": 0.3030168595583214,
+          "min_edge_length_world": 0.004158977941309624,
+          "min_triangle_quality": 0.3011739120914927,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2360924022887032
+        },
+        "optimized_final_metrics": {
+          "adjacent_angle_over_30_edges": 15,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 9.593155622804897,
+          "edited_patch_edge_length_p95_world": 0.020632192941622888,
+          "edited_patch_normal_laplacian_mean": 0.02682891675701742,
+          "edited_patch_normal_laplacian_p95": 0.09561973874196047,
+          "edited_vertices": 4563,
+          "max_adjacent_normal_angle_degrees": 59.99943054796052,
+          "max_edge_length_over_initial_median": 1.099528593449454,
+          "max_edge_length_world": 0.02158878836494953,
+          "max_normalized_normal_laplacian": 0.17864889435905845,
+          "max_radial_height": 0.3033354159280659,
+          "max_vertex_displacement": 0.3030168595583214,
+          "min_edge_length_world": 0.004158977941309624,
+          "min_triangle_quality": 0.3011739120914927,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2360924022887032
+        },
+        "baseline_height_retention": 1.0,
+        "final_obj_byte_identical": true,
+        "baseline_obj_sha256": "5e957c0df2638ebba89e21e200f001517cb785196873a29be20d9893b517c8bf",
+        "optimized_obj_sha256": "5e957c0df2638ebba89e21e200f001517cb785196873a29be20d9893b517c8bf",
+        "structure_valid": true,
+        "local_gates": {
+          "no_existing_face_inversion_events": true,
+          "no_edges_over_60_degrees": true,
+          "no_edges_over_90_degrees": true,
+          "roughness_p95_at_most_0_12": true,
+          "triangle_quality_at_least_0_15": true,
+          "max_edge_world_at_most_0_021601": true,
+          "height_world_at_least_0_05": true,
+          "height_retention_to_0_1_3_at_least_0_999999": true
+        },
+        "all_local_gates_pass": true
+      },
+      {
+        "case": "crossing",
+        "sphere_level": 6,
+        "rounds": 2,
+        "requested_dabs": 164,
+        "identical_rays": true,
+        "ray_inputs_sha256": "01810d16f67e969af64f411fd4297bc3046b20eb108b002f9e178fffc115d9af",
+        "baseline_per_dab_flip_events": 0,
+        "optimized_per_dab_flip_events": 0,
+        "initial_metrics_identical": true,
+        "final_metrics_identical": true,
+        "baseline_final_metrics": {
+          "adjacent_angle_over_30_edges": 52,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 8.471267848860082,
+          "edited_patch_edge_length_p95_world": 0.0208538843440989,
+          "edited_patch_normal_laplacian_mean": 0.028517893016348342,
+          "edited_patch_normal_laplacian_p95": 0.0765623252093442,
+          "edited_vertices": 5159,
+          "max_adjacent_normal_angle_degrees": 59.880769039743704,
+          "max_edge_length_over_initial_median": 1.099892070735775,
+          "max_edge_length_world": 0.021595925090866986,
+          "max_normalized_normal_laplacian": 0.3063338546959303,
+          "max_radial_height": 0.15549034700457143,
+          "max_vertex_displacement": 0.1564328507068094,
+          "min_edge_length_world": 0.0057598873387653075,
+          "min_triangle_quality": 0.46877584052218474,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.241069867665744
+        },
+        "optimized_final_metrics": {
+          "adjacent_angle_over_30_edges": 52,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 8.471267848860082,
+          "edited_patch_edge_length_p95_world": 0.0208538843440989,
+          "edited_patch_normal_laplacian_mean": 0.028517893016348342,
+          "edited_patch_normal_laplacian_p95": 0.0765623252093442,
+          "edited_vertices": 5159,
+          "max_adjacent_normal_angle_degrees": 59.880769039743704,
+          "max_edge_length_over_initial_median": 1.099892070735775,
+          "max_edge_length_world": 0.021595925090866986,
+          "max_normalized_normal_laplacian": 0.3063338546959303,
+          "max_radial_height": 0.15549034700457143,
+          "max_vertex_displacement": 0.1564328507068094,
+          "min_edge_length_world": 0.0057598873387653075,
+          "min_triangle_quality": 0.46877584052218474,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.241069867665744
+        },
+        "baseline_height_retention": 1.0,
+        "final_obj_byte_identical": true,
+        "baseline_obj_sha256": "27157d0ef4cc880902bf7fd7a3f3a4cac1793c7122cb9c4552bede365b3941a3",
+        "optimized_obj_sha256": "27157d0ef4cc880902bf7fd7a3f3a4cac1793c7122cb9c4552bede365b3941a3",
+        "structure_valid": true,
+        "local_gates": {
+          "no_existing_face_inversion_events": true,
+          "no_edges_over_60_degrees": true,
+          "no_edges_over_90_degrees": true,
+          "roughness_p95_at_most_0_12": true,
+          "triangle_quality_at_least_0_15": true,
+          "max_edge_world_at_most_0_021601": true,
+          "height_world_at_least_0_05": true,
+          "height_retention_to_0_1_3_at_least_0_999999": true
+        },
+        "all_local_gates_pass": true
+      },
+      {
+        "case": "crossing",
+        "sphere_level": 6,
+        "rounds": 4,
+        "requested_dabs": 328,
+        "identical_rays": true,
+        "ray_inputs_sha256": "89e38b8525d94624a27c254d17a1224d1ceddbb209ed869f5fe348877f117e57",
+        "baseline_per_dab_flip_events": 0,
+        "optimized_per_dab_flip_events": 0,
+        "initial_metrics_identical": true,
+        "final_metrics_identical": true,
+        "baseline_final_metrics": {
+          "adjacent_angle_over_30_edges": 62,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 9.339417374258028,
+          "edited_patch_edge_length_p95_world": 0.02073658194269797,
+          "edited_patch_normal_laplacian_mean": 0.028308401946334678,
+          "edited_patch_normal_laplacian_p95": 0.0865600424566709,
+          "edited_vertices": 6643,
+          "max_adjacent_normal_angle_degrees": 59.999582913596136,
+          "max_edge_length_over_initial_median": 1.0998886598192015,
+          "max_edge_length_world": 0.021595858118933303,
+          "max_normalized_normal_laplacian": 0.34026264503984427,
+          "max_radial_height": 0.29782195231288666,
+          "max_vertex_displacement": 0.2975898382020008,
+          "min_edge_length_world": 0.0037247145818556445,
+          "min_triangle_quality": 0.27759830870090507,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2432004696185741
+        },
+        "optimized_final_metrics": {
+          "adjacent_angle_over_30_edges": 62,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 9.339417374258028,
+          "edited_patch_edge_length_p95_world": 0.02073658194269797,
+          "edited_patch_normal_laplacian_mean": 0.028308401946334678,
+          "edited_patch_normal_laplacian_p95": 0.0865600424566709,
+          "edited_vertices": 6643,
+          "max_adjacent_normal_angle_degrees": 59.999582913596136,
+          "max_edge_length_over_initial_median": 1.0998886598192015,
+          "max_edge_length_world": 0.021595858118933303,
+          "max_normalized_normal_laplacian": 0.34026264503984427,
+          "max_radial_height": 0.29782195231288666,
+          "max_vertex_displacement": 0.2975898382020008,
+          "min_edge_length_world": 0.0037247145818556445,
+          "min_triangle_quality": 0.27759830870090507,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2432004696185741
+        },
+        "baseline_height_retention": 1.0,
+        "final_obj_byte_identical": true,
+        "baseline_obj_sha256": "28d3f32eb86e3b9e244e5c19fccb6b8c8b8ea93bc489bcc2426bb1dfcccea08a",
+        "optimized_obj_sha256": "28d3f32eb86e3b9e244e5c19fccb6b8c8b8ea93bc489bcc2426bb1dfcccea08a",
+        "structure_valid": true,
+        "local_gates": {
+          "no_existing_face_inversion_events": true,
+          "no_edges_over_60_degrees": true,
+          "no_edges_over_90_degrees": true,
+          "roughness_p95_at_most_0_12": true,
+          "triangle_quality_at_least_0_15": true,
+          "max_edge_world_at_most_0_021601": true,
+          "height_world_at_least_0_05": true,
+          "height_retention_to_0_1_3_at_least_0_999999": true
+        },
+        "all_local_gates_pass": true
+      },
+      {
+        "case": "crossing",
+        "sphere_level": 6,
+        "rounds": 8,
+        "requested_dabs": 656,
+        "identical_rays": true,
+        "ray_inputs_sha256": "fab0c7213fd93b0d4c2671e32046d5ba78103bbf5725de64331d861d10af04ca",
+        "baseline_per_dab_flip_events": 0,
+        "optimized_per_dab_flip_events": 0,
+        "initial_metrics_identical": true,
+        "final_metrics_identical": true,
+        "baseline_final_metrics": {
+          "adjacent_angle_over_30_edges": 75,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 10.128383491790423,
+          "edited_patch_edge_length_p95_world": 0.02059436616617135,
+          "edited_patch_normal_laplacian_mean": 0.02602277907598549,
+          "edited_patch_normal_laplacian_p95": 0.08663504252312891,
+          "edited_vertices": 9378,
+          "max_adjacent_normal_angle_degrees": 59.999938371492775,
+          "max_edge_length_over_initial_median": 1.0998968320969391,
+          "max_edge_length_world": 0.021596018578220667,
+          "max_normalized_normal_laplacian": 0.3500057307908096,
+          "max_radial_height": 0.5023070292190914,
+          "max_vertex_displacement": 0.5002376223830751,
+          "min_edge_length_world": 0.0025514074544891697,
+          "min_triangle_quality": 0.21944998396408844,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2347539710314126
+        },
+        "optimized_final_metrics": {
+          "adjacent_angle_over_30_edges": 75,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 10.128383491790423,
+          "edited_patch_edge_length_p95_world": 0.02059436616617135,
+          "edited_patch_normal_laplacian_mean": 0.02602277907598549,
+          "edited_patch_normal_laplacian_p95": 0.08663504252312891,
+          "edited_vertices": 9378,
+          "max_adjacent_normal_angle_degrees": 59.999938371492775,
+          "max_edge_length_over_initial_median": 1.0998968320969391,
+          "max_edge_length_world": 0.021596018578220667,
+          "max_normalized_normal_laplacian": 0.3500057307908096,
+          "max_radial_height": 0.5023070292190914,
+          "max_vertex_displacement": 0.5002376223830751,
+          "min_edge_length_world": 0.0025514074544891697,
+          "min_triangle_quality": 0.21944998396408844,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2347539710314126
+        },
+        "baseline_height_retention": 1.0,
+        "final_obj_byte_identical": true,
+        "baseline_obj_sha256": "5c851e3a644a88bf3b5fee01680ce46f58f88f0476fcabe85e675d7fb6c7558c",
+        "optimized_obj_sha256": "5c851e3a644a88bf3b5fee01680ce46f58f88f0476fcabe85e675d7fb6c7558c",
+        "structure_valid": true,
+        "local_gates": {
+          "no_existing_face_inversion_events": true,
+          "no_edges_over_60_degrees": true,
+          "no_edges_over_90_degrees": true,
+          "roughness_p95_at_most_0_12": true,
+          "triangle_quality_at_least_0_15": true,
+          "max_edge_world_at_most_0_021601": true,
+          "height_world_at_least_0_05": true,
+          "height_retention_to_0_1_3_at_least_0_999999": true
+        },
+        "all_local_gates_pass": true
+      },
+      {
+        "case": "loops",
+        "sphere_level": 6,
+        "rounds": 4,
+        "requested_dabs": 260,
+        "identical_rays": true,
+        "ray_inputs_sha256": "d0992442dad6413f2138db937255c260ac787e4c2f59dadcc9cdb5404f5b9c2e",
+        "baseline_per_dab_flip_events": 0,
+        "optimized_per_dab_flip_events": 0,
+        "initial_metrics_identical": true,
+        "final_metrics_identical": true,
+        "baseline_final_metrics": {
+          "adjacent_angle_over_30_edges": 43,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 10.532533422710358,
+          "edited_patch_edge_length_p95_world": 0.02057353964713513,
+          "edited_patch_normal_laplacian_mean": 0.030298205200515484,
+          "edited_patch_normal_laplacian_p95": 0.09471563027021661,
+          "edited_vertices": 7443,
+          "max_adjacent_normal_angle_degrees": 59.99937764058528,
+          "max_edge_length_over_initial_median": 1.1000025072747073,
+          "max_edge_length_world": 0.02159809346655177,
+          "max_normalized_normal_laplacian": 0.30842068234751135,
+          "max_radial_height": 0.20685883040305075,
+          "max_vertex_displacement": 0.20583650801108633,
+          "min_edge_length_world": 0.0034232717333655795,
+          "min_triangle_quality": 0.3494088280340159,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2470644822456982
+        },
+        "optimized_final_metrics": {
+          "adjacent_angle_over_30_edges": 43,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 10.532533422710358,
+          "edited_patch_edge_length_p95_world": 0.02057353964713513,
+          "edited_patch_normal_laplacian_mean": 0.030298205200515484,
+          "edited_patch_normal_laplacian_p95": 0.09471563027021661,
+          "edited_vertices": 7443,
+          "max_adjacent_normal_angle_degrees": 59.99937764058528,
+          "max_edge_length_over_initial_median": 1.1000025072747073,
+          "max_edge_length_world": 0.02159809346655177,
+          "max_normalized_normal_laplacian": 0.30842068234751135,
+          "max_radial_height": 0.20685883040305075,
+          "max_vertex_displacement": 0.20583650801108633,
+          "min_edge_length_world": 0.0034232717333655795,
+          "min_triangle_quality": 0.3494088280340159,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2470644822456982
+        },
+        "baseline_height_retention": 1.0,
+        "final_obj_byte_identical": true,
+        "baseline_obj_sha256": "53c05030be967656b33590170b922630cae58e63b5de24bb051cd0bcb72e659d",
+        "optimized_obj_sha256": "53c05030be967656b33590170b922630cae58e63b5de24bb051cd0bcb72e659d",
+        "structure_valid": true,
+        "local_gates": {
+          "no_existing_face_inversion_events": true,
+          "no_edges_over_60_degrees": true,
+          "no_edges_over_90_degrees": true,
+          "roughness_p95_at_most_0_12": true,
+          "triangle_quality_at_least_0_15": true,
+          "max_edge_world_at_most_0_021601": true,
+          "height_world_at_least_0_05": true,
+          "height_retention_to_0_1_3_at_least_0_999999": true
+        },
+        "all_local_gates_pass": true
+      },
+      {
+        "case": "loops",
+        "sphere_level": 6,
+        "rounds": 8,
+        "requested_dabs": 520,
+        "identical_rays": true,
+        "ray_inputs_sha256": "ad4c2d861915c5f045f57e4fc291f1ac3a3b6bff6ad96eb521ab74d1b3428d96",
+        "baseline_per_dab_flip_events": 0,
+        "optimized_per_dab_flip_events": 0,
+        "initial_metrics_identical": true,
+        "final_metrics_identical": true,
+        "baseline_final_metrics": {
+          "adjacent_angle_over_30_edges": 59,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 10.17498103181985,
+          "edited_patch_edge_length_p95_world": 0.020406604320894684,
+          "edited_patch_normal_laplacian_mean": 0.025587462406686426,
+          "edited_patch_normal_laplacian_p95": 0.09770082520726155,
+          "edited_vertices": 11104,
+          "max_adjacent_normal_angle_degrees": 59.99999790390413,
+          "max_edge_length_over_initial_median": 1.0999250668321254,
+          "max_edge_length_world": 0.02159657295554756,
+          "max_normalized_normal_laplacian": 0.3143717145621783,
+          "max_radial_height": 0.33679311788097976,
+          "max_vertex_displacement": 0.337609130899943,
+          "min_edge_length_world": 0.002798588169617146,
+          "min_triangle_quality": 0.20996666010595702,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2323727787613206
+        },
+        "optimized_final_metrics": {
+          "adjacent_angle_over_30_edges": 59,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 10.17498103181985,
+          "edited_patch_edge_length_p95_world": 0.020406604320894684,
+          "edited_patch_normal_laplacian_mean": 0.025587462406686426,
+          "edited_patch_normal_laplacian_p95": 0.09770082520726155,
+          "edited_vertices": 11104,
+          "max_adjacent_normal_angle_degrees": 59.99999790390413,
+          "max_edge_length_over_initial_median": 1.0999250668321254,
+          "max_edge_length_world": 0.02159657295554756,
+          "max_normalized_normal_laplacian": 0.3143717145621783,
+          "max_radial_height": 0.33679311788097976,
+          "max_vertex_displacement": 0.337609130899943,
+          "min_edge_length_world": 0.002798588169617146,
+          "min_triangle_quality": 0.20996666010595702,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2323727787613206
+        },
+        "baseline_height_retention": 1.0,
+        "final_obj_byte_identical": true,
+        "baseline_obj_sha256": "00d5f273b2e77fe8653b19e8d98f6b7dd5e4c25339d3a330ef59b9ce3beca56e",
+        "optimized_obj_sha256": "00d5f273b2e77fe8653b19e8d98f6b7dd5e4c25339d3a330ef59b9ce3beca56e",
+        "structure_valid": true,
+        "local_gates": {
+          "no_existing_face_inversion_events": true,
+          "no_edges_over_60_degrees": true,
+          "no_edges_over_90_degrees": true,
+          "roughness_p95_at_most_0_12": true,
+          "triangle_quality_at_least_0_15": true,
+          "max_edge_world_at_most_0_021601": true,
+          "height_world_at_least_0_05": true,
+          "height_retention_to_0_1_3_at_least_0_999999": true
+        },
+        "all_local_gates_pass": true
+      },
+      {
+        "case": "silhouette_tilted",
+        "sphere_level": 6,
+        "rounds": 4,
+        "requested_dabs": 164,
+        "identical_rays": true,
+        "ray_inputs_sha256": "8fb5eb1704f4e87b21d8365f27a5c41209644c1a7d259b2c3e32b6c948c703a6",
+        "baseline_per_dab_flip_events": 0,
+        "optimized_per_dab_flip_events": 0,
+        "initial_metrics_identical": true,
+        "final_metrics_identical": true,
+        "baseline_final_metrics": {
+          "adjacent_angle_over_30_edges": 12,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 9.643476812668045,
+          "edited_patch_edge_length_p95_world": 0.020463095481916323,
+          "edited_patch_normal_laplacian_mean": 0.027033027813984634,
+          "edited_patch_normal_laplacian_p95": 0.07602601760950671,
+          "edited_vertices": 5134,
+          "max_adjacent_normal_angle_degrees": 56.71466439196362,
+          "max_edge_length_over_initial_median": 1.0989569587036416,
+          "max_edge_length_world": 0.0215775645535608,
+          "max_normalized_normal_laplacian": 0.27957556378241033,
+          "max_radial_height": 0.18856279436036116,
+          "max_vertex_displacement": 0.20090465187785855,
+          "min_edge_length_world": 0.003151681340856967,
+          "min_triangle_quality": 0.3561746968871018,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2430097353324145
+        },
+        "optimized_final_metrics": {
+          "adjacent_angle_over_30_edges": 12,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 9.643476812668045,
+          "edited_patch_edge_length_p95_world": 0.020463095481916323,
+          "edited_patch_normal_laplacian_mean": 0.027033027813984634,
+          "edited_patch_normal_laplacian_p95": 0.07602601760950671,
+          "edited_vertices": 5134,
+          "max_adjacent_normal_angle_degrees": 56.71466439196362,
+          "max_edge_length_over_initial_median": 1.0989569587036416,
+          "max_edge_length_world": 0.0215775645535608,
+          "max_normalized_normal_laplacian": 0.27957556378241033,
+          "max_radial_height": 0.18856279436036116,
+          "max_vertex_displacement": 0.20090465187785855,
+          "min_edge_length_world": 0.003151681340856967,
+          "min_triangle_quality": 0.3561746968871018,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2430097353324145
+        },
+        "baseline_height_retention": 1.0,
+        "final_obj_byte_identical": true,
+        "baseline_obj_sha256": "4c490492f982a701b0d5ba3b5f5db469da9b6d36e794e8541629df57e785ab22",
+        "optimized_obj_sha256": "4c490492f982a701b0d5ba3b5f5db469da9b6d36e794e8541629df57e785ab22",
+        "structure_valid": true,
+        "local_gates": {
+          "no_existing_face_inversion_events": true,
+          "no_edges_over_60_degrees": true,
+          "no_edges_over_90_degrees": true,
+          "roughness_p95_at_most_0_12": true,
+          "triangle_quality_at_least_0_15": true,
+          "max_edge_world_at_most_0_021601": true,
+          "height_world_at_least_0_05": true,
+          "height_retention_to_0_1_3_at_least_0_999999": true
+        },
+        "all_local_gates_pass": true
+      },
+      {
+        "case": "silhouette_tilted",
+        "sphere_level": 6,
+        "rounds": 8,
+        "requested_dabs": 328,
+        "identical_rays": true,
+        "ray_inputs_sha256": "19f4d85019f8d1d0847964ecdbc6f394f7f9d7979fb007f11a3b52b24c77f41d",
+        "baseline_per_dab_flip_events": 0,
+        "optimized_per_dab_flip_events": 0,
+        "initial_metrics_identical": true,
+        "final_metrics_identical": true,
+        "baseline_final_metrics": {
+          "adjacent_angle_over_30_edges": 14,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 10.893545684481312,
+          "edited_patch_edge_length_p95_world": 0.02038779263440827,
+          "edited_patch_normal_laplacian_mean": 0.02590090665200903,
+          "edited_patch_normal_laplacian_p95": 0.09326329504502634,
+          "edited_vertices": 7964,
+          "max_adjacent_normal_angle_degrees": 55.17866892857364,
+          "max_edge_length_over_initial_median": 1.1000867119066506,
+          "max_edge_length_world": 0.021599746789611494,
+          "max_normalized_normal_laplacian": 0.23394813974511078,
+          "max_radial_height": 0.2662179059131533,
+          "max_vertex_displacement": 0.31189756003134367,
+          "min_edge_length_world": 0.0028128438960303382,
+          "min_triangle_quality": 0.1986754244546394,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2411361764223083
+        },
+        "optimized_final_metrics": {
+          "adjacent_angle_over_30_edges": 14,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 10.893545684481312,
+          "edited_patch_edge_length_p95_world": 0.02038779263440827,
+          "edited_patch_normal_laplacian_mean": 0.02590090665200903,
+          "edited_patch_normal_laplacian_p95": 0.09326329504502634,
+          "edited_vertices": 7964,
+          "max_adjacent_normal_angle_degrees": 55.17866892857364,
+          "max_edge_length_over_initial_median": 1.1000867119066506,
+          "max_edge_length_world": 0.021599746789611494,
+          "max_normalized_normal_laplacian": 0.23394813974511078,
+          "max_radial_height": 0.2662179059131533,
+          "max_vertex_displacement": 0.31189756003134367,
+          "min_edge_length_world": 0.0028128438960303382,
+          "min_triangle_quality": 0.1986754244546394,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2411361764223083
+        },
+        "baseline_height_retention": 1.0,
+        "final_obj_byte_identical": true,
+        "baseline_obj_sha256": "2653c5b7d01b45e2bb78be3deb9fa15f5268089edac62535686be06d7330b518",
+        "optimized_obj_sha256": "2653c5b7d01b45e2bb78be3deb9fa15f5268089edac62535686be06d7330b518",
+        "structure_valid": true,
+        "local_gates": {
+          "no_existing_face_inversion_events": true,
+          "no_edges_over_60_degrees": true,
+          "no_edges_over_90_degrees": true,
+          "roughness_p95_at_most_0_12": true,
+          "triangle_quality_at_least_0_15": true,
+          "max_edge_world_at_most_0_021601": true,
+          "height_world_at_least_0_05": true,
+          "height_retention_to_0_1_3_at_least_0_999999": true
+        },
+        "all_local_gates_pass": true
+      },
+      {
+        "case": "crossing_finer",
+        "sphere_level": 7,
+        "rounds": 4,
+        "requested_dabs": 328,
+        "identical_rays": true,
+        "ray_inputs_sha256": "89e38b8525d94624a27c254d17a1224d1ceddbb209ed869f5fe348877f117e57",
+        "baseline_per_dab_flip_events": 0,
+        "optimized_per_dab_flip_events": 0,
+        "initial_metrics_identical": true,
+        "final_metrics_identical": true,
+        "baseline_final_metrics": {
+          "adjacent_angle_over_30_edges": 101,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 6.380057791147257,
+          "edited_patch_edge_length_p95_world": 0.016682493779192495,
+          "edited_patch_normal_laplacian_mean": 0.02014168701285543,
+          "edited_patch_normal_laplacian_p95": 0.05250368929249894,
+          "edited_vertices": 11338,
+          "max_adjacent_normal_angle_degrees": 59.99996351137896,
+          "max_edge_length_over_initial_median": 2.198797979424335,
+          "max_edge_length_world": 0.021586347013792005,
+          "max_normalized_normal_laplacian": 0.33158675000916105,
+          "max_radial_height": 0.3002133012914874,
+          "max_vertex_displacement": 0.3010887717735516,
+          "min_edge_length_world": 0.005514558559486087,
+          "min_triangle_quality": 0.5428560387767499,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 2.4467180982874934
+        },
+        "optimized_final_metrics": {
+          "adjacent_angle_over_30_edges": 101,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 6.380057791147257,
+          "edited_patch_edge_length_p95_world": 0.016682493779192495,
+          "edited_patch_normal_laplacian_mean": 0.02014168701285543,
+          "edited_patch_normal_laplacian_p95": 0.05250368929249894,
+          "edited_vertices": 11338,
+          "max_adjacent_normal_angle_degrees": 59.99996351137896,
+          "max_edge_length_over_initial_median": 2.198797979424335,
+          "max_edge_length_world": 0.021586347013792005,
+          "max_normalized_normal_laplacian": 0.33158675000916105,
+          "max_radial_height": 0.3002133012914874,
+          "max_vertex_displacement": 0.3010887717735516,
+          "min_edge_length_world": 0.005514558559486087,
+          "min_triangle_quality": 0.5428560387767499,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 2.4467180982874934
+        },
+        "baseline_height_retention": 1.0,
+        "final_obj_byte_identical": true,
+        "baseline_obj_sha256": "a8de780b2acbc3fb83f4881f4a1a5af6ac16f377c652c994f16df6c8df80f641",
+        "optimized_obj_sha256": "a8de780b2acbc3fb83f4881f4a1a5af6ac16f377c652c994f16df6c8df80f641",
+        "structure_valid": true,
+        "local_gates": {
+          "no_existing_face_inversion_events": true,
+          "no_edges_over_60_degrees": true,
+          "no_edges_over_90_degrees": true,
+          "roughness_p95_at_most_0_12": true,
+          "triangle_quality_at_least_0_15": true,
+          "max_edge_world_at_most_0_021601": true,
+          "height_world_at_least_0_05": true,
+          "height_retention_to_0_1_3_at_least_0_999999": true
+        },
+        "all_local_gates_pass": true
+      },
+      {
+        "case": "repeated_point_tip",
+        "sphere_level": 6,
+        "rounds": 64,
+        "requested_dabs": 64,
+        "identical_rays": true,
+        "ray_inputs_sha256": "b9884e752c8e73d78c53f05701aed59dfd26b91554bb02df7f785df9739ab125",
+        "baseline_per_dab_flip_events": 0,
+        "optimized_per_dab_flip_events": 0,
+        "initial_metrics_identical": true,
+        "final_metrics_identical": true,
+        "baseline_final_metrics": {
+          "adjacent_angle_over_30_edges": 0,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 9.467326724483135,
+          "edited_patch_edge_length_p95_world": 0.020718666215186015,
+          "edited_patch_normal_laplacian_mean": 0.02654537424769534,
+          "edited_patch_normal_laplacian_p95": 0.08446494362907797,
+          "edited_vertices": 2534,
+          "max_adjacent_normal_angle_degrees": 26.59956248511614,
+          "max_edge_length_over_initial_median": 1.1000834471496077,
+          "max_edge_length_world": 0.021599682687459643,
+          "max_normalized_normal_laplacian": 0.25848983378579204,
+          "max_radial_height": 0.2768608410398785,
+          "max_vertex_displacement": 0.2791890838434507,
+          "min_edge_length_world": 0.0033093759945854247,
+          "min_triangle_quality": 0.2752961971296056,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2312626197243104
+        },
+        "optimized_final_metrics": {
+          "adjacent_angle_over_30_edges": 0,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 9.467326724483135,
+          "edited_patch_edge_length_p95_world": 0.020718666215186015,
+          "edited_patch_normal_laplacian_mean": 0.02654537424769534,
+          "edited_patch_normal_laplacian_p95": 0.08446494362907797,
+          "edited_vertices": 2534,
+          "max_adjacent_normal_angle_degrees": 26.59956248511614,
+          "max_edge_length_over_initial_median": 1.1000834471496077,
+          "max_edge_length_world": 0.021599682687459643,
+          "max_normalized_normal_laplacian": 0.25848983378579204,
+          "max_radial_height": 0.2768608410398785,
+          "max_vertex_displacement": 0.2791890838434507,
+          "min_edge_length_world": 0.0033093759945854247,
+          "min_triangle_quality": 0.2752961971296056,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2312626197243104
+        },
+        "baseline_height_retention": 1.0,
+        "final_obj_byte_identical": true,
+        "baseline_obj_sha256": "c4161095f9e8d74ea1d36d81449a079ed7a5798a34494e3b38128cca02af69a8",
+        "optimized_obj_sha256": "c4161095f9e8d74ea1d36d81449a079ed7a5798a34494e3b38128cca02af69a8",
+        "structure_valid": true,
+        "local_gates": {
+          "no_existing_face_inversion_events": true,
+          "no_edges_over_60_degrees": true,
+          "no_edges_over_90_degrees": true,
+          "roughness_p95_at_most_0_12": true,
+          "triangle_quality_at_least_0_15": true,
+          "max_edge_world_at_most_0_021601": true,
+          "height_world_at_least_0_05": true,
+          "height_retention_to_0_1_3_at_least_0_999999": true
+        },
+        "all_local_gates_pass": true
+      },
+      {
+        "case": "repeated_point_tip",
+        "sphere_level": 6,
+        "rounds": 128,
+        "requested_dabs": 128,
+        "identical_rays": true,
+        "ray_inputs_sha256": "0382fa871dc8199fa400d3ad9e3ff22ea2302dd7f49bfb1b84b84798fb7eb7df",
+        "baseline_per_dab_flip_events": 0,
+        "optimized_per_dab_flip_events": 0,
+        "initial_metrics_identical": true,
+        "final_metrics_identical": true,
+        "baseline_final_metrics": {
+          "adjacent_angle_over_30_edges": 0,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 9.634627505520884,
+          "edited_patch_edge_length_p95_world": 0.020599461567742325,
+          "edited_patch_normal_laplacian_mean": 0.023166966619997044,
+          "edited_patch_normal_laplacian_p95": 0.06456936630112922,
+          "edited_vertices": 3394,
+          "max_adjacent_normal_angle_degrees": 26.502621990867656,
+          "max_edge_length_over_initial_median": 1.1000834471496077,
+          "max_edge_length_world": 0.021599682687459643,
+          "max_normalized_normal_laplacian": 0.29897392451888744,
+          "max_radial_height": 0.37974568594674674,
+          "max_vertex_displacement": 0.38380879348324887,
+          "min_edge_length_world": 0.002400972353705415,
+          "min_triangle_quality": 0.22540662203706516,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2312626197243104
+        },
+        "optimized_final_metrics": {
+          "adjacent_angle_over_30_edges": 0,
+          "adjacent_angle_over_60_edges": 0,
+          "adjacent_angle_over_90_edges": 0,
+          "edited_patch_adjacent_angle_p95_degrees": 9.634627505520884,
+          "edited_patch_edge_length_p95_world": 0.020599461567742325,
+          "edited_patch_normal_laplacian_mean": 0.023166966619997044,
+          "edited_patch_normal_laplacian_p95": 0.06456936630112922,
+          "edited_vertices": 3394,
+          "max_adjacent_normal_angle_degrees": 26.502621990867656,
+          "max_edge_length_over_initial_median": 1.1000834471496077,
+          "max_edge_length_world": 0.021599682687459643,
+          "max_normalized_normal_laplacian": 0.29897392451888744,
+          "max_radial_height": 0.37974568594674674,
+          "max_vertex_displacement": 0.38380879348324887,
+          "min_edge_length_world": 0.002400972353705415,
+          "min_triangle_quality": 0.22540662203706516,
+          "nonfinite_vertices": 0,
+          "original_vertex_edge_max_stretch": 1.2312626197243104
+        },
+        "baseline_height_retention": 1.0,
+        "final_obj_byte_identical": true,
+        "baseline_obj_sha256": "ada9bf9620977f07a5c820ec3b16440ba15e80820dc541ff25380748978f5f09",
+        "optimized_obj_sha256": "ada9bf9620977f07a5c820ec3b16440ba15e80820dc541ff25380748978f5f09",
+        "structure_valid": true,
+        "local_gates": {
+          "no_existing_face_inversion_events": true,
+          "no_edges_over_60_degrees": true,
+          "no_edges_over_90_degrees": true,
+          "roughness_p95_at_most_0_12": true,
+          "triangle_quality_at_least_0_15": true,
+          "max_edge_world_at_most_0_021601": true,
+          "height_world_at_least_0_05": true,
+          "height_retention_to_0_1_3_at_least_0_999999": true
+        },
+        "all_local_gates_pass": true
+      }
+    ]
+  },
+  "limitations": [
+    "No browser frame-rate, native UI responsiveness, tablet-pressure or full-host-matrix claim from these native probes. App scheduling/rendering and actual headless WebGL timings are separate evidence.",
+    "No new reference ZBrush appearance/brush/performance parity claim.",
+    "No universal global self-intersection proof or repair of pre-damaged meshes.",
+    "Final geometry equality covers these12 fixed paths, four of which additionally compare every serialized mesh field; it does not establish equality for all edits/topologies/settings.",
+    "Earlier failed Draw quality evidence and the0.1.3 performance baseline are preserved; existing historical records are unchanged."
+  ]
+}

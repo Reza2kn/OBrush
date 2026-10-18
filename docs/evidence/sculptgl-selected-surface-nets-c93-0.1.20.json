@@ -1,0 +1,400 @@
+{
+  "schema_version": 1,
+  "scope": "C93 paired two selected overlapping colored/material OBJ boxes; Smooth Surface Nets and Block resolution16",
+  "reference": {
+    "upstream_commit": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "pinned_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "runs": {
+      "nets": {
+        "path": ".artifacts/sculptgl-reference-runtime/c93-nets-fusion-ba732b7a-57c9-457b-b9b0-a16ea242300d/result.json",
+        "sha256": "342e51eebfb1573d67eef51a4fcb5c9a0808f25645bfd5c42b9ad5c6b572ca77",
+        "bytes": 66045
+      },
+      "block": {
+        "path": ".artifacts/sculptgl-reference-runtime/c93-block-fusion-412d2ec2-dda3-45e0-9aef-cea2dfb563e5/result.json",
+        "sha256": "82398b4bbb3954532f4b5723863e8f8e496e68c82044d29dce3c71f8d78a76bc",
+        "bytes": 67663
+      }
+    }
+  },
+  "fixture": [
+    {
+      "path": "crates/obrush-core/tests/fixtures/independent-fusion-left.obj",
+      "sha256": "0466ebbdfabf3bc74b0d312d46fe4a89cf4391c2c8c65a14a8ab029650f08d83",
+      "bytes": 339
+    },
+    {
+      "path": "crates/obrush-core/tests/fixtures/independent-fusion-right.obj",
+      "sha256": "9600c7b964ac0b35ebafda32d889f96bda59799ecc0e65092b5fa598ba924dbf",
+      "bytes": 340
+    }
+  ],
+  "parameters": {
+    "selection_order": [
+      "right",
+      "left"
+    ],
+    "resolution": 16,
+    "modes": [
+      "smooth_surface_nets",
+      "block"
+    ],
+    "reference_selection": "public programmatic multi-selection then visible remesh controls",
+    "obrush_selection": "visible inspector additive selection and selected fusion buttons"
+  },
+  "source": [
+    {
+      "path": "crates/obrush-core/src/remesh.rs",
+      "sha256": "7020eb20cb0b80a0079719642a08f91c34fc7d5680b81e7ba12ab7eb6bc39421",
+      "bytes": 70414
+    },
+    {
+      "path": "crates/obrush-core/src/document.rs",
+      "sha256": "4ea2449dad591f10f4ecdf7edd9b97d1b684efe1bb759e436f27e54549dd63be",
+      "bytes": 166142
+    },
+    {
+      "path": "crates/obrush-core/tests/remesh.rs",
+      "sha256": "c0033ca3dcea0908054cece4002e138b1dc8883d946ac4fc204335ef0cc32c7d",
+      "bytes": 31286
+    },
+    {
+      "path": "crates/obrush-core/examples/mc_selected_fixture.rs",
+      "sha256": "048297872488a56beb81961bb5d717bea33b04edac624b2f66b698e4ddc61087",
+      "bytes": 2204
+    },
+    {
+      "path": "crates/obrush-app/src/app.rs",
+      "sha256": "01d0133d1bf6fd3b05887144822b0eeea42d10f2c142b6fba866f5ab0ed99063",
+      "bytes": 496894
+    },
+    {
+      "path": "scripts/check-sculptgl-mc.mjs",
+      "sha256": "35da006cd43c41240f1fcfb5558effdd3ca096ba306a8ad3479d42da18fe23d2",
+      "bytes": 61889
+    },
+    {
+      "path": "scripts/check-mc-browser.mjs",
+      "sha256": "93c2605c12f3d961931d18357f68e1642934671f15000150d7e873a4b5570053",
+      "bytes": 123921
+    },
+    {
+      "path": "scripts/compare-selected-nets.py",
+      "sha256": "a182908f51132c156ffb13b165bc2a14b0e476484f17a8fd488a83ceaa1c991c",
+      "bytes": 4462
+    }
+  ],
+  "comparison": {
+    "initial_failed_rgb": {
+      "nets": {
+        "path": ".artifacts/c93-nets-comparison.json",
+        "sha256": "e69583883973a35f156ce95e6a6622e3eed668c9eec1820be151eb67484f3841",
+        "bytes": 928
+      },
+      "block": {
+        "path": ".artifacts/c93-block-comparison.json",
+        "sha256": "9538041d081d3ff2702877d8f57f951df09f471e7af161a43f59e7caaeada596",
+        "bytes": 931
+      }
+    },
+    "native_corrected": {
+      "nets": {
+        "path": ".artifacts/c93-nets-comparison-2.json",
+        "sha256": "e450ae628749d8d78828d65ba3e63c888155cc9385df744c46e2d46af9d02fca",
+        "bytes": 1142
+      },
+      "block": {
+        "path": ".artifacts/c93-block-comparison-2.json",
+        "sha256": "1755d8ec96ce20af8630defc0eb68790ee87ca850d54e12addb53b495b455e32",
+        "bytes": 1145
+      }
+    },
+    "browser_final": {
+      "nets": {
+        "path": ".artifacts/c93-nets-browser-final-comparison.json",
+        "sha256": "4a2000f15884f10f857a8b9472f15b0250d9c96b24e5388c73eb3bb6e69768b7",
+        "bytes": 1297
+      },
+      "block": {
+        "path": ".artifacts/c93-block-browser-final-comparison.json",
+        "sha256": "274bac7dab4c6bb709167efd3be753fb6391ad0f6b9d6f889557cdf08ff73fc1",
+        "bytes": 1301
+      }
+    },
+    "summary": {
+      "nets": {
+        "native": {
+          "reference": {
+            "path": ".artifacts/sculptgl-reference-runtime/c93-nets-fusion-ba732b7a-57c9-457b-b9b0-a16ea242300d/nets-fusion-false-after.json",
+            "sha256": "bf02e90263b01f764d73de29c478a412494ad7356eb3950b67dfcfdcd2061c42"
+          },
+          "obrush": {
+            "path": ".artifacts/c93-nets-core-2.json",
+            "sha256": "b71991541c37c0e367897a18774fce7ac46a54e2cfdad97790acc726535826a4"
+          },
+          "vertices": 1058,
+          "reference_quads": 1056,
+          "obrush_quads": 1056,
+          "matched_oriented_quads": 1056,
+          "unmatched_reference_oriented_quads": 0,
+          "unmatched_obrush_oriented_quads": 0,
+          "world_position_maximum": 1.2529213703389315e-07,
+          "world_position_rms": 7.93619917314891e-08,
+          "rgb": {
+            "values": 3174,
+            "maximum": 0.0,
+            "rms": 0.0
+          },
+          "roughness_metallic": {
+            "values": 2116,
+            "maximum": 0.0,
+            "rms": 0.0
+          },
+          "unmasked_weight": {
+            "values": 1058,
+            "maximum": 0.0,
+            "rms": 0.0
+          },
+          "gates": {
+            "one_to_one_vertex_map": true,
+            "all_oriented_quads": true,
+            "positions_within_2e_7": true,
+            "rgb_within_save_rounding": true,
+            "material_within_save_rounding": true,
+            "unmasked_exact": true
+          }
+        },
+        "browser-final": {
+          "reference": {
+            "path": ".artifacts/sculptgl-reference-runtime/c93-nets-fusion-ba732b7a-57c9-457b-b9b0-a16ea242300d/nets-fusion-false-after.json",
+            "sha256": "bf02e90263b01f764d73de29c478a412494ad7356eb3950b67dfcfdcd2061c42"
+          },
+          "obrush": {
+            "path": ".artifacts/mask-filter-browser/c93-final-nets-96c29970-7b79-4ec7-be87-3ac7030e9170/nets-fusion-false-after.obrush",
+            "sha256": "f7a3602d65196e14f53f9de214ba7f874e8488a2a3a32ca06ec492f1f7859715"
+          },
+          "vertices": 1058,
+          "reference_quads": 1056,
+          "obrush_quads": 1056,
+          "matched_oriented_quads": 1056,
+          "unmatched_reference_oriented_quads": 0,
+          "unmatched_obrush_oriented_quads": 0,
+          "world_position_maximum": 1.461773076125217e-07,
+          "world_position_rms": 7.701678175151223e-08,
+          "rgb": {
+            "values": 3174,
+            "maximum": 2.7055358842176247e-08,
+            "rms": 4.524426786754661e-09
+          },
+          "roughness_metallic": {
+            "values": 2116,
+            "maximum": 2.384185793236071e-08,
+            "rms": 1.737759083115635e-08
+          },
+          "unmasked_weight": {
+            "values": 1058,
+            "maximum": 0.0,
+            "rms": 0.0
+          },
+          "gates": {
+            "one_to_one_vertex_map": true,
+            "all_oriented_quads": true,
+            "positions_within_2e_7": true,
+            "rgb_within_save_rounding": true,
+            "material_within_save_rounding": true,
+            "unmasked_exact": true
+          }
+        }
+      },
+      "block": {
+        "native": {
+          "reference": {
+            "path": ".artifacts/sculptgl-reference-runtime/c93-block-fusion-412d2ec2-dda3-45e0-9aef-cea2dfb563e5/block-fusion-false-after.json",
+            "sha256": "9521617ff173efe70039fd5d50e1ff6f5c17152a510e0e3a22bf67c638dd8cb0"
+          },
+          "obrush": {
+            "path": ".artifacts/c93-block-core-2.json",
+            "sha256": "c80b47f2174009d01b3d69deded395632b2ef16a54297b256ed24dfdb39c84c6"
+          },
+          "vertices": 1058,
+          "reference_quads": 1056,
+          "obrush_quads": 1056,
+          "matched_oriented_quads": 1056,
+          "unmatched_reference_oriented_quads": 0,
+          "unmatched_obrush_oriented_quads": 0,
+          "world_position_maximum": 1.737759081973225e-07,
+          "world_position_rms": 8.495833546071211e-08,
+          "rgb": {
+            "values": 3174,
+            "maximum": 0.0,
+            "rms": 0.0
+          },
+          "roughness_metallic": {
+            "values": 2116,
+            "maximum": 0.0,
+            "rms": 0.0
+          },
+          "unmasked_weight": {
+            "values": 1058,
+            "maximum": 0.0,
+            "rms": 0.0
+          },
+          "gates": {
+            "one_to_one_vertex_map": true,
+            "all_oriented_quads": true,
+            "positions_within_2e_7": true,
+            "rgb_within_save_rounding": true,
+            "material_within_save_rounding": true,
+            "unmasked_exact": true
+          }
+        },
+        "browser-final": {
+          "reference": {
+            "path": ".artifacts/sculptgl-reference-runtime/c93-block-fusion-412d2ec2-dda3-45e0-9aef-cea2dfb563e5/block-fusion-false-after.json",
+            "sha256": "9521617ff173efe70039fd5d50e1ff6f5c17152a510e0e3a22bf67c638dd8cb0"
+          },
+          "obrush": {
+            "path": ".artifacts/mask-filter-browser/c93-final-block-0c8042e4-ef21-4080-a547-8cc5384e3cf5/block-fusion-false-after.obrush",
+            "sha256": "ba5530500797b84016de159cf97bf85723fb5fef1c8e5c59c032d2832e811ccc"
+          },
+          "vertices": 1058,
+          "reference_quads": 1056,
+          "obrush_quads": 1056,
+          "matched_oriented_quads": 1056,
+          "unmatched_reference_oriented_quads": 0,
+          "unmatched_obrush_oriented_quads": 0,
+          "world_position_maximum": 1.891323773108724e-07,
+          "world_position_rms": 8.882498795924513e-08,
+          "rgb": {
+            "values": 3174,
+            "maximum": 2.7055358842176247e-08,
+            "rms": 4.524426786754661e-09
+          },
+          "roughness_metallic": {
+            "values": 2116,
+            "maximum": 2.384185793236071e-08,
+            "rms": 1.737759083115635e-08
+          },
+          "unmasked_weight": {
+            "values": 1058,
+            "maximum": 0.0,
+            "rms": 0.0
+          },
+          "gates": {
+            "one_to_one_vertex_map": true,
+            "all_oriented_quads": true,
+            "positions_within_2e_7": true,
+            "rgb_within_save_rounding": true,
+            "material_within_save_rounding": true,
+            "unmasked_exact": true
+          }
+        }
+      }
+    }
+  },
+  "browser": {
+    "nets": {
+      "path": ".artifacts/mask-filter-browser/c93-final-nets-96c29970-7b79-4ec7-be87-3ac7030e9170/result.json",
+      "sha256": "19aa1bd05b8b38c766b4f9339775406cbf2c001718ee7d1cbed8b4e0c2f60c82",
+      "bytes": 884164
+    },
+    "block": {
+      "path": ".artifacts/mask-filter-browser/c93-final-block-0c8042e4-ef21-4080-a547-8cc5384e3cf5/result.json",
+      "sha256": "18b9b6e82d1c3dfe4467b53251867ed0c8f4094c1e129ca1e1d6ac9c6d38cd59",
+      "bytes": 885452
+    }
+  },
+  "regression_browser": [
+    {
+      "path": ".artifacts/mask-filter-browser/c93-smooth-nets-regression-0bd1caee-5975-49b0-9f38-be1872da51e2/result.json",
+      "sha256": "ba633460ef976a0a22322b027337fc7a4b1145010bcc20f20ce1e8b5ca8bed99",
+      "bytes": 1098851
+    },
+    {
+      "path": ".artifacts/mask-filter-browser/c93-block-regression-e3938111-6939-4c0d-ac2c-aa290e4b9346/result.json",
+      "sha256": "11ffff4007f7bc8c8ea1042fcd1ca48c9d30611edea851bbbf44877810652e9b",
+      "bytes": 1086801
+    }
+  ],
+  "builds": {
+    "web_wasm": {
+      "path": "web/dist/pkg/obrush_app_bg.wasm",
+      "sha256": "884e597f989be35b96919ed57de98bcc57c9747774fe88dfc5be26ee329c76c8",
+      "bytes": 23421411
+    },
+    "macos_executable": {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/OBRush",
+      "sha256": "5f388381b1399e556005bd16c5f5a3b688891947ad417a0f733ab3f0871bb65e",
+      "bytes": 26755024
+    }
+  },
+  "checks": {
+    "cargo_fmt": "passed",
+    "core_remesh_tests": "passed final source: 23 remesh tests, zero failures",
+    "workspace_tests": "passed: 2,388 tests across 70 result blocks, one ignored, zero failures; compiled before final identifier-only rename",
+    "strict_native_clippy": "passed final source",
+    "strict_wasm_clippy": "passed final source",
+    "wasm_target_check": "passed final source",
+    "official_web_build": "passed",
+    "official_macos_package_and_signature": "passed",
+    "browser_visible_workflow": "passed both modes",
+    "live_8792_served_wasm": "same SHA-256 as official web build"
+  },
+  "limitations": [
+    "one overlapping box pair at one resolution",
+    "reference additive selection is programmatic",
+    "mixed UV and affine/source-origin selected parts unsupported",
+    "native GUI and physical pen unverified",
+    "sustained million-vertex responsiveness and production WebGPU integration open",
+    "complete SculptGL and ZBrush parity unverified"
+  ],
+  "check_logs": {
+    "workspace_tests": {
+      "path": ".artifacts/c93-tests.log",
+      "sha256": "8fb0b6092445ec6be0c16a15191e96547dde65877ba15420236473a3530ba9ac",
+      "bytes": 228881
+    },
+    "core_remesh_tests": {
+      "path": ".artifacts/c93-remesh-tests-final2.log",
+      "sha256": "c16d19def7a6a00f963ccbe7e9bd9756b817c360384febfcf0c3e3eff9ca61f7",
+      "bytes": 2073
+    },
+    "strict_native_clippy": {
+      "path": ".artifacts/c93-clippy-native-final2.log",
+      "sha256": "d6fd0fa348b853af3c212ed78b8d4b643be0ab5b8320850023dee42a883d2fcc",
+      "bytes": 485
+    },
+    "strict_wasm_clippy": {
+      "path": ".artifacts/c93-clippy-wasm-final2.log",
+      "sha256": "f8c5205d29029dab9a313565826e14f90bdee572c2e1b0073aaf38b804765eac",
+      "bytes": 433
+    },
+    "wasm_target_check": {
+      "path": ".artifacts/c93-wasm-check-final2.log",
+      "sha256": "15318748933bc1b5bfb25c3271264dbc1a433c5647e4ed06c1950ddd3a9c19c4",
+      "bytes": 326
+    },
+    "official_web_build": {
+      "path": ".artifacts/c93-build-web-final.log",
+      "sha256": "f81a4a2aad7752beb4bc9234ea4604f0a951e27507937c74c20585b5dd577d5b",
+      "bytes": 279
+    },
+    "official_macos_package": {
+      "path": ".artifacts/c93-package-macos-final.log",
+      "sha256": "f05e10409653183b264c098de09522b54f73a84cea970ff675e14fb1b9f413f7",
+      "bytes": 407
+    }
+  },
+  "retained_failed_checks": [
+    {
+      "path": ".artifacts/c93-clippy-native.log",
+      "sha256": "a988d8b0ea9b99f7494d9cfc9638cf08a64d6ad29692bbf39052b435b3993ba0",
+      "bytes": 1204
+    },
+    {
+      "path": ".artifacts/c93-clippy-wasm.log",
+      "sha256": "ab7fa9a5d99cf5f6c036f6a4e237d4d96806b9123ef493ba573d8aaac3f75bcf",
+      "bytes": 1152
+    }
+  ]
+}

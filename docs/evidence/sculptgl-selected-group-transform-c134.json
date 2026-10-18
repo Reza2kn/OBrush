@@ -1,0 +1,127 @@
+{
+  "scope": "C134 selected-group numeric world transform; local foundation only, no pinned SculptGL reference parity",
+  "reference": {
+    "name": "SculptGL",
+    "commit": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "runtime_compared": false
+  },
+  "fixture": {
+    "path": "crates/obrush-core/tests/fixtures/independent-affine-two-mesh.sgl",
+    "sha256": "99e107226fd5bdfeb687a4d92a61eebcec1abb2e910184e35aa58808ace105fd",
+    "bytes": 540
+  },
+  "source_changes": [
+    "crates/obrush-core/src/document.rs",
+    "crates/obrush-app/src/app.rs",
+    "crates/obrush-core/tests/document_scene_v7.rs"
+  ],
+  "parameters": {
+    "selected_ids": [
+      2,
+      1
+    ],
+    "active_id": 1,
+    "numeric_world_translation": [
+      0.25,
+      0,
+      0
+    ],
+    "rotation_degrees": [
+      0,
+      0,
+      0
+    ],
+    "uniform_scale": 1,
+    "pivot": "selection center"
+  },
+  "browser": {
+    "status": "PASS normal browser selected-group numeric transform and history",
+    "raw_result": ".artifacts/scene-group-transform-c134/root-1792286474040/result.json",
+    "raw_result_sha256": "d8d06ac73e45129bb74b9dde2bc743a0dc0d0d2cf41073fda6a36b249cc1a010",
+    "harness": ".artifacts/scene-group-transform-c134/root.mjs",
+    "harness_sha256": "b5e3c0059be3e90670f5678b1f8e5b53e3a46213bd1539fdfed8b96d953aa235",
+    "wasm_sha256": "05d0e2b1c9be4fb60a063896d89526cb1b545d17bb2b83fcb7808c44a7047e31",
+    "affine_max_errors": [
+      0,
+      0
+    ],
+    "local_mesh_unchanged": true,
+    "inactive_payload_unchanged": true,
+    "origins_unchanged": true,
+    "before_project": {
+      "sha256": "7806128a01d641f774943b3a708ce8afa9f9db7df8330bfa5336f84b4800542b",
+      "bytes": 3133
+    },
+    "after_project": {
+      "sha256": "76b898ab1c396e767faad0d4c82333235358aa0df975beb7cb73406d50e5be3e",
+      "bytes": 3135
+    },
+    "undo_project": {
+      "name": "independent-affine-two-mesh.obrush",
+      "sha256": "7806128a01d641f774943b3a708ce8afa9f9db7df8330bfa5336f84b4800542b",
+      "bytes": 3133
+    },
+    "redo_project": {
+      "sha256": "76b898ab1c396e767faad0d4c82333235358aa0df975beb7cb73406d50e5be3e",
+      "bytes": 3135
+    },
+    "revision_after": 4,
+    "selection_after": [
+      2,
+      1
+    ],
+    "active_after": 1,
+    "message": "Transformed 2 selected part(s). Levels, layers, target, paint and masks stay attached; one Undo restores them."
+  },
+  "checks": {
+    "fmt": "pass",
+    "workspace_all_targets": {
+      "status": "pass",
+      "summaries": 100,
+      "passed": 2462,
+      "failed": 0,
+      "ignored": 1,
+      "log": ".artifacts/scene-group-transform-c134/workspace-tests.log"
+    },
+    "strict_native_clippy": {
+      "status": "pass",
+      "log": ".artifacts/scene-group-transform-c134/clippy-native.log"
+    },
+    "strict_wasm_clippy": {
+      "status": "pass",
+      "log": ".artifacts/scene-group-transform-c134/clippy-wasm.log"
+    },
+    "official_web_build": {
+      "status": "pass",
+      "log": ".artifacts/scene-group-transform-c134-build-web.log"
+    },
+    "official_macos_package": {
+      "status": "pass",
+      "log": ".artifacts/scene-group-transform-c134/package-macos.log",
+      "codesign": "pass",
+      "executable_sha256": "0872266316b7ea59ad8e6e070192b0399c6a7093890e7fc3ae5b7b5e91612d2d",
+      "native_gui_interaction": "untested"
+    },
+    "existing_transform_browser_regression": {
+      "status": "passed eight transform browser workflows",
+      "cases": 8,
+      "all_case_gates": true,
+      "raw_result": ".artifacts/transform-browser/group-c134-17f1fced-56cc-4310-9620-b3efc89337a7/result.json",
+      "raw_result_sha256": "9c4e24665e17989b52795d6f5525e919ba5248bbcce665a4e702800fb186de2b",
+      "log": ".artifacts/scene-group-transform-c134/legacy-transform-browser.log"
+    }
+  },
+  "retained_failed_browser_attempts": [
+    ".artifacts/scene-group-transform-c134/root-1792286198050/result.json",
+    ".artifacts/scene-group-transform-c134/root-1792286215947/result.json",
+    ".artifacts/scene-group-transform-c134/root-1792286229832/result.json",
+    ".artifacts/scene-group-transform-c134/root-1792286250382/result.json",
+    ".artifacts/scene-group-transform-c134/root-1792286267164/result.json"
+  ],
+  "limitations": [
+    "No pinned SculptGL runtime transform comparison",
+    "Numeric translation only through normal browser route; group interactive gizmo remains active-only",
+    "Mask-weighted and nonuniform/plane/view transforms untested or absent",
+    "No native GUI or sustained performance run"
+  ]
+}

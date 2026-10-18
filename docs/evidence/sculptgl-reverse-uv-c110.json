@@ -1,0 +1,83 @@
+{
+  "feature_id": "SGL-TOPO-REVERSE",
+  "scope": "first and repeated Reverse on one same-byte independently authored nonplanar 5x5 quad UV grid",
+  "fixture_sha256": "f51f9af14a1e09d681e1dc1dc366ef2854eed48c74206ca65b7330f49a3e0361",
+  "reference_kernel_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+  "reference_result_path": ".artifacts/sculptgl-reference-runtime/reverse-c110-uv-return-b6455e48-502b-44f5-b101-94c12fbcbefc/result.json",
+  "reference_result_sha256": "bb281026b454a512bf3f9cff001ff715739a6b0aad4e5a4cf990c61c49eeaa6f",
+  "obrush_result_path": ".artifacts/sculptgl-paint-static-runtime/reverse-c110-final-16b026e2-8f8a-4951-a5d1-2cfd4a57b7b1/result.json",
+  "obrush_result_sha256": "894f452a8569ec7cd257348b03939045833addf519f22d103d85bb15fa456ae7",
+  "obrush_wasm_sha256": "75a88ad289cf8991c0eef9fda51674153eb7b41cc75ea5a7ea65daf5d49bca8b",
+  "comparison_method": "Map unique physical vertices by integer source x/y grid location (rejecting displacement over 0.001), compare complete 3D coordinates and cyclically normalized oriented face-corner (grid location, UV value) multisets without reversing winding; compare UV coordinate counts at each level",
+  "comparison": {
+    "before": {
+      "reference_snapshot_sha256": "daf887f2c7aa61f5f4f7d9452ccc0348baf1d5f3238adc8f7ba241f5ca9162c4",
+      "obrush_project_sha256": "3090a637e30aa04f1374d4042d25fdf7fe7bbb14bfd6b3d4c22c9288aa94d192",
+      "vertices": 25,
+      "faces": 16,
+      "reference_uv_coordinates": 25,
+      "obrush_uv_coordinates": 25,
+      "maximum_mapped_position_distance": 0.0,
+      "oriented_face_corner_geometry_uv_exact": true
+    },
+    "first": {
+      "reference_snapshot_sha256": "e4ce06f1d1b90c2e1115e7ede59ebb54ee404651adc20e7a54f357bd662e10e4",
+      "obrush_project_sha256": "941807ca5f9a585c7ab718255d1a694968fe7bbdcb8e517992a989d2f6860e9b",
+      "vertices": 9,
+      "faces": 4,
+      "reference_uv_coordinates": 9,
+      "obrush_uv_coordinates": 9,
+      "maximum_mapped_position_distance": 0.0,
+      "oriented_face_corner_geometry_uv_exact": true
+    },
+    "second": {
+      "reference_snapshot_sha256": "a49e97c31bab4b64dbe9ebae79281ea24a2c12e5f29e214651a589a9246ae8a4",
+      "obrush_project_sha256": "80bc3688f613b7b6d95900fa8fdba0297d8f4e8b4b0ea8a85c3984202d50a886",
+      "vertices": 4,
+      "faces": 1,
+      "reference_uv_coordinates": 4,
+      "obrush_uv_coordinates": 4,
+      "maximum_mapped_position_distance": 0.0,
+      "oriented_face_corner_geometry_uv_exact": true
+    },
+    "returned": {
+      "reference_snapshot_sha256": "9a077e9cfb3b064085197d733395611f80f230efaba8a1745ff06bd6f3a04dbb",
+      "obrush_project_sha256": "1d2a5eb6be9830f5827a8acddd84ef9e9ca65d45d82d87fe14989ce738e7ac4d",
+      "vertices": 25,
+      "faces": 16,
+      "reference_uv_coordinates": 25,
+      "obrush_uv_coordinates": 25,
+      "maximum_mapped_position_distance": 7.450580596923828e-09,
+      "oriented_face_corner_geometry_uv_exact": true
+    }
+  },
+  "reference_gates": {
+    "first_level_added": true,
+    "second_level_added": true,
+    "coarse_face_recovered": true,
+    "fine_uv_returned": true
+  },
+  "obrush_browser_gates": {
+    "two_recovered_uv_levels": true,
+    "uv_counts_25_9_4": true,
+    "finest_uv_ids_and_corners_exact": true,
+    "lower_exact": true,
+    "second_reverse_history_exact": true,
+    "project_reload_exact": true,
+    "visible_gpu_save_exact": true
+  },
+  "obrush_browser_counts": {
+    "downloads": 28,
+    "gpu_checks": 28,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    }
+  },
+  "retained_failed_check": ".artifacts/sculptgl-paint-static-runtime/reverse-c110-13f28f26-40bf-4ca9-a200-9e1970665d11/result.json: initial UV-ID oracle sorted within each face instead of over all physical corners; saved data matched after correcting the harness and rerunning.",
+  "limits": [
+    "One nonseamed grid with exact quarter-step UVs; arbitrary seam alias distributions, non-midpoint UV detail, edited UVs, other topology, performance and native GUI remain open.",
+    "Reference and OBrush are separate isolated browser runs; returned fine numerical difference is measured, not an accepted general tolerance."
+  ]
+}

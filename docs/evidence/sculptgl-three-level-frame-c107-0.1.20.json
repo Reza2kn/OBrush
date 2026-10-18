@@ -1,0 +1,307 @@
+{
+  "id": "sculptgl-three-level-frame-c107-0.1.20",
+  "scope": "Three retained static smooth levels, one direct coarse edit on three independent UV-seamed fixtures; normal OBrush browser Draw delivery on one larger UV grid. No full brush or performance parity.",
+  "reference": {
+    "source_revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "hosted_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "run": {
+      "path": ".artifacts/sculptgl-reference-runtime/uv-three-level-c107-23ba719e-6946-49ef-983e-8b4204d6b9c4/result.json",
+      "bytes": 317081,
+      "sha256": "11b0d17236070fad7a2862b90433bb41720b7203663408778d795e29efceb11e"
+    },
+    "status": "completed reference-only controlled three-level edit fixtures",
+    "browser": "Chrome/155.0.8059.80",
+    "exceptions": 0,
+    "console_errors": 0,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "method": "Real import/Subdivide/Lower/Higher controls; one diagnostic direct coarse typed-array edit, no brush or history claim"
+  },
+  "implementation": {
+    "source_manifest": [
+      {
+        "path": "scripts/check-sculptgl-reference.mjs",
+        "bytes": 61774,
+        "sha256": "06a93db9f026db3eaaf455fbeb38f2187a5101181f0e39f24e5080a52f35eb25"
+      },
+      {
+        "path": "scripts/compare-uv-two-level.py",
+        "bytes": 6024,
+        "sha256": "be2686e3675e9163358a879a12bd0df7e8126d4e0f1bf37b9fba888b9fd29f54"
+      },
+      {
+        "path": "crates/obrush-core/examples/uv_two_level_probe.rs",
+        "bytes": 3979,
+        "sha256": "f06d604d774fe4e124616c06abdb37d57e7285c45aa3b0460387b0f9896ef6df"
+      },
+      {
+        "path": "scripts/check-sculptgl-paint-static.mjs",
+        "bytes": 132991,
+        "sha256": "bfb5a22517996f6fcc3977c1822bb273d428ff1a01f81ef3561f373625903892"
+      }
+    ],
+    "web_wasm": {
+      "path": "web/dist/pkg/obrush_app_bg.wasm",
+      "bytes": 23457211,
+      "sha256": "a9d8f9370c8ccb00d8004e8a450546fcf1661be93489a98d6edd983c18fd0d9a"
+    },
+    "git_state": "Unborn checkout; source hashes identify the checked files."
+  },
+  "comparison": {
+    "corrected": {
+      "path": ".artifacts/sculptgl-uv-three-level-c107/comparison.json",
+      "bytes": 6015,
+      "sha256": "b09f122d22ffee46c41367a03e307ee8d2df291d726d1e7c84a992bee8297e49"
+    },
+    "two_level_regression": {
+      "path": ".artifacts/sculptgl-uv-three-level-c107/comparison-two-regression.json",
+      "bytes": 4367,
+      "sha256": "2866ada58c0b2e34e19fcab0829d34c15b378ecdb280179eddc16ba9027c1827"
+    },
+    "cases": [
+      {
+        "fixture": "tetra",
+        "fixture_sha256": "f038d1990b21472c2f2970b59950c12801219716f298bb991a260bed1c87dcc2",
+        "probe_sha256": "261d19907923d8d1f1e8bd5ae1235829236e85e9b9d8258ee0d7ec8192e4870e",
+        "mapped_coarse_edit": {
+          "reference_vertex": 0,
+          "host_vertex": 0,
+          "delta": [
+            0.125,
+            -0.09375,
+            0.0625
+          ]
+        },
+        "levels": [
+          {
+            "level": "first",
+            "vertices": 10,
+            "before_max": 0.0,
+            "after_max": 1.4901161193847656e-08,
+            "after_rms": 9.02310119300333e-09,
+            "displacement_max": 1.4901161193847656e-08,
+            "first_neighbor_mismatches": null
+          },
+          {
+            "level": "second",
+            "vertices": 34,
+            "before_max": 0.0,
+            "after_max": 1.4901161193847656e-08,
+            "after_rms": 5.509248101275632e-09,
+            "displacement_max": 1.4901161193847656e-08,
+            "first_neighbor_mismatches": 0
+          },
+          {
+            "level": "third",
+            "vertices": 130,
+            "before_max": 0.0,
+            "after_max": 2.9802322387695312e-08,
+            "after_rms": 6.476379589843703e-09,
+            "displacement_max": 2.9802322387695312e-08,
+            "first_neighbor_mismatches": 0
+          }
+        ]
+      },
+      {
+        "fixture": "quad-cube",
+        "fixture_sha256": "8b76a6ee950a7cf29701aa01c267772c023f668d67c66514885092bab0fdc4c0",
+        "probe_sha256": "fff96608a2f10924c2e12882fc39add3723d5486cf21794f0f617afdfa5ef077",
+        "mapped_coarse_edit": {
+          "reference_vertex": 0,
+          "host_vertex": 0,
+          "delta": [
+            0.125,
+            -0.09375,
+            0.0625
+          ]
+        },
+        "levels": [
+          {
+            "level": "first",
+            "vertices": 26,
+            "before_max": 0.0,
+            "after_max": 5.960464477539063e-08,
+            "after_rms": 9.592208374377015e-09,
+            "displacement_max": 5.960464477539063e-08,
+            "first_neighbor_mismatches": null
+          },
+          {
+            "level": "second",
+            "vertices": 98,
+            "before_max": 0.0,
+            "after_max": 5.960464477539063e-08,
+            "after_rms": 1.3274437676817234e-08,
+            "displacement_max": 5.960464477539063e-08,
+            "first_neighbor_mismatches": 0
+          },
+          {
+            "level": "third",
+            "vertices": 386,
+            "before_max": 5.960464477539063e-08,
+            "after_max": 1.7881393432617188e-07,
+            "after_rms": 1.7818224647108555e-08,
+            "displacement_max": 1.1920928955078125e-07,
+            "first_neighbor_mismatches": 0
+          }
+        ]
+      },
+      {
+        "fixture": "pyramid",
+        "fixture_sha256": "8a4bb88bf941a1f88e882c0b769da1369549e5ef6c96dc1c928b7987d5c78081",
+        "probe_sha256": "b81fd0747509acf272cefbbc7acc6486f3273e938a3fa4b81048381fc7e3c9f5",
+        "mapped_coarse_edit": {
+          "reference_vertex": 0,
+          "host_vertex": 3,
+          "delta": [
+            0.125,
+            -0.09375,
+            0.0625
+          ]
+        },
+        "levels": [
+          {
+            "level": "first",
+            "vertices": 14,
+            "before_max": 0.0,
+            "after_max": 2.9802322387695312e-08,
+            "after_rms": 1.2416248354171347e-08,
+            "displacement_max": 2.9802322387695312e-08,
+            "first_neighbor_mismatches": null
+          },
+          {
+            "level": "second",
+            "vertices": 50,
+            "before_max": 2.9802322387695312e-08,
+            "after_max": 4.470348358154297e-08,
+            "after_rms": 1.1873784540079111e-08,
+            "displacement_max": 4.470348358154297e-08,
+            "first_neighbor_mismatches": 0
+          },
+          {
+            "level": "third",
+            "vertices": 194,
+            "before_max": 2.9802322387695312e-08,
+            "after_max": 5.960464477539063e-08,
+            "after_rms": 1.3097817581600966e-08,
+            "displacement_max": 5.960464477539063e-08,
+            "first_neighbor_mismatches": 0
+          }
+        ]
+      }
+    ],
+    "two_level_regression_max_after": 5.960464477539063e-08
+  },
+  "retained_failed_check": {
+    "actual_wrong_edit_probe": {
+      "path": ".artifacts/sculptgl-uv-three-level-c107/wrong-edit-probes/pyramid.json",
+      "bytes": 34040,
+      "sha256": "5a8e64b26b6765d6e1658e1b399e94b8227c01d1c9c33250855970cc8a416910"
+    },
+    "ungated_false_comparison": {
+      "path": ".artifacts/sculptgl-uv-three-level-c107/wrong-edit-ungated.json",
+      "bytes": 1193,
+      "sha256": "117501fae7bb531360deb4dee7f1a1068f886034d789efd48d68031d3e6b3053"
+    },
+    "guarded_rejection": {
+      "path": ".artifacts/sculptgl-uv-three-level-c107/wrong-edit.stderr",
+      "bytes": 376,
+      "sha256": "28fd1e017c934cda03c02d82f6a49908385fba898e9329a1a9ce71d7ce8522aa"
+    },
+    "reason": "Reference pyramid coarse vertex 0 maps to host physical vertex 3; editing host 0 creates a false 0.0424584537 first-level difference. Current comparator rejects it."
+  },
+  "normal_browser": {
+    "result": {
+      "path": ".artifacts/sculptgl-paint-static-runtime/three-level-c107-758495e1-efa7-45ff-8848-e5b434099ef8/result.json",
+      "bytes": 1955934,
+      "sha256": "23d78abd7601db253b982c5e797d73c4454b2871708df972d435b981ac3dd200"
+    },
+    "status": "passed scoped local host gates; reference parity unverified",
+    "case": "three-level-normal-browser-draw",
+    "downloads": 10,
+    "gpu_checks": 10,
+    "exceptions": 0,
+    "console_errors": 0,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "coarse_difference": {
+      "changed": 18,
+      "original_count": 1538,
+      "after_count": 1538,
+      "max": 0.01595562197393095,
+      "rms": 0.0010028616446239491
+    },
+    "third_difference": {
+      "changed": 4138,
+      "original_count": 98306,
+      "after_count": 98306,
+      "max": 0.01289742197319291,
+      "rms": 0.0007336200219999087
+    },
+    "gates": {
+      "new_v3_scheme": true,
+      "four_retained_levels": true,
+      "useful_coarse_draw": true,
+      "useful_third_level_transport": true,
+      "brush_undo_redo_exact": true,
+      "normal_project_reload_exact": true,
+      "release_quiet": true,
+      "visible_gpu_save_exact": true
+    },
+    "saved_third_project_sha256": "ec8c610735178aa417c7d112b00e5795e694b4541eebf257c4b25d1fafe9babc"
+  },
+  "validation": {
+    "fmt": {
+      "path": ".artifacts/sculptgl-uv-three-level-c107/fmt.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "workspace_tests": {
+      "path": ".artifacts/sculptgl-uv-three-level-c107/workspace-tests.log",
+      "bytes": 10750,
+      "sha256": "6e439093bf68ace7ec4c6db08328a09431893ea324ef3e54c019a2ddd9a17bbd",
+      "test_groups": 71,
+      "passed": 2403,
+      "failed": 0,
+      "ignored": 1
+    },
+    "clippy_native": {
+      "path": ".artifacts/sculptgl-uv-three-level-c107/clippy-native.log",
+      "bytes": 148,
+      "sha256": "57a53b22352a98e1648d3ae8208c5429ec50de9c0ce6f84b45c45491cd3dbad7"
+    },
+    "clippy_wasm": {
+      "path": ".artifacts/sculptgl-uv-three-level-c107/clippy-wasm.log",
+      "bytes": 148,
+      "sha256": "c06f4f96d343eebf1ebccdc66143e3e76a2014ba631184a9b85d8f45c87c034e"
+    },
+    "check_wasm": {
+      "path": ".artifacts/sculptgl-uv-three-level-c107/check-wasm.log",
+      "bytes": 72,
+      "sha256": "d7dae192715495fa89ccbe279af3efb9792c1dae1768228e369035e68a1df673"
+    },
+    "build_web": {
+      "path": ".artifacts/sculptgl-uv-three-level-c107/build-web.log",
+      "bytes": 128,
+      "sha256": "ab9fa6c9cdd700b1e948b5ed3894d4512abf3c19f7c35b87a2b88e1619af008e"
+    },
+    "package_macos": {
+      "path": ".artifacts/sculptgl-uv-three-level-c107/package-macos.log",
+      "bytes": 256,
+      "sha256": "9a337e1bc8422db70742418160c24785fd84467261069113e2924ccfa0ddb61b"
+    },
+    "node_syntax_checks": "Both reference and browser harness passed node --check; comparator passed py_compile.",
+    "macos_signature": "Official package script reports valid on disk and satisfies designated requirement."
+  },
+  "limitations": [
+    "Direct edit comparison is not paired brush response.",
+    "Only three small UV-seamed topologies and one larger browser grid are checked.",
+    "Three-level edited fine rows, linear modes, arbitrary meshes and sustained responsiveness remain unverified.",
+    "Browser product remains WASM CPU geometry plus WebGL2; WebGPU compute/draw prototype is separate."
+  ]
+}

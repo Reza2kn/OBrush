@@ -1,0 +1,199 @@
+{
+  "scope": "Actual0.1.19candidate2 release/history attempt remains failed at exact compound new-radius gate. Existing corrected import/stroke history, saved CPU/GPU and quiet gates passed. No paired reference/input-performance claim.",
+  "recorded_at": "2026-10-14T05:19:16.909821+00:00",
+  "result": {
+    "path": ".artifacts/sculptgl-preferences-runtime/candidate2-0.1.19-release-history-7925874d-00b2-4590-972d-da3224a7ec83/result.json",
+    "sha256": "3cbdfadfedc8b035edd08abd1a47e0995faa23f9bfc330136a8857a9264860cf",
+    "harness_sha256": "8724cd0b0e54b90e0ea14876bf62dae531b75334604421cd75caf1515356f74c",
+    "raw_status": "failed local host run",
+    "candidate": {
+      "candidate": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.19-candidate2",
+      "source_root": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.19-candidate2/source",
+      "status": "immutable candidate binding",
+      "manifest_sha256": "a30f468da98469297013e5a2d437c903912d82922e04dbbba3fd4360b78fb72f",
+      "build_sha256": "3b06e0c984a5cd4fcd235964d0500a230127e01ba198a4d58b97f8b3e65c22cb",
+      "checked_source_files": 168
+    },
+    "WASM_sha256": "21860258fd0861b52a399c29c28f59b72a72bab34fd0ce3c40de886f2e5e78c2",
+    "downloads": 41,
+    "recorded_saved_GPU_pairs": 37,
+    "gates": {
+      "source_fixture_and_camera_exact": true,
+      "actual_release_and_setting_same_frame": true,
+      "actual_events_trusted": true,
+      "new_radius_committed_exact": false,
+      "old_captured_endpoint_exact": true,
+      "final_endpoint_useful": true,
+      "new_settings_future_output_differs": true,
+      "whole_single_stroke_history_exact": true,
+      "complete_gpu_exact": true,
+      "post_completion_quiet": true
+    },
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "owned_pid": 80465,
+    "postclosure_sha256": "0ea65afd1904feafc7c414c6e6b839165a5a4e403fee21c45be49fc38a97ede9"
+  },
+  "expected_new_radius": 0.15300001204013824,
+  "trials": [
+    {
+      "name": "old-settings",
+      "initial_radius": 0.18000000715255737,
+      "final_radius": 0.18000000715255737,
+      "same_frame": true,
+      "frame_keys": [
+        2314.7000000029802
+      ],
+      "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "fixture_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "stroke_sha256": "39e249d0a0ad285edb712740a02c446f021841053630b88c0ae8134f58b6c5d6",
+      "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "redo_stroke_sha256": "39e249d0a0ad285edb712740a02c446f021841053630b88c0ae8134f58b6c5d6",
+      "quiet_pass": true,
+      "actual_relevant_DOM_events": [
+        {
+          "type": "pointerup",
+          "key": null,
+          "buttons": 0,
+          "x": 859,
+          "y": 513,
+          "shift": false,
+          "ctrl": false,
+          "alt": false,
+          "trusted": true,
+          "scene_frame_at": 2314.7000000029802,
+          "at": 2315.9000000059605
+        }
+      ]
+    },
+    {
+      "name": "early-endpoint",
+      "initial_radius": 0.18000000715255737,
+      "final_radius": 0.18000000715255737,
+      "same_frame": true,
+      "frame_keys": [
+        2257.1000000089407
+      ],
+      "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "fixture_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "stroke_sha256": "90c916afcfc7227ffdf80dbb28bcb2fbefed93369047d85b6d8fcc447a97e4c2",
+      "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "redo_stroke_sha256": "90c916afcfc7227ffdf80dbb28bcb2fbefed93369047d85b6d8fcc447a97e4c2",
+      "quiet_pass": true,
+      "actual_relevant_DOM_events": [
+        {
+          "type": "pointerup",
+          "key": null,
+          "buttons": 0,
+          "x": 811,
+          "y": 513,
+          "shift": false,
+          "ctrl": false,
+          "alt": false,
+          "trusted": true,
+          "scene_frame_at": 2257.1000000089407,
+          "at": 2271.9000000059605
+        }
+      ]
+    },
+    {
+      "name": "changed-release-frame",
+      "initial_radius": 0.18000000715255737,
+      "final_radius": 0.18000000715255737,
+      "same_frame": true,
+      "frame_keys": [
+        2184.9000000059605
+      ],
+      "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "fixture_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "stroke_sha256": "39e249d0a0ad285edb712740a02c446f021841053630b88c0ae8134f58b6c5d6",
+      "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "redo_stroke_sha256": "39e249d0a0ad285edb712740a02c446f021841053630b88c0ae8134f58b6c5d6",
+      "quiet_pass": true,
+      "actual_relevant_DOM_events": [
+        {
+          "type": "pointerup",
+          "key": null,
+          "buttons": 0,
+          "x": 859,
+          "y": 513,
+          "shift": false,
+          "ctrl": false,
+          "alt": false,
+          "trusted": true,
+          "scene_frame_at": 2184.9000000059605,
+          "at": 2199.7999999970198
+        },
+        {
+          "type": "keydown",
+          "key": "[",
+          "buttons": null,
+          "x": null,
+          "y": null,
+          "shift": false,
+          "ctrl": false,
+          "alt": false,
+          "trusted": true,
+          "scene_frame_at": 2184.9000000059605,
+          "at": 2200.9000000059605
+        }
+      ]
+    },
+    {
+      "name": "new-settings-control",
+      "initial_radius": 0.15300001204013824,
+      "final_radius": 0.15300001204013824,
+      "same_frame": true,
+      "frame_keys": [
+        2689.0999999940395
+      ],
+      "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "fixture_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "stroke_sha256": "a340e3148b14f202aaf8c76071c34e1db103c5a29ca1f85de1e3bb99e1b1997c",
+      "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "redo_stroke_sha256": "a340e3148b14f202aaf8c76071c34e1db103c5a29ca1f85de1e3bb99e1b1997c",
+      "quiet_pass": true,
+      "actual_relevant_DOM_events": [
+        {
+          "type": "pointerup",
+          "key": null,
+          "buttons": 0,
+          "x": 859,
+          "y": 513,
+          "shift": false,
+          "ctrl": false,
+          "alt": false,
+          "trusted": true,
+          "scene_frame_at": 2689.0999999940395,
+          "at": 2750.0999999940395
+        }
+      ]
+    }
+  ],
+  "remaining_diagnosis": "Changed actual tile\u2192drag\u2192same-frame release/bracket keeps old radius although background-focused fresh comparator commits exactnew radius. Actual focused ID/runner-delivery vs shortcut guarding were not exposed in this build; no second guessed product fix claimed. Root is preparing bounded readonly focus records, with a separate passive DOM target/activeElement observer.",
+  "next_helper_source_only": {
+    "path": "scripts/check-sculptgl-preferences-release-diagnostic.mjs",
+    "sha256": "dabde6094e9f89ca57ac02485c319a315250b2da5f3db3353e34470431f5ac55",
+    "preregistration_sha256": "517deeed5a4895dbd9324afb501c3e68f564fcf48867b0db8977f2f26ed0c92d",
+    "status": "frozen/source prepared; immutable diagnostic candidate execution pending"
+  },
+  "Continuous_source4_status": "Not launched after release failure; source-only gates pending independent coordination",
+  "limits": [
+    "Actual numerical/history/input/frame/GPU requirements remain unchanged",
+    "Previous immediate-frame and source3/842/8724 failed results remain failed",
+    "Normal Save affects scheduling; CPU and GPU completion observed separately",
+    "37runtime saved/GPU pairs not yet second-reconstructed independently during rootCPU slot",
+    "No app/tool/mesh assignments or focus bypasses; ownChrome/server closed"
+  ]
+}

@@ -1,0 +1,499 @@
+{
+  "status": "Compared / gaps remain; FA00 only",
+  "utc": "2026-10-15T12:39:51.037876+00:00",
+  "candidate": "C37 / OBrush 0.1.20",
+  "product_build_sha256": "7633c98eb349dfe164b2598dba944cfb46cff461c5f7bf6a4dfa1c54f6eabeed",
+  "source_checks_sha256": "e24cc9d2ca5989e4c6a10402509eaf945fedfc2b2e804b455a0e760794355a3c",
+  "helper_sha256": "6c506fa2756c763de8cf192c6f312465ac19e79724c7b507881b7c22d04423be",
+  "protocol_sha256": "d8cc220d33b7a9861466840a632ecfed37eb8dc3144b952c01e8cf3fb9942c9b",
+  "preregistration_sha256": "a3e1bf7db028eb534c729e4ffcae225ae9a4c26955f3656c5d9fa649b65e640d",
+  "module_checks": {
+    "count": 22,
+    "all_exit_zero": true,
+    "sha256": "24af5737b2e5cc3165c78aa4c98aa28f9577499dd4dcb385b08d5a56c1d562bc"
+  },
+  "execution": {
+    "exit": 0,
+    "seconds": 46.536995749978814,
+    "result": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-runtime/candidate37-alphaframewords-FA00-8075940f-b852-4eba-87cc-e7972506e990/result.json",
+    "result_sha256": "cd691606da375a114103576dfb91594abda1070f129b53dc3a37b865ac350c39",
+    "status": "Completed scoped boundedpartition; otherpartition/native/physical/reference differences remain pending",
+    "names": [
+      "FA00"
+    ],
+    "failure": null,
+    "required_unexercised": [],
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_servers_closed": 2
+    },
+    "cleanup_errors": [],
+    "exceptions": [],
+    "console_errors": [],
+    "log_sha256": "f8e87f2164f8ed196bc181e86a301a93b493e27f015dd4f4585cd63f732d49a0"
+  },
+  "independent_audit_sha256": "a0ebcaf76530011459fa8ac1470c435ce68a456693a67814fcd31bdaa463a881",
+  "observations": {
+    "status": "PASS scoped actual imported asymmetric opaquegray alpha Flatten; exact rawframe/owncandidate/selectednormals/GPU, paired1e-6 envelope, whole Undo/Redo and quiet",
+    "result": "cd691606da375a114103576dfb91594abda1070f129b53dc3a37b865ac350c39",
+    "raw_records": 287,
+    "raw_bytes": 74064030,
+    "gzip_bytes": 8364037,
+    "downloads": 16,
+    "quiet": [
+      {
+        "side": "source",
+        "samples": 32,
+        "milliseconds": 516.5
+      },
+      {
+        "side": "root",
+        "samples": 31,
+        "milliseconds": 500.0
+      }
+    ],
+    "prefixes": [
+      {
+        "side": "source",
+        "frames": 27,
+        "bytes": 1679514
+      },
+      {
+        "side": "root",
+        "frames": 51,
+        "bytes": 2363059
+      }
+    ],
+    "paired": {
+      "label": "Actual paired Flatten final original positions",
+      "rows": 6,
+      "words": 18,
+      "word_difference_count": 1,
+      "max_absolute_difference": 1.862645149230957e-09,
+      "RMS": 4.390296719884795e-10,
+      "differences": [
+        {
+          "row": 5,
+          "column": 2,
+          "expected_word": 1015333403,
+          "actual_word": 1015333402,
+          "expected": 0.016205837950110435,
+          "actual": 0.016205836087465286,
+          "absolute_difference": 1.862645149230957e-09
+        }
+      ],
+      "exact_words": false,
+      "expected_sha256": "6e8b288f286af5ca49299de53457d3210c84ac7ba9ecf4e8819014ce7fea4c58",
+      "actual_sha256": "8bf613c4dc4387da548695832ca416f5808a95cc4b8f460af9566d077b2c325f"
+    },
+    "alpha_frame": [
+      {
+        "side": "source",
+        "frame": {
+          "frame": {
+            "label": "Source every rawf32frame word",
+            "rows": 1,
+            "words": 16,
+            "word_difference_count": 0,
+            "max_absolute_difference": 0,
+            "RMS": 0,
+            "differences": [],
+            "exact_words": true,
+            "expected_sha256": "a6967ae58156c7974c606f69d21a24b4c3cc894c9dec0efb54d5ed7a45a09795",
+            "actual_sha256": "a6967ae58156c7974c606f69d21a24b4c3cc894c9dec0efb54d5ed7a45a09795"
+          },
+          "side": 0.8873446845730387,
+          "actual_frame_sha256": "a6967ae58156c7974c606f69d21a24b4c3cc894c9dec0efb54d5ed7a45a09795",
+          "scope": "Raw bytes mandatory; no signedzero canonicalization/tolerance"
+        },
+        "samples": [
+          {
+            "v": 0,
+            "inside": false,
+            "x": -0.283464622558476,
+            "y": -1.1156440762132467,
+            "factor": 0
+          },
+          {
+            "v": 1,
+            "inside": false,
+            "x": -0.283464622558476,
+            "y": 1.1382714932053437,
+            "factor": 0
+          },
+          {
+            "v": 2,
+            "inside": true,
+            "x": 0.8434931621508192,
+            "y": 0.011313708496048472,
+            "px": 0.3130136756983617,
+            "py": 1.977372583007903,
+            "column": 0,
+            "row": 1,
+            "index": 4,
+            "margin": 0.022627416992097027,
+            "gray": 208,
+            "factor": 0.8156862745098039
+          },
+          {
+            "v": 3,
+            "inside": false,
+            "x": -0.283464622558476,
+            "y": -1.1156440762132467,
+            "factor": 0
+          },
+          {
+            "v": 4,
+            "inside": false,
+            "x": -0.283464622558476,
+            "y": 1.1382714932053437,
+            "factor": 0
+          },
+          {
+            "v": 5,
+            "inside": true,
+            "x": 0.8434931621508192,
+            "y": 0.011313708496048472,
+            "px": 0.3130136756983617,
+            "py": 1.977372583007903,
+            "column": 0,
+            "row": 1,
+            "index": 4,
+            "margin": 0.022627416992097027,
+            "gray": 208,
+            "factor": 0.8156862745098039
+          }
+        ],
+        "contrast": {
+          "label": "Imported alpha versus same-input None counterfactual",
+          "rows": 6,
+          "words": 18,
+          "word_difference_count": 3,
+          "max_absolute_difference": 0.0036618970334529877,
+          "RMS": 0.0012111127072939995,
+          "differences": [
+            {
+              "row": 3,
+              "column": 2,
+              "expected_word": 993919463,
+              "actual_word": 0,
+              "expected": 0.0028992833103984594,
+              "actual": 0,
+              "absolute_difference": 0.0028992833103984594
+            },
+            {
+              "row": 4,
+              "column": 2,
+              "expected_word": 990665747,
+              "actual_word": 0,
+              "expected": 0.0021417185198515654,
+              "actual": 0,
+              "absolute_difference": 0.0021417185198515654
+            },
+            {
+              "row": 5,
+              "column": 2,
+              "expected_word": 1017299369,
+              "actual_word": 1015333403,
+              "expected": 0.019867734983563423,
+              "actual": 0.016205837950110435,
+              "absolute_difference": 0.0036618970334529877
+            }
+          ],
+          "exact_words": false,
+          "expected_sha256": "1e2674d9a51ed51186fe4ef3d1fb720f5d4c2873a1452c48779460ba91110bef",
+          "actual_sha256": "6e8b288f286af5ca49299de53457d3210c84ac7ba9ecf4e8819014ce7fea4c58"
+        }
+      },
+      {
+        "side": "root",
+        "frame": {
+          "frame": {
+            "label": "Root every rawf32frame word",
+            "rows": 1,
+            "words": 16,
+            "word_difference_count": 0,
+            "max_absolute_difference": 0,
+            "RMS": 0,
+            "differences": [],
+            "exact_words": true,
+            "expected_sha256": "a6967ae58156c7974c606f69d21a24b4c3cc894c9dec0efb54d5ed7a45a09795",
+            "actual_sha256": "a6967ae58156c7974c606f69d21a24b4c3cc894c9dec0efb54d5ed7a45a09795"
+          },
+          "side": 0.8873446568210624,
+          "actual_frame_sha256": "a6967ae58156c7974c606f69d21a24b4c3cc894c9dec0efb54d5ed7a45a09795",
+          "scope": "Raw bytes mandatory; no signedzero canonicalization/tolerance"
+        },
+        "samples": [
+          {
+            "v": 0,
+            "inside": false,
+            "x": -0.283464631423919,
+            "y": -1.1156441111053572,
+            "factor": 0
+          },
+          {
+            "v": 1,
+            "inside": false,
+            "x": -0.283464631423919,
+            "y": 1.1382715288051337,
+            "factor": 0
+          },
+          {
+            "v": 2,
+            "inside": true,
+            "x": 0.8434931885313265,
+            "y": 0.011313708849888174,
+            "px": 0.313013622937347,
+            "py": 1.9773725823002237,
+            "column": 0,
+            "row": 1,
+            "index": 4,
+            "margin": 0.022627417699776275,
+            "gray": 208,
+            "factor": 0.8156862745098039
+          },
+          {
+            "v": 3,
+            "inside": false,
+            "x": -0.283464631423919,
+            "y": -1.1156441111053572,
+            "factor": 0
+          },
+          {
+            "v": 4,
+            "inside": false,
+            "x": -0.283464631423919,
+            "y": 1.1382715288051337,
+            "factor": 0
+          },
+          {
+            "v": 5,
+            "inside": true,
+            "x": 0.8434931885313265,
+            "y": 0.011313708849888174,
+            "px": 0.313013622937347,
+            "py": 1.9773725823002237,
+            "column": 0,
+            "row": 1,
+            "index": 4,
+            "margin": 0.022627417699776275,
+            "gray": 208,
+            "factor": 0.8156862745098039
+          }
+        ],
+        "contrast": {
+          "label": "Root importedalpha versus same-input None counterfactual",
+          "rows": 6,
+          "words": 18,
+          "word_difference_count": 3,
+          "max_absolute_difference": 0.0036618970334529877,
+          "RMS": 0.0012111123532926758,
+          "differences": [
+            {
+              "row": 3,
+              "column": 2,
+              "expected_word": 993919456,
+              "actual_word": 0,
+              "expected": 0.002899281680583954,
+              "actual": 0,
+              "absolute_difference": 0.002899281680583954
+            },
+            {
+              "row": 4,
+              "column": 2,
+              "expected_word": 990665741,
+              "actual_word": 0,
+              "expected": 0.0021417171228677034,
+              "actual": 0,
+              "absolute_difference": 0.0021417171228677034
+            },
+            {
+              "row": 5,
+              "column": 2,
+              "expected_word": 1017299368,
+              "actual_word": 1015333402,
+              "expected": 0.019867733120918274,
+              "actual": 0.016205836087465286,
+              "absolute_difference": 0.0036618970334529877
+            }
+          ],
+          "exact_words": false,
+          "expected_sha256": "ffcbae7c5602c830f2dbb41166ab740928637587175d57569a0216a114bf5d1b",
+          "actual_sha256": "8bf613c4dc4387da548695832ca416f5808a95cc4b8f460af9566d077b2c325f"
+        }
+      }
+    ],
+    "images": [
+      {
+        "side": "source",
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-runtime/candidate37-alphaframewords-FA00-8075940f-b852-4eba-87cc-e7972506e990/source-FA00 completed source normal Flatten-shot1.png",
+        "bytes": 64516,
+        "sha256": "62b8653d75b6caf3da2d6df6631284690b430edc5192de61016ea5ee6f95a6a7",
+        "original_label": "FA00 completed source normal Flatten",
+        "owned_serial": 1,
+        "complete_identity": {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-runtime/candidate37-alphaframewords-FA00-8075940f-b852-4eba-87cc-e7972506e990/source-FA00 completed source normal Flatten-shot1.png",
+          "kind": "complete-PNG",
+          "bytes": 64516,
+          "sha256": "62b8653d75b6caf3da2d6df6631284690b430edc5192de61016ea5ee6f95a6a7",
+          "before": {
+            "dev": "16777231",
+            "ino": "87374501",
+            "bytes": 64516,
+            "mtime_ms": 1792067841193.418
+          },
+          "deduplicated": false,
+          "after": {
+            "dev": "16777231",
+            "ino": "87374501",
+            "bytes": 64516,
+            "mtime_ms": 1792067841193.418
+          }
+        },
+        "scope": "Complete ordinary browser surface; exact bytes retained, no crop/pixel substitute"
+      },
+      {
+        "side": "root",
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-runtime/candidate37-alphaframewords-FA00-8075940f-b852-4eba-87cc-e7972506e990/root-FA00 completed root normal Flatten-shot1.png",
+        "bytes": 153321,
+        "sha256": "dfb18123f3aa06cbe4b07b5ec9bb4d7ebe12df912fe21cc3564d715296833d77",
+        "original_label": "FA00 completed root normal Flatten",
+        "owned_serial": 1,
+        "complete_identity": {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-runtime/candidate37-alphaframewords-FA00-8075940f-b852-4eba-87cc-e7972506e990/root-FA00 completed root normal Flatten-shot1.png",
+          "kind": "complete-PNG",
+          "bytes": 153321,
+          "sha256": "dfb18123f3aa06cbe4b07b5ec9bb4d7ebe12df912fe21cc3564d715296833d77",
+          "before": {
+            "dev": "16777231",
+            "ino": "87374846",
+            "bytes": 153321,
+            "mtime_ms": 1792067868209.7651
+          },
+          "deduplicated": false,
+          "after": {
+            "dev": "16777231",
+            "ino": "87374846",
+            "bytes": 153321,
+            "mtime_ms": 1792067868209.7651
+          }
+        },
+        "scope": "Complete ordinary browser surface; exact bytes retained, no crop/pixel substitute"
+      }
+    ],
+    "scope": "Independent sixvertex/twosheet fixture and4x4opaquegrayPNG; radius500/I.25/Negativefalse/cullfalse/NoneXmirror/factors0/guardfalse/DPR1. Cardinal +Z normal/+X travel only; initial track treated as captured priorinput. No fullcolor/opacity/nonsquare/JPEG/preset/undefinedIDW/mirroralpha/continuous/nativephysical/performance/fullN06/Flatten/317+5 claim."
+  },
+  "image_review_sha256": "5b5613ab60dc45fcc9614f5caf89580cc53b03e0f8e11001197fd7f26ada76b1",
+  "fixture": {
+    "creator": "Independent deterministic procedural PNG; no external image/source pixels",
+    "width": 4,
+    "height": 4,
+    "rgba": [
+      16,
+      16,
+      16,
+      255,
+      224,
+      224,
+      224,
+      255,
+      80,
+      80,
+      80,
+      255,
+      144,
+      144,
+      144,
+      255,
+      208,
+      208,
+      208,
+      255,
+      48,
+      48,
+      48,
+      255,
+      176,
+      176,
+      176,
+      255,
+      112,
+      112,
+      112,
+      255,
+      96,
+      96,
+      96,
+      255,
+      160,
+      160,
+      160,
+      255,
+      32,
+      32,
+      32,
+      255,
+      240,
+      240,
+      240,
+      255,
+      128,
+      128,
+      128,
+      255,
+      64,
+      64,
+      64,
+      255,
+      255,
+      255,
+      255,
+      255,
+      192,
+      192,
+      192,
+      255
+    ],
+    "mean_gray": [
+      16,
+      224,
+      80,
+      144,
+      208,
+      48,
+      176,
+      112,
+      96,
+      160,
+      32,
+      240,
+      128,
+      64,
+      255,
+      192
+    ],
+    "file": "independent-asymmetric-gray4x4.png",
+    "bytes": 130,
+    "sha256": "407cd04a7f930a226f09f5545e87acad8714ee3e1442534ef25c06a92bac695f",
+    "conversion_scope": "Opaque gray only; mean RGB and weighted opacity agree here. Full color/transparent/JPEG conversion remains separate."
+  },
+  "preserved_failures": [
+    {
+      "helper_stage": "sculptgl-flatten-c37-alpha-stage",
+      "result_sha256": "30b2889ef2ebf26636cb0a46585d9ead310e0f9aac729b06205e06736f83a47c",
+      "failure": "Generic text selector matched hidden duplicate import button before brush; derivative requires exactly1 visible original button."
+    },
+    {
+      "helper_stage": "sculptgl-flatten-c37-alpha-visible-stage",
+      "result_sha256": "7b33d716e097a9cafd82564418ad733611df9a2a949bd0749d2310d239527484",
+      "failure": "JSON numeric matrix lost negativezero; derivative adds raw64byte frame capture with same exactword gate, no canonicalization or tolerance change."
+    }
+  ],
+  "remaining": [
+    "Full color/opacity/nonsquare/JPEG/preset alpha import and sampling matrices.",
+    "General initial alpha/IDW/frame tracking, undefined lookup, mirror/offset/pose/continuous and rollback matrices.",
+    "Broader Flatten, native GUI, physical pressure/touch, calibrated latency, long sessions, full SculptGL 317+5 and ZBrush parity."
+  ]
+}

@@ -1,0 +1,419 @@
+{
+  "feature": "C99 posed selected Smooth Surface Nets and Block",
+  "reference": {
+    "upstream_revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "hosted_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600"
+  },
+  "parameters": {
+    "fixture": "independent-posed-fusion.sgl",
+    "selected_order": "right then left",
+    "resolution": 16,
+    "modes": [
+      "nets",
+      "block"
+    ],
+    "left_x_shear_by_y": 0.15,
+    "left_translation_x": -0.3,
+    "right_translation_x": 0.3,
+    "pose_loss_consent": true
+  },
+  "comparisons": {
+    "nets": {
+      "native": {
+        "reference": {
+          "path": ".artifacts/sculptgl-reference-runtime/posed-nets-c99-b8646c0c-3942-4d81-bc77-3d1e2246ec6a/nets-posed-fusion-false-after.json",
+          "sha256": "116259e9d509c04ccff2b5a487ea340ae4c927a74a55df4503728a48c5d7d45b"
+        },
+        "obrush": {
+          "path": ".artifacts/c99-native-nets.json",
+          "sha256": "cb996e30a70d296efeec60d17ac17fa044f7ec36f56921fa741598d1881da116"
+        },
+        "vertices": 1036,
+        "reference_quads": 1034,
+        "obrush_quads": 1034,
+        "matched_oriented_quads": 1034,
+        "unmatched_reference_oriented_quads": 0,
+        "unmatched_obrush_oriented_quads": 0,
+        "world_position_maximum": 1.3793023070667472e-07,
+        "world_position_rms": 7.523610254786755e-08,
+        "rgb": {
+          "values": 3108,
+          "maximum": 0.0,
+          "rms": 0.0
+        },
+        "roughness_metallic": {
+          "values": 2072,
+          "maximum": 0.0,
+          "rms": 0.0
+        },
+        "unmasked_weight": {
+          "values": 1036,
+          "maximum": 0.0,
+          "rms": 0.0
+        },
+        "gates": {
+          "one_to_one_vertex_map": true,
+          "all_oriented_quads": true,
+          "positions_within_2e_7": true,
+          "rgb_within_save_rounding": true,
+          "material_within_save_rounding": true,
+          "unmasked_exact": true
+        }
+      },
+      "browser_save": {
+        "reference": {
+          "path": ".artifacts/sculptgl-reference-runtime/posed-nets-c99-b8646c0c-3942-4d81-bc77-3d1e2246ec6a/nets-posed-fusion-false-after.json",
+          "sha256": "116259e9d509c04ccff2b5a487ea340ae4c927a74a55df4503728a48c5d7d45b"
+        },
+        "obrush": {
+          "path": ".artifacts/mask-filter-browser/posed-nets-c99-7f5cddb4-0aa7-4161-a3c1-fce2bd8273d7/nets-posed-fusion-false-after.obrush",
+          "sha256": "5907e87d634402d45b8299069be63907cc9d48193e6fb6d1d71d7219429d88ca"
+        },
+        "vertices": 1036,
+        "reference_quads": 1034,
+        "obrush_quads": 1034,
+        "matched_oriented_quads": 1034,
+        "unmatched_reference_oriented_quads": 0,
+        "unmatched_obrush_oriented_quads": 0,
+        "world_position_maximum": 1.612501301379416e-07,
+        "world_position_rms": 7.648273350401213e-08,
+        "rgb": {
+          "values": 3108,
+          "maximum": 2.9302215542870158e-08,
+          "rms": 4.102858170677825e-09
+        },
+        "roughness_metallic": {
+          "values": 2072,
+          "maximum": 2.384185793236071e-08,
+          "rms": 1.737759083115635e-08
+        },
+        "unmasked_weight": {
+          "values": 1036,
+          "maximum": 0.0,
+          "rms": 0.0
+        },
+        "gates": {
+          "one_to_one_vertex_map": true,
+          "all_oriented_quads": true,
+          "positions_within_2e_7": true,
+          "rgb_within_save_rounding": true,
+          "material_within_save_rounding": true,
+          "unmasked_exact": true
+        }
+      }
+    },
+    "block": {
+      "native": {
+        "reference": {
+          "path": ".artifacts/sculptgl-reference-runtime/posed-block-c99-3bcf9e2a-a2a3-4c04-be30-be5b9500853c/block-posed-fusion-false-after.json",
+          "sha256": "20979cd0b9506059fb212acd0123cd637181d00980ad5784a3fff05168c34363"
+        },
+        "obrush": {
+          "path": ".artifacts/c99-native-block.json",
+          "sha256": "5c5f00a58b3984f142911ea83d2b87fff5745241403f715ce83a920f253d0fe5"
+        },
+        "vertices": 1036,
+        "reference_quads": 1034,
+        "obrush_quads": 1034,
+        "matched_oriented_quads": 1034,
+        "unmatched_reference_oriented_quads": 0,
+        "unmatched_obrush_oriented_quads": 0,
+        "world_position_maximum": 1.2990531157078367e-07,
+        "world_position_rms": 7.62516285186322e-08,
+        "rgb": {
+          "values": 3108,
+          "maximum": 0.0,
+          "rms": 0.0
+        },
+        "roughness_metallic": {
+          "values": 2072,
+          "maximum": 0.0,
+          "rms": 0.0
+        },
+        "unmasked_weight": {
+          "values": 1036,
+          "maximum": 0.0,
+          "rms": 0.0
+        },
+        "gates": {
+          "one_to_one_vertex_map": true,
+          "all_oriented_quads": true,
+          "positions_within_2e_7": true,
+          "rgb_within_save_rounding": true,
+          "material_within_save_rounding": true,
+          "unmasked_exact": true
+        }
+      },
+      "browser_save": {
+        "reference": {
+          "path": ".artifacts/sculptgl-reference-runtime/posed-block-c99-3bcf9e2a-a2a3-4c04-be30-be5b9500853c/block-posed-fusion-false-after.json",
+          "sha256": "20979cd0b9506059fb212acd0123cd637181d00980ad5784a3fff05168c34363"
+        },
+        "obrush": {
+          "path": ".artifacts/mask-filter-browser/posed-block-c99-0b9c5358-4a1d-49b6-ae0a-f075099864a8/block-posed-fusion-false-after.obrush",
+          "sha256": "cc797e1251c6a1799e267f3f92fde7564d7e568b15fb570d09ec3cf6a1f17552"
+        },
+        "vertices": 1036,
+        "reference_quads": 1034,
+        "obrush_quads": 1034,
+        "matched_oriented_quads": 1034,
+        "unmatched_reference_oriented_quads": 0,
+        "unmatched_obrush_oriented_quads": 0,
+        "world_position_maximum": 1.3549672560883889e-07,
+        "world_position_rms": 7.41490303168514e-08,
+        "rgb": {
+          "values": 3108,
+          "maximum": 2.9302215542870158e-08,
+          "rms": 4.102858170677825e-09
+        },
+        "roughness_metallic": {
+          "values": 2072,
+          "maximum": 2.384185793236071e-08,
+          "rms": 1.737759083115635e-08
+        },
+        "unmasked_weight": {
+          "values": 1036,
+          "maximum": 0.0,
+          "rms": 0.0
+        },
+        "gates": {
+          "one_to_one_vertex_map": true,
+          "all_oriented_quads": true,
+          "positions_within_2e_7": true,
+          "rgb_within_save_rounding": true,
+          "material_within_save_rounding": true,
+          "unmasked_exact": true
+        }
+      }
+    }
+  },
+  "browser": {
+    "nets": {
+      "status": "passed mask filter browser workflows",
+      "wasm": {
+        "sha256": "a7a166a926d1484023b983f6af60558d0c1f589fea5ec5e06c35ceab132a9a84",
+        "served_sha256": "a7a166a926d1484023b983f6af60558d0c1f589fea5ec5e06c35ceab132a9a84",
+        "bytes": 23428712
+      },
+      "cases": [
+        {
+          "name": "nets-posed-fusion-relaxed-false-visible-workflow",
+          "gates": {
+            "visible_selection": true,
+            "explicit_mixed_uv_loss": true,
+            "explicit_pose_loss": true,
+            "closed_solid": true,
+            "history_exact": true,
+            "visible_gpu_save_exact": true
+          }
+        }
+      ],
+      "exceptions": [],
+      "console_errors": [],
+      "runtime_errors": {
+        "gl": [],
+        "js": []
+      },
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      }
+    },
+    "block": {
+      "status": "passed mask filter browser workflows",
+      "wasm": {
+        "sha256": "a7a166a926d1484023b983f6af60558d0c1f589fea5ec5e06c35ceab132a9a84",
+        "served_sha256": "a7a166a926d1484023b983f6af60558d0c1f589fea5ec5e06c35ceab132a9a84",
+        "bytes": 23428712
+      },
+      "cases": [
+        {
+          "name": "block-posed-fusion-relaxed-false-visible-workflow",
+          "gates": {
+            "visible_selection": true,
+            "explicit_mixed_uv_loss": true,
+            "explicit_pose_loss": true,
+            "closed_solid": true,
+            "history_exact": true,
+            "visible_gpu_save_exact": true
+          }
+        }
+      ],
+      "exceptions": [],
+      "console_errors": [],
+      "runtime_errors": {
+        "gl": [],
+        "js": []
+      },
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      }
+    }
+  },
+  "limitations": [
+    "One independently authored two-box SGL pair and one resolution",
+    "No arbitrary affine or complex source mesh comparison",
+    "No mixed UV under pose, many-part fusion or sustained responsiveness",
+    "No native GUI or physical stylus comparison"
+  ],
+  "files": {
+    "fixture": {
+      "path": "crates/obrush-core/tests/fixtures/independent-posed-fusion.sgl",
+      "sha256": "b7c3ad813abfa4f22c0bbe8ab93598b923e9472b19eed943457f337ffa25bbb9",
+      "bytes": 1244
+    },
+    "fixture_generator": {
+      "path": "crates/obrush-core/examples/posed_fusion_fixture.rs",
+      "sha256": "f4c33187bc398559cc01cc224929118472dab0f62366d3e5647da57cc1608753",
+      "bytes": 2538
+    },
+    "native_probe_source": {
+      "path": "crates/obrush-core/examples/posed_quad_fusion_probe.rs",
+      "sha256": "642ff3dd950803165cfe888915eab684e3f42a08bbfb619b88a01dbc342f1eed",
+      "bytes": 1629
+    },
+    "native_probe_output": {
+      "path": ".artifacts/c99-native-quad-probe.json",
+      "sha256": "46c63c2005755f3c3e51e51bff3bd8080b29d0eefd57352cf308302413530cbc",
+      "bytes": 300862
+    },
+    "core_regression": {
+      "path": "crates/obrush-core/tests/remesh.rs",
+      "sha256": "be4ec33b8bc1ec4df7791b41673fc566a9bb3444d0c1c0ad9931ef4dd32f921d",
+      "bytes": 38715
+    },
+    "reference_harness": {
+      "path": "scripts/check-sculptgl-mc.mjs",
+      "sha256": "e8c60d56d85c786a36746c2daefb6d096f1db54dd08a8dfee457c4114021b404",
+      "bytes": 64018
+    },
+    "browser_harness": {
+      "path": "scripts/check-mc-browser.mjs",
+      "sha256": "d38ad1108bd772618f39cbece403a5cac74062cbff6aeca7aeebc6b46ead2710",
+      "bytes": 128780
+    },
+    "comparison_script": {
+      "path": "scripts/compare-selected-nets.py",
+      "sha256": "90020245ed7338e21d2dcfdd9372e49f33dec6a5e885291d4e8e9bc9d13bd330",
+      "bytes": 4599
+    },
+    "wasm": {
+      "path": "web/dist/pkg/obrush_app_bg.wasm",
+      "sha256": "a7a166a926d1484023b983f6af60558d0c1f589fea5ec5e06c35ceab132a9a84",
+      "bytes": 23428712
+    },
+    "nets_reference_run": {
+      "path": ".artifacts/sculptgl-reference-runtime/posed-nets-c99-b8646c0c-3942-4d81-bc77-3d1e2246ec6a/result.json",
+      "sha256": "feb710e4b86de5cff51f0b37421106a7f3f380dad5e2674c3ce701bb2a41d350",
+      "bytes": 65745
+    },
+    "nets_reference_output": {
+      "path": ".artifacts/sculptgl-reference-runtime/posed-nets-c99-b8646c0c-3942-4d81-bc77-3d1e2246ec6a/nets-posed-fusion-false-after.json",
+      "sha256": "116259e9d509c04ccff2b5a487ea340ae4c927a74a55df4503728a48c5d7d45b",
+      "bytes": 293046
+    },
+    "nets_browser_run": {
+      "path": ".artifacts/mask-filter-browser/posed-nets-c99-7f5cddb4-0aa7-4161-a3c1-fce2bd8273d7/result.json",
+      "sha256": "b7f329e3ee7924d0ad9e45b703e8ed356b584382aeb672e3f5275f7fd4629458",
+      "bytes": 1124168
+    },
+    "nets_browser_save": {
+      "path": ".artifacts/mask-filter-browser/posed-nets-c99-7f5cddb4-0aa7-4161-a3c1-fce2bd8273d7/nets-posed-fusion-false-after.obrush",
+      "sha256": "5907e87d634402d45b8299069be63907cc9d48193e6fb6d1d71d7219429d88ca",
+      "bytes": 145011
+    },
+    "nets_browser_comparison": {
+      "path": ".artifacts/c99-nets-comparison.json",
+      "sha256": "173c9531caa372870ca2362b23fc37281ee0c896c4d2bf7fea61bcbf61a2f0e8",
+      "bytes": 1308
+    },
+    "nets_native_comparison": {
+      "path": ".artifacts/c99-native-nets-comparison.json",
+      "sha256": "4ec770eb7510132c0ddca8f70a4b108d7f46d1cc7f6cb1e322e916e50231f277",
+      "bytes": 1148
+    },
+    "block_reference_run": {
+      "path": ".artifacts/sculptgl-reference-runtime/posed-block-c99-3bcf9e2a-a2a3-4c04-be30-be5b9500853c/result.json",
+      "sha256": "110f77d69dd4846791ed1eb66ad72f5dcc364d8bd84c2b109603c274c3c3406e",
+      "bytes": 67338
+    },
+    "block_reference_output": {
+      "path": ".artifacts/sculptgl-reference-runtime/posed-block-c99-3bcf9e2a-a2a3-4c04-be30-be5b9500853c/block-posed-fusion-false-after.json",
+      "sha256": "20979cd0b9506059fb212acd0123cd637181d00980ad5784a3fff05168c34363",
+      "bytes": 240731
+    },
+    "block_browser_run": {
+      "path": ".artifacts/mask-filter-browser/posed-block-c99-0b9c5358-4a1d-49b6-ae0a-f075099864a8/result.json",
+      "sha256": "c6cecb4d6ee2ac3b42d4d0fa785b37c24f0f1a626e3c4a32a0e0cff7e8c7f30e",
+      "bytes": 1124097
+    },
+    "block_browser_save": {
+      "path": ".artifacts/mask-filter-browser/posed-block-c99-0b9c5358-4a1d-49b6-ae0a-f075099864a8/block-posed-fusion-false-after.obrush",
+      "sha256": "cc797e1251c6a1799e267f3f92fde7564d7e568b15fb570d09ec3cf6a1f17552",
+      "bytes": 132535
+    },
+    "block_browser_comparison": {
+      "path": ".artifacts/c99-block-comparison.json",
+      "sha256": "8bf43e5a72e7a39baa70d9d74dafeeb10898b38f20b3d29fede47c6aaf184b91",
+      "bytes": 1312
+    },
+    "block_native_comparison": {
+      "path": ".artifacts/c99-native-block-comparison.json",
+      "sha256": "5586426631c8246e8ceef8c66ebc334822d2681cdbb705a5615328a58d1fdab6",
+      "bytes": 1150
+    },
+    "workspace_tests": {
+      "path": ".artifacts/c99-workspace-test.log",
+      "sha256": "8bc9b359ffb6fe721c8b11db3ce259d8d216f79aa2bc8eba44da05d3eaa0aa38",
+      "bytes": 228925
+    },
+    "native_clippy": {
+      "path": ".artifacts/c99-clippy-native.log",
+      "sha256": "b5fd2c40493c565294ef276bd14170f51ca9b1000d061d2fc7c39746b906f445",
+      "bytes": 148
+    },
+    "wasm_clippy": {
+      "path": ".artifacts/c99-clippy-wasm.log",
+      "sha256": "d794d1ce749172f76f4186266cd17f6e31c6e955a66280cc318456935502e1e0",
+      "bytes": 148
+    },
+    "wasm_check": {
+      "path": ".artifacts/c99-wasm-check.log",
+      "sha256": "299f16a2c523be18fef769975d2df00e0505521db047540feea3a74b94666887",
+      "bytes": 72
+    },
+    "official_web_build": {
+      "path": ".artifacts/c99-build-web.log",
+      "sha256": "9cf44a685a89f22cc7fbfd56816a8f56e9e722ac4d0ba4bd1e05c326ee9b77f2",
+      "bytes": 128
+    },
+    "official_macos_package": {
+      "path": ".artifacts/c99-package-macos.log",
+      "sha256": "e74293ac1036cf43ba0ed67630d52c465e14eeaedda74b602a6e69a2cf0ada88",
+      "bytes": 256
+    },
+    "macos_binary": {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/OBrush",
+      "sha256": "dc024b4d025df4add0b96583002108e5531310e99f1c1d7ccbbffede4c71cf22",
+      "bytes": 26758384
+    }
+  },
+  "checks": {
+    "cargo_fmt": "passed",
+    "workspace_tests": {
+      "passed": 2391,
+      "ignored": 1,
+      "sections": 70,
+      "failed": 0
+    },
+    "native_strict_clippy": "passed",
+    "wasm_strict_clippy": "passed",
+    "wasm_target_check": "passed",
+    "official_web_build": "passed",
+    "official_macos_package": "passed with ad-hoc signature verified",
+    "isolated_browser": "Nets and Block visible workflows passed; served WASM matches official rebuilt hash"
+  }
+}

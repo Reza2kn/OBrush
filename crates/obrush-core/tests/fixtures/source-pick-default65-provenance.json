@@ -1,0 +1,10 @@
+{
+  "fixture": "source-pick-default65.json",
+  "bytes": 5948346,
+  "sha256": "1ffb55f1a72e505cf4de24179503964f9863c887cfa6e7e9a150b97ae7127094",
+  "independently_authored": true,
+  "producer_binary_binding_sha256": "c20ce22e7bef91ee7f88f788ce211f6d578ac4e993c56b278d6710957bf0454e",
+  "producer_source_manifest": "4a8a6cb8be721e879884e036389d05e34022b1478def56992f71d422966e9f6a",
+  "hit_expectations_computed": false,
+  "scope": "Pinned40962vertex81920triangle default geometry and65predeclared rays; old complete scalar authority computed at test time, no SculptGL outcome encoded."
+}

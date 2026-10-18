@@ -1,0 +1,46 @@
+{
+  "candidate": "C73 keep-source mask extraction option",
+  "date": "2026-10-17",
+  "reference": {
+    "source": "SculptGL Masking.js pinned upstream commit 8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "matched_runtime_comparison": false,
+    "matched_scope": "source-active selection after extraction only",
+    "remaining": ["signed pre-offset", "bridge policy", "three nonzero-border smoothing passes", "extracted default channels", "paired browser reference geometry and images"]
+  },
+  "fixture": {
+    "authorship": "independent unit square",
+    "positions": [[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0]],
+    "triangles": [[0, 1, 2], [0, 2, 3]],
+    "masks": [0, 1, 1, 0],
+    "threshold": 0.5,
+    "selection": "whole incident faces",
+    "keep_source_active": true,
+    "whole_face_inward_shell": {"thickness": -0.125, "vertices": 8, "triangles": 12, "signed_volume": 0.12499999999999999, "expected_signed_volume": 0.125}
+  },
+  "checks": {
+    "cargo_fmt": "passed",
+    "workspace_tests": {"passed": 2354, "failed": 0, "ignored": 1},
+    "workspace_strict_clippy": "passed",
+    "wasm_core_strict_clippy": "passed",
+    "official_web_build": "passed",
+    "official_macos_package_and_signature": "passed",
+    "browser_status": "passed mask filter browser workflows",
+    "browser_cases": 11,
+    "browser_saved_snapshots": 119,
+    "browser_actual_4x_msaa": true,
+    "browser_gl_errors": 0,
+    "browser_js_errors": 0,
+    "browser_visible_control_checks": 9346,
+    "browser_visible_control_failures": 0,
+    "browser_result": ".artifacts/mask-filter-browser/keep-source-c73-160fc1dc-79cf-4904-9b4e-d3157e335359/result.json"
+  },
+  "sha256": {
+    "document_rs": "5415306260a502fcb2beacda5c06ec19612d85e05c811ebee1870d7e18fe4c3d",
+    "app_rs": "298b44739ec4899a1eac49f4fa1ea4859afb5d3d151f70c15fca16cfa95f1cdc",
+    "core_fixture": "a6e308de75cf07bf684cc8d348506c781b49d5875c60af266429a91653ebc9cf",
+    "browser_harness": "2778ba6b0b0bdc8ea915a535a68befc3e77814f6fa1d374b3ec99aa2bd62d434",
+    "built_and_served_wasm": "826337f306ee37787c7795dbf6501f4a74980c66a73bcae131e9366ac40d281b",
+    "signed_macos_executable": "060d17fde480cf69f6fc7ecb940d65c3425b6295c5447f992e90c116288acf50"
+  },
+  "limitations": ["No production WebGPU pipeline", "No matched SculptGL extraction runtime", "No ZBrush extraction parity", "No large-mesh responsiveness improvement"]
+}

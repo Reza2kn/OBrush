@@ -1,0 +1,589 @@
+{
+  "schema_version": 1,
+  "version": "0.1.11",
+  "recorded_at_utc": "2026-10-13T17:47:03.843722+00:00",
+  "status": "Scoped shared-core transform contracts pass on final source; all282workspace tests and platform/build checks bind the final manifest; no reference execution",
+  "git": "Unborn main; source hashes identify checks",
+  "reference": {
+    "version": "ZBrush desktop 2026.2.1",
+    "execution": false,
+    "primary_scope": [
+      "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/modeling-basics/gizmo-3d/gizmo-3d.html",
+      "https://help.maxon.net/zbr/en-us/Content/html/reference-guide/transform/transform.html"
+    ]
+  },
+  "owner_receipt": {
+    "path": ".artifacts/transform-core/receipt.json",
+    "bytes": 7751,
+    "sha256": "de9b0182d53ff1bf8792bae5617170c74e3b5007cc033fefa0c12b8598c5f64a"
+  },
+  "independent_receipt": {
+    "path": ".artifacts/transform-contract-audit/final-receipt.json",
+    "bytes": 19718,
+    "sha256": "29118737979714b778a86380604d279e91efe8bf40e923171638f7b5c3a4d8dd"
+  },
+  "owner_fixture_gates": {
+    "max_point_component_error": 2e-06,
+    "max_normal_component_error": 2e-05,
+    "max_layer_base_and_delta_f64_component_error": 2e-13,
+    "composition": "bit-exact f32 saved mesh equals ordered transformed-f64 layer composition",
+    "history_and_unrelated_scene": "canonical project bytes, attributes, IDs/order/visibility/intensities/recording and inactive mesh Arc identity preserved"
+  },
+  "owner_measured_fixtures": [
+    {
+      "case": "rich-active-world-xyz",
+      "max_component_error": {
+        "layer_base_f64": 4.440892098500626e-16,
+        "layer_delta_f64": 9.540979117872439e-18,
+        "morph_points": 7.934453538638309e-08,
+        "normals": 7.100949273031176e-08,
+        "retained_level_points": 1.125032038640228e-07,
+        "visible_points": 9.783271459617993e-08
+      },
+      "parameters": {
+        "pivot": [
+          0.14000000059604645,
+          -0.07999999821186066,
+          0.20999999344348907
+        ],
+        "rotation_degrees": [
+          23.0,
+          -41.0,
+          67.0
+        ],
+        "scale": 1.25,
+        "translation": [
+          0.27000001072883606,
+          -0.3100000023841858,
+          0.1899999976158142
+        ]
+      }
+    }
+  ],
+  "independent_audit": {
+    "created_utc": "2026-10-13T06:10:27.377500+00:00",
+    "scope": "Independent shared-core OBrush whole-active-object transform foundation contracts and bounded read-only source audit. No GUI, runtime GPU, interactive-handle, physical input or ZBrush Gizmo/Transpose parity claim.",
+    "owned_changes": [
+      "crates/obrush-core/tests/transform_contract.rs",
+      ".artifacts/transform-contract-audit/*"
+    ],
+    "fixture_provenance": "Independently created sphere, localized level/layer edits, hidden/cancelling layer data, detached origin target, explicit scene, and analytically constructed rounding-flipped triangle; no user/commercial fixture/source used.",
+    "command": "cargo test --locked -p obrush-core --test transform_contract -- --test-threads=1 --nocapture",
+    "result": {
+      "passed": 21,
+      "failed": 0,
+      "exit_code": 0
+    },
+    "runs": [
+      {
+        "run": "run-1",
+        "path": ".artifacts/transform-contract-audit/run-1.log",
+        "sha256": "03287264ec7cc32ebf40fbdae4103ea814de01f4426050266c47460166342d0e",
+        "passed": 21,
+        "failed": 0,
+        "reported_debug_suite_seconds": 0.68,
+        "exit_code": 0,
+        "source_receipt": ".artifacts/transform-contract-audit/run-1-source.json",
+        "source_receipt_sha256": "135dc4122ff148f6eef42aa5b45b9e172595b54ef572886f03420f167f00d7f3"
+      },
+      {
+        "run": "run-2",
+        "path": ".artifacts/transform-contract-audit/run-2.log",
+        "sha256": "c6f2b8e2f7aa0987c274f5a648f823fbed3ac33114e81f0cb52a1019ef59a8e7",
+        "passed": 21,
+        "failed": 0,
+        "reported_debug_suite_seconds": 0.58,
+        "exit_code": 0,
+        "source_receipt": ".artifacts/transform-contract-audit/run-2-source.json",
+        "source_receipt_sha256": "a643b3be268bd411254a580622cb51a7e9706fc6744f7b8ff10321319e8a5ab0"
+      }
+    ],
+    "oracle": {
+      "rotation_order": "World X then Y then Z; Rz*Ry*Rx on column vectors. Independent scalar f64 sine/cosine, no production/glam rotation helper.",
+      "point_formula": "pivot + scale*R*(point-pivot) + translation",
+      "layer_delta_formula": "scale*R*delta (without pivot/translation)",
+      "typed_components": "Restore serialized mesh/normal/target shortest f32 decimals to f32 bits, then widen to f64 for independent point/normal comparisons. Layer base/offset arrays retain actual f64 values.",
+      "normal_formula": "Rotate original corner-angle-weighted unit normal; compare against recomputed normals after rounded f32 geometry, allowing the preregistered tolerance.",
+      "component_metric": "Maximum absolute component error, not L2 distance/angular error."
+    },
+    "preregistered_gates": {
+      "f32_point_max_component_absolute": 2e-06,
+      "normal_max_component_absolute": 2e-05,
+      "f64_layer_base_and_offset_max_component_absolute": 2e-13,
+      "exact_gates": "Canonical serialized state/metadata for undo-redo; signed-zero f32 bits for identity; exact topology/masks/colors; inactive mesh Arc identity and serialized bytes; exact ordered f64 layer composition cast to visible f32 components."
+    },
+    "observed_maxima": {
+      "f32_positions_including_target_pivot_and_forward_inverse": 5.960464477539063e-08,
+      "recomputed_normal_components": 2.4344970755985074e-07,
+      "f64_layer_affine_base": 6.661338147750939e-16,
+      "f64_layer_linear_offsets": 1.3877787807814457e-17
+    },
+    "observed_maxima_by_family": {
+      "positions_f32_vs_f64_affine": 5.960464477539063e-08,
+      "recomputed_normals_vs_rotated_original": 2.4344970755985074e-07,
+      "positions": 5.960464477539063e-08,
+      "position": 5.960464477539063e-08,
+      "f64-affine-base": 6.661338147750939e-16,
+      "f64-linear-offset": 1.3877787807814457e-17
+    },
+    "emitted_metrics": [
+      {
+        "case": "retained-level-0",
+        "family": "positions_f32_vs_f64_affine",
+        "gate": 2e-06,
+        "max_component_absolute_error": 5.959240123587506e-08
+      },
+      {
+        "case": "retained-level-0",
+        "family": "recomputed_normals_vs_rotated_original",
+        "gate": 2e-05,
+        "max_component_absolute_error": 6.856666256993549e-08
+      },
+      {
+        "case": "retained-level-1",
+        "family": "positions_f32_vs_f64_affine",
+        "gate": 2e-06,
+        "max_component_absolute_error": 5.955461168660747e-08
+      },
+      {
+        "case": "retained-level-1",
+        "family": "recomputed_normals_vs_rotated_original",
+        "gate": 2e-05,
+        "max_component_absolute_error": 1.0566472716244668e-07
+      },
+      {
+        "case": "retained-level-2",
+        "family": "positions_f32_vs_f64_affine",
+        "gate": 2e-06,
+        "max_component_absolute_error": 5.95196720798441e-08
+      },
+      {
+        "case": "retained-level-2",
+        "family": "recomputed_normals_vs_rotated_original",
+        "gate": 2e-05,
+        "max_component_absolute_error": 2.4344970755985074e-07
+      },
+      {
+        "case": "origin-target",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_component_absolute_error": 5.959240123587506e-08
+      },
+      {
+        "case": "arbitrary-XYZ-pivot-scale",
+        "family": "positions_f32_vs_f64_affine",
+        "gate": 2e-06,
+        "max_component_absolute_error": 5.959240123587506e-08
+      },
+      {
+        "case": "arbitrary-XYZ-pivot-scale",
+        "family": "recomputed_normals_vs_rotated_original",
+        "gate": 2e-05,
+        "max_component_absolute_error": 6.856666256993549e-08
+      },
+      {
+        "case": "cardinal-Vec3(90.0, 0.0, 0.0)",
+        "family": "positions_f32_vs_f64_affine",
+        "gate": 2e-06,
+        "max_component_absolute_error": 6.118844970848828e-25
+      },
+      {
+        "case": "cardinal-Vec3(90.0, 0.0, 0.0)",
+        "family": "recomputed_normals_vs_rotated_original",
+        "gate": 2e-05,
+        "max_component_absolute_error": 5.2087338196232936e-17
+      },
+      {
+        "case": "cardinal-Vec3(0.0, 90.0, 0.0)",
+        "family": "positions_f32_vs_f64_affine",
+        "gate": 2e-06,
+        "max_component_absolute_error": 6.118844970848828e-25
+      },
+      {
+        "case": "cardinal-Vec3(0.0, 90.0, 0.0)",
+        "family": "recomputed_normals_vs_rotated_original",
+        "gate": 2e-05,
+        "max_component_absolute_error": 5.2087338196232936e-17
+      },
+      {
+        "case": "cardinal-Vec3(0.0, 0.0, 90.0)",
+        "family": "positions_f32_vs_f64_affine",
+        "gate": 2e-06,
+        "max_component_absolute_error": 6.118844970848828e-25
+      },
+      {
+        "case": "cardinal-Vec3(0.0, 0.0, 90.0)",
+        "family": "recomputed_normals_vs_rotated_original",
+        "gate": 2e-05,
+        "max_component_absolute_error": 5.2087338196232936e-17
+      },
+      {
+        "case": "cardinal-Vec3(90.0, 90.0, 90.0)",
+        "family": "positions_f32_vs_f64_affine",
+        "gate": 2e-06,
+        "max_component_absolute_error": 6.118844970848828e-25
+      },
+      {
+        "case": "cardinal-Vec3(90.0, 90.0, 90.0)",
+        "family": "recomputed_normals_vs_rotated_original",
+        "gate": 2e-05,
+        "max_component_absolute_error": 5.208733819623294e-17
+      },
+      {
+        "case": "rounding-flipped-triangle",
+        "signed_double_area_after_f32_oracle": -0.00390625,
+        "signed_double_area_before": 0.007578125223517418
+      },
+      {
+        "case": "forward-inverse",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_component_absolute_error": 5.960464477539063e-08
+      },
+      {
+        "case": "pivot-vertex",
+        "family": "position",
+        "gate": 2e-06,
+        "max_component_absolute_error": 5.960464477539063e-08
+      },
+      {
+        "case": "reveal-layer-0",
+        "family": "positions_f32_vs_f64_affine",
+        "gate": 2e-06,
+        "max_component_absolute_error": 5.95196720798441e-08
+      },
+      {
+        "case": "reveal-layer-0",
+        "family": "recomputed_normals_vs_rotated_original",
+        "gate": 2e-05,
+        "max_component_absolute_error": 2.4344970755985074e-07
+      },
+      {
+        "case": "reveal-layer-1",
+        "family": "positions_f32_vs_f64_affine",
+        "gate": 2e-06,
+        "max_component_absolute_error": 5.95196720798441e-08
+      },
+      {
+        "case": "reveal-layer-1",
+        "family": "recomputed_normals_vs_rotated_original",
+        "gate": 2e-05,
+        "max_component_absolute_error": 2.4344970755985074e-07
+      },
+      {
+        "case": "reveal-layer-2",
+        "family": "positions_f32_vs_f64_affine",
+        "gate": 2e-06,
+        "max_component_absolute_error": 5.95196720798441e-08
+      },
+      {
+        "case": "reveal-layer-2",
+        "family": "recomputed_normals_vs_rotated_original",
+        "gate": 2e-05,
+        "max_component_absolute_error": 2.4344970755985074e-07
+      },
+      {
+        "case": "rich-level-0",
+        "family": "positions_f32_vs_f64_affine",
+        "gate": 2e-06,
+        "max_component_absolute_error": 5.959240123587506e-08
+      },
+      {
+        "case": "rich-level-0",
+        "family": "recomputed_normals_vs_rotated_original",
+        "gate": 2e-05,
+        "max_component_absolute_error": 6.856666256993549e-08
+      },
+      {
+        "case": "rich-level-1",
+        "family": "positions_f32_vs_f64_affine",
+        "gate": 2e-06,
+        "max_component_absolute_error": 5.955461168660747e-08
+      },
+      {
+        "case": "rich-level-1",
+        "family": "recomputed_normals_vs_rotated_original",
+        "gate": 2e-05,
+        "max_component_absolute_error": 1.0566472716244668e-07
+      },
+      {
+        "case": "rich-level-2",
+        "family": "positions_f32_vs_f64_affine",
+        "gate": 2e-06,
+        "max_component_absolute_error": 5.95196720798441e-08
+      },
+      {
+        "case": "rich-level-2",
+        "family": "recomputed_normals_vs_rotated_original",
+        "gate": 2e-05,
+        "max_component_absolute_error": 2.4344970755985074e-07
+      },
+      {
+        "case": "rich-layers",
+        "family": "f64-affine-base",
+        "gate": 2e-13,
+        "max_component_absolute_error": 6.661338147750939e-16
+      },
+      {
+        "case": "layer-0",
+        "family": "f64-linear-offset",
+        "gate": 2e-13,
+        "max_component_absolute_error": 1.3877787807814457e-17
+      },
+      {
+        "case": "layer-1",
+        "family": "f64-linear-offset",
+        "gate": 2e-13,
+        "max_component_absolute_error": 1.3877787807814457e-17
+      },
+      {
+        "case": "layer-2",
+        "family": "f64-linear-offset",
+        "gate": 2e-13,
+        "max_component_absolute_error": 1.214306433183765e-17
+      },
+      {
+        "case": "rich-origin-target",
+        "family": "positions",
+        "gate": 2e-06,
+        "max_component_absolute_error": 5.959240123587506e-08
+      },
+      {
+        "case": "translation",
+        "family": "positions_f32_vs_f64_affine",
+        "gate": 2e-06,
+        "max_component_absolute_error": 5.960464477539063e-08
+      },
+      {
+        "case": "translation",
+        "family": "recomputed_normals_vs_rotated_original",
+        "gate": 2e-05,
+        "max_component_absolute_error": 5.960464477539063e-08
+      }
+    ],
+    "coverage": {
+      "test_names": [
+        "identity_is_bit_exact_including_signed_zero_and_does_not_create_history",
+        "active_center_is_read_only_bounds_center_and_ignores_other_objects",
+        "translation_uses_all_vertices_ignores_masks_and_preserves_channels",
+        "cardinal_rotations_match_independent_world_axis_order",
+        "arbitrary_xyz_rotation_translation_scale_and_pivot_match_scalar_oracle",
+        "point_at_pivot_is_fixed_except_for_translation",
+        "all_retained_levels_and_unavailable_origin_target_are_transformed",
+        "rich_layers_use_affine_base_linear_offsets_and_keep_recording_metadata",
+        "revealing_hidden_and_faded_layers_after_transform_matches_transformed_original_shapes",
+        "active_scene_transform_preserves_inactive_arc_bits_ids_visibility_and_whole_scene_undo",
+        "v2_v3_v4_v5_formats_keep_versions_and_roundtrip_after_transform",
+        "exact_single_transform_undo_redo_and_identity_preserve_genuine_redo",
+        "forward_and_inverse_single_axis_transform_has_bounded_measured_drift",
+        "invalid_parameters_are_rejected_atomically_with_redo_intact",
+        "documented_parameter_boundaries_are_accepted_when_geometry_stays_healthy",
+        "coordinate_overflow_in_current_geometry_is_atomic",
+        "inactive_origin_target_coordinate_overflow_rejects_whole_operation",
+        "hidden_hierarchy_level_coordinate_overflow_rejects_whole_operation",
+        "hidden_layer_offset_and_cancelling_base_overflow_are_not_ignored",
+        "f32_rounding_collapse_and_orientation_flip_are_rejected_before_commit",
+        "pending_invalid_stroke_aborts_transform_even_identity_and_preserves_redo"
+      ],
+      "invalid_parameter_variants": 22,
+      "identity_signed_zero": true,
+      "retained_levels": 3,
+      "layer_entries": 3,
+      "layer_states": [
+        "hidden",
+        "faded intensity0.37",
+        "visible unit intensity recording"
+      ],
+      "origin_target_creation_level": 0,
+      "origin_target_unavailable_active_level": 1,
+      "versioned_roundtrips": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "malformed_current_geometry_guard": "NaN pending stroke aborts both identity and useful transform, preserves redo",
+      "hidden_metadata_overflow_guards": [
+        "current world coords",
+        "stored origin target world coords",
+        "inactive hierarchy level world coords",
+        "hidden layer delta >2M",
+        "cancelling layer base >1M"
+      ],
+      "rounding_guards": [
+        "sphere collapse at scale0.001 plus legal translation999999",
+        "CCW-to-CW face after legal translation and f32 grid rounding"
+      ],
+      "scene": "Active-only geometry/metadata; stable IDs, visibility and recording; inactive CPU/render Arc bytes unchanged; transform is one whole-scene undo entry."
+    },
+    "source_binding": {
+      "tested_run2_before": {
+        "crates/obrush-core/tests/transform_contract.rs": "55fdc526a4367589d879322959978ebe4621515eba8efe156658f0ba28493632",
+        "crates/obrush-core/src/transform.rs": "cf05ce983f788db4827f403707d46f55d6c45f07f5fa20ac54e0b005de74b18a",
+        "crates/obrush-core/src/document.rs": "4687833d23190e2c5858adccfa9bb96baa8bb3424fdc0a7d47c2cf5739ce1251",
+        "crates/obrush-core/src/mesh.rs": "7e9027e1aff2c2a1d3744e7d1c27df4c0aed27f9ef104b70ef83454d9fa791ae",
+        "crates/obrush-core/src/multires.rs": "bb4282a9b558161be5297eed9c2b3dd6bc0e1849d898598caaebd52afae04a36",
+        "crates/obrush-core/src/layers.rs": "03f745e11208ba529d34c7b9ab8d974cf6cefeb1d80ebbeb14645e3b1a42f6fc",
+        "crates/obrush-core/src/morph.rs": "408b99c714e318617fa814a152ca76c52265b5519968afe8d4d0783f81c2925a",
+        "crates/obrush-core/src/subtools.rs": "e5697432bfb40a6c4fe35e4557cd8bd5fadfac604dcd7ca584c4817e8122ab6c",
+        "crates/obrush-core/src/decode_limits.rs": "e05f23682bd599779af266cee33307fc6fbd5e4259c6288bf79979f03136e311",
+        "crates/obrush-core/src/lib.rs": "65bc2d1fc92b9bab1afd5dcf958cef96b8b361008da212e62833051cc409cee4",
+        "Cargo.toml": "183d05aaa7f06cdf89ef24178c7e3a0801790b4d83cf8d11a89431fb3885f495",
+        "Cargo.lock": "964703ae96d2be69f4ab5adf5703cb494532947c330552300421220103624402"
+      },
+      "final_current": {
+        "crates/obrush-core/tests/transform_contract.rs": "55fdc526a4367589d879322959978ebe4621515eba8efe156658f0ba28493632",
+        "crates/obrush-core/src/transform.rs": "9c8e472c279266777ed0eb2519f01a9d74313c5dd069a8a217138edf4c26d85e",
+        "crates/obrush-core/src/document.rs": "4687833d23190e2c5858adccfa9bb96baa8bb3424fdc0a7d47c2cf5739ce1251",
+        "crates/obrush-core/src/mesh.rs": "7e9027e1aff2c2a1d3744e7d1c27df4c0aed27f9ef104b70ef83454d9fa791ae",
+        "crates/obrush-core/src/multires.rs": "bb4282a9b558161be5297eed9c2b3dd6bc0e1849d898598caaebd52afae04a36",
+        "crates/obrush-core/src/layers.rs": "03f745e11208ba529d34c7b9ab8d974cf6cefeb1d80ebbeb14645e3b1a42f6fc",
+        "crates/obrush-core/src/morph.rs": "408b99c714e318617fa814a152ca76c52265b5519968afe8d4d0783f81c2925a",
+        "crates/obrush-core/src/subtools.rs": "e5697432bfb40a6c4fe35e4557cd8bd5fadfac604dcd7ca584c4817e8122ab6c",
+        "crates/obrush-core/src/decode_limits.rs": "e05f23682bd599779af266cee33307fc6fbd5e4259c6288bf79979f03136e311",
+        "crates/obrush-core/src/lib.rs": "65bc2d1fc92b9bab1afd5dcf958cef96b8b361008da212e62833051cc409cee4",
+        "Cargo.toml": "183d05aaa7f06cdf89ef24178c7e3a0801790b4d83cf8d11a89431fb3885f495",
+        "Cargo.lock": "964703ae96d2be69f4ab5adf5703cb494532947c330552300421220103624402"
+      },
+      "changed_since_run2_before": {
+        "crates/obrush-core/src/transform.rs": {
+          "tested_before": "cf05ce983f788db4827f403707d46f55d6c45f07f5fa20ac54e0b005de74b18a",
+          "final_current": "9c8e472c279266777ed0eb2519f01a9d74313c5dd069a8a217138edf4c26d85e"
+        }
+      },
+      "final_literal_sources": ".artifacts/transform-contract-audit/final-source",
+      "scope_note": "If production comment/error-label formatting changes are listed, root final workspace pipeline must bind these final bytes; independent numerical run remains explicitly bound to its recorded source hashes."
+    },
+    "preserved_diagnosis": {
+      "path": ".artifacts/transform-contract-audit/run-1-normalization-diagnosis.json",
+      "sha256": "6e3b6c2b5d058a06fa175c0473333d896a9346012915d9c8829fd0aa541e7027",
+      "note": "Run1 gates passed; its emitted f32-family maxima were computed from shortest JSON decimals interpreted as f64. Run2 corrects only representation, preserves all21 gates and f64 layer math. Raw run1/log/source receipt remain unchanged."
+    },
+    "source_audit": [
+      "No blocking issue found in the reviewed final core implementation.",
+      "Transform validates parameters and source after finishing pending valid stroke; pending invalid stroke aborts before candidate construction. Current/retained-level/target faces reject zero area or orientation reversal relative to rotated expected face normal.",
+      "Layer base and all offsets transform directly in f64 including hidden/faded entries. Visible f32 mesh is reconstructed from ordered transformed layer composition, not a corrected hidden base/delta. Active retained baseline is synchronized to the visible composed surface to prevent navigation drift.",
+      "Candidate metadata/topology bindings and existing aggregate/output budgets are checked before installation; history is committed only on complete changed state. Existing project decoder/schema remains unchanged.",
+      "True identity can still reconcile/validate current retained metadata before returning false; no allocation/latency guarantee is inferred from exact no-op semantics."
+    ],
+    "limits": [
+      "World-space, whole-active-object translation/XYZ Euler/positive uniform scale only; masks/RGB are preserved rather than constraining partial transforms.",
+      "No local axes, negative/nonuniform scaling, multiple selected objects, persistent transform matrices/pivot, Gizmo handles, snapping or reference behavior checks.",
+      "Positive mathematical affine transforms do not repair existing self-intersections/global collisions; face guards only prevent zero-area/orientation damage under the declared local policy.",
+      "Point/normal maxima concern unit-scale analytic fixtures. Boundary and overflow tests are binary acceptance/atomicity guards, not numerical-error bounds across every legal world scale.",
+      "Allocation/output budget integration is additionally source-reviewed; this suite does not construct near128MiB encoded output or prove a universal peak-memory/real-time limit. Candidate/reconciliation/normal temporary buffers and encoded strings are separate from retained-array budgets.",
+      "The0.58s suite duration is a debug correctness-suite duration, not a production operation latency/isolated benchmark.",
+      "All executable checks passed. The normalization correction is retained as an auditor helper issue; no failed check or threshold was discarded/relaxed."
+    ],
+    "cleanup": {
+      "owned_test_session_ids": [
+        2665,
+        37430
+      ],
+      "final_exit_codes": [
+        0,
+        0
+      ],
+      "remaining_owned_processes": false,
+      "browser_native_GUI_processes_started": false
+    },
+    "baseline_receipt": ".artifacts/transform-contract-audit/baseline.json"
+  },
+  "owner_checks": [
+    {
+      "path": ".artifacts/transform-core/check-1.log",
+      "sha256": "1f2ffa218a2c45847878f5107ea8e541e0602c475b3666378ba23ab2405fe604",
+      "result": "pass"
+    },
+    {
+      "path": ".artifacts/transform-core/focused-1.log",
+      "sha256": "28fc10dfe183496ea04d8635887315318a088c9d2cdaad9d3dd1228ef23727b1",
+      "result": "pass"
+    },
+    {
+      "path": ".artifacts/transform-core/focused-final.log",
+      "sha256": "ee6e93a8682ec602f9bbbecc1742b076567c96c88acf83a7c7ca3a49e513c8a1",
+      "result": "pass"
+    },
+    {
+      "path": ".artifacts/transform-core/clippy-native-1.log",
+      "sha256": "caff9ffdf04e95524127b48b18e043d17e200c12d834dc3bc65fb6ccf34fdf4f",
+      "result": "pass"
+    },
+    {
+      "path": ".artifacts/transform-core/wasm-check-1.log",
+      "sha256": "bafb43ff61311ee4369f19b082f119cfb4e8c9c6abf6b155d972bb04004af1e8",
+      "result": "pass"
+    },
+    {
+      "path": ".artifacts/transform-core/clippy-wasm-1.log",
+      "sha256": "bafb43ff61311ee4369f19b082f119cfb4e8c9c6abf6b155d972bb04004af1e8",
+      "result": "pass"
+    }
+  ],
+  "host_receipt_before_caption_fix": {
+    "path": ".artifacts/transform-host/receipt.json",
+    "bytes": 6976,
+    "sha256": "613dc91a4987759ea34c9f18e34a7ee7bd5f79902ec40739d69fd0a5df1b15d3"
+  },
+  "host_tests": [
+    {
+      "command": "cargo test --locked -p obrush-app",
+      "log": ".artifacts/transform-host/app-tests-frozen.log",
+      "exit_code": 0,
+      "tests": 35,
+      "scope": "Final interaction guards and sharedpreview clear. Only readonly dirty/revision diagnostics were added afterward; strictClippy recompilation passes on final source."
+    },
+    {
+      "command": "cargo clippy --locked -p obrush-app --all-targets -- -D warnings",
+      "log": ".artifacts/transform-host/clippy-frozen.log",
+      "exit_code": 0,
+      "scope": "Finalsource including dirty/document_revision/snapshot_revision diagnostics"
+    }
+  ],
+  "retained_failures": [
+    {
+      "log": ".artifacts/transform-host/app-tests-initial.log",
+      "exit_code": 101,
+      "failure": "serde_json readonlydiagnostic macro recursion limit; split base and transform metadata maps, no crate recursion override"
+    },
+    {
+      "log": ".artifacts/transform-host/clippy-initial.log",
+      "exit_code": 101,
+      "failure": "new math test reassigned Camera target afterDefault; replaced with struct initializer without tolerance/behaviorchange"
+    }
+  ],
+  "limitations": [
+    "World-space, whole-active-object translation/XYZ Euler/positive uniform scale only; masks/RGB are preserved rather than constraining partial transforms.",
+    "No local axes, negative/nonuniform scaling, multiple selected objects, persistent transform matrices/pivot, Gizmo handles, snapping or reference behavior checks.",
+    "Positive mathematical affine transforms do not repair existing self-intersections/global collisions; face guards only prevent zero-area/orientation damage under the declared local policy.",
+    "Point/normal maxima concern unit-scale analytic fixtures. Boundary and overflow tests are binary acceptance/atomicity guards, not numerical-error bounds across every legal world scale.",
+    "Allocation/output budget integration is additionally source-reviewed; this suite does not construct near128MiB encoded output or prove a universal peak-memory/real-time limit. Candidate/reconciliation/normal temporary buffers and encoded strings are separate from retained-array budgets.",
+    "The0.58s suite duration is a debug correctness-suite duration, not a production operation latency/isolated benchmark.",
+    "All executable checks passed. The normalization correction is retained as an auditor helper issue; no failed check or threshold was discarded/relaxed."
+  ],
+  "final_source_manifest": {
+    "path": ".artifacts/transform-release-0.1.11-final/source-manifest.json",
+    "bytes": 12809,
+    "sha256": "c9789e17a89b50a2be346fad7e9f2f57f634fd017dce1fcca04c899a70bfc493"
+  },
+  "no_op_correction": {
+    "receipt": {
+      "path": ".artifacts/transform-core/noop-regression/receipt.json",
+      "bytes": 14072,
+      "sha256": "d151a0e3360c5c98bc715ab870f8ff71bf4eb5c427ae765ddb01c7598c8cee19"
+    },
+    "independent_read_only_review": {
+      "path": ".artifacts/transform-core/noop-regression/read-only-review.json",
+      "bytes": 1068,
+      "sha256": "91559acf380640dee04927a8d25edd9a761301788fb4231a0fb5318acbfb2d25"
+    },
+    "old_source_failure": {
+      "path": ".artifacts/transform-core/noop-regression/old-source-failing.log",
+      "bytes": 979,
+      "sha256": "fa4dddacc99ce24394bcffa40de84b4587b4c1bcac26b443caf6c19db6b5040e"
+    },
+    "reason": "Reconciled coarse-level baselines alone formerly consumed redo despite identical saved geometry. Compare candidate against reconciled effective input before installing; true no-op preserves stored state, while real hidden f64 changes remain undoable.",
+    "final_workspace_test_count": 282
+  }
+}

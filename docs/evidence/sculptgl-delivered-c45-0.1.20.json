@@ -1,0 +1,337 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-10-15",
+  "status": "Delivered checkedC45 sharedtree/controlledvalidation/UIpreflight corrections; fullSculptGLparity unverified",
+  "preview": "http://127.0.0.1:8808/",
+  "source_manifest": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate45/source/manifest.json",
+    "bytes": 91949,
+    "sha256": "128ff3f1316ab0c5fbd8dfd9de1e52b233c2f9aa19e4a24295eb030049368a5d"
+  },
+  "build": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate45/build-record.json",
+    "bytes": 9353,
+    "sha256": "c945aa957719432d80dd8f2c77d5eb41571040a94d2be0ef642a2243422079b9"
+  },
+  "checked_receipt": {
+    "path": ".artifacts/sculptgl-performance-c45-stage/FINAL_CHECKED_RECEIPT.json",
+    "bytes": 2914,
+    "sha256": "959efc528bfab21ce6d38fb40c2da7f2fe6b94b0507e989a8785086a3155e921"
+  },
+  "checks": {
+    "path": ".artifacts/sculptgl-performance-c45-stage/CHECKS02.json",
+    "bytes": 2026,
+    "sha256": "703b91e6ed1c464e9c03939304c4578acf3ed9909490ea164b22fdf762fc6ded"
+  },
+  "tests": {
+    "workspace": 2292,
+    "core": 1584,
+    "app": 708,
+    "ignored": 1
+  },
+  "wasm": {
+    "path": "pkg/obrush_app_bg.wasm",
+    "bytes": 23241968,
+    "sha256": "cfdc021251e2fea8b5d55e684eb1f3cbdc45505e2c50fdbebcc2152bd1e8c402"
+  },
+  "changes": {
+    "C43": "Exclusive same-call typedcontrolledentryvalidation proof removes repeatedMesh/state/domain checks, keepsfullpublicentryvalidationeachdab",
+    "C44": "Exactprivateorderedtreefaceallocationcounter replaces repeatedlive-node scans; no cap/mathematics/order change; existingconservativenestedheadercharge+16correctlyretained",
+    "C45": "Onlydisplaypreflight omitted whileOBrushApp.strokeownsSourceGeometrySession; idle/modeentryandallactualpress/dabvalidationunchanged",
+    "sharedcore": "AllC45core rows byte-identicalcheckedC44; ninefocusedconsumer testsPASS includingmalformed/staledatarejectionbetweenwarmdabs"
+  },
+  "regressions": {
+    "original_failed_preflight": {
+      "path": ".artifacts/sculptgl-performance-c45-stage/failed-panel-baseline01/run.log",
+      "bytes": 1263,
+      "sha256": "839b3c155bf585f0b3629e3ce290b42b8e485aed032ea5d16167e903d075f0db"
+    },
+    "final": {
+      "path": ".artifacts/sculptgl-performance-c45-stage/panel-regressions02.log",
+      "bytes": 1488,
+      "sha256": "1a94dd14c33f72c76514da17b7e3d5f2819e1598848b94e4a6fd56e3f490ee18"
+    },
+    "old_display_checks_for128redraws": 128,
+    "new": 0,
+    "tree_evidence": {
+      "path": "docs/evidence/sculptgl-tree-accounting-c44-0.1.20.json",
+      "bytes": 21262,
+      "sha256": "6432ebbc1381b72214608d6e1d161fda16940b035015e1e2349dae7a239f2cdf"
+    }
+  },
+  "normal_browser": {
+    "post_audit": {
+      "path": ".artifacts/sculptgl-normal-c45-consumer-stage/POST_AUDIT01.json",
+      "bytes": 237418,
+      "sha256": "52f7b4ce6e16acd867c74805662f819690113ab7a422e5ad38773c6193a64f09"
+    },
+    "helper": {
+      "path": ".artifacts/sculptgl-normal-c45-consumer-stage/manifest.json",
+      "bytes": 2324,
+      "sha256": "a63399738f63b489a09e81af47633a262567bf4d2a89212b9d93538356ead603"
+    },
+    "original_cases": 20,
+    "complete_actual_downloads": 126,
+    "saved_GPU_comparisons": 118,
+    "whole_screenshots": 17,
+    "errors": [],
+    "limits": "OriginalnormalJSconsumeroracle andindependentfile/hash audit, nofreshsecondPythonGPUreconstruction claimed"
+  },
+  "paired_Source_CW03": {
+    "post": {
+      "path": ".artifacts/sculptgl-crease-history-c45-stage/actual-CW03/POST.json",
+      "bytes": 726,
+      "sha256": "2d826a68b654e1f11d6785066cefaefd3a53826498a81d5288cdd3efd2287f56"
+    },
+    "result": {
+      "path": ".artifacts/sculptgl-crease-runtime/candidate45-history-CW03-101c472a-b309-4332-ab53-d79419ff7195/result.json",
+      "bytes": 40846765,
+      "sha256": "3b83ae710e939e0883b8bd5a54a937280989d338dda12bc5f3cd0dca9f4059aa"
+    },
+    "helper_manifest": {
+      "path": ".artifacts/sculptgl-crease-history-c45-stage/MANIFEST.json",
+      "bytes": 31429,
+      "sha256": "fd31619635535bd8b1e16816d65892a4a0a143fba9db8ef572cb3a3a6b797e22"
+    },
+    "protocol": {
+      "path": ".artifacts/sculptgl-crease-history-c45-stage/protocol/manifest.json",
+      "bytes": 434,
+      "sha256": "c1cb02d8a3d5d6e4e3064b7c5efa0f50817e5e4f361cbd3d88fac8f93b69f8f8"
+    },
+    "closed_binding_and102checks": {
+      "path": ".artifacts/sculptgl-crease-history-c45-stage/root-check01/RESULT.json",
+      "bytes": 50729,
+      "sha256": "c6478efa7e5ce7c31fbafc62a52791ceec0a4d88ae89e4dec18e99d600c7ba80"
+    },
+    "audit": {
+      "path": ".artifacts/sculptgl-crease-history-c45-stage/ROOT_HISTORY_AUDIT.json",
+      "bytes": 34938,
+      "sha256": "730e95049524257fde20d1214b7828e85a6d21eb17d2c81914f25b790822d35a"
+    },
+    "independent_math": {
+      "path": ".artifacts/sculptgl-crease-history-c45-stage/ROOT_INDEPENDENT_HISTORY_MATH.json",
+      "bytes": 13071,
+      "sha256": "85ac7ac033e0880bbbab9c8be14e3a05e637b13d42f78deb81a998e8e3b3a0e6"
+    },
+    "image_review": {
+      "path": ".artifacts/sculptgl-crease-history-c45-stage/WHOLE_PNG_REVIEW.json",
+      "bytes": 2882,
+      "sha256": "2a7318efad45c44c3b6f995cdae8fd05570bef269876efc785740b81f27b1dc0"
+    },
+    "raw_records": 554,
+    "whole_downloads": 36,
+    "actual_GPU_snapshots": 24,
+    "GPU_prefixes": [
+      {
+        "side": "source",
+        "frames": 71,
+        "bytes": 4620397
+      },
+      {
+        "side": "root",
+        "frames": 200,
+        "bytes": 9270792
+      }
+    ],
+    "input": "Same6vertex/two-sheetfixture; threeactualmirroredSourceCreasestrokes500px/.25,370px/.75,500px/.75;Negativeon,rawU1,Nonealpha,mirroroffset0,culling/pressure/Continuous/PreventFoldsoff,DPR1; sixUndo/Redo steps, currentfieldnormalrefresh",
+    "result_scope": "Bothhosts ownpositions/normals/proxies independentlyreconstructed,12passesand24fullGPUstates; pairedforwardandhistoryoriginalmax/RMS1e-6 gatesunchanged; completequiet/history/files pass",
+    "limits": [
+      "CW03 selected-current-field history verified on this fixture; original C41 CW00/CW01 failures and CW02 gap remain historical",
+      "One independent6vertex static fixture; no alpha/pressure/nonzerooffset/pose/culling/Lock/dynamic/nativephysical/HiDPI/performance or full317+5 parity",
+      "Small middle stroke cannot discriminate wrong mirror direction through final f32 coordinates; its actual picked direction is independently verified",
+      "Source GL1 upload observation differs from Root GL2 actual GPU readback"
+    ]
+  },
+  "sustained100k60": {
+    "protocol": {
+      "path": ".artifacts/sculptgl-sustained-performance-c45-stage/SUSTAINED_PREREGISTRATION.json",
+      "bytes": 6310,
+      "sha256": "1ee84563e28f3afc8311f7c784f9e53220c44313946bed06e135546ff0de3ed2"
+    },
+    "helper_manifest": {
+      "path": ".artifacts/sculptgl-sustained-performance-c45-stage/HELPER_MANIFEST01.json",
+      "bytes": 5911,
+      "sha256": "c64f6f48419e68fd8a2e9a8cb3e7fa3f91df6d56837fb059a20d08b77d2f5b74"
+    },
+    "input_identity": {
+      "path": ".artifacts/sculptgl-sustained-performance-c45-stage/INPUT_IDENTITY01.json",
+      "bytes": 454,
+      "sha256": "ff93931003f4defd2d41074a63ab5929e2dd937fbafd63fe336e5aca7e13459e"
+    },
+    "actual_result": {
+      "path": ".artifacts/sculptgl-sustained-performance-c45-stage/actual/SP-LONG00-100k-60s-root-f8217afc-1c20-42d6-8c0c-6d08490c0aa4/result.json",
+      "bytes": 14209973,
+      "sha256": "0e17cfabf8de403314bfd8d073fdb64e404c790a4028665251918e69984694e7"
+    },
+    "independent_audit": {
+      "path": ".artifacts/sculptgl-sustained-performance-c45-stage/ROOT_100K_60S_AUDIT01.json",
+      "bytes": 6843,
+      "sha256": "15e0ad5518ef2d04d5362738db28983722ce85686ff23ea760cd2bf863147055"
+    },
+    "status": "FAIL one or more named local data/scalar gates",
+    "checks": {
+      "original_runtime_admission_pass": true,
+      "whole_attributes_topology_history": true,
+      "finite_useful": true,
+      "zero_degenerate_faces": true,
+      "zero_original_orientation_reversals": true,
+      "maximum_edge_stretch_le4": true,
+      "pacing_P99_le25ms": true,
+      "pacing_max_le100ms": true,
+      "independentRAF_P95_le33_34ms": true,
+      "independentRAF_max_le250ms": true,
+      "appRAF_summed_CPU_P95_le16_667ms": false,
+      "Root_queue_zero_by100ms": true,
+      "Root_applied_stable_after100ms": true,
+      "memory_samples_no_errors": true,
+      "Root_exported_WASM_memory_measured": true
+    },
+    "metrics": {
+      "actual_pointer_contact_ms": 60092.80000001192,
+      "scheduled_motion_requests": 24000,
+      "delivered_pointer_moves": 11225,
+      "motion_send_lateness_ms": {
+        "count": 24000,
+        "minimum": 0,
+        "P50": 0.0,
+        "P95": 0.6943329999994603,
+        "P99": 1.2802920000031008,
+        "maximum": 16.696749999999156
+      },
+      "motion_ack_elapsed_ms": {
+        "count": 24000,
+        "minimum": 0.2930419999975129,
+        "P50": 4.687188000001697,
+        "P95": 19.294958999998926,
+        "P99": 23.03612499999872,
+        "maximum": 68.12654199999997
+      },
+      "independentRAF_active_interval_ms": {
+        "count": 3600,
+        "minimum": 0.5,
+        "P50": 13.199999988079071,
+        "P95": 31.100000023841858,
+        "P99": 32.69999998807907,
+        "maximum": 75.30000001192093
+      },
+      "independentRAF_active_timestamp_interval_ms": {
+        "count": 3600,
+        "minimum": 16.5,
+        "P50": 16.69999999999709,
+        "P95": 16.700000000004366,
+        "P99": 16.80000000000291,
+        "maximum": 66.60000000000036
+      },
+      "appRAF_active_callback_CPU_ms": {
+        "count": 3602,
+        "minimum": 0,
+        "P50": 7.399999976158142,
+        "P95": 21.30000001192093,
+        "P99": 22.69999998807907,
+        "maximum": 66.69999998807907
+      },
+      "appRAF_active_sum_CPU_per_shared_timestamp_ms": {
+        "count": 3601,
+        "minimum": 0,
+        "P50": 7.399999976158142,
+        "P95": 21.30000001192093,
+        "P99": 22.69999998807907,
+        "maximum": 66.69999998807907
+      },
+      "Source_original_Brush_callback_CPU_ms": {
+        "count": 0
+      },
+      "Source_original_Brush_callbacks": 0,
+      "longtasks": [
+        [
+          8412.5,
+          65
+        ],
+        [
+          8567.799999952316,
+          67
+        ]
+      ],
+      "seen": {
+        "events": 22454,
+        "draws": 79266,
+        "uploads": 135448,
+        "appRAF": 3724,
+        "pumpRAF": 3723,
+        "sourceDabs": 0,
+        "longtasks": 2
+      },
+      "Root_before_queue": {
+        "applied_dabs": 0,
+        "coalesced_dabs": 0,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 0,
+        "pending_dabs": 0,
+        "processed_dabs": 0,
+        "released_strokes": 0
+      },
+      "Root_tail_first": {
+        "applied_dabs": 1147,
+        "coalesced_dabs": 0,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 1,
+        "pending_dabs": 0,
+        "processed_dabs": 1147,
+        "released_strokes": 1
+      },
+      "Root_tail_last": {
+        "applied_dabs": 1147,
+        "coalesced_dabs": 0,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 1,
+        "pending_dabs": 0,
+        "processed_dabs": 1147,
+        "released_strokes": 1
+      },
+      "last_candidate_upload_after_pointerup_ms": 51.89999997615814,
+      "scope": "DOM/CPU/RAF/upload submission only; upload last is all-buffer metadata, not actual last position edit or GPU completion"
+    },
+    "geometry": {
+      "changed_original_vertices": 4064,
+      "maximum_position_change": 0.2204599380493164,
+      "RMS_position_change": 0.013353865573122521,
+      "before_minimum_normalized_quality": 0.0007395786042558039,
+      "after_minimum_normalized_quality": 0.0007395786042558039,
+      "after_degenerate_faces": 0,
+      "faces_reversed_against_original_cross": 0,
+      "maximum_original_edge_stretch_ratio": 2.2210233175229215,
+      "minimum_face_normal_original_alignment": 0.4985849187398405,
+      "complete_adjacent_face_pairs": 298800,
+      "before_maximum_adjacent_angle_degrees": 0.9002909196599697,
+      "after_maximum_adjacent_angle_degrees": 30.816016836596418,
+      "new_adjacent_pairs_over90degrees": 0,
+      "scope": "Whole original triangle/edge/closed-adjacency metrics; no global self-intersection, visual or retained-normal-field equivalence proof. Adjacent angles are descriptive supplemental metrics, not a retroactive new acceptance gate"
+    },
+    "scope": "Oneactualoriginal100k60s24000motions400HzSourcefixedtopologyDraw64px/.25/None/noClay/noAccumulate/noMirror/noCulling/noContinuous/zeropressurefactors/PreventFoldsOff,1024x768DPR1. NotdefaultStudio/adaptive/Move/Crease; notphysical/native latency",
+    "comparison": "C44trialP50/P95CPU16.3/39.2ms; C45trial7.4/21.3ms. ActualC45callbackP9531.1ms/max75.3ms,inputproducermaxlateness16.697ms. Differentuncontrolledtrials, nooverallcausal applicationspeedratio; CPUbudget16.667msstillfails. Wholedata/history/shape/memory/release/pacing/RAFintervalgatespass."
+  },
+  "promotion": {
+    "path": ".artifacts/sculptgl-main-c45-promotion-stage/PROMOTED.json",
+    "bytes": 2172,
+    "sha256": "47e59f801d0aa2c023a891866681d9b708b4efb8975861ba5296ddc07e9e8345"
+  },
+  "HTTP19": {
+    "path": ".artifacts/sculptgl-main-c45-promotion-stage/HTTP_VERIFIED.json",
+    "bytes": 5393,
+    "sha256": "70e15323ebd3e0e48902576e95bb57d7c6ba9af89a87ab38cdb8f89476fa17d7"
+  },
+  "native": "OfficialmacOSartifactadHocsignedandverified,unopened/uninstalled; syntheticpressuredoesnotestablishphysicaltabletbehavior",
+  "remaining": [
+    "Alloriginal317workflowIDs+5hostedcontrols remain required; nofamilyparitypromoted",
+    "100kCPU95framebudgetfails;10k/100k120s/currentotherbrush/default/qualitymatrixneedsrelevantnewbuildcoverage",
+    "Original1Mcombinedraw/editableimportandlargerstatecapacity gaps remain",
+    "NativeGUI,physicalpen/touch/HiDPI/fullrendering/advancedtopology/fullreference/usability/performance remain open"
+  ],
+  "next": "Inspect immutable sharedMesh+selectedNormalArc identity reuse in renderer. Current scene_source_normal_storage andGpuMesh.normal_cache_matches repeatedlyvalidate unchangedsnapshotpairs. Anyreuse mustbind actualimmutableArc payloads, invalidateonreplacement/Arc::make_mut/statechange, preserveRevisionfallback andfullpubliccorevalidation, maintainresourcecaps andfullGPU/historyproof; no unsafepublicepochtrust."
+}

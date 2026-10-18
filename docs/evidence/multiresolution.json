@@ -1,0 +1,529 @@
+{
+  "feature_ids": [
+    "T04",
+    "F13",
+    "F15",
+    "H02"
+  ],
+  "status": "Locally verified persistent Loop-level foundation. ZBrush/HD and SculptGL parity unverified.",
+  "commit": null,
+  "reference": {
+    "zbrush": "2026.2.1",
+    "zbrush_executed": false,
+    "sculptgl_executed": false
+  },
+  "created_utc": "2026-10-12T23:34:42.785728+00:00",
+  "sources": [
+    {
+      "path": "crates/obrush-core/src/multires.rs",
+      "bytes": 12162,
+      "sha256": "04c1ace2b6e5e92119893d5acfad060ce22f2b21d9d8fcf6f558d565cfe1097f"
+    },
+    {
+      "path": "crates/obrush-core/src/document.rs",
+      "bytes": 16310,
+      "sha256": "142f8a4d67da85fca8edb171a6e2738c567edb9d7ae59c54ef0df037aa5e21c3"
+    },
+    {
+      "path": "crates/obrush-core/tests/multires.rs",
+      "bytes": 11034,
+      "sha256": "1fa1aab0414dae2fc3c9768236399e5220f9cc1ac6f5015bf74df77a4160d803"
+    },
+    {
+      "path": "crates/obrush-core/src/mesh.rs",
+      "bytes": 58738,
+      "sha256": "4db1884082d155c81c5acbcf154046370cdca2fa7d087f293c71f12802320f98"
+    },
+    {
+      "path": "crates/obrush-app/src/app.rs",
+      "bytes": 72906,
+      "sha256": "2a8cf6ede4f3ef216bdce2df99618763e8f344bec402e93a3446b78612d54a4d"
+    },
+    {
+      "path": "crates/obrush-app/src/dab_queue.rs",
+      "bytes": 14679,
+      "sha256": "38c71e0fcc000c28473035d7170a1c57b9e2b682f37252df032f24098c078d04"
+    },
+    {
+      "path": "scripts/check-multires.mjs",
+      "bytes": 31163,
+      "sha256": "f4ba9eb60279ebfc6dfedc660336b1e0a02167757701c8fb861b02c2be81e210"
+    },
+    {
+      "path": "Cargo.toml",
+      "bytes": 637,
+      "sha256": "cba2e0cd91a2854c420fe9d97218a3df7596fc3e01595beed9334fe6df16497e"
+    },
+    {
+      "path": "Cargo.lock",
+      "bytes": 92204,
+      "sha256": "69412564938f9bf8483783760d6af736688fcb175c1736289193485de54fc098"
+    }
+  ],
+  "frozen_build_manifest": {
+    "path": ".artifacts/topology-inputs-final/source-manifest.json",
+    "bytes": 8394,
+    "sha256": "59d5053a2db4dd1bc30eaa69444c9120d39cb87bd695d53528938cb441217d9a"
+  },
+  "semantics": {
+    "geometry": "Add Loop(new parent)-Loop(old parent) to its existing finer mesh, retaining finer sculpt offsets as additive world-space detail; repeat upward. Fine edits do not reverse-project into coarse levels.",
+    "attributes": "Analogous interpolated additive mask/RGB deltas are clamped to 0-1. Unchanged channels copy exactly. Fine attributes do not project down; finer masks do not automatically protect parent-level edits.",
+    "history": "Selection does not consume an undo entry. Add/sculpt/topology and project replacements snapshot whole mesh/name/hierarchy state.",
+    "topology": "Stored levels have fixed topology; the app disables adaptive brush splitting. Explicit replacement/refinement/remesh/accepted decimation clears the stack; Undo restores it. Zero-collapse decimation preserves hierarchy and redo.",
+    "project": "Version2 has optional multiresolution scheme loop_world_offsets_v1, ordered level list and active index. Exactly the active slot is null and supplied by top-level mesh. Version1 flat files remain supported. Unknown/malformed fields, unsupported topology, collapsed hierarchy triangles and excess aggregate allocation reject atomically.",
+    "transport_limit": "Saved world-space residuals do not rotate/scale with coarse frames. Large reshaping can distort detail or create intersections. No normal-frame transport, inverse projection or HD geometry."
+  },
+  "limits": {
+    "maximum_levels": 8,
+    "aggregate_unique_vertices": 1000000,
+    "aggregate_unique_triangles": 2000000,
+    "project_input_output_bytes": 134217728,
+    "history_bytes": 134217728,
+    "history_entries": 64,
+    "note": "Runtime retains an active baseline in the hierarchy in addition to pub mesh; files omit that duplicate. History accounting includes retained storage. Add/select preflight output bytes before commit."
+  },
+  "core_checks": {
+    "multires_tests": 10,
+    "focused_exit": 0,
+    "focused_log": {
+      "path": ".artifacts/multires-tests-geometry-guard.log",
+      "bytes": 1082,
+      "sha256": "503a9998a80936af1194ae38169283606cb38b421e7cfc366a6ad894b20ab669"
+    },
+    "preexisting_unit_tests": 41,
+    "preexisting_tests_log": {
+      "path": ".artifacts/multires-existing-core-tests.log",
+      "bytes": 3705,
+      "sha256": "8c910c3304950f8e60871a0590f6b186f9227416109ab280103aaab240d9a932"
+    },
+    "workspace_tests_reported_by_root": 142,
+    "strict_native_clippy": {
+      "path": ".artifacts/topology-inputs-build/clippy-native-final.log",
+      "bytes": 482,
+      "sha256": "87206269d87d72127f8e94faf9a6b4c683e28b1a9b74a66f1fb79a123822387d"
+    },
+    "strict_wasm_clippy": {
+      "path": ".artifacts/topology-inputs-build/clippy-wasm-final.log",
+      "bytes": 430,
+      "sha256": "839c433f03f6858e36a5b7010f96f207043a31cbc68b8df42a8a5071c90e5f2b"
+    },
+    "fixture": "Independent unit icosphere level1 (42vertices/80triangles), two persistent Loop levels added.",
+    "parameters": {
+      "fine_vertex0_delta": [
+        0.03,
+        0.02,
+        0.07
+      ],
+      "fine_mask": 0.45,
+      "fine_RGB": [
+        0.1,
+        0.2,
+        0.9
+      ],
+      "coarse_translation": [
+        0.14,
+        -0.06,
+        0.11
+      ],
+      "translation_maximum_error_tolerance": 2e-06,
+      "localized_coarse_vertex0_delta": [
+        0,
+        0,
+        0.05
+      ]
+    },
+    "first_failed_log": ".artifacts/multires-tests-first.log",
+    "first_failure": "Test-only JSON key-order assertion corrected to compare original bytes; eight behavioral tests already passed."
+  },
+  "runtime": {
+    "method": "Isolated CLI headless Chrome/CDP, actual canvas controls and public file inputs",
+    "browser": {
+      "protocolVersion": "1.3",
+      "product": "Chrome/155.0.8059.39",
+      "revision": "@3ff7ac5a9224be9156d7f8703a06e22890aafd34",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "jsVersion": "15.5.35.20"
+    },
+    "platform": "Apple M2,24GiB;1600x1000,DPR1,synthetic CDP mouse. Own Chrome process/profile/server, no user tabs or desktop/accessibility interactions.",
+    "wasm": {
+      "sha256": "dfe8de34af906a26a80bac2bcf6e523e95a9f5df9f3549f7890230feb8cb22c4",
+      "served_sha256": "dfe8de34af906a26a80bac2bcf6e523e95a9f5df9f3549f7890230feb8cb22c4",
+      "bytes": 3736829
+    },
+    "source": {
+      "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/harness.mjs",
+      "bytes": 29069,
+      "sha256": "f781f436acadb22daab73577c39730da89482ecee176b228cc4c3bbd678a0107"
+    },
+    "raw_result": {
+      "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/result.json",
+      "bytes": 345696,
+      "sha256": "a18221423db2ad2da97c569ce701ede50450e0bd237077bb830feb416c9eb263"
+    },
+    "fixtures": [
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/after-malformed-import.obrush",
+        "bytes": 27920712,
+        "sha256": "49f4ca03ad497668ccfe302e4d60b5c88773611de52101ca1bc06d2c02ba8dc1"
+      },
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/base.obrush",
+        "bytes": 5317105,
+        "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb"
+      },
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/before-coarse.obrush",
+        "bytes": 27919769,
+        "sha256": "34285c0f010d58fd9af6fd083ce83933ace6f515a78c516459166094abb1b9ab"
+      },
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/coarse-edit.obrush",
+        "bytes": 27920712,
+        "sha256": "fca9773821cd43b409445704a964bddfce29663a1051f3f19f85b432683a831a"
+      },
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/coarse-redo.obrush",
+        "bytes": 27920712,
+        "sha256": "49f4ca03ad497668ccfe302e4d60b5c88773611de52101ca1bc06d2c02ba8dc1"
+      },
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/coarse-undo.obrush",
+        "bytes": 27919769,
+        "sha256": "34285c0f010d58fd9af6fd083ce83933ace6f515a78c516459166094abb1b9ab"
+      },
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/control-coarse.obrush",
+        "bytes": 27865845,
+        "sha256": "0801b5e49fc045f769578c1b70641322121cd8d22765e67dce4893ad349fe160"
+      },
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/control-high.obrush",
+        "bytes": 27865845,
+        "sha256": "cb9476742e0c02c5b7df461b85115126f2412100ce65003e058dd2917d9c6ee6"
+      },
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/cube-redo.obrush",
+        "bytes": 130679,
+        "sha256": "9c72e488e5d196995d81f09b5ced146c61417c099567a2bf5779fd0d45f2d76b"
+      },
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/cube-replacement.obrush",
+        "bytes": 130679,
+        "sha256": "9c72e488e5d196995d81f09b5ced146c61417c099567a2bf5779fd0d45f2d76b"
+      },
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/fine-after-coarse.obrush",
+        "bytes": 27920712,
+        "sha256": "49f4ca03ad497668ccfe302e4d60b5c88773611de52101ca1bc06d2c02ba8dc1"
+      },
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/fine-edit.obrush",
+        "bytes": 27919769,
+        "sha256": "012d15b1b1222ed5b71fb6811857be0195336a3c06e1760ef525118b27a0701c"
+      },
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/hierarchy-restored.obrush",
+        "bytes": 27920712,
+        "sha256": "49f4ca03ad497668ccfe302e4d60b5c88773611de52101ca1bc06d2c02ba8dc1"
+      },
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/initial-high.obrush",
+        "bytes": 27864740,
+        "sha256": "cc45c75106d264ea2b67fea3700a8b69be4f6aacbea62a9ef0c4b69b730b9607"
+      },
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/loaded-hierarchy.obrush",
+        "bytes": 27920712,
+        "sha256": "49f4ca03ad497668ccfe302e4d60b5c88773611de52101ca1bc06d2c02ba8dc1"
+      },
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/malformed-hierarchy.obrush",
+        "bytes": 27510721,
+        "sha256": "67752908286a08a3c9332a900460011753b492d421b02f45d795f089ae263425"
+      },
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/rejected-lower-add.obrush",
+        "bytes": 27919769,
+        "sha256": "34285c0f010d58fd9af6fd083ce83933ace6f515a78c516459166094abb1b9ab"
+      }
+    ],
+    "actual_add": {
+      "base": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/base.obrush",
+        "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+        "bytes": 5317105,
+        "vertices": 40962,
+        "triangles": 81920
+      },
+      "high": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/initial-high.obrush",
+        "sha256": "cc45c75106d264ea2b67fea3700a8b69be4f6aacbea62a9ef0c4b69b730b9607",
+        "bytes": 27864740,
+        "vertices": 163842,
+        "triangles": 327680
+      },
+      "metrics": {
+        "adaptive_detail": false,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Draw",
+        "message": "Subdivision level 2 added. Lower levels remain editable; Undo restores the previous stack.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 1,
+        "subdivision_levels": 2,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 327680,
+        "vertices": 163842
+      }
+    },
+    "fine_draw": {
+      "changed_vertices": 3488,
+      "maximum_world_displacement": 0.02209831376168329,
+      "rms_world_displacement": 0.001286353487772632
+    },
+    "coarse_draw": {
+      "changed_vertices": 754,
+      "maximum_world_displacement": 0.01802287501379015,
+      "rms_world_displacement": 0.0009755438496012005
+    },
+    "fine_mask_changed": 2874,
+    "fine_RGB_changed": 2594,
+    "fine_residual": {
+      "maximum_component_error": 1.0000000005838672e-07,
+      "rms_component_error": 1.4657404264637338e-09,
+      "original_rms_magnitude": 0.0007426765324385444
+    },
+    "control_coarse_difference": {
+      "changed_vertices": 0,
+      "maximum_world_displacement": 0,
+      "rms_world_displacement": 0
+    },
+    "tolerances": {
+      "fine_residual_maximum_component_error": 2e-06,
+      "control_coarse_maximum_displacement": 2e-06,
+      "history": "Exact complete parsed project",
+      "gpu": "Exact SHA256 of packed40byte/f32 vertex rows",
+      "sculpt_topology": "Exact vertex count and face indices"
+    },
+    "sculpt_history": {
+      "undo_exact": true,
+      "redo_exact": true
+    },
+    "replacement_history": {
+      "undo_exact": true,
+      "redo_exact": true
+    },
+    "v2_load_exact": true,
+    "malformed_import_preserves_document": true,
+    "malformed_notice": "Import failed: Triangle 0 refers to a missing vertex",
+    "lower_add_failure": {
+      "message": "Cannot add subdivision level: Select the highest subdivision level before adding another",
+      "project_exact": true
+    },
+    "inactive_attributes_exact": true,
+    "gpu_cases": [
+      {
+        "name": "added-high-gpu",
+        "gpu": {
+          "bytes": 6553680,
+          "last_upload_at": 1186,
+          "sha256": "a96b05889d4ea72c9caea3b03de0aad152b42405e2b116b6eb56305e1588a04e"
+        },
+        "packed_saved_sha256": "a96b05889d4ea72c9caea3b03de0aad152b42405e2b116b6eb56305e1588a04e",
+        "gpu_exact": true
+      },
+      {
+        "name": "fine-after-coarse-gpu",
+        "gpu": {
+          "bytes": 6553680,
+          "last_upload_at": 17214.699999999255,
+          "sha256": "65164ecc982f10a83bf16e250975e5c251058bfdaa69ee103bf59cf50dea28de"
+        },
+        "packed_saved_sha256": "65164ecc982f10a83bf16e250975e5c251058bfdaa69ee103bf59cf50dea28de",
+        "gpu_exact": true
+      }
+    ],
+    "actual_4x_msaa": true,
+    "runtime_errors": {
+      "gl": [],
+      "js": []
+    },
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "screenshots": [
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/initial-controls.png",
+        "bytes": 202092,
+        "sha256": "4b68b7a4c3babf4d415318b7c447561d9c7b6589cbe434d59bdb4d7b4e1bb07b"
+      },
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/after-add.png",
+        "bytes": 210183,
+        "sha256": "8c3b356ce57ef4871ef0f569bf859ef30d6d51dcc6bfe93f989462fc1a303604"
+      },
+      {
+        "path": ".artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/final-hierarchy.png",
+        "bytes": 245990,
+        "sha256": "a868b84273a333569635889c5bd4009ebb96d64dfb4f31bab74da134fb4e2a4f"
+      }
+    ]
+  },
+  "main_thread_limits": {
+    "scope": "Indicative single-run headless measurements, not physical latency or competitive/baseline performance. Root builds/checks had completed. Targeted probe ended before topology measured phases; startup/background activity not guaranteed absent.",
+    "Add_level_longtasks_ms": [
+      165
+    ],
+    "fine_Draw_longtasks_ms": [
+      56
+    ],
+    "targeted_source": {
+      "path": ".artifacts/multires-browser-0.1.6/final-targeted-timing-b1d93872-a5f9-47e1-ad43-f8681f122f4b/harness.mjs",
+      "bytes": 31163,
+      "sha256": "f4ba9eb60279ebfc6dfedc660336b1e0a02167757701c8fb861b02c2be81e210"
+    },
+    "targeted_result": {
+      "path": ".artifacts/multires-browser-0.1.6/final-targeted-timing-b1d93872-a5f9-47e1-ad43-f8681f122f4b/result.json",
+      "bytes": 185206,
+      "sha256": "7c988f68cf0f133e0eb1d84a6358747ebabb4fae43b003c11f61b9b8b18cee64"
+    },
+    "targeted_fixture": {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/multires-browser-0.1.6/final-message-capture-f2681809-26ff-4fb8-82bb-d9c2d2338442/fine-after-coarse.obrush",
+      "sha256": "49f4ca03ad497668ccfe302e4d60b5c88773611de52101ca1bc06d2c02ba8dc1",
+      "bytes": 27920712
+    },
+    "run_epoch_bounds": {
+      "filesystem_birth_ms": 1791847695596.4382,
+      "last_result_write_ms": 1791847704848.5425,
+      "performance_timeOrigin_recorded": false
+    },
+    "Lower_longtasks_ms": [
+      92
+    ],
+    "Higher_after_edit_longtasks_ms": [
+      238
+    ],
+    "exports": [
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/multires-browser-0.1.6/final-targeted-timing-b1d93872-a5f9-47e1-ad43-f8681f122f4b/timing-initial.obrush",
+        "sha256": "49f4ca03ad497668ccfe302e4d60b5c88773611de52101ca1bc06d2c02ba8dc1",
+        "bytes": 27920712,
+        "export_timing": {
+          "start": 1005,
+          "emitted": 1198.300000000745,
+          "elapsed_ms": 193.30000000074506,
+          "longtasks": [
+            {
+              "start": 1014.0999999996275,
+              "duration": 186
+            }
+          ]
+        },
+        "vertices": 163842,
+        "triangles": 327680
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/multires-browser-0.1.6/final-targeted-timing-b1d93872-a5f9-47e1-ad43-f8681f122f4b/timing-low.obrush",
+        "sha256": "fca9773821cd43b409445704a964bddfce29663a1051f3f19f85b432683a831a",
+        "bytes": 27920712,
+        "export_timing": {
+          "start": 2858.0999999996275,
+          "emitted": 3038,
+          "elapsed_ms": 179.90000000037253,
+          "longtasks": [
+            {
+              "start": 2864.199999999255,
+              "duration": 175
+            }
+          ]
+        },
+        "vertices": 40962,
+        "triangles": 81920
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/multires-browser-0.1.6/final-targeted-timing-b1d93872-a5f9-47e1-ad43-f8681f122f4b/timing-high.obrush",
+        "sha256": "c0cda5cb7204fe709d80bfbb34048cca212789a2e672de4abd9847e40a4d033b",
+        "bytes": 27920839,
+        "export_timing": {
+          "start": 6122.5,
+          "emitted": 6319.5999999996275,
+          "elapsed_ms": 197.09999999962747,
+          "longtasks": [
+            {
+              "start": 6131,
+              "duration": 190
+            }
+          ]
+        },
+        "vertices": 163842,
+        "triangles": 327680
+      }
+    ],
+    "scope_note": "Navigation intervals include harness waits. Export elapsed ends at browser-emitted bytes and excludes physical downloads, chunk retrieval and disk writes.",
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    }
+  },
+  "failed_browser_attempts": [
+    {
+      "result": {
+        "path": ".artifacts/multires-browser-0.1.6/final-correctness-49265b82-937b-4e4e-ab11-e2b13de25552/result.json",
+        "bytes": 137770,
+        "sha256": "fd76bb48e9a8a2fe14a8529b176affc90ffab064048f1fe8f47b725d846ce850"
+      },
+      "source": {
+        "path": ".artifacts/multires-browser-0.1.6/final-correctness-49265b82-937b-4e4e-ab11-e2b13de25552/harness.mjs",
+        "bytes": 29031,
+        "sha256": "d30f54ecc733114b5f39e84f963794867ff6dcf3761d5e57c1f9c4e9188e23f0"
+      },
+      "failure": "Error: Subdivision control did not reach level 1 of 2",
+      "classification": "Harness control-coordinate/message-capture failure. No product source changed.",
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      }
+    },
+    {
+      "result": {
+        "path": ".artifacts/multires-browser-0.1.6/final-corrected-controls-14e885e3-b8ba-4734-86bb-18c86f1b0d71/result.json",
+        "bytes": 442750,
+        "sha256": "645203af8821b9d544bb48cbd1ca1cf164473080b29ade576547cbcfa9e5ed67"
+      },
+      "source": {
+        "path": ".artifacts/multires-browser-0.1.6/final-corrected-controls-14e885e3-b8ba-4734-86bb-18c86f1b0d71/harness.mjs",
+        "bytes": 29031,
+        "sha256": "29d6594363df044d7dd07e657d380d0c6fe458dbfc0d621a67565cc62404fb7c"
+      },
+      "failure": "Error: Lower-level Add changed hierarchy or omitted failure",
+      "classification": "Harness control-coordinate/message-capture failure. No product source changed.",
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      }
+    }
+  ],
+  "limitations": [
+    "Headless Chrome/M2, synthetic mouse input andDPR1; not physical latency or nativeGUI evidence.",
+    "Add/select/Save validate and serialize on the main thread; retained longtasks measure this limitation.",
+    "Fine detail transport uses additive world-space residuals; rotations/scales do not rotate/scale those vectors.",
+    "Cumulative UI selection is not an Undo step; geometry and hierarchy changes restore whole document state.",
+    "Shared-core tests establish interpolation contracts; this browser branch checks useful actual edits, retained detail and public file/history behavior.",
+    "Only two levels exercised on the default dense browser sphere; deeper levels have core and allocation tests but no browser large-level benchmark.",
+    "Physical tablet input, native GUI, HiDPI and long-session high-level editing remain unverified.",
+    "Schema2 hierarchies cannot load in old schema1-only versions; original version1 files are supported."
+  ]
+}

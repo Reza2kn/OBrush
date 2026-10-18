@@ -1,0 +1,28 @@
+{
+  "origin": "independent author fields/scalars; no OBrush/reference consumer output",
+  "source_scene": {
+    "version": 3,
+    "byte_order": "little_endian",
+    "display": {
+      "show_grid": true,
+      "show_symmetry_line": true,
+      "show_contour": true
+    },
+    "camera": {
+      "projection": 1,
+      "mode": 2,
+      "fov_degrees": 33.0,
+      "use_pivot": false
+    },
+    "meshes": []
+  },
+  "expectation": {
+    "editable_object_count": 0,
+    "active_id": null,
+    "selected_ids": [],
+    "top_level_mesh": null,
+    "apply_encoded_camera_display_without_placeholder_geometry": true,
+    "reference_append_empty_updates_header_but_keeps_existing_meshes": true,
+    "explicit_replace_empty_clears_existing_meshes": true
+  }
+}

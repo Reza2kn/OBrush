@@ -1,0 +1,240 @@
+{
+  "version": "0.1.14",
+  "recorded_at_utc": "2026-10-13T21:05:02.382483+00:00",
+  "status": "All required source/build checks and scoped frozen browser workflows pass; native GUI and reference equivalence remain unverified",
+  "git": "Unborn main",
+  "test_totals": {
+    "core": 365,
+    "app": 57,
+    "total": 422
+  },
+  "checks": [
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791923132.1899781,
+      "end_epoch": 1791923132.494179,
+      "log": {
+        "path": ".artifacts/mask-region-build/validation-c5ffcad5-a464-4605-929c-87837bf7fab5/fmt.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "tests",
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--workspace"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791923132.4945679,
+      "end_epoch": 1791923265.26569,
+      "log": {
+        "path": ".artifacts/mask-region-build/validation-c5ffcad5-a464-4605-929c-87837bf7fab5/tests.log",
+        "bytes": 40534,
+        "sha256": "4163fd041196f9217f7bbffda9da4452d95e77cf43a10adc1247f3f8e62fd54a"
+      }
+    },
+    {
+      "name": "clippy-native",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--workspace",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791923265.266043,
+      "end_epoch": 1791923265.59476,
+      "log": {
+        "path": ".artifacts/mask-region-build/validation-c5ffcad5-a464-4605-929c-87837bf7fab5/clippy-native.log",
+        "bytes": 72,
+        "sha256": "9d892c5778d0c975f64a671e66ea5a753502353da3addd1dfdf3825225e406a2"
+      }
+    },
+    {
+      "name": "clippy-wasm",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "-p",
+        "obrush-app",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791923265.595084,
+      "end_epoch": 1791923266.842996,
+      "log": {
+        "path": ".artifacts/mask-region-build/validation-c5ffcad5-a464-4605-929c-87837bf7fab5/clippy-wasm.log",
+        "bytes": 146,
+        "sha256": "0ea54de08018fa972f63e8a938d96c5b8c6484c6496780d95dffa5d727165218"
+      }
+    },
+    {
+      "name": "core-wasm",
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "-p",
+        "obrush-core",
+        "--target",
+        "wasm32-unknown-unknown"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791923266.843332,
+      "end_epoch": 1791923266.997937,
+      "log": {
+        "path": ".artifacts/mask-region-build/validation-c5ffcad5-a464-4605-929c-87837bf7fab5/core-wasm.log",
+        "bytes": 72,
+        "sha256": "a41051563a4cb5fc1b1bcdd9aa0ba28ca80f7736d629d90cc138218756e8e3a9"
+      }
+    },
+    {
+      "name": "web-build",
+      "command": [
+        "bash",
+        "scripts/build-web.sh"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791923266.9982731,
+      "end_epoch": 1791923271.0015628,
+      "log": {
+        "path": ".artifacts/mask-region-build/validation-c5ffcad5-a464-4605-929c-87837bf7fab5/web-build.log",
+        "bytes": 202,
+        "sha256": "8c159106f6f26ce265ef446710bff443497872e97da0aa232dac75579cc3fce7"
+      }
+    },
+    {
+      "name": "native-package",
+      "command": [
+        "bash",
+        "scripts/package-macos.sh"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791923271.001888,
+      "end_epoch": 1791923275.555443,
+      "log": {
+        "path": ".artifacts/mask-region-build/validation-c5ffcad5-a464-4605-929c-87837bf7fab5/native-package.log",
+        "bytes": 330,
+        "sha256": "efc6809bcab396e759c77b889e933907bf3d78ca9d3fe7ecb597abba0045f30a"
+      }
+    }
+  ],
+  "source_manifest": {
+    "path": ".artifacts/mask-region-release-0.1.14-final/source-manifest.json",
+    "bytes": 15078,
+    "sha256": "f85980837069bb5e19237ab5ceaf9ca7927fa04c9f48164ee199b8194ea41c28"
+  },
+  "artifacts": {
+    "wasm": {
+      "path": ".artifacts/mask-region-release-0.1.14-final/web/pkg/obrush_app_bg.wasm",
+      "bytes": 4296919,
+      "sha256": "5e3385258d680dc34b42c5d906093aa5ee04d7395d7f16849d6b2ef9efe08cdb"
+    },
+    "native": {
+      "path": ".artifacts/mask-region-release-0.1.14-final/OBrush.app/Contents/MacOS/OBrush",
+      "bytes": 7189488,
+      "sha256": "4437bb2ed18ae043e821e6ee0f87fa544f541e76125fe53bb9d04f4de81ebf26"
+    }
+  },
+  "tools": {
+    "wasm_bindgen": "0.2.129"
+  },
+  "limitations": [
+    "No reference rectangle/lasso mask fixture executed",
+    "Native GUI and physical devices not exercised",
+    "Region alpha/soft edges, occlusion/frontface modes, feature/color/group/UV masks, visibility and reference matching remain gaps",
+    "Capacity caps are not real-time or peak-memory guarantees"
+  ],
+  "build_record": {
+    "path": ".artifacts/mask-region-release-0.1.14-final/build-record.json",
+    "bytes": 4939,
+    "sha256": "28300122068da9a31bd4a79ca65394dc8b07fd8d1fff569be33e6010164435db"
+  },
+  "final_browser": {
+    "path": ".artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/summary.json",
+    "bytes": 91124,
+    "sha256": "e9e7ae12b06f1957328becbe5c6b0726a18fef097cd2fef841d95053e74e5cbb"
+  },
+  "browser_receipt": {
+    "path": "docs/evidence/mask-region-browser.json",
+    "bytes": 98260,
+    "sha256": "2aa1693837108c429177c292d88a66c8e5664deb96a49008aebbe705e1682b85"
+  },
+  "core_receipt": {
+    "path": "docs/evidence/mask-region-core.json",
+    "bytes": 51453,
+    "sha256": "462794f301b1ce540a681a126d82b299a01471ca36a42733b9913ff746fcd45c"
+  },
+  "host_receipt": {
+    "path": ".artifacts/mask-region-host/receipt.json",
+    "bytes": 21061,
+    "sha256": "e8c745d3e7a6a379a9acd88ef82d58babb8e3329272a215947c0a129ccb10dc1"
+  },
+  "reference": {
+    "version": "ZBrush desktop 2026.2.1",
+    "execution": false,
+    "historical_binary_identity_record": {
+      "path": "docs/evidence/zbrush-native-inspection.json",
+      "bytes": 11282,
+      "sha256": "02de46853a20df3fd70d39fb986574fd555f15fb6b1eeefb2948d9309706f692"
+    },
+    "identity_scope": "Prior executable/build identity only; no new reference process or fixture executed for this release",
+    "primary_scope": "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/modeling-basics/masking/masking.html",
+    "scope_checked_date": "2026-10-13",
+    "limitation": "Independent through-depth vertex projection, hard rectangle/lasso selection and explicit host gesture policies do not establish reference behavior; no matched region fixture executed"
+  },
+  "browser_scenarios": 8,
+  "browser_gate_count": 59,
+  "superseded_pre_navigation_build": {
+    "path": ".artifacts/mask-region-build/pre-navigation-artifacts/record.json",
+    "bytes": 4571,
+    "sha256": "c4c4f35215641391244224a7bc2ca9e24739fa698aea849aee7b69869248b2e2"
+  },
+  "superseded_pre_web_chord_build": {
+    "path": ".artifacts/mask-region-build/pre-web-chord-artifacts/record.json",
+    "bytes": 1283,
+    "sha256": "8e50b6e22cf096afc3365857ecccdff33a4b1fca785f7baa1d710ad268917e31"
+  },
+  "interrupted_pre_contact_cancel_checks": {
+    "path": ".artifacts/mask-region-build/validation-b9f88b7a-7f5a-4bd8-a2fb-3c08c66cf006/interruption.json",
+    "bytes": 1074,
+    "sha256": "f8a317c4f605e3de140e9dd0b4fd7babced8b76cb062ac5d0392844ca05d292d"
+  },
+  "deployment_verification": {
+    "path": ".artifacts/mask-region-build/deployment-verification-641.json",
+    "bytes": 93857,
+    "sha256": "4408409efd961e4518c4ba0c86de801e481d7f54fcff9357ea08deaf7f1b5a90"
+  },
+  "deployment_scope": "Current and frozen production source/artifact receipts, HTTP localhost8787 web files, ad-hoc signatures/package versions and original user-file identities; native GUI unverified. The preview server is intentionally left running for use. This immutable initial verification predates addition of its own receipt links; the final verifier checks the augmented record.",
+  "prior_deployment_failure": {
+    "path": ".artifacts/mask-region-build/deployment-before-server-restart.json",
+    "bytes": 94654,
+    "sha256": "98c0a3bc83de7aa2690599ff6b688dc350993b1dd3844ea7b6b45a4f5d909815"
+  },
+  "prior_deployment_failure_reason": "The localhost8787 preview server was stopped; four HTTP checks refused connection. Local source/build/receipt/native/original-file checks passed. Restarting the repository preview script resolved service availability without modifying tested files.",
+  "doc_link_verification": {
+    "path": ".artifacts/mask-region-build/doc-links.json",
+    "bytes": 19511,
+    "sha256": "6f3c486f82552ba5707f9ffda02f32aad5a4fe52e83834317e96b3f3acf7d7f3"
+  }
+}

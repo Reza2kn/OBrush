@@ -1,0 +1,61 @@
+{
+  "scope": "Isolated resident point pass, GPU-owned changed-row compaction, shared Rust document commit; not normal-studio or SculptGL parity",
+  "fixture": {
+    "path": "crates/obrush-gpu/tests/fixtures/resident-sphere-162.obrush",
+    "sha256": "ab16459719d55e25d49fa8c2cc0fd16809749a991a6d08e960f6a822d34afe0a",
+    "vertices": 162,
+    "triangles": 320
+  },
+  "parameters": {
+    "center": [0, 0, 1],
+    "radius": 0.5,
+    "intensity_f32": 0.10000000149011612,
+    "passes": 1,
+    "checkpoint_before_pass": true
+  },
+  "source_sha256": {
+    "crates/obrush-gpu/src/lib.rs": "c8552eaf925d19e4b4e9381018ff51659276101601580eedabc33a6d31cb74ee",
+    "crates/obrush-gpu/src/sparse.rs": "17141619c127ba032db3e8da8f648eb9d4d85dcb6e1cb1d2d8614cb048ebdb2e",
+    "crates/obrush-gpu/src/sparse.wgsl": "e03030d0abd5bf53c3e9ac5a934e96b30a260d68c1e0f4137e2ecb8f863778a1",
+    "crates/obrush-gpu/src/bin/resident_sparse_probe.rs": "aaa08714b623bb7a212b81fb8656bac46c32780e63cfe4d655cd7dce5e4a88d8"
+  },
+  "build_sha256": {
+    "raw_gpu_wasm": "162030049ba519009367291ee63276e7cfc6e59a1605c98d1bed0097a4758b0e",
+    "bound_gpu_wasm": "369339d2137cd3a366840739c96f9798df157fd820c7767624bd286adc5d316a",
+    "wasm_bindgen_cli": "0.2.129"
+  },
+  "result": {
+    "native_sparse": ".artifacts/gpu-compact-c119/native/sparse-final.bin",
+    "native_accepted": ".artifacts/gpu-compact-c119/native/accepted-final.obrush",
+    "browser_result": ".artifacts/gpu-compact-c119/browser-final/result.json",
+    "browser_result_sha256": "7ecdcc942c2eed9669ca7544dad50eaaeb7e7a72b600a7ef957f3afebe875619",
+    "native_browser_sparse_sha256": "676cf71a17d0dd637053e8b69ee0c4265f46a30481ed7f731c95c79f4401117b",
+    "native_browser_accepted_project_sha256": "78ee164193035562df3690cd6c399dd9a1f8fa8c1aefc132eb986a86d4cc47c5",
+    "changed_vertex_ids": [25, 84, 85, 88, 89, 147, 149],
+    "sparse_payload_bytes": 140,
+    "avoided_full_position_map_bytes": 2592,
+    "browser_position_readbacks": 0,
+    "browser_gpu_map_sizes_including_pixel_diagnostics": [1048576, 4, 4, 140, 4, 1048576],
+    "browser_invalid_and_stale_rejected": true,
+    "browser_undo_redo_exact": true,
+    "native_empty_checkpoint_and_cancel": true,
+    "browser_exit_code": 0,
+    "browser_server_closed": true
+  },
+  "checks": {
+    "cargo_fmt_check": "passed",
+    "workspace_all_targets": "2453 passed, 0 failed, 1 ignored",
+    "strict_native_workspace_clippy": "passed",
+    "strict_core_gpu_wasm_clippy": "passed",
+    "gpu_wasm_release_and_bindgen": "passed",
+    "final_native_metal": "passed",
+    "final_browser_webgpu": "passed"
+  },
+  "retained_failure": "First native GPU bind-group creation rejected checkpoint usage lacking STORAGE; corrected by adding STORAGE and rerunning",
+  "limitations": [
+    "No normal-studio WebGPU integration or sustained browser responsiveness measurement",
+    "Point program is not a SculptGL reference brush",
+    "Sparse compaction scans all vertices on the GPU and maps count twice; no end-to-end latency gain measured",
+    "Single visible subtool, one stroke, no production device-loss recovery"
+  ]
+}

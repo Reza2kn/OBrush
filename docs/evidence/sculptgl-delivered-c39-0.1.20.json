@@ -1,0 +1,941 @@
+{
+  "status": "Delivered C39 mirrored ordinary Paint foundation with two scoped matched reference cohorts; no full SculptGL/ZBrush parity claim",
+  "version": "0.1.20",
+  "utc": "2026-10-15T17:45:01.493931+00:00",
+  "changes": [
+    "Ordinary Paint captures object-local reflected ray hits, X symmetry and f64 relative mirror offset, using shared Rust contact preparation.",
+    "Primary then mirrored requests blend overlapping RGB/material values with a Float32 write between the two passes.",
+    "Both actual press and dab alpha tracks use the shared exclusive frame lease; mirrored alpha X lookup uses the existing core kernel.",
+    "Additive retained-source-controls entry accepts validated alpha/mirror requests over the actual immutable warm normal producer. The previous alphaNone-only API and its original rejection tests remain intact.",
+    "Primary miss resets copied mirror radius to zero, preserving a finite empty selection/no-op rather than inventing a stale radius.",
+    "Normal sidebar exposes X symmetry and a strict f64 relative-offset numeric editor. Existing settings and file formats remain unchanged."
+  ],
+  "checked_source_manifest_sha256": "9fce8700398b4162e44e746b13dc9a45117ccdeddb701e5d035f5b08957a26c9",
+  "candidate_source_manifest_sha256": "fdced23ec4efebfd2d7f0f1661be487993f840252fdf69a10d1d200959954733",
+  "source_checks_sha256": "0962a91e7c5e6c62a89302910ad45859520a39bf37a1b3359589902f4dca0483",
+  "build_sha256": "16a7d8945633096996d9009dd69ffe56e1f1670e28feb74010be64283fcf809e",
+  "checked_receipt_sha256": "cbf218dd75a44f6aa4b3ac29f9666a1d58b0dc05ee35110c0b18cf391c90d1d2",
+  "tests": {
+    "total": 2246,
+    "core": 1556,
+    "host": 690,
+    "ignored": 1
+  },
+  "required_checks": [
+    "cargo fmt --all -- --check",
+    "cargo clippy --workspace --all-targets --locked -- -D warnings",
+    "cargo test --workspace --locked",
+    "cargo check --workspace --all-targets --target wasm32-unknown-unknown --locked",
+    "cargo clippy --workspace --all-targets --target wasm32-unknown-unknown --locked -- -D warnings"
+  ],
+  "local_test_scope": [
+    "Literal overlapping two-pass RGB/RM words and whole history",
+    "Immutable captured offset/alpha, actual reflected center and mirrored frame direction",
+    "Primary miss/mirror hit zero-radius/noop preserves real redo",
+    "Invalid offset/unsupported Lock rejection, old narrow route symmetry rejection",
+    "Warm host producer ownership/history with a real mirrored second pass",
+    "Warm core culling witness distinguishes actual retained normals from fresh recomputation; exact two-pass alpha/color/material words",
+    "Invalid/stale/malformed second pass rejects before mutation; transparent alpha/mirror preserve genuine redo without material allocation"
+  ],
+  "official_builds": [
+    {
+      "key": "web",
+      "argv": [
+        "bash",
+        "scripts/build-web.sh"
+      ],
+      "exit_code": 0,
+      "seconds": 27.747596082976088,
+      "log": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.20-candidate39/web.log",
+      "log_sha256": "4b7b5769b086c958892570934906becff76a2c9c618be28a26898c555b527487",
+      "owned_process_closed": true
+    },
+    {
+      "key": "macos",
+      "argv": [
+        "bash",
+        "scripts/package-macos.sh"
+      ],
+      "exit_code": 0,
+      "seconds": 31.92717854201328,
+      "log": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.20-candidate39/macos.log",
+      "log_sha256": "69a38a03ed036d09649279203c58b6e4c3e91981f504d4a0bae52c97a3f7b094",
+      "owned_process_closed": true
+    }
+  ],
+  "wasm": {
+    "path": "pkg/obrush_app_bg.wasm",
+    "bytes": 23210918,
+    "sha256": "21ad31c04cbca6c20f223e391c08f40eb21982e2d511682bfbc76e7e1a4d4174"
+  },
+  "native": {
+    "ad_hoc_signature_verified": true,
+    "installed": false,
+    "opened": false
+  },
+  "reference": {
+    "pinned_commit": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "actual_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "actual_wrapper_sha256": "a87cc1246a6bc39cebf81b78dcf6d6c5c6201ef72710dab7f177d1fe4acd11f0",
+    "unchanged": true
+  },
+  "browser_reference": {
+    "protocol_sha256": "f8198f809b9ce07236dc754ee1003c654fcb4118fb28b32a7838c18911c1bf31",
+    "runner_sha256": "181d82a86e012aef7db9681855008758055301e117637588d0468a48e52223ac",
+    "independent_audit_sha256": "3e53be762a9c9cc5fae297a7969da26e5b788323dbb618b2ec0826cd5aaea8e1",
+    "independent_auditor_sha256": "957f23519cfcfe046d22ddada2684bdc7b285d9cf231ba4d9cdf039128881a7d",
+    "raw_files_total": 272,
+    "whole_public_files_total": 20,
+    "actual_GUID_files_rehashed": 20,
+    "cases": [
+      {
+        "id": "PM00",
+        "mirror_offset": 0.0,
+        "result_sha256": "be14b568413d984e8464a25ec19771a306afa55da1871dc49a9b9e8b1603b409",
+        "changed_vertices_each_host": 2,
+        "source_actual_original_callbacks": 2,
+        "all_RGB_RM_words_match_independent_JS_and_Python": true,
+        "all32_alpha_frame_words_match_independent_cardinal_formula_each_host": true,
+        "independent_mirror_plane_x": 0.0,
+        "paired_saved_RGB_RM_word_differences": 0,
+        "paired_saved_RGB_RM_maximum_difference": 0,
+        "original_declared_envelope": 1e-06,
+        "omitting_mirror_changes_RGB_words_each_host": 6,
+        "complete_own_UndoRedo_files_exact": true,
+        "quiet_frames_each_host": 32,
+        "quiet_whole_saved_files_exact": true,
+        "raw_files_rehashed": 136,
+        "whole_public_files_and_GUID_files_rehashed": 10,
+        "actual_owned_chrome_exit": 0,
+        "actual_owned_servers_closed": 2,
+        "owned_PID_absence_verified": true,
+        "preparation": [
+          {
+            "side": "source",
+            "passes": [
+              {
+                "mirrored": false,
+                "pass": {
+                  "center": [
+                    -0.010039159096777439,
+                    0.2515308354049921,
+                    0.5
+                  ],
+                  "radius_squared": 1.574761178480051
+                },
+                "frame_words": [
+                  2147483648,
+                  1065353216,
+                  0,
+                  0,
+                  1065353216,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  3212836864,
+                  0,
+                  3196111014,
+                  1009023817,
+                  1056964608,
+                  1065353216
+                ],
+                "weights": [
+                  {
+                    "v": 0,
+                    "index": null,
+                    "x": -0.283464622558476,
+                    "y": -1.1156440762132467,
+                    "distance": 0.8139453000608203,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 1,
+                    "index": null,
+                    "x": -0.283464622558476,
+                    "y": 1.1382714932053437,
+                    "distance": 0.8294619311446462,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 2,
+                    "index": 4,
+                    "x": 0.8434931621508192,
+                    "y": 0.011313708496048472,
+                    "distance": 0.5964933766980014,
+                    "alpha": 0.8156862745098039,
+                    "weight": 0.1295354079221327
+                  },
+                  {
+                    "v": 3,
+                    "index": null,
+                    "x": -0.283464622558476,
+                    "y": -1.1156440762132467,
+                    "distance": 0.9062346178312266,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 4,
+                    "index": null,
+                    "x": -0.283464622558476,
+                    "y": 1.1382714932053437,
+                    "distance": 0.9201963520264661,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 5,
+                    "index": 4,
+                    "x": 0.8434931621508192,
+                    "y": 0.011313708496048472,
+                    "distance": 0.7173273865601355,
+                    "alpha": 0.8156862745098039,
+                    "weight": 0.10841890838842784
+                  }
+                ]
+              },
+              {
+                "mirrored": true,
+                "pass": {
+                  "center": [
+                    0.010039159096777439,
+                    0.2515308354049921,
+                    0.5
+                  ],
+                  "radius_squared": 1.574761178480051
+                },
+                "frame_words": [
+                  2147483648,
+                  3212836864,
+                  0,
+                  0,
+                  3212836864,
+                  0,
+                  0,
+                  0,
+                  2147483648,
+                  0,
+                  3212836864,
+                  0,
+                  1048627366,
+                  1009023817,
+                  1056964608,
+                  1065353216
+                ],
+                "weights": [
+                  {
+                    "v": 0,
+                    "index": null,
+                    "x": -0.283464622558476,
+                    "y": 1.1382714932053437,
+                    "distance": 0.8294619311446462,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 1,
+                    "index": null,
+                    "x": -0.283464622558476,
+                    "y": -1.1156440762132467,
+                    "distance": 0.8139453000608203,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 2,
+                    "index": 4,
+                    "x": 0.8434931621508192,
+                    "y": 0.011313708496048472,
+                    "distance": 0.5964933766980014,
+                    "alpha": 0.8156862745098039,
+                    "weight": 0.1295354079221327
+                  },
+                  {
+                    "v": 3,
+                    "index": null,
+                    "x": -0.283464622558476,
+                    "y": 1.1382714932053437,
+                    "distance": 0.9201963520264661,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 4,
+                    "index": null,
+                    "x": -0.283464622558476,
+                    "y": -1.1156440762132467,
+                    "distance": 0.9062346178312266,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 5,
+                    "index": 4,
+                    "x": 0.8434931621508192,
+                    "y": 0.011313708496048472,
+                    "distance": 0.7173273865601355,
+                    "alpha": 0.8156862745098039,
+                    "weight": 0.10841890838842784
+                  }
+                ]
+              }
+            ],
+            "captured_mirror_plane": null
+          },
+          {
+            "side": "root",
+            "passes": [
+              {
+                "mirrored": false,
+                "pass": {
+                  "center": [
+                    -0.01003915878540517,
+                    0.2515308390921468,
+                    0.5
+                  ],
+                  "eye": [
+                    0,
+                    0,
+                    -1
+                  ],
+                  "mirrored_x": false,
+                  "radius_squared": 1.5747610799777778
+                },
+                "frame_words": [
+                  2147483648,
+                  1065353216,
+                  0,
+                  0,
+                  1065353216,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  3212836864,
+                  0,
+                  3196111014,
+                  1009023817,
+                  1056964608,
+                  1065353216
+                ],
+                "weights": [
+                  {
+                    "v": 0,
+                    "index": null,
+                    "x": -0.283464631423919,
+                    "y": -1.1156441111053572,
+                    "distance": 0.8139453264812511,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 1,
+                    "index": null,
+                    "x": -0.283464631423919,
+                    "y": 1.1382715288051337,
+                    "distance": 0.8294619575555714,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 2,
+                    "index": 4,
+                    "x": 0.8434931885313265,
+                    "y": 0.011313708849888174,
+                    "distance": 0.5964933924122331,
+                    "alpha": 0.8156862745098039,
+                    "weight": 0.129535405399808
+                  },
+                  {
+                    "v": 3,
+                    "index": null,
+                    "x": -0.283464631423919,
+                    "y": -1.1156441111053572,
+                    "distance": 0.9062346470398577,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 4,
+                    "index": null,
+                    "x": -0.283464631423919,
+                    "y": 1.1382715288051337,
+                    "distance": 0.9201963812288687,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 5,
+                    "index": 4,
+                    "x": 0.8434931885313265,
+                    "y": 0.011313708849888174,
+                    "distance": 0.7173274065489477,
+                    "alpha": 0.8156862745098039,
+                    "weight": 0.10841890455507944
+                  }
+                ]
+              },
+              {
+                "mirrored": true,
+                "pass": {
+                  "center": [
+                    0.01003915878540517,
+                    0.2515308390921468,
+                    0.5
+                  ],
+                  "radius_squared": 1.5747610799777778
+                },
+                "frame_words": [
+                  2147483648,
+                  3212836864,
+                  0,
+                  0,
+                  3212836864,
+                  0,
+                  0,
+                  0,
+                  2147483648,
+                  0,
+                  3212836864,
+                  0,
+                  1048627366,
+                  1009023817,
+                  1056964608,
+                  1065353216
+                ],
+                "weights": [
+                  {
+                    "v": 0,
+                    "index": null,
+                    "x": -0.283464631423919,
+                    "y": 1.1382715288051337,
+                    "distance": 0.8294619575555714,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 1,
+                    "index": null,
+                    "x": -0.283464631423919,
+                    "y": -1.1156441111053572,
+                    "distance": 0.8139453264812511,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 2,
+                    "index": 4,
+                    "x": 0.8434931885313265,
+                    "y": 0.011313708849888174,
+                    "distance": 0.5964933924122331,
+                    "alpha": 0.8156862745098039,
+                    "weight": 0.129535405399808
+                  },
+                  {
+                    "v": 3,
+                    "index": null,
+                    "x": -0.283464631423919,
+                    "y": 1.1382715288051337,
+                    "distance": 0.9201963812288687,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 4,
+                    "index": null,
+                    "x": -0.283464631423919,
+                    "y": -1.1156441111053572,
+                    "distance": 0.9062346470398577,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 5,
+                    "index": 4,
+                    "x": 0.8434931885313265,
+                    "y": 0.011313708849888174,
+                    "distance": 0.7173274065489477,
+                    "alpha": 0.8156862745098039,
+                    "weight": 0.10841890455507944
+                  }
+                ]
+              }
+            ],
+            "captured_mirror_plane": {
+              "normal": [
+                1,
+                0,
+                0
+              ],
+              "origin": [
+                0,
+                0.5,
+                0.25
+              ]
+            }
+          }
+        ],
+        "screenshots": [
+          {
+            "side": "source",
+            "bytes": 66325,
+            "sha256": "85e69613fae3c0ee1ed78a8d29f6817cfbc706f052a8555c2010d3f2800203be"
+          },
+          {
+            "side": "root",
+            "bytes": 145608,
+            "sha256": "12310dc94b35bfb7322ae4f543b4d2931efd6eb1e8c61efc0ece2b1fe9de87b3"
+          }
+        ]
+      },
+      {
+        "id": "PM01",
+        "mirror_offset": 0.12,
+        "result_sha256": "0c4535213842ce3b78798298d8d2090dafcaca87b34f270db427d6b0eb3846b8",
+        "changed_vertices_each_host": 4,
+        "source_actual_original_callbacks": 2,
+        "all_RGB_RM_words_match_independent_JS_and_Python": true,
+        "all32_alpha_frame_words_match_independent_cardinal_formula_each_host": true,
+        "independent_mirror_plane_x": 0.13747726380825043,
+        "paired_saved_RGB_RM_word_differences": 0,
+        "paired_saved_RGB_RM_maximum_difference": 0,
+        "original_declared_envelope": 1e-06,
+        "omitting_mirror_changes_RGB_words_each_host": 12,
+        "complete_own_UndoRedo_files_exact": true,
+        "quiet_frames_each_host": 32,
+        "quiet_whole_saved_files_exact": true,
+        "raw_files_rehashed": 136,
+        "whole_public_files_and_GUID_files_rehashed": 10,
+        "actual_owned_chrome_exit": 0,
+        "actual_owned_servers_closed": 2,
+        "owned_PID_absence_verified": true,
+        "preparation": [
+          {
+            "side": "source",
+            "passes": [
+              {
+                "mirrored": false,
+                "pass": {
+                  "center": [
+                    -0.010039159096777439,
+                    0.2515308354049921,
+                    0.5
+                  ],
+                  "radius_squared": 1.574761178480051
+                },
+                "frame_words": [
+                  2147483648,
+                  1065353216,
+                  0,
+                  0,
+                  1065353216,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  3212836864,
+                  0,
+                  3196111014,
+                  1009023817,
+                  1056964608,
+                  1065353216
+                ],
+                "weights": [
+                  {
+                    "v": 0,
+                    "index": null,
+                    "x": -0.283464622558476,
+                    "y": -1.1156440762132467,
+                    "distance": 0.8139453000608203,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 1,
+                    "index": null,
+                    "x": -0.283464622558476,
+                    "y": 1.1382714932053437,
+                    "distance": 0.8294619311446462,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 2,
+                    "index": 4,
+                    "x": 0.8434931621508192,
+                    "y": 0.011313708496048472,
+                    "distance": 0.5964933766980014,
+                    "alpha": 0.8156862745098039,
+                    "weight": 0.1295354079221327
+                  },
+                  {
+                    "v": 3,
+                    "index": null,
+                    "x": -0.283464622558476,
+                    "y": -1.1156440762132467,
+                    "distance": 0.9062346178312266,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 4,
+                    "index": null,
+                    "x": -0.283464622558476,
+                    "y": 1.1382714932053437,
+                    "distance": 0.9201963520264661,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 5,
+                    "index": 4,
+                    "x": 0.8434931621508192,
+                    "y": 0.011313708496048472,
+                    "distance": 0.7173273865601355,
+                    "alpha": 0.8156862745098039,
+                    "weight": 0.10841890838842784
+                  }
+                ]
+              },
+              {
+                "mirrored": true,
+                "pass": {
+                  "center": [
+                    0.2849936867132783,
+                    0.2515308354049921,
+                    0.5
+                  ],
+                  "radius_squared": 1.574761178480051
+                },
+                "frame_words": [
+                  2147483648,
+                  3212836864,
+                  0,
+                  0,
+                  3212836864,
+                  0,
+                  0,
+                  0,
+                  2147483648,
+                  0,
+                  3212836864,
+                  0,
+                  1048627366,
+                  1049750193,
+                  1056964608,
+                  1065353216
+                ],
+                "weights": [
+                  {
+                    "v": 0,
+                    "index": null,
+                    "x": -0.283464622558476,
+                    "y": 1.448133629097775,
+                    "distance": 1,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 1,
+                    "index": 14,
+                    "x": -0.283464622558476,
+                    "y": -0.8057819403208152,
+                    "distance": 0.6040019529425183,
+                    "alpha": 1,
+                    "weight": 0.15732093929637148
+                  },
+                  {
+                    "v": 2,
+                    "index": 4,
+                    "x": 0.8434931621508192,
+                    "y": 0.32117584438847996,
+                    "distance": 0.6382141591877972,
+                    "alpha": 0.8156862745098039,
+                    "weight": 0.12265604196228197
+                  },
+                  {
+                    "v": 3,
+                    "index": null,
+                    "x": -0.283464622558476,
+                    "y": 1.448133629097775,
+                    "distance": 1,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 4,
+                    "index": 14,
+                    "x": -0.283464622558476,
+                    "y": -0.8057819403208152,
+                    "distance": 0.7235831605440983,
+                    "alpha": 1,
+                    "weight": 0.13143839798930088
+                  },
+                  {
+                    "v": 5,
+                    "index": 4,
+                    "x": 0.8434931621508192,
+                    "y": 0.32117584438847996,
+                    "distance": 0.7523772617858658,
+                    "alpha": 0.8156862745098039,
+                    "weight": 0.1014748514122732
+                  }
+                ]
+              }
+            ],
+            "captured_mirror_plane": null
+          },
+          {
+            "side": "root",
+            "passes": [
+              {
+                "mirrored": false,
+                "pass": {
+                  "center": [
+                    -0.01003915878540517,
+                    0.2515308390921468,
+                    0.5
+                  ],
+                  "eye": [
+                    0,
+                    0,
+                    -1
+                  ],
+                  "mirrored_x": false,
+                  "radius_squared": 1.5747610799777778
+                },
+                "frame_words": [
+                  2147483648,
+                  1065353216,
+                  0,
+                  0,
+                  1065353216,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  3212836864,
+                  0,
+                  3196111014,
+                  1009023817,
+                  1056964608,
+                  1065353216
+                ],
+                "weights": [
+                  {
+                    "v": 0,
+                    "index": null,
+                    "x": -0.283464631423919,
+                    "y": -1.1156441111053572,
+                    "distance": 0.8139453264812511,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 1,
+                    "index": null,
+                    "x": -0.283464631423919,
+                    "y": 1.1382715288051337,
+                    "distance": 0.8294619575555714,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 2,
+                    "index": 4,
+                    "x": 0.8434931885313265,
+                    "y": 0.011313708849888174,
+                    "distance": 0.5964933924122331,
+                    "alpha": 0.8156862745098039,
+                    "weight": 0.129535405399808
+                  },
+                  {
+                    "v": 3,
+                    "index": null,
+                    "x": -0.283464631423919,
+                    "y": -1.1156441111053572,
+                    "distance": 0.9062346470398577,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 4,
+                    "index": null,
+                    "x": -0.283464631423919,
+                    "y": 1.1382715288051337,
+                    "distance": 0.9201963812288687,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 5,
+                    "index": 4,
+                    "x": 0.8434931885313265,
+                    "y": 0.011313708849888174,
+                    "distance": 0.7173274065489477,
+                    "alpha": 0.8156862745098039,
+                    "weight": 0.10841890455507944
+                  }
+                ]
+              },
+              {
+                "mirrored": true,
+                "pass": {
+                  "center": [
+                    0.28499368640190603,
+                    0.2515308390921468,
+                    0.5
+                  ],
+                  "radius_squared": 1.5747610799777778
+                },
+                "frame_words": [
+                  2147483648,
+                  3212836864,
+                  0,
+                  0,
+                  3212836864,
+                  0,
+                  0,
+                  0,
+                  2147483648,
+                  0,
+                  3212836864,
+                  0,
+                  1048627366,
+                  1049750193,
+                  1056964608,
+                  1065353216
+                ],
+                "weights": [
+                  {
+                    "v": 0,
+                    "index": null,
+                    "x": -0.283464631423919,
+                    "y": 1.4481336743885984,
+                    "distance": 1,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 1,
+                    "index": 14,
+                    "x": -0.283464631423919,
+                    "y": -0.8057819655218925,
+                    "distance": 0.6040019730419858,
+                    "alpha": 1,
+                    "weight": 0.15732093530384278
+                  },
+                  {
+                    "v": 2,
+                    "index": 4,
+                    "x": 0.8434931885313265,
+                    "y": 0.321175854433353,
+                    "distance": 0.6382141763139497,
+                    "alpha": 0.8156862745098039,
+                    "weight": 0.12265603905914722
+                  },
+                  {
+                    "v": 3,
+                    "index": null,
+                    "x": -0.283464631423919,
+                    "y": 1.4481336743885984,
+                    "distance": 1,
+                    "alpha": 0,
+                    "weight": 0
+                  },
+                  {
+                    "v": 4,
+                    "index": 14,
+                    "x": -0.283464631423919,
+                    "y": -0.8057819655218925,
+                    "distance": 0.7235831841836823,
+                    "alpha": 1,
+                    "weight": 0.13143839236889598
+                  },
+                  {
+                    "v": 5,
+                    "index": 4,
+                    "x": 0.8434931885313265,
+                    "y": 0.321175854433353,
+                    "distance": 0.7523772829125547,
+                    "alpha": 0.8156862745098039,
+                    "weight": 0.10147484708345496
+                  }
+                ]
+              }
+            ],
+            "captured_mirror_plane": {
+              "normal": [
+                1,
+                0,
+                0
+              ],
+              "origin": [
+                0.13747726380825043,
+                0.5,
+                0.25
+              ]
+            }
+          }
+        ],
+        "screenshots": [
+          {
+            "side": "source",
+            "bytes": 74548,
+            "sha256": "a0d9027c2f09c064374c350d8437eda9eb2dc220479534a48a200f46611afeec"
+          },
+          {
+            "side": "root",
+            "bytes": 156188,
+            "sha256": "136280e6dd43c300cbd61820ab3349b3c70f0966ef7d337cd3995a3d733fdbc8"
+          }
+        ]
+      }
+    ],
+    "whole_PNG_review": "All4 whole screenshots manually viewed: zero/.12 offset and X symmetry controls visible, alpha library selected, blue triangular fixture visible. Root upper surface tint differs; Source red contour/double points and Files menu differ from Root orange primary cursor/panels. No appearance or mirrored-hover-cursor parity asserted."
+  },
+  "preserved_failures": [
+    {
+      "log": "paint-mirror-initial.log",
+      "scope": "Compile: five explicit test preference literals needed new default mirror_offset; original changed source and manifest retained"
+    },
+    {
+      "log": "paint-mirror-tests02.log",
+      "scope": "Warm test old corner/primary contact did not produce mirrored hit; retained full failed source/manifest; authored interior two-hit contact declared for successor"
+    },
+    {
+      "log": "paint-mirror-tests03.log",
+      "scope": "Interior warm test exposed real core retained-normal alphaNone/unmirrored admission restriction; additive controlled retained API added, old narrow API and rejection tests retained"
+    },
+    {
+      "scope": "Initial PM00 Source callback frame oracle used wrong column-major signed-zero slot; complete failed originalSource trace and runner/protocol retained. Correct independent cardinal layout keeps all16-word equality, including signedzero; no product/parameter/tolerance/cap change."
+    },
+    {
+      "scope": "Initial independent Python audit compared different pass dictionary shapes. Correct same explicit center/radius schema and additionally verify eye/mirrored flag; failed script retained, no runtime replay."
+    }
+  ],
+  "promotion_sha256": "e89d49f4817c7490d8e28cc4a9e257e42500112c456dd20b9b84a015e0b63eaf",
+  "preview": {
+    "url": "http://127.0.0.1:8804/",
+    "all19_HTTP_files_sha256": "a206f05272edd6ed0ab5a54d6141b64056492346767a36a5253fec8288cc61bf"
+  },
+  "limitations": [
+    "Two static cold imported gray4x4alpha mirror cases; not all bitmaps/cull/pressure/sizes/transforms/angles",
+    "Warm retained-normal alpha/mirror locally tested in shared Rust; actual warm browser/reference alpha handoff pending",
+    "Relative offset is captured in Paint preferences; matching per-object/shared-tool offset lifetime remains a gap",
+    "Source mirrored hover cursor/contour and full rendering remain open",
+    "Lock alpha/mirror, dynamic topology, full continuous/lifecycle/native/physical/performance remain open",
+    "Mirrored-only miss zero-radius behavior locally tested; no paired consumer cohort yet",
+    "Source/Root precise radius/contact values differ slightly; equal final f32 output in these two cases does not establish camera/ray equality",
+    "Initial PM00 independent oracle transposed signed-zero xaxis.z into slot2 instead of column-major slot8. Original run/fulltrace retained; corrected independent column-major formula preserves exact all16-word tests without zero normalization or tolerance/cap changes.",
+    "New mirror-offset editor label uses English fallback; full language coverage remains unfinished",
+    "All earlier C38/C37 reference cohorts retain their actual older build hashes; no automatic current-build parity promotion"
+  ]
+}

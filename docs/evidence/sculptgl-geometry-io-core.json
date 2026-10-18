@@ -1,0 +1,92 @@
+{
+  "version": "0.1.15",
+  "recorded_at_utc": "2026-10-13T23:23:37.445983+00:00",
+  "status": "Candidate core contracts pass; no SculptGL parity established",
+  "scope": "Bounded PLY/STL interchange; Cylinder/Torus/concatenation/explicit merge history; complete raw SGL v1-v3 records and source-derived explicit-order v0; actual deployed export decoding/bit comparisons.",
+  "immutable_owner_receipts": [
+    {
+      "path": ".artifacts/sculptgl-mesh-io/receipt.json",
+      "bytes": 8700,
+      "sha256": "13048c1aeee41e0aae3ac1d6732612573fd97db66c36115b81babb18dd049a49"
+    },
+    {
+      "path": ".artifacts/sculptgl-primitives-scene/receipt.json",
+      "bytes": 8522,
+      "sha256": "6dd186bec790dddee0fa8844f22c1f4d21fbf18d596656edb8c20850157eccea"
+    },
+    {
+      "path": ".artifacts/sculptgl-sgl/receipt.json",
+      "bytes": 11618,
+      "sha256": "f49edcf1ad8943dbf3f2ed8c884801656845f7cacacd25d11733115d79af4998"
+    }
+  ],
+  "candidate_sources": [
+    {
+      "path": "crates/obrush-core/src/mesh_io.rs",
+      "bytes": 48465,
+      "sha256": "59cc92939f9e51bd1b0c5d00cba0c4df1c238f0cd9eb0d7d22ce1d8b37293c62"
+    },
+    {
+      "path": "crates/obrush-core/src/primitives.rs",
+      "bytes": 16191,
+      "sha256": "4f6acf340875e8cb08bee10a2a52be7bb4be39f966782893c61f485def7c30d0"
+    },
+    {
+      "path": "crates/obrush-core/src/sgl.rs",
+      "bytes": 28526,
+      "sha256": "dc49398184c4002001bd7fde20dc706fb0be55b1ad20af9af09bc6d9fa0d9ca5"
+    },
+    {
+      "path": "crates/obrush-core/src/document.rs",
+      "bytes": 79352,
+      "sha256": "47053bf5fc2b2cdb951e96ec58998f66820b527b704cd12ae5c2ac265e3d7c57"
+    },
+    {
+      "path": "crates/obrush-core/tests/mesh_io.rs",
+      "bytes": 23733,
+      "sha256": "9e6bb707fc7ceb3d3e9833edeae6f5c41b5d594abd4e30783d1b5bfbd2952474"
+    },
+    {
+      "path": "crates/obrush-core/tests/primitives_scene.rs",
+      "bytes": 23494,
+      "sha256": "3573c5fa26b6f7772f28a59e8cd65f40f2b100f39b3b68274631bc363d37df16"
+    },
+    {
+      "path": "crates/obrush-core/tests/sgl_io.rs",
+      "bytes": 23104,
+      "sha256": "8f7c3df5d585fb83153b30e0b4d43c5e2fa82b2daa06c149f15d711cf14df16c"
+    }
+  ],
+  "candidate_build": {
+    "path": ".artifacts/sculptgl-release-0.1.15-candidate1/build-record.json",
+    "bytes": 6676,
+    "sha256": "d60f3adbe4be47e0bd1bc279c210f9563bb17762f4e3c169997b23815e0a764a"
+  },
+  "candidate_source_manifest": {
+    "path": ".artifacts/sculptgl-release-0.1.15-candidate1/source-manifest.json",
+    "bytes": 17329,
+    "sha256": "1d81da9831a4f5e3184aed31f1defefec83506066b8c71f26a4abed7f4c2189c"
+  },
+  "workspace_validation": {
+    "app": 69,
+    "core": 563,
+    "total": 632,
+    "log": {
+      "path": ".artifacts/sculptgl-host-build/validation-e16fe27d-5d7a-41bc-a920-b2c7db9f8c4f/tests.log",
+      "bytes": 57462,
+      "sha256": "ae8c66d79f8753fd7d44c87986cc7cb5b9c524333f8cbad6e5c9fd0cd9b96897"
+    },
+    "host_after_equivalent_clippy_cleanup": {
+      "path": ".artifacts/sculptgl-host-build/validation-7ef2b08a-75af-4801-9446-24f5b47b9f66/tests-host-after-clippy-boolean.log",
+      "bytes": 6982,
+      "sha256": "91e3caf5eb359e28c18420c4812327acaf1ed1f0e7207fcabbe63a54e4a2917f"
+    }
+  },
+  "formatter_lineage": "Some earlier owned receipts retain pre-explicit-core-edition formatter bytes. Final full workspace and build validation uses the candidate source manifest; prior failed checks remain preserved.",
+  "limitations": [
+    "Raw SGL domain records are not rich editable Mesh/Document/host scene import. Material/UV attribute integration is staged.",
+    "Primitive polygon structure, defaults, retained levels and scene placement differ from SculptGL and await matched acceptance.",
+    "SGL v0 is source-derived and automatically rejected as endian-ambiguous; no historical exporter proof.",
+    "Normal recalculation, RGB quantization and format-specific loss policies remain explicit."
+  ]
+}

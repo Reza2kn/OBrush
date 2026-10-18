@@ -1,0 +1,2641 @@
+{
+  "schema_version": 1,
+  "version": "0.1.14",
+  "recorded_at_utc": "2026-10-13T21:05:02.382483+00:00",
+  "git": "Unborn main; exact source/build/helper hashes identify this execution",
+  "status": "passed eight mask region browser workflows",
+  "raw_result": {
+    "path": ".artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/result.json",
+    "bytes": 8747879,
+    "sha256": "bcd2355163baf153ba1bd5e874df54624ba5c3439f30fdaae8555f615198844d"
+  },
+  "bound_summary": {
+    "path": ".artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/summary.json",
+    "bytes": 91124,
+    "sha256": "e9e7ae12b06f1957328becbe5c6b0726a18fef097cd2fef841d95053e74e5cbb"
+  },
+  "summary": {
+    "status": "passed eight mask region browser workflows",
+    "raw_result": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/result.json",
+    "raw_sha256": "bcd2355163baf153ba1bd5e874df54624ba5c3439f30fdaae8555f615198844d",
+    "method": "Isolated CLI headless Chrome/CDP; no desktop, CUA, accessibility, user-tab, or physical device control",
+    "browser": {
+      "protocolVersion": "1.3",
+      "product": "Chrome/155.0.8059.40",
+      "revision": "@cfaadc5a132d78e1828635aa8405a499f3e14864",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "jsVersion": "15.5.35.20"
+    },
+    "wasm": {
+      "sha256": "5e3385258d680dc34b42c5d906093aa5ee04d7395d7f16849d6b2ef9efe08cdb",
+      "served_sha256": "5e3385258d680dc34b42c5d906093aa5ee04d7395d7f16849d6b2ef9efe08cdb",
+      "bytes": 4296919
+    },
+    "helper_sha256": "0135cbe2788ec76479b22ae5c12043e7699e3a19c9819acc0b8cc2bb6db98ca8",
+    "original_helper": {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/helper-original.mjs",
+      "sha256": "69a0b306b1e6867bd2a2ffe91271200cb4e3c92efc99bfe2df74c73fd7a538d9"
+    },
+    "compiled_input_identity": {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-build/post-history-oracle-pre-browser-source.json",
+      "sha256": "d03a9afb914b83697875b4ced806d2d00e0e9d372a5a4823b73963d53fa807f8",
+      "scope": "Root-produced immutable Rust/Cargo, production web host, QA helper and native/WASM identities; helper-only history-oracle correction preserves all compiled production bytes."
+    },
+    "contract": {
+      "mask_policy": "Exactf32bits: selected1orAlt-press0, outsideoldbits; throughdepth active-only; finite frozenf32projection evaluatedf64 withw>0/inclusiveclip before division",
+      "lasso": "Finite-segment nearest distance<=1e-7screenunits or evenodd crossings; ordered repeats retained, implicit closure",
+      "rectangle": "Exact inclusive bounds; reversed corners; zeroextentempty",
+      "geometry": "Current/retained geometry,normals,RGB,orderedfaces,layerf64,target/inactiveexact; retainedmasktransport excluded",
+      "preview": "Geometry/masks/bufferidentities/counts/uploads anddirty/revisions unchanged beforeactualrelease",
+      "limits": "512rawlassopoints/32Mconservativework; only512overflow browsertested, source32M math coreonly",
+      "bounds": "Horizontaltoolbox/inspector, fullenabledgizmocontainment",
+      "release": "150mssettle then0/200/800quietprobes; no firstcommit/physical latency bound",
+      "pipeline": "One40Kdefaultsphere rectangle\u2192Grow1/.5\u2192Blur1/.5\u2192Extract.5/.02"
+    },
+    "case_count": 8,
+    "case_gate_count": 59,
+    "cases": [
+      {
+        "name": "rectangle-forward-reverse-alt",
+        "gates": {
+          "all_bits_exact": true,
+          "all_geometry_exact": true,
+          "all_useful": true,
+          "reverse_same_project": true,
+          "alt_press_erases": true,
+          "history_exact": true
+        }
+      },
+      {
+        "name": "lasso-closed-concave-selfcross",
+        "gates": {
+          "finite_segment_evenodd_bits": true,
+          "all_geometry_exact": true,
+          "all_useful": true,
+          "large_closed_not_tiny": true,
+          "ordered_repeats_kept": true,
+          "history_exact": true
+        }
+      },
+      {
+        "name": "preview-cancel-frozen-camera-outside",
+        "gates": {
+          "escape_exact": true,
+          "wheel_camera_frozen": true,
+          "wheel_report_bits": true,
+          "navigation_cancel_exact": true,
+          "middle_navigation_cancel_exact": true,
+          "resize_cancel_exact": true,
+          "outside_clamped": true,
+          "outside_bits": true
+        }
+      },
+      {
+        "name": "command-barriers-and-captured-modifiers",
+        "gates": {
+          "ctrl_capture_masks_without_geometry": true,
+          "alt_press_kept_after_modifier_release": true,
+          "ctrl_history_exact": true,
+          "save_cancels_without_apply": true,
+          "undo_cancels_before_history": true,
+          "brush_cancel_exact": true,
+          "part_switch_no_mask": true,
+          "selection_and_cancel_add_no_history": true,
+          "selection_redo_exact": true
+        }
+      },
+      {
+        "name": "rich-active-only-through-depth",
+        "gates": {
+          "all_projected_active_points_selected": true,
+          "all_active_masks_hardone": true,
+          "throughdepth_oracle_bits": true,
+          "levels_layer_target_geometry_exact": true,
+          "inactive_payload_exact": true,
+          "inactive_gpu_cache_exact": true,
+          "history_exact": true
+        }
+      },
+      {
+        "name": "tiny-empty-saturated-hidden-priority-caps",
+        "gates": {
+          "all_noop_bits_exact": true,
+          "all_noop_zero_changes": true,
+          "all_dirty_revision_afterUndo_kept": true,
+          "genuine_redo_kept": true,
+          "tiny_click_skipped": true,
+          "hidden_controls_disabled": true,
+          "hidden_masks_unchanged": true,
+          "transform_input_priority": true,
+          "raw_point_cap_cancels": true
+        }
+      },
+      {
+        "name": "v2-v5-freshload-historical-reports",
+        "gates": {
+          "versions_retained": true,
+          "reload_exact": true,
+          "history_exact": true,
+          "historical_report_preserved": true,
+          "load_clears_reports": true,
+          "all_maskbits_exact": true
+        }
+      },
+      {
+        "name": "region-filter-extract-source-preservation",
+        "gates": {
+          "original_geometry_exact": true,
+          "region_bits_exact": true,
+          "region_history_exact": true,
+          "filter_oracles": true,
+          "filter_history_exact": true,
+          "closed_newpart": true,
+          "original_filtered_source_exact": true,
+          "extraction_history_exact": true
+        }
+      }
+    ],
+    "failed_case_gates": [],
+    "snapshot_contracts": {
+      "count": 115,
+      "exact_visible_vbo_solid_ibo_pairs": 127,
+      "object_contracts": 130,
+      "all_gpu_saved_scene_exact": true,
+      "f64_layer_compositions": 11,
+      "morph_target_contracts": 11
+    },
+    "recorded_region_reports": {
+      "count": 18,
+      "all_mask_bits_exact": true,
+      "all_geometry_metadata_exact": true,
+      "all_inactive_exact": true,
+      "measures": [
+        {
+          "case": "rectangle-forward-reverse-alt",
+          "mask_bits_exact": true,
+          "geometry_metadata_exact": true,
+          "inactive_exact": true,
+          "projected": 49,
+          "selected": 8,
+          "changed": 6,
+          "max_abs_change": 1,
+          "report": {
+            "captured_document_revision": 2,
+            "changed_vertices": 6,
+            "document_revision": 3,
+            "erase": false,
+            "kind": "Rectangle",
+            "max_abs_change": 1,
+            "point_edge_work": 0,
+            "polygon_points": 4,
+            "projected_vertices": 49,
+            "region": {
+              "end": [
+                789,
+                691
+              ],
+              "kind": "rectangle",
+              "start": [
+                602,
+                376
+              ]
+            },
+            "selected_vertices": 8,
+            "skipped_tiny_click": false,
+            "subtool_id": 1,
+            "vertices": 49,
+            "view_projection": [
+              2.0647244453430176,
+              -0.16866450011730194,
+              -0.3373646140098572,
+              -0.33735784888267517,
+              0,
+              2.7030887603759766,
+              -0.17903317511081696,
+              -0.17902958393096924,
+              -0.7536832690238953,
+              -0.4620584547519684,
+              -0.9242144823074341,
+              -0.9241959452629089,
+              0,
+              0,
+              4.15971040725708,
+              4.167963027954102
+            ],
+            "viewport": [
+              225,
+              57,
+              1140,
+              912
+            ]
+          }
+        },
+        {
+          "case": "rectangle-forward-reverse-alt",
+          "mask_bits_exact": true,
+          "geometry_metadata_exact": true,
+          "inactive_exact": true,
+          "projected": 49,
+          "selected": 8,
+          "changed": 6,
+          "max_abs_change": 1,
+          "report": {
+            "captured_document_revision": 2,
+            "changed_vertices": 6,
+            "document_revision": 3,
+            "erase": false,
+            "kind": "Rectangle",
+            "max_abs_change": 1,
+            "point_edge_work": 0,
+            "polygon_points": 4,
+            "projected_vertices": 49,
+            "region": {
+              "end": [
+                602,
+                376
+              ],
+              "kind": "rectangle",
+              "start": [
+                789,
+                691
+              ]
+            },
+            "selected_vertices": 8,
+            "skipped_tiny_click": false,
+            "subtool_id": 1,
+            "vertices": 49,
+            "view_projection": [
+              2.0647244453430176,
+              -0.16866450011730194,
+              -0.3373646140098572,
+              -0.33735784888267517,
+              0,
+              2.7030887603759766,
+              -0.17903317511081696,
+              -0.17902958393096924,
+              -0.7536832690238953,
+              -0.4620584547519684,
+              -0.9242144823074341,
+              -0.9241959452629089,
+              0,
+              0,
+              4.15971040725708,
+              4.167963027954102
+            ],
+            "viewport": [
+              225,
+              57,
+              1140,
+              912
+            ]
+          }
+        },
+        {
+          "case": "rectangle-forward-reverse-alt",
+          "mask_bits_exact": true,
+          "geometry_metadata_exact": true,
+          "inactive_exact": true,
+          "projected": 49,
+          "selected": 8,
+          "changed": 6,
+          "max_abs_change": 1,
+          "report": {
+            "captured_document_revision": 2,
+            "changed_vertices": 6,
+            "document_revision": 3,
+            "erase": true,
+            "kind": "Rectangle",
+            "max_abs_change": 1,
+            "point_edge_work": 0,
+            "polygon_points": 4,
+            "projected_vertices": 49,
+            "region": {
+              "end": [
+                789,
+                691
+              ],
+              "kind": "rectangle",
+              "start": [
+                602,
+                376
+              ]
+            },
+            "selected_vertices": 8,
+            "skipped_tiny_click": false,
+            "subtool_id": 1,
+            "vertices": 49,
+            "view_projection": [
+              2.0647244453430176,
+              -0.16866450011730194,
+              -0.3373646140098572,
+              -0.33735784888267517,
+              0,
+              2.7030887603759766,
+              -0.17903317511081696,
+              -0.17902958393096924,
+              -0.7536832690238953,
+              -0.4620584547519684,
+              -0.9242144823074341,
+              -0.9241959452629089,
+              0,
+              0,
+              4.15971040725708,
+              4.167963027954102
+            ],
+            "viewport": [
+              225,
+              57,
+              1140,
+              912
+            ]
+          }
+        },
+        {
+          "case": "lasso-closed-concave-selfcross",
+          "mask_bits_exact": true,
+          "geometry_metadata_exact": true,
+          "inactive_exact": true,
+          "projected": 49,
+          "selected": 25,
+          "changed": 20,
+          "max_abs_change": 1,
+          "report": {
+            "captured_document_revision": 2,
+            "changed_vertices": 20,
+            "document_revision": 3,
+            "erase": false,
+            "kind": "Lasso",
+            "max_abs_change": 1,
+            "point_edge_work": 294,
+            "polygon_points": 6,
+            "projected_vertices": 49,
+            "region": {
+              "kind": "lasso",
+              "points": [
+                [
+                  629,
+                  318
+                ],
+                [
+                  1001,
+                  318
+                ],
+                [
+                  1001,
+                  318
+                ],
+                [
+                  1001,
+                  720
+                ],
+                [
+                  629,
+                  720
+                ],
+                [
+                  629,
+                  318
+                ]
+              ]
+            },
+            "selected_vertices": 25,
+            "skipped_tiny_click": false,
+            "subtool_id": 1,
+            "vertices": 49,
+            "view_projection": [
+              2.0647244453430176,
+              -0.16866450011730194,
+              -0.3373646140098572,
+              -0.33735784888267517,
+              0,
+              2.7030887603759766,
+              -0.17903317511081696,
+              -0.17902958393096924,
+              -0.7536832690238953,
+              -0.4620584547519684,
+              -0.9242144823074341,
+              -0.9241959452629089,
+              0,
+              0,
+              4.15971040725708,
+              4.167963027954102
+            ],
+            "viewport": [
+              225,
+              57,
+              1140,
+              912
+            ]
+          }
+        },
+        {
+          "case": "lasso-closed-concave-selfcross",
+          "mask_bits_exact": true,
+          "geometry_metadata_exact": true,
+          "inactive_exact": true,
+          "projected": 49,
+          "selected": 19,
+          "changed": 15,
+          "max_abs_change": 1,
+          "report": {
+            "captured_document_revision": 2,
+            "changed_vertices": 15,
+            "document_revision": 3,
+            "erase": false,
+            "kind": "Lasso",
+            "max_abs_change": 1,
+            "point_edge_work": 294,
+            "polygon_points": 6,
+            "projected_vertices": 49,
+            "region": {
+              "kind": "lasso",
+              "points": [
+                [
+                  629,
+                  318
+                ],
+                [
+                  1001,
+                  318
+                ],
+                [
+                  1001,
+                  462
+                ],
+                [
+                  815,
+                  462
+                ],
+                [
+                  815,
+                  720
+                ],
+                [
+                  629,
+                  720
+                ]
+              ]
+            },
+            "selected_vertices": 19,
+            "skipped_tiny_click": false,
+            "subtool_id": 1,
+            "vertices": 49,
+            "view_projection": [
+              2.0647244453430176,
+              -0.16866450011730194,
+              -0.3373646140098572,
+              -0.33735784888267517,
+              0,
+              2.7030887603759766,
+              -0.17903317511081696,
+              -0.17902958393096924,
+              -0.7536832690238953,
+              -0.4620584547519684,
+              -0.9242144823074341,
+              -0.9241959452629089,
+              0,
+              0,
+              4.15971040725708,
+              4.167963027954102
+            ],
+            "viewport": [
+              225,
+              57,
+              1140,
+              912
+            ]
+          }
+        },
+        {
+          "case": "lasso-closed-concave-selfcross",
+          "mask_bits_exact": true,
+          "geometry_metadata_exact": true,
+          "inactive_exact": true,
+          "projected": 49,
+          "selected": 6,
+          "changed": 5,
+          "max_abs_change": 1,
+          "report": {
+            "captured_document_revision": 2,
+            "changed_vertices": 5,
+            "document_revision": 3,
+            "erase": false,
+            "kind": "Lasso",
+            "max_abs_change": 1,
+            "point_edge_work": 196,
+            "polygon_points": 4,
+            "projected_vertices": 49,
+            "region": {
+              "kind": "lasso",
+              "points": [
+                [
+                  656,
+                  347
+                ],
+                [
+                  975,
+                  691
+                ],
+                [
+                  656,
+                  691
+                ],
+                [
+                  975,
+                  347
+                ]
+              ]
+            },
+            "selected_vertices": 6,
+            "skipped_tiny_click": false,
+            "subtool_id": 1,
+            "vertices": 49,
+            "view_projection": [
+              2.0647244453430176,
+              -0.16866450011730194,
+              -0.3373646140098572,
+              -0.33735784888267517,
+              0,
+              2.7030887603759766,
+              -0.17903317511081696,
+              -0.17902958393096924,
+              -0.7536832690238953,
+              -0.4620584547519684,
+              -0.9242144823074341,
+              -0.9241959452629089,
+              0,
+              0,
+              4.15971040725708,
+              4.167963027954102
+            ],
+            "viewport": [
+              225,
+              57,
+              1140,
+              912
+            ]
+          }
+        },
+        {
+          "case": "preview-cancel-frozen-camera-outside",
+          "mask_bits_exact": true,
+          "geometry_metadata_exact": true,
+          "inactive_exact": true,
+          "projected": 49,
+          "selected": 13,
+          "changed": 10,
+          "max_abs_change": 1,
+          "report": {
+            "captured_document_revision": 2,
+            "changed_vertices": 10,
+            "document_revision": 3,
+            "erase": false,
+            "kind": "Rectangle",
+            "max_abs_change": 1,
+            "point_edge_work": 0,
+            "polygon_points": 4,
+            "projected_vertices": 49,
+            "region": {
+              "end": [
+                975,
+                691
+              ],
+              "kind": "rectangle",
+              "start": [
+                656,
+                347
+              ]
+            },
+            "selected_vertices": 13,
+            "skipped_tiny_click": false,
+            "subtool_id": 1,
+            "vertices": 49,
+            "view_projection": [
+              2.0647244453430176,
+              -0.16866450011730194,
+              -0.3373646140098572,
+              -0.33735784888267517,
+              0,
+              2.7030887603759766,
+              -0.17903317511081696,
+              -0.17902958393096924,
+              -0.7536832690238953,
+              -0.4620584547519684,
+              -0.9242144823074341,
+              -0.9241959452629089,
+              0,
+              0,
+              4.15971040725708,
+              4.167963027954102
+            ],
+            "viewport": [
+              225,
+              57,
+              1140,
+              912
+            ]
+          }
+        },
+        {
+          "case": "preview-cancel-frozen-camera-outside",
+          "mask_bits_exact": true,
+          "geometry_metadata_exact": true,
+          "inactive_exact": true,
+          "projected": 49,
+          "selected": 7,
+          "changed": 5,
+          "max_abs_change": 1,
+          "report": {
+            "captured_document_revision": 2,
+            "changed_vertices": 5,
+            "document_revision": 3,
+            "erase": false,
+            "kind": "Rectangle",
+            "max_abs_change": 1,
+            "point_edge_work": 0,
+            "polygon_points": 4,
+            "projected_vertices": 49,
+            "region": {
+              "end": [
+                1365,
+                513
+              ],
+              "kind": "rectangle",
+              "start": [
+                656,
+                347
+              ]
+            },
+            "selected_vertices": 7,
+            "skipped_tiny_click": false,
+            "subtool_id": 1,
+            "vertices": 49,
+            "view_projection": [
+              2.0647244453430176,
+              -0.16866450011730194,
+              -0.3373646140098572,
+              -0.33735784888267517,
+              0,
+              2.7030887603759766,
+              -0.17903317511081696,
+              -0.17902958393096924,
+              -0.7536832690238953,
+              -0.4620584547519684,
+              -0.9242144823074341,
+              -0.9241959452629089,
+              0,
+              0,
+              4.15971040725708,
+              4.167963027954102
+            ],
+            "viewport": [
+              225,
+              57,
+              1140,
+              912
+            ]
+          }
+        },
+        {
+          "case": "command-barriers-and-captured-modifiers",
+          "mask_bits_exact": true,
+          "geometry_metadata_exact": true,
+          "inactive_exact": true,
+          "projected": 49,
+          "selected": 13,
+          "changed": 10,
+          "max_abs_change": 1,
+          "report": {
+            "captured_document_revision": 2,
+            "changed_vertices": 10,
+            "document_revision": 3,
+            "erase": true,
+            "kind": "Rectangle",
+            "max_abs_change": 1,
+            "point_edge_work": 0,
+            "polygon_points": 4,
+            "projected_vertices": 49,
+            "region": {
+              "end": [
+                975,
+                691
+              ],
+              "kind": "rectangle",
+              "start": [
+                656,
+                347
+              ]
+            },
+            "selected_vertices": 13,
+            "skipped_tiny_click": false,
+            "subtool_id": 1,
+            "vertices": 49,
+            "view_projection": [
+              2.0647244453430176,
+              -0.16866450011730194,
+              -0.3373646140098572,
+              -0.33735784888267517,
+              0,
+              2.7030887603759766,
+              -0.17903317511081696,
+              -0.17902958393096924,
+              -0.7536832690238953,
+              -0.4620584547519684,
+              -0.9242144823074341,
+              -0.9241959452629089,
+              0,
+              0,
+              4.15971040725708,
+              4.167963027954102
+            ],
+            "viewport": [
+              225,
+              57,
+              1140,
+              912
+            ]
+          }
+        },
+        {
+          "case": "rich-active-only-through-depth",
+          "mask_bits_exact": true,
+          "geometry_metadata_exact": true,
+          "inactive_exact": true,
+          "projected": 266,
+          "selected": 266,
+          "changed": 228,
+          "max_abs_change": 1,
+          "report": {
+            "captured_document_revision": 2,
+            "changed_vertices": 228,
+            "document_revision": 3,
+            "erase": false,
+            "kind": "Rectangle",
+            "max_abs_change": 1,
+            "point_edge_work": 0,
+            "polygon_points": 4,
+            "projected_vertices": 266,
+            "region": {
+              "end": [
+                1363,
+                967
+              ],
+              "kind": "rectangle",
+              "start": [
+                227,
+                59
+              ]
+            },
+            "selected_vertices": 266,
+            "skipped_tiny_click": false,
+            "subtool_id": 2,
+            "vertices": 266,
+            "view_projection": [
+              2.0647244453430176,
+              -0.16866450011730194,
+              -0.3373645544052124,
+              -0.33735784888267517,
+              0,
+              2.7030885219573975,
+              -0.17903314530849457,
+              -0.17902958393096924,
+              -0.7536832690238953,
+              -0.462058424949646,
+              -0.9242143034934998,
+              -0.9241958856582642,
+              2.9938507080078125,
+              -0.24456313252449036,
+              8.04101276397705,
+              8.057947158813477
+            ],
+            "viewport": [
+              225,
+              57,
+              1140,
+              912
+            ]
+          }
+        },
+        {
+          "case": "tiny-empty-saturated-hidden-priority-caps",
+          "mask_bits_exact": true,
+          "geometry_metadata_exact": true,
+          "inactive_exact": true,
+          "projected": 0,
+          "selected": 0,
+          "changed": 0,
+          "max_abs_change": 0,
+          "report": {
+            "captured_document_revision": 4,
+            "changed_vertices": 0,
+            "document_revision": 4,
+            "erase": false,
+            "kind": "Rectangle",
+            "max_abs_change": 0,
+            "point_edge_work": 0,
+            "polygon_points": 4,
+            "projected_vertices": 0,
+            "region": {
+              "end": [
+                815,
+                519
+              ],
+              "kind": "rectangle",
+              "start": [
+                815,
+                519
+              ]
+            },
+            "selected_vertices": 0,
+            "skipped_tiny_click": true,
+            "subtool_id": 1,
+            "vertices": 49,
+            "view_projection": [
+              2.0647244453430176,
+              -0.16866450011730194,
+              -0.3373646140098572,
+              -0.33735784888267517,
+              0,
+              2.7030887603759766,
+              -0.17903317511081696,
+              -0.17902958393096924,
+              -0.7536832690238953,
+              -0.4620584547519684,
+              -0.9242144823074341,
+              -0.9241959452629089,
+              0,
+              0,
+              4.15971040725708,
+              4.167963027954102
+            ],
+            "viewport": [
+              225,
+              57,
+              1140,
+              912
+            ]
+          }
+        },
+        {
+          "case": "tiny-empty-saturated-hidden-priority-caps",
+          "mask_bits_exact": true,
+          "geometry_metadata_exact": true,
+          "inactive_exact": true,
+          "projected": 49,
+          "selected": 0,
+          "changed": 0,
+          "max_abs_change": 0,
+          "report": {
+            "captured_document_revision": 4,
+            "changed_vertices": 0,
+            "document_revision": 4,
+            "erase": false,
+            "kind": "Rectangle",
+            "max_abs_change": 0,
+            "point_edge_work": 0,
+            "polygon_points": 4,
+            "projected_vertices": 49,
+            "region": {
+              "end": [
+                238,
+                70
+              ],
+              "kind": "rectangle",
+              "start": [
+                228,
+                60
+              ]
+            },
+            "selected_vertices": 0,
+            "skipped_tiny_click": false,
+            "subtool_id": 1,
+            "vertices": 49,
+            "view_projection": [
+              2.0647244453430176,
+              -0.16866450011730194,
+              -0.3373646140098572,
+              -0.33735784888267517,
+              0,
+              2.7030887603759766,
+              -0.17903317511081696,
+              -0.17902958393096924,
+              -0.7536832690238953,
+              -0.4620584547519684,
+              -0.9242144823074341,
+              -0.9241959452629089,
+              0,
+              0,
+              4.15971040725708,
+              4.167963027954102
+            ],
+            "viewport": [
+              225,
+              57,
+              1140,
+              912
+            ]
+          }
+        },
+        {
+          "case": "tiny-empty-saturated-hidden-priority-caps",
+          "mask_bits_exact": true,
+          "geometry_metadata_exact": true,
+          "inactive_exact": true,
+          "projected": 49,
+          "selected": 49,
+          "changed": 0,
+          "max_abs_change": 0,
+          "report": {
+            "captured_document_revision": 4,
+            "changed_vertices": 0,
+            "document_revision": 4,
+            "erase": false,
+            "kind": "Rectangle",
+            "max_abs_change": 0,
+            "point_edge_work": 0,
+            "polygon_points": 4,
+            "projected_vertices": 49,
+            "region": {
+              "end": [
+                1363,
+                967
+              ],
+              "kind": "rectangle",
+              "start": [
+                227,
+                59
+              ]
+            },
+            "selected_vertices": 49,
+            "skipped_tiny_click": false,
+            "subtool_id": 1,
+            "vertices": 49,
+            "view_projection": [
+              2.0647244453430176,
+              -0.16866450011730194,
+              -0.3373646140098572,
+              -0.33735784888267517,
+              0,
+              2.7030887603759766,
+              -0.17903317511081696,
+              -0.17902958393096924,
+              -0.7536832690238953,
+              -0.4620584547519684,
+              -0.9242144823074341,
+              -0.9241959452629089,
+              0,
+              0,
+              4.15971040725708,
+              4.167963027954102
+            ],
+            "viewport": [
+              225,
+              57,
+              1140,
+              912
+            ]
+          }
+        },
+        {
+          "case": "v2-v5-freshload-historical-reports",
+          "mask_bits_exact": true,
+          "geometry_metadata_exact": true,
+          "inactive_exact": true,
+          "projected": 49,
+          "selected": 13,
+          "changed": 10,
+          "max_abs_change": 1,
+          "report": {
+            "captured_document_revision": 2,
+            "changed_vertices": 10,
+            "document_revision": 3,
+            "erase": false,
+            "kind": "Rectangle",
+            "max_abs_change": 1,
+            "point_edge_work": 0,
+            "polygon_points": 4,
+            "projected_vertices": 49,
+            "region": {
+              "end": [
+                975,
+                691
+              ],
+              "kind": "rectangle",
+              "start": [
+                656,
+                347
+              ]
+            },
+            "selected_vertices": 13,
+            "skipped_tiny_click": false,
+            "subtool_id": 1,
+            "vertices": 49,
+            "view_projection": [
+              2.0647244453430176,
+              -0.16866450011730194,
+              -0.3373646140098572,
+              -0.33735784888267517,
+              0,
+              2.7030887603759766,
+              -0.17903317511081696,
+              -0.17902958393096924,
+              -0.7536832690238953,
+              -0.4620584547519684,
+              -0.9242144823074341,
+              -0.9241959452629089,
+              0,
+              0,
+              4.15971040725708,
+              4.167963027954102
+            ],
+            "viewport": [
+              225,
+              57,
+              1140,
+              912
+            ]
+          }
+        },
+        {
+          "case": "v2-v5-freshload-historical-reports",
+          "mask_bits_exact": true,
+          "geometry_metadata_exact": true,
+          "inactive_exact": true,
+          "projected": 49,
+          "selected": 13,
+          "changed": 10,
+          "max_abs_change": 1,
+          "report": {
+            "captured_document_revision": 2,
+            "changed_vertices": 10,
+            "document_revision": 3,
+            "erase": false,
+            "kind": "Rectangle",
+            "max_abs_change": 1,
+            "point_edge_work": 0,
+            "polygon_points": 4,
+            "projected_vertices": 49,
+            "region": {
+              "end": [
+                975,
+                691
+              ],
+              "kind": "rectangle",
+              "start": [
+                656,
+                347
+              ]
+            },
+            "selected_vertices": 13,
+            "skipped_tiny_click": false,
+            "subtool_id": 1,
+            "vertices": 49,
+            "view_projection": [
+              2.0647244453430176,
+              -0.16866450011730194,
+              -0.3373646140098572,
+              -0.33735784888267517,
+              0,
+              2.7030887603759766,
+              -0.17903317511081696,
+              -0.17902958393096924,
+              -0.7536832690238953,
+              -0.4620584547519684,
+              -0.9242144823074341,
+              -0.9241959452629089,
+              0,
+              0,
+              4.15971040725708,
+              4.167963027954102
+            ],
+            "viewport": [
+              225,
+              57,
+              1140,
+              912
+            ]
+          }
+        },
+        {
+          "case": "v2-v5-freshload-historical-reports",
+          "mask_bits_exact": true,
+          "geometry_metadata_exact": true,
+          "inactive_exact": true,
+          "projected": 49,
+          "selected": 13,
+          "changed": 10,
+          "max_abs_change": 1,
+          "report": {
+            "captured_document_revision": 2,
+            "changed_vertices": 10,
+            "document_revision": 3,
+            "erase": false,
+            "kind": "Rectangle",
+            "max_abs_change": 1,
+            "point_edge_work": 0,
+            "polygon_points": 4,
+            "projected_vertices": 49,
+            "region": {
+              "end": [
+                975,
+                691
+              ],
+              "kind": "rectangle",
+              "start": [
+                656,
+                347
+              ]
+            },
+            "selected_vertices": 13,
+            "skipped_tiny_click": false,
+            "subtool_id": 1,
+            "vertices": 49,
+            "view_projection": [
+              2.0647244453430176,
+              -0.16866450011730194,
+              -0.3373646140098572,
+              -0.33735784888267517,
+              0,
+              2.7030887603759766,
+              -0.17903317511081696,
+              -0.17902958393096924,
+              -0.7536832690238953,
+              -0.4620584547519684,
+              -0.9242144823074341,
+              -0.9241959452629089,
+              0,
+              0,
+              4.15971040725708,
+              4.167963027954102
+            ],
+            "viewport": [
+              225,
+              57,
+              1140,
+              912
+            ]
+          }
+        },
+        {
+          "case": "v2-v5-freshload-historical-reports",
+          "mask_bits_exact": true,
+          "geometry_metadata_exact": true,
+          "inactive_exact": true,
+          "projected": 49,
+          "selected": 12,
+          "changed": 9,
+          "max_abs_change": 1,
+          "report": {
+            "captured_document_revision": 2,
+            "changed_vertices": 9,
+            "document_revision": 3,
+            "erase": false,
+            "kind": "Rectangle",
+            "max_abs_change": 1,
+            "point_edge_work": 0,
+            "polygon_points": 4,
+            "projected_vertices": 49,
+            "region": {
+              "end": [
+                1116,
+                620
+              ],
+              "kind": "rectangle",
+              "start": [
+                939,
+                440
+              ]
+            },
+            "selected_vertices": 12,
+            "skipped_tiny_click": false,
+            "subtool_id": 2,
+            "vertices": 49,
+            "view_projection": [
+              2.0647244453430176,
+              -0.16866450011730194,
+              -0.3373646140098572,
+              -0.33735784888267517,
+              0,
+              2.7030887603759766,
+              -0.17903317511081696,
+              -0.17902958393096924,
+              -0.7536832690238953,
+              -0.4620584547519684,
+              -0.9242144823074341,
+              -0.9241959452629089,
+              3.0970869064331055,
+              -0.25299689173698425,
+              7.870949745178223,
+              7.887579441070557
+            ],
+            "viewport": [
+              225,
+              57,
+              1140,
+              912
+            ]
+          }
+        },
+        {
+          "case": "region-filter-extract-source-preservation",
+          "mask_bits_exact": true,
+          "geometry_metadata_exact": true,
+          "inactive_exact": true,
+          "projected": 40962,
+          "selected": 1667,
+          "changed": 1667,
+          "max_abs_change": 1,
+          "report": {
+            "captured_document_revision": 1,
+            "changed_vertices": 1667,
+            "document_revision": 2,
+            "erase": false,
+            "kind": "Rectangle",
+            "max_abs_change": 1,
+            "point_edge_work": 0,
+            "polygon_points": 4,
+            "projected_vertices": 40962,
+            "region": {
+              "end": [
+                847,
+                578
+              ],
+              "kind": "rectangle",
+              "start": [
+                698,
+                416
+              ]
+            },
+            "selected_vertices": 1667,
+            "skipped_tiny_click": false,
+            "subtool_id": 1,
+            "vertices": 40962,
+            "view_projection": [
+              2.0647244453430176,
+              -0.16866450011730194,
+              -0.3373646140098572,
+              -0.33735784888267517,
+              0,
+              2.7030887603759766,
+              -0.17903317511081696,
+              -0.17902958393096924,
+              -0.7536832690238953,
+              -0.4620584547519684,
+              -0.9242144823074341,
+              -0.9241959452629089,
+              0,
+              0,
+              3.992079973220825,
+              4
+            ],
+            "viewport": [
+              225,
+              57,
+              1140,
+              912
+            ]
+          }
+        }
+      ]
+    },
+    "recorded_filter_reports": {
+      "count": 2,
+      "max_mask_error": 0,
+      "measures": [
+        {
+          "case": "region-filter-extract-source-preservation",
+          "max_mask_error": 0,
+          "changed_vertices": 233,
+          "max_abs_change": 0.5,
+          "current_and_retained_geometry_exact": true,
+          "layer_target_bits_exact": true,
+          "inactive_payload_exact": true,
+          "report": {
+            "changed_vertices": 233,
+            "document_revision": 5,
+            "iterations": 1,
+            "max_abs_change": 0.5,
+            "operation": "Grow",
+            "strength": 0.5,
+            "subtool_id": 1,
+            "vertices": 40962
+          }
+        },
+        {
+          "case": "region-filter-extract-source-preservation",
+          "max_mask_error": 0,
+          "changed_vertices": 584,
+          "max_abs_change": 0.1428571343421936,
+          "current_and_retained_geometry_exact": true,
+          "layer_target_bits_exact": true,
+          "inactive_payload_exact": true,
+          "report": {
+            "changed_vertices": 584,
+            "document_revision": 8,
+            "iterations": 1,
+            "max_abs_change": 0.1428571343421936,
+            "operation": "Blur",
+            "strength": 0.5,
+            "subtool_id": 1,
+            "vertices": 40962
+          }
+        }
+      ]
+    },
+    "navigation_chords": [
+      {
+        "name": "navigation-cancel",
+        "button": "right",
+        "dispatched_press": {
+          "type": "mousePressed",
+          "x": 972,
+          "y": 689,
+          "button": "right",
+          "buttons": 3,
+          "clickCount": 1
+        },
+        "dispatched_release": {
+          "type": "mouseReleased",
+          "x": 972,
+          "y": 689,
+          "button": "right",
+          "buttons": 1,
+          "clickCount": 1
+        },
+        "state_while_navigation_held": {
+          "active": false,
+          "cancel_reason": "Pointer input interrupted; pending selection cancelled.",
+          "suppressed_this_frame": false
+        },
+        "actual_events": [
+          {
+            "type": "pointermove",
+            "pointer_type": "mouse",
+            "pressure": 0,
+            "x": 657,
+            "y": 349,
+            "buttons": 0,
+            "button": -1,
+            "alt": false,
+            "ctrl": false,
+            "shift": false,
+            "meta": false,
+            "trusted": true,
+            "at": 6802.699999988079
+          },
+          {
+            "type": "pointerdown",
+            "pointer_type": "mouse",
+            "pressure": 0.5,
+            "x": 657,
+            "y": 349,
+            "buttons": 1,
+            "button": 0,
+            "alt": false,
+            "ctrl": false,
+            "shift": false,
+            "meta": false,
+            "trusted": true,
+            "at": 6845.199999988079
+          },
+          {
+            "type": "pointermove",
+            "pointer_type": "mouse",
+            "pressure": 0.5,
+            "x": 972,
+            "y": 689,
+            "buttons": 1,
+            "button": -1,
+            "alt": false,
+            "ctrl": false,
+            "shift": false,
+            "meta": false,
+            "trusted": true,
+            "at": 7018.5999999940395
+          },
+          {
+            "type": "pointermove",
+            "pointer_type": "mouse",
+            "pressure": 0,
+            "x": 972,
+            "y": 689,
+            "buttons": 3,
+            "button": 2,
+            "alt": false,
+            "ctrl": false,
+            "shift": false,
+            "meta": false,
+            "trusted": true,
+            "at": 7162
+          },
+          {
+            "type": "pointermove",
+            "pointer_type": "mouse",
+            "pressure": 0,
+            "x": 972,
+            "y": 689,
+            "buttons": 1,
+            "button": 2,
+            "alt": false,
+            "ctrl": false,
+            "shift": false,
+            "meta": false,
+            "trusted": true,
+            "at": 7318.899999991059
+          }
+        ]
+      },
+      {
+        "name": "middle-navigation-cancel",
+        "button": "middle",
+        "dispatched_press": {
+          "type": "mousePressed",
+          "x": 972,
+          "y": 689,
+          "button": "middle",
+          "buttons": 5,
+          "clickCount": 1
+        },
+        "dispatched_release": {
+          "type": "mouseReleased",
+          "x": 972,
+          "y": 689,
+          "button": "middle",
+          "buttons": 1,
+          "clickCount": 1
+        },
+        "state_while_navigation_held": {
+          "active": false,
+          "cancel_reason": "Pointer input interrupted; pending selection cancelled.",
+          "suppressed_this_frame": false
+        },
+        "actual_events": [
+          {
+            "type": "pointermove",
+            "pointer_type": "mouse",
+            "pressure": 0,
+            "x": 657,
+            "y": 349,
+            "buttons": 0,
+            "button": -1,
+            "alt": false,
+            "ctrl": false,
+            "shift": false,
+            "meta": false,
+            "trusted": true,
+            "at": 8869.5
+          },
+          {
+            "type": "pointerdown",
+            "pointer_type": "mouse",
+            "pressure": 0.5,
+            "x": 657,
+            "y": 349,
+            "buttons": 1,
+            "button": 0,
+            "alt": false,
+            "ctrl": false,
+            "shift": false,
+            "meta": false,
+            "trusted": true,
+            "at": 8913.39999999106
+          },
+          {
+            "type": "pointermove",
+            "pointer_type": "mouse",
+            "pressure": 0.5,
+            "x": 972,
+            "y": 689,
+            "buttons": 1,
+            "button": -1,
+            "alt": false,
+            "ctrl": false,
+            "shift": false,
+            "meta": false,
+            "trusted": true,
+            "at": 9086
+          },
+          {
+            "type": "pointermove",
+            "pointer_type": "mouse",
+            "pressure": 0,
+            "x": 972,
+            "y": 689,
+            "buttons": 5,
+            "button": 1,
+            "alt": false,
+            "ctrl": false,
+            "shift": false,
+            "meta": false,
+            "trusted": true,
+            "at": 9232.59999999404
+          },
+          {
+            "type": "pointermove",
+            "pointer_type": "mouse",
+            "pressure": 0,
+            "x": 972,
+            "y": 689,
+            "buttons": 1,
+            "button": 1,
+            "alt": false,
+            "ctrl": false,
+            "shift": false,
+            "meta": false,
+            "trusted": true,
+            "at": 9390.09999999404
+          }
+        ]
+      }
+    ],
+    "short_release_observations": [
+      {
+        "name": "rectangle-forward",
+        "type": "region",
+        "mouseup_at": 1910.5,
+        "first_probe_start_after_mouseup_ms": 155.1000000089407,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 92,
+        "raf_p95_ms": 16.700000000000273,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "rectangle-reverse",
+        "type": "region",
+        "mouseup_at": 1869.2000000029802,
+        "first_probe_start_after_mouseup_ms": 155.29999999701977,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 93,
+        "raf_p95_ms": 16.700000000000273,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "rectangle-erase",
+        "type": "region",
+        "mouseup_at": 1874.5,
+        "first_probe_start_after_mouseup_ms": 155.40000000596046,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 93,
+        "raf_p95_ms": 16.700000000000273,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "lasso-closed-repeated",
+        "type": "region",
+        "mouseup_at": 2071.2999999970198,
+        "first_probe_start_after_mouseup_ms": 154.0,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 104,
+        "raf_p95_ms": 16.700000000000273,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "lasso-concave",
+        "type": "region",
+        "mouseup_at": 2088.1000000089407,
+        "first_probe_start_after_mouseup_ms": 157.29999999701977,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 106,
+        "raf_p95_ms": 16.799999999999727,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "lasso-self-cross",
+        "type": "region",
+        "mouseup_at": 1970.5,
+        "first_probe_start_after_mouseup_ms": 156.90000000596046,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 99,
+        "raf_p95_ms": 16.700000000000273,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "wheel-frozen",
+        "type": "region",
+        "mouseup_at": 4242,
+        "first_probe_start_after_mouseup_ms": 154.79999999701977,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 105,
+        "raf_p95_ms": 16.799999999999272,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "outside-release",
+        "type": "region",
+        "mouseup_at": 1869.1000000089407,
+        "first_probe_start_after_mouseup_ms": 159.3999999910593,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 93,
+        "raf_p95_ms": 16.700000000000273,
+        "raf_max_ms": 16.799999999999955,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "ctrl-temporary",
+        "type": "region",
+        "mouseup_at": 1968.1000000089407,
+        "first_probe_start_after_mouseup_ms": 155.79999999701977,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 92,
+        "raf_p95_ms": 16.799999999999727,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "barrier-edit",
+        "type": "region",
+        "mouseup_at": 8700.20000000298,
+        "first_probe_start_after_mouseup_ms": 154.79999999701977,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 92,
+        "raf_p95_ms": 16.700000000000728,
+        "raf_max_ms": 16.799999999999272,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "region-rich-layer-setup",
+        "type": "brush",
+        "mouseup_at": 4447.5,
+        "first_probe_start_after_mouseup_ms": 107.09999999403954,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 107,
+        "raf_p95_ms": 16.700000000000728,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 2
+      },
+      {
+        "name": "rich-region",
+        "type": "region",
+        "mouseup_at": 1922,
+        "first_probe_start_after_mouseup_ms": 157.40000000596046,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 93,
+        "raf_p95_ms": 16.700000000000273,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "tiny-redo-edit",
+        "type": "region",
+        "mouseup_at": 1880.7000000029802,
+        "first_probe_start_after_mouseup_ms": 155.20000000298023,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 92,
+        "raf_p95_ms": 16.700000000000273,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "tiny-noop",
+        "type": "region",
+        "mouseup_at": 4483.5,
+        "first_probe_start_after_mouseup_ms": 155.70000000298023,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 93,
+        "raf_p95_ms": 16.800000000000182,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "empty-redo-edit",
+        "type": "region",
+        "mouseup_at": 1866.2000000029802,
+        "first_probe_start_after_mouseup_ms": 154.3999999910593,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 92,
+        "raf_p95_ms": 16.700000000000273,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "empty-noop",
+        "type": "region",
+        "mouseup_at": 4486.5,
+        "first_probe_start_after_mouseup_ms": 156.09999999403954,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 93,
+        "raf_p95_ms": 16.800000000000182,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "saturated-redo-edit",
+        "type": "region",
+        "mouseup_at": 1867.7000000029802,
+        "first_probe_start_after_mouseup_ms": 154.3999999910593,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 92,
+        "raf_p95_ms": 16.700000000000273,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "saturated-noop",
+        "type": "region",
+        "mouseup_at": 4469.9000000059605,
+        "first_probe_start_after_mouseup_ms": 156.5,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 93,
+        "raf_p95_ms": 16.700000000000728,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "region-schema-2",
+        "type": "region",
+        "mouseup_at": 1858.2000000029802,
+        "first_probe_start_after_mouseup_ms": 155.09999999403954,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 92,
+        "raf_p95_ms": 16.799999999999727,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "region-schema-3",
+        "type": "region",
+        "mouseup_at": 1868.7999999970198,
+        "first_probe_start_after_mouseup_ms": 154.70000000298023,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 92,
+        "raf_p95_ms": 16.799999999999727,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "region-schema-4",
+        "type": "region",
+        "mouseup_at": 1874.2999999970198,
+        "first_probe_start_after_mouseup_ms": 154.59999999403954,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 92,
+        "raf_p95_ms": 16.799999999999955,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "region-schema-5",
+        "type": "region",
+        "mouseup_at": 1867.1000000089407,
+        "first_probe_start_after_mouseup_ms": 156.09999999403954,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 92,
+        "raf_p95_ms": 16.799999999999727,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      },
+      {
+        "name": "default-region",
+        "type": "region",
+        "mouseup_at": 2880.4000000059605,
+        "first_probe_start_after_mouseup_ms": 158.3999999910593,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 94,
+        "raf_p95_ms": 16.799999999999727,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "applied_dabs_cumulative": 0
+      }
+    ],
+    "runtime": {
+      "pages": 28,
+      "gl_errors": [],
+      "js_errors": [],
+      "cdp_exceptions": [],
+      "console_errors": [],
+      "actual_4x_msaa_every_page": true,
+      "horizontal_clip_bounds": {
+        "checked_states": 1068,
+        "visible_control_checks": 4785,
+        "failures": []
+      }
+    },
+    "screenshots": [
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/initial-controls.png",
+        "sha256": "5b936a994443e2ab88133770d6571d8495a633a72866647757dfcad6d7f91d56",
+        "bytes": 219449
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/rectangle-controls.png",
+        "sha256": "25a76d4ecc52cb233f05f5b4582542d5840d6167e4753b09982a618d2ec3d53c",
+        "bytes": 222873
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/lasso-controls.png",
+        "sha256": "7b7856bb6bb0b8dc99f7971030a5c05eb7254a84585484ab83960d7eda166e33",
+        "bytes": 230758
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-preview.png",
+        "sha256": "07f136ee5244a9b998f68483f99ec751df86df60a959e8320de226e655722276",
+        "bytes": 297183
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/rich-regions.png",
+        "sha256": "e3a45146dda3f1f21f8e74163c8481fc3aa17e4b39f2fd273e30ff8c8c09c536",
+        "bytes": 186894
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-shell.png",
+        "sha256": "eaa617ca4950c116886711bcde8ce15fe8ddb3e4c3dfbc5949a3a33dfe046cb5",
+        "bytes": 144668
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-final-controls.png",
+        "sha256": "eaa617ca4950c116886711bcde8ce15fe8ddb3e4c3dfbc5949a3a33dfe046cb5",
+        "bytes": 144668
+      }
+    ],
+    "visual_inspection": "Scoped pass from six unique final-run PNGs viewed by root: default sphere, rectangle selection, lasso result, held rectangle outline, rich masked sphere with unchanged inactive grid, and solo extracted shell. The final-controls PNG is byte-identical to the viewed shell image. All three mask modes, explanatory text, filter controls and extraction report are visible after scrolling in the shell image. Initial/Lasso images have lower controls below the scroll fold; no full vertical containment claim. Preview outline is visible and remains inside the viewport. These images do not establish reference rendering or boundary smoothness beyond mesh density.",
+    "independent_fixture_and_snapshot_hashes": [
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/Independent region barrier pair.obrush",
+        "sha256": "7f6ff4b7568e22162c9680dfb2119eb22613ababe6cad56204f6e330a1fb00cf",
+        "bytes": 11220
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/Independent region empty redo.obrush",
+        "sha256": "377dd513f46aa2582f58b1e1be2ff1474965d39cd4e268963e125768c1d4f991",
+        "bytes": 5493
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/Independent region grid.obrush",
+        "sha256": "5e816ebdc01c323f6d07fe3ac68dfef9f6baf6bbaed2e555dabdc4efccb72b47",
+        "bytes": 5487
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/Independent region saturated redo.obrush",
+        "sha256": "574b2005f091dab3ae55a823a628fbf4c546d9e395ebfdc4072fa9de20bbf0ce",
+        "bytes": 5417
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/Independent region tiny redo.obrush",
+        "sha256": "00c23482dfff1962550ae42036e93da2e7b133e7712ac745dde7746e5f42fd88",
+        "bytes": 5492
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/Independent region v2.obrush",
+        "sha256": "f233d1dcd32aa0833af5f4e9f4f6d04f42b654046bea5a322dd99ad6f4e0c4c3",
+        "bytes": 5546
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/Independent region v3.obrush",
+        "sha256": "7a09ef2a3b4e4aae1c3f0f65399ce61f72333f17297e0f60bff3ad62e0105dda",
+        "bytes": 8757
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/Independent region v4.obrush",
+        "sha256": "22c79ff7dc853260cb99623043b73852da60929f004acc721393005759b83cc5",
+        "bytes": 8267
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/Independent region v5.obrush",
+        "sha256": "6bec943f70da584127c069b7fc1ba0d3f99b8e3cbfbdd48a97c20befdad0ab65",
+        "bytes": 11229
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/Independent rich region pair.obrush",
+        "sha256": "32888c3c3fd72b588dcbe43e16dab7b3e67b7fd6cc600896ae0afe98ce692971",
+        "bytes": 269347
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/Independent rich region sphere.obrush",
+        "sha256": "f01202cc6261920bf1dba15c3aac5a099daaf5f265f42402a40e49a15dda0b1f",
+        "bytes": 53150
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/barrier-edit-after.obrush",
+        "sha256": "667ea19394cd4a01bfb70a54ac85ffdede6d74ccdfb313b9caf291d2f7894bb8",
+        "bytes": 3805
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/barrier-edit-before.obrush",
+        "sha256": "c51dc6736f8f8d4289dddc1dfe706d248a9e81814e5674a18376c387178829b1",
+        "bytes": 3820
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/brush-cancel-before.obrush",
+        "sha256": "667ea19394cd4a01bfb70a54ac85ffdede6d74ccdfb313b9caf291d2f7894bb8",
+        "bytes": 3805
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/brush-command-after.obrush",
+        "sha256": "667ea19394cd4a01bfb70a54ac85ffdede6d74ccdfb313b9caf291d2f7894bb8",
+        "bytes": 3805
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/cancel-preview-before.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/ctrl-temporary-after.obrush",
+        "sha256": "c51dc6736f8f8d4289dddc1dfe706d248a9e81814e5674a18376c387178829b1",
+        "bytes": 3820
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/ctrl-temporary-before.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/ctrl-temporary-redo.obrush",
+        "sha256": "c51dc6736f8f8d4289dddc1dfe706d248a9e81814e5674a18376c387178829b1",
+        "bytes": 3820
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/ctrl-temporary-undo.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/default-region-after.obrush",
+        "sha256": "047f452ef6e6a4a90f828a3007e9df331da78548369c7a92a1a9e3c469999db1",
+        "bytes": 5317105
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/default-region-before.obrush",
+        "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+        "bytes": 5317105
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/default-region-extract-redo.obrush",
+        "sha256": "b4be3c5ddce8e43db2317474db839dc4f6c730960c058413d44c900eb846a28a",
+        "bytes": 5829882
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/default-region-extract-undo.obrush",
+        "sha256": "d93d292e91c705e5aa530ed7e97ed6e16c9244acbcac072d9564a370b069afaa",
+        "bytes": 5321226
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/default-region-extracted.obrush",
+        "sha256": "b4be3c5ddce8e43db2317474db839dc4f6c730960c058413d44c900eb846a28a",
+        "bytes": 5829882
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/default-region-filtered.obrush",
+        "sha256": "d93d292e91c705e5aa530ed7e97ed6e16c9244acbcac072d9564a370b069afaa",
+        "bytes": 5321226
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/default-region-redo.obrush",
+        "sha256": "047f452ef6e6a4a90f828a3007e9df331da78548369c7a92a1a9e3c469999db1",
+        "bytes": 5317105
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/default-region-shell-solo.obrush",
+        "sha256": "04c9081f59a8a1a535dad6b0f07ac9dae5a748291a67a217a7a0aa58bf1d081b",
+        "bytes": 5829881
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/default-region-source.obrush",
+        "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+        "bytes": 5317105
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/default-region-undo.obrush",
+        "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+        "bytes": 5317105
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/empty-noop-after.obrush",
+        "sha256": "e5e0828995ff8a9ef0ea4fcd62ec04c1661f73ae30d5ce48b3145b947eac120f",
+        "bytes": 3831
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/empty-noop-redo.obrush",
+        "sha256": "ad17e00501692cecda7c18d64aab18ed898e20db61150ca196d46dbd3d68d32b",
+        "bytes": 3811
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/empty-redo-edit-after.obrush",
+        "sha256": "ad17e00501692cecda7c18d64aab18ed898e20db61150ca196d46dbd3d68d32b",
+        "bytes": 3811
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/empty-redo-edit-before.obrush",
+        "sha256": "e5e0828995ff8a9ef0ea4fcd62ec04c1661f73ae30d5ce48b3145b947eac120f",
+        "bytes": 3831
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/escape-preview-after.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/hidden-region-after.obrush",
+        "sha256": "0844612ec60964f43e3ae8ee9135dd7ff07e1c24dace88b6ebcf7e8d87552944",
+        "bytes": 3982
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/hidden-region-before.obrush",
+        "sha256": "0844612ec60964f43e3ae8ee9135dd7ff07e1c24dace88b6ebcf7e8d87552944",
+        "bytes": 3982
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/lasso-closed-repeated-after.obrush",
+        "sha256": "efd160b02e42c7c1e890b77295ff7e589b124a7f629d6232fb0311f602110479",
+        "bytes": 3815
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/lasso-closed-repeated-before.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/lasso-closed-repeated-redo.obrush",
+        "sha256": "efd160b02e42c7c1e890b77295ff7e589b124a7f629d6232fb0311f602110479",
+        "bytes": 3815
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/lasso-closed-repeated-undo.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/lasso-concave-after.obrush",
+        "sha256": "ab610a6c4d055ef443f9f5def81a9010535c032d2720d8bd4c9e111b86963023",
+        "bytes": 3818
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/lasso-concave-before.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/lasso-concave-redo.obrush",
+        "sha256": "ab610a6c4d055ef443f9f5def81a9010535c032d2720d8bd4c9e111b86963023",
+        "bytes": 3818
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/lasso-concave-undo.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/lasso-self-cross-after.obrush",
+        "sha256": "e33c94da5fcf318c31397abe6412ce33f8f990053c45537d57ddd5e1cb8c008d",
+        "bytes": 3823
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/lasso-self-cross-before.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/lasso-self-cross-redo.obrush",
+        "sha256": "e33c94da5fcf318c31397abe6412ce33f8f990053c45537d57ddd5e1cb8c008d",
+        "bytes": 3823
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/lasso-self-cross-undo.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/middle-navigation-cancel-after.obrush",
+        "sha256": "f92a074dc2e37309ed64de9b91015b3442de3d8e93c8f6eb98fdcfd7718f5815",
+        "bytes": 3820
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/middle-navigation-cancel-before.obrush",
+        "sha256": "f92a074dc2e37309ed64de9b91015b3442de3d8e93c8f6eb98fdcfd7718f5815",
+        "bytes": 3820
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/navigation-cancel-after.obrush",
+        "sha256": "f92a074dc2e37309ed64de9b91015b3442de3d8e93c8f6eb98fdcfd7718f5815",
+        "bytes": 3820
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/navigation-cancel-before.obrush",
+        "sha256": "f92a074dc2e37309ed64de9b91015b3442de3d8e93c8f6eb98fdcfd7718f5815",
+        "bytes": 3820
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/outside-release-after.obrush",
+        "sha256": "efcf6bd193478f970a1723cae68d95e8d5126523b45ef84a33da8862eb26bc83",
+        "bytes": 3822
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/outside-release-before.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/part-cancel-after.obrush",
+        "sha256": "82a3612d8406e3285e2737e7eb77e53b21c07229d69e612e0a87c5c9a52bca30",
+        "bytes": 8006
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/part-cancel-before.obrush",
+        "sha256": "3d2bbf8142bc074f6f6406c9cee254fe2fa97bf0bedf960a5c54297220fcf9d2",
+        "bytes": 8006
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/part-cancel-redo.obrush",
+        "sha256": "82a3612d8406e3285e2737e7eb77e53b21c07229d69e612e0a87c5c9a52bca30",
+        "bytes": 8006
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/part-cancel-undo.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/part-import-history-before.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/point-cap-after.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/point-cap-before.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/rectangle-erase-after.obrush",
+        "sha256": "b9caee17568ea69d3ee1a5bd560770db4972c435b6fed0eb5427fac4edee8cba",
+        "bytes": 3822
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/rectangle-erase-before.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/rectangle-erase-redo.obrush",
+        "sha256": "b9caee17568ea69d3ee1a5bd560770db4972c435b6fed0eb5427fac4edee8cba",
+        "bytes": 3822
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/rectangle-erase-undo.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/rectangle-forward-after.obrush",
+        "sha256": "29738f50259afb11d2d1c3e572083e30dd0e618f9fa9ee3dbff07001be032ba3",
+        "bytes": 3822
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/rectangle-forward-before.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/rectangle-forward-redo.obrush",
+        "sha256": "29738f50259afb11d2d1c3e572083e30dd0e618f9fa9ee3dbff07001be032ba3",
+        "bytes": 3822
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/rectangle-forward-undo.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/rectangle-reverse-after.obrush",
+        "sha256": "29738f50259afb11d2d1c3e572083e30dd0e618f9fa9ee3dbff07001be032ba3",
+        "bytes": 3822
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/rectangle-reverse-before.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/rectangle-reverse-redo.obrush",
+        "sha256": "29738f50259afb11d2d1c3e572083e30dd0e618f9fa9ee3dbff07001be032ba3",
+        "bytes": 3822
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/rectangle-reverse-undo.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-layer-empty.obrush",
+        "sha256": "aa24de4c9cb644e02bf4beef5c59583ae57879fd47413fa48c834302a2d6a813",
+        "bytes": 263449
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-pipeline-blur-after.obrush",
+        "sha256": "d93d292e91c705e5aa530ed7e97ed6e16c9244acbcac072d9564a370b069afaa",
+        "bytes": 5321226
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-pipeline-blur-before.obrush",
+        "sha256": "783643fa0fe09e8136a6db63659e6a83cae23a6248ff772c1054ba2b6496b3c7",
+        "bytes": 5317105
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-pipeline-blur-redo.obrush",
+        "sha256": "d93d292e91c705e5aa530ed7e97ed6e16c9244acbcac072d9564a370b069afaa",
+        "bytes": 5321226
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-pipeline-blur-undo.obrush",
+        "sha256": "783643fa0fe09e8136a6db63659e6a83cae23a6248ff772c1054ba2b6496b3c7",
+        "bytes": 5317105
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-pipeline-grow-after.obrush",
+        "sha256": "783643fa0fe09e8136a6db63659e6a83cae23a6248ff772c1054ba2b6496b3c7",
+        "bytes": 5317105
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-pipeline-grow-before.obrush",
+        "sha256": "047f452ef6e6a4a90f828a3007e9df331da78548369c7a92a1a9e3c469999db1",
+        "bytes": 5317105
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-pipeline-grow-redo.obrush",
+        "sha256": "783643fa0fe09e8136a6db63659e6a83cae23a6248ff772c1054ba2b6496b3c7",
+        "bytes": 5317105
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-pipeline-grow-undo.obrush",
+        "sha256": "047f452ef6e6a4a90f828a3007e9df331da78548369c7a92a1a9e3c469999db1",
+        "bytes": 5317105
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-rich-source.obrush",
+        "sha256": "a4618f6108eb38e29eb998e44af5e7dbedfec29fbca1dad1ae621cd3bed75674",
+        "bytes": 267346
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-2-after.obrush",
+        "sha256": "ef4af254df001ef47ce215e4982b86f8860d4f124f6d17f31da68eda38c2d41b",
+        "bytes": 3822
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-2-before.obrush",
+        "sha256": "9614ade8b0df52995030a470bb80283385e6d3e49cb662e647fb56fa9f451b6b",
+        "bytes": 3827
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-2-loaded.obrush",
+        "sha256": "ef4af254df001ef47ce215e4982b86f8860d4f124f6d17f31da68eda38c2d41b",
+        "bytes": 3822
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-2-redo.obrush",
+        "sha256": "ef4af254df001ef47ce215e4982b86f8860d4f124f6d17f31da68eda38c2d41b",
+        "bytes": 3822
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-2-undo.obrush",
+        "sha256": "9614ade8b0df52995030a470bb80283385e6d3e49cb662e647fb56fa9f451b6b",
+        "bytes": 3827
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-3-after.obrush",
+        "sha256": "c324301e7be40e12e3a1b327490f8f4f79133480dc586d4bc7e09c7ca5865a14",
+        "bytes": 7469
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-3-before.obrush",
+        "sha256": "2aaa7089384dfd95853a8cc3abc367bc1a8319d961b30ca1ad8c987f1216facc",
+        "bytes": 7474
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-3-loaded.obrush",
+        "sha256": "c324301e7be40e12e3a1b327490f8f4f79133480dc586d4bc7e09c7ca5865a14",
+        "bytes": 7469
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-3-redo.obrush",
+        "sha256": "c324301e7be40e12e3a1b327490f8f4f79133480dc586d4bc7e09c7ca5865a14",
+        "bytes": 7469
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-3-undo.obrush",
+        "sha256": "2aaa7089384dfd95853a8cc3abc367bc1a8319d961b30ca1ad8c987f1216facc",
+        "bytes": 7474
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-4-after.obrush",
+        "sha256": "69bbb87f3d654e972968402812e0c56e06474764525c12e3001f5e199abfb6d9",
+        "bytes": 5401
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-4-before.obrush",
+        "sha256": "ea3dbf5ddf5cb80e4a3b5d7b0074349674f2983377e7231f23ef14e68bb19c89",
+        "bytes": 5406
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-4-loaded.obrush",
+        "sha256": "69bbb87f3d654e972968402812e0c56e06474764525c12e3001f5e199abfb6d9",
+        "bytes": 5401
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-4-redo.obrush",
+        "sha256": "69bbb87f3d654e972968402812e0c56e06474764525c12e3001f5e199abfb6d9",
+        "bytes": 5401
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-4-undo.obrush",
+        "sha256": "ea3dbf5ddf5cb80e4a3b5d7b0074349674f2983377e7231f23ef14e68bb19c89",
+        "bytes": 5406
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-5-after.obrush",
+        "sha256": "dce6e251b4163e4a0b75e32ef211df0c09c8732e37f06c1b49feec72e5659f1d",
+        "bytes": 8011
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-5-before.obrush",
+        "sha256": "a30d9a2d16d500e95ee775d76ce7b61ada30fabdd1b92c9fd2f8713e49f9a104",
+        "bytes": 8015
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-5-loaded.obrush",
+        "sha256": "dce6e251b4163e4a0b75e32ef211df0c09c8732e37f06c1b49feec72e5659f1d",
+        "bytes": 8011
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-5-redo.obrush",
+        "sha256": "dce6e251b4163e4a0b75e32ef211df0c09c8732e37f06c1b49feec72e5659f1d",
+        "bytes": 8011
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/region-schema-5-undo.obrush",
+        "sha256": "a30d9a2d16d500e95ee775d76ce7b61ada30fabdd1b92c9fd2f8713e49f9a104",
+        "bytes": 8015
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/resize-cancel-after.obrush",
+        "sha256": "f92a074dc2e37309ed64de9b91015b3442de3d8e93c8f6eb98fdcfd7718f5815",
+        "bytes": 3820
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/resize-cancel-before.obrush",
+        "sha256": "f92a074dc2e37309ed64de9b91015b3442de3d8e93c8f6eb98fdcfd7718f5815",
+        "bytes": 3820
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/rich-region-after.obrush",
+        "sha256": "c2b85af6bdeedf8e6612984e0f9aa2439a65cd42bb14b9d45b7a92683b3c2e76",
+        "bytes": 266770
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/rich-region-before.obrush",
+        "sha256": "de7d2300d880c7b3f1ea38663293a5cd0c9df1bd79dd9becc1ce4f80a9e51a22",
+        "bytes": 271522
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/rich-region-redo.obrush",
+        "sha256": "c2b85af6bdeedf8e6612984e0f9aa2439a65cd42bb14b9d45b7a92683b3c2e76",
+        "bytes": 266770
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/rich-region-undo.obrush",
+        "sha256": "de7d2300d880c7b3f1ea38663293a5cd0c9df1bd79dd9becc1ce4f80a9e51a22",
+        "bytes": 271522
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/saturated-noop-after.obrush",
+        "sha256": "66f96f1181d51e239d5a479840c6d6758b65cc4bbe15292a02bc93c64591a0e0",
+        "bytes": 3815
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/saturated-noop-redo.obrush",
+        "sha256": "2896074f67ea5a6685e7ae4650dc96ccccfd0d176286332a2bebb8902e331e10",
+        "bytes": 3815
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/saturated-redo-edit-after.obrush",
+        "sha256": "2896074f67ea5a6685e7ae4650dc96ccccfd0d176286332a2bebb8902e331e10",
+        "bytes": 3815
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/saturated-redo-edit-before.obrush",
+        "sha256": "66f96f1181d51e239d5a479840c6d6758b65cc4bbe15292a02bc93c64591a0e0",
+        "bytes": 3815
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/save-cancel-before.obrush",
+        "sha256": "c51dc6736f8f8d4289dddc1dfe706d248a9e81814e5674a18376c387178829b1",
+        "bytes": 3820
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/save-held-after.obrush",
+        "sha256": "c51dc6736f8f8d4289dddc1dfe706d248a9e81814e5674a18376c387178829b1",
+        "bytes": 3820
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/save-held-cancels.obrush",
+        "sha256": "c51dc6736f8f8d4289dddc1dfe706d248a9e81814e5674a18376c387178829b1",
+        "bytes": 3820
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/tiny-noop-after.obrush",
+        "sha256": "9f98567c5f583e4bbc6baac4aebeab445668ef141b16cad5bccd5de1751bc1c3",
+        "bytes": 3830
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/tiny-noop-redo.obrush",
+        "sha256": "c6eef5ccf075fcd9f5b282c8628a37361420ae115dde6ae4c2bdaec4edf3d5db",
+        "bytes": 3810
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/tiny-redo-edit-after.obrush",
+        "sha256": "c6eef5ccf075fcd9f5b282c8628a37361420ae115dde6ae4c2bdaec4edf3d5db",
+        "bytes": 3810
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/tiny-redo-edit-before.obrush",
+        "sha256": "9f98567c5f583e4bbc6baac4aebeab445668ef141b16cad5bccd5de1751bc1c3",
+        "bytes": 3830
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/transform-region-after.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/transform-region-before.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/undo-held-after.obrush",
+        "sha256": "c51dc6736f8f8d4289dddc1dfe706d248a9e81814e5674a18376c387178829b1",
+        "bytes": 3820
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/undo-held-redo.obrush",
+        "sha256": "667ea19394cd4a01bfb70a54ac85ffdede6d74ccdfb313b9caf291d2f7894bb8",
+        "bytes": 3805
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/wheel-frozen-after.obrush",
+        "sha256": "f92a074dc2e37309ed64de9b91015b3442de3d8e93c8f6eb98fdcfd7718f5815",
+        "bytes": 3820
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/final-101330de-349e-464e-a2ac-03bbd40e5484/wheel-preview-before.obrush",
+        "sha256": "4858747ff435058e2337f69bf0bcdd79f0070f7f54e5cc9746adc9bd10df86cf",
+        "bytes": 3825
+      }
+    ],
+    "preserved_actual_source_failure": {
+      "raw_path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/candidate-19250ea7-ce61-4059-bac7-e311e37f02fe/result.json",
+      "raw_sha256": "fce1c577014a637540849ed977c4a3dd9c7e13406debe31493f99e54ca2f1dbe",
+      "diagnosis_path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/candidate-19250ea7-ce61-4059-bac7-e311e37f02fe/diagnosis.json",
+      "diagnosis_sha256": "b582faec819fdf8c85eefd77f313e914c22d0251e54bddead687cad84d35f0f2",
+      "scope": "Additional Secondary while Primary held arrived as actual trusted pointermove button2/buttons3 rather than another pointerdown; region remained active. Native raw egui navigation regression did not establish actual DOM chord behavior. Original Secondary gate and input trace retained; added Middle buttons5 path."
+    },
+    "limits": [
+      "Independent active-only through-depth hard region selection; no occlusion/backface test or ZBrushregion response comparison",
+      "Exactcurrent/retainedgeometry/layerf64/target/inactive andmaskbits; retainedlevelmasktransport established separately bycoreaudit",
+      "Noopdirty/revision trials afterUndo; clean-state/noop trial notseparate",
+      "ActualSecondaryandMiddlenavigationchordcancel tested; browserframegrouping/physicalfocus/touch/nativeGUI unverified",
+      "512rawpointoverflow tested onsmallgrid;32Mworkpreflight coreonly, sourcecaps/long-session/physical latency unverified",
+      "150msrelease settle beforequietprobes; observationstart beforeGPUreadback, notfirstcommit/input-to-photon",
+      "DefaultMouse/radius/strength/Xsym fixture; physicalpressure/alpha/device/fullreference parity remain gaps",
+      "Region report endpoints/complete lasso sequence are independently bound to actual trusted press/move/release coordinates clamped in the captured viewport; matrix binds actual uploaded GPU uniform",
+      "No-op dirty/revision/redo UI trials are afterUndo; no separate clean-state trial",
+      "Retained-level mask bytes excluded from geometry hashes; hidden-level transfer math established by core audit",
+      "Quiet region probes start after150mssettle; probe.at is observationstart before GPUreadback, not firstcommit/input-to-photon latency",
+      "Browser buffer agreement covers packed visible vertex buffers and solid index buffers, not physical display latency or a reference renderer",
+      "Actual primary-only DOM pointercancel/window blur signal wiring is covered by a separate production-listener mock and core host contracts; no physical contact/focus cancellation performed in this browser suite."
+    ],
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "build_scope": "Fresh frozen-release runtime; compiled-input provenance retains parent validation origin",
+    "preserved_helper_history_oracle_failure": {
+      "raw_path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/contact-candidate-ebf51e4d-e19b-4dc1-9812-a6d7a1656e4c/result.json",
+      "raw_sha256": "2390c54f3e9ae0498083b6d766d9a6d115d4e1799378b60d3c653308a210ac24",
+      "diagnosis_path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/contact-candidate-ebf51e4d-e19b-4dc1-9812-a6d7a1656e4c/diagnosis.json",
+      "diagnosis_sha256": "9c2559ccb87db02b7033b2e26b58a9a10c9012231ab57b39a80424e24eab26cd",
+      "correction_receipt": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-browser/helper-history-oracle-correction.json",
+        "sha256": "ac2d6bc11fcb1dec82faa5aff71d942e3a84e27d14490340499fdcb1ab404423"
+      },
+      "scope": "Established selection is nonhistorical. The original helper wrongly expected selection Undo. Approved correction proves exact Undo to genuine pre-pair import anchor and Redo to selected pair, so canceled preview/selection add no history. No production or numerical gate changed."
+    },
+    "frozen_release": {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-release-0.1.14-final",
+      "source_manifest": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-release-0.1.14-final/source-manifest.json",
+        "sha256": "f85980837069bb5e19237ab5ceaf9ca7927fa04c9f48164ee199b8194ea41c28"
+      },
+      "build_record": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-release-0.1.14-final/build-record.json",
+        "sha256": "28300122068da9a31bd4a79ca65394dc8b07fd8d1fff569be33e6010164435db"
+      },
+      "frozen_helper": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-region-release-0.1.14-final/source/scripts/check-mask-regions.mjs",
+        "sha256": "0135cbe2788ec76479b22ae5c12043e7699e3a19c9819acc0b8cc2bb6db98ca8"
+      }
+    }
+  },
+  "reference": {
+    "version": "ZBrush desktop 2026.2.1",
+    "execution": false,
+    "historical_binary_identity_record": {
+      "path": "docs/evidence/zbrush-native-inspection.json",
+      "bytes": 11282,
+      "sha256": "02de46853a20df3fd70d39fb986574fd555f15fb6b1eeefb2948d9309706f692"
+    },
+    "identity_scope": "Prior executable/build identity only; no new reference process or fixture executed for this release",
+    "primary_scope": "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/modeling-basics/masking/masking.html",
+    "scope_checked_date": "2026-10-13",
+    "limitation": "Independent through-depth vertex projection, hard rectangle/lasso selection and explicit host gesture policies do not establish reference behavior; no matched region fixture executed"
+  },
+  "frozen_source_manifest": {
+    "path": ".artifacts/mask-region-release-0.1.14-final/source-manifest.json",
+    "bytes": 15078,
+    "sha256": "f85980837069bb5e19237ab5ceaf9ca7927fa04c9f48164ee199b8194ea41c28"
+  },
+  "build_record": {
+    "path": ".artifacts/mask-region-release-0.1.14-final/build-record.json",
+    "bytes": 4939,
+    "sha256": "28300122068da9a31bd4a79ca65394dc8b07fd8d1fff569be33e6010164435db"
+  }
+}

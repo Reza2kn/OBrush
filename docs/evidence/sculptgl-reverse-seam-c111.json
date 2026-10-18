@@ -1,0 +1,164 @@
+{
+  "feature_id": "SGL-TOPO-REVERSE",
+  "scope": "Repeated Reverse on one independently authored two-chart nonplanar 5x5 quad UV seam grid",
+  "fixture_sha256": "a77798a24a3a97abe7d74c3663357f980597acc6b47ea67b331fcbba95b4cebb",
+  "pinned_reference_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+  "reference_result_path": ".artifacts/sculptgl-reference-runtime/reverse-c111-seam-export-aae6fd18-5045-46bf-9f76-32fca344967d/result.json",
+  "reference_result_sha256": "49bf0b0a7dea3e097e9d8994600646a59fd3f45b3807a10b8868d1c6535b489e",
+  "obrush_result_path": ".artifacts/sculptgl-paint-static-runtime/reverse-c111-final-20225f9a-be03-41df-9a90-c7e9fa8064ac/result.json",
+  "obrush_result_sha256": "2403d9eebbf235634c32ee2555fe854965a716a2e8e5215e3f07cfa9a05bf61b",
+  "obrush_wasm_sha256": "9e14c108e8859e8b8e4f1bbbc04bb62e2f5251b1ca5c0e4c918dca29a035f2f0",
+  "comparison_script": "scripts/compare-reverse-seam.py",
+  "comparison_script_sha256": "59e983cae630a3933a89267b58a4a63dfee88be3bdf4a1e928c53a29bb483768",
+  "comparison_runtime_path": ".artifacts/reverse-c111-comparison.json",
+  "comparison": {
+    "before": {
+      "faces": 16,
+      "corners": 64,
+      "matched_uv_corners": 64,
+      "reference_invalid_uv_indices": [],
+      "reference_uv_coordinates": 33,
+      "obrush_uv_coordinates": 30,
+      "uv_sharing_partition_equal": true,
+      "max_position_component_error": 0.0,
+      "max_valid_uv_component_error": 0.0,
+      "uv_differences": [],
+      "all_uv_corners_compared": true
+    },
+    "first": {
+      "faces": 4,
+      "corners": 16,
+      "matched_uv_corners": 15,
+      "reference_invalid_uv_indices": [
+        {
+          "face": 3,
+          "corner": 0,
+          "uv_id": 19
+        }
+      ],
+      "reference_uv_coordinates": 13,
+      "obrush_uv_coordinates": 12,
+      "uv_sharing_partition_equal": false,
+      "max_position_component_error": 0.0,
+      "max_valid_uv_component_error": 0.5,
+      "uv_differences": [
+        {
+          "face": [
+            [
+              0,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              0,
+              2
+            ]
+          ],
+          "corner": [
+            2,
+            0
+          ],
+          "reference_uv": [
+            1,
+            0
+          ],
+          "obrush_uv": [
+            0.5,
+            0.0
+          ],
+          "max_component_error": 0.5
+        }
+      ],
+      "all_uv_corners_compared": false
+    },
+    "second": {
+      "faces": 1,
+      "corners": 4,
+      "matched_uv_corners": 4,
+      "reference_invalid_uv_indices": [],
+      "reference_uv_coordinates": 4,
+      "obrush_uv_coordinates": 4,
+      "uv_sharing_partition_equal": true,
+      "max_position_component_error": 0.0,
+      "max_valid_uv_component_error": 0.0,
+      "uv_differences": [],
+      "all_uv_corners_compared": true
+    },
+    "returned": {
+      "faces": 16,
+      "corners": 64,
+      "matched_uv_corners": 64,
+      "reference_invalid_uv_indices": [],
+      "reference_uv_coordinates": 33,
+      "obrush_uv_coordinates": 30,
+      "uv_sharing_partition_equal": true,
+      "max_position_component_error": 7.450580596923828e-09,
+      "max_valid_uv_component_error": 0.0,
+      "uv_differences": [],
+      "all_uv_corners_compared": true
+    }
+  },
+  "reference_gates": {
+    "first_reverse": true,
+    "second_reverse": true,
+    "returned_fine": true
+  },
+  "obrush_browser_gates": {
+    "two_recovered_levels": true,
+    "seam_ids_and_corners_exact": true,
+    "second_reverse_history_exact": true,
+    "lower_exact": true,
+    "project_reload_exact": true,
+    "visible_gpu_save_exact": true
+  },
+  "obrush_browser_counts": {
+    "cases": 6,
+    "downloads": 36,
+    "gpu_checks": 36,
+    "owned_chrome_exit_code": 0,
+    "owned_server_closed": true
+  },
+  "validation": {
+    "cargo_fmt": "passed",
+    "workspace_tests": 2409,
+    "strict_native_clippy": "passed",
+    "strict_wasm_core_clippy": "passed",
+    "wasm_app_check": "passed",
+    "official_web_build": "passed",
+    "official_macos_package": "passed"
+  },
+  "retained_failed_checks": [
+    {
+      "path": ".artifacts/sculptgl-paint-static-runtime/reverse-c111-seam-diagnostic-55f423fb-b40a-4a81-897c-087e171c99dd/result.json",
+      "reason": "Second Reverse rejected a legitimate fine UV seam split before the core fix"
+    },
+    {
+      "path": ".artifacts/reverse-c111-browser-console.log",
+      "reason": "Initial host history check observed no second level because command rejection was not asserted immediately"
+    },
+    {
+      "path": ".artifacts/reverse-c111-comparison.json",
+      "reason": "Pinned reference first-level in-memory UV and actual OBJ export both have an out-of-range face UV ID and a corner differing by 0.5"
+    }
+  ],
+  "limits": [
+    "Intermediate seam UV values and sharing partition do not match the pinned reference; full seam UV parity is unproven",
+    "One split grid only; arbitrary seams and mixed topology remain open",
+    "Native GUI and sustained million-vertex responsiveness unverified",
+    "WebGPU backend remains prototype; delivered browser uses WASM CPU geometry and WebGL2 drawing"
+  ],
+  "reference_first_level_obj_export": {
+    "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-reference-runtime/reverse-c111-seam-export-aae6fd18-5045-46bf-9f76-32fca344967d/reverse-seam-first-reference.obj",
+    "sha256": "647fc26b9314afaf598abc5ca5d848daf97f76e8db998d171d7bce7ec2b8ef95",
+    "bytes": 451,
+    "observed": "13 vt rows but a face references vt 20; another corner at physical (2,0) uses vt 5 = (1,0) instead of (0.5,0)"
+  },
+  "reference_harness_sha256": "47a6de4d40e35960e304d38ee6ef3636d9a4d78a0b45c75f6058584466ad3d57"
+}

@@ -1,0 +1,86 @@
+{
+  "version": "0.1.15",
+  "recorded_at_utc": "2026-10-13T23:23:37.444139+00:00",
+  "status": "Candidate core contracts pass; no SculptGL parity established",
+  "scope": "Four independently implemented new tools; brush hardness/culling/camera-axis/smooth/clay/accumulation/Move/offset controls; proxy ancestry and absolute locked stamps; scalar and history contracts.",
+  "immutable_owner_receipts": [
+    {
+      "path": ".artifacts/sculptgl-brushes/receipt.json",
+      "bytes": 9924,
+      "sha256": "2575db8db5335752a4a247db63140f705beac5b0a57858249a3d2b66fe14e0d9"
+    },
+    {
+      "path": ".artifacts/sculptgl-brush-options/receipt.json",
+      "bytes": 15594,
+      "sha256": "6da0393d4753925ada850e7024cb916c97ed453f365991e79a3f4427f4e95c4f"
+    },
+    {
+      "path": ".artifacts/locked-stamp/receipt.json",
+      "bytes": 13483,
+      "sha256": "fbe0056d742efad9e5671c920fe4e8cfca3b6f0d831635fdb731870ed7836631"
+    }
+  ],
+  "candidate_sources": [
+    {
+      "path": "crates/obrush-core/src/brush.rs",
+      "bytes": 85315,
+      "sha256": "40d79b50b48968853ca13ef74cdf24ae9321de3765618897d9cebc5e0561a759"
+    },
+    {
+      "path": "crates/obrush-core/src/refinement.rs",
+      "bytes": 39609,
+      "sha256": "e634ac7a2df8b88aad0f03afcee74aa8b290ca1f3707e639c52811caabda0486"
+    },
+    {
+      "path": "crates/obrush-core/src/locked_stamp.rs",
+      "bytes": 12500,
+      "sha256": "f9fa97e761c0c90f523fb0e8708e2e743f38924a358f2a7a3f305608ee69039b"
+    },
+    {
+      "path": "crates/obrush-core/tests/sculptgl_brushes.rs",
+      "bytes": 34564,
+      "sha256": "0226bf9821cd9fcf6539f176a2625aa042dfed0b64625ff63a49c6ffef98cd8a"
+    },
+    {
+      "path": "crates/obrush-core/tests/sculptgl_brush_options.rs",
+      "bytes": 32712,
+      "sha256": "477d57f7c1e0c4714ce11dbd3f2e166f477f827167d1116333a5d0d8f5efd8cc"
+    },
+    {
+      "path": "crates/obrush-core/tests/locked_stamp.rs",
+      "bytes": 21253,
+      "sha256": "5b993d4e86b8c5771a3beab56df4970e2a166dad574ac2715925a9d8debf676b"
+    }
+  ],
+  "candidate_build": {
+    "path": ".artifacts/sculptgl-release-0.1.15-candidate1/build-record.json",
+    "bytes": 6676,
+    "sha256": "d60f3adbe4be47e0bd1bc279c210f9563bb17762f4e3c169997b23815e0a764a"
+  },
+  "candidate_source_manifest": {
+    "path": ".artifacts/sculptgl-release-0.1.15-candidate1/source-manifest.json",
+    "bytes": 17329,
+    "sha256": "1d81da9831a4f5e3184aed31f1defefec83506066b8c71f26a4abed7f4c2189c"
+  },
+  "workspace_validation": {
+    "app": 69,
+    "core": 563,
+    "total": 632,
+    "log": {
+      "path": ".artifacts/sculptgl-host-build/validation-e16fe27d-5d7a-41bc-a920-b2c7db9f8c4f/tests.log",
+      "bytes": 57462,
+      "sha256": "ae8c66d79f8753fd7d44c87986cc7cb5b9c524333f8cbad6e5c9fd0cd9b96897"
+    },
+    "host_after_equivalent_clippy_cleanup": {
+      "path": ".artifacts/sculptgl-host-build/validation-7ef2b08a-75af-4801-9446-24f5b47b9f66/tests-host-after-clippy-boolean.log",
+      "bytes": 6982,
+      "sha256": "91e3caf5eb359e28c18420c4812327acaf1ed1f0e7207fcabbe63a54e4a2917f"
+    }
+  },
+  "formatter_lineage": "Some earlier owned receipts retain pre-explicit-core-edition formatter bytes. Final full workspace and build validation uses the candidate source manifest; prior failed checks remain preserved.",
+  "limitations": [
+    "Core fixtures and scalar equations do not establish matched live SculptGL response, visual quality, full brush input or performance parity.",
+    "Legacy/default falloff, facing fade, displacement scales, frozen gesture and raster sampling differ from reference.",
+    "Host wrapper/core tests are distinct from browser execution and physical/native input."
+  ]
+}

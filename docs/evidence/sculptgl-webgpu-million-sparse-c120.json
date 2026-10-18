@@ -1,0 +1,63 @@
+{
+  "scope": "One-pass isolated million-vertex resident point program; sparse GPU readback capacity and native/browser output identity, not studio performance or SculptGL parity",
+  "fixture": {
+    "path": ".artifacts/sculptgl-large-sustained-c57-stage/fixtures/independent-id-sphere-1m.sgl",
+    "sha256": "dfb5316f62e392e633f03cb662dcb12215ed165a71a9ae72a3fd639528731afe",
+    "encoded_bytes": 67932232,
+    "vertices": 999002,
+    "triangles": 1998000
+  },
+  "parameters": {
+    "center": [0, 0, 1],
+    "radius": 0.5,
+    "intensity": 0.25,
+    "passes": 1,
+    "checkpoint_before_pass": true
+  },
+  "source_sha256": {
+    "crates/obrush-gpu/src/bin/resident_sparse_capacity.rs": "dbb61f1654b7e245dffba582b2be1fcb5a7d37ca3db9d2b8403c8a8ff18f6df8"
+  },
+  "bound_gpu_wasm_sha256": "369339d2137cd3a366840739c96f9798df157fd820c7767624bd286adc5d316a",
+  "native": {
+    "result_path": ".artifacts/gpu-capacity-c120/native/result.json",
+    "result_sha256": "6c1324c5e2080d74ea009786ef9b7d1cb3852440cda3e950bc6ef3d1272dcd14",
+    "sparse_sha256": "5d01e205c078e90b1673f3404f453cee7ecb0a436fea9f8d7e19ffbe99757b88",
+    "full_position_sha256": "3bdbbb40675c09d088755e00101154efe61cdf61360f411a40a3e838d8d96464",
+    "sparse_equal_full_changed_rows": true,
+    "changed_vertices": 41065,
+    "sparse_bytes": 821300,
+    "full_position_bytes": 15984032,
+    "one_shot_sparse_observed_ms": 6.721333,
+    "later_one_shot_full_observed_ms": 25.620875
+  },
+  "browser": {
+    "result_path": ".artifacts/gpu-capacity-c120/browser/result.json",
+    "result_sha256": "126c5be5643916e4cba7ebc08d6bf71f635bcdace0b085f2c2dee3994b3b3564",
+    "sparse_sha256": "5d01e205c078e90b1673f3404f453cee7ecb0a436fea9f8d7e19ffbe99757b88",
+    "sparse_bytes": 821300,
+    "changed_vertices": 41065,
+    "actual_map_sizes": [4, 4, 821300, 4],
+    "full_position_readbacks": 0,
+    "one_shot_sparse_observed_ms": 5.800000011920929,
+    "gpu_resident_bytes": 241857652,
+    "gpu_errors": [],
+    "browser_exceptions": [],
+    "console_errors": [],
+    "blocked_external_requests": [],
+    "owned_exit_code": 0,
+    "server_closed": true
+  },
+  "checks": {
+    "cargo_fmt_check": "passed",
+    "workspace_all_targets": "2453 passed, 0 failed, 1 ignored",
+    "strict_native_workspace_clippy": "passed",
+    "strict_core_gpu_wasm_clippy": "passed",
+    "actual_native_metal": "passed",
+    "actual_browser_webgpu": "passed"
+  },
+  "limitations": [
+    "Different operation order and warm states prevent a controlled sparse/full latency ratio",
+    "No normal-studio input, brush response, document commit, history, rendering or sustained performance result",
+    "This is a point-program capacity check, not a SculptGL brush or full parity claim"
+  ]
+}

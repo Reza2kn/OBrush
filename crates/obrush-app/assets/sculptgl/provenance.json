@@ -1,0 +1,211 @@
+{
+  "pinned_revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+  "license_notice": "LICENSE",
+  "license_sha256": "99ae6fd4cab305bb78329327a2fce4c7a1fd986586d9ccd7cef3b7467f2c1167",
+  "catalog_source": "src/render/shaders/ShaderMatcap.js",
+  "credits": [
+    "Stephane Ginier and contributors",
+    "FV, hazardousarts: artist names retained verbatim from source catalog; no additional attribution inferred from absent EXIF fields"
+  ],
+  "assets": [
+    {
+      "name": "resources/matcaps/clay.jpg",
+      "url": "https://stephaneginier.com/sculptgl/resources/matcaps/clay.jpg",
+      "path": ".tools/sculptgl-reference/host-mirror/resources/matcaps/clay.jpg",
+      "status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 11605,
+      "sha256": "df09e11e65143e18b6816d900531ade5ec550b36b034eef43d60b6158c20b1cb",
+      "equals_pinned_asset": true,
+      "pinned_path": ".tools/sculptgl-reference/upstream/app/resources/matcaps/clay.jpg",
+      "pinned_sha256": "df09e11e65143e18b6816d900531ade5ec550b36b034eef43d60b6158c20b1cb",
+      "actual_deployed_bytes_equal_pinned_asset": true,
+      "metadata": {
+        "format": "JPEG",
+        "mode": "RGB",
+        "width": 256,
+        "height": 256,
+        "exif_artist": null,
+        "exif_copyright": null
+      },
+      "license_basis": "Repository-wide MIT notice, no asset-specific exception found in pinned README/LICENSE; environments additionally credited toHDRIHaven, current successor asset license CC0. Preserve MIT notice/source provenance and recorded credit; no inference about unrelated website content."
+    },
+    {
+      "name": "resources/matcaps/green.jpg",
+      "url": "https://stephaneginier.com/sculptgl/resources/matcaps/green.jpg",
+      "path": ".tools/sculptgl-reference/host-mirror/resources/matcaps/green.jpg",
+      "status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 37136,
+      "sha256": "a10a1625e0614b3e64c2b9e9de0aad38a5f939f96f372a39f995e93df7f9224b",
+      "equals_pinned_asset": true,
+      "pinned_path": ".tools/sculptgl-reference/upstream/app/resources/matcaps/green.jpg",
+      "pinned_sha256": "a10a1625e0614b3e64c2b9e9de0aad38a5f939f96f372a39f995e93df7f9224b",
+      "actual_deployed_bytes_equal_pinned_asset": true,
+      "metadata": {
+        "format": "JPEG",
+        "mode": "RGB",
+        "width": 256,
+        "height": 256,
+        "exif_artist": null,
+        "exif_copyright": null
+      },
+      "license_basis": "Repository-wide MIT notice, no asset-specific exception found in pinned README/LICENSE; environments additionally credited toHDRIHaven, current successor asset license CC0. Preserve MIT notice/source provenance and recorded credit; no inference about unrelated website content."
+    },
+    {
+      "name": "resources/matcaps/matcapFV.jpg",
+      "url": "https://stephaneginier.com/sculptgl/resources/matcaps/matcapFV.jpg",
+      "path": ".tools/sculptgl-reference/host-mirror/resources/matcaps/matcapFV.jpg",
+      "status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 23762,
+      "sha256": "07489012c6a15d2b5934bea3a2b272a6c8331a69d81c74b29fd0a34ac946c28e",
+      "equals_pinned_asset": true,
+      "pinned_path": ".tools/sculptgl-reference/upstream/app/resources/matcaps/matcapFV.jpg",
+      "pinned_sha256": "07489012c6a15d2b5934bea3a2b272a6c8331a69d81c74b29fd0a34ac946c28e",
+      "actual_deployed_bytes_equal_pinned_asset": true,
+      "metadata": {
+        "format": "JPEG",
+        "mode": "RGB",
+        "width": 512,
+        "height": 512,
+        "exif_artist": null,
+        "exif_copyright": null
+      },
+      "license_basis": "Repository-wide MIT notice, no asset-specific exception found in pinned README/LICENSE; environments additionally credited toHDRIHaven, current successor asset license CC0. Preserve MIT notice/source provenance and recorded credit; no inference about unrelated website content."
+    },
+    {
+      "name": "resources/matcaps/pearl.jpg",
+      "url": "https://stephaneginier.com/sculptgl/resources/matcaps/pearl.jpg",
+      "path": ".tools/sculptgl-reference/host-mirror/resources/matcaps/pearl.jpg",
+      "status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 19131,
+      "sha256": "389a3059e02d529bc1eee425aa996d31df1b423b5f86bf28a96064b07f275dca",
+      "equals_pinned_asset": true,
+      "pinned_path": ".tools/sculptgl-reference/upstream/app/resources/matcaps/pearl.jpg",
+      "pinned_sha256": "389a3059e02d529bc1eee425aa996d31df1b423b5f86bf28a96064b07f275dca",
+      "actual_deployed_bytes_equal_pinned_asset": true,
+      "metadata": {
+        "format": "JPEG",
+        "mode": "RGB",
+        "width": 256,
+        "height": 256,
+        "exif_artist": null,
+        "exif_copyright": null
+      },
+      "license_basis": "Repository-wide MIT notice, no asset-specific exception found in pinned README/LICENSE; environments additionally credited toHDRIHaven, current successor asset license CC0. Preserve MIT notice/source provenance and recorded credit; no inference about unrelated website content."
+    },
+    {
+      "name": "resources/matcaps/redClay.jpg",
+      "url": "https://stephaneginier.com/sculptgl/resources/matcaps/redClay.jpg",
+      "path": ".tools/sculptgl-reference/host-mirror/resources/matcaps/redClay.jpg",
+      "status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 4724,
+      "sha256": "5a47930ee4cbdd4862d9171bd0ed45d3d056b3a409b2298cdcf2a339cffe6e85",
+      "equals_pinned_asset": true,
+      "pinned_path": ".tools/sculptgl-reference/upstream/app/resources/matcaps/redClay.jpg",
+      "pinned_sha256": "5a47930ee4cbdd4862d9171bd0ed45d3d056b3a409b2298cdcf2a339cffe6e85",
+      "actual_deployed_bytes_equal_pinned_asset": true,
+      "metadata": {
+        "format": "JPEG",
+        "mode": "RGB",
+        "width": 177,
+        "height": 178,
+        "exif_artist": null,
+        "exif_copyright": null
+      },
+      "license_basis": "Repository-wide MIT notice, no asset-specific exception found in pinned README/LICENSE; environments additionally credited toHDRIHaven, current successor asset license CC0. Preserve MIT notice/source provenance and recorded credit; no inference about unrelated website content."
+    },
+    {
+      "name": "resources/matcaps/skin.jpg",
+      "url": "https://stephaneginier.com/sculptgl/resources/matcaps/skin.jpg",
+      "path": ".tools/sculptgl-reference/host-mirror/resources/matcaps/skin.jpg",
+      "status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 19134,
+      "sha256": "bba87eca8c8d50e051e656aab5d5d6b619292e2a38828ab0be41bc1d7b4d9171",
+      "equals_pinned_asset": true,
+      "pinned_path": ".tools/sculptgl-reference/upstream/app/resources/matcaps/skin.jpg",
+      "pinned_sha256": "bba87eca8c8d50e051e656aab5d5d6b619292e2a38828ab0be41bc1d7b4d9171",
+      "actual_deployed_bytes_equal_pinned_asset": true,
+      "metadata": {
+        "format": "JPEG",
+        "mode": "RGB",
+        "width": 256,
+        "height": 256,
+        "exif_artist": null,
+        "exif_copyright": null
+      },
+      "license_basis": "Repository-wide MIT notice, no asset-specific exception found in pinned README/LICENSE; environments additionally credited toHDRIHaven, current successor asset license CC0. Preserve MIT notice/source provenance and recorded credit; no inference about unrelated website content."
+    },
+    {
+      "name": "resources/matcaps/skinHazardousarts.jpg",
+      "url": "https://stephaneginier.com/sculptgl/resources/matcaps/skinHazardousarts.jpg",
+      "path": ".tools/sculptgl-reference/host-mirror/resources/matcaps/skinHazardousarts.jpg",
+      "status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 41866,
+      "sha256": "0cb2a4c7a8cd9c443357b368edbdb588aa9cd62c7538f1dd536a575d039a72cf",
+      "equals_pinned_asset": true,
+      "pinned_path": ".tools/sculptgl-reference/upstream/app/resources/matcaps/skinHazardousarts.jpg",
+      "pinned_sha256": "0cb2a4c7a8cd9c443357b368edbdb588aa9cd62c7538f1dd536a575d039a72cf",
+      "actual_deployed_bytes_equal_pinned_asset": true,
+      "metadata": {
+        "format": "JPEG",
+        "mode": "RGB",
+        "width": 749,
+        "height": 749,
+        "exif_artist": null,
+        "exif_copyright": null
+      },
+      "license_basis": "Repository-wide MIT notice, no asset-specific exception found in pinned README/LICENSE; environments additionally credited toHDRIHaven, current successor asset license CC0. Preserve MIT notice/source provenance and recorded credit; no inference about unrelated website content."
+    },
+    {
+      "name": "resources/matcaps/skinHazardousarts2.jpg",
+      "url": "https://stephaneginier.com/sculptgl/resources/matcaps/skinHazardousarts2.jpg",
+      "path": ".tools/sculptgl-reference/host-mirror/resources/matcaps/skinHazardousarts2.jpg",
+      "status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 40672,
+      "sha256": "ba0c5c776878b828272121102ce0fe8770c8a8f9e418db6f715ee3a231df3982",
+      "equals_pinned_asset": true,
+      "pinned_path": ".tools/sculptgl-reference/upstream/app/resources/matcaps/skinHazardousarts2.jpg",
+      "pinned_sha256": "ba0c5c776878b828272121102ce0fe8770c8a8f9e418db6f715ee3a231df3982",
+      "actual_deployed_bytes_equal_pinned_asset": true,
+      "metadata": {
+        "format": "JPEG",
+        "mode": "RGB",
+        "width": 749,
+        "height": 749,
+        "exif_artist": null,
+        "exif_copyright": null
+      },
+      "license_basis": "Repository-wide MIT notice, no asset-specific exception found in pinned README/LICENSE; environments additionally credited toHDRIHaven, current successor asset license CC0. Preserve MIT notice/source provenance and recorded credit; no inference about unrelated website content."
+    },
+    {
+      "name": "resources/matcaps/white.jpg",
+      "url": "https://stephaneginier.com/sculptgl/resources/matcaps/white.jpg",
+      "path": ".tools/sculptgl-reference/host-mirror/resources/matcaps/white.jpg",
+      "status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 17483,
+      "sha256": "bbff1f63d886994a791b540a3f4939000b5074a51126ef0771bf25304f0edf79",
+      "equals_pinned_asset": true,
+      "pinned_path": ".tools/sculptgl-reference/upstream/app/resources/matcaps/white.jpg",
+      "pinned_sha256": "bbff1f63d886994a791b540a3f4939000b5074a51126ef0771bf25304f0edf79",
+      "actual_deployed_bytes_equal_pinned_asset": true,
+      "metadata": {
+        "format": "JPEG",
+        "mode": "RGB",
+        "width": 256,
+        "height": 256,
+        "exif_artist": null,
+        "exif_copyright": null
+      },
+      "license_basis": "Repository-wide MIT notice, no asset-specific exception found in pinned README/LICENSE; environments additionally credited toHDRIHaven, current successor asset license CC0. Preserve MIT notice/source provenance and recorded credit; no inference about unrelated website content."
+    }
+  ],
+  "scope": "Exact public source/host-mirror bytes, not decoded pixel or rendered appearance parity"
+}

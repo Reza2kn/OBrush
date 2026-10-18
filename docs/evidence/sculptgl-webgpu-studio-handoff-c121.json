@@ -1,0 +1,67 @@
+{
+  "scope": "One-use GPU sparse result committed to actual normal studio document/history and visible WebGL redraw; not production WebGPU sculpting or SculptGL parity",
+  "source_sha256": {
+    "crates/obrush-app/src/resident_studio.rs": "4b159af8ff84c952ce9d49fe6e27490e1b87cb1bef2041b038a1f627f81425ae",
+    "crates/obrush-app/src/app.rs": "0c8150a8c875e61e1a6e4281d677c84320014adcbf8479f81f58404ea3e9a12f",
+    "crates/obrush-app/src/lib.rs": "6b73e3e7d059534e7fad60758ec7f84da79121670d84d257b4974a4b840bb7e8",
+    "web/index.html": "5bb7b62046597e363b5ec96107a41dfbfd2089c2309ce853f9cde86d786d815f",
+    "scripts/build-web.sh": "5b187beb1793b4174118d9d6ebccb3fa6abcb5756f2431e5703edb37aa0f0928"
+  },
+  "frozen_web_build": {
+    "path": ".artifacts/gpu-studio-c121/web-dist",
+    "app_wasm_sha256": "88822968ed9dcb0b7f72a3da30636ec38b984e2e94e97e3877a13ae9037833ab",
+    "gpu_wasm_sha256": "369339d2137cd3a366840739c96f9798df157fd820c7767624bd286adc5d316a",
+    "wasm_bindgen_cli": "0.2.129"
+  },
+  "native_package": {
+    "script": "scripts/package-macos.sh",
+    "executable_sha256": "56ad6cef51f0fe933d280596527958aec0ccea788deca5439ef88b5a8db8f61b",
+    "ad_hoc_signature_verified": true,
+    "opened_or_installed": false
+  },
+  "browser": {
+    "fixture": "Normal app startup Document::new(Mesh::sphere(6))",
+    "vertices": 40962,
+    "triangles": 81920,
+    "parameters": {"center": [0, 0, 1], "radius": 0.5, "intensity_f32": 0.10000000149011612, "passes": 1},
+    "result_path": ".artifacts/gpu-studio-c121/browser-history/result.json",
+    "result_sha256": "fd3d998e1b2532426e4e6d8b28a2f5064f7d24026f539dcba484d73039a82b5e",
+    "initial_project_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+    "accepted_project_sha256": "ae8dfd151312deb05e1732801121addd7da580516c9e98b964155302c52970c8",
+    "sparse_result_sha256": "6d66639f33d493cbe7609258f245dc83e30828ba772384e818ceff8a37d8f66e",
+    "changed_vertices": 2511,
+    "sparse_bytes": 50220,
+    "gpu_map_sizes": [4, 4, 50220, 4],
+    "full_position_readbacks": 0,
+    "invalid_result_rejected_capture_retained": true,
+    "stale_token_rejected": true,
+    "normal_studio_project_changed": true,
+    "sphere_region": [500, 175, 1090, 765],
+    "before_after_changed_pixels_in_region": 44103,
+    "before_undo_changed_pixels_in_region": 0,
+    "after_redo_changed_pixels_in_region": 0,
+    "history_verification_path": ".artifacts/gpu-studio-c121/browser-history/history-verification.json",
+    "history_verification_sha256": "c88becb71b724a442a461cd65d2c0cd045b5d99b23288fe9cd75f754d4f742aa",
+    "javascript_exceptions": [],
+    "console_errors": [],
+    "blocked_external_requests": [],
+    "owned_browser_exit_code": 0,
+    "server_closed": true
+  },
+  "checks": {
+    "cargo_fmt_check": "passed",
+    "workspace_all_targets": "2455 passed, 0 failed, 1 ignored",
+    "strict_native_workspace_clippy": "passed",
+    "strict_wasm_workspace_clippy": "passed",
+    "official_web_build": "passed",
+    "official_macos_package": "passed",
+    "frozen_browser_studio_handoff": "passed",
+    "normal_keyboard_undo_redo_visual": "passed"
+  },
+  "limitations": [
+    "GPU point pass is separate and offscreen; normal pointer brushes/picking still use CPU/WASM",
+    "Visible studio viewport still uses WebGL2 and CPU-to-GPU refresh after commit",
+    "No sustained or end-to-end latency improvement established",
+    "Single active subtool point pass is not SculptGL or ZBrush brush-response parity"
+  ]
+}

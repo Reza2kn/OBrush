@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-10-16T15:32:17.583695+00:00",
+  "status": "UNPROMOTED C56: actual1Mbrowser capacity/edit/history/reload andcompleteGPUdata checks pass; strictcrosshostwholeprojectnormalcachecomparisonFAIL",
+  "current_delivered": "C54 remains main and8817preview; original317+5/fullSculptGL andZBrush2026.2.1unfinished",
+  "source": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate56/source/manifest.json",
+    "bytes": 92140,
+    "sha256": "9b3f0745d498466f962c68bab0ba7ecaded55e85528f4d4c4064322bee1347de"
+  },
+  "build": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate56/build-record.json",
+    "bytes": 9366,
+    "sha256": "883711fc3dd25e3d1bf93a9834ae143be97ac17b4f76146bf202a790607d9081"
+  },
+  "receipt": {
+    "path": ".artifacts/sculptgl-render-resource-c56-stage/FINAL_CHECKED_RECEIPT.json",
+    "bytes": 3132,
+    "sha256": "7a344245e5b59f18edad3b0dd3d2a7a59a1c2b60cc84ac10ecca8e784f021519"
+  },
+  "checks": {
+    "path": ".artifacts/sculptgl-render-resource-c56-stage/CHECKS01.json",
+    "bytes": 2026,
+    "sha256": "a80007d83554a90d255c82e011b8da7678fbebadf09f7a222299528444148d21"
+  },
+  "tests": {
+    "workspace": 2341,
+    "core": 1620,
+    "app": 721,
+    "ignored": 1
+  },
+  "identity": {
+    "path": ".artifacts/sculptgl-render-resource-c56-stage/PRODUCTION_IDENTITY.json",
+    "bytes": 2227,
+    "sha256": "0b380d44e61f0afafd4f5e5d8b85155626ffcc9ca88c3376c754e0f67b47c405"
+  },
+  "resource_scope": "C55declared document budgets plus separate512MiB aggregate renderer normalcache/replacement peak. Individual freshfield128MiB/geometrycount limits unchanged; noGPUcap increase/Legacyfallback. NotRSSorworstcaseguarantee.",
+  "parent_C55_native_capacity": {
+    "path": ".artifacts/sculptgl-resource-policy-c55-stage/INDEPENDENT_NATIVE_AUDIT04.json",
+    "bytes": 8478,
+    "sha256": "97c8644cb89be1c258bc662b1ef8d0085c72294393e68e9d0493a3fc96848277"
+  },
+  "actual_browser": {
+    "result": {
+      "path": ".artifacts/sculptgl-large-workflow-c56-two-dab-stage/actual/large1M-1c0c317c-8890-40da-ba80-ec1c229932dc/result.json",
+      "bytes": 6585359,
+      "sha256": "c1ff28a139e27ccf081f3cdb868576df02d5dc75928dba8930adccbe5365d9b2"
+    },
+    "preregistration": {
+      "path": ".artifacts/sculptgl-large-workflow-c56-two-dab-stage/PREREGISTRATION.json",
+      "bytes": 3603,
+      "sha256": "667920e0b1be34364aa95e7d7cd4c2895d33baf73f500d6957c68f24d239d5ef"
+    },
+    "helper": {
+      "path": ".artifacts/sculptgl-large-workflow-c56-two-dab-stage/HELPER_MANIFEST01.json",
+      "bytes": 7325,
+      "sha256": "bd5583bc6ebe7d418fe2d7b3f1fbf8cd9d610bb4acb02a0c99b3a9f8be0d73fd"
+    },
+    "fixture_vertices": 999002,
+    "fixture_triangles": 1998000,
+    "actual_useful_dabs": 2,
+    "whole_completed_public_downloads": 6,
+    "whole_Undo_Redo_stability_reload_exact": true,
+    "complete_GPU_snapshots": 6,
+    "whole_image_review": {
+      "path": ".artifacts/sculptgl-large-workflow-c56-two-dab-stage/WHOLE_IMAGE_REVIEW01.json",
+      "bytes": 5823,
+      "sha256": "ce81be48eee0496ca79157489f9081240364d0215d784914f8b1365e362a2253"
+    },
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_servers_closed": 1
+    },
+    "max_main_WASM_committed_bytes": 2343370752,
+    "max_asynchronous_owned_sum_RSS_KiB": 4206720,
+    "memory_limitations": "Asynchronous exportedmainpageWASMcommitted andsummedownedRSSmaydoublecountsharedpages; notlive/private/RSSbound/leakproof",
+    "timing": "Short sequentialcapacityinput only; original60/120s400Hz performancegates notrun/qualified"
+  },
+  "native_replay": {
+    "launch": {
+      "path": ".artifacts/sculptgl-large-workflow-c56-two-dab-stage/NATIVE_REPLAY_LAUNCH02.json",
+      "bytes": 266283,
+      "sha256": "940c502b5b28b27e927f7a2fe7a3694212207f96c187977ddaa1a79de0169898"
+    },
+    "result": {
+      "path": ".artifacts/sculptgl-large-workflow-c56-two-dab-stage/native-replay02/result.json",
+      "bytes": 14902,
+      "sha256": "fe3810c596d409810e637ae1c9225b995d16fe68350149287517e9df65e4eff0"
+    },
+    "strict_complete_public_file_audit_failure": {
+      "path": ".artifacts/sculptgl-large-workflow-c56-two-dab-stage/independent-large-audit02.log",
+      "bytes": 791,
+      "sha256": "703bfffa8f30ed1f512e017a284b1960282913b8ce1a0f4310f436e278af0b48"
+    },
+    "diagnostic_other_full_data_and_GPU": {
+      "path": ".artifacts/sculptgl-large-workflow-c56-two-dab-stage/INDEPENDENT_LARGE_AUDIT01.json",
+      "bytes": 61250,
+      "sha256": "d407bf04949d2885e4a8cda0042cb8df014b7cc080d5268234c7e438533bbb3e"
+    },
+    "diagnostic_auditor": {
+      "path": ".artifacts/sculptgl-large-workflow-c56-two-dab-stage/DIAGNOSTIC_AUDIT_LEGACY01.py",
+      "bytes": 8611,
+      "sha256": "e51c1b7abdba92b2958c40f99c6751bffc94de183a8d881c8f0b232a72164a8e"
+    },
+    "observed_changed_vertices": 10929,
+    "max_coordinate_change": 0.01197803020477295,
+    "non_Legacy_normal_public_bytes_exact_all5states": true,
+    "Legacy_cache_differences": {
+      "path": ".artifacts/sculptgl-large-workflow-c56-two-dab-stage/LEGACY_NORMAL_DIFFERENCES01.json",
+      "bytes": 12333,
+      "sha256": "5c2eddbec3958b973fe9070ccf3877da4a7de1171143cd8fd62753fb4ecb7c20"
+    },
+    "scope": "All6GPUcomplete position/rawSource-normal/displaymask/RGB/material/source-mask/index streams exactlynativecurrentfieldreplay; freshbefore/reload independentlyreconstructedNumPy. StrictwholepublicJSONmatchremainsfailed; otherGPUchecksnotawaiver."
+  },
+  "normal20": {
+    "path": ".artifacts/sculptgl-normal-c56-consumer-stage/POST_AUDIT01.json",
+    "bytes": 231257,
+    "sha256": "e91c5d256b468c18a6acee6860ecc84a8116c96e0b98c09f144d80112bc57ca0"
+  },
+  "CW03": {
+    "audit": {
+      "path": ".artifacts/sculptgl-crease-history-c56-stage/ROOT_HISTORY_AUDIT.json",
+      "bytes": 34951,
+      "sha256": "88d34f700a7fd931b45859ff8b399cad6fc705897c4a63bf75d4250c4bbc5c41"
+    },
+    "independent_math": {
+      "path": ".artifacts/sculptgl-crease-history-c56-stage/ROOT_INDEPENDENT_HISTORY_MATH.json",
+      "bytes": 13070,
+      "sha256": "3cd848737d27a75df2c2f143c8b628d902b1bab85d9ebd619e0f64edbc5a3f1e"
+    }
+  },
+  "retained_failures": [
+    {
+      "path": ".artifacts/sculptgl-render-resource-c56-stage/PARENT_BROWSER_FAILURE.json",
+      "bytes": 1377,
+      "sha256": "254886b9b9d5784cc46135ee0719ee928d267fd504feecd27f79ffa091091b83"
+    },
+    {
+      "path": ".artifacts/sculptgl-large-workflow-c56-two-dab-stage/PARENT_SPACING_FAILURE.json",
+      "bytes": 1095,
+      "sha256": "9553cb8bb117b02efe8274997aab2a175813978892bcb032f6e4a43e4f6de027"
+    },
+    {
+      "path": ".artifacts/sculptgl-large-workflow-c56-stage/ENVIRONMENT_RETRY03.json",
+      "bytes": 5728,
+      "sha256": "90d2ccbe93ba8d60b2729aecab62e75ea8bea2a50e1c2a2431539fd6ed5e025a"
+    },
+    {
+      "path": ".artifacts/sculptgl-large-workflow-c56-two-dab-stage/native-replay01.log",
+      "bytes": 730,
+      "sha256": "9b13da578a19f4ff7da1eb0b27043b961a43019c3b707b33fffe158bb058bc09"
+    }
+  ],
+  "next": "Portable corner-angle hypothesis isolatedC57; exactnativeWASM JSON andcompleteoriginalcohortmustpass anew. NoC56promotion.",
+  "remaining": [
+    "Full317+5 feature/workflow/math/usability/performance gates",
+    "Dynamicdecimation/Reverse/multiresattributes/transforms/interchange/fullappearance/nativeGUI/physicaltablet/touch/HiDPI",
+    "DefaultStudio/otherbrush/densequality/arbitrarymesh/longsession andsustainedfullmatrix",
+    "No native/macOSGUI/physicalorfullparityfrombuilds/checkcounts/shortmouseinput"
+  ]
+}

@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-12T18:40:42.295460+00:00",
+  "target": {
+    "name": "OBrush",
+    "version": "0.1.0",
+    "bundle_version": "0.1.0",
+    "build_kind": "local optimized release build packaged as an ad-hoc signed macOS application",
+    "path_label": ".artifacts/OBrush.app/Contents/MacOS/OBrush",
+    "sha256": "d1016cb942106fbb52c3b85786fc410494544d3783cd4bfdef020a7d75ed0f0f",
+    "size_bytes": 5922544,
+    "format": "mach-o",
+    "architecture": "arm64",
+    "raw_cargo_executable": {
+      "path_label": "target/release/obrush",
+      "sha256": "7414f7dcd720a33b0cf77e984261afcfdfd78a06490daba909ce3e482b96a057",
+      "size_bytes": 5938944,
+      "byte_identical_to_bundle": false,
+      "relationship": "App packaging copies the raw Cargo executable to a fresh inode and ad-hoc signs the complete bundle. Signature/container bytes intentionally differ from the raw build."
+    }
+  },
+  "signature": {
+    "kind": "ad-hoc",
+    "verification_command": "codesign --verify --deep --strict .artifacts/OBrush.app",
+    "verification_exit_code": 0
+  },
+  "tool": {
+    "name": "rea-agents",
+    "package_version": "6.4.0",
+    "source_commit": "ec2d251c0ad8382e0665546be5ec8f5f1c175962"
+  },
+  "commands": [
+    "node .tools/rea/scripts/rea.mjs inspect-macho .artifacts/OBrush.app/Contents/MacOS/OBrush --json",
+    "node .tools/rea/scripts/rea.mjs inspect-artifact .artifacts/OBrush.app/Contents/MacOS/OBrush --json"
+  ],
+  "operations": {
+    "inspect_macho": {
+      "exit_code": 0,
+      "evidence_id": "ev_24efd86082aec4f14ec36f2200f4e8347a25914700502835814f2f9da590062e",
+      "provider": {
+        "id": "native-macos",
+        "name": "macOS native inspection utilities",
+        "version": null
+      },
+      "full_local_output_sha256": "697989f2704822be73e77c14e5a18deb7f2910d2f7a0af92dfbc684803940733"
+    },
+    "inspect_artifact": {
+      "exit_code": 0,
+      "evidence_id": "ev_658f01aa79d2538d7994b2ab9a8d5f1ee1b47e481d5b158bdfcb4385fb351ae5",
+      "provider": {
+        "id": "rea-artifact-graph",
+        "name": "REA safe artifact graph provider",
+        "version": "1"
+      },
+      "full_local_output_sha256": "acc9bcba17a201b29fc85ef070fccf71d01d0c0081baa5a28c8965619c3d0e95",
+      "graph_sha256": "f88e490e9d2bd26105fd797dce75452c5b4b81e3eedd89d4a53bcc9b690ac5e0",
+      "node_count": 1,
+      "root_hash_status": "verified"
+    }
+  },
+  "observations": {
+    "selected_architecture": {
+      "name": "arm64",
+      "container_file_offset": 0
+    },
+    "architectures": {
+      "items": [
+        {
+          "name": "arm64",
+          "cpu_type": null,
+          "cpu_subtype": null,
+          "file_offset": null,
+          "size": null,
+          "alignment": null
+        }
+      ],
+      "total": 1,
+      "exhaustive": true,
+      "limitations": []
+    },
+    "uuid": "1676BDAC-6E1A-36D2-86F8-04F45DAE50BC",
+    "build_metadata": {
+      "items": [
+        {
+          "platform": "1",
+          "minimum_os": "11.0",
+          "sdk": "26.5",
+          "tools": [
+            {
+              "name": "3",
+              "version": "1267.0"
+            }
+          ]
+        }
+      ],
+      "total": 1,
+      "exhaustive": true,
+      "limitations": []
+    },
+    "entrypoints": {
+      "items": [
+        {
+          "file_offset": 11844
+        }
+      ],
+      "total": 1,
+      "exhaustive": true,
+      "limitations": []
+    },
+    "dependencies": {
+      "items": [
+        {
+          "path": "/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "2685.60.104",
+          "compatibility_version": "45.0.0"
+        },
+        {
+          "path": "/usr/lib/libSystem.B.dylib",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "1356.0.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "1.0.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "1965.5.1",
+          "compatibility_version": "64.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "5026.5.4",
+          "compatibility_version": "300.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "5026.5.4",
+          "compatibility_version": "150.0.0"
+        },
+        {
+          "path": "/usr/lib/libobjc.A.dylib",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "228.0.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/ApplicationServices.framework/Versions/A/ApplicationServices",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "66.0.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "734.4.0",
+          "compatibility_version": "1.2.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/Carbon.framework/Versions/A/Carbon",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "170.0.0",
+          "compatibility_version": "2.0.0"
+        },
+        {
+          "path": "/usr/lib/libiconv.2.dylib",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "7.0.0",
+          "compatibility_version": "7.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/ColorSync.framework/Versions/A/ColorSync",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "3813.5.1",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "1226.0.0",
+          "compatibility_version": "1.0.0"
+        }
+      ],
+      "total": 13,
+      "exhaustive": true,
+      "limitations": []
+    },
+    "imports": {
+      "returned_items": 209,
+      "total": null,
+      "exhaustive": false
+    },
+    "exports": {
+      "returned_items": 1958,
+      "total": null,
+      "exhaustive": false
+    }
+  },
+  "limitations": [
+    "Imports and exports combine dyld_info and nm; stripped or toolchain-hidden symbols may be absent.",
+    "vtool output is retained as provenance but only otool build metadata is normalized.",
+    "Static metadata only; no brush algorithm, live behavior, performance or feature parity established by these operations.",
+    "This record identifies the final locally signed app executable; the raw Cargo build has a separate hash and is not represented as byte-identical.",
+    "Later builds or signing operations require a new hash and inspection.",
+    "A local release-mode build is not a claim of published distribution or ZBrush feature parity."
+  ]
+}

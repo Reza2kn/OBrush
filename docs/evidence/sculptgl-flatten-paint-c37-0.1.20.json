@@ -1,0 +1,389 @@
+{
+  "status": "Compared / gaps remain; scoped FP00 only",
+  "utc": "2026-10-15T12:58:06.938044+00:00",
+  "candidate": "C37 / OBrush 0.1.20",
+  "product_build_sha256": "7633c98eb349dfe164b2598dba944cfb46cff461c5f7bf6a4dfa1c54f6eabeed",
+  "source_checks_sha256": "e24cc9d2ca5989e4c6a10402509eaf945fedfc2b2e804b455a0e760794355a3c",
+  "helper_sha256": "4f8d2cef5aaa1d57f45b7482c494d89a62355464665c6fea0b1b2d0774c66867",
+  "protocol_sha256": "0746a34cdb2d0166efb70d9356921fced2b36446119a75be73b79df11f744e79",
+  "preregistration_sha256": "1fd75d3c77b0d151cb4755c6bb3b10fc9d25666d507bfc5ab354602d2c142b3e",
+  "module_checks": {
+    "count": 24,
+    "all_exit_zero": true,
+    "sha256": "20fb95ae6479908c7f9ac4deb7526b84db05cc14efd6d13c01f8c585bd682ad3"
+  },
+  "execution": {
+    "exit": 0,
+    "seconds": 101.3259922080033,
+    "result": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-runtime/candidate37-warmPaintHistory-FP00-b50a0030-372b-4798-9683-69eac2becd34/result.json",
+    "result_sha256": "f6a1e94672370c9a7796053fe64b17e540c00c87f2eb41d657f8b8007925aea7",
+    "status": "Completed scoped boundedpartition; otherpartition/native/physical/reference differences remain pending",
+    "names": [
+      "FP00"
+    ],
+    "failure": null,
+    "required_unexercised": [],
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_servers_closed": 2
+    },
+    "cleanup_errors": [],
+    "exceptions": [],
+    "console_errors": [],
+    "log_sha256": "67c6d752d88f4b2aad843445ead53b2b081b6d89cfe4a7f30603664a923dca60"
+  },
+  "independent_audit_sha256": "897bab8fb0a23c6e01441f2efcd2ce322279d30b1a1772aeadbb98421dcc63b6",
+  "observations": {
+    "status": "PASS scoped actual C37 two useful Flatten then retained-normal Paint; full owncandidate/normals/GPU, threewholeUndoRedo groups, quiet and rawpublicbytes audited",
+    "result": "f6a1e94672370c9a7796053fe64b17e540c00c87f2eb41d657f8b8007925aea7",
+    "raw_records": 567,
+    "raw_bytes": 210618005,
+    "gzip_bytes": 19649751,
+    "downloads": 36,
+    "quiet": [
+      {
+        "side": "source",
+        "phase": "first500",
+        "samples": 31,
+        "milliseconds": 500.5
+      },
+      {
+        "side": "source",
+        "phase": "second370",
+        "samples": 32,
+        "milliseconds": 504.10000002384186
+      },
+      {
+        "side": "source",
+        "phase": "Paint500",
+        "samples": 32,
+        "milliseconds": 503.40000000596046
+      },
+      {
+        "side": "root",
+        "phase": "first500",
+        "samples": 31,
+        "milliseconds": 501.80000001192093
+      },
+      {
+        "side": "root",
+        "phase": "second370",
+        "samples": 31,
+        "milliseconds": 500.90000000596046
+      },
+      {
+        "side": "root",
+        "phase": "Paint500",
+        "samples": 32,
+        "milliseconds": 516.4000000059605
+      }
+    ],
+    "prefixes": [
+      {
+        "side": "source",
+        "frames": 66,
+        "bytes": 4156643
+      },
+      {
+        "side": "root",
+        "frames": 206,
+        "bytes": 9549174
+      }
+    ],
+    "warm_witnesses": [
+      {
+        "side": "source",
+        "outside": [
+          3,
+          4
+        ],
+        "wrong_fresh_differences": {
+          "label": "Fresh whole normals must fail actual selected-only warm field",
+          "rows": 6,
+          "words": 18,
+          "word_difference_count": 6,
+          "max_absolute_difference": 0.0012202225625514984,
+          "RMS": 0.00040675622871090675,
+          "differences": [
+            {
+              "row": 3,
+              "column": 0,
+              "expected_word": 977704715,
+              "actual_word": 977704784,
+              "expected": 0.000757560774218291,
+              "actual": 0.0007575647905468941,
+              "absolute_difference": 4.016328603029251e-09
+            },
+            {
+              "row": 3,
+              "column": 1,
+              "expected_word": 3172145992,
+              "actual_word": 3171818441,
+              "expected": -0.03591468930244446,
+              "actual": -0.03469446673989296,
+              "absolute_difference": 0.0012202225625514984
+            },
+            {
+              "row": 3,
+              "column": 2,
+              "expected_word": 1073741735,
+              "actual_word": 1073741824,
+              "expected": 1.99998939037323,
+              "actual": 2,
+              "absolute_difference": 1.0609626770019531e-05
+            },
+            {
+              "row": 4,
+              "column": 0,
+              "expected_word": 977704715,
+              "actual_word": 977704784,
+              "expected": 0.000757560774218291,
+              "actual": 0.0007575647905468941,
+              "absolute_difference": 4.016328603029251e-09
+            },
+            {
+              "row": 4,
+              "column": 1,
+              "expected_word": 3172145992,
+              "actual_word": 3171818441,
+              "expected": -0.03591468930244446,
+              "actual": -0.03469446673989296,
+              "absolute_difference": 0.0012202225625514984
+            },
+            {
+              "row": 4,
+              "column": 2,
+              "expected_word": 1073741735,
+              "actual_word": 1073741824,
+              "expected": 1.99998939037323,
+              "actual": 2,
+              "absolute_difference": 1.0609626770019531e-05
+            }
+          ],
+          "exact_words": false,
+          "expected_sha256": "f39460b4d500174eb2573ebd33a068cda7c3ee1281df08315efce217815197b9",
+          "actual_sha256": "62263c9d1dd415da5453697c919f575459b80fcadd90d3991876fdaef2bd25de"
+        }
+      },
+      {
+        "side": "root",
+        "outside": [
+          3,
+          4
+        ],
+        "wrong_fresh_differences": {
+          "label": "Fresh whole normals must fail actual selected-only warm field",
+          "rows": 6,
+          "words": 18,
+          "word_difference_count": 6,
+          "max_absolute_difference": 0.0012202225625514984,
+          "RMS": 0.00040675622871090675,
+          "differences": [
+            {
+              "row": 3,
+              "column": 0,
+              "expected_word": 977704711,
+              "actual_word": 977704780,
+              "expected": 0.0007575605413876474,
+              "actual": 0.0007575645577162504,
+              "absolute_difference": 4.016328603029251e-09
+            },
+            {
+              "row": 3,
+              "column": 1,
+              "expected_word": 3172145992,
+              "actual_word": 3171818441,
+              "expected": -0.03591468930244446,
+              "actual": -0.03469446673989296,
+              "absolute_difference": 0.0012202225625514984
+            },
+            {
+              "row": 3,
+              "column": 2,
+              "expected_word": 1073741735,
+              "actual_word": 1073741824,
+              "expected": 1.99998939037323,
+              "actual": 2,
+              "absolute_difference": 1.0609626770019531e-05
+            },
+            {
+              "row": 4,
+              "column": 0,
+              "expected_word": 977704711,
+              "actual_word": 977704780,
+              "expected": 0.0007575605413876474,
+              "actual": 0.0007575645577162504,
+              "absolute_difference": 4.016328603029251e-09
+            },
+            {
+              "row": 4,
+              "column": 1,
+              "expected_word": 3172145992,
+              "actual_word": 3171818441,
+              "expected": -0.03591468930244446,
+              "actual": -0.03469446673989296,
+              "absolute_difference": 0.0012202225625514984
+            },
+            {
+              "row": 4,
+              "column": 2,
+              "expected_word": 1073741735,
+              "actual_word": 1073741824,
+              "expected": 1.99998939037323,
+              "actual": 2,
+              "absolute_difference": 1.0609626770019531e-05
+            }
+          ],
+          "exact_words": false,
+          "expected_sha256": "dd449d27ae4bf8c5746b1462b521cee6423e96139f34ed25248d34bd2fa01785",
+          "actual_sha256": "423676f3b422fd4c017c4eb7ed7c607ad7dbd7bb72efe97bc24ca1667fde6be6"
+        }
+      }
+    ],
+    "Paint_pairing": {
+      "colors": {
+        "label": "Paired actual warm Paint RGB",
+        "rows": 6,
+        "words": 18,
+        "word_difference_count": 3,
+        "max_absolute_difference": 2.9802322387695312e-08,
+        "RMS": 8.603189426505949e-09,
+        "differences": [
+          {
+            "row": 0,
+            "column": 0,
+            "expected_word": 1042777489,
+            "actual_word": 1042777488,
+            "expected": 0.16359545290470123,
+            "actual": 0.16359543800354004,
+            "absolute_difference": 1.4901161193847656e-08
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "expected_word": 1046249709,
+            "actual_word": 1046249708,
+            "expected": 0.21533556282520294,
+            "actual": 0.21533554792404175,
+            "absolute_difference": 1.4901161193847656e-08
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "expected_word": 1050808357,
+            "actual_word": 1050808356,
+            "expected": 0.31652942299842834,
+            "actual": 0.31652939319610596,
+            "absolute_difference": 2.9802322387695312e-08
+          }
+        ],
+        "exact_words": false,
+        "expected_sha256": "4080e219a1d4f9d3ebf71b88a485b85424f8fd672018becd51460186b5069cb4",
+        "actual_sha256": "e4402d5ea4def999d34cbe8ac664b5ed4b4baeafcf1fc56261d6767e5bfeda3b"
+      },
+      "materials": {
+        "label": "Paired actual warm Paint RM",
+        "rows": 6,
+        "words": 12,
+        "word_difference_count": 0,
+        "max_absolute_difference": 0,
+        "RMS": 0,
+        "differences": [],
+        "exact_words": true,
+        "expected_sha256": "38cac3bc0fd2fccafe68210fe8180af811dd77f93d068a7e0532fd04aab420d7",
+        "actual_sha256": "38cac3bc0fd2fccafe68210fe8180af811dd77f93d068a7e0532fd04aab420d7"
+      }
+    },
+    "Root_Paint_producer": {
+      "generation": 2,
+      "kind": "RetainedGeometry",
+      "normal_policy": {
+        "face_origin": "StoredOriginalFaces",
+        "faces": 2,
+        "policy": "StaticSelectedRefresh",
+        "quads": 0,
+        "storage": {
+          "peak_bytes": 856,
+          "retained_bytes": 856
+        },
+        "supplied_face_order_preserved": true,
+        "unused_vertices": 0,
+        "vertices": 6,
+        "zero_face_normals": 0,
+        "zero_vertex_normals": 0
+      }
+    },
+    "images": [
+      {
+        "side": "source",
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-runtime/candidate37-warmPaintHistory-FP00-b50a0030-372b-4798-9683-69eac2becd34/source-FP00 completed source actual warm normals and Paint-shot1.png",
+        "bytes": 65480,
+        "sha256": "e30097866ffcb0c831a016cbca84e717b03fc5abbd3a8b7f1bab3234ccdcb379",
+        "original_label": "FP00 completed source actual warm normals and Paint",
+        "owned_serial": 1,
+        "complete_identity": {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-runtime/candidate37-warmPaintHistory-FP00-b50a0030-372b-4798-9683-69eac2becd34/source-FP00 completed source actual warm normals and Paint-shot1.png",
+          "kind": "complete-PNG",
+          "bytes": 65480,
+          "sha256": "e30097866ffcb0c831a016cbca84e717b03fc5abbd3a8b7f1bab3234ccdcb379",
+          "before": {
+            "dev": "16777231",
+            "ino": "87380255",
+            "bytes": 65480,
+            "mtime_ms": 1792068871097.7222
+          },
+          "deduplicated": false,
+          "after": {
+            "dev": "16777231",
+            "ino": "87380255",
+            "bytes": 65480,
+            "mtime_ms": 1792068871097.7222
+          }
+        },
+        "scope": "Complete ordinary browser surface; exact bytes retained, no crop/pixel substitute"
+      },
+      {
+        "side": "root",
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-runtime/candidate37-warmPaintHistory-FP00-b50a0030-372b-4798-9683-69eac2becd34/root-FP00 completed root actual warm normals and Paint-shot1.png",
+        "bytes": 168601,
+        "sha256": "9201348d1711a61afca3a1b2d82eb8449b3943cd104709d00c6b68cb8ed94f15",
+        "original_label": "FP00 completed root actual warm normals and Paint",
+        "owned_serial": 1,
+        "complete_identity": {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-runtime/candidate37-warmPaintHistory-FP00-b50a0030-372b-4798-9683-69eac2becd34/root-FP00 completed root actual warm normals and Paint-shot1.png",
+          "kind": "complete-PNG",
+          "bytes": 168601,
+          "sha256": "9201348d1711a61afca3a1b2d82eb8449b3943cd104709d00c6b68cb8ed94f15",
+          "before": {
+            "dev": "16777231",
+            "ino": "87380883",
+            "bytes": 168601,
+            "mtime_ms": 1792068937704.3215
+          },
+          "deduplicated": false,
+          "after": {
+            "dev": "16777231",
+            "ino": "87380883",
+            "bytes": 168601,
+            "mtime_ms": 1792068937704.3215
+          }
+        },
+        "scope": "Complete ordinary browser surface; exact bytes retained, no crop/pixel substitute"
+      }
+    ],
+    "scope": "Independent6vertex/twosheet fixture, 500/370 Flatten then500 Paint; I.25/None/cullfalse/mirroroff/factors0/guardfalse/DPR1; Paint hardness.75/originaldefaultf32RGB/RM/allwritechannels. No reset/refit/reimport/rearm. SourceGL1forwardeduploads distinct from RootGL2GPUreadback. Fullcolor/alpha/mirror/continuous/lifecycle/densegeometry/nativephysical/performance/N05/317+5 remain open."
+  },
+  "image_review_sha256": "2ac1af4d4c311aa4cf4652be9116340e9a13de414c4f4c0cbeeab81686c70be0",
+  "preserved_failure": {
+    "helper_stage": "sculptgl-flatten-paint-c37-stage",
+    "result_sha256": "1245cfcecab4254ea9cd1c1a51c346b1b87fad17286d952a4f163d59934bbfd8",
+    "failure": "Compared full original live history to narrower page.state history; no actual Paint callback before failure. Exact full live histories in original saved records match; derivative compares same full schema with both records retained.",
+    "source_only_preflight_failures": "Original finalizer scope anchor ValueError and copied FW00-label assertion preserved in initial scripts/check01; no runtime result inferred."
+  },
+  "remaining": [
+    "Paint alpha/mirror/continuous/Lock/hardness/pressure/channel matrices, general cross-tool alpha tracking and Source cancellation/lifecycle.",
+    "Appearance/visible tint/cursor remain different; SourceGL1 upload observation is distinct from actual GL1 memory readback.",
+    "Dense geometry, native GUI, physical input, calibrated latency, long sessions, complete N05/Paint/Flatten/317+5 and ZBrush parity."
+  ]
+}

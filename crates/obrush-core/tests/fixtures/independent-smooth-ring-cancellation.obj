@@ -1,0 +1,9 @@
+# Independently authored CC0 fixture. The last X coordinate is exactly 2^-45.
+v 0 0 1
+v 65536 0 0
+v -65536 1 0
+v 0.000000000000028421709430404007434844970703125 -1 0
+f 1 2 3
+f 1 3 4
+f 1 4 2
+f 2 4 3

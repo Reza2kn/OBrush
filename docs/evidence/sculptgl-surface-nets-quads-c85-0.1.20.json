@@ -1,0 +1,330 @@
+{
+  "feature": "Paired Smooth Surface Nets and Block quad persistence through project and OBJ",
+  "status": "Paired closed-fixture oriented quads, browser interchange, history and GPU display pass; full SculptGL and ZBrush parity open",
+  "reference_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+  "world_position_tolerance": 2e-07,
+  "source": [
+    {
+      "path": "crates/obrush-core/src/remesh.rs",
+      "sha256": "eaaba02d4fa6ea9b01c64fbf38d44c88dae1e1b439069687d4a94ba597d8b87d",
+      "bytes": 44693
+    },
+    {
+      "path": "crates/obrush-core/tests/remesh.rs",
+      "sha256": "69fc9100eb4f897212d833ec918b7f3cc77ff147d659fb01de297b64ec1549be",
+      "bytes": 17015
+    },
+    {
+      "path": "crates/obrush-core/tests/attributes_v6.rs",
+      "sha256": "0bafced1eed1c31f5c40d7c65d195ea724a897cc166852cebb718a9f6f8eb10c",
+      "bytes": 32315
+    },
+    {
+      "path": ".artifacts/surface-nets-quads-c85-harness.mjs",
+      "sha256": "e7fe1769db888f1e0e4c9677302267f45d330c9af7af6d59f2b34b8ab5ae63be",
+      "bytes": 112499
+    },
+    {
+      "path": "scripts/compare-surface-nets.py",
+      "sha256": "2bb2f99e3e32a69986481abfc5adb2f455f65ddcc5176b6de2907d3fd9cc51db",
+      "bytes": 6203
+    },
+    {
+      "path": "docs/SCULPTGL_SURFACE_NETS_QUADS_C85.md",
+      "sha256": "a2c7a34dfb81da1356e26bbce151f70059b8ebd23475a5f44504d8260f7ff19e",
+      "bytes": 2871
+    },
+    {
+      "path": "docs/FEATURE_PARITY.md",
+      "sha256": "4dd6780f7304350b9588c54161bcc3649b01a72b07273b4d6c94d40baf6bd1f7",
+      "bytes": 68549
+    },
+    {
+      "path": "docs/SCULPTGL_PARITY.md",
+      "sha256": "a042cc95f99295718975c26f5e12470e496069240ca42c95e4858eab7e567d8b",
+      "bytes": 173832
+    },
+    {
+      "path": "crates/obrush-core/tests/fixtures/independent-filter-cube.obj",
+      "sha256": "c9038e8adcbe5649273871feba73699753fa9abee0984575e14f41c9d610dde7",
+      "bytes": 252
+    },
+    {
+      "path": "crates/obrush-core/tests/fixtures/independent-reference-sphere.obj",
+      "sha256": "165e2cfacb2f0d99312fd3f4f3f79c2696be3eee9b05047ac7f57c891783ba9b",
+      "bytes": 24272
+    }
+  ],
+  "reference_runtime": {
+    "cube": {
+      "path": ".artifacts/sculptgl-reference-runtime/block-remesh-c82-cube64-3fa10208-7504-40ed-9ff4-e25fabbd61ab/result.json",
+      "sha256": "bea5e80256f87bbde99e5d00731d2401704507f7beb280ed1d9016f03f85a6ab",
+      "bytes": 5860371
+    },
+    "sphere": {
+      "path": ".artifacts/sculptgl-reference-runtime/block-remesh-c82-corrected-2923614b-5274-4721-994f-79785d4a1278/result.json",
+      "sha256": "3c9014f9b942133c0e10a823db030b31a25992a59ee5cab10fd8751efcdf4765",
+      "bytes": 1254802
+    }
+  },
+  "comparison": {
+    "cube": {
+      "artifact": {
+        "path": ".artifacts/surface-nets-quads-c85-cube-comparison.json",
+        "sha256": "af87511ab8bddf14736d417eac3abe962fdabd8746f191acb8e0ba1de0fb25d4",
+        "bytes": 1226
+      },
+      "metrics": {
+        "fixture": "cube",
+        "resolution": 64,
+        "world_tolerance": 2e-07,
+        "reference_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+        "reference_snapshot": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-reference-runtime/block-remesh-c82-cube64-3fa10208-7504-40ed-9ff4-e25fabbd61ab/block-remesh-false-after.json",
+        "reference_snapshot_sha256": "c8272604f79ea2ea273fd2bbd4f1308b700bb52dbcce1f92c4cc62f62992aa7c",
+        "obrush_output": ".artifacts/surface-nets-quads-c85-cube-mesh.json",
+        "obrush_output_sha256": "dbe73e9b9645382a2099c8a8f9d3da84e32b3c1274087b5258dcd15cdc9d8631",
+        "reference_vertices": 24578,
+        "obrush_vertices": 24578,
+        "reference_quads": 24576,
+        "reference_triangles_after_split": 49152,
+        "obrush_triangles": 49152,
+        "duplicate_reference_cell_keys": 0,
+        "unmatched_reference_cells": 0,
+        "unmatched_obrush_cells": 0,
+        "world_position_max_error": 1.446379940856306e-07,
+        "world_position_rms_error": 4.9272032114252327e-08,
+        "unmatched_reference_oriented_triangles": 0,
+        "unmatched_obrush_oriented_triangles": 0,
+        "obrush_quads": 24576,
+        "unmatched_reference_oriented_quads": 0,
+        "unmatched_obrush_oriented_quads": 0,
+        "within_tolerance_and_same_topology": true
+      }
+    },
+    "sphere": {
+      "artifact": {
+        "path": ".artifacts/surface-nets-quads-c85-sphere-comparison.json",
+        "sha256": "a4a4340dd99d5af0acdf3c37091b063de8f32688c22525cb41295c73991ff5b6",
+        "bytes": 1227
+      },
+      "metrics": {
+        "fixture": "sphere",
+        "resolution": 32,
+        "world_tolerance": 2e-07,
+        "reference_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+        "reference_snapshot": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-reference-runtime/block-remesh-c82-corrected-2923614b-5274-4721-994f-79785d4a1278/block-remesh-false-after.json",
+        "reference_snapshot_sha256": "6d5ed9ced9989080a03d9e8d9db678942fbfdc2cc7a42d222d2e88e62e279ee0",
+        "obrush_output": ".artifacts/surface-nets-quads-c85-sphere-mesh.json",
+        "obrush_output_sha256": "f35b39aee80b8be5c1d47b3e85f7700c896619e4acede5450c9cdb1fcbe8a84d",
+        "reference_vertices": 4746,
+        "obrush_vertices": 4746,
+        "reference_quads": 4744,
+        "reference_triangles_after_split": 9488,
+        "obrush_triangles": 9488,
+        "duplicate_reference_cell_keys": 0,
+        "unmatched_reference_cells": 0,
+        "unmatched_obrush_cells": 0,
+        "world_position_max_error": 1.2356228941052182e-07,
+        "world_position_rms_error": 6.253577301501749e-08,
+        "unmatched_reference_oriented_triangles": 0,
+        "unmatched_obrush_oriented_triangles": 0,
+        "obrush_quads": 4744,
+        "unmatched_reference_oriented_quads": 0,
+        "unmatched_obrush_oriented_quads": 0,
+        "within_tolerance_and_same_topology": true
+      }
+    }
+  },
+  "browser": {
+    "cube": {
+      "result": {
+        "path": ".artifacts/mask-filter-browser/surface-nets-quads-c85-final-cube-b4aac7d4-391b-487f-bb88-a5204bdccc99/result.json",
+        "sha256": "0c1708f5d2683a911c2cb8b3bbbcad6ecfb02ca57a2bc4887ad0b9b6012f3d32",
+        "bytes": 1081200
+      },
+      "status": "passed smooth Surface Nets browser workflow",
+      "wasm": {
+        "sha256": "e64dadb0f902f0bf37f1f7251e753810e6efd74e1c546f6e0844660cd3e072ed",
+        "served_sha256": "e64dadb0f902f0bf37f1f7251e753810e6efd74e1c546f6e0844660cd3e072ed",
+        "bytes": 23286985
+      },
+      "gates": {
+        "visible_option": true,
+        "closed_solid": true,
+        "expected_face_form": true,
+        "quad_metadata": true,
+        "visible_obj_quad_roundtrip": true,
+        "history_exact": true,
+        "visible_gpu_save_exact": true
+      },
+      "resolution": 64,
+      "export": {
+        "path": ".artifacts/mask-filter-browser/surface-nets-quads-c85-final-cube-b4aac7d4-391b-487f-bb88-a5204bdccc99/smooth-nets-export.obj",
+        "sha256": "426f8bb903632db0ed0db62a5e4221cb94ef3c2eeea0d9ec76b0f80dea29c9f1",
+        "bytes": 2562121
+      },
+      "quad_faces": 24576,
+      "after_project": {
+        "path": ".artifacts/mask-filter-browser/surface-nets-quads-c85-final-cube-b4aac7d4-391b-487f-bb88-a5204bdccc99/smooth-nets-after.obrush",
+        "sha256": "e0c5d15014f7e424d8cd90747c3be3b76e80afad74c6a9fcb9dd6df40248e0df",
+        "bytes": 3549219
+      },
+      "reimport_project": {
+        "path": ".artifacts/mask-filter-browser/surface-nets-quads-c85-final-cube-b4aac7d4-391b-487f-bb88-a5204bdccc99/smooth-nets-obj-import.obrush",
+        "sha256": "0b59731c0c101b116ad1cd23c72d9cb749f15535665a6da8dde102bb1fb7e353",
+        "bytes": 3141498
+      }
+    },
+    "sphere": {
+      "result": {
+        "path": ".artifacts/mask-filter-browser/surface-nets-quads-c85-final-sphere-6774be97-540a-4890-906a-fdf65825b9b3/result.json",
+        "sha256": "fc3a48f5c21a0cc2f47b12dd005c22222766ed84d6ea10acfb90362b62dca155",
+        "bytes": 1084701
+      },
+      "status": "passed smooth Surface Nets browser workflow",
+      "wasm": {
+        "sha256": "e64dadb0f902f0bf37f1f7251e753810e6efd74e1c546f6e0844660cd3e072ed",
+        "served_sha256": "e64dadb0f902f0bf37f1f7251e753810e6efd74e1c546f6e0844660cd3e072ed",
+        "bytes": 23286985
+      },
+      "gates": {
+        "visible_option": true,
+        "closed_solid": true,
+        "expected_face_form": true,
+        "quad_metadata": true,
+        "visible_obj_quad_roundtrip": true,
+        "history_exact": true,
+        "visible_gpu_save_exact": true
+      },
+      "resolution": 32,
+      "export": {
+        "path": ".artifacts/mask-filter-browser/surface-nets-quads-c85-final-sphere-6774be97-540a-4890-906a-fdf65825b9b3/smooth-nets-export.obj",
+        "sha256": "203cb9c7d15351f577f7676dd90d72ac2aca483b8b16c18bbdc506381992113e",
+        "bytes": 700542
+      },
+      "quad_faces": 4744,
+      "after_project": {
+        "path": ".artifacts/mask-filter-browser/surface-nets-quads-c85-final-sphere-6774be97-540a-4890-906a-fdf65825b9b3/smooth-nets-after.obrush",
+        "sha256": "b5d95f0b9e82329eb7baffbc1759cc01e0a80014920da6a8150bd6816d0624fc",
+        "bytes": 881445
+      },
+      "reimport_project": {
+        "path": ".artifacts/mask-filter-browser/surface-nets-quads-c85-final-sphere-6774be97-540a-4890-906a-fdf65825b9b3/smooth-nets-obj-import.obrush",
+        "sha256": "f86e3d73afff83a8bb8122f85abefd4cfd19290cc611922d2eaea9942b8fd1fa",
+        "bytes": 769556
+      }
+    },
+    "block_sphere": {
+      "result": {
+        "path": ".artifacts/mask-filter-browser/surface-nets-quads-c85-final-block-93e196d4-061e-443a-ac24-4055d985a99d/result.json",
+        "sha256": "ac0b5c7d67a282969fb169e7eb7501efdf64661c71431ae879e6bb3a1d12ec7a",
+        "bytes": 1071808
+      },
+      "status": "passed block remesh browser workflow",
+      "wasm": {
+        "sha256": "e64dadb0f902f0bf37f1f7251e753810e6efd74e1c546f6e0844660cd3e072ed",
+        "served_sha256": "e64dadb0f902f0bf37f1f7251e753810e6efd74e1c546f6e0844660cd3e072ed",
+        "bytes": 23286985
+      },
+      "gates": {
+        "visible_option": true,
+        "closed_solid": true,
+        "expected_face_form": true,
+        "quad_metadata": true,
+        "visible_obj_quad_roundtrip": true,
+        "history_exact": true,
+        "visible_gpu_save_exact": true
+      },
+      "resolution": 32,
+      "export": {
+        "path": ".artifacts/mask-filter-browser/surface-nets-quads-c85-final-block-93e196d4-061e-443a-ac24-4055d985a99d/block-remesh-export.obj",
+        "sha256": "40452012dea9eb3380b3c145b13199e74c192e203259bb2f7ea2dc603bac9be1",
+        "bytes": 604790
+      },
+      "quad_faces": 4744,
+      "after_project": {
+        "path": ".artifacts/mask-filter-browser/surface-nets-quads-c85-final-block-93e196d4-061e-443a-ac24-4055d985a99d/block-remesh-after.obrush",
+        "sha256": "e52d1866557f4c7b6542e1ce699c3916e0471d9e4b62f8061cdf4db61d5bf6b3",
+        "bytes": 794560
+      },
+      "reimport_project": {
+        "path": ".artifacts/mask-filter-browser/surface-nets-quads-c85-final-block-93e196d4-061e-443a-ac24-4055d985a99d/block-remesh-obj-import.obrush",
+        "sha256": "2dba0cac2cade52861db9bd260c7cfc5360232f65a4ca31b1d8dcc5c791500f6",
+        "bytes": 682597
+      }
+    }
+  },
+  "failed_checks": [
+    {
+      "stage": "initial browser cube export",
+      "artifact": {
+        "path": ".artifacts/mask-filter-browser/surface-nets-quads-c85-cube-0201b172-b3bf-42c0-8041-f12104dc9836/result.json",
+        "sha256": "53c0ed4c878e1e61e08418b0974a15950ee843f8445d6bcc73da184d1fda4f56",
+        "bytes": 1646058
+      },
+      "failure": "Visible OBJ export did not finish: explicit material-attribute-loss toggle was absent from harness",
+      "resolution": "Harness clicked visible attribute-loss control; cube, sphere and Block regression then passed"
+    },
+    {
+      "stage": "first full workspace test run",
+      "failure": "One attributes_v6 test expected the former generic original face/UV remesh error",
+      "resolution": "Updated assertion to explicit UV metadata rejection; both subsequent complete workspace runs passed 2,373 tests"
+    },
+    {
+      "stage": "initial strict Clippy",
+      "failure": "Complex Surface Nets geometry return tuple",
+      "resolution": "Named SurfaceNetsGeometry alias; strict native and WASM Clippy then passed"
+    }
+  ],
+  "validation": {
+    "cargo_fmt": "passed",
+    "targeted_remesh_tests": "15 passed",
+    "targeted_decimate_tests": "11 passed",
+    "workspace_tests": "passed: 2,373 passed, 0 failed, 1 ignored in 83 test groups on final source",
+    "strict_native_clippy": "passed -D warnings",
+    "strict_wasm_clippy": "passed -D warnings",
+    "wasm_check": "passed",
+    "official_web_build": "passed",
+    "official_macos_package": "passed; ad-hoc codesign verified",
+    "final_workspace_log": {
+      "path": ".artifacts/surface-nets-quads-c85-workspace-tests-final.log",
+      "sha256": "01e00323cbc9c92fce11639338800a6bfc3a4fd08d4fe59c2bcfc70b39aa9801",
+      "bytes": 230519
+    },
+    "native_clippy_log": {
+      "path": ".artifacts/surface-nets-quads-c85-native-clippy.log",
+      "sha256": "840a621ed2546b0299239327e5d6d1fe13fda4ca8613e0affd903b2f245f66ba",
+      "bytes": 223
+    },
+    "wasm_check_log": {
+      "path": ".artifacts/surface-nets-quads-c85-wasm-check.log",
+      "sha256": "b4a80ba6c8a47a78a9070d6811a3bef22e10ed95e4ab5c48841bc6e2f2d1b468",
+      "bytes": 222
+    },
+    "wasm_clippy_log": {
+      "path": ".artifacts/surface-nets-quads-c85-wasm-clippy.log",
+      "sha256": "99475305e3c395eb58a779e47b688daf4162b121d6414a8e77efd914f036ded5",
+      "bytes": 222
+    }
+  },
+  "limits": [
+    "Closed authored cube and sphere only",
+    "UV/material transfer across remesh not reference-verified",
+    "OBJ material channels explicitly omitted",
+    "Adaptive refinement on retained quads requires explicit detachment",
+    "Open/arbitrary shape, multi-mesh fusion, Marching Cubes and sustained browser performance open"
+  ],
+  "builds": {
+    "web_wasm": {
+      "path": "web/dist/pkg/obrush_app_bg.wasm",
+      "sha256": "e64dadb0f902f0bf37f1f7251e753810e6efd74e1c546f6e0844660cd3e072ed",
+      "bytes": 23286985
+    },
+    "macos_executable": {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/OBrush",
+      "sha256": "86c19a9496c35c68c54130fbf82db7030f6bbfab3c2bcbfba07756459b91f74e",
+      "bytes": 26447712
+    },
+    "local_server_8792_wasm_sha256": "e64dadb0f902f0bf37f1f7251e753810e6efd74e1c546f6e0844660cd3e072ed"
+  }
+}

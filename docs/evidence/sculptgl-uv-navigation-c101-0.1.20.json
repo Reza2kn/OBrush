@@ -1,0 +1,434 @@
+{
+  "id": "SGL-UV-SUBDIVISION-C101",
+  "scope": "One static smooth Lower/Higher on same-byte independent all-seamed tetra, quad cube, and mixed pyramid OBJ fixtures, including all-stage physical vertex RGB/material/mask channels; larger independent 1536-quad smooth/linear OBrush workflow; one historical static-v1 browser project",
+  "reference": {
+    "revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "result_path": ".artifacts/sculptgl-reference-runtime/uv-subdivision-c100-0fcc99ee-04ba-4439-8e77-a9891c24990e/result.json",
+    "result_sha256": "c9f17e844ba0176a052e22d30868b35afd7dfd3de8e75ef462f0ebe9288e8dfb",
+    "browser": "Chrome/155.0.8059.80",
+    "status": "completed reference-only UV subdivision comparison fixtures"
+  },
+  "obrush": {
+    "web_wasm_sha256": "31170de98d8a5ef884e7e16832af01000c47e149a3e8087f01743e681c4a937f",
+    "browser": "Chrome/155.0.8059.80",
+    "paired_result_path": ".artifacts/sculptgl-paint-static-runtime/uv-navigation-colors-c102-7c3acc1c-f8e8-4f66-9f38-426d3263b236/result.json",
+    "paired_result_sha256": "8a21bb1b03435ad52c6122444008ee7718ab8ab3a97c0477a9498ecd8a6933ab",
+    "paired_status": "passed scoped local host gates; reference parity unverified",
+    "large_result_path": ".artifacts/sculptgl-paint-static-runtime/uv-navigation-large-final-c102-c8ab4b3e-70dd-4e9a-bc07-08fab37ed9d0/result.json",
+    "large_result_sha256": "40421761f9f5f005ed2cfd0717084cbe8010ce4a9e992ad8caa02f15df6cd430",
+    "large_status": "passed scoped local host gates; reference parity unverified",
+    "legacy_result_path": ".artifacts/sculptgl-paint-static-runtime/uv-navigation-colors-c102-7c3acc1c-f8e8-4f66-9f38-426d3263b236/result.json",
+    "legacy_result_sha256": "8a21bb1b03435ad52c6122444008ee7718ab8ab3a97c0477a9498ecd8a6933ab",
+    "legacy_status": "passed scoped local host gates; reference parity unverified",
+    "paired_downloads": 22,
+    "paired_gpu_checks": 22,
+    "large_downloads": 15,
+    "large_gpu_checks": 15,
+    "legacy_downloads": 22,
+    "legacy_gpu_checks": 22
+  },
+  "comparison": {
+    "path": ".artifacts/sculptgl-paint-static-runtime/uv-navigation-colors-c102-7c3acc1c-f8e8-4f66-9f38-426d3263b236/paired-comparison.json",
+    "sha256": "ff882a3362e2d244632aaf90ebed77ca4ca1f778fe40af99469e53f08be126be",
+    "reference_result_sha256": "c9f17e844ba0176a052e22d30868b35afd7dfd3de8e75ef462f0ebe9288e8dfb",
+    "host_result_sha256": "8a21bb1b03435ad52c6122444008ee7718ab8ab3a97c0477a9498ecd8a6933ab",
+    "cases": [
+      {
+        "name": "paired-uv-independent-seamed-tetra",
+        "fixture_sha256": "f038d1990b21472c2f2970b59950c12801219716f298bb991a260bed1c87dcc2",
+        "input": {
+          "faces": 4,
+          "corners": 12,
+          "reference_uv_coordinates": 12,
+          "host_uv_coordinates": 12,
+          "max_position_component_error": 0.0,
+          "max_uv_component_error": 2.5272369419404583e-08
+        },
+        "child": {
+          "faces": 16,
+          "corners": 48,
+          "reference_uv_coordinates": 24,
+          "host_uv_coordinates": 24,
+          "max_position_component_error": 0.0,
+          "max_uv_component_error": 2.5272369419404583e-08
+        },
+        "input_channels": {
+          "vertices": 4,
+          "max_component_error": {
+            "rgb": 0.0,
+            "roughness": 7.152557379708213e-09,
+            "metalness": 1.7881393449270533e-09,
+            "unmasked": 0.0
+          }
+        },
+        "child_channels": {
+          "vertices": 10,
+          "max_component_error": {
+            "rgb": 0.0,
+            "roughness": 7.152557379708213e-09,
+            "metalness": 1.7881393449270533e-09,
+            "unmasked": 0.0
+          }
+        },
+        "reference_navigation": {
+          "lower_positions": {
+            "different_components": 12,
+            "max_component_error": 0.75
+          },
+          "return_positions": {
+            "different_components": 12,
+            "max_component_error": 1.4901161193847656e-08
+          },
+          "lower_uv_exact": true,
+          "return_uv_exact": true
+        },
+        "host_gates": {
+          "source_uv_count": true,
+          "child_uv_count": true,
+          "child_face_count": true,
+          "versioned_source_navigation": true,
+          "coarse_even_positions_exact": true,
+          "coarse_uv_exact": true,
+          "fine_active_mesh_return_exact": true,
+          "hierarchy_records_lower_analysis": true,
+          "whole_history_exact": true,
+          "visible_gpu_save_exact": true
+        },
+        "coarse": {
+          "faces": 4,
+          "corners": 12,
+          "reference_uv_coordinates": 12,
+          "host_uv_coordinates": 12,
+          "max_position_component_error": 0.0,
+          "max_uv_component_error": 2.5272369419404583e-08
+        },
+        "returned": {
+          "faces": 16,
+          "corners": 48,
+          "reference_uv_coordinates": 24,
+          "host_uv_coordinates": 24,
+          "max_position_component_error": 1.4901161193847656e-08,
+          "max_uv_component_error": 2.5272369419404583e-08
+        },
+        "coarse_channels": {
+          "vertices": 4,
+          "max_component_error": {
+            "rgb": 0.0,
+            "roughness": 7.152557379708213e-09,
+            "metalness": 1.7881393449270533e-09,
+            "unmasked": 0.0
+          }
+        },
+        "returned_channels": {
+          "vertices": 10,
+          "max_component_error": {
+            "rgb": 0.0,
+            "roughness": 7.152557379708213e-09,
+            "metalness": 1.7881393449270533e-09,
+            "unmasked": 0.0
+          }
+        },
+        "native_probe_sha256": "859ac09a98719550f11d39f7aebfaf97fc604b0ea189885102037b0df5d21b5c",
+        "native_browser": {
+          "parent": {
+            "positions_f32_words_exact": true,
+            "uvs_f32_words_exact": true,
+            "colors_f32_words_exact": true,
+            "materials_f32_words_exact": true,
+            "masks_f32_words_exact": true,
+            "faces_indices_exact": true,
+            "face_uvs_indices_exact": true
+          },
+          "child": {
+            "positions_f32_words_exact": true,
+            "uvs_f32_words_exact": true,
+            "colors_f32_words_exact": true,
+            "materials_f32_words_exact": true,
+            "masks_f32_words_exact": true,
+            "faces_indices_exact": true,
+            "face_uvs_indices_exact": true
+          }
+        }
+      },
+      {
+        "name": "paired-uv-independent-seamed-quad-cube",
+        "fixture_sha256": "8b76a6ee950a7cf29701aa01c267772c023f668d67c66514885092bab0fdc4c0",
+        "input": {
+          "faces": 6,
+          "corners": 24,
+          "reference_uv_coordinates": 24,
+          "host_uv_coordinates": 24,
+          "max_position_component_error": 0.0,
+          "max_uv_component_error": 0.0
+        },
+        "child": {
+          "faces": 24,
+          "corners": 96,
+          "reference_uv_coordinates": 54,
+          "host_uv_coordinates": 54,
+          "max_position_component_error": 1.7953491249222964e-08,
+          "max_uv_component_error": 0.0
+        },
+        "input_channels": {
+          "vertices": 8,
+          "max_component_error": {
+            "rgb": 7.3820114188105634e-09,
+            "roughness": 2.384185793236071e-08,
+            "metalness": 2.384185793236071e-08,
+            "unmasked": 0.0
+          }
+        },
+        "child_channels": {
+          "vertices": 26,
+          "max_component_error": {
+            "rgb": 8.55102538777075e-08,
+            "roughness": 2.5400543224307626e-08,
+            "metalness": 4.872283931867116e-08,
+            "unmasked": 0.0
+          }
+        },
+        "reference_navigation": {
+          "lower_positions": {
+            "different_components": 24,
+            "max_component_error": 0.4444444179534912
+          },
+          "return_positions": {
+            "different_components": 6,
+            "max_component_error": 2.997601623857441e-17
+          },
+          "lower_uv_exact": true,
+          "return_uv_exact": true
+        },
+        "host_gates": {
+          "source_uv_count": true,
+          "child_uv_count": true,
+          "child_face_count": true,
+          "versioned_source_navigation": true,
+          "coarse_even_positions_exact": true,
+          "coarse_uv_exact": true,
+          "fine_active_mesh_return_exact": true,
+          "hierarchy_records_lower_analysis": true,
+          "whole_history_exact": true,
+          "visible_gpu_save_exact": true
+        },
+        "coarse": {
+          "faces": 6,
+          "corners": 24,
+          "reference_uv_coordinates": 24,
+          "host_uv_coordinates": 24,
+          "max_position_component_error": 1.7953491249222964e-08,
+          "max_uv_component_error": 0.0
+        },
+        "returned": {
+          "faces": 24,
+          "corners": 96,
+          "reference_uv_coordinates": 54,
+          "host_uv_coordinates": 54,
+          "max_position_component_error": 1.7953491249222964e-08,
+          "max_uv_component_error": 0.0
+        },
+        "coarse_channels": {
+          "vertices": 8,
+          "max_component_error": {
+            "rgb": 7.3820114188105634e-09,
+            "roughness": 2.384185793236071e-08,
+            "metalness": 2.384185793236071e-08,
+            "unmasked": 0.0
+          }
+        },
+        "returned_channels": {
+          "vertices": 26,
+          "max_component_error": {
+            "rgb": 8.55102538777075e-08,
+            "roughness": 2.5400543224307626e-08,
+            "metalness": 4.872283931867116e-08,
+            "unmasked": 0.0
+          }
+        },
+        "native_probe_sha256": "de57fb1129ec9bb374c245e00c65bbbfb2508a1cdbbdf6c19e876b0a610d3b94",
+        "native_browser": {
+          "parent": {
+            "positions_f32_words_exact": true,
+            "uvs_f32_words_exact": true,
+            "colors_f32_words_exact": true,
+            "materials_f32_words_exact": true,
+            "masks_f32_words_exact": true,
+            "faces_indices_exact": true,
+            "face_uvs_indices_exact": true
+          },
+          "child": {
+            "positions_f32_words_exact": true,
+            "uvs_f32_words_exact": true,
+            "colors_f32_words_exact": true,
+            "materials_f32_words_exact": true,
+            "masks_f32_words_exact": true,
+            "faces_indices_exact": true,
+            "face_uvs_indices_exact": true
+          }
+        }
+      },
+      {
+        "name": "paired-uv-independent-seamed-pyramid",
+        "fixture_sha256": "8a4bb88bf941a1f88e882c0b769da1369549e5ef6c96dc1c928b7987d5c78081",
+        "input": {
+          "faces": 5,
+          "corners": 16,
+          "reference_uv_coordinates": 16,
+          "host_uv_coordinates": 16,
+          "max_position_component_error": 0.0,
+          "max_uv_component_error": 2.6702880906448456e-08
+        },
+        "child": {
+          "faces": 20,
+          "corners": 64,
+          "reference_uv_coordinates": 33,
+          "host_uv_coordinates": 33,
+          "max_position_component_error": 2.763214101975109e-09,
+          "max_uv_component_error": 2.6702880906448456e-08
+        },
+        "input_channels": {
+          "vertices": 5,
+          "max_component_error": {
+            "rgb": 0.0,
+            "roughness": 7.152557379708213e-09,
+            "metalness": 1.7881393449270533e-09,
+            "unmasked": 0.0
+          }
+        },
+        "child_channels": {
+          "vertices": 14,
+          "max_component_error": {
+            "rgb": 0.0,
+            "roughness": 7.152557379708213e-09,
+            "metalness": 1.7881393449270533e-09,
+            "unmasked": 0.0
+          }
+        },
+        "reference_navigation": {
+          "lower_positions": {
+            "different_components": 13,
+            "max_component_error": 0.7272727191448212
+          },
+          "return_positions": {
+            "different_components": 8,
+            "max_component_error": 8.578715515739077e-09
+          },
+          "lower_uv_exact": true,
+          "return_uv_exact": true
+        },
+        "host_gates": {
+          "source_uv_count": true,
+          "child_uv_count": true,
+          "child_face_count": true,
+          "versioned_source_navigation": true,
+          "coarse_even_positions_exact": true,
+          "coarse_uv_exact": true,
+          "fine_active_mesh_return_exact": true,
+          "hierarchy_records_lower_analysis": true,
+          "whole_history_exact": true,
+          "visible_gpu_save_exact": true
+        },
+        "coarse": {
+          "faces": 5,
+          "corners": 16,
+          "reference_uv_coordinates": 16,
+          "host_uv_coordinates": 16,
+          "max_position_component_error": 2.763214101975109e-09,
+          "max_uv_component_error": 2.6702880906448456e-08
+        },
+        "returned": {
+          "faces": 20,
+          "corners": 64,
+          "reference_uv_coordinates": 33,
+          "host_uv_coordinates": 33,
+          "max_position_component_error": 8.578715515739077e-09,
+          "max_uv_component_error": 2.6702880906448456e-08
+        },
+        "coarse_channels": {
+          "vertices": 5,
+          "max_component_error": {
+            "rgb": 0.0,
+            "roughness": 7.152557379708213e-09,
+            "metalness": 1.7881393449270533e-09,
+            "unmasked": 0.0
+          }
+        },
+        "returned_channels": {
+          "vertices": 14,
+          "max_component_error": {
+            "rgb": 0.0,
+            "roughness": 7.152557379708213e-09,
+            "metalness": 1.7881393449270533e-09,
+            "unmasked": 0.0
+          }
+        },
+        "native_probe_sha256": "ae9e337a6d92497815bfb2253c89112120816a6b2041146c8e3811e664ec57ee",
+        "native_browser": {
+          "parent": {
+            "positions_f32_words_exact": true,
+            "uvs_f32_words_exact": true,
+            "colors_f32_words_exact": true,
+            "materials_f32_words_exact": true,
+            "masks_f32_words_exact": true,
+            "faces_indices_exact": true,
+            "face_uvs_indices_exact": true
+          },
+          "child": {
+            "positions_f32_words_exact": true,
+            "uvs_f32_words_exact": true,
+            "colors_f32_words_exact": true,
+            "materials_f32_words_exact": true,
+            "masks_f32_words_exact": true,
+            "faces_indices_exact": true,
+            "face_uvs_indices_exact": true
+          }
+        }
+      }
+    ]
+  },
+  "retained_failure": {
+    "path": ".artifacts/sculptgl-paint-static-runtime/uv-navigation-c101-1c521f5a-a37b-4124-a1be-4758afc1a0b8/result.json",
+    "sha256": "67ef466d4a6b3fa56923bb9c571b93df9ca6e9aee16dc829f06e675c6ceee913",
+    "status": "failed local host run",
+    "reason": "An initial C101 host assertion compared the complete fine project before and after Lower; updated coarse history legitimately changes it. Active fine mesh remained exact. Gate corrected without changing application geometry."
+  },
+  "source_hashes": {
+    "crates/obrush-core/src/multires.rs": "0e29cfbeee14c79d1b3e0151bd67920ff3844e2e8720d1a98ba5178a521d7369",
+    "crates/obrush-core/src/document.rs": "f3d3ef693ed2dc025082592c2d525b7ec937ed052d72adee2d9546bc8b0e43ce",
+    "crates/obrush-core/src/obj_io.rs": "d9fc0b1acb18f1b62ceae1f77bf81c7beefc8a2f3b518df9e51acfb8e6b26af7",
+    "crates/obrush-core/tests/static_subdivision.rs": "fb8987954112688a2f89302a788ffb4ab13cc8743c7d13cf62b6bd338846e040",
+    "crates/obrush-core/tests/obj_attributes.rs": "1fc8a185a502193f8ba4ddf5202aafe2d703679737f7ea205f9c230c3f8b88e2",
+    "crates/obrush-core/examples/uv_subdivision_probe.rs": "da460139ceb6058e82252c49bd0785d9d61233750ed37dff897993935bd90479",
+    "crates/obrush-app/src/app.rs": "2a6ed2c63e759d113a402231fcc043a388e11f480dd544f3235085c53309d249",
+    "scripts/check-sculptgl-paint-static.mjs": "1c138a3e9be7b9058866a7e73fb1e83913f5e7b8bfdd953572d28859e56560ee",
+    "scripts/compare-uv-subdivision.py": "a0d2327c2672bd40d21de5735bba692cdc08e6dee3b369a520918eb4f4ded676",
+    "Cargo.lock": "42b7e17d68fa40ac3cdf147581afaaa571cb6c6436b9b62486d30fd0a728db3d"
+  },
+  "parameters": {
+    "subdivision": "SculptGL static smooth, one level, actual reference and OBrush GUI controls",
+    "level_navigation": [
+      "Lower 1",
+      "Higher 2"
+    ],
+    "fixture_source": "independently authored OBJ with one distinct UV island per face",
+    "comparison": "position-keyed physical face/corner association, component differences; four-stage physical vertex RGB/roughness/metalness/unmasked comparison; exact f32 native/browser position/UV/color/material/mask word and index checks"
+  },
+  "limitations": [
+    "No preregistered numerical acceptance tolerance; measured differences are descriptive",
+    "Source Higher stores/applies detail in normal frame; OBrush still uses world-space delta reconciliation after coarse edits",
+    "Multiple paired reference levels, UV texture pixels, shared-chart seams, native GUI, physical pen and sustained performance unverified"
+  ],
+  "checks": {
+    "targeted_v2_core_tests": "passed three new navigation cases plus colorless OBJ default test",
+    "paired_browser": "passed; 22 downloads and 22 GPU checks including legacy-v1 reopening on final WASM",
+    "large_browser": "passed; 15 downloads and 15 GPU checks on final WASM",
+    "legacy_v1_browser": "passed; 22 downloads and 22 GPU checks on final WASM",
+    "workspace_tests": "passed; 2395 tests across 70 groups, zero failures",
+    "fmt": "passed cargo fmt --all --check",
+    "native_clippy": "passed cargo clippy --workspace --all-targets -- -D warnings",
+    "wasm_clippy": "passed cargo clippy --workspace --all-targets --target wasm32-unknown-unknown -- -D warnings",
+    "wasm_check": "passed cargo check --workspace --target wasm32-unknown-unknown",
+    "macos_package": "passed scripts/package-macos.sh, ad-hoc signature valid on disk"
+  }
+}

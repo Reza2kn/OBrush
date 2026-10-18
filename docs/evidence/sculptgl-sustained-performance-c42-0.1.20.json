@@ -1,0 +1,2234 @@
+{
+  "schema_version": 1,
+  "checked_at_utc": "2026-10-15T22:34:38.177205+00:00",
+  "status": "C42 full requested scale/duration attempt roster recorded; substantive performance/capacity failures remain, no SculptGL family parity",
+  "product": {
+    "candidate": "C42",
+    "version": "0.1.20",
+    "delivery": {
+      "path": "docs/evidence/sculptgl-delivered-c42-0.1.20.json",
+      "bytes": 65704,
+      "sha256": "abea896d00247b698939975380b98d026f18a3acd2a8c8b3862b011ae447343b"
+    },
+    "unchanged_product": {
+      "path": ".artifacts/sculptgl-sustained-performance-c42-stage/UNCHANGED_C42_PRODUCT_CHECK01.json",
+      "bytes": 536,
+      "sha256": "322fd102eecd5c99b4ffcd0b1691032d3e7699133e39e8e25cc484fccad06c32"
+    },
+    "preview": "http://127.0.0.1:8807/"
+  },
+  "reference": {
+    "actual_hosted_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "upstream_revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "hosted_upstream_equivalence": "unestablished; actual hosted runtime used"
+  },
+  "protocol": {
+    "path": ".artifacts/sculptgl-sustained-performance-c42-stage/SUSTAINED_PREREGISTRATION.json",
+    "bytes": 6070,
+    "sha256": "a08188bd82725d6aa3c2c1abc264066b96890bcac5c544268cd9d7b40688044e"
+  },
+  "helpers": [
+    {
+      "path": ".artifacts/sculptgl-sustained-performance-c42-stage/SUSTAINED_HELPER_MANIFEST01.json",
+      "bytes": 5008,
+      "sha256": "2c31faedf59b6695c24b001d2d3497625bfbb02b2710cd159fd3b19a6916d6dc"
+    },
+    {
+      "path": ".artifacts/sculptgl-sustained-performance-c42-stage/SUSTAINED_HELPER_MANIFEST02.json",
+      "bytes": 5487,
+      "sha256": "e518e0891b2f496db4c083d87073435d26cb97b011c297bec2d38ac3df343148"
+    },
+    {
+      "path": ".artifacts/sculptgl-sustained-performance-c42-stage/MATRIX_CONTROLLER01.json",
+      "bytes": 255,
+      "sha256": "2fb9c5140832a369ad2691049a15ba44a35b552ce08ecb31ce8539789ae1b23b"
+    }
+  ],
+  "fixtures": {
+    "path": ".artifacts/sculptgl-sustained-performance-c42-stage/FIXTURE_MANIFEST.json",
+    "bytes": 4436,
+    "sha256": "f83022cb2766e44a147fb490c169e40a0a35e7a4e89c48d644566af16d0aea4a"
+  },
+  "fixture_independent_validation": {
+    "path": ".artifacts/sculptgl-sustained-performance-c42-stage/INDEPENDENT_FIXTURE_VERIFICATION.json",
+    "bytes": 2988,
+    "sha256": "692b85035fa09a9271c3062e056cebe351f2cc25135fcec4321a53df2ebe31e7"
+  },
+  "original_remaining_matrix_execution": {
+    "path": ".artifacts/sculptgl-sustained-performance-c42-stage/REMAINING_MATRIX_EXECUTION01.json",
+    "bytes": 19655,
+    "sha256": "52c5fa258dc68337287fc23f78353e3785b80e3b15d3e3615b955ad961284fb1"
+  },
+  "callback_clock_correction": {
+    "path": ".artifacts/sculptgl-sustained-performance-c42-stage/CALLBACK_TIMING_AUDIT_CORRECTION.json",
+    "bytes": 656,
+    "sha256": "f026b7162aa8d5e38e6e004db579bf70419b2281c0605909a79fa9b641565cb5"
+  },
+  "completed_timed_data_runs": [
+    {
+      "side": "source",
+      "cohort": {
+        "label": "10k",
+        "seconds": 60,
+        "motions": 24000
+      },
+      "actual_result": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-10k-60s-source-51e25f04-8c79-47eb-a9c4-250923d3d8e5/result.json",
+        "bytes": 14396447,
+        "sha256": "91f6fbc34d375d8adddf93e696fb2336bd2e2c391806e97728703f5d87a9d5a5"
+      },
+      "independent_audit": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/SUSTAINED_10K_60S_PAIR_ADJACENCY_AUDIT.json",
+        "bytes": 11478,
+        "sha256": "e00003acb77c97dc37b3b3ac02df35384de9afe1a5601007df4ddf408befaae6"
+      },
+      "status": "PASS named local data/scalar gates",
+      "checks": {
+        "whole_attributes_topology_history": true,
+        "finite_useful": true,
+        "zero_degenerate_faces": true,
+        "zero_original_orientation_reversals": true,
+        "maximum_edge_stretch_le4": true,
+        "pacing_P99_le25ms": true,
+        "pacing_max_le100ms": true,
+        "independentRAF_P95_le33_34ms": true,
+        "independentRAF_max_le250ms": true,
+        "appRAF_summed_CPU_P95_le16_667ms": true,
+        "Source_no_original_callback_after_up100ms": true,
+        "memory_samples_no_errors": true
+      },
+      "metrics": {
+        "actual_pointer_contact_ms": 60018.39999997616,
+        "scheduled_motion_requests": 24000,
+        "delivered_pointer_moves": 22524,
+        "motion_send_lateness_ms": {
+          "count": 24000,
+          "minimum": 0,
+          "P50": 0.0,
+          "P95": 0.7742499999949359,
+          "P99": 0.9699169999948936,
+          "maximum": 8.752707999999984
+        },
+        "motion_ack_elapsed_ms": {
+          "count": 24000,
+          "minimum": 0.27104200000030687,
+          "P50": 2.8956044999977166,
+          "P95": 4.623749999998836,
+          "P99": 5.506124999999884,
+          "maximum": 19.33129100000042
+        },
+        "independentRAF_active_interval_ms": {
+          "count": 3600,
+          "P50": 16.69999998807907,
+          "P95": 17.30000001192093,
+          "P99": 17.600000023841858,
+          "maximum": 18.600000023841858
+        },
+        "appRAF_active_callback_CPU_ms": {
+          "count": 3552,
+          "minimum": 0,
+          "P50": 0.10000002384185791,
+          "P95": 0.2999999523162842,
+          "P99": 0.30000001192092896,
+          "maximum": 0.699999988079071
+        },
+        "appRAF_active_sum_CPU_per_shared_timestamp_ms": {
+          "count": 3551,
+          "minimum": 0,
+          "P50": 0.10000002384185791,
+          "P95": 0.2999999523162842,
+          "P99": 0.30000001192092896,
+          "maximum": 0.699999988079071
+        },
+        "Source_original_Brush_callback_CPU_ms": {
+          "count": 1141,
+          "minimum": 0,
+          "P50": 0.09999996423721313,
+          "P95": 0.19999998807907104,
+          "P99": 0.20000004768371582,
+          "maximum": 1.100000023841858
+        },
+        "Source_original_Brush_callbacks": 1141,
+        "longtasks": [],
+        "seen": {
+          "events": 45052,
+          "draws": 16376,
+          "uploads": 2282,
+          "appRAF": 3554,
+          "pumpRAF": 3723,
+          "sourceDabs": 1141,
+          "longtasks": 0
+        },
+        "Root_before_queue": null,
+        "Root_tail_first": {
+          "timer": -1,
+          "action": 0
+        },
+        "Root_tail_last": {
+          "timer": -1,
+          "action": 0
+        },
+        "scope": "DOM/CPU/RAF/upload submission only; upload last is all-buffer metadata, not actual last position edit or GPU completion",
+        "independentRAF_active_original_timestamp_interval_ms": {
+          "count": 3600,
+          "minimum": 16.5,
+          "P50": 16.69999999999709,
+          "P95": 16.700000000004366,
+          "P99": 16.80000000000291,
+          "maximum": 16.80000000000291
+        },
+        "last_any_buffer_upload_after_pointerup_ms": -46.09999996423721
+      },
+      "geometry": {
+        "changed_original_vertices": 384,
+        "maximum_position_change": 0.21649211645126343,
+        "RMS_position_change": 0.012633235129126593,
+        "before_minimum_normalized_quality": 0.007168275006764499,
+        "after_minimum_normalized_quality": 0.007168275006764499,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.2126168333000122,
+        "minimum_face_normal_original_alignment": 0.48323814332315057,
+        "complete_adjacent_face_pairs": 30336,
+        "before_maximum_adjacent_angle_degrees": 2.8120369617368746,
+        "after_maximum_adjacent_angle_degrees": 80.75183947211285,
+        "new_adjacent_pairs_over90degrees": 0,
+        "scope": "Whole original triangle/edge/closed-adjacency metrics; no global self-intersection, visual or retained-normal-field equivalence proof. Adjacent angles are descriptive supplemental metrics, not a retroactive new acceptance gate"
+      },
+      "public_downloads": 5,
+      "memory_samples": 64,
+      "recorder": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-10k-60s-source-51e25f04-8c79-47eb-a9c4-250923d3d8e5/scalar-recording.json",
+        "bytes": 4144028,
+        "sha256": "9f38221aeaf3371228bedc0fab6f31aef91ce7a3e6353e8736311a5843b1a766"
+      },
+      "screenshots": [
+        {
+          "side": "source",
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-10k-60s-source-51e25f04-8c79-47eb-a9c4-250923d3d8e5/source-admission-complete.png",
+          "bytes": 188232,
+          "sha256": "c768bf74e768984b28573accf86360443b1211f42c658467af65ef5bcd87df97",
+          "scope": "Complete ordinary browser surface; no cropped pixel gate substitution"
+        }
+      ],
+      "owned_closure": {
+        "observed_owned_process_absent": true,
+        "owned_pid": 44064,
+        "actual_exit_code": 0,
+        "actual_signal": null,
+        "actual_servers_closed": 1,
+        "exit_status": "Actual exit0 recorded",
+        "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+      },
+      "callback_clock_correction": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/ACTUAL_CALLBACK_TIMING_CORRECTION_AUDIT.json",
+        "bytes": 5793,
+        "sha256": "3d26fe45a77f79d8b2aa8ec0c987f9da0c559161355bb89930740b6065456278"
+      },
+      "failed_checks": []
+    },
+    {
+      "side": "root",
+      "cohort": {
+        "label": "10k",
+        "seconds": 60,
+        "motions": 24000
+      },
+      "actual_result": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-10k-60s-root-01d0b600-a2ed-41ad-992f-8602a54a76df/result.json",
+        "bytes": 14059843,
+        "sha256": "e38184670098d5dff3b337aa8711d2cd4f515b6ffa16d05a1920ead2e9b5778d"
+      },
+      "independent_audit": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/SUSTAINED_10K_60S_PAIR_ADJACENCY_AUDIT.json",
+        "bytes": 11478,
+        "sha256": "e00003acb77c97dc37b3b3ac02df35384de9afe1a5601007df4ddf408befaae6"
+      },
+      "status": "PASS named local data/scalar gates",
+      "checks": {
+        "whole_attributes_topology_history": true,
+        "finite_useful": true,
+        "zero_degenerate_faces": true,
+        "zero_original_orientation_reversals": true,
+        "maximum_edge_stretch_le4": true,
+        "pacing_P99_le25ms": true,
+        "pacing_max_le100ms": true,
+        "independentRAF_P95_le33_34ms": true,
+        "independentRAF_max_le250ms": true,
+        "appRAF_summed_CPU_P95_le16_667ms": true,
+        "Root_queue_zero_by100ms": true,
+        "Root_applied_stable_after100ms": true,
+        "memory_samples_no_errors": true,
+        "Root_exported_WASM_memory_measured": true
+      },
+      "metrics": {
+        "actual_pointer_contact_ms": 60031.89999997616,
+        "scheduled_motion_requests": 24000,
+        "delivered_pointer_moves": 20106,
+        "motion_send_lateness_ms": {
+          "count": 24000,
+          "minimum": 0,
+          "P50": 0.0,
+          "P95": 0.6067499999990105,
+          "P99": 0.9750420000018494,
+          "maximum": 74.27887500000361
+        },
+        "motion_ack_elapsed_ms": {
+          "count": 24000,
+          "minimum": 0.20087499999499414,
+          "P50": 2.652333500001987,
+          "P95": 4.282999999999447,
+          "P99": 5.4849169999997684,
+          "maximum": 111.060083999997
+        },
+        "independentRAF_active_interval_ms": {
+          "count": 3601,
+          "P50": 16.600000023841858,
+          "P95": 19.0,
+          "P99": 19.5,
+          "maximum": 28.100000023841858
+        },
+        "appRAF_active_callback_CPU_ms": {
+          "count": 3603,
+          "minimum": 0,
+          "P50": 3.100000023841858,
+          "P95": 5.100000023841858,
+          "P99": 5.300000011920929,
+          "maximum": 13.899999976158142
+        },
+        "appRAF_active_sum_CPU_per_shared_timestamp_ms": {
+          "count": 3602,
+          "minimum": 0,
+          "P50": 3.100000023841858,
+          "P95": 5.100000023841858,
+          "P99": 5.300000011920929,
+          "maximum": 13.899999976158142
+        },
+        "Source_original_Brush_callback_CPU_ms": {
+          "count": 0
+        },
+        "Source_original_Brush_callbacks": 0,
+        "longtasks": [],
+        "seen": {
+          "events": 40216,
+          "draws": 79288,
+          "uploads": 135454,
+          "appRAF": 3724,
+          "pumpRAF": 3723,
+          "sourceDabs": 0,
+          "longtasks": 0
+        },
+        "Root_before_queue": {
+          "applied_dabs": 0,
+          "coalesced_dabs": 0,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 0,
+          "pending_dabs": 0,
+          "processed_dabs": 0,
+          "released_strokes": 0
+        },
+        "Root_tail_first": {
+          "applied_dabs": 1143,
+          "coalesced_dabs": 0,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 2,
+          "pending_dabs": 0,
+          "processed_dabs": 1143,
+          "released_strokes": 1
+        },
+        "Root_tail_last": {
+          "applied_dabs": 1143,
+          "coalesced_dabs": 0,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 2,
+          "pending_dabs": 0,
+          "processed_dabs": 1143,
+          "released_strokes": 1
+        },
+        "scope": "DOM/CPU/RAF/upload submission only; upload last is all-buffer metadata, not actual last position edit or GPU completion",
+        "independentRAF_active_original_timestamp_interval_ms": {
+          "count": 3601,
+          "minimum": 16.5,
+          "P50": 16.69999999999709,
+          "P95": 16.70000000001164,
+          "P99": 16.80000000000291,
+          "maximum": 16.80000000000291
+        },
+        "last_any_buffer_upload_after_pointerup_ms": 46.40000003576279
+      },
+      "geometry": {
+        "changed_original_vertices": 421,
+        "maximum_position_change": 0.22671610116958618,
+        "RMS_position_change": 0.013655976554663447,
+        "before_minimum_normalized_quality": 0.007168275006764499,
+        "after_minimum_normalized_quality": 0.007168275006764499,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.2056798222813754,
+        "minimum_face_normal_original_alignment": 0.4767030788963576,
+        "complete_adjacent_face_pairs": 30336,
+        "before_maximum_adjacent_angle_degrees": 2.8120369617368746,
+        "after_maximum_adjacent_angle_degrees": 78.37448812670455,
+        "new_adjacent_pairs_over90degrees": 0,
+        "scope": "Whole original triangle/edge/closed-adjacency metrics; no global self-intersection, visual or retained-normal-field equivalence proof. Adjacent angles are descriptive supplemental metrics, not a retroactive new acceptance gate"
+      },
+      "public_downloads": 5,
+      "memory_samples": 64,
+      "recorder": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-10k-60s-root-01d0b600-a2ed-41ad-992f-8602a54a76df/scalar-recording.json",
+        "bytes": 12479308,
+        "sha256": "8a2ee0f62c8aecd3c288d0324c678e980815db91a87feba0f205357020241cf6"
+      },
+      "screenshots": [
+        {
+          "side": "root",
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-10k-60s-root-01d0b600-a2ed-41ad-992f-8602a54a76df/root-admission-complete.png",
+          "bytes": 260003,
+          "sha256": "eac35a0a4902383a9f6a105e96d904f85d5a0dc8f2ea349e7e3c47e0e47fb13b",
+          "scope": "Complete ordinary browser surface; no cropped pixel gate substitution"
+        }
+      ],
+      "owned_closure": {
+        "observed_owned_process_absent": true,
+        "owned_pid": 45698,
+        "actual_exit_code": 0,
+        "actual_signal": null,
+        "actual_servers_closed": 1,
+        "exit_status": "Actual exit0 recorded",
+        "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+      },
+      "callback_clock_correction": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/ACTUAL_CALLBACK_TIMING_CORRECTION_AUDIT.json",
+        "bytes": 5793,
+        "sha256": "3d26fe45a77f79d8b2aa8ec0c987f9da0c559161355bb89930740b6065456278"
+      },
+      "failed_checks": []
+    },
+    {
+      "side": "source",
+      "cohort": {
+        "label": "10k",
+        "seconds": 120,
+        "motions": 48000
+      },
+      "actual_result": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-10k-120s-source-5b68b82e-f584-483f-bb9e-7fcdf5b77dfa/result.json",
+        "bytes": 25004723,
+        "sha256": "61d51bb82e87c4ff325b00dea87e60955ba20da266b1251be3132bab6e0e71f9"
+      },
+      "independent_audit": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/SUSTAINED_10K_120S_PAIR_AUDIT.json",
+        "bytes": 11462,
+        "sha256": "77975895de20ce562cc6859462363bee52d4f633aa8750ebb0cf737e1dd09038"
+      },
+      "status": "PASS named local data/scalar gates",
+      "checks": {
+        "whole_attributes_topology_history": true,
+        "finite_useful": true,
+        "zero_degenerate_faces": true,
+        "zero_original_orientation_reversals": true,
+        "maximum_edge_stretch_le4": true,
+        "pacing_P99_le25ms": true,
+        "pacing_max_le100ms": true,
+        "independentRAF_P95_le33_34ms": true,
+        "independentRAF_max_le250ms": true,
+        "appRAF_summed_CPU_P95_le16_667ms": true,
+        "Source_no_original_callback_after_up100ms": true,
+        "memory_samples_no_errors": true
+      },
+      "metrics": {
+        "actual_pointer_contact_ms": 120016.90000003576,
+        "scheduled_motion_requests": 48000,
+        "delivered_pointer_moves": 44075,
+        "motion_send_lateness_ms": {
+          "count": 48000,
+          "minimum": 0,
+          "P50": 0.0,
+          "P95": 0.7137910000019474,
+          "P99": 1.3398750000051223,
+          "maximum": 40.25325000000885
+        },
+        "motion_ack_elapsed_ms": {
+          "count": 48000,
+          "minimum": 0.23166700000001583,
+          "P50": 2.7826454999994894,
+          "P95": 4.546707999994396,
+          "P99": 7.2708330000023125,
+          "maximum": 169.1959579999966
+        },
+        "independentRAF_active_interval_ms": {
+          "count": 7200,
+          "P50": 16.69999998807907,
+          "P95": 17.5,
+          "P99": 17.69999998807907,
+          "maximum": 18.0
+        },
+        "appRAF_active_callback_CPU_ms": {
+          "count": 7063,
+          "minimum": 0,
+          "P50": 0.09999996423721313,
+          "P95": 0.19999998807907104,
+          "P99": 0.30000001192092896,
+          "maximum": 0.40000003576278687
+        },
+        "appRAF_active_sum_CPU_per_shared_timestamp_ms": {
+          "count": 7062,
+          "minimum": 0,
+          "P50": 0.09999996423721313,
+          "P95": 0.19999998807907104,
+          "P99": 0.30000001192092896,
+          "maximum": 0.40000003576278687
+        },
+        "Source_original_Brush_callback_CPU_ms": {
+          "count": 2276,
+          "minimum": 0,
+          "P50": 0.0,
+          "P95": 0.10000002384185791,
+          "P99": 0.20000004768371582,
+          "maximum": 0.9000000357627869
+        },
+        "Source_original_Brush_callbacks": 2276,
+        "longtasks": [],
+        "seen": {
+          "events": 88154,
+          "draws": 32579,
+          "uploads": 4550,
+          "appRAF": 7065,
+          "pumpRAF": 7322,
+          "sourceDabs": 2276,
+          "longtasks": 0
+        },
+        "Root_before_queue": null,
+        "Root_tail_first": {
+          "timer": -1,
+          "action": 0
+        },
+        "Root_tail_last": {
+          "timer": -1,
+          "action": 0
+        },
+        "scope": "DOM/CPU/RAF/upload submission only; upload last is all-buffer metadata, not actual last position edit or GPU completion",
+        "independentRAF_active_original_timestamp_interval_ms": {
+          "count": 7200,
+          "minimum": 16.5,
+          "P50": 16.69999999999709,
+          "P95": 16.70000000001164,
+          "P99": 16.80000000000291,
+          "maximum": 16.80000000000291
+        },
+        "last_any_buffer_upload_after_pointerup_ms": -30.0
+      },
+      "geometry": {
+        "changed_original_vertices": 387,
+        "maximum_position_change": 0.22509735822677612,
+        "RMS_position_change": 0.012892909528792382,
+        "before_minimum_normalized_quality": 0.007168275006764499,
+        "after_minimum_normalized_quality": 0.007168275006764499,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.24963107754973,
+        "minimum_face_normal_original_alignment": 0.4647063748354517,
+        "complete_adjacent_face_pairs": 30336,
+        "before_maximum_adjacent_angle_degrees": 2.8120369617368746,
+        "after_maximum_adjacent_angle_degrees": 89.71036602504059,
+        "new_adjacent_pairs_over90degrees": 0,
+        "scope": "Whole original triangle/edge/closed-adjacency metrics; no global self-intersection, visual or retained-normal-field equivalence proof. Adjacent angles are descriptive supplemental metrics, not a retroactive new acceptance gate"
+      },
+      "public_downloads": 5,
+      "memory_samples": 123,
+      "recorder": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-10k-120s-source-5b68b82e-f584-483f-bb9e-7fcdf5b77dfa/scalar-recording.json",
+        "bytes": 8150324,
+        "sha256": "d440b25dd935c886488dbef6d0366a1216e59e1551c5c5cf3a8064856a6f63a1"
+      },
+      "screenshots": [
+        {
+          "side": "source",
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-10k-120s-source-5b68b82e-f584-483f-bb9e-7fcdf5b77dfa/source-admission-complete.png",
+          "bytes": 188281,
+          "sha256": "e054132c2791a07b0a9ac8f4233b98bf1bc29b82068123958aee4ad783e5f8c5",
+          "scope": "Complete ordinary browser surface; no cropped pixel gate substitution"
+        }
+      ],
+      "owned_closure": {
+        "observed_owned_process_absent": true,
+        "owned_pid": 46459,
+        "actual_exit_code": 0,
+        "actual_signal": null,
+        "actual_servers_closed": 1,
+        "exit_status": "Actual exit0 recorded",
+        "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+      },
+      "callback_clock_correction": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/ACTUAL_CALLBACK_TIMING_CORRECTION_AUDIT.json",
+        "bytes": 5793,
+        "sha256": "3d26fe45a77f79d8b2aa8ec0c987f9da0c559161355bb89930740b6065456278"
+      },
+      "failed_checks": []
+    },
+    {
+      "side": "root",
+      "cohort": {
+        "label": "10k",
+        "seconds": 120,
+        "motions": 48000
+      },
+      "actual_result": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-10k-120s-root-c50491fd-47f3-4b16-8af9-9d9867c9bd10/result.json",
+        "bytes": 25058549,
+        "sha256": "dbefff996b68371f2e4f145759ce38e5600b13bec06c623025789e23d7d6674b"
+      },
+      "independent_audit": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/SUSTAINED_10K_120S_PAIR_AUDIT.json",
+        "bytes": 11462,
+        "sha256": "77975895de20ce562cc6859462363bee52d4f633aa8750ebb0cf737e1dd09038"
+      },
+      "status": "PASS named local data/scalar gates",
+      "checks": {
+        "whole_attributes_topology_history": true,
+        "finite_useful": true,
+        "zero_degenerate_faces": true,
+        "zero_original_orientation_reversals": true,
+        "maximum_edge_stretch_le4": true,
+        "pacing_P99_le25ms": true,
+        "pacing_max_le100ms": true,
+        "independentRAF_P95_le33_34ms": true,
+        "independentRAF_max_le250ms": true,
+        "appRAF_summed_CPU_P95_le16_667ms": true,
+        "Root_queue_zero_by100ms": true,
+        "Root_applied_stable_after100ms": true,
+        "memory_samples_no_errors": true,
+        "Root_exported_WASM_memory_measured": true
+      },
+      "metrics": {
+        "actual_pointer_contact_ms": 120030.40000003576,
+        "scheduled_motion_requests": 48000,
+        "delivered_pointer_moves": 40171,
+        "motion_send_lateness_ms": {
+          "count": 48000,
+          "minimum": 0,
+          "P50": 0.0,
+          "P95": 0.6861670000071172,
+          "P99": 7.552499999999782,
+          "maximum": 64.84237500000017
+        },
+        "motion_ack_elapsed_ms": {
+          "count": 48000,
+          "minimum": 0.19945900001039263,
+          "P50": 2.7086454999989655,
+          "P95": 5.07195899999715,
+          "P99": 31.56866699999955,
+          "maximum": 386.24087500000314
+        },
+        "independentRAF_active_interval_ms": {
+          "count": 7201,
+          "P50": 16.600000023841858,
+          "P95": 19.0,
+          "P99": 19.600000023841858,
+          "maximum": 30.30000001192093
+        },
+        "appRAF_active_callback_CPU_ms": {
+          "count": 7203,
+          "minimum": 0,
+          "P50": 3.199999988079071,
+          "P95": 5.199999988079071,
+          "P99": 5.799999952316284,
+          "maximum": 15.699999988079071
+        },
+        "appRAF_active_sum_CPU_per_shared_timestamp_ms": {
+          "count": 7202,
+          "minimum": 0,
+          "P50": 3.199999988079071,
+          "P95": 5.199999988079071,
+          "P99": 5.799999952316284,
+          "maximum": 15.699999988079071
+        },
+        "Source_original_Brush_callback_CPU_ms": {
+          "count": 0
+        },
+        "Source_original_Brush_callbacks": 0,
+        "longtasks": [],
+        "seen": {
+          "events": 80346,
+          "draws": 158268,
+          "uploads": 270424,
+          "appRAF": 7324,
+          "pumpRAF": 7323,
+          "sourceDabs": 0,
+          "longtasks": 0
+        },
+        "Root_before_queue": {
+          "applied_dabs": 0,
+          "coalesced_dabs": 0,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 0,
+          "pending_dabs": 0,
+          "processed_dabs": 0,
+          "released_strokes": 0
+        },
+        "Root_tail_first": {
+          "applied_dabs": 2293,
+          "coalesced_dabs": 0,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 4,
+          "pending_dabs": 0,
+          "processed_dabs": 2293,
+          "released_strokes": 1
+        },
+        "Root_tail_last": {
+          "applied_dabs": 2293,
+          "coalesced_dabs": 0,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 4,
+          "pending_dabs": 0,
+          "processed_dabs": 2293,
+          "released_strokes": 1
+        },
+        "scope": "DOM/CPU/RAF/upload submission only; upload last is all-buffer metadata, not actual last position edit or GPU completion",
+        "independentRAF_active_original_timestamp_interval_ms": {
+          "count": 7201,
+          "minimum": 16.5,
+          "P50": 16.69999999999709,
+          "P95": 16.70000000001164,
+          "P99": 16.80000000000291,
+          "maximum": 16.80000000000291
+        },
+        "last_any_buffer_upload_after_pointerup_ms": 43.59999996423721
+      },
+      "geometry": {
+        "changed_original_vertices": 420,
+        "maximum_position_change": 0.2362627387046814,
+        "RMS_position_change": 0.013935295504216755,
+        "before_minimum_normalized_quality": 0.007168275006764499,
+        "after_minimum_normalized_quality": 0.007168275006764499,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.2314398564963405,
+        "minimum_face_normal_original_alignment": 0.46040520070211743,
+        "complete_adjacent_face_pairs": 30336,
+        "before_maximum_adjacent_angle_degrees": 2.8120369617368746,
+        "after_maximum_adjacent_angle_degrees": 87.35901564639623,
+        "new_adjacent_pairs_over90degrees": 0,
+        "scope": "Whole original triangle/edge/closed-adjacency metrics; no global self-intersection, visual or retained-normal-field equivalence proof. Adjacent angles are descriptive supplemental metrics, not a retroactive new acceptance gate"
+      },
+      "public_downloads": 5,
+      "memory_samples": 123,
+      "recorder": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-10k-120s-root-c50491fd-47f3-4b16-8af9-9d9867c9bd10/scalar-recording.json",
+        "bytes": 24998187,
+        "sha256": "6058a9b6ab3887af42ac3f48141d290d17cf530207982242202cc1fc866357e2"
+      },
+      "screenshots": [
+        {
+          "side": "root",
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-10k-120s-root-c50491fd-47f3-4b16-8af9-9d9867c9bd10/root-admission-complete.png",
+          "bytes": 260099,
+          "sha256": "ceb389bce95118ad5758cd2bf7fce8caf3a81367330ebaeb373af27c1af613c8",
+          "scope": "Complete ordinary browser surface; no cropped pixel gate substitution"
+        }
+      ],
+      "owned_closure": {
+        "observed_owned_process_absent": true,
+        "owned_pid": 47562,
+        "actual_exit_code": 0,
+        "actual_signal": null,
+        "actual_servers_closed": 1,
+        "exit_status": "Actual exit0 recorded",
+        "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+      },
+      "callback_clock_correction": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/ACTUAL_CALLBACK_TIMING_CORRECTION_AUDIT.json",
+        "bytes": 5793,
+        "sha256": "3d26fe45a77f79d8b2aa8ec0c987f9da0c559161355bb89930740b6065456278"
+      },
+      "failed_checks": []
+    },
+    {
+      "side": "source",
+      "cohort": {
+        "label": "100k",
+        "seconds": 60,
+        "motions": 24000
+      },
+      "actual_result": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-100k-60s-source-bb4dcf77-06a0-45c4-9669-72d1bab5aa3a/result.json",
+        "bytes": 14414650,
+        "sha256": "ac0ab41ed360d85865b3b7c39db163cb04b897de7270798a1f6f450d8e4a3f80"
+      },
+      "independent_audit": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/SUSTAINED_100K_60S_PAIR_AUDIT.json",
+        "bytes": 11604,
+        "sha256": "c176c6c2dcc0137f02feead309474ba65deca9e429f0678907cdd255ced6cbf3"
+      },
+      "status": "PASS named local data/scalar gates",
+      "checks": {
+        "whole_attributes_topology_history": true,
+        "finite_useful": true,
+        "zero_degenerate_faces": true,
+        "zero_original_orientation_reversals": true,
+        "maximum_edge_stretch_le4": true,
+        "pacing_P99_le25ms": true,
+        "pacing_max_le100ms": true,
+        "independentRAF_P95_le33_34ms": true,
+        "independentRAF_max_le250ms": true,
+        "appRAF_summed_CPU_P95_le16_667ms": true,
+        "Source_no_original_callback_after_up100ms": true,
+        "memory_samples_no_errors": true
+      },
+      "metrics": {
+        "actual_pointer_contact_ms": 60018.30000001192,
+        "scheduled_motion_requests": 24000,
+        "delivered_pointer_moves": 21622,
+        "motion_send_lateness_ms": {
+          "count": 24000,
+          "minimum": 0,
+          "P50": 0.0,
+          "P95": 0.6642079999983252,
+          "P99": 0.8914999999979045,
+          "maximum": 44.99512500000128
+        },
+        "motion_ack_elapsed_ms": {
+          "count": 24000,
+          "minimum": 0.26270799999838346,
+          "P50": 2.7154369999989285,
+          "P95": 4.369790999997349,
+          "P99": 5.579374999999345,
+          "maximum": 76.2465830000001
+        },
+        "independentRAF_active_interval_ms": {
+          "count": 3601,
+          "P50": 16.69999998807907,
+          "P95": 17.5,
+          "P99": 17.69999998807907,
+          "maximum": 19.799999952316284
+        },
+        "appRAF_active_callback_CPU_ms": {
+          "count": 3500,
+          "minimum": 0,
+          "P50": 0.09999996423721313,
+          "P95": 0.19999998807907104,
+          "P99": 0.20000004768371582,
+          "maximum": 0.30000001192092896
+        },
+        "appRAF_active_sum_CPU_per_shared_timestamp_ms": {
+          "count": 3500,
+          "minimum": 0,
+          "P50": 0.09999996423721313,
+          "P95": 0.19999998807907104,
+          "P99": 0.20000004768371582,
+          "maximum": 0.30000001192092896
+        },
+        "Source_original_Brush_callback_CPU_ms": {
+          "count": 1138,
+          "minimum": 0,
+          "P50": 0.19999998807907104,
+          "P95": 0.30000001192092896,
+          "P99": 0.40000003576278687,
+          "maximum": 3.699999988079071
+        },
+        "Source_original_Brush_callbacks": 1138,
+        "longtasks": [],
+        "seen": {
+          "events": 43248,
+          "draws": 16200,
+          "uploads": 2274,
+          "appRAF": 3502,
+          "pumpRAF": 3722,
+          "sourceDabs": 1138,
+          "longtasks": 0
+        },
+        "Root_before_queue": null,
+        "Root_tail_first": {
+          "timer": -1,
+          "action": 0
+        },
+        "Root_tail_last": {
+          "timer": -1,
+          "action": 0
+        },
+        "scope": "DOM/CPU/RAF/upload submission only; upload last is all-buffer metadata, not actual last position edit or GPU completion",
+        "independentRAF_active_original_timestamp_interval_ms": {
+          "count": 3601,
+          "minimum": 16.5,
+          "P50": 16.69999999999709,
+          "P95": 16.700000000004366,
+          "P99": 16.80000000000291,
+          "maximum": 16.80000000000291
+        },
+        "last_any_buffer_upload_after_pointerup_ms": -55.5
+      },
+      "geometry": {
+        "changed_original_vertices": 3730,
+        "maximum_position_change": 0.21149486303329468,
+        "RMS_position_change": 0.012302227483198046,
+        "before_minimum_normalized_quality": 0.0007395786042558039,
+        "after_minimum_normalized_quality": 0.0007395786042558039,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.203306958117697,
+        "minimum_face_normal_original_alignment": 0.5000719637692199,
+        "complete_adjacent_face_pairs": 298800,
+        "before_maximum_adjacent_angle_degrees": 0.9002909196599697,
+        "after_maximum_adjacent_angle_degrees": 31.940008939613953,
+        "new_adjacent_pairs_over90degrees": 0,
+        "scope": "Whole original triangle/edge/closed-adjacency metrics; no global self-intersection, visual or retained-normal-field equivalence proof. Adjacent angles are descriptive supplemental metrics, not a retroactive new acceptance gate"
+      },
+      "public_downloads": 5,
+      "memory_samples": 64,
+      "recorder": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-100k-60s-source-bb4dcf77-06a0-45c4-9669-72d1bab5aa3a/scalar-recording.json",
+        "bytes": 4043385,
+        "sha256": "5fd6edb20f61792c675f6cfd747d3e53efe0b842d5d3faf6bba42a543530fe72"
+      },
+      "screenshots": [
+        {
+          "side": "source",
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-100k-60s-source-bb4dcf77-06a0-45c4-9669-72d1bab5aa3a/source-admission-complete.png",
+          "bytes": 225186,
+          "sha256": "7133e383de597d54c08f2d9409a1a905650c77e74634fc3e15bee21ccf36b49c",
+          "scope": "Complete ordinary browser surface; no cropped pixel gate substitution"
+        }
+      ],
+      "owned_closure": {
+        "observed_owned_process_absent": true,
+        "owned_pid": 48156,
+        "actual_exit_code": 0,
+        "actual_signal": null,
+        "actual_servers_closed": 1,
+        "exit_status": "Actual exit0 recorded",
+        "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+      },
+      "callback_clock_correction": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/ACTUAL_CALLBACK_TIMING_CORRECTION_AUDIT.json",
+        "bytes": 5793,
+        "sha256": "3d26fe45a77f79d8b2aa8ec0c987f9da0c559161355bb89930740b6065456278"
+      },
+      "failed_checks": []
+    },
+    {
+      "side": "root",
+      "cohort": {
+        "label": "100k",
+        "seconds": 60,
+        "motions": 24000
+      },
+      "actual_result": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-100k-60s-root-9122eda8-7a61-457d-976c-4252bd0373fe/result.json",
+        "bytes": 14165610,
+        "sha256": "2ff2b6751f792740972e2c0eda29dc7c8db4c848201d8eb877d37757a87cf239"
+      },
+      "independent_audit": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/SUSTAINED_100K_60S_PAIR_AUDIT.json",
+        "bytes": 11604,
+        "sha256": "c176c6c2dcc0137f02feead309474ba65deca9e429f0678907cdd255ced6cbf3"
+      },
+      "status": "FAIL one or more named local data/scalar gates",
+      "checks": {
+        "whole_attributes_topology_history": true,
+        "finite_useful": true,
+        "zero_degenerate_faces": true,
+        "zero_original_orientation_reversals": true,
+        "maximum_edge_stretch_le4": true,
+        "pacing_P99_le25ms": true,
+        "pacing_max_le100ms": true,
+        "independentRAF_P95_le33_34ms": true,
+        "independentRAF_max_le250ms": false,
+        "appRAF_summed_CPU_P95_le16_667ms": false,
+        "Root_queue_zero_by100ms": true,
+        "Root_applied_stable_after100ms": true,
+        "memory_samples_no_errors": true,
+        "Root_exported_WASM_memory_measured": true
+      },
+      "metrics": {
+        "actual_pointer_contact_ms": 60437.59999996424,
+        "scheduled_motion_requests": 24000,
+        "delivered_pointer_moves": 9349,
+        "motion_send_lateness_ms": {
+          "count": 24000,
+          "minimum": 0,
+          "P50": 0.0,
+          "P95": 0.5632919999989099,
+          "P99": 9.4055420000077,
+          "maximum": 66.7994580000086
+        },
+        "motion_ack_elapsed_ms": {
+          "count": 24000,
+          "minimum": 0.20662500000253203,
+          "P50": 4.767750000000888,
+          "P95": 20.35687499999767,
+          "P99": 64.12358400000085,
+          "maximum": 405.6284999999989
+        },
+        "independentRAF_active_interval_ms": {
+          "count": 3569,
+          "P50": 12.300000011920929,
+          "P95": 30.900000035762787,
+          "P99": 32.60000002384186,
+          "maximum": 410.9000000357628
+        },
+        "appRAF_active_callback_CPU_ms": {
+          "count": 3571,
+          "minimum": 0,
+          "P50": 8,
+          "P95": 22.099999964237213,
+          "P99": 24.400000035762787,
+          "maximum": 403.80000001192093
+        },
+        "appRAF_active_sum_CPU_per_shared_timestamp_ms": {
+          "count": 3570,
+          "minimum": 0,
+          "P50": 8.0,
+          "P95": 22.099999964237213,
+          "P99": 24.400000035762787,
+          "maximum": 403.80000001192093
+        },
+        "Source_original_Brush_callback_CPU_ms": {
+          "count": 0
+        },
+        "Source_original_Brush_callbacks": 0,
+        "longtasks": [
+          [
+            8031.399999976158,
+            405
+          ],
+          [
+            8534,
+            404
+          ]
+        ],
+        "seen": {
+          "events": 18702,
+          "draws": 78386,
+          "uploads": 133983,
+          "appRAF": 3693,
+          "pumpRAF": 3692,
+          "sourceDabs": 0,
+          "longtasks": 2
+        },
+        "Root_before_queue": {
+          "applied_dabs": 0,
+          "coalesced_dabs": 0,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 0,
+          "pending_dabs": 0,
+          "processed_dabs": 0,
+          "released_strokes": 0
+        },
+        "Root_tail_first": {
+          "applied_dabs": 1142,
+          "coalesced_dabs": 5,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 8,
+          "pending_dabs": 0,
+          "processed_dabs": 1142,
+          "released_strokes": 1
+        },
+        "Root_tail_last": {
+          "applied_dabs": 1142,
+          "coalesced_dabs": 5,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 8,
+          "pending_dabs": 0,
+          "processed_dabs": 1142,
+          "released_strokes": 1
+        },
+        "scope": "DOM/CPU/RAF/upload submission only; upload last is all-buffer metadata, not actual last position edit or GPU completion",
+        "independentRAF_active_original_timestamp_interval_ms": {
+          "count": 3569,
+          "minimum": 16.5,
+          "P50": 16.69999999999709,
+          "P95": 16.70000000001164,
+          "P99": 16.80000000000291,
+          "maximum": 400.10000000000036
+        },
+        "last_any_buffer_upload_after_pointerup_ms": 53.60000002384186
+      },
+      "geometry": {
+        "changed_original_vertices": 4049,
+        "maximum_position_change": 0.2201632857322693,
+        "RMS_position_change": 0.013337754594277898,
+        "before_minimum_normalized_quality": 0.0007395786042558039,
+        "after_minimum_normalized_quality": 0.0007395786042558039,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.2149224235552833,
+        "minimum_face_normal_original_alignment": 0.4974887356798152,
+        "complete_adjacent_face_pairs": 298800,
+        "before_maximum_adjacent_angle_degrees": 0.9002909196599697,
+        "after_maximum_adjacent_angle_degrees": 31.044257962718348,
+        "new_adjacent_pairs_over90degrees": 0,
+        "scope": "Whole original triangle/edge/closed-adjacency metrics; no global self-intersection, visual or retained-normal-field equivalence proof. Adjacent angles are descriptive supplemental metrics, not a retroactive new acceptance gate"
+      },
+      "public_downloads": 5,
+      "memory_samples": 64,
+      "recorder": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-100k-60s-root-9122eda8-7a61-457d-976c-4252bd0373fe/scalar-recording.json",
+        "bytes": 11026668,
+        "sha256": "0d6d17d4d6fa20ed4f88a2316010e2903069aec2ee40447d0f5fa81902569a06"
+      },
+      "screenshots": [
+        {
+          "side": "root",
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-100k-60s-root-9122eda8-7a61-457d-976c-4252bd0373fe/root-admission-complete.png",
+          "bytes": 296441,
+          "sha256": "8bad7cd4308ea1eff57811fff0140237fdd326a9e737bdfdbee0b56625c9fb84",
+          "scope": "Complete ordinary browser surface; no cropped pixel gate substitution"
+        }
+      ],
+      "owned_closure": {
+        "observed_owned_process_absent": true,
+        "owned_pid": 48579,
+        "actual_exit_code": 0,
+        "actual_signal": null,
+        "actual_servers_closed": 1,
+        "exit_status": "Actual exit0 recorded",
+        "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+      },
+      "callback_clock_correction": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/ACTUAL_CALLBACK_TIMING_CORRECTION_AUDIT.json",
+        "bytes": 5793,
+        "sha256": "3d26fe45a77f79d8b2aa8ec0c987f9da0c559161355bb89930740b6065456278"
+      },
+      "failed_checks": [
+        "independentRAF_max_le250ms",
+        "appRAF_summed_CPU_P95_le16_667ms"
+      ]
+    },
+    {
+      "side": "source",
+      "cohort": {
+        "label": "100k",
+        "seconds": 120,
+        "motions": 48000
+      },
+      "actual_result": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-100k-120s-source-5b1d529b-3c96-4ef4-91a8-04e1b428ee08/result.json",
+        "bytes": 25152158,
+        "sha256": "d5f32b8a051a4a8e8c7bf8672e6315300781f1f9d4eabb63fa4d0405b4c2c3e3"
+      },
+      "independent_audit": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/SUSTAINED_100K_120S_PAIR_AUDIT.json",
+        "bytes": 11634,
+        "sha256": "c590a930de31098d3fc3a720a13a5f755c2450884dc7119343db2fb3ccb655a3"
+      },
+      "status": "PASS named local data/scalar gates",
+      "checks": {
+        "whole_attributes_topology_history": true,
+        "finite_useful": true,
+        "zero_degenerate_faces": true,
+        "zero_original_orientation_reversals": true,
+        "maximum_edge_stretch_le4": true,
+        "pacing_P99_le25ms": true,
+        "pacing_max_le100ms": true,
+        "independentRAF_P95_le33_34ms": true,
+        "independentRAF_max_le250ms": true,
+        "appRAF_summed_CPU_P95_le16_667ms": true,
+        "Source_no_original_callback_after_up100ms": true,
+        "memory_samples_no_errors": true
+      },
+      "metrics": {
+        "actual_pointer_contact_ms": 120015.39999997616,
+        "scheduled_motion_requests": 48000,
+        "delivered_pointer_moves": 43950,
+        "motion_send_lateness_ms": {
+          "count": 48000,
+          "minimum": 0,
+          "P50": 0.0,
+          "P95": 0.8137920000008307,
+          "P99": 3.1312920000054874,
+          "maximum": 87.86562500000582
+        },
+        "motion_ack_elapsed_ms": {
+          "count": 48000,
+          "minimum": 0.22841699999844423,
+          "P50": 2.8597290000016073,
+          "P95": 5.013082999998005,
+          "P99": 16.437459000000672,
+          "maximum": 307.65358299999207
+        },
+        "independentRAF_active_interval_ms": {
+          "count": 7200,
+          "P50": 16.69999998807907,
+          "P95": 17.5,
+          "P99": 17.80000001192093,
+          "maximum": 20.399999976158142
+        },
+        "appRAF_active_callback_CPU_ms": {
+          "count": 6988,
+          "minimum": 0,
+          "P50": 0.10000002384185791,
+          "P95": 0.20000004768371582,
+          "P99": 0.30000001192092896,
+          "maximum": 0.7000000476837158
+        },
+        "appRAF_active_sum_CPU_per_shared_timestamp_ms": {
+          "count": 6987,
+          "minimum": 0,
+          "P50": 0.10000002384185791,
+          "P95": 0.20000004768371582,
+          "P99": 0.30000001192092896,
+          "maximum": 0.7000000476837158
+        },
+        "Source_original_Brush_callback_CPU_ms": {
+          "count": 2273,
+          "minimum": 0,
+          "P50": 0.19999998807907104,
+          "P95": 0.30000001192092896,
+          "P99": 0.40000003576278687,
+          "maximum": 4.399999976158142
+        },
+        "Source_original_Brush_callbacks": 2273,
+        "longtasks": [],
+        "seen": {
+          "events": 87904,
+          "draws": 32324,
+          "uploads": 4538,
+          "appRAF": 6990,
+          "pumpRAF": 7322,
+          "sourceDabs": 2273,
+          "longtasks": 0
+        },
+        "Root_before_queue": null,
+        "Root_tail_first": {
+          "timer": -1,
+          "action": 0
+        },
+        "Root_tail_last": {
+          "timer": -1,
+          "action": 0
+        },
+        "scope": "DOM/CPU/RAF/upload submission only; upload last is all-buffer metadata, not actual last position edit or GPU completion",
+        "independentRAF_active_original_timestamp_interval_ms": {
+          "count": 7200,
+          "minimum": 16.5,
+          "P50": 16.69999999999709,
+          "P95": 16.70000000001164,
+          "P99": 16.80000000000291,
+          "maximum": 16.80000000000291
+        },
+        "last_any_buffer_upload_after_pointerup_ms": -41.19999998807907
+      },
+      "geometry": {
+        "changed_original_vertices": 3726,
+        "maximum_position_change": 0.21895194053649902,
+        "RMS_position_change": 0.012514697572894957,
+        "before_minimum_normalized_quality": 0.0007395786042558039,
+        "after_minimum_normalized_quality": 0.0007395786042558039,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.2278687379838265,
+        "minimum_face_normal_original_alignment": 0.4840595378870082,
+        "complete_adjacent_face_pairs": 298800,
+        "before_maximum_adjacent_angle_degrees": 0.9002909196599697,
+        "after_maximum_adjacent_angle_degrees": 37.815256471044464,
+        "new_adjacent_pairs_over90degrees": 0,
+        "scope": "Whole original triangle/edge/closed-adjacency metrics; no global self-intersection, visual or retained-normal-field equivalence proof. Adjacent angles are descriptive supplemental metrics, not a retroactive new acceptance gate"
+      },
+      "public_downloads": 5,
+      "memory_samples": 123,
+      "recorder": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-100k-120s-source-5b1d529b-3c96-4ef4-91a8-04e1b428ee08/scalar-recording.json",
+        "bytes": 8221187,
+        "sha256": "6a068df4db5839d32174b24f8cf057fec5ed7ed9c35f871145f6839ffcc08b78"
+      },
+      "screenshots": [
+        {
+          "side": "source",
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-100k-120s-source-5b1d529b-3c96-4ef4-91a8-04e1b428ee08/source-admission-complete.png",
+          "bytes": 225335,
+          "sha256": "08c66fc56cfdec462a820fa1166e3c613a6ef8132eec37cb3ba311ade61843bd",
+          "scope": "Complete ordinary browser surface; no cropped pixel gate substitution"
+        }
+      ],
+      "owned_closure": {
+        "observed_owned_process_absent": true,
+        "owned_pid": 49056,
+        "actual_exit_code": 0,
+        "actual_signal": null,
+        "actual_servers_closed": 1,
+        "exit_status": "Actual exit0 recorded",
+        "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+      },
+      "callback_clock_correction": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/ACTUAL_CALLBACK_TIMING_CORRECTION_AUDIT.json",
+        "bytes": 5793,
+        "sha256": "3d26fe45a77f79d8b2aa8ec0c987f9da0c559161355bb89930740b6065456278"
+      },
+      "failed_checks": []
+    },
+    {
+      "side": "root",
+      "cohort": {
+        "label": "100k",
+        "seconds": 120,
+        "motions": 48000
+      },
+      "actual_result": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-100k-120s-root-c95b28a8-7584-4f0d-9e04-1b1c92240626/result.json",
+        "bytes": 24712917,
+        "sha256": "5f2bf5bfe720d51c170ff7bbadfead4d29e8a319c5664ec36cd79fdc59485c55"
+      },
+      "independent_audit": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/SUSTAINED_100K_120S_PAIR_AUDIT.json",
+        "bytes": 11634,
+        "sha256": "c590a930de31098d3fc3a720a13a5f755c2450884dc7119343db2fb3ccb655a3"
+      },
+      "status": "FAIL one or more named local data/scalar gates",
+      "checks": {
+        "whole_attributes_topology_history": true,
+        "finite_useful": true,
+        "zero_degenerate_faces": true,
+        "zero_original_orientation_reversals": true,
+        "maximum_edge_stretch_le4": true,
+        "pacing_P99_le25ms": true,
+        "pacing_max_le100ms": false,
+        "independentRAF_P95_le33_34ms": true,
+        "independentRAF_max_le250ms": false,
+        "appRAF_summed_CPU_P95_le16_667ms": false,
+        "Root_queue_zero_by100ms": true,
+        "Root_applied_stable_after100ms": true,
+        "memory_samples_no_errors": true,
+        "Root_exported_WASM_memory_measured": true
+      },
+      "metrics": {
+        "actual_pointer_contact_ms": 120408.40000003576,
+        "scheduled_motion_requests": 48000,
+        "delivered_pointer_moves": 19286,
+        "motion_send_lateness_ms": {
+          "count": 48000,
+          "minimum": 0,
+          "P50": 0.0,
+          "P95": 0.6285840000055032,
+          "P99": 5.245584000003873,
+          "maximum": 140.63816700000098
+        },
+        "motion_ack_elapsed_ms": {
+          "count": 48000,
+          "minimum": 0.2150839999958407,
+          "P50": 4.606853999997838,
+          "P95": 19.98425000000134,
+          "P99": 41.32791599999837,
+          "maximum": 386.19745799999873
+        },
+        "independentRAF_active_interval_ms": {
+          "count": 7166,
+          "P50": 12.599999964237213,
+          "P95": 30.600000023841858,
+          "P99": 32.30000001192093,
+          "maximum": 394.4000000357628
+        },
+        "appRAF_active_callback_CPU_ms": {
+          "count": 7168,
+          "minimum": 0,
+          "P50": 7.800000011920929,
+          "P95": 21.5,
+          "P99": 23.600000023841858,
+          "maximum": 386.4000000357628
+        },
+        "appRAF_active_sum_CPU_per_shared_timestamp_ms": {
+          "count": 7167,
+          "minimum": 0,
+          "P50": 7.800000011920929,
+          "P95": 21.5,
+          "P99": 23.600000023841858,
+          "maximum": 386.4000000357628
+        },
+        "Source_original_Brush_callback_CPU_ms": {
+          "count": 0
+        },
+        "Source_original_Brush_callbacks": 0,
+        "longtasks": [
+          [
+            8549.400000035763,
+            386
+          ],
+          [
+            9016,
+            386
+          ]
+        ],
+        "seen": {
+          "events": 38576,
+          "draws": 157586,
+          "uploads": 269308,
+          "appRAF": 7292,
+          "pumpRAF": 7291,
+          "sourceDabs": 0,
+          "longtasks": 2
+        },
+        "Root_before_queue": {
+          "applied_dabs": 0,
+          "coalesced_dabs": 0,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 0,
+          "pending_dabs": 0,
+          "processed_dabs": 0,
+          "released_strokes": 0
+        },
+        "Root_tail_first": {
+          "applied_dabs": 2287,
+          "coalesced_dabs": 5,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 8,
+          "pending_dabs": 0,
+          "processed_dabs": 2287,
+          "released_strokes": 1
+        },
+        "Root_tail_last": {
+          "applied_dabs": 2287,
+          "coalesced_dabs": 5,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 8,
+          "pending_dabs": 0,
+          "processed_dabs": 2287,
+          "released_strokes": 1
+        },
+        "scope": "DOM/CPU/RAF/upload submission only; upload last is all-buffer metadata, not actual last position edit or GPU completion",
+        "independentRAF_active_original_timestamp_interval_ms": {
+          "count": 7166,
+          "minimum": 16.5,
+          "P50": 16.69999999999709,
+          "P95": 16.70000000001164,
+          "P99": 16.80000000000291,
+          "maximum": 383.40000000000146
+        },
+        "last_any_buffer_upload_after_pointerup_ms": 49.09999996423721
+      },
+      "geometry": {
+        "changed_original_vertices": 4042,
+        "maximum_position_change": 0.22819453477859497,
+        "RMS_position_change": 0.013568756272009513,
+        "before_minimum_normalized_quality": 0.0007395786042558039,
+        "after_minimum_normalized_quality": 0.0007395786042558039,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.2333498314727813,
+        "minimum_face_normal_original_alignment": 0.48213489584027924,
+        "complete_adjacent_face_pairs": 298800,
+        "before_maximum_adjacent_angle_degrees": 0.9002909196599697,
+        "after_maximum_adjacent_angle_degrees": 36.74002426460616,
+        "new_adjacent_pairs_over90degrees": 0,
+        "scope": "Whole original triangle/edge/closed-adjacency metrics; no global self-intersection, visual or retained-normal-field equivalence proof. Adjacent angles are descriptive supplemental metrics, not a retroactive new acceptance gate"
+      },
+      "public_downloads": 5,
+      "memory_samples": 124,
+      "recorder": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-100k-120s-root-c95b28a8-7584-4f0d-9e04-1b1c92240626/scalar-recording.json",
+        "bytes": 22204613,
+        "sha256": "b7b3781d3c774c23f304f0cda6f18262d2a490ce7a708469a56a0a13b1c2fff7"
+      },
+      "screenshots": [
+        {
+          "side": "root",
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-100k-120s-root-c95b28a8-7584-4f0d-9e04-1b1c92240626/root-admission-complete.png",
+          "bytes": 296588,
+          "sha256": "47688a1c0e076e1f67d724fbc6258664d110ee8a8f82f7be2b09d2ffb456b739",
+          "scope": "Complete ordinary browser surface; no cropped pixel gate substitution"
+        }
+      ],
+      "owned_closure": {
+        "observed_owned_process_absent": true,
+        "owned_pid": 50218,
+        "actual_exit_code": 0,
+        "actual_signal": null,
+        "actual_servers_closed": 1,
+        "exit_status": "Actual exit0 recorded",
+        "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+      },
+      "callback_clock_correction": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/ACTUAL_CALLBACK_TIMING_CORRECTION_AUDIT.json",
+        "bytes": 5793,
+        "sha256": "3d26fe45a77f79d8b2aa8ec0c987f9da0c559161355bb89930740b6065456278"
+      },
+      "failed_checks": [
+        "pacing_max_le100ms",
+        "independentRAF_max_le250ms",
+        "appRAF_summed_CPU_P95_le16_667ms"
+      ]
+    },
+    {
+      "side": "source",
+      "cohort": {
+        "label": "1m",
+        "seconds": 60,
+        "motions": 24000
+      },
+      "actual_result": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-1m-60s-source-1abac714-9b27-4de0-a50e-43c59337e2bc/result.json",
+        "bytes": 14471114,
+        "sha256": "329aa7b6208cd304ff0ebeec27866c4ccef6de6804ce1de67e903c614913fc7d"
+      },
+      "independent_audit": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/SUSTAINED_1M_60S_SOURCE_AUDIT.json",
+        "bytes": 5495,
+        "sha256": "37bf01f1cd325d950f53922527cc95ab6c6980a787dd63dd6833001724b4429d"
+      },
+      "status": "PASS named local data/scalar gates",
+      "checks": {
+        "whole_attributes_topology_history": true,
+        "finite_useful": true,
+        "zero_degenerate_faces": true,
+        "zero_original_orientation_reversals": true,
+        "maximum_edge_stretch_le4": true,
+        "pacing_P99_le25ms": true,
+        "pacing_max_le100ms": true,
+        "independentRAF_P95_le33_34ms": true,
+        "independentRAF_max_le250ms": true,
+        "appRAF_summed_CPU_P95_le16_667ms": true,
+        "Source_no_original_callback_after_up100ms": true,
+        "memory_samples_no_errors": true
+      },
+      "metrics": {
+        "actual_pointer_contact_ms": 60008.90000003576,
+        "scheduled_motion_requests": 24000,
+        "delivered_pointer_moves": 19869,
+        "motion_send_lateness_ms": {
+          "count": 24000,
+          "minimum": 0,
+          "P50": 0.0,
+          "P95": 0.6794589999990421,
+          "P99": 0.9052499999961583,
+          "maximum": 56.279499999996915
+        },
+        "motion_ack_elapsed_ms": {
+          "count": 24000,
+          "minimum": 0.24262499999895226,
+          "P50": 2.8102505000006204,
+          "P95": 5.619874999996682,
+          "P99": 8.532915999996476,
+          "maximum": 73.29054100000212
+        },
+        "independentRAF_active_interval_ms": {
+          "count": 3600,
+          "P50": 16.69999998807907,
+          "P95": 20.30000001192093,
+          "P99": 21.69999998807907,
+          "maximum": 25.80000001192093
+        },
+        "appRAF_active_callback_CPU_ms": {
+          "count": 3478,
+          "minimum": 0,
+          "P50": 0.10000002384185791,
+          "P95": 0.20000004768371582,
+          "P99": 0.30000001192092896,
+          "maximum": 0.5999999642372131
+        },
+        "appRAF_active_sum_CPU_per_shared_timestamp_ms": {
+          "count": 3477,
+          "minimum": 0,
+          "P50": 0.10000002384185791,
+          "P95": 0.20000004768371582,
+          "P99": 0.30000001192092896,
+          "maximum": 0.5999999642372131
+        },
+        "Source_original_Brush_callback_CPU_ms": {
+          "count": 1138,
+          "minimum": 0.5999999642372131,
+          "P50": 1.5,
+          "P95": 2.399999976158142,
+          "P99": 3.100000023841858,
+          "maximum": 9.200000047683716
+        },
+        "Source_original_Brush_callbacks": 1138,
+        "longtasks": [],
+        "seen": {
+          "events": 39742,
+          "draws": 16134,
+          "uploads": 2274,
+          "appRAF": 3480,
+          "pumpRAF": 3722,
+          "sourceDabs": 1138,
+          "longtasks": 0
+        },
+        "Root_before_queue": null,
+        "Root_tail_first": {
+          "timer": -1,
+          "action": 0
+        },
+        "Root_tail_last": {
+          "timer": -1,
+          "action": 0
+        },
+        "scope": "DOM/CPU/RAF/upload submission only; upload last is all-buffer metadata, not actual last position edit or GPU completion",
+        "independentRAF_active_original_timestamp_interval_ms": {
+          "count": 3600,
+          "minimum": 16.5,
+          "P50": 16.69999999999709,
+          "P95": 16.700000000004366,
+          "P99": 16.80000000000291,
+          "maximum": 16.80000000000291
+        },
+        "last_any_buffer_upload_after_pointerup_ms": -42.40000003576279
+      },
+      "geometry": {
+        "changed_original_vertices": 37270,
+        "maximum_position_change": 0.21073085069656372,
+        "RMS_position_change": 0.012254594815190551,
+        "before_minimum_normalized_quality": 0.00011841791657651968,
+        "after_minimum_normalized_quality": 0.00011841791657651968,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.2128046877780467,
+        "minimum_face_normal_original_alignment": 0.5045308755280065,
+        "complete_adjacent_face_pairs": 2997000,
+        "before_maximum_adjacent_angle_degrees": 0.36085473777860616,
+        "after_maximum_adjacent_angle_degrees": 12.515009369043359,
+        "new_adjacent_pairs_over90degrees": 0,
+        "scope": "Whole original triangle/edge/closed-adjacency metrics; no global self-intersection, visual or retained-normal-field equivalence proof. Adjacent angles are descriptive supplemental metrics, not a retroactive new acceptance gate"
+      },
+      "public_downloads": 5,
+      "memory_samples": 64,
+      "recorder": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-1m-60s-source-1abac714-9b27-4de0-a50e-43c59337e2bc/scalar-recording.json",
+        "bytes": 3818633,
+        "sha256": "f84cd122a86a106c8bc32357da8ec26e2feb2577c8131002ea6aee26aae21e66"
+      },
+      "screenshots": [
+        {
+          "side": "source",
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-1m-60s-source-1abac714-9b27-4de0-a50e-43c59337e2bc/source-admission-complete.png",
+          "bytes": 261938,
+          "sha256": "be64b12b5e96965837d55c9aa01a343c6b80e296fce6c9cb042a798e58e7cdf0",
+          "scope": "Complete ordinary browser surface; no cropped pixel gate substitution"
+        }
+      ],
+      "owned_closure": {
+        "observed_owned_process_absent": true,
+        "owned_pid": 50849,
+        "actual_exit_code": 0,
+        "actual_signal": null,
+        "actual_servers_closed": 1,
+        "exit_status": "Actual exit0 recorded",
+        "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+      },
+      "callback_clock_correction": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/ACTUAL_CALLBACK_TIMING_CORRECTION_AUDIT.json",
+        "bytes": 5793,
+        "sha256": "3d26fe45a77f79d8b2aa8ec0c987f9da0c559161355bb89930740b6065456278"
+      },
+      "failed_checks": []
+    },
+    {
+      "side": "source",
+      "cohort": {
+        "label": "1m",
+        "seconds": 120,
+        "motions": 48000
+      },
+      "actual_result": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-1m-120s-source-4979633c-27b1-4204-a09c-91d36d297698/result.json",
+        "bytes": 25202636,
+        "sha256": "aa03c9d961e98d21fd2530ed5ed71b03bb9aa39e6f676f3437b3d35939d2fb5b"
+      },
+      "independent_audit": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/SUSTAINED_1M_120S_SOURCE_CALLBACK_AUDIT.json",
+        "bytes": 5751,
+        "sha256": "4074a03ab2159aa742e6c1e116ecd6b9613a9a9f3cf765de6b109edcb08a9914"
+      },
+      "status": "FAIL one or more named local data/scalar gates",
+      "checks": {
+        "whole_attributes_topology_history": true,
+        "finite_useful": true,
+        "zero_degenerate_faces": true,
+        "zero_original_orientation_reversals": true,
+        "maximum_edge_stretch_le4": true,
+        "pacing_P99_le25ms": true,
+        "pacing_max_le100ms": false,
+        "independentRAF_P95_le33_34ms": true,
+        "independentRAF_max_le250ms": true,
+        "appRAF_summed_CPU_P95_le16_667ms": true,
+        "Source_no_original_callback_after_up100ms": true,
+        "memory_samples_no_errors": true
+      },
+      "metrics": {
+        "actual_pointer_contact_ms": 120015.30000001192,
+        "scheduled_motion_requests": 48000,
+        "delivered_pointer_moves": 40524,
+        "motion_send_lateness_ms": {
+          "count": 48000,
+          "minimum": 0,
+          "P50": 0.0,
+          "P95": 0.7006660000042757,
+          "P99": 6.0680000000029395,
+          "maximum": 202.54887499999313
+        },
+        "motion_ack_elapsed_ms": {
+          "count": 48000,
+          "minimum": 0.22570900000573602,
+          "P50": 2.7709580000009737,
+          "P95": 5.34908300000825,
+          "P99": 19.176708999992115,
+          "maximum": 464.75666700000875
+        },
+        "independentRAF_active_interval_ms": {
+          "count": 7200,
+          "minimum": 7.5,
+          "P50": 16.69999998807907,
+          "P95": 18.899999976158142,
+          "P99": 20.30000001192093,
+          "maximum": 26.099999964237213
+        },
+        "independentRAF_active_timestamp_interval_ms": {
+          "count": 7200,
+          "minimum": 16.5,
+          "P50": 16.69999999999709,
+          "P95": 16.70000000001164,
+          "P99": 16.80000000000291,
+          "maximum": 16.80000000000291
+        },
+        "appRAF_active_callback_CPU_ms": {
+          "count": 6971,
+          "minimum": 0,
+          "P50": 0.09999996423721313,
+          "P95": 0.19999998807907104,
+          "P99": 0.20000004768371582,
+          "maximum": 0.30000001192092896
+        },
+        "appRAF_active_sum_CPU_per_shared_timestamp_ms": {
+          "count": 6970,
+          "minimum": 0,
+          "P50": 0.09999996423721313,
+          "P95": 0.19999998807907104,
+          "P99": 0.20000004768371582,
+          "maximum": 0.30000001192092896
+        },
+        "Source_original_Brush_callback_CPU_ms": {
+          "count": 2274,
+          "minimum": 0.5,
+          "P50": 0.800000011920929,
+          "P95": 1.9000000357627869,
+          "P99": 2.699999988079071,
+          "maximum": 9
+        },
+        "Source_original_Brush_callbacks": 2274,
+        "longtasks": [],
+        "seen": {
+          "events": 81052,
+          "draws": 32243,
+          "uploads": 4526,
+          "appRAF": 6973,
+          "pumpRAF": 7323,
+          "sourceDabs": 2274,
+          "longtasks": 0
+        },
+        "Root_before_queue": null,
+        "Root_tail_first": {
+          "timer": -1,
+          "action": 0
+        },
+        "Root_tail_last": {
+          "timer": -1,
+          "action": 0
+        },
+        "scope": "DOM/CPU/RAF/upload submission only; upload last is all-buffer metadata, not actual last position edit or GPU completion",
+        "last_any_buffer_upload_after_pointerup_ms": -7.5
+      },
+      "geometry": {
+        "changed_original_vertices": 37322,
+        "maximum_position_change": 0.21848303079605103,
+        "RMS_position_change": 0.012469993270041314,
+        "before_minimum_normalized_quality": 0.00011841791657651968,
+        "after_minimum_normalized_quality": 0.00011841791657651968,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.230910199489239,
+        "minimum_face_normal_original_alignment": 0.4839407637412211,
+        "complete_adjacent_face_pairs": 2997000,
+        "before_maximum_adjacent_angle_degrees": 0.36085473777860616,
+        "after_maximum_adjacent_angle_degrees": 14.933601709851036,
+        "new_adjacent_pairs_over90degrees": 0,
+        "scope": "Whole original triangle/edge/closed-adjacency metrics; no global self-intersection, visual or retained-normal-field equivalence proof. Adjacent angles are descriptive supplemental metrics, not a retroactive new acceptance gate"
+      },
+      "public_downloads": 5,
+      "memory_samples": 123,
+      "recorder": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-1m-120s-source-4979633c-27b1-4204-a09c-91d36d297698/scalar-recording.json",
+        "bytes": 7713155,
+        "sha256": "ce38aeb93429c7ea879f7f232583e9f64f01093c9fc54a60dffdcaf38126fa07"
+      },
+      "screenshots": [
+        {
+          "side": "source",
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-1m-120s-source-4979633c-27b1-4204-a09c-91d36d297698/source-admission-complete.png",
+          "bytes": 261950,
+          "sha256": "91a36147784e34ec61f7a450e0c406d3e31d5ab316e51553fadc9ce1753d8232",
+          "scope": "Complete ordinary browser surface; no cropped pixel gate substitution"
+        }
+      ],
+      "owned_closure": {
+        "observed_owned_process_absent": true,
+        "owned_pid": 51127,
+        "actual_exit_code": 0,
+        "actual_signal": null,
+        "actual_servers_closed": 1,
+        "exit_status": "Actual exit0 recorded",
+        "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+      },
+      "failed_checks": [
+        "pacing_max_le100ms"
+      ]
+    },
+    {
+      "side": "source",
+      "cohort": {
+        "label": "1m",
+        "seconds": 120,
+        "motions": 48000
+      },
+      "actual_result": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-1m-120s-source-620145e9-2914-4110-9778-71fec1f38b58/result.json",
+        "bytes": 25284557,
+        "sha256": "9dcb56d6c36c165c17558755ccdb23524ac8315ff4ed2a63832d41e4f18168b8"
+      },
+      "independent_audit": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/SUSTAINED_1M_120S_SOURCE_RETRY02_CALLBACK_AUDIT.json",
+        "bytes": 5767,
+        "sha256": "4a2678f502791d5bebcee13ad7632b8e0f1a1343971142f68318a003af041d9a"
+      },
+      "status": "PASS named local data/scalar gates",
+      "checks": {
+        "whole_attributes_topology_history": true,
+        "finite_useful": true,
+        "zero_degenerate_faces": true,
+        "zero_original_orientation_reversals": true,
+        "maximum_edge_stretch_le4": true,
+        "pacing_P99_le25ms": true,
+        "pacing_max_le100ms": true,
+        "independentRAF_P95_le33_34ms": true,
+        "independentRAF_max_le250ms": true,
+        "appRAF_summed_CPU_P95_le16_667ms": true,
+        "Source_no_original_callback_after_up100ms": true,
+        "memory_samples_no_errors": true
+      },
+      "metrics": {
+        "actual_pointer_contact_ms": 120009.69999998808,
+        "scheduled_motion_requests": 48000,
+        "delivered_pointer_moves": 39674,
+        "motion_send_lateness_ms": {
+          "count": 48000,
+          "minimum": 0,
+          "P50": 0.0,
+          "P95": 0.7030829999930575,
+          "P99": 0.9874999999992724,
+          "maximum": 45.02862499999901
+        },
+        "motion_ack_elapsed_ms": {
+          "count": 48000,
+          "minimum": 0.2182089999987511,
+          "P50": 2.8088960000013685,
+          "P95": 5.511583999999857,
+          "P99": 8.584750000001804,
+          "maximum": 130.76441600000544
+        },
+        "independentRAF_active_interval_ms": {
+          "count": 7200,
+          "minimum": 8.0,
+          "P50": 16.69999998807907,
+          "P95": 20.399999976158142,
+          "P99": 22.0,
+          "maximum": 24.100000023841858
+        },
+        "independentRAF_active_timestamp_interval_ms": {
+          "count": 7200,
+          "minimum": 16.488000000000284,
+          "P50": 16.69999999999709,
+          "P95": 16.79999999998836,
+          "P99": 16.80000000000291,
+          "maximum": 16.80000000000291
+        },
+        "appRAF_active_callback_CPU_ms": {
+          "count": 6973,
+          "minimum": 0,
+          "P50": 0.09999996423721313,
+          "P95": 0.19999998807907104,
+          "P99": 0.20000004768371582,
+          "maximum": 0.30000001192092896
+        },
+        "appRAF_active_sum_CPU_per_shared_timestamp_ms": {
+          "count": 6972,
+          "minimum": 0,
+          "P50": 0.09999996423721313,
+          "P95": 0.19999998807907104,
+          "P99": 0.20000004768371582,
+          "maximum": 0.30000001192092896
+        },
+        "Source_original_Brush_callback_CPU_ms": {
+          "count": 2281,
+          "minimum": 0.5,
+          "P50": 1.4000000357627869,
+          "P95": 2.099999964237213,
+          "P99": 3.099999964237213,
+          "maximum": 9.800000011920929
+        },
+        "Source_original_Brush_callbacks": 2281,
+        "longtasks": [],
+        "seen": {
+          "events": 79352,
+          "draws": 32319,
+          "uploads": 4554,
+          "appRAF": 6975,
+          "pumpRAF": 7322,
+          "sourceDabs": 2281,
+          "longtasks": 0
+        },
+        "Root_before_queue": null,
+        "Root_tail_first": {
+          "timer": -1,
+          "action": 0
+        },
+        "Root_tail_last": {
+          "timer": -1,
+          "action": 0
+        },
+        "scope": "DOM/CPU/RAF/upload submission only; upload last is all-buffer metadata, not actual last position edit or GPU completion",
+        "last_any_buffer_upload_after_pointerup_ms": -13.199999988079071
+      },
+      "geometry": {
+        "changed_original_vertices": 37321,
+        "maximum_position_change": 0.21842414140701294,
+        "RMS_position_change": 0.01246686977789626,
+        "before_minimum_normalized_quality": 0.00011841791657651968,
+        "after_minimum_normalized_quality": 0.00011841791657651968,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.230749129421039,
+        "minimum_face_normal_original_alignment": 0.4836573486960172,
+        "complete_adjacent_face_pairs": 2997000,
+        "before_maximum_adjacent_angle_degrees": 0.36085473777860616,
+        "after_maximum_adjacent_angle_degrees": 15.029202790743694,
+        "new_adjacent_pairs_over90degrees": 0,
+        "scope": "Whole original triangle/edge/closed-adjacency metrics; no global self-intersection, visual or retained-normal-field equivalence proof. Adjacent angles are descriptive supplemental metrics, not a retroactive new acceptance gate"
+      },
+      "public_downloads": 5,
+      "memory_samples": 123,
+      "recorder": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-1m-120s-source-620145e9-2914-4110-9778-71fec1f38b58/scalar-recording.json",
+        "bytes": 7641811,
+        "sha256": "cccf924c98f7094ea77db6deb5ada2753df2b35077d1206953d16fd068893bff"
+      },
+      "screenshots": [
+        {
+          "side": "source",
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-1m-120s-source-620145e9-2914-4110-9778-71fec1f38b58/source-admission-complete.png",
+          "bytes": 262142,
+          "sha256": "34f6febda774c4e5fa9edc23a758ee800ad20d1a8f340f8df3d693e0354e4de5",
+          "scope": "Complete ordinary browser surface; no cropped pixel gate substitution"
+        }
+      ],
+      "owned_closure": {
+        "observed_owned_process_absent": true,
+        "owned_pid": 54740,
+        "actual_exit_code": 0,
+        "actual_signal": null,
+        "actual_servers_closed": 1,
+        "exit_status": "Actual exit0 recorded",
+        "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+      },
+      "failed_checks": []
+    }
+  ],
+  "preserved_failed_attempts_or_gates": [
+    {
+      "result": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-10k-60s-root-ccf4e75c-e3db-422d-9aac-836505c47ddc/result.json",
+        "bytes": 12382527,
+        "sha256": "d1520c0e287a8133c5168ed32d977696376e420e6341469f91afb0f2319dcfa8"
+      },
+      "side": "root",
+      "cohort": {
+        "label": "10k",
+        "seconds": 60,
+        "motions": 24000
+      },
+      "status": "FAILED actual observer/owned closure",
+      "failure": "Error: Owned CDP socket error: {\"kind\":\"error\",\"at\":\"2026-10-15T22:04:59.734Z\",\"ready_state\":1,\"code\":null,\"reason\":null,\"message\":\"Max decompressed message size exceeded\"}\n    at failedSocket (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/workspace/paired-driver.mjs:16:4111)\n    at WebSocket.<anonymous> (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/workspace/paired-driver.mjs:16:4310)\n    at [nodejs.internal.kHybridDispatch] (node:internal/event_target:843:20)\n    at WebSocket.dispatchEvent (node:internal/event_target:776:26)\n    at fireEvent (node:internal/deps/undici/undici:11883:14)\n    at failWebsocketConnection (node:internal/deps/undici/undici:11964:9)\n    at node:internal/deps/undici/undici:12580:21\n    at InflateRaw.<anonymous> (node:internal/deps/undici/undici:12380:17)\n    at InflateRaw.emit (node:events:519:28)\n    at addChunk (node:internal/streams/readable:561:12)",
+      "cleanup_errors": [
+        "Error: CDP timeout Runtime.evaluate"
+      ],
+      "owned": {
+        "observed_owned_process_absent": true,
+        "owned_pid": 44546,
+        "actual_exit_code": 0,
+        "actual_signal": null,
+        "actual_servers_closed": 1,
+        "exit_status": "Actual exit0 recorded",
+        "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+      },
+      "scheduled_count": 24000,
+      "recorder_started": null,
+      "notice": null,
+      "notice_evidence": null,
+      "screenshots": []
+    },
+    {
+      "result": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-1m-120s-root-fb2f93d5-5fdb-4447-8699-2f6a6618b2d2/result.json",
+        "bytes": 10406116,
+        "sha256": "73a8049cfceaebac8fff82b69d2f0e71ef7eb75bb53da49f3b6ce2bebe05021f"
+      },
+      "side": "root",
+      "cohort": {
+        "label": "1m",
+        "seconds": 120,
+        "motions": 48000
+      },
+      "status": "FAILED actual sustained cohort; capacity/setup/input/file/history failure retained",
+      "failure": "Error: Complete dense fixture import counts bounded120 publication timeout\n    at PageDriver.wait (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/workspace/paired-driver.mjs:26:351)\n    at async PageDriver.prepareFixture (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/workspace/perf-driver.mjs:61:3)\n    at async file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/workspace/perf-sustained.mjs:33:13",
+      "cleanup_errors": [],
+      "owned": {
+        "observed_owned_process_absent": true,
+        "owned_pid": 52301,
+        "actual_exit_code": 0,
+        "actual_signal": null,
+        "actual_servers_closed": 1,
+        "exit_status": "Actual exit0 recorded",
+        "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+      },
+      "scheduled_count": 0,
+      "recorder_started": null,
+      "notice": "Import failed: Combined raw/editable staged allocations exceed the selected storage limit",
+      "notice_evidence": "Both actual whole60s/120s failure screenshots reviewed: same combinedraw/editable staging allocation refusal; no timed Root1M stroke inferred.",
+      "screenshots": [
+        {
+          "side": "root",
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-1m-120s-root-fb2f93d5-5fdb-4447-8699-2f6a6618b2d2/root-admission-failed.png",
+          "bytes": 144616,
+          "sha256": "b5f077c7fc65b63826c0da147b49108ad5ac1cb95fcc4c1e0d57f27603d19f40",
+          "scope": "Complete ordinary browser surface; no cropped pixel gate substitution"
+        }
+      ]
+    },
+    {
+      "result": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-1m-60s-root-992221ed-f0fc-4467-9422-758d736835c0/result.json",
+        "bytes": 10406110,
+        "sha256": "9acd8746376bd582e2705e78babe218f7b1b6efc79ca2adf445bc6546b847bf0"
+      },
+      "side": "root",
+      "cohort": {
+        "label": "1m",
+        "seconds": 60,
+        "motions": 24000
+      },
+      "status": "FAILED actual sustained cohort; capacity/setup/input/file/history failure retained",
+      "failure": "Error: Complete dense fixture import counts bounded120 publication timeout\n    at PageDriver.wait (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/workspace/paired-driver.mjs:26:351)\n    at async PageDriver.prepareFixture (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/workspace/perf-driver.mjs:61:3)\n    at async file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/workspace/perf-sustained.mjs:33:13",
+      "cleanup_errors": [],
+      "owned": {
+        "observed_owned_process_absent": true,
+        "owned_pid": 51100,
+        "actual_exit_code": 0,
+        "actual_signal": null,
+        "actual_servers_closed": 1,
+        "exit_status": "Actual exit0 recorded",
+        "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+      },
+      "scheduled_count": 0,
+      "recorder_started": null,
+      "notice": "Import failed: Combined raw/editable staged allocations exceed the selected storage limit",
+      "notice_evidence": "Both actual whole60s/120s failure screenshots reviewed: same combinedraw/editable staging allocation refusal; no timed Root1M stroke inferred.",
+      "screenshots": [
+        {
+          "side": "root",
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-1m-60s-root-992221ed-f0fc-4467-9422-758d736835c0/root-admission-failed.png",
+          "bytes": 144616,
+          "sha256": "b5f077c7fc65b63826c0da147b49108ad5ac1cb95fcc4c1e0d57f27603d19f40",
+          "scope": "Complete ordinary browser surface; no cropped pixel gate substitution"
+        }
+      ]
+    },
+    {
+      "result": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-100k-60s-root-9122eda8-7a61-457d-976c-4252bd0373fe/result.json",
+        "bytes": 14165610,
+        "sha256": "2ff2b6751f792740972e2c0eda29dc7c8db4c848201d8eb877d37757a87cf239"
+      },
+      "side": "root",
+      "cohort": {
+        "label": "100k",
+        "seconds": 60,
+        "motions": 24000
+      },
+      "status": "FAILED preregistered local gates despite completed timing/data/history",
+      "failed_checks": [
+        "independentRAF_max_le250ms",
+        "appRAF_summed_CPU_P95_le16_667ms"
+      ]
+    },
+    {
+      "result": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-100k-120s-root-c95b28a8-7584-4f0d-9e04-1b1c92240626/result.json",
+        "bytes": 24712917,
+        "sha256": "5f2bf5bfe720d51c170ff7bbadfead4d29e8a319c5664ec36cd79fdc59485c55"
+      },
+      "side": "root",
+      "cohort": {
+        "label": "100k",
+        "seconds": 120,
+        "motions": 48000
+      },
+      "status": "FAILED preregistered local gates despite completed timing/data/history",
+      "failed_checks": [
+        "pacing_max_le100ms",
+        "independentRAF_max_le250ms",
+        "appRAF_summed_CPU_P95_le16_667ms"
+      ]
+    },
+    {
+      "result": {
+        "path": ".artifacts/sculptgl-sustained-performance-c42-stage/actual/SP-LONG00-1m-120s-source-4979633c-27b1-4204-a09c-91d36d297698/result.json",
+        "bytes": 25202636,
+        "sha256": "aa03c9d961e98d21fd2530ed5ed71b03bb9aa39e6f676f3437b3d35939d2fb5b"
+      },
+      "side": "source",
+      "cohort": {
+        "label": "1m",
+        "seconds": 120,
+        "motions": 48000
+      },
+      "status": "FAILED preregistered local gates despite completed timing/data/history",
+      "failed_checks": [
+        "pacing_max_le100ms"
+      ]
+    }
+  ],
+  "paired_position_differences": [
+    {
+      "label": "10k",
+      "seconds": 60,
+      "maximum_per_coordinate_difference": 0.026303648948669434,
+      "RMS_per_coordinate_difference": 0.0015324932788914633,
+      "different_coordinate_words": 1263,
+      "different_original_vertices": 421,
+      "scope": "Descriptive wholecanonical matchedID exported positions; actual event/dab schedules differ. No1e-6 response-equivalence or kernel-error attribution."
+    },
+    {
+      "label": "10k",
+      "seconds": 120,
+      "maximum_per_coordinate_difference": 0.026589632034301758,
+      "RMS_per_coordinate_difference": 0.001560179236921287,
+      "different_coordinate_words": 1260,
+      "different_original_vertices": 420,
+      "scope": "Descriptive wholecanonical matchedID exported positions; actual event/dab schedules differ. No1e-6 response-equivalence or kernel-error attribution."
+    },
+    {
+      "label": "100k",
+      "seconds": 60,
+      "maximum_per_coordinate_difference": 0.025042295455932617,
+      "RMS_per_coordinate_difference": 0.0015159916325816164,
+      "different_coordinate_words": 12138,
+      "different_original_vertices": 4049,
+      "scope": "Descriptive wholecanonical matchedID exported positions; actual event/dab schedules differ. No1e-6 response-equivalence or kernel-error attribution."
+    },
+    {
+      "label": "100k",
+      "seconds": 120,
+      "maximum_per_coordinate_difference": 0.026111602783203125,
+      "RMS_per_coordinate_difference": 0.001537079873681575,
+      "different_coordinate_words": 12116,
+      "different_original_vertices": 4042,
+      "scope": "Descriptive wholecanonical matchedID exported positions; actual event/dab schedules differ. No1e-6 response-equivalence or kernel-error attribution. This120s100k producer pacing gate failed."
+    }
+  ],
+  "short_admission": {
+    "path": ".artifacts/sculptgl-sustained-performance-c42-stage/ADMISSION_AUDIT_INPUT_EXACT.json",
+    "bytes": 9821,
+    "sha256": "0b95ecffbe15b1c460cbe81a7f53236596a1a7722494f2a0b3ff0bb8ebda9d35"
+  },
+  "first10k60_cpu_memory_supplement": {
+    "path": ".artifacts/sculptgl-sustained-performance-c42-stage/SUSTAINED_10K_60S_CPU_MEMORY_SUPPLEMENT.json",
+    "bytes": 3864,
+    "sha256": "510a7e01e8f5a26dc0f56712b2635ee918223eaa0f814e5226cdf86260d64a0a"
+  },
+  "retry_after_sender_failure": {
+    "path": ".artifacts/sculptgl-sustained-performance-c42-stage/SOURCE_1M_120S_RETRY02_PREREGISTRATION.json",
+    "bytes": 747,
+    "sha256": "62f288fdd67ec869260589bb2786c3fbfdfbe971b4c0da2a620c661b6c22ad7b"
+  },
+  "test_tool_fixes": [
+    {
+      "path": ".artifacts/sculptgl-sustained-performance-c42-stage/SOURCE01_FAILURE.json",
+      "bytes": 1098,
+      "sha256": "6cc64c8800bfc81193fae2ded6cb2aa5d692b2e030ed849ce04469bda102d640"
+    },
+    {
+      "path": ".artifacts/sculptgl-sustained-performance-c42-stage/ROOT01_FAILURE.json",
+      "bytes": 716,
+      "sha256": "1de9be9ff6b03e34990089d953afde6cfdb47fdf2addce200c134b7ef61c2682"
+    },
+    {
+      "path": ".artifacts/sculptgl-sustained-performance-c42-stage/ROOT02_FAILURE.json",
+      "bytes": 959,
+      "sha256": "3cdcbfe2b7fecaba70366177dd4f4cbb21fb71a4601f4ad45cd2d3e3b5e05bee"
+    },
+    {
+      "path": ".artifacts/sculptgl-sustained-performance-c42-stage/ROOT03_FAILURE.json",
+      "bytes": 873,
+      "sha256": "2e96efb0ee55fdc4788c9359f48ae39acfdef0aac98640ededaef09a9b9ff2fe"
+    },
+    {
+      "path": ".artifacts/sculptgl-sustained-performance-c42-stage/ROOT04_FAILURE.json",
+      "bytes": 1060,
+      "sha256": "6f3dfea8800239580239d222c66cc53e4569ef767ecb9041a60693c1ad0ae8c4"
+    },
+    {
+      "path": ".artifacts/sculptgl-sustained-performance-c42-stage/SUSTAINED_ROOT01_FAILURE.json",
+      "bytes": 1832,
+      "sha256": "71cdb8015085758bdf20b530fc2667aa7b4360376db0d7fddcf8d678fe96221f"
+    }
+  ],
+  "implementation_follow_up": {
+    "stage": ".artifacts/sculptgl-performance-c43-stage",
+    "actual_baseline_regression": {
+      "path": ".artifacts/sculptgl-performance-c43-stage/failed-baseline-regression/MANIFEST.json",
+      "bytes": 1086,
+      "sha256": "73be14758f6d1fe707363594e22718849e7cae2d539c6ea1312e512a3bb3c1f5"
+    },
+    "math_identity": {
+      "path": ".artifacts/sculptgl-performance-c43-stage/CONTROLLED_MATH_IDENTITY.json",
+      "bytes": 476,
+      "sha256": "eab1d4a0c92fde27417b49070b456b0e256f9ddde156a2c829498e6eeb232dc8"
+    },
+    "status": "Isolated controlled-entry duplicate validation correction passes4targeted checks including3new regressions; complete checks/build/browser/performance and promotion remain separate"
+  },
+  "limits": [
+    "Exactly12required hostcohorts,14actual sustained attempts including transport failure andSource120s1M pacing retry. No smaller substitute for1M input.",
+    "Ordinary Source fixed-topology Draw, radius64px/intensity25%, Clay/Accumulate/alpha/mirror/culling/continuous disabled, pressurefactors0, RootPreventFolds off; originalStudio/default/adaptive/Crease/Move remain separately required.",
+    "Native1024x768 scene viewport, DPR1/UI1, orthographicReset/Frame. Nativepixel dimensions use exactrounded/clampedf32edges; logicalCSS rects andactualmatrices retained.",
+    "IndependentRAF callback clocks, JS CPU/nativecallbacks, scalarGL submissions and upload metadata are not presentedGPUframes, completeGPUbuffer equivalence, physical latency or per-dab matched-cadence math.",
+    "First timed callbacks and Root100k longtasks/cold preparation are included. Source RAF callbackCPU omits event-handler work that Root schedules inRAF; do not infer speed ratio solely fromRAFCPU.",
+    "Paired exported dense shapes differ; useful/finite/nondegenerate and boundededgechecks do not establish identical response or appearance. Supplementalwholeadjacent-angle checks are descriptive, not a retroactively addedgate.",
+    "RSS may doublecount sharedpages; WASM committed bytes are not live allocations; instanceCPU includesUI/GPUprocessCPU/sampling/tail. No leak orGPUexecutiontimeclaim.",
+    "One serial firstpass percase and one specificSource retry, uncontrolled othermachine load, no reversed-order fullreplicate; producer pacing failures remain failed.",
+    "All recording caps retained; completepost-end scalarJSON uses boundedhashedchunks after originalRoot60s undici oversizefailure. Earlierfailed prefixes remainfailed.",
+    "Whole screens differ inUI/cursor/contour/shading; completevisualreview, nativeGUI/physicaltablet/touch/HiDPI, remaining317+5andZBrush2026.2.1 gates remain open."
+  ],
+  "metadata_correction": {
+    "previous_public_sha256": "270815fbe3dbb6fe0dad3a04c25ae429c777838dc55b78c8dfbacd509cd48510",
+    "preserved_previous": ".artifacts/sculptgl-sustained-performance-c42-stage/public-evidence-before-upload-field-name.json",
+    "scope": "Name lastany-buffer submission correctly; numerical values, raw records, gates and failures unchanged. Clarify case-specific producer warning and reviewed notice evidence."
+  }
+}

@@ -1,0 +1,276 @@
+{
+  "scope": "Additive failed release-completion records; original immediate-frame failure and initial preference run statuses unchanged. No reference performance or complete host parity claim.",
+  "recorded_at": "2026-10-14T05:07:53.615181+00:00",
+  "runs": [
+    {
+      "path": ".artifacts/sculptgl-preferences-runtime/candidate2-0.1.18-release-completion-7988ec5e-4983-4104-ad9c-00fbc387d346/result.json",
+      "sha256": "b56aba68a17f6b07c1710a3b4112196822836a2ad1d85d8913617b8adb170a6b",
+      "raw_status": "failed local host run",
+      "harness_sha256": "c3efea73d7c48e73704d60734e1bfdea61a3495ecad33c4cd924d4a24d1e9dc4",
+      "candidate": {
+        "candidate": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.18-candidate2",
+        "source_root": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.18-candidate2/source",
+        "status": "immutable candidate binding",
+        "manifest_sha256": "063a50a5cec6886e0dd0ae166b8190ea5d7d7cf214f2c01e4cb6e45636ed62c5",
+        "build_sha256": "181512d0ce527ccb87340c81e6fe2d9f5cadcf5eee98c64752a90e247e922775",
+        "checked_source_files": 158
+      },
+      "actual_downloads": 2,
+      "recorded_saved_GPU_pairs": 2,
+      "failure": "Error: Geometry or pending dabs changed after release: captured-release-old-settings",
+      "case_gates": [
+        {
+          "name": "frozen-host-startup",
+          "gates": {
+            "actual_startup": true,
+            "default_radius_strength": true,
+            "production_download_completed": true,
+            "visible_gpu_save_exact": true
+          }
+        }
+      ],
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      },
+      "owned_pid": 70242,
+      "quiet_observations": [
+        {
+          "stage": "captured-release-old-settings",
+          "pass": false,
+          "probes": [
+            {
+              "at_epoch_ms": 1791951683241,
+              "GPU_sha256": "706bfd5eb526e8bfd9962a09908c32fccf08de2d940d1df1f3acccf176d264ce",
+              "pending_dabs": 0
+            },
+            {
+              "at_epoch_ms": 1791951683446,
+              "GPU_sha256": "94c6da59b25fa01efb0b05d98ca4faded0a4c942a69947b2223968c7f5fbab7a",
+              "pending_dabs": 0
+            },
+            {
+              "at_epoch_ms": 1791951684251,
+              "GPU_sha256": "94c6da59b25fa01efb0b05d98ca4faded0a4c942a69947b2223968c7f5fbab7a",
+              "pending_dabs": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": ".artifacts/sculptgl-preferences-runtime/candidate2-0.1.18-release-document-0320dedd-0aa0-49e3-ae78-c3b49261ae7b/result.json",
+      "sha256": "a42109a231a3d72bcc773c2dbfbe8d10e0050c5272ef5a30ebbbc818daefd396",
+      "raw_status": "failed local host run",
+      "harness_sha256": "84273f959434596ff4bbacd9f42eccfa020ea3d94f93d598aae6e9f9dfa3ee19",
+      "candidate": {
+        "candidate": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.18-candidate2",
+        "source_root": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.18-candidate2/source",
+        "status": "immutable candidate binding",
+        "manifest_sha256": "063a50a5cec6886e0dd0ae166b8190ea5d7d7cf214f2c01e4cb6e45636ed62c5",
+        "build_sha256": "181512d0ce527ccb87340c81e6fe2d9f5cadcf5eee98c64752a90e247e922775",
+        "checked_source_files": 158
+      },
+      "actual_downloads": 29,
+      "recorded_saved_GPU_pairs": 25,
+      "failure": "Error: Failed declared host case: completed-normal-release-frame-setting-change-captures-old-endpoint",
+      "case_gates": [
+        {
+          "name": "frozen-host-startup",
+          "gates": {
+            "actual_startup": true,
+            "default_radius_strength": true,
+            "production_download_completed": true,
+            "visible_gpu_save_exact": true
+          }
+        },
+        {
+          "name": "completed-normal-release-frame-setting-change-captures-old-endpoint",
+          "gates": {
+            "source_fixture_and_camera_exact": true,
+            "actual_release_and_setting_same_frame": true,
+            "actual_events_trusted": true,
+            "new_radius_committed_exact": false,
+            "old_captured_endpoint_exact": true,
+            "final_endpoint_useful": true,
+            "new_settings_future_output_differs": false,
+            "whole_single_stroke_history_exact": false,
+            "complete_gpu_exact": true,
+            "post_completion_quiet": true
+          }
+        }
+      ],
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      },
+      "owned_pid": 76221,
+      "quiet_observations": [
+        {
+          "stage": "captured-release-old-settings",
+          "pass": true,
+          "probes": [
+            {
+              "at_epoch_ms": 1791953327190,
+              "GPU_sha256": "94c6da59b25fa01efb0b05d98ca4faded0a4c942a69947b2223968c7f5fbab7a",
+              "pending_dabs": 0
+            },
+            {
+              "at_epoch_ms": 1791953327393,
+              "GPU_sha256": "94c6da59b25fa01efb0b05d98ca4faded0a4c942a69947b2223968c7f5fbab7a",
+              "pending_dabs": 0
+            },
+            {
+              "at_epoch_ms": 1791953328197,
+              "GPU_sha256": "94c6da59b25fa01efb0b05d98ca4faded0a4c942a69947b2223968c7f5fbab7a",
+              "pending_dabs": 0
+            }
+          ]
+        },
+        {
+          "stage": "captured-release-early-endpoint",
+          "pass": true,
+          "probes": [
+            {
+              "at_epoch_ms": 1791953332459,
+              "GPU_sha256": "706bfd5eb526e8bfd9962a09908c32fccf08de2d940d1df1f3acccf176d264ce",
+              "pending_dabs": 0
+            },
+            {
+              "at_epoch_ms": 1791953332670,
+              "GPU_sha256": "706bfd5eb526e8bfd9962a09908c32fccf08de2d940d1df1f3acccf176d264ce",
+              "pending_dabs": 0
+            },
+            {
+              "at_epoch_ms": 1791953333479,
+              "GPU_sha256": "706bfd5eb526e8bfd9962a09908c32fccf08de2d940d1df1f3acccf176d264ce",
+              "pending_dabs": 0
+            }
+          ]
+        },
+        {
+          "stage": "captured-release-changed-release-frame",
+          "pass": true,
+          "probes": [
+            {
+              "at_epoch_ms": 1791953337828,
+              "GPU_sha256": "94c6da59b25fa01efb0b05d98ca4faded0a4c942a69947b2223968c7f5fbab7a",
+              "pending_dabs": 0
+            },
+            {
+              "at_epoch_ms": 1791953338036,
+              "GPU_sha256": "94c6da59b25fa01efb0b05d98ca4faded0a4c942a69947b2223968c7f5fbab7a",
+              "pending_dabs": 0
+            },
+            {
+              "at_epoch_ms": 1791953338846,
+              "GPU_sha256": "94c6da59b25fa01efb0b05d98ca4faded0a4c942a69947b2223968c7f5fbab7a",
+              "pending_dabs": 0
+            }
+          ]
+        },
+        {
+          "stage": "captured-release-new-settings-control",
+          "pass": true,
+          "probes": [
+            {
+              "at_epoch_ms": 1791953343161,
+              "GPU_sha256": "94c6da59b25fa01efb0b05d98ca4faded0a4c942a69947b2223968c7f5fbab7a",
+              "pending_dabs": 0
+            },
+            {
+              "at_epoch_ms": 1791953343368,
+              "GPU_sha256": "94c6da59b25fa01efb0b05d98ca4faded0a4c942a69947b2223968c7f5fbab7a",
+              "pending_dabs": 0
+            },
+            {
+              "at_epoch_ms": 1791953344178,
+              "GPU_sha256": "94c6da59b25fa01efb0b05d98ca4faded0a4c942a69947b2223968c7f5fbab7a",
+              "pending_dabs": 0
+            }
+          ]
+        }
+      ],
+      "trials": [
+        {
+          "name": "old-settings",
+          "mode": "ordinary",
+          "before_SHA256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_SHA256": "39e249d0a0ad285edb712740a02c446f021841053630b88c0ae8134f58b6c5d6",
+          "one_undo_SHA256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_SHA256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "whole_undo_redo": {
+            "undo_exact": true,
+            "redo_exact": true
+          },
+          "start_radius": 0.18000000715255737,
+          "after_radius": 0.18000000715255737,
+          "same_frame": true,
+          "quiet_pass": true
+        },
+        {
+          "name": "early-endpoint",
+          "mode": "early",
+          "before_SHA256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_SHA256": "90c916afcfc7227ffdf80dbb28bcb2fbefed93369047d85b6d8fcc447a97e4c2",
+          "one_undo_SHA256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_SHA256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "whole_undo_redo": {
+            "undo_exact": true,
+            "redo_exact": true
+          },
+          "start_radius": 0.18000000715255737,
+          "after_radius": 0.18000000715255737,
+          "same_frame": true,
+          "quiet_pass": true
+        },
+        {
+          "name": "changed-release-frame",
+          "mode": "changed",
+          "before_SHA256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_SHA256": "39e249d0a0ad285edb712740a02c446f021841053630b88c0ae8134f58b6c5d6",
+          "one_undo_SHA256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_SHA256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "whole_undo_redo": {
+            "undo_exact": true,
+            "redo_exact": true
+          },
+          "start_radius": 0.18000000715255737,
+          "after_radius": 0.18000000715255737,
+          "same_frame": true,
+          "quiet_pass": true
+        },
+        {
+          "name": "new-settings-control",
+          "mode": "new-radius",
+          "before_SHA256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_SHA256": "39e249d0a0ad285edb712740a02c446f021841053630b88c0ae8134f58b6c5d6",
+          "one_undo_SHA256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_SHA256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "whole_undo_redo": {
+            "undo_exact": true,
+            "redo_exact": true
+          },
+          "start_radius": 0.18000000715255737,
+          "after_radius": 0.18000000715255737,
+          "same_frame": true,
+          "quiet_pass": true
+        }
+      ]
+    }
+  ],
+  "diagnosis": {
+    "render_completion": "CPU released/pending0 can precede the actual completed GPU frame; every-trial normal Save and independent GPU correspondence defines a separate observed completion scope, not physical input latency.",
+    "history_contract": "Fixture import is a normal undo entry; original second-Undo expecting fixture again is wrong. New separate helper captures actual preimport Save and requires two Undo/two Redo exact states.",
+    "focus": "Root source review identified egui wants_keyboard_input for any focused widget; brush tile focus can survive custom viewport drag and block radius bracket. Runtime exact new-radius gates failed and remain failed; normal press focus handoff is source-staged, not yet consumer checked."
+  },
+  "next_source_only": {
+    "path": "scripts/check-sculptgl-preferences-release-history.mjs",
+    "sha256": "8724cd0b0e54b90e0ea14876bf62dae531b75334604421cd75caf1515356f74c",
+    "preregistration_sha256": "ea822d942e31abc212a5da39d49141f1e141188175faceea9e483e85bfde58df",
+    "status": "prepared and frozen; actual next immutable focus-fix candidate execution pending"
+  },
+  "independent_consolidation_limit": "27 additional runtime saved/GPU pairs are recorded here; second independent reconstruction pending a quiet CPU slot. The separately reconstructed original85 pairs remain exact."
+}

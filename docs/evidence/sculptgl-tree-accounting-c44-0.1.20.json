@@ -1,0 +1,617 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-10-15",
+  "status": "Checked/built C44optimization withnormalbrowserPASS;100k60sperformanceFAIL; notpromoted; fullSculptGLparity unproven",
+  "baseline": "ExactcheckedC43 includes priorcontrolledentryvalidationfix; deliveredmainremainsC42",
+  "change": {
+    "status": "Two new unit regressions and original8 ordered-tree tests pass in final version; full checks/build/runtime pending",
+    "changed_files": [
+      "crates/obrush-core/src/source_ordered_tree.rs"
+    ],
+    "baseline_result": "Compiled original regression fails:18688 live-cell visits for256 storage queries; unchanged required count is0",
+    "new_behavior": "private exact sum of live face-vector allocated capacities, updated on insertion/clear/copy/growth/prune; bytes() no traversal; ordinary geometry, ordering, selection and tree topology algorithms unchanged",
+    "storage_limit": 67108864,
+    "header_accounting": "New usize field is included through size_of<Self>(); no lowered memory charge or relaxed limit",
+    "risks": "All mutable allocation sites must update sum. Unit check_limit independently sums actual capacities; full production numerical/browser/performance gates pending."
+  },
+  "source_manifest": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate44/source/manifest.json",
+    "bytes": 91948,
+    "sha256": "df8c454d6e5b305d7847c5ca6819617f3eeebf34bb3a4bdaeadd59d651a0b447"
+  },
+  "build": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate44/build-record.json",
+    "bytes": 9356,
+    "sha256": "f7899f5a99c7381180ee0d3aa0a57f06a46da55f6140efd4ff0b42d4ada8a78c"
+  },
+  "checked_receipt": {
+    "path": ".artifacts/sculptgl-performance-c44-stage/FINAL_CHECKED_RECEIPT.json",
+    "bytes": 2919,
+    "sha256": "0e39e3ce771d0ea93751e2e6352dd7101e86763ea7d69f1b2b112090cfc14a41"
+  },
+  "checks": {
+    "path": ".artifacts/sculptgl-performance-c44-stage/CHECKS02.json",
+    "bytes": 2027,
+    "sha256": "dc91c49af421d44a74b65602312bafddf7fa842b6803f04631176e7971a3f415"
+  },
+  "tests": {
+    "workspace": 2290,
+    "core": 1584,
+    "app": 706,
+    "ignored": 1
+  },
+  "wasm": {
+    "path": "pkg/obrush_app_bg.wasm",
+    "bytes": 23242008,
+    "sha256": "e0238e1a2ae4f11f2e0c7dd224fb10370a0d635da9ba8b13b390e84de5c627d5"
+  },
+  "actual_profile": {
+    "path": ".artifacts/sculptgl-profile-names-c43-stage/CPU_CALLERS01.json",
+    "bytes": 20736,
+    "sha256": "15907a5eb3434233bca781f476c200808d4579d8f272a13a181f94303f3df460"
+  },
+  "profile_limit": "Symbolizeddiagnostic has differentexecutablesections; usedforhotspothypotheses, notproductiontimingidentity",
+  "regression": {
+    "baseline": {
+      "path": ".artifacts/sculptgl-performance-c44-stage/failed-baseline-regression/run.log",
+      "bytes": 1253,
+      "sha256": "633acd2b53356197f6ae36059d86cd923ad5dd4d99a3095e99ce22bd9789d5d5"
+    },
+    "final": {
+      "path": ".artifacts/sculptgl-performance-c44-stage/tree-regressions02.log",
+      "bytes": 1565,
+      "sha256": "be5f1e6e6a9a26343cdf17a4c65297b94da82b99feea353fd99ae7863802c98f"
+    },
+    "old_cell_visits_for_256queries": 18688,
+    "new": 0,
+    "limits": "Unitstructuralscancount notbrowserbenchmark"
+  },
+  "native_probe": {
+    "protocol": {
+      "path": ".artifacts/sculptgl-performance-c44-stage/NATIVE_PROBE02_PREREGISTRATION.json",
+      "bytes": 1843,
+      "sha256": "ad93459541c20dc8d64ee931b8846cc4245d1b94c10cd8699f7861fc2efe3a66"
+    },
+    "result": {
+      "path": ".artifacts/sculptgl-performance-c44-stage/NATIVE_PROBE_RESULTS02.json",
+      "bytes": 7881,
+      "sha256": "2970dcf6533a58fe7d7ced4e7082658315d1825079911fb7f543e1a54e46dd09"
+    },
+    "cases": [
+      {
+        "baseline": {
+          "center": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "faces": 1280,
+          "generation": 0,
+          "level": 3,
+          "retained_bytes": 170584,
+          "seed_ms": [
+            0.20620799999999997,
+            0.13029200000000002,
+            0.11204199999999999,
+            0.10358400000000001,
+            0.100041
+          ],
+          "vertices": 642
+        },
+        "candidate": {
+          "center": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "faces": 1280,
+          "generation": 0,
+          "level": 3,
+          "retained_bytes": 170600,
+          "seed_ms": [
+            0.289834,
+            0.25216700000000003,
+            0.199625,
+            0.19720800000000002,
+            0.190292
+          ],
+          "vertices": 642
+        },
+        "baseline_median_ms": 0.11204199999999999,
+        "candidate_median_ms": 0.199625,
+        "full_artifacts": [
+          {
+            "filename": "level3-normals.bin",
+            "bytes": 23064,
+            "sha256": "d66d4d9c13a6a936c9d7449438214091973754cd9d173ea6128acbc7a3838472",
+            "byte_identical": true
+          },
+          {
+            "filename": "level3-tree.json",
+            "bytes": 184967,
+            "sha256": "1c09af2840b1307896080c458290fff3799cb19c34318caed67b94c596f807d7",
+            "byte_identical": true
+          }
+        ]
+      },
+      {
+        "baseline": {
+          "center": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "faces": 5120,
+          "generation": 0,
+          "level": 4,
+          "retained_bytes": 688728,
+          "seed_ms": [
+            0.6641670000000001,
+            0.6570830000000001,
+            0.542083,
+            0.5507920000000001,
+            0.590084
+          ],
+          "vertices": 2562
+        },
+        "candidate": {
+          "center": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "faces": 5120,
+          "generation": 0,
+          "level": 4,
+          "retained_bytes": 688744,
+          "seed_ms": [
+            0.73325,
+            0.6653749999999999,
+            0.712792,
+            0.6939160000000001,
+            0.68875
+          ],
+          "vertices": 2562
+        },
+        "baseline_median_ms": 0.590084,
+        "candidate_median_ms": 0.6939160000000001,
+        "full_artifacts": [
+          {
+            "filename": "level4-normals.bin",
+            "bytes": 92184,
+            "sha256": "8dbffb70b82bbf541e8c53c29938924d00d47d4477a40c547a87ab2c0063aa83",
+            "byte_identical": true
+          },
+          {
+            "filename": "level4-tree.json",
+            "bytes": 773757,
+            "sha256": "6e8e4d0d2721e4f094f97c777d04c48ea6adb65787c3f9ed8bc6b8aca09a1680",
+            "byte_identical": true
+          }
+        ]
+      },
+      {
+        "baseline": {
+          "center": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "faces": 20480,
+          "generation": 0,
+          "level": 5,
+          "retained_bytes": 2718296,
+          "seed_ms": [
+            4.547583,
+            4.357333,
+            4.1142080000000005,
+            3.804375,
+            3.8930000000000002
+          ],
+          "vertices": 10242
+        },
+        "candidate": {
+          "center": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "faces": 20480,
+          "generation": 0,
+          "level": 5,
+          "retained_bytes": 2718312,
+          "seed_ms": [
+            2.423333,
+            2.422542,
+            2.334708,
+            2.1941669999999998,
+            2.575459
+          ],
+          "vertices": 10242
+        },
+        "baseline_median_ms": 4.1142080000000005,
+        "candidate_median_ms": 2.422542,
+        "full_artifacts": [
+          {
+            "filename": "level5-normals.bin",
+            "bytes": 368664,
+            "sha256": "097e987f7ca41c1db6639b0aac4428c5eaa554005d702af529886110c9688938",
+            "byte_identical": true
+          },
+          {
+            "filename": "level5-tree.json",
+            "bytes": 3135270,
+            "sha256": "742b3bd4520c7eb41b14ccc745af980a68f795a62b7090d7afd87b0b1224e804",
+            "byte_identical": true
+          }
+        ]
+      },
+      {
+        "baseline": {
+          "center": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "faces": 81920,
+          "generation": 0,
+          "level": 6,
+          "retained_bytes": 10650200,
+          "seed_ms": [
+            42.202375,
+            40.956375,
+            38.631083,
+            39.918208,
+            39.094708
+          ],
+          "vertices": 40962
+        },
+        "candidate": {
+          "center": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "faces": 81920,
+          "generation": 0,
+          "level": 6,
+          "retained_bytes": 10650216,
+          "seed_ms": [
+            7.75825,
+            6.497707999999999,
+            6.32775,
+            5.663958,
+            5.617249999999999
+          ],
+          "vertices": 40962
+        },
+        "baseline_median_ms": 39.918208,
+        "candidate_median_ms": 6.32775,
+        "full_artifacts": [
+          {
+            "filename": "level6-normals.bin",
+            "bytes": 1474584,
+            "sha256": "6ebb9478265197fc3a88f02e13d2a018ff1c8fd8a808cf9aed557017b3037c26",
+            "byte_identical": true
+          },
+          {
+            "filename": "level6-tree.json",
+            "bytes": 12545473,
+            "sha256": "ed6bb458a367540ec56f5a454668602e2f225c1e2931bfdccaf27a58c7690a32",
+            "byte_identical": true
+          }
+        ]
+      },
+      {
+        "baseline": {
+          "center": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "faces": 327680,
+          "generation": 0,
+          "level": 7,
+          "retained_bytes": 42377816,
+          "seed_ms": [
+            512.7987499999999,
+            514.6269159999999,
+            544.691416,
+            545.377833,
+            535.798625
+          ],
+          "vertices": 163842
+        },
+        "candidate": {
+          "center": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "faces": 327680,
+          "generation": 0,
+          "level": 7,
+          "retained_bytes": 42377832,
+          "seed_ms": [
+            26.619459000000003,
+            27.471625,
+            25.145750000000003,
+            24.372958999999998,
+            26.563792
+          ],
+          "vertices": 163842
+        },
+        "baseline_median_ms": 535.798625,
+        "candidate_median_ms": 26.563792,
+        "full_artifacts": [
+          {
+            "filename": "level7-normals.bin",
+            "bytes": 5898264,
+            "sha256": "b7f79e1a41d6489d834e0471e98084d1b7a8705382aeaf591187173d4dd02e58",
+            "byte_identical": true
+          },
+          {
+            "filename": "level7-tree.json",
+            "bytes": 50768181,
+            "sha256": "c5d4b37b09d77f66ca1d164a93221dabfde8b342c516f8acc7e0b3da918a047d",
+            "byte_identical": true
+          }
+        ]
+      }
+    ],
+    "status": "PASS complete independent nativecoldseed output/layout/capacity gates; timings scopedtonativediagnostic",
+    "limits": [
+      "All5samples retained; machine/systemload uncontrolled; no browser/physical latency or fullSculptGL speedratio claim",
+      "Original+8header assertion failureandunsealedinitialtiming limitation preserved",
+      "Complete numerical output and selectedtree invariant proof only for5independenticospheres"
+    ]
+  },
+  "normal_browser": {
+    "result": {
+      "path": ".artifacts/sculptgl-normal-consumer-runtime/candidate44-normal-82473fe0-fbdb-4f03-bbeb-3e6fd2fd1f32/result.json",
+      "bytes": 27464473,
+      "sha256": "334601f05a74b9714f9517c3f5ea29323503feffaf9bb549d42e25f187fab179"
+    },
+    "post_audit": {
+      "path": ".artifacts/sculptgl-normal-c44-consumer-stage/POST_AUDIT02.json",
+      "bytes": 237618,
+      "sha256": "9ea0b9a60c98c7ecce9789b861d7a46c1024278ec8b033c038648818803bb582"
+    },
+    "case_count": 20,
+    "actual_downloads": 126,
+    "saved_GPU_comparisons": 118,
+    "whole_screenshots": 17,
+    "errors": [],
+    "owned_Chrome_exit": 0,
+    "server_closed": true,
+    "limits": "Originalnormal20behaviorunchanged; 118GPUcomparisons fromJSconsumeroracle, nofreshsecondPythonreconstruction claimed"
+  },
+  "sustained_100k_60s": {
+    "protocol": {
+      "path": ".artifacts/sculptgl-sustained-performance-c44-stage/SUSTAINED_PREREGISTRATION.json",
+      "bytes": 6310,
+      "sha256": "c45079b9d484bf8555f1cdc82ca1897f5a3b094db02a8790b4da3a0c7a0604a8"
+    },
+    "helper": {
+      "path": ".artifacts/sculptgl-sustained-performance-c44-stage/HELPER_MANIFEST01.json",
+      "bytes": 5911,
+      "sha256": "2eae06e872ae459c9e1eb956e92ae4b60d4b5f312b147b61f15774e3cfa687f5"
+    },
+    "audit": {
+      "path": ".artifacts/sculptgl-sustained-performance-c44-stage/ROOT_100K_60S_AUDIT01.json",
+      "bytes": 7186,
+      "sha256": "ded6be389543f68739918bf8beb4c1e6998c7a6f8e49ec288f3624cb8c9ba178"
+    },
+    "actual_result": {
+      "path": ".artifacts/sculptgl-sustained-performance-c44-stage/actual/SP-LONG00-100k-60s-root-c17ebae5-e848-4c71-9ea7-6671144f4693/result.json",
+      "bytes": 13855315,
+      "sha256": "150237519f658ba513899a0d7b1299f0252b9b17bf815f0d30f9b3ad16a89e83"
+    },
+    "status": "FAIL one or more named local data/scalar gates",
+    "checks": {
+      "original_runtime_admission_pass": true,
+      "whole_attributes_topology_history": true,
+      "finite_useful": true,
+      "zero_degenerate_faces": true,
+      "zero_original_orientation_reversals": true,
+      "maximum_edge_stretch_le4": true,
+      "pacing_P99_le25ms": true,
+      "pacing_max_le100ms": false,
+      "independentRAF_P95_le33_34ms": false,
+      "independentRAF_max_le250ms": true,
+      "appRAF_summed_CPU_P95_le16_667ms": false,
+      "Root_queue_zero_by100ms": true,
+      "Root_applied_stable_after100ms": true,
+      "memory_samples_no_errors": true,
+      "Root_exported_WASM_memory_measured": true
+    },
+    "metrics": {
+      "actual_pointer_contact_ms": 60109.19999998808,
+      "scheduled_motion_requests": 24000,
+      "delivered_pointer_moves": 3453,
+      "motion_send_lateness_ms": {
+        "count": 24000,
+        "minimum": 0,
+        "P50": 0.0,
+        "P95": 0.745333999999275,
+        "P99": 20.582000000002154,
+        "maximum": 124.75958399999945
+      },
+      "motion_ack_elapsed_ms": {
+        "count": 24000,
+        "minimum": 0.3914589999985765,
+        "P50": 12.765583499998684,
+        "P95": 36.3804999999993,
+        "P99": 140.66416700000264,
+        "maximum": 337.8073330000043
+      },
+      "independentRAF_active_interval_ms": {
+        "count": 2616,
+        "minimum": 0.10000002384185791,
+        "P50": 16.950000017881393,
+        "P95": 39.80000001192093,
+        "P99": 47.80000001192093,
+        "maximum": 81.40000003576279
+      },
+      "independentRAF_active_timestamp_interval_ms": {
+        "count": 2616,
+        "minimum": 16.5,
+        "P50": 16.700000000000728,
+        "P95": 33.400000000001455,
+        "P99": 50.0,
+        "maximum": 66.69999999999891
+      },
+      "appRAF_active_callback_CPU_ms": {
+        "count": 2618,
+        "minimum": 0,
+        "P50": 16.30000001192093,
+        "P95": 39.19999998807907,
+        "P99": 46.69999998807907,
+        "maximum": 75.30000001192093
+      },
+      "appRAF_active_sum_CPU_per_shared_timestamp_ms": {
+        "count": 2617,
+        "minimum": 0,
+        "P50": 16.30000001192093,
+        "P95": 39.19999998807907,
+        "P99": 46.69999998807907,
+        "maximum": 75.30000001192093
+      },
+      "Source_original_Brush_callback_CPU_ms": {
+        "count": 0
+      },
+      "Source_original_Brush_callbacks": 0,
+      "longtasks": [
+        [
+          8300.399999976158,
+          67
+        ],
+        [
+          8453.599999964237,
+          75
+        ],
+        [
+          37989,
+          51
+        ],
+        [
+          38110.39999997616,
+          50
+        ],
+        [
+          38913.39999997616,
+          51
+        ],
+        [
+          38965.59999996424,
+          51
+        ],
+        [
+          39018,
+          50
+        ]
+      ],
+      "seen": {
+        "events": 6910,
+        "draws": 57442,
+        "uploads": 99786,
+        "appRAF": 2741,
+        "pumpRAF": 2740,
+        "sourceDabs": 0,
+        "longtasks": 7
+      },
+      "Root_before_queue": {
+        "applied_dabs": 0,
+        "coalesced_dabs": 0,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 0,
+        "pending_dabs": 0,
+        "processed_dabs": 0,
+        "released_strokes": 0
+      },
+      "Root_tail_first": {
+        "applied_dabs": 1157,
+        "coalesced_dabs": 4,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 3,
+        "pending_dabs": 0,
+        "processed_dabs": 1157,
+        "released_strokes": 1
+      },
+      "Root_tail_last": {
+        "applied_dabs": 1157,
+        "coalesced_dabs": 4,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 3,
+        "pending_dabs": 0,
+        "processed_dabs": 1157,
+        "released_strokes": 1
+      },
+      "last_candidate_upload_after_pointerup_ms": 59.89999997615814,
+      "scope": "DOM/CPU/RAF/upload submission only; upload last is all-buffer metadata, not actual last position edit or GPU completion"
+    },
+    "geometry": {
+      "changed_original_vertices": 4066,
+      "maximum_position_change": 0.22026020288467407,
+      "RMS_position_change": 0.013361457642202581,
+      "before_minimum_normalized_quality": 0.0007395786042558039,
+      "after_minimum_normalized_quality": 0.0007395786042558039,
+      "after_degenerate_faces": 0,
+      "faces_reversed_against_original_cross": 0,
+      "maximum_original_edge_stretch_ratio": 2.222992687678149,
+      "minimum_face_normal_original_alignment": 0.49944620529844036,
+      "complete_adjacent_face_pairs": 298800,
+      "before_maximum_adjacent_angle_degrees": 0.9002909196599697,
+      "after_maximum_adjacent_angle_degrees": 31.03418154308287,
+      "new_adjacent_pairs_over90degrees": 0,
+      "scope": "Whole original triangle/edge/closed-adjacency metrics; no global self-intersection, visual or retained-normal-field equivalence proof. Adjacent angles are descriptive supplemental metrics, not a retroactive new acceptance gate"
+    },
+    "comparison": "Maximum callbackgap81.4ms vs earlierC43retry397.8ms; P95summedRAFCPU39.2ms vs earlier21.5ms. Uncontrolleddifferenttrials and producerpacingfailure preventoverallbrowserimprovement attribution. Originalthresholdsunchanged.",
+    "scope": "SameoriginalSourcefixedtopologyDraw64px/.25/None/noMirror/noClay/noAccumulate/noCulling/noContinuous/zeropressurefactors/PreventFoldsOff,400motionrequests/s24000requests,1024x768DPR1; notdefaultStudio/adaptive/Crease/Move",
+    "wholePNGreview": {
+      "path": ".artifacts/sculptgl-sustained-performance-c44-stage/actual/SP-LONG00-100k-60s-root-c17ebae5-e848-4c71-9ea7-6671144f4693/root-admission-complete.png",
+      "sha256": "d8fe40511ef6e41c00bc25bd28b447c8a2d916ab223292f5b8c55fd310671d53",
+      "observation": "Wholebrowser shows centralraisedloop on diagnosticRGB-IDstriped sphere, intactsilhouette,noobviousgaps atthisview; notneutralmaterial beautycomparison orglobalintersection proof"
+    }
+  },
+  "retained_failures": [
+    {
+      "path": ".artifacts/sculptgl-performance-c44-stage/native-probe-failed-header-assumption01/build-freeze-probes.log",
+      "bytes": 1770,
+      "sha256": "1865ce38e6a21f110ee93155000ed8f8e79b5cc24cd68b7e1e55556dda76d3f1"
+    },
+    {
+      "path": ".artifacts/sculptgl-performance-c44-stage/NATIVE_LAYOUT_CORRECTION_PREREGISTRATION02.json",
+      "bytes": 725,
+      "sha256": "05ad7ea81164f831de44b5d0b403fe32aef91bf09b78049178f7e6eea8d2151a"
+    },
+    {
+      "path": ".artifacts/sculptgl-normal-c44-consumer-stage/FAILED_POST_AUDIT01.json",
+      "bytes": 586,
+      "sha256": "fff92e662cc1227407565e5d414679dbf39d94101266e70dca04ba4173d1450f"
+    }
+  ],
+  "memory_accounting": "Actualpublicstate size272->280bytes; existing formula counts embeddedOrderedTreeheader twice, thus conservative retainedcharge+16. Actualcap64MiBunchanged; noaccountingcharge lowered. Originalassumed+8assertionfailure preserved.",
+  "main_product": {
+    "path": ".artifacts/sculptgl-performance-c44-stage/UNCHANGED_MAIN_CHECK01.json",
+    "bytes": 488,
+    "sha256": "bfb3657e553ef7fb13c04069f2daacd92f41923476e1d7caf2d5538b740c5349"
+  },
+  "next": {
+    "candidate": "C45 isolatedactiveSourcepanelpreflightcorrection",
+    "target": "Eliminate display-only repeatedMesh/statevalidation whileownedSourcestrokeopen; allactualpress/dabvalidationstaysmandatory",
+    "status": "9focusedtestspass, original128checksregressionpreserved, fullchecks/buildrunning"
+  },
+  "remaining": [
+    "Complete original317stableIDs+5hostedcontrols remain required; nofamilyparitypromoted",
+    "100k sustainedresponsivenessfails; original1Mcombinedstagingcapacityfailure unresolved",
+    "Fullmatrix/currentdefault/adaptive/multiplebrush/nativeGUI/physicaltablet/HiDPI/visual/advancedtopology/referencegates remain",
+    "Nativecoldseedtimings do notestablish browser/physical/fullapplicationperformance"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "scope": "Selected rear-object contour behind an opaque foreground object",
+  "reference_revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+  "fixture": {
+    "path": ".artifacts/contour-occlusion-c127/independent-opaque-selected-back.sgl",
+    "author": ".artifacts/contour-occlusion-c127/author.py",
+    "manifest": ".artifacts/contour-occlusion-c127/fixture.json",
+    "bytes": 700,
+    "sha256": "d4f7f1b612666dfd0d9d610d6ae8aad26b320ccaf5e0c25d44508e692f0e18ed",
+    "front_quad": "opaque red at z=+0.25, XY [-0.25,1.25]^2",
+    "selected_back_quad": "opaque green at z=-0.25, XY [0,1]^2",
+    "selected_object_index": 1
+  },
+  "obrush_web_wasm_sha256": "5c78d1ce06ee2fcaf017d888c00c24299dcc634eb0779abcebb538134ec3918f",
+  "source_result": ".artifacts/contour-occlusion-c127/source-1792282577687/result.json",
+  "obrush_result": ".artifacts/contour-occlusion-c127/root-1792282585306/startup.json",
+  "viewport_pixels_each": [1140, 825],
+  "source_off_on_png_sha256": ["a00b53414b8b3499b4d828f1e856d75919b498517798b7a1ae4cb3d97d9ec40e", "c3afa3b2c32b35d86bc5fdb7ce084aad247a7f0562412453ab1297a637a03dd4"],
+  "obrush_off_on_png_sha256": ["12da0fe8d6abc945f0ac477367d0ce56719ec8be8effbd7140e1ae7d0ab70461", "da639bcafcd3964ec93d86fdf8abb38b802771420d05b385312e2a3a135d33d6"],
+  "response": {
+    "selected_hidden_surface_contour_visible_in_both": true,
+    "source_changed_pixels": 3208,
+    "obrush_changed_pixels": 3200,
+    "source_bbox_width_height": [402, 401],
+    "obrush_bbox_width_height": [400, 401],
+    "source_changed_pixels_per_bbox_perimeter": 1.9975093399750934,
+    "obrush_changed_pixels_per_bbox_perimeter": 1.9975031210986267,
+    "binary_mask_iou": 0.6011994002998501,
+    "each_mask_within_one_pixel_of_other": 1.0
+  },
+  "obrush_saved_project_sha256_off_on_off": "75f142a155ab8833e96dcf2501b507256c5500b712ed34118984dc007839472c",
+  "obrush_saved_project_bytes": 3728,
+  "browser_errors_each": 0,
+  "limitations": ["exact color/alpha/sample response open", "multiple selections open", "physical high-DPI and native GUI open", "full SculptGL parity open"]
+}

@@ -1,0 +1,1361 @@
+{
+  "status": "Final OBrush0.1.3 isolated headless-browser smoke passed",
+  "date": "2026-10-12",
+  "method": "Dedicated fresh Chrome profile launched with --headless=new and loopback CDP; no visible window, CUA, accessibility/VoiceOver control or existing user-tab interaction. Trusted CDP pointer events operated only this isolated canvas.",
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/155.0.8059.39",
+    "revision": "@3ff7ac5a9224be9156d7f8703a06e22890aafd34",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+    "jsVersion": "15.5.35.20"
+  },
+  "harness": {
+    "path": ".artifacts/headless-browser-runtime/check.mjs",
+    "sha256": "ec970b7883cf5f15b1cdce0bcc302f1cecf7f12b239c57320057f1dd06e2b7e7",
+    "raw_record": ".artifacts/headless-browser-runtime/final-0.1.3-c52c989e-392f-448f-b48f-79ed2b03d0fb/result.json",
+    "raw_record_sha256": "667a103c0e0e992e67720b3d62606becfdf11f7101c50a12374b1d38967460e3"
+  },
+  "wasm": {
+    "path": "web/dist/pkg/obrush_app_bg.wasm",
+    "local_sha256": "8337208356bfbec933a74f4eb4d8f37170faf1ab96b73afda50a9decb8059c88",
+    "served_sha256": "8337208356bfbec933a74f4eb4d8f37170faf1ab96b73afda50a9decb8059c88",
+    "bytes": 3003622,
+    "served_matches_local": true
+  },
+  "startup": {
+    "runtime": {
+      "contexts": [
+        {
+          "kind": "webgl2",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "glsl": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)",
+          "max_samples": 4
+        }
+      ],
+      "allocations": [
+        {
+          "samples": 4,
+          "actual_samples": 4,
+          "format": 32856,
+          "width": 1153,
+          "height": 912
+        },
+        {
+          "samples": 4,
+          "actual_samples": 4,
+          "format": 33190,
+          "width": 1153,
+          "height": 912
+        }
+      ],
+      "gl_errors": [],
+      "viewports": {
+        "0,0,300,150": 1,
+        "0,0,1600,1000": 9,
+        "212,31,1153,912": 9,
+        "0,0,1153,912": 3
+      },
+      "draw_calls": 39,
+      "max_triangle_indices": 245760,
+      "errors": [],
+      "key_events": []
+    },
+    "canvas": {
+      "width": 1600,
+      "height": 1000,
+      "device_pixel_ratio": 1
+    },
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+    "focus": {
+      "document_has_focus": true,
+      "active_element": "obrush_canvas"
+    },
+    "notice": ""
+  },
+  "final_runtime": {
+    "runtime": {
+      "contexts": [
+        {
+          "kind": "webgl2",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "glsl": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)",
+          "max_samples": 4
+        }
+      ],
+      "allocations": [
+        {
+          "samples": 4,
+          "actual_samples": 4,
+          "format": 32856,
+          "width": 1153,
+          "height": 912
+        },
+        {
+          "samples": 4,
+          "actual_samples": 4,
+          "format": 33190,
+          "width": 1153,
+          "height": 912
+        }
+      ],
+      "gl_errors": [],
+      "viewports": {
+        "0,0,300,150": 1,
+        "0,0,1600,1000": 597,
+        "212,31,1153,912": 597,
+        "0,0,1153,912": 199
+      },
+      "draw_calls": 2587,
+      "max_triangle_indices": 255000,
+      "errors": [],
+      "key_events": []
+    },
+    "notice": ""
+  },
+  "page_network_requests": [
+    "http://127.0.0.1:8787/",
+    "http://127.0.0.1:8787/pkg/obrush_app.js",
+    "http://127.0.0.1:8787/pkg/obrush_app_bg.wasm",
+    "http://127.0.0.1:8787/favicon.ico"
+  ],
+  "blocked_external_page_requests": [],
+  "observed_console_errors": [],
+  "observed_js_exceptions": [],
+  "draw_smoke": {
+    "strokes": 3,
+    "screen_pointer_events": 105,
+    "default_radius": 0.18,
+    "default_strength": 0.35,
+    "symmetry_x": true,
+    "initial_vertices": 40962,
+    "sculpted_vertices": 42502,
+    "changed_original_vertices": 2976
+  },
+  "sculpt_viewport": {
+    "left": 212,
+    "top": 57,
+    "width": 1153,
+    "height": 912
+  },
+  "pointer_trace": [
+    {
+      "type": "mouseMoved",
+      "x": 346,
+      "y": 26,
+      "button": "none",
+      "buttons": 0,
+      "pointerType": "mouse",
+      "control": "Save project",
+      "at_ms": 1791836624663
+    },
+    {
+      "type": "mousePressed",
+      "x": 346,
+      "y": 26,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "clickCount": 1,
+      "control": "Save project",
+      "at_ms": 1791836624728
+    },
+    {
+      "type": "mouseReleased",
+      "x": 346,
+      "y": 26,
+      "button": "left",
+      "buttons": 0,
+      "pointerType": "mouse",
+      "clickCount": 1,
+      "control": "Save project",
+      "at_ms": 1791836624791
+    },
+    {
+      "type": "mouseMoved",
+      "x": 663.5,
+      "y": 488,
+      "button": "none",
+      "buttons": 0,
+      "pointerType": "mouse",
+      "at_ms": 1791836625476
+    },
+    {
+      "type": "mousePressed",
+      "x": 663.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "clickCount": 1,
+      "at_ms": 1791836625514
+    },
+    {
+      "type": "mouseMoved",
+      "x": 671.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836625590
+    },
+    {
+      "type": "mouseMoved",
+      "x": 680.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836625631
+    },
+    {
+      "type": "mouseMoved",
+      "x": 688.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836625664
+    },
+    {
+      "type": "mouseMoved",
+      "x": 696.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836625697
+    },
+    {
+      "type": "mouseMoved",
+      "x": 705.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836625731
+    },
+    {
+      "type": "mouseMoved",
+      "x": 713.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836625764
+    },
+    {
+      "type": "mouseMoved",
+      "x": 721.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836625797
+    },
+    {
+      "type": "mouseMoved",
+      "x": 730.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836625831
+    },
+    {
+      "type": "mouseMoved",
+      "x": 738.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836625864
+    },
+    {
+      "type": "mouseMoved",
+      "x": 746.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836625897
+    },
+    {
+      "type": "mouseMoved",
+      "x": 755.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836625931
+    },
+    {
+      "type": "mouseMoved",
+      "x": 763.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836625963
+    },
+    {
+      "type": "mouseMoved",
+      "x": 771.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836625997
+    },
+    {
+      "type": "mouseMoved",
+      "x": 780.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836626030
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836626077
+    },
+    {
+      "type": "mouseMoved",
+      "x": 796.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836626123
+    },
+    {
+      "type": "mouseMoved",
+      "x": 805.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836626168
+    },
+    {
+      "type": "mouseMoved",
+      "x": 813.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836626214
+    },
+    {
+      "type": "mouseMoved",
+      "x": 821.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836626306
+    },
+    {
+      "type": "mouseMoved",
+      "x": 830.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836626347
+    },
+    {
+      "type": "mouseMoved",
+      "x": 838.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836626395
+    },
+    {
+      "type": "mouseMoved",
+      "x": 846.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836626441
+    },
+    {
+      "type": "mouseMoved",
+      "x": 855.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836626487
+    },
+    {
+      "type": "mouseMoved",
+      "x": 863.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836626534
+    },
+    {
+      "type": "mouseMoved",
+      "x": 871.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836626580
+    },
+    {
+      "type": "mouseMoved",
+      "x": 880.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836626626
+    },
+    {
+      "type": "mouseMoved",
+      "x": 888.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836626671
+    },
+    {
+      "type": "mouseMoved",
+      "x": 896.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836626718
+    },
+    {
+      "type": "mouseMoved",
+      "x": 905.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836626765
+    },
+    {
+      "type": "mouseMoved",
+      "x": 913.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836626812
+    },
+    {
+      "type": "mouseReleased",
+      "x": 913.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 0,
+      "pointerType": "mouse",
+      "clickCount": 1,
+      "at_ms": 1791836626858
+    },
+    {
+      "type": "mouseMoved",
+      "x": 913.5,
+      "y": 488,
+      "button": "none",
+      "buttons": 0,
+      "pointerType": "mouse",
+      "at_ms": 1791836627197
+    },
+    {
+      "type": "mousePressed",
+      "x": 913.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "clickCount": 1,
+      "at_ms": 1791836627231
+    },
+    {
+      "type": "mouseMoved",
+      "x": 905.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836627308
+    },
+    {
+      "type": "mouseMoved",
+      "x": 896.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836627347
+    },
+    {
+      "type": "mouseMoved",
+      "x": 888.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836627381
+    },
+    {
+      "type": "mouseMoved",
+      "x": 880.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836627439
+    },
+    {
+      "type": "mouseMoved",
+      "x": 871.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836627487
+    },
+    {
+      "type": "mouseMoved",
+      "x": 863.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836627537
+    },
+    {
+      "type": "mouseMoved",
+      "x": 855.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836627590
+    },
+    {
+      "type": "mouseMoved",
+      "x": 846.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836627640
+    },
+    {
+      "type": "mouseMoved",
+      "x": 838.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836627690
+    },
+    {
+      "type": "mouseMoved",
+      "x": 830.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836627740
+    },
+    {
+      "type": "mouseMoved",
+      "x": 821.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836627792
+    },
+    {
+      "type": "mouseMoved",
+      "x": 813.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836627845
+    },
+    {
+      "type": "mouseMoved",
+      "x": 805.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836627895
+    },
+    {
+      "type": "mouseMoved",
+      "x": 796.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836627943
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836627993
+    },
+    {
+      "type": "mouseMoved",
+      "x": 780.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836628048
+    },
+    {
+      "type": "mouseMoved",
+      "x": 771.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836628080
+    },
+    {
+      "type": "mouseMoved",
+      "x": 763.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836628128
+    },
+    {
+      "type": "mouseMoved",
+      "x": 755.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836628183
+    },
+    {
+      "type": "mouseMoved",
+      "x": 746.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836628230
+    },
+    {
+      "type": "mouseMoved",
+      "x": 738.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836628280
+    },
+    {
+      "type": "mouseMoved",
+      "x": 730.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836628328
+    },
+    {
+      "type": "mouseMoved",
+      "x": 721.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836628378
+    },
+    {
+      "type": "mouseMoved",
+      "x": 713.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836628427
+    },
+    {
+      "type": "mouseMoved",
+      "x": 705.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836628481
+    },
+    {
+      "type": "mouseMoved",
+      "x": 696.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836628533
+    },
+    {
+      "type": "mouseMoved",
+      "x": 688.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836628584
+    },
+    {
+      "type": "mouseMoved",
+      "x": 680.1666666666666,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836628633
+    },
+    {
+      "type": "mouseMoved",
+      "x": 671.8333333333334,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836628681
+    },
+    {
+      "type": "mouseMoved",
+      "x": 663.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836628730
+    },
+    {
+      "type": "mouseReleased",
+      "x": 663.5,
+      "y": 488,
+      "button": "left",
+      "buttons": 0,
+      "pointerType": "mouse",
+      "clickCount": 1,
+      "at_ms": 1791836628779
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 383,
+      "button": "none",
+      "buttons": 0,
+      "pointerType": "mouse",
+      "at_ms": 1791836629113
+    },
+    {
+      "type": "mousePressed",
+      "x": 788.5,
+      "y": 383,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "clickCount": 1,
+      "at_ms": 1791836629148
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 391.3333333333333,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836629235
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 399.6666666666667,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836629281
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 408,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836629314
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 416.3333333333333,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836629347
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 424.6666666666667,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836629381
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 433,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836629414
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 441.3333333333333,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836629447
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 449.6666666666667,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836629480
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 458,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836629528
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 466.3333333333333,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836629577
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 474.6666666666667,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836629629
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 483,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836629678
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 491.3333333333333,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836629726
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 499.6666666666667,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836629774
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 508,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836629826
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 516.3333333333334,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836629876
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 524.6666666666666,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836629927
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 533,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836629964
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 541.3333333333334,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836630016
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 549.6666666666666,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836630064
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 558,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836630112
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 566.3333333333334,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836630161
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 574.6666666666666,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836630211
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 583,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836630259
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 591.3333333333334,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836630307
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 599.6666666666666,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836630355
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 608,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836630404
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 616.3333333333334,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836630451
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 624.6666666666666,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836630502
+    },
+    {
+      "type": "mouseMoved",
+      "x": 788.5,
+      "y": 633,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "at_ms": 1791836630549
+    },
+    {
+      "type": "mouseReleased",
+      "x": 788.5,
+      "y": 633,
+      "button": "left",
+      "buttons": 0,
+      "pointerType": "mouse",
+      "clickCount": 1,
+      "at_ms": 1791836630597
+    },
+    {
+      "type": "mouseMoved",
+      "x": 346,
+      "y": 26,
+      "button": "none",
+      "buttons": 0,
+      "pointerType": "mouse",
+      "control": "Save project",
+      "at_ms": 1791836630954
+    },
+    {
+      "type": "mousePressed",
+      "x": 346,
+      "y": 26,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "clickCount": 1,
+      "control": "Save project",
+      "at_ms": 1791836631029
+    },
+    {
+      "type": "mouseReleased",
+      "x": 346,
+      "y": 26,
+      "button": "left",
+      "buttons": 0,
+      "pointerType": "mouse",
+      "clickCount": 1,
+      "control": "Save project",
+      "at_ms": 1791836631094
+    },
+    {
+      "type": "mouseMoved",
+      "x": 1407,
+      "y": 735,
+      "button": "none",
+      "buttons": 0,
+      "pointerType": "mouse",
+      "control": "Undo",
+      "at_ms": 1791836631889
+    },
+    {
+      "type": "mousePressed",
+      "x": 1407,
+      "y": 735,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "clickCount": 1,
+      "control": "Undo",
+      "at_ms": 1791836631960
+    },
+    {
+      "type": "mouseReleased",
+      "x": 1407,
+      "y": 735,
+      "button": "left",
+      "buttons": 0,
+      "pointerType": "mouse",
+      "clickCount": 1,
+      "control": "Undo",
+      "at_ms": 1791836632023
+    },
+    {
+      "type": "mouseMoved",
+      "x": 346,
+      "y": 26,
+      "button": "none",
+      "buttons": 0,
+      "pointerType": "mouse",
+      "control": "Save project",
+      "at_ms": 1791836632387
+    },
+    {
+      "type": "mousePressed",
+      "x": 346,
+      "y": 26,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "clickCount": 1,
+      "control": "Save project",
+      "at_ms": 1791836632460
+    },
+    {
+      "type": "mouseReleased",
+      "x": 346,
+      "y": 26,
+      "button": "left",
+      "buttons": 0,
+      "pointerType": "mouse",
+      "clickCount": 1,
+      "control": "Save project",
+      "at_ms": 1791836632523
+    },
+    {
+      "type": "mouseMoved",
+      "x": 1465,
+      "y": 735,
+      "button": "none",
+      "buttons": 0,
+      "pointerType": "mouse",
+      "control": "Redo",
+      "at_ms": 1791836633198
+    },
+    {
+      "type": "mousePressed",
+      "x": 1465,
+      "y": 735,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "clickCount": 1,
+      "control": "Redo",
+      "at_ms": 1791836633273
+    },
+    {
+      "type": "mouseReleased",
+      "x": 1465,
+      "y": 735,
+      "button": "left",
+      "buttons": 0,
+      "pointerType": "mouse",
+      "clickCount": 1,
+      "control": "Redo",
+      "at_ms": 1791836633335
+    },
+    {
+      "type": "mouseMoved",
+      "x": 346,
+      "y": 26,
+      "button": "none",
+      "buttons": 0,
+      "pointerType": "mouse",
+      "control": "Save project",
+      "at_ms": 1791836633699
+    },
+    {
+      "type": "mousePressed",
+      "x": 346,
+      "y": 26,
+      "button": "left",
+      "buttons": 1,
+      "pointerType": "mouse",
+      "clickCount": 1,
+      "control": "Save project",
+      "at_ms": 1791836633778
+    },
+    {
+      "type": "mouseReleased",
+      "x": 346,
+      "y": 26,
+      "button": "left",
+      "buttons": 0,
+      "pointerType": "mouse",
+      "clickCount": 1,
+      "control": "Save project",
+      "at_ms": 1791836633842
+    }
+  ],
+  "save_method": "Real Save project UI button; its public obrushDownload callback was intercepted and the complete unmodified .obrush text retrieved in64KiB CDP chunks.",
+  "history_method": "Real Undo/Redo UI buttons; saved mesh arrays and final PNG were compared exactly. Keyboard shortcut behavior is not certified by this check.",
+  "history_smoke": {
+    "undo_changes_geometry": true,
+    "redo_restores_exact_geometry_masks_colors_normals_and_topology": true
+  },
+  "screenshots": [
+    {
+      "stage": "startup",
+      "path": ".artifacts/headless-browser-runtime/final-0.1.3-c52c989e-392f-448f-b48f-79ed2b03d0fb/startup.png",
+      "sha256": "3d7f822d0d77afe132ed208ad8690fa181af9bc31a38ecc40d8dc7a0dcde9f46",
+      "bytes": 195117
+    },
+    {
+      "stage": "after-draw",
+      "path": ".artifacts/headless-browser-runtime/final-0.1.3-c52c989e-392f-448f-b48f-79ed2b03d0fb/after-draw.png",
+      "sha256": "662ddc69409981ba9079a7ad8086779048cd0c1ac66a0c312e9e65fb99dc3a29",
+      "bytes": 215902
+    },
+    {
+      "stage": "after-redo",
+      "path": ".artifacts/headless-browser-runtime/final-0.1.3-c52c989e-392f-448f-b48f-79ed2b03d0fb/after-redo.png",
+      "sha256": "662ddc69409981ba9079a7ad8086779048cd0c1ac66a0c312e9e65fb99dc3a29",
+      "bytes": 215902
+    }
+  ],
+  "saved_documents": [
+    {
+      "stage": "initial",
+      "path": ".artifacts/headless-browser-runtime/final-0.1.3-c52c989e-392f-448f-b48f-79ed2b03d0fb/initial.obrush",
+      "sha256": "b030d791a7f3c30fb8676e26f554ef3e0c0423b3aefa937ad3cd212517df8ed8",
+      "bytes": 5317105,
+      "name": "Untitled_sculpture.obrush",
+      "vertices": 40962,
+      "triangles": 81920
+    },
+    {
+      "stage": "after-draw",
+      "path": ".artifacts/headless-browser-runtime/final-0.1.3-c52c989e-392f-448f-b48f-79ed2b03d0fb/after-draw.obrush",
+      "sha256": "36e7007bda40136ba0190f9eb64a376596de76b6f3987f0d745e2b73d972dd02",
+      "bytes": 5518269,
+      "name": "Untitled_sculpture.obrush",
+      "vertices": 42502,
+      "triangles": 85000
+    },
+    {
+      "stage": "after-undo",
+      "path": ".artifacts/headless-browser-runtime/final-0.1.3-c52c989e-392f-448f-b48f-79ed2b03d0fb/after-undo.obrush",
+      "sha256": "5d4f43d6b0e52ba45d83d989069427054845499d6d78d9e16d467b7af689224c",
+      "bytes": 5470785,
+      "name": "Untitled_sculpture.obrush",
+      "vertices": 42142,
+      "triangles": 84280
+    },
+    {
+      "stage": "after-redo",
+      "path": ".artifacts/headless-browser-runtime/final-0.1.3-c52c989e-392f-448f-b48f-79ed2b03d0fb/after-redo.obrush",
+      "sha256": "36e7007bda40136ba0190f9eb64a376596de76b6f3987f0d745e2b73d972dd02",
+      "bytes": 5518269,
+      "name": "Untitled_sculpture.obrush",
+      "vertices": 42502,
+      "triangles": 85000
+    }
+  ],
+  "saved_mesh_diagnostics": {
+    "source": ".artifacts/headless-browser-runtime/final-0.1.3-c52c989e-392f-448f-b48f-79ed2b03d0fb/after-draw.obrush",
+    "source_sha256": "36e7007bda40136ba0190f9eb64a376596de76b6f3987f0d745e2b73d972dd02",
+    "vertices": 42502,
+    "triangles": 85000,
+    "finite_positions_and_normals": true,
+    "indices_within_bounds": true,
+    "degenerate_triangles": 0,
+    "repeated_index_triangles": 0,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "max_adjacent_normal_angle_degrees": 36.82124676095582,
+    "adjacent_angle_over_60_edges": 0,
+    "minimum_triangle_quality": 0.5919847520074858,
+    "mask_range": [
+      0.0,
+      0.0
+    ],
+    "limitation": "Numerical check of saved headless-browser mesh only; no global self-intersection test or ZBrush reference comparison."
+  },
+  "saved_mesh_diagnostics_sha256": "33eff16e7492d6985705a5ee19088d09bea944e2ccf62f45543c46f005314166",
+  "cleanup": {
+    "isolated_chrome_exit_code": 0,
+    "isolated_chrome_signal": null,
+    "owned_pid_no_longer_present": true,
+    "existing_localhost_server_preserved": true,
+    "existing_user_profiles_and_tabs_not_targeted": true
+  },
+  "failed_checks_preserved": [
+    {
+      "path": ".artifacts/headless-browser-runtime/final-0.1.3-749a3944-a1f7-4036-bbed-abd93c6b1e3b/result.json",
+      "sha256": "13e7a9a2225a53d310a9338c20943047cb5d5e5e1d25a6420317bbfb1e017f34",
+      "status": "failed isolated headless browser smoke",
+      "failure": "Error: CDP timeout:Runtime.evaluate",
+      "retained_screenshot_paths": [
+        ".artifacts/headless-browser-runtime/final-0.1.3-749a3944-a1f7-4036-bbed-abd93c6b1e3b/startup.png"
+      ],
+      "scope": "Retained harness attempt; startup itself rendered final0.1.3/WebGL2/4xMSAA. Does not establish a general app failure."
+    },
+    {
+      "path": ".artifacts/headless-browser-runtime/final-0.1.3-81ef493b-4816-4bad-9c02-42bfd0ff286d/result.json",
+      "sha256": "1261936f9b6cc60e88d1881e04c53d3f11fd9808229e76564fe5c5096868d364",
+      "status": "failed isolated headless browser smoke",
+      "failure": "Error: Save callback missing:initial",
+      "retained_screenshot_paths": [
+        ".artifacts/headless-browser-runtime/final-0.1.3-81ef493b-4816-4bad-9c02-42bfd0ff286d/startup.png"
+      ],
+      "scope": "Retained harness attempt; startup itself rendered final0.1.3/WebGL2/4xMSAA. Does not establish a general app failure."
+    },
+    {
+      "path": ".artifacts/headless-browser-runtime/final-0.1.3-c4b0cfe8-7201-47ed-bdb8-257239d450e6/result.json",
+      "sha256": "65b7fe5c1c687db96684f36b5315d25566a998db6c54f50212d758497aa0ed55",
+      "status": "failed isolated headless browser smoke",
+      "failure": "Error: Save callback missing:initial",
+      "retained_screenshot_paths": [
+        ".artifacts/headless-browser-runtime/final-0.1.3-c4b0cfe8-7201-47ed-bdb8-257239d450e6/startup.png"
+      ],
+      "scope": "Retained harness attempt; startup itself rendered final0.1.3/WebGL2/4xMSAA. Does not establish a general app failure."
+    }
+  ],
+  "limitations": [
+    "Headless Chrome155 smoke on AppleM2/ANGLE Metal, not native eframeUI, browser matrix, tablet/pressure or full host certification.",
+    "Three recorded default Draw strokes, save and one-step undo/redo; not exhaustive workflows, global self-intersection validation or ZBrush parity.",
+    "Independently generated fresh scene, not exact replay of the user screenshot session.",
+    "Initial keyboard-save attempts did not capture a file, and an unbounded multi-megabyte CDP return timed out. Those failed harness runs are retained; successful validation used observed GUI controls in headless Chrome and bounded file retrieval."
+  ]
+}

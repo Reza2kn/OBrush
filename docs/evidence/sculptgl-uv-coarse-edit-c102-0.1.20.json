@@ -1,0 +1,242 @@
+{
+  "id": "SGL-UV-COARSE-EDIT-C102",
+  "scope": "Controlled direct coarse vertex edit after one actual reference and shared-core static smooth level, three independent same-OBJ fixtures; diagnostic only, no normal brush/history/runtime parity",
+  "parameters": {
+    "delta": [
+      0.125,
+      -0.09375,
+      0.0625
+    ],
+    "source_coarse_vertex": 0,
+    "host_coarse_vertices": {
+      "independent-seamed-tetra": 0,
+      "independent-seamed-quad-cube": 0,
+      "independent-seamed-pyramid": 3
+    },
+    "reference_operation": "actual GUI OBJ import, Subdivide, Lower, direct typed-array coarse edit + geometry update, actual GUI Higher",
+    "host_operation": "shared Rust core import, source-static Add Level, Lower, same physical direct coarse edit, Higher"
+  },
+  "reference": {
+    "revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "result_path": ".artifacts/sculptgl-reference-runtime/uv-coarse-predictions-c102-c5c906f3-b53d-47a3-8714-72342ba07999/result.json",
+    "result_sha256": "2f581826ceddaa94b53c9854f1defa71c86cbf3214a6d8736bc636f16069c960",
+    "browser": "Chrome/155.0.8059.80",
+    "status": "completed reference-only controlled coarse-edit subdivision fixtures",
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "exceptions": 0,
+    "console_errors": 0,
+    "blocked_external_requests": [
+      "https://fonts.googleapis.com/css?family=Open+Sans:400,600"
+    ]
+  },
+  "core": {
+    "comparison_path": ".artifacts/sculptgl-uv-coarse-edit-c102/paired-comparison.json",
+    "comparison_sha256": "0b226cf99b785831cd204475ecaa8b5577464e452d5209b0bae62409aa914224",
+    "cases": [
+      {
+        "fixture": "independent-seamed-tetra",
+        "fixture_sha256": "f038d1990b21472c2f2970b59950c12801219716f298bb991a260bed1c87dcc2",
+        "host_probe_path": ".artifacts/sculptgl-uv-coarse-edit-c102/final-core/independent-seamed-tetra.json",
+        "host_probe_sha256": "3005f029c6f7f5340d212a7d2cb763f384fe84d74bffc3bb124ecb42ec7804aa",
+        "fine_vertices": 10,
+        "edit_delta": [
+          0.125,
+          -0.09375,
+          0.0625
+        ],
+        "old_prediction": {
+          "components": 30,
+          "max_component_error": 0.0,
+          "rms_component_error": 0.0
+        },
+        "new_prediction": {
+          "components": 30,
+          "max_component_error": 0.0,
+          "rms_component_error": 0.0
+        },
+        "unit_fine_normals": {
+          "components": 30,
+          "max_component_error": 1.8817090040521723e-17,
+          "rms_component_error": 1.190097269290375e-17
+        },
+        "diagnostic_face_average_unit_normals": {
+          "components": 30,
+          "max_component_error": 1.1102230246251565e-16,
+          "rms_component_error": 7.021666937153402e-17
+        },
+        "first_neighbor_mismatched_vertices": 8,
+        "edited_fine_absolute": {
+          "components": 30,
+          "max_component_error": 1.4901161193847656e-08,
+          "rms_component_error": 6.664001874625056e-09
+        },
+        "edited_fine_displacement": {
+          "components": 30,
+          "max_component_error": 1.4901161193847656e-08,
+          "rms_component_error": 6.664001874625056e-09
+        },
+        "diagnostic_reference_neighbor_frame_absolute": {
+          "components": 30,
+          "max_component_error": 1.490116130486996e-08,
+          "rms_component_error": 6.664001905656733e-09
+        }
+      },
+      {
+        "fixture": "independent-seamed-quad-cube",
+        "fixture_sha256": "8b76a6ee950a7cf29701aa01c267772c023f668d67c66514885092bab0fdc4c0",
+        "host_probe_path": ".artifacts/sculptgl-uv-coarse-edit-c102/final-core/independent-seamed-quad-cube.json",
+        "host_probe_sha256": "ffd829a34b486a5747275f687740cf03cb58bdfe2f954c2bc52c717589313c16",
+        "fine_vertices": 26,
+        "edit_delta": [
+          0.125,
+          -0.09375,
+          0.0625
+        ],
+        "old_prediction": {
+          "components": 78,
+          "max_component_error": 0.0,
+          "rms_component_error": 0.0
+        },
+        "new_prediction": {
+          "components": 78,
+          "max_component_error": 2.9802322387695312e-08,
+          "rms_component_error": 4.7721908630456665e-09
+        },
+        "unit_fine_normals": {
+          "components": 78,
+          "max_component_error": 0.036351726284709174,
+          "rms_component_error": 0.015114316670849351
+        },
+        "diagnostic_face_average_unit_normals": {
+          "components": 78,
+          "max_component_error": 1.1102230246251565e-16,
+          "rms_component_error": 8.709305949236425e-17
+        },
+        "first_neighbor_mismatched_vertices": 22,
+        "edited_fine_absolute": {
+          "components": 78,
+          "max_component_error": 5.960464477539063e-08,
+          "rms_component_error": 1.785590319380993e-08
+        },
+        "edited_fine_displacement": {
+          "components": 78,
+          "max_component_error": 5.960464477539063e-08,
+          "rms_component_error": 1.785590319380993e-08
+        },
+        "diagnostic_reference_neighbor_frame_absolute": {
+          "components": 78,
+          "max_component_error": 5.960464477539063e-08,
+          "rms_component_error": 1.1689432569633963e-08
+        }
+      },
+      {
+        "fixture": "independent-seamed-pyramid",
+        "fixture_sha256": "8a4bb88bf941a1f88e882c0b769da1369549e5ef6c96dc1c928b7987d5c78081",
+        "host_probe_path": ".artifacts/sculptgl-uv-coarse-edit-c102/final-core/independent-seamed-pyramid.json",
+        "host_probe_sha256": "2bcfd5d91257567deeb0f98cdb8ac97b5e0d239b706c0596484164e3a6e75788",
+        "fine_vertices": 14,
+        "edit_delta": [
+          0.125,
+          -0.09375,
+          0.0625
+        ],
+        "old_prediction": {
+          "components": 42,
+          "max_component_error": 1.4901161193847656e-08,
+          "rms_component_error": 3.2516999577878768e-09
+        },
+        "new_prediction": {
+          "components": 42,
+          "max_component_error": 1.4901161193847656e-08,
+          "rms_component_error": 3.2516999577878768e-09
+        },
+        "unit_fine_normals": {
+          "components": 42,
+          "max_component_error": 0.8329596209691662,
+          "rms_component_error": 0.2972379173344075
+        },
+        "diagnostic_face_average_unit_normals": {
+          "components": 42,
+          "max_component_error": 5.662832647246319e-09,
+          "rms_component_error": 2.7002083286435048e-09
+        },
+        "first_neighbor_mismatched_vertices": 13,
+        "edited_fine_absolute": {
+          "components": 42,
+          "max_component_error": 0.037432581186294556,
+          "rms_component_error": 0.009809396133687302
+        },
+        "edited_fine_displacement": {
+          "components": 42,
+          "max_component_error": 0.037432581186294556,
+          "rms_component_error": 0.009809396133687302
+        },
+        "diagnostic_reference_neighbor_frame_absolute": {
+          "components": 42,
+          "max_component_error": 2.9340721519055535e-08,
+          "rms_component_error": 1.0090129094616291e-08
+        }
+      }
+    ],
+    "product_core_sha256": "0e29cfbeee14c79d1b3e0151bd67920ff3844e2e8720d1a98ba5178a521d7369",
+    "delivered_wasm_sha256": "31170de98d8a5ef884e7e16832af01000c47e149a3e8087f01743e681c4a937f",
+    "product_code_unchanged_from_c101": true,
+    "browser_coarse_edit_comparison": "not run; direct reference mutation is diagnostic only"
+  },
+  "rejected_trial": {
+    "path": ".artifacts/sculptgl-uv-coarse-edit-c102/rejected-frame-trial.json",
+    "sha256": "6627b7256ce7b0a99885f6459587b26ed369ca0ffda9cfeba297722df037924f",
+    "cases": [
+      {
+        "fixture": "independent-seamed-tetra",
+        "trial_probe_path": ".artifacts/sculptgl-uv-navigation-c101/coarse-independent-seamed-tetra-normal-frame.json",
+        "trial_probe_sha256": "b5fc07efcd23ce4c75eea5d385d011107fa73005ad6e1b639183c947c9f0b47f",
+        "max_displacement_component_error": 4.470348358154297e-08,
+        "rms_displacement_component_error": 2.402740045874879e-08
+      },
+      {
+        "fixture": "independent-seamed-quad-cube",
+        "trial_probe_path": ".artifacts/sculptgl-uv-navigation-c101/coarse-independent-seamed-quad-cube-normal-frame.json",
+        "trial_probe_sha256": "09c37914221a446b017e55d4bfd0f8bb1d340267666aee9d2b2e4e6bb91b699b",
+        "max_displacement_component_error": 0.0005422234535217285,
+        "rms_displacement_component_error": 0.0001542061263536833
+      },
+      {
+        "fixture": "independent-seamed-pyramid",
+        "trial_probe_path": ".artifacts/sculptgl-uv-navigation-c101/coarse-independent-seamed-pyramid-normal-frame.json",
+        "trial_probe_sha256": "1a37c03ffbc2f1358a7d4819cf40e4125901a86c2d05926af7a2071b5d3beafd",
+        "max_displacement_component_error": 0.037432581186294556,
+        "rms_displacement_component_error": 0.010168977134457496
+      }
+    ],
+    "note": "Exploratory source not retained as product code; diagnostic outputs retained, not a frozen build"
+  },
+  "source_hashes": {
+    "crates/obrush-core/src/multires.rs": "0e29cfbeee14c79d1b3e0151bd67920ff3844e2e8720d1a98ba5178a521d7369",
+    "crates/obrush-core/examples/uv_coarse_edit_probe.rs": "6cbef42f5a9a616eaf84c7c78ce680490ef7363ccbdc53c7b7a346159def5a9f",
+    "scripts/check-sculptgl-reference.mjs": "e52ddbfb11f1dba017f3093861d600090502eecd9980919d5c659a91d0053b7e",
+    "scripts/compare-uv-coarse-edit.py": "710db115038e805cba43136036961d7efb31f380f022976b2137a151c52eb89c",
+    "Cargo.lock": "42b7e17d68fa40ac3cdf147581afaaa571cb6c6436b9b62486d30fd0a728db3d"
+  },
+  "limitations": [
+    "No normal reference or OBrush brush edit, undo, interchange, usability or performance test",
+    "Oracle uses reference neighbor identities and is not integrated",
+    "Reference import and host core use different vertex/face ordering; all comparisons use pre-edit physical point mapping",
+    "No acceptance tolerance was preregistered; numerical differences are descriptive"
+  ],
+  "checks": {
+    "cargo_fmt": "passed",
+    "workspace_tests": "passed; 2395 tests across 70 groups, zero failures",
+    "native_clippy": "passed cargo clippy --workspace --all-targets -- -D warnings",
+    "wasm_clippy": "passed cargo clippy --workspace --all-targets --target wasm32-unknown-unknown -- -D warnings",
+    "wasm_check": "passed cargo check --workspace --target wasm32-unknown-unknown",
+    "reference_runtime": "passed; owned browser/server closed",
+    "paired_comparator": "passed three same-byte fixtures",
+    "normal_browser_edit": "not run"
+  }
+}

@@ -1,0 +1,189 @@
+{
+  "feature": "SculptGL Block remesh paired cube and sphere comparison",
+  "status": "Cube core/browser world geometry exact; sphere differs; full remesh and SculptGL parity open",
+  "reference_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+  "source": [
+    {
+      "path": "crates/obrush-core/src/remesh.rs",
+      "sha256": "82537554fdac6f42d60ac5c14849720eb1bdb1a8e3f84be6af5d227280fdae15",
+      "bytes": 40518
+    },
+    {
+      "path": "crates/obrush-core/tests/remesh.rs",
+      "sha256": "e0e700edbadb0b128e89383cf46a8bd2f0eb698b5d77e6a540df660886cefe7f",
+      "bytes": 11443
+    },
+    {
+      "path": "crates/obrush-core/tests/fixtures/independent-filter-cube.obj",
+      "sha256": "c9038e8adcbe5649273871feba73699753fa9abee0984575e14f41c9d610dde7",
+      "bytes": 252
+    },
+    {
+      "path": "crates/obrush-core/examples/block_remesh_fixture.rs",
+      "sha256": "09b597d90b13a7e0e1333205ea71aafd8d1bc44052d288d9ac65d98afd5d10c6",
+      "bytes": 790
+    },
+    {
+      "path": "crates/obrush-app/src/app.rs",
+      "sha256": "afec66acb5599ff6ca7305731653ae2aeb629b53aebbbe445c8392bfc651b4dd",
+      "bytes": 486713
+    },
+    {
+      "path": "crates/obrush-app/src/preferences_host.rs",
+      "sha256": "90d6c7944536450b3b6b9f5a9feb855e79f0a854ee72c43810b891a94b215165",
+      "bytes": 44796
+    },
+    {
+      "path": "scripts/check-mask-filters.mjs",
+      "sha256": "3954edf47f848fe9b4319d955072d3b894cfebe99a71098d11841039c73f8fd8",
+      "bytes": 108095
+    },
+    {
+      "path": "scripts/check-sculptgl-reference.mjs",
+      "sha256": "c337bf0dcd9ce27cfc105998d89d7c5d077cfd66d57e98a9c0dfa25c80a19b6d",
+      "bytes": 53153
+    },
+    {
+      "path": "scripts/compare-block-remesh.py",
+      "sha256": "7b764a539944997834854772d82b3723bca69adb9e75496acbfe241ca05fcd0f",
+      "bytes": 4077
+    },
+    {
+      "path": "docs/SCULPTGL_BLOCK_REMESH_C82.md",
+      "sha256": "79c6aad2edea662cf61bac3f4dfee12d1bc6c0805f2c7b45c59a80d5442321e9",
+      "bytes": 2729
+    },
+    {
+      "path": "docs/FEATURE_PARITY.md",
+      "sha256": "9a243f4fc4d11a2dcc4e062f09a30889dfd3163001d0a484127e2f4844e0fcc7",
+      "bytes": 66771
+    },
+    {
+      "path": "docs/SCULPTGL_PARITY.md",
+      "sha256": "076084078df3d5e77df3800e5c3e5d43ca5d2e5d643c4439e9b899d0234bf25b",
+      "bytes": 173431
+    }
+  ],
+  "reference_runtime": {
+    "path": ".artifacts/sculptgl-reference-runtime/block-remesh-c82-cube64-3fa10208-7504-40ed-9ff4-e25fabbd61ab/result.json",
+    "sha256": "bea5e80256f87bbde99e5d00731d2401704507f7beb280ed1d9016f03f85a6ab",
+    "bytes": 5860371,
+    "status": "passed reference-only block remesh workflows",
+    "cases": 3,
+    "browser_product": "Chrome/155.0.8059.80"
+  },
+  "reference_initial_failed_assumption": {
+    "path": ".artifacts/sculptgl-reference-runtime/block-remesh-c82-f16737fa-037f-495d-b5a6-4c9b543c4e11/result.json",
+    "sha256": "ef525a5aed2ca100717feb9efaac93693201730d32977d96fb0f0320f1dd8399",
+    "bytes": 217091
+  },
+  "core_output": {
+    "path": ".artifacts/block-remesh-c82-own.json",
+    "sha256": "2964ba8748cefc53bced1c0e8e85c566cdd5515dd79bc439680c776fd8c28452",
+    "bytes": 3733728
+  },
+  "cube_core_comparison": {
+    "path": ".artifacts/block-remesh-c82-comparison.json",
+    "sha256": "6fc38ad2d11cbd953aa411500bc7a32d47361ed71bad33df88ae93a50f288e04",
+    "bytes": 948,
+    "exact_world_geometry": true,
+    "vertices": 24578,
+    "oriented_triangles": 49152
+  },
+  "targeted_browser": {
+    "path": ".artifacts/mask-filter-browser/block-remesh-c82-final-e6136b53-847d-4d7c-b53c-08d181d382b6/result.json",
+    "sha256": "fb00a9e9ea313d4aa15545ecb602c21b61dbd33a3fc09cc208a6bb052465799a",
+    "bytes": 818389,
+    "status": "passed block remesh browser workflow",
+    "cases": 1,
+    "snapshots": 4,
+    "web_wasm_sha256": "3a4ab69f1645cf185d36e13d98c19e786e9fefd29097610562645c53856f49d8",
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "exceptions": 0,
+    "console_errors": 0,
+    "gl_errors": 0,
+    "js_errors": 0
+  },
+  "cube_browser_comparison": {
+    "path": ".artifacts/block-remesh-c82-browser-comparison.json",
+    "sha256": "0ccf51c9dc8d53b3af381c3c1c8f3e4fb6ca104ad79cb3b0044afd222c1d517d",
+    "bytes": 957,
+    "exact_world_geometry": true,
+    "unmatched_reference_points": 0,
+    "unmatched_reference_oriented_triangles": 0
+  },
+  "sphere_reference_runtime": {
+    "path": ".artifacts/sculptgl-reference-runtime/block-remesh-c82-corrected-2923614b-5274-4721-994f-79785d4a1278/result.json",
+    "sha256": "3c9014f9b942133c0e10a823db030b31a25992a59ee5cab10fd8751efcdf4765",
+    "bytes": 1254802
+  },
+  "sphere_failed_comparison": {
+    "path": ".artifacts/block-remesh-c82-sphere-comparison.json",
+    "sha256": "f7b0416e44e976bf2d31e535e302f43bbb44cceba27b4345c8a7a01a5231bdc9",
+    "bytes": 967,
+    "reference_vertices": 4746,
+    "obrush_vertices": 4768,
+    "reference_triangles": 9488,
+    "obrush_triangles": 9532,
+    "exact_world_geometry": false
+  },
+  "sphere_geometric_gap": {
+    "path": ".artifacts/block-remesh-c82-sphere-gap.json",
+    "sha256": "01bf74a8f4067e5106ac616960b2861a69913c443647a80e3c1b6a2e2175297b",
+    "bytes": 883
+  },
+  "validation": {
+    "cargo_fmt_check": "passed",
+    "workspace_tests": {
+      "path": ".artifacts/block-remesh-c82-final-workspace-tests.log",
+      "sha256": "7addcf2675af88d534447c81807424609edcd9643d12f70b9fd8b446659e074e",
+      "bytes": 230205,
+      "passed": 2369,
+      "failed": 0,
+      "ignored": 1,
+      "test_binaries": 83
+    },
+    "native_workspace_strict_clippy": {
+      "path": ".artifacts/block-remesh-c82-final-clippy-native.log",
+      "sha256": "b7fd0d729d80e8ff03b85721ce229141e3c7b0ab0fea9a8d64d1bc1c54774b7c",
+      "bytes": 148
+    },
+    "wasm_workspace_strict_clippy": {
+      "path": ".artifacts/block-remesh-c82-final-clippy-wasm.log",
+      "sha256": "d2046956d53111745d8e801f164d5cef6dcdcd1fbc97520a8c44a6725447958d",
+      "bytes": 148
+    },
+    "wasm_workspace_check": {
+      "path": ".artifacts/block-remesh-c82-final-check-wasm.log",
+      "sha256": "5789439e2e69828478c73859030afb5fe41d063cc9fb0351fc76f0a743767e92",
+      "bytes": 148
+    },
+    "javascript_syntax": "passed",
+    "git_diff_check": "passed",
+    "official_web_build": {
+      "path": ".artifacts/block-remesh-c82-final-build-web.log",
+      "sha256": "2275a31131ed99d082a6c2699ab16f412c70463602732d782df1ebbafc017760",
+      "bytes": 279
+    },
+    "official_macos_package": {
+      "path": ".artifacts/block-remesh-c82-package-macos.log",
+      "sha256": "9d3e27b8439252c07d3f2a524bd8b4bc3c8c07211fe68418cf6dd5022ff709a0",
+      "bytes": 407
+    },
+    "built_wasm": {
+      "path": "web/dist/pkg/obrush_app_bg.wasm",
+      "sha256": "3a4ab69f1645cf185d36e13d98c19e786e9fefd29097610562645c53856f49d8",
+      "bytes": 23287608
+    }
+  },
+  "limitations": [
+    "Only one paired cube exact at resolution 64; the independent sphere at 32 fails geometry comparison",
+    "Reference sphere has UV corners stripped on OBrush import due metadata detachment policy",
+    "Arbitrary shapes, selection fusion, all parameter ranges, native GUI and sustained large-mesh responsiveness unverified",
+    "SculptGL and ZBrush full parity remain open"
+  ]
+}

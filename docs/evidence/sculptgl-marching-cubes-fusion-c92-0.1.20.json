@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "scope": "C92 selected two-mesh Marching Cubes fusion; one independently authored overlapping-box pair at resolution 16, Relax off/on",
+  "reference": {
+    "upstream_commit": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "pinned_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "run": {
+      "path": ".artifacts/sculptgl-reference-runtime/mc-c92-fusion-be87dc50-866f-4b87-8bad-8bb19ae3c59e/result.json",
+      "sha256": "a78a053d47e9e1b1670949b93cc3fe93b695cb8a3fe6dd5952253c6c6ae33b42",
+      "bytes": 93856
+    }
+  },
+  "fixture": [
+    {
+      "path": "crates/obrush-core/tests/fixtures/independent-fusion-left.obj",
+      "sha256": "0466ebbdfabf3bc74b0d312d46fe4a89cf4391c2c8c65a14a8ab029650f08d83",
+      "bytes": 339
+    },
+    {
+      "path": "crates/obrush-core/tests/fixtures/independent-fusion-right.obj",
+      "sha256": "9600c7b964ac0b35ebafda32d889f96bda59799ecc0e65092b5fa598ba924dbf",
+      "bytes": 340
+    }
+  ],
+  "parameters": {
+    "selection_order": [
+      "right",
+      "left"
+    ],
+    "mode": "Marching Cubes",
+    "resolution": 16,
+    "relax": [
+      false,
+      true
+    ],
+    "source": "two imported OBJ SubTools",
+    "reference_selection": "programmatic public selection method",
+    "obrush_selection": "actual visible inspector additive selection"
+  },
+  "source": [
+    {
+      "path": "crates/obrush-core/src/remesh.rs",
+      "sha256": "8a1c7db663ea5d56de250b546679df6ca27b44f558bfefbbd82d5cf6ae2357f1",
+      "bytes": 69363
+    },
+    {
+      "path": "crates/obrush-core/src/document.rs",
+      "sha256": "4ea2449dad591f10f4ecdf7edd9b97d1b684efe1bb759e436f27e54549dd63be",
+      "bytes": 166142
+    },
+    {
+      "path": "crates/obrush-core/src/topology.rs",
+      "sha256": "23a4b23360b2a8791d61efbf1e27b08bb9d179c8bb11c30fc9752eda5f3ac9f2",
+      "bytes": 3835
+    },
+    {
+      "path": "crates/obrush-core/src/lib.rs",
+      "sha256": "1ca37eeb833c4e67b01fd8e51580b21522c12a7fdd24d0c04db08fdc0dbcd60c",
+      "bytes": 8810
+    },
+    {
+      "path": "crates/obrush-app/src/app.rs",
+      "sha256": "d96f61d2f77f38ef7f9d1803d0ccd8aae0aa202174227b1f75f2da8da043559c",
+      "bytes": 495272
+    },
+    {
+      "path": "scripts/check-mc-browser.mjs",
+      "sha256": "cea91cbebbf49003f97734e02d0d5a91df183e84e8818e24a7f25fc13502d01d",
+      "bytes": 123155
+    },
+    {
+      "path": "scripts/compare-mc-remesh.py",
+      "sha256": "ca652d34815f7df1a10cbc2102a1f14e42381d3669a05b5927f79b54519a38c4",
+      "bytes": 7327
+    }
+  ],
+  "builds": {
+    "web_wasm": {
+      "path": "web/dist/pkg/obrush_app_bg.wasm",
+      "sha256": "d48f110d892aaa766831d58cb1da3cc810588e2f11911ff5e5378475ee4c54a8",
+      "bytes": 23418428
+    },
+    "macos_executable": {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/OBRush",
+      "sha256": "0a5efc2d1a9a9e37d2ab53d8f96e90ee3f3cf62b63257cbb11015faf0557c019",
+      "bytes": 26738992
+    }
+  },
+  "comparisons": {
+    "native_core": {
+      "path": ".artifacts/mc-c92-fusion-comparison-3.json",
+      "sha256": "6c7e1d3cb1fbcef66330973a62e3a6a00b7b90df6f3affdd9dae33d7492ae1d0",
+      "bytes": 3542
+    },
+    "browser_save": {
+      "path": ".artifacts/mc-c92-fusion-browser-comparison.json",
+      "sha256": "b27205426d6eb6754c8b65b173b58d7f0e956d66b9e34aee13dac1ef68a5347d",
+      "bytes": 4085
+    },
+    "core_summary": {
+      "counts": [
+        1056,
+        2108
+      ],
+      "mapped_oriented_faces": 2108,
+      "relaxed_maximum_world_position_error": 3.2398532419733026e-07,
+      "attribute_differences": [
+        {
+          "relaxed": false,
+          "rgb": {
+            "values_compared": 3168,
+            "maximum_abs_difference": 0.0,
+            "rms_abs_difference": 0.0
+          },
+          "roughness_metallic": {
+            "values_compared": 2112,
+            "maximum_abs_difference": 0.0,
+            "rms_abs_difference": 0.0
+          },
+          "unmasked_weight": {
+            "values_compared": 1056,
+            "maximum_abs_difference": 0.0,
+            "rms_abs_difference": 0.0
+          }
+        },
+        {
+          "relaxed": true,
+          "rgb": {
+            "values_compared": 3168,
+            "maximum_abs_difference": 0.0,
+            "rms_abs_difference": 0.0
+          },
+          "roughness_metallic": {
+            "values_compared": 2112,
+            "maximum_abs_difference": 0.0,
+            "rms_abs_difference": 0.0
+          },
+          "unmasked_weight": {
+            "values_compared": 1056,
+            "maximum_abs_difference": 0.0,
+            "rms_abs_difference": 0.0
+          }
+        }
+      ]
+    },
+    "browser_summary": {
+      "counts": [
+        1056,
+        2108
+      ],
+      "mapped_oriented_faces": 2108,
+      "relaxed_maximum_world_position_error": 3.2459885279663655e-07,
+      "attribute_differences": [
+        {
+          "relaxed": false,
+          "rgb": {
+            "values_compared": 3168,
+            "maximum_abs_difference": 2.7055358842176247e-08,
+            "rms_abs_difference": 4.478224143438802e-09
+          },
+          "roughness_metallic": {
+            "values_compared": 2112,
+            "maximum_abs_difference": 2.384185793236071e-08,
+            "rms_abs_difference": 1.737759083115635e-08
+          },
+          "unmasked_weight": {
+            "values_compared": 1056,
+            "maximum_abs_difference": 0.0,
+            "rms_abs_difference": 0.0
+          }
+        },
+        {
+          "relaxed": true,
+          "rgb": {
+            "values_compared": 3168,
+            "maximum_abs_difference": 2.7055358842176247e-08,
+            "rms_abs_difference": 4.478224143438802e-09
+          },
+          "roughness_metallic": {
+            "values_compared": 2112,
+            "maximum_abs_difference": 2.384185793236071e-08,
+            "rms_abs_difference": 1.737759083115635e-08
+          },
+          "unmasked_weight": {
+            "values_compared": 1056,
+            "maximum_abs_difference": 0.0,
+            "rms_abs_difference": 0.0
+          }
+        }
+      ]
+    }
+  },
+  "browser": {
+    "result": {
+      "path": ".artifacts/mask-filter-browser/mc-c92-fusion-retry-cb2be005-b91e-4883-9f6b-f4a087ce2767/result.json",
+      "sha256": "34ee66838bcdd469c637a097439e3e38d729ea312d90eeacd5dd35c7e9ae04fc",
+      "bytes": 1757109
+    },
+    "cases": [
+      "marching-cubes-fusion-relaxed-false-visible-workflow",
+      "marching-cubes-fusion-relaxed-true-visible-workflow"
+    ],
+    "visible_gpu_save_and_history": "both Relax settings passed"
+  },
+  "checks": {
+    "cargo_fmt": "passed",
+    "cargo_test_workspace": "passed",
+    "strict_native_clippy": "passed after final target-only cfg change",
+    "strict_wasm_clippy": "passed after target-only cfg correction",
+    "wasm_check": "passed",
+    "official_build_web": "passed",
+    "official_package_macos": "passed",
+    "isolated_browser": "passed both cases"
+  },
+  "retained_failed_checks": [
+    {
+      "path": ".artifacts/mc-c92-fusion-comparison.json",
+      "sha256": "e79e39d0bb07d23ec921c3930b200f96b38eb361da8d1ef08d35e5f6964c371f",
+      "bytes": 3570
+    },
+    {
+      "path": ".artifacts/mc-c92-fusion-comparison-2.json",
+      "sha256": "03c5d5096807e9089d978eaf820a28bcdc8a4b7df364d869bf7bb2af4aa04dcc",
+      "bytes": 3572
+    },
+    {
+      "path": ".artifacts/mask-filter-browser/mc-c92-fusion-91c3830c-42da-4029-b260-9a04aec167c8/result.json",
+      "sha256": "61650ca92977ba197b58a0f7b34ea9290202b0b10d35f2c530483d537734144e",
+      "bytes": 981482
+    }
+  ],
+  "limitations": [
+    "one overlapping box pair and one resolution",
+    "mixed UV, affine/source-origin selected inputs remain unsupported",
+    "no production WebGPU compute/draw integration",
+    "sustained million-vertex responsiveness and full SculptGL/ZBrush parity unverified"
+  ]
+}

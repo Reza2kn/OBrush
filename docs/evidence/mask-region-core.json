@@ -1,0 +1,1294 @@
+{
+  "schema_version": 1,
+  "version": "0.1.14",
+  "recorded_at_utc": "2026-10-13T21:05:02.382483+00:00",
+  "git": "Unborn main; exact source/build/helper hashes identify this execution",
+  "status": "Scoped independent core and host contracts pass; full workspace checks bind final production source",
+  "reference": {
+    "version": "ZBrush desktop 2026.2.1",
+    "execution": false,
+    "historical_binary_identity_record": {
+      "path": "docs/evidence/zbrush-native-inspection.json",
+      "bytes": 11282,
+      "sha256": "02de46853a20df3fd70d39fb986574fd555f15fb6b1eeefb2948d9309706f692"
+    },
+    "identity_scope": "Prior executable/build identity only; no new reference process or fixture executed for this release",
+    "primary_scope": "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/modeling-basics/masking/masking.html",
+    "scope_checked_date": "2026-10-13",
+    "limitation": "Independent through-depth vertex projection, hard rectangle/lasso selection and explicit host gesture policies do not establish reference behavior; no matched region fixture executed"
+  },
+  "owner_receipt": {
+    "path": ".artifacts/mask-region-core/receipt.json",
+    "bytes": 12432,
+    "sha256": "49ec65c216baa10aead60c0549e29b3caf700828f2a493c3984c9db8caafb343"
+  },
+  "independent_receipt": {
+    "path": ".artifacts/mask-region-contract-audit/final-receipt.json",
+    "bytes": 34226,
+    "sha256": "87b33e49e9cbb60caf8e2218699bce2dd548224c77fd1630d2d0b861bd253d6a"
+  },
+  "host_receipt": {
+    "path": ".artifacts/mask-region-host/receipt.json",
+    "bytes": 21061,
+    "sha256": "e8c745d3e7a6a379a9acd88ef82d58babb8e3329272a215947c0a129ccb10dc1"
+  },
+  "owner": {
+    "api": {
+      "document_method": "Document::mask_region(&MaskRegionSettings)->Result<MaskRegionReport,String>",
+      "mesh_method": "Mesh::region_masks(&MaskRegionSettings)->Result<(Vec<f32>,MaskRegionReport),String>",
+      "region": "MaskRegion::{Rectangle{start:[f64;2],end:[f64;2]},Lasso{points:Vec<[f64;2]>}}",
+      "report_fields": [
+        "kind",
+        "erase",
+        "vertices",
+        "projected_vertices",
+        "selected_vertices",
+        "changed_vertices",
+        "polygon_points",
+        "point_edge_work",
+        "max_abs_change"
+      ],
+      "settings": "MaskRegionSettings{region,view_projection:[f32;16],viewport:[f64;4],erase:bool}"
+    },
+    "baseline": {
+      "capability_before": "Captured 0.1.13 core has painting/clear/invert/scalar filters, no frozen-projection region API.",
+      "frozen_sources": [
+        {
+          "bytes": 71811,
+          "path": ".artifacts/mask-region-core/baseline/document.rs",
+          "sha256": "a4266fb14008a50dcffa47aa6a903559676a489597a6091f1def19e444142f77"
+        },
+        {
+          "bytes": 1501,
+          "path": ".artifacts/mask-region-core/baseline/lib.rs",
+          "sha256": "aa517a8d97ab916b3ea53d4a1ca05a28bfbbb860703ad547f9751463b7bf7630"
+        },
+        {
+          "bytes": 7990,
+          "path": ".artifacts/mask-region-core/baseline/mask_filter.rs",
+          "sha256": "98b908e846e935946e5e08d706aff0a670e7d8ea87b755a0157dc2ac62d54fcb"
+        },
+        {
+          "bytes": 60899,
+          "path": ".artifacts/mask-region-core/baseline/mesh.rs",
+          "sha256": "7e9027e1aff2c2a1d3744e7d1c27df4c0aed27f9ef104b70ef83454d9fa791ae"
+        }
+      ],
+      "source_manifest": {
+        "bytes": 807,
+        "path": ".artifacts/mask-region-core/baseline/source-hashes.json",
+        "sha256": "65e3e092d6ab382d83b2fd24a64986932745ea2473a45bd7700962148c0bc46a"
+      }
+    },
+    "final_sources": [
+      {
+        "frozen_copy": {
+          "bytes": 12792,
+          "path": ".artifacts/mask-region-core/final-source/mask_region.rs",
+          "sha256": "2f07a3f9d1dcf5bfa4625e8dc85d2fc802c5353b1d8a9602ad9be3d2a68f9273"
+        },
+        "source": {
+          "bytes": 12792,
+          "path": "crates/obrush-core/src/mask_region.rs",
+          "sha256": "2f07a3f9d1dcf5bfa4625e8dc85d2fc802c5353b1d8a9602ad9be3d2a68f9273"
+        }
+      },
+      {
+        "frozen_copy": {
+          "bytes": 72614,
+          "path": ".artifacts/mask-region-core/final-source/document.rs",
+          "sha256": "c5c23b0a6aa8be45d73309536a517bbbb267b8dcf97706f146e0d2b2ab4c05de"
+        },
+        "source": {
+          "bytes": 72614,
+          "path": "crates/obrush-core/src/document.rs",
+          "sha256": "c5c23b0a6aa8be45d73309536a517bbbb267b8dcf97706f146e0d2b2ab4c05de"
+        }
+      },
+      {
+        "frozen_copy": {
+          "bytes": 1694,
+          "path": ".artifacts/mask-region-core/final-source/lib.rs",
+          "sha256": "dcbaf3fa23108fc1e9cdb19d44dcbbffbac1eb79642cead70e306892cfd6bcbe"
+        },
+        "source": {
+          "bytes": 1694,
+          "path": "crates/obrush-core/src/lib.rs",
+          "sha256": "dcbaf3fa23108fc1e9cdb19d44dcbbffbac1eb79642cead70e306892cfd6bcbe"
+        }
+      },
+      {
+        "frozen_copy": {
+          "bytes": 13347,
+          "path": ".artifacts/mask-region-core/final-source/mask_regions.rs",
+          "sha256": "1fe3f7e6d84818c6f1283bfed7c09ef56e3d688efd160c35b80beb2d112f477c"
+        },
+        "source": {
+          "bytes": 13347,
+          "path": "crates/obrush-core/tests/mask_regions.rs",
+          "sha256": "1fe3f7e6d84818c6f1283bfed7c09ef56e3d688efd160c35b80beb2d112f477c"
+        }
+      },
+      {
+        "frozen_copy": {
+          "bytes": 37962,
+          "path": ".artifacts/mask-region-core/final-source/mask_region_contract.rs",
+          "sha256": "93f0c24d6cd970510e44098f4a844c805d771974fe58996bb6b38691b1325637"
+        },
+        "source": {
+          "bytes": 37962,
+          "path": "crates/obrush-core/tests/mask_region_contract.rs",
+          "sha256": "93f0c24d6cd970510e44098f4a844c805d771974fe58996bb6b38691b1325637"
+        }
+      }
+    ],
+    "independent_audit": {
+      "helper": {
+        "bytes": 37962,
+        "path": "crates/obrush-core/tests/mask_region_contract.rs",
+        "sha256": "93f0c24d6cd970510e44098f4a844c805d771974fe58996bb6b38691b1325637"
+      },
+      "passed": 37,
+      "receipt": {
+        "bytes": 34226,
+        "path": ".artifacts/mask-region-contract-audit/final-receipt.json",
+        "sha256": "87b33e49e9cbb60caf8e2218699bce2dd548224c77fd1630d2d0b861bd253d6a"
+      },
+      "scope": "Independent analytical projection/even-odd/finite-boundary/limits/rejections/full-state fixtures and focused strict lint. Original gates retained."
+    },
+    "limitations": [
+      "Vertex-based through-depth selection is distinct from visible/front-facing surface or face-area selection; vertices outside the clip volume are excluded.",
+      "No native GUI, physical-device, browser/WASM execution, global latency or matched ZBrush fixture by this owner.",
+      "Screen boundary tolerance and scalar floating-point policies are explicit OBrush definitions, not reference equivalence.",
+      "No lasso smoothing/resampling, pressure/alpha/symmetry, softer regional falloff, visibility isolation or faces/new geometry."
+    ],
+    "limits": {
+      "allocation": "General mesh/settings/work counts checked before region mask scratch reservation; bounded512-point settings validation.",
+      "lasso_points_max": 512,
+      "memory_scope": "Count/reservation limits, not universal peak-memory or large-mesh latency guarantees.",
+      "point_edge_work_estimate_max": 32000000,
+      "screen_coordinates": "Finite point/viewport origin/corners abs<=1M, finite positive width/height<=1M.",
+      "source_triangles": 2000000,
+      "source_vertices": 1000000,
+      "work_preflight": "Checked vertices*raw_lasso_input_points before masks allocation, even when most vertices/contour interior would be skipped; report records estimate rather than measured comparisons."
+    },
+    "owner_checks": {
+      "core_compile": {
+        "command": [
+          "cargo",
+          "check",
+          "--locked",
+          "-p",
+          "obrush-core"
+        ],
+        "exit_code": 0,
+        "log": {
+          "bytes": 148,
+          "path": ".artifacts/mask-region-core/check-first.log",
+          "sha256": "b0fb14bb7e1a1c2cb5a9beeee88fb7043bbf9b2f296e5f850298baadef1ee4be"
+        },
+        "scope": "Initial API compile; final corrected production also compiled by frozen focused tests."
+      },
+      "focused_tests": {
+        "command": [
+          "cargo",
+          "test",
+          "--locked",
+          "-p",
+          "obrush-core",
+          "--test",
+          "mask_regions",
+          "--test",
+          "mask_filters",
+          "--test",
+          "mask_filter_contract",
+          "--",
+          "--nocapture",
+          "--test-threads=1"
+        ],
+        "endpoint_measurements": [
+          {
+            "epsilon": 1e-07,
+            "expected_probe_mask": 0.0,
+            "extent": 2.00000018,
+            "finite_segment_distance": 1.2727922046807977e-07,
+            "probe_mask": 0.0
+          }
+        ],
+        "exact_mask_metrics": [
+          {
+            "case": "identity-reversed-through-depth",
+            "gate": 1e-07,
+            "maximum_mask_error": 0.0,
+            "projected_vertices": 7,
+            "selected_vertices": 6
+          }
+        ],
+        "exit_code": 0,
+        "log": {
+          "bytes": 25561,
+          "path": ".artifacts/mask-region-core/owner-first.log",
+          "sha256": "27562b1738d3b9a1b5641d437dd129ac192cf0e66db2924443d7730f588dc36d"
+        },
+        "new_region_passed": 8,
+        "numeric_note": "Expected hard weights/source-unchanged weights are checked by actual f32 bit equality. The recorded zero mask error follows those passing exact-bit assertions, not an unmeasured reference difference.",
+        "previous_mask_filter_regressions_passed": 35
+      }
+    },
+    "owner_processes_running": false,
+    "projection": {
+      "clip": "Require finite homogeneous values,w>0,inclusive -w<=x/y/z<=w before division.",
+      "matrix": "Finite column-major OpenGL f32 coefficients, f32 source points evaluated in deterministic scalar f64 arithmetic; no determinant condition.",
+      "report": "projected_vertices counts all clip-eligible points, including empty rectangles/selections.",
+      "screen": "Top-left x=viewport_x+(ndc_x+1)*width/2; y=viewport_y+(1-ndc_y)*height/2.",
+      "through_depth": "All eligible active-object vertices at any eligible depth are classified. No backface, visible-surface, occlusion or inactive-object query."
+    },
+    "recorded_at_utc": "2026-10-13T19:45:06.374948+00:00",
+    "required_release_checks": "Parent owns final workspace/fmt/native+WASM strict checks/build/package/browser pipeline after source freeze. No duplicate owner broad/scoped checks or runtime jobs; this receipt does not assert the parent pipeline complete.",
+    "retained_failures": [
+      {
+        "exit_code": 101,
+        "fix": "Finite endpoint Euclidean distance; no epsilon or gate change.",
+        "initial_sources": {
+          "bytes": 857,
+          "path": ".artifacts/mask-region-core/initial-boundary/source-hashes.json",
+          "sha256": "2a0586cf83f5226217932192fa27630d76c87b953e71d49f07adb9c3c5e39b2a"
+        },
+        "kind": "genuine finite-endpoint bug",
+        "log": {
+          "bytes": 1039,
+          "path": ".artifacts/mask-region-core/endpoint-initial-failure.log",
+          "sha256": "06aefc985c0c405757119a845c65291a814028e0bfbcb6688bb4cbe38e044c49"
+        },
+        "observed": "Probe beyond(1,1) by(.9epsilon,.9epsilon), distance1.2727922046807977e-7>1e-7, incorrectly became mask1. Same fixture now mask0."
+      },
+      {
+        "exit_code": 101,
+        "fix": "Independently normalized directions fallback; tiny true-collinear and mixed-scale controls still reject, mixed valid accepts.",
+        "initial_sources": {
+          "bytes": 248,
+          "path": ".artifacts/mask-region-core/initial-boundary/tiny-source-hashes.json",
+          "sha256": "f43a0711e517f8e85e368e10e50faf30602be2670302f070fa6aead7f07e2c3c"
+        },
+        "kind": "genuine tiny outline validity bug",
+        "log": {
+          "bytes": 953,
+          "path": ".artifacts/mask-region-core/tiny-initial-failure.log",
+          "sha256": "e9d51c8aad14255b27d6b878dfc81dcc4cd68bd106d87f83918f9f75d8dd68d0"
+        },
+        "observed": "Allowed finite non-collinear outline [[0,0],[1e-200,0],[0,1e-200]] rejected as collinear because direct products underflowed."
+      }
+    ],
+    "schema": "obrush-mask-region-core-v1",
+    "scope": "Independently written pure-Rust through-depth rectangle/lasso vertex masking; focused native acceptance, no reference parity claim.",
+    "selection": {
+      "boundary": "Fixed absolute1e-7 caller screen-unit Euclidean distance to finite segment, with expanded segment bbox. Hypot/unit direction plus endpoint distance avoids short-edge squared underflow; zero edge uses point Euclidean distance.",
+      "lasso": "3\u2013512 raw stored points, at least3 non-collinear distinct points. All ordered repetitions/closing points retained; even-odd rule (including double traces/self-crossings/bowtie with zero shoelace area).",
+      "masks": "Selected weights become1, or0 for erase. Numerically equal original bits retained, including signed zero; no pressure/alpha/symmetry/soft falloff and no faces cut.",
+      "rectangle": "Reversed corners supported; exact inclusive bounds; zero width or height valid empty/no-op. polygon_points=4 conceptual corners, point_edge_work=0.",
+      "validity": "Direct f64 orientation with independently normalized-direction fallback avoids tiny determinant underflow; no new minimum extent. This is not an arbitrary-precision exact-real predicate claim across all floating dynamic ranges."
+    },
+    "transaction": {
+      "barriers": "Finish valid pending stroke first; invalid pending stroke restores and rejects dependent operation; hidden active rejects.",
+      "format": "No project schema changes.",
+      "no_op": "Empty/all-target/equal-bit result returns before candidate normalization/history, preserving redo and unreconciled hidden baselines.",
+      "shared_helper": "Existing filter candidate checks factored verbatim into private commit_mask_candidate; both scalar filter and region use the same mask-only commit.",
+      "unchanged": "Positions/normals/RGB/triangles/adjacency, f64 layers/targets, active level/IDs/visibility and inactive payload Arcs; retained masks follow existing f32 reconciliation policy.",
+      "useful_edit": "Validate candidate existing multires mask transport/layer composition/Morph binding/scene+output budget before installing only masks and one whole-scene history state."
+    }
+  },
+  "independent_audit": {
+    "created_utc": "2026-10-13T19:40:50.022179+00:00",
+    "feature": "OBrush 0.1.14 projected rectangle/lasso mask selection",
+    "scope": "Independent pure Rust native CPU projection/shape/document contracts and bounded source review; no reference or UI execution",
+    "status": "37 contracts and focused strict Clippy pass on owner-frozen corrected production",
+    "reference_execution": false,
+    "platform": {
+      "os": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+      "architecture": "arm64",
+      "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+      "execution": "native Rust CPU tests only"
+    },
+    "preregistered": {
+      "path": ".artifacts/mask-region-contract-audit/preregistered.json",
+      "sha256": "ea6473992c0a44e4006aed7204fb9c915535a32dd7bce924c8492864d9a5b99f",
+      "bytes": 3037
+    },
+    "source_files": [
+      {
+        "path": "AGENTS.md",
+        "sha256": "b9aebf717528d1887a30f15d23ca492cac78e86542f0f7f77e72ee21545cebd4",
+        "bytes": 1312
+      },
+      {
+        "path": "Cargo.toml",
+        "sha256": "e91798b2ee3d7ac49f6bf1a68fa15e9ff8a2743a5d268234ede1266598aafdc4",
+        "bytes": 684
+      },
+      {
+        "path": "Cargo.lock",
+        "sha256": "f95276474613e3f3eb2d0d41aeb3d8978306195da96c65853879801218fde73e",
+        "bytes": 92206
+      },
+      {
+        "path": "crates/obrush-core/Cargo.toml",
+        "sha256": "05bde7e131c4bc2f53709cfc3d5fcc12f2363105fba5f65ee18fa8c34e8039ce",
+        "bytes": 250
+      },
+      {
+        "path": "crates/obrush-core/src/mask_region.rs",
+        "sha256": "2f07a3f9d1dcf5bfa4625e8dc85d2fc802c5353b1d8a9602ad9be3d2a68f9273",
+        "bytes": 12792
+      },
+      {
+        "path": "crates/obrush-core/src/document.rs",
+        "sha256": "c5c23b0a6aa8be45d73309536a517bbbb267b8dcf97706f146e0d2b2ab4c05de",
+        "bytes": 72614
+      },
+      {
+        "path": "crates/obrush-core/src/lib.rs",
+        "sha256": "dcbaf3fa23108fc1e9cdb19d44dcbbffbac1eb79642cead70e306892cfd6bcbe",
+        "bytes": 1694
+      },
+      {
+        "path": "crates/obrush-core/src/mesh.rs",
+        "sha256": "7e9027e1aff2c2a1d3744e7d1c27df4c0aed27f9ef104b70ef83454d9fa791ae",
+        "bytes": 60899
+      },
+      {
+        "path": "crates/obrush-core/src/multires.rs",
+        "sha256": "bb4282a9b558161be5297eed9c2b3dd6bc0e1849d898598caaebd52afae04a36",
+        "bytes": 13536
+      },
+      {
+        "path": "crates/obrush-core/src/layers.rs",
+        "sha256": "03f745e11208ba529d34c7b9ab8d974cf6cefeb1d80ebbeb14645e3b1a42f6fc",
+        "bytes": 35026
+      },
+      {
+        "path": "crates/obrush-core/src/morph.rs",
+        "sha256": "408b99c714e318617fa814a152ca76c52265b5519968afe8d4d0783f81c2925a",
+        "bytes": 10108
+      },
+      {
+        "path": "crates/obrush-core/src/subtools.rs",
+        "sha256": "e5697432bfb40a6c4fe35e4557cd8bd5fadfac604dcd7ca584c4817e8122ab6c",
+        "bytes": 15459
+      },
+      {
+        "path": "crates/obrush-core/tests/mask_region_contract.rs",
+        "sha256": "93f0c24d6cd970510e44098f4a844c805d771974fe58996bb6b38691b1325637",
+        "bytes": 37962
+      }
+    ],
+    "fixtures": {
+      "origin": "Independently authored analytic indexed point/triangle grids, identity/asymmetric column-major/perspective matrices, convex/concave/bowtie/double-traced/duplicate/tiny/mixed lasso shapes, epsilon probes and generated rich source-state fixtures embedded in hashed test source",
+      "license": "MIT repository fixtures",
+      "source": {
+        "path": "crates/obrush-core/tests/mask_region_contract.rs",
+        "sha256": "93f0c24d6cd970510e44098f4a844c805d771974fe58996bb6b38691b1325637",
+        "bytes": 37962
+      },
+      "case_names": [
+        "identity_projection_uses_top_left_screen_coordinates_and_inclusive_rectangle",
+        "reversed_rectangle_corners_select_the_same_exact_masks",
+        "erase_writes_zero_inside_and_preserves_outside_signed_bits",
+        "zero_extent_rectangles_are_empty_but_project_all_eligible_vertices",
+        "rectangle_includes_each_edge_corner_and_only_exact_bounds",
+        "convex_lasso_and_reversed_winding_match_analytic_rectangle",
+        "concave_lasso_excludes_notch_and_includes_its_boundary",
+        "zero_shoelace_bowtie_is_valid_evenodd_with_inclusive_crossing",
+        "double_traced_contour_has_empty_interior_and_keeps_boundary",
+        "consecutive_and_closing_duplicates_retain_shape_and_raw_report_count",
+        "lasso_boundary_distance_includes_half_epsilon_and_excludes_twice_epsilon",
+        "boundary_distance_is_to_finite_segment_not_infinite_supporting_line",
+        "perspective_homogeneous_frustum_and_nonpositive_w_are_checked_before_division",
+        "asymmetric_column_major_matrix_selects_known_translated_scaled_points",
+        "finite_singular_and_zero_matrices_follow_projection_policy_without_inverse_requirement",
+        "arbitrarily_small_positive_w_is_eligible_and_huge_finite_coefficients_use_f64",
+        "negative_viewport_origin_and_inclusive_coordinate_bound_are_supported",
+        "invalid_nonfinite_and_out_of_range_viewports_reject",
+        "each_nonfinite_matrix_coefficient_is_rejected_even_for_empty_rectangle",
+        "invalid_shape_points_counts_and_collinearity_reject_without_shoelace_assumption",
+        "invalid_mesh_channels_indices_and_empty_input_reject_even_when_selection_is_empty",
+        "geometric_degeneracy_duplicate_faces_and_coincident_ids_do_not_restrict_selection",
+        "malformed_general_source_count_caps_reject_before_scratch",
+        "lasso_work_boundary_is_accepted_and_cap_plus_one_rejects",
+        "useful_rectangle_and_erase_have_one_exact_scene_history_step",
+        "empty_and_already_matching_selection_preserve_genuine_redo_and_signed_zero",
+        "noops_after_coarse_sculpt_leave_unreconciled_baselines_and_redo_intact",
+        "rich_scene_lasso_keeps_layer_target_geometry_and_inactive_arc_exact",
+        "retained_masks_follow_existing_f32_loop_transport_and_preserve_fine_residual",
+        "invalid_settings_and_hidden_active_source_preserve_scene_and_redo",
+        "pending_invalid_stroke_restores_complete_scene_before_even_empty_selection",
+        "pending_valid_stroke_finishes_before_separate_region_history_step",
+        "invalid_public_source_without_open_stroke_rejects_without_destroying_redo",
+        "region_report_and_settings_roundtrip_without_a_new_project_schema",
+        "tiny_finite_noncollinear_lasso_is_valid_despite_squared_cross_underflow",
+        "tiny_and_mixed_scale_truly_collinear_lassos_remain_invalid",
+        "mixed_scale_noncollinear_lasso_keeps_boundary_and_excludes_distant_point"
+      ]
+    },
+    "gates": {
+      "current_mask_output_and_unchanged_values": "exact f32 bits including signed zero",
+      "source_geometry_normals_rgb_ordered_faces_layer_f64_morph_history_inactive_arc": "exact source bits or canonical serialized state",
+      "projection_observation": "Exact mask vectors/eligibility counts against independent scalar f64 projection and analytic known-index expectations; API exposes no coordinates, so no observed coordinate-error bound claimed",
+      "boundary": "fixed absolute1e-7 finite-segment Euclidean screen-unit distance; no gate/cap change after defects found",
+      "retained_mask_transport": "existing explicit triangle Loop f32 stencil and staged residual arithmetic, exact expected bits"
+    },
+    "observed": {
+      "passed_tests": 37,
+      "duration_seconds": 0.93,
+      "observation_rows": 30,
+      "recorded_rejection_rows": 85,
+      "mask_bit_differences": 0,
+      "scope_note": "These fixtures do not establish global exact-real arithmetic at arbitrary f64 dynamic ranges or reference equivalence"
+    },
+    "observations": [
+      {
+        "case": "small-positive-w",
+        "changed_vertices": 11,
+        "mask_bits_exact": true,
+        "point_edge_work": 0,
+        "projected_vertices": 11,
+        "selected_vertices": 11,
+        "source_bits_exact": true
+      },
+      {
+        "case": "huge-finite-w",
+        "changed_vertices": 11,
+        "mask_bits_exact": true,
+        "point_edge_work": 0,
+        "projected_vertices": 11,
+        "selected_vertices": 11,
+        "source_bits_exact": true
+      },
+      {
+        "case": "asymmetric-column-major",
+        "changed_vertices": 2,
+        "mask_bits_exact": true,
+        "point_edge_work": 0,
+        "projected_vertices": 4,
+        "selected_vertices": 2,
+        "source_bits_exact": true
+      },
+      {
+        "case": "finite-segment-endpoint-epsilon",
+        "changed_vertices": 3,
+        "mask_bits_exact": true,
+        "point_edge_work": 12,
+        "projected_vertices": 4,
+        "selected_vertices": 3,
+        "source_bits_exact": true
+      },
+      {
+        "case": "concave-notch",
+        "changed_vertices": 5,
+        "mask_bits_exact": true,
+        "point_edge_work": 56,
+        "projected_vertices": 7,
+        "selected_vertices": 5,
+        "source_bits_exact": true
+      },
+      {
+        "case": "repeated-closing-points",
+        "changed_vertices": 2,
+        "mask_bits_exact": true,
+        "point_edge_work": 18,
+        "projected_vertices": 3,
+        "selected_vertices": 2,
+        "source_bits_exact": true
+      },
+      {
+        "case": "convex-lasso",
+        "changed_vertices": 5,
+        "mask_bits_exact": true,
+        "point_edge_work": 28,
+        "projected_vertices": 7,
+        "selected_vertices": 5,
+        "source_bits_exact": true
+      },
+      {
+        "case": "reversed-lasso",
+        "changed_vertices": 5,
+        "mask_bits_exact": true,
+        "point_edge_work": 28,
+        "projected_vertices": 7,
+        "selected_vertices": 5,
+        "source_bits_exact": true
+      },
+      {
+        "case": "double-contour-evenodd",
+        "changed_vertices": 2,
+        "mask_bits_exact": true,
+        "point_edge_work": 32,
+        "projected_vertices": 4,
+        "selected_vertices": 2,
+        "source_bits_exact": true
+      },
+      {
+        "case": "erase-region",
+        "changed_vertices": 4,
+        "mask_bits_exact": true,
+        "point_edge_work": 0,
+        "projected_vertices": 9,
+        "selected_vertices": 5,
+        "source_bits_exact": true
+      },
+      {
+        "case": "zero-matrix-nonpositive-w",
+        "changed_vertices": 0,
+        "mask_bits_exact": true,
+        "point_edge_work": 0,
+        "projected_vertices": 0,
+        "selected_vertices": 0,
+        "source_bits_exact": true
+      },
+      {
+        "case": "singular-finite-projection",
+        "changed_vertices": 10,
+        "mask_bits_exact": true,
+        "point_edge_work": 0,
+        "projected_vertices": 10,
+        "selected_vertices": 10,
+        "source_bits_exact": true
+      },
+      {
+        "case": "degenerate-duplicate-coincident-source",
+        "changed_vertices": 4,
+        "mask_bits_exact": true,
+        "point_edge_work": 0,
+        "projected_vertices": 4,
+        "selected_vertices": 4,
+        "source_bits_exact": true
+      },
+      {
+        "case": "identity-rectangle",
+        "changed_vertices": 5,
+        "mask_bits_exact": true,
+        "point_edge_work": 0,
+        "projected_vertices": 9,
+        "selected_vertices": 5,
+        "source_bits_exact": true
+      },
+      {
+        "case": "lasso-distance-epsilon",
+        "changed_vertices": 3,
+        "mask_bits_exact": true,
+        "point_edge_work": 16,
+        "projected_vertices": 4,
+        "selected_vertices": 3,
+        "source_bits_exact": true
+      },
+      {
+        "cap_plus_one_rejected": true,
+        "case": "work-boundary-bbox-skip",
+        "not_a_full_edge_test_benchmark": true,
+        "point_edge_work": 32000000,
+        "polygon_points": 512,
+        "selected_vertices": 0,
+        "vertices": 62500
+      },
+      {
+        "case": "mixed-scale-noncollinear-lasso",
+        "changed_vertices": 2,
+        "mask_bits_exact": true,
+        "point_edge_work": 9,
+        "projected_vertices": 3,
+        "selected_vertices": 2,
+        "source_bits_exact": true
+      },
+      {
+        "case": "negative-viewport-origin",
+        "changed_vertices": 9,
+        "mask_bits_exact": true,
+        "point_edge_work": 0,
+        "projected_vertices": 9,
+        "selected_vertices": 9,
+        "source_bits_exact": true
+      },
+      {
+        "case": "inclusive-viewport-coordinate-bound",
+        "changed_vertices": 9,
+        "mask_bits_exact": true,
+        "point_edge_work": 0,
+        "projected_vertices": 9,
+        "selected_vertices": 9,
+        "source_bits_exact": true
+      },
+      {
+        "case": "perspective-frustum-through-depth",
+        "changed_vertices": 5,
+        "mask_bits_exact": true,
+        "point_edge_work": 0,
+        "projected_vertices": 9,
+        "selected_vertices": 5,
+        "source_bits_exact": true
+      },
+      {
+        "case": "inclusive-six-frustum-planes",
+        "changed_vertices": 9,
+        "mask_bits_exact": true,
+        "point_edge_work": 0,
+        "projected_vertices": 9,
+        "selected_vertices": 9,
+        "source_bits_exact": true
+      },
+      {
+        "case": "rectangle-edges-corners",
+        "changed_vertices": 9,
+        "mask_bits_exact": true,
+        "point_edge_work": 0,
+        "projected_vertices": 11,
+        "selected_vertices": 9,
+        "source_bits_exact": true
+      },
+      {
+        "case": "report-roundtrip",
+        "changed_vertices": 5,
+        "mask_bits_exact": true,
+        "point_edge_work": 44,
+        "projected_vertices": 9,
+        "selected_vertices": 5,
+        "source_bits_exact": true
+      },
+      {
+        "case": "rectangle-forward",
+        "changed_vertices": 5,
+        "mask_bits_exact": true,
+        "point_edge_work": 0,
+        "projected_vertices": 9,
+        "selected_vertices": 5,
+        "source_bits_exact": true
+      },
+      {
+        "case": "rectangle-reversed",
+        "changed_vertices": 5,
+        "mask_bits_exact": true,
+        "point_edge_work": 0,
+        "projected_vertices": 9,
+        "selected_vertices": 5,
+        "source_bits_exact": true
+      },
+      {
+        "case": "tiny-noncollinear-lasso",
+        "changed_vertices": 3,
+        "mask_bits_exact": true,
+        "point_edge_work": 9,
+        "projected_vertices": 3,
+        "selected_vertices": 3,
+        "source_bits_exact": true
+      },
+      {
+        "case": "zero-extent-rectangle",
+        "changed_vertices": 0,
+        "mask_bits_exact": true,
+        "point_edge_work": 0,
+        "projected_vertices": 9,
+        "selected_vertices": 0,
+        "source_bits_exact": true
+      },
+      {
+        "case": "zero-extent-rectangle",
+        "changed_vertices": 0,
+        "mask_bits_exact": true,
+        "point_edge_work": 0,
+        "projected_vertices": 9,
+        "selected_vertices": 0,
+        "source_bits_exact": true
+      },
+      {
+        "case": "zero-extent-rectangle",
+        "changed_vertices": 0,
+        "mask_bits_exact": true,
+        "point_edge_work": 0,
+        "projected_vertices": 9,
+        "selected_vertices": 0,
+        "source_bits_exact": true
+      },
+      {
+        "case": "bowtie-evenodd",
+        "changed_vertices": 6,
+        "mask_bits_exact": true,
+        "point_edge_work": 32,
+        "projected_vertices": 8,
+        "selected_vertices": 6,
+        "source_bits_exact": true
+      }
+    ],
+    "rejections": [
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "nonfinite-matrix",
+        "error": "Region projection matrix entries must be finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-source-empty-selection",
+        "error": "Vertex 0 has a non-finite or excessive coordinate",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-source-empty-selection",
+        "error": "Normal 0 is not finite",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-source-empty-selection",
+        "error": "Mask 0 must be in 0\u20131",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-source-empty-selection",
+        "error": "Mask 0 must be in 0\u20131",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-source-empty-selection",
+        "error": "Color 0 must have finite channels in 0\u20131",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-source-empty-selection",
+        "error": "Triangle 0 refers to a missing vertex",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-source-empty-selection",
+        "error": "Triangle 0 repeats a vertex",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-source-empty-selection",
+        "error": "Mesh must have 1\u20132000000 triangles",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-source-empty-selection",
+        "error": "Normals, masks, and colors must match the vertex count",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-source-empty-selection",
+        "error": "Mesh must have 1\u20131000000 vertices",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-viewport",
+        "error": "Region viewport needs finite positive extents and bounded \u00b11M screen corners",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-viewport",
+        "error": "Region viewport needs finite positive extents and bounded \u00b11M screen corners",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-viewport",
+        "error": "Region viewport needs finite positive extents and bounded \u00b11M screen corners",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-viewport",
+        "error": "Region viewport needs finite positive extents and bounded \u00b11M screen corners",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-viewport",
+        "error": "Region viewport needs finite positive extents and bounded \u00b11M screen corners",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-viewport",
+        "error": "Region viewport needs finite positive extents and bounded \u00b11M screen corners",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-viewport",
+        "error": "Region viewport needs finite positive extents and bounded \u00b11M screen corners",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-viewport",
+        "error": "Region viewport needs finite positive extents and bounded \u00b11M screen corners",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-viewport",
+        "error": "Region viewport needs finite positive extents and bounded \u00b11M screen corners",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-viewport",
+        "error": "Region viewport needs finite positive extents and bounded \u00b11M screen corners",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-viewport",
+        "error": "Region viewport needs finite positive extents and bounded \u00b11M screen corners",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-lasso",
+        "error": "Lasso requires 3\u2013512 stored points",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-lasso",
+        "error": "Lasso requires 3\u2013512 stored points",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-lasso",
+        "error": "Lasso requires 3\u2013512 stored points",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-lasso",
+        "error": "Lasso requires three non-collinear distinct stored points",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-lasso",
+        "error": "Lasso requires three non-collinear distinct stored points",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-lasso",
+        "error": "Lasso requires three non-collinear distinct stored points",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-lasso",
+        "error": "Lasso coordinates must be finite within \u00b11M",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-lasso",
+        "error": "Lasso coordinates must be finite within \u00b11M",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-lasso",
+        "error": "Lasso coordinates must be finite within \u00b11M",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-lasso",
+        "error": "Lasso requires 3\u2013512 stored points",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-rectangle-point",
+        "error": "Rectangle coordinates must be finite within \u00b11M",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-rectangle-point",
+        "error": "Rectangle coordinates must be finite within \u00b11M",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-rectangle-point",
+        "error": "Rectangle coordinates must be finite within \u00b11M",
+        "source_bits_exact": true
+      },
+      {
+        "case": "invalid-rectangle-point",
+        "error": "Rectangle coordinates must be finite within \u00b11M",
+        "source_bits_exact": true
+      },
+      {
+        "case": "tiny-mixed-collinear-rejection",
+        "error": "Lasso requires three non-collinear distinct stored points",
+        "source_bits_exact": true
+      },
+      {
+        "case": "tiny-mixed-collinear-rejection",
+        "error": "Lasso requires three non-collinear distinct stored points",
+        "source_bits_exact": true
+      }
+    ],
+    "runs": [
+      {
+        "name": "pre-execution-helper-cleanup",
+        "record": {
+          "path": ".artifacts/mask-region-contract-audit/pre-run-helper-cleanup.json",
+          "sha256": "188ae362148c44be92496ca1398a68397f4ec52d30127674c3d2d27ec1797289",
+          "bytes": 496
+        },
+        "note": "Rustfmt parser caught missing whitespace in < -comparison. Also included the authored diagonal-on-edge fourth point in known expected indices before first run. All gates unchanged; original helper source retained."
+      },
+      {
+        "name": "initial-34-contracts",
+        "command": "cargo test -p obrush-core --test mask_region_contract -- --nocapture --test-threads=1",
+        "exit_code": 101,
+        "passed_tests": 33,
+        "failed_tests": 1,
+        "duration_seconds": 0.94,
+        "log": {
+          "path": ".artifacts/mask-region-contract-audit/run-1.log",
+          "sha256": "6f21f12c452780798742bb9ff0a53d72dbb63794f575679c15ec3885301437f3",
+          "bytes": 21384
+        },
+        "source_manifest": {
+          "path": ".artifacts/mask-region-contract-audit/run-1-source.json",
+          "sha256": "fcdcac4faf47477918a4107d9dbb4b3bb1bed360a6a1256bd8ee24c17c02d63f",
+          "bytes": 4096
+        },
+        "original_production": {
+          "path": ".artifacts/mask-region-contract-audit/initial-mask-region.rs",
+          "sha256": "169426350b578e10d57ecec09ca64119879759950c2aeccebd2483be2160bf62",
+          "bytes": 11954
+        },
+        "genuine_failure": "Infinite supporting-line distance plus expanded bbox selected a point beyond an endpoint at1.2727922046807977e-7 finite-segment distance; contract band1e-7."
+      },
+      {
+        "name": "tiny-allowed-shape-initial-failure",
+        "command": "cargo test -p obrush-core --test mask_region_contract tiny_finite_noncollinear_lasso_is_valid_despite_squared_cross_underflow -- --nocapture --test-threads=1",
+        "exit_code": 101,
+        "passed_tests": 0,
+        "failed_tests": 1,
+        "log": {
+          "path": ".artifacts/mask-region-contract-audit/tiny-initial-failure.log",
+          "sha256": "c4b1ef6971ff2dbb7487b54d3314867489b191539bf87996cbabb8e4363f2ac1",
+          "bytes": 976
+        },
+        "source_manifest": {
+          "path": ".artifacts/mask-region-contract-audit/tiny-initial-source.json",
+          "sha256": "9c7d6cd83a45aeb71b1f67b279e6871c747de53813b55aba673bf18d6b8828d6",
+          "bytes": 660
+        },
+        "genuine_failure": "Allowed finite noncollinear [[0,0],[1e-200,0],[0,1e-200]] was rejected because the unscaled determinant underflowed tozero."
+      },
+      {
+        "name": "approved-production-corrections",
+        "record": {
+          "path": ".artifacts/mask-region-contract-audit/production-corrections.json",
+          "sha256": "42a4b4e908727ca7909f8344bd3f790dba6849e2c9b1a0c799468a45b403d60d",
+          "bytes": 1421
+        },
+        "changes": "Endpoint Euclidean distance outside finite segment and interior perpendicular distance; hypot avoids squared-length underflow. Direct nonzero determinant or independently normalized directions determine noncollinearity. Tiny/mixed truly-collinear controls remain rejected. Same epsilon/work/input caps and exact gates."
+      },
+      {
+        "name": "focused-strict-clippy",
+        "command": "cargo clippy -p obrush-core --test mask_region_contract -- -D warnings",
+        "exit_code": 0,
+        "log": {
+          "path": ".artifacts/mask-region-contract-audit/clippy-focused.log",
+          "sha256": "3a3b42821e6395186cbf19a7f77e26961a7089f16b6600d3b51d42965c2d47a9",
+          "bytes": 148
+        }
+      },
+      {
+        "name": "final-37-contracts",
+        "command": "cargo test -p obrush-core --test mask_region_contract -- --nocapture --test-threads=1",
+        "exit_code": 0,
+        "passed_tests": 37,
+        "failed_tests": 0,
+        "duration_seconds": 0.93,
+        "log": {
+          "path": ".artifacts/mask-region-contract-audit/run-2.log",
+          "sha256": "89d74a4cadea49b1441cf0e64a77269a65e93868a7c43e67859faa68b966dc10",
+          "bytes": 21963
+        },
+        "source_manifest": {
+          "path": ".artifacts/mask-region-contract-audit/run-2-source.json",
+          "sha256": "499561a92719f2f4c448ed38ffd7e1648b592ba1c4aa294890574cc862ae82f5",
+          "bytes": 1183
+        },
+        "corrected_production": {
+          "path": ".artifacts/mask-region-contract-audit/corrected-mask-region.rs",
+          "sha256": "2f07a3f9d1dcf5bfa4625e8dc85d2fc802c5353b1d8a9602ad9be3d2a68f9273",
+          "bytes": 12792
+        }
+      }
+    ],
+    "source_review": [
+      {
+        "path": "crates/obrush-core/src/mask_region.rs",
+        "finding": "Finite matrix/screen settings, positive bounded viewport, lasso3..512 stored raw points, noncollinear validity, complete Mesh validation and conservative checked work32M precede output mask scratch allocation. Lasso deserialization reserves only up to512 points."
+      },
+      {
+        "path": "crates/obrush-core/src/mask_region.rs",
+        "finding": "Scalar f64 projection of f32 column-major matrix/positions requires w>0 and inclusive homogeneous OpenGL frustum before division. Eligible count independent of empty shape. Through-depth vertex masking reads no normals, topology visibility or GPU."
+      },
+      {
+        "path": "crates/obrush-core/src/mask_region.rs",
+        "finding": "Exact inclusive normalized rectangle; zeroextent valid empty. Raw ordered repeated/closing lasso points preserve even-odd semantics. Corrected finite-segment band and normalized tiny-shape validity retain declared epsilon/caps."
+      },
+      {
+        "path": "crates/obrush-core/src/document.rs",
+        "finding": "Pending stroke finish/reject and hidden-active guard precede operation; bitno-op skips normalized baselines/history. Shared mask-only candidate helper is factored from prior filter guard unchanged: layers/Morph/retained output/aggregate budgets checked before masks-only install and one whole-scene undo."
+      }
+    ],
+    "capacity": {
+      "source_vertices": 1000000,
+      "source_triangles": 2000000,
+      "raw_lasso_points": [
+        3,
+        512
+      ],
+      "point_edge_work": 32000000,
+      "runtime_cases": "Malformed general count cap+1;62500 vertices\u00d7512 raw points exactly32000000 accepted with empty selection,62501 rejected. Source points are outside the lasso region/segment bboxes; not a full geometric edge-distance throughput benchmark.",
+      "review_only": "Peak memory, valid near-general-cap throughput, physical/UI latency and aggregate encoded-output limits"
+    },
+    "limitations": [
+      "No ZBrush or other commercial fixture/execution/parity comparison",
+      "No native GUI, accessibility, physical devices, browser/WASM runtime or user files touched by this audit",
+      "No physical latency, peak-memory or valid near-cap throughput guarantee",
+      "No observed projected-coordinate error bound, since public API returns masks/report only",
+      "Published exact-mask results are scoped to hashed independently authored fixtures; no global exact-real arithmetic guarantee"
+    ]
+  },
+  "workspace_tests": {
+    "core": 365,
+    "app": 57,
+    "total": 422
+  },
+  "frozen_source_manifest": {
+    "path": ".artifacts/mask-region-release-0.1.14-final/source-manifest.json",
+    "bytes": 15078,
+    "sha256": "f85980837069bb5e19237ab5ceaf9ca7927fa04c9f48164ee199b8194ea41c28"
+  },
+  "limitations": [
+    "No reference region or gesture equivalence measured",
+    "Caps and synchronous work bounds are not latency or peak-memory guarantees",
+    "Current mask only; retained masks follow existing subdivision reconciliation/navigation",
+    "Native GUI and physical devices unverified"
+  ]
+}

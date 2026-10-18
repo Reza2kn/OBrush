@@ -1,0 +1,193 @@
+{
+  "scope": "C115 isolated native Metal/browser WebGPU affine normal transform; normal OBrush studio remains WASM CPU plus WebGL2",
+  "source_fixture": {
+    "crates/obrush-gpu/tests/fixtures/reflected-shear-v3.sgl": {
+      "sha256": "dbf724eacab383f647ec8f36655424d53cb14cf60e74d258ea10a169f8ee5c69",
+      "bytes": 476
+    },
+    "crates/obrush-gpu/tests/fixtures/reflected-shear-nonplanar-v7.obrush": {
+      "sha256": "cc3ebbca73d6c2de2ac2d8a53a5421a2beba4fc4ddf3af7229a9f4d96b49b895",
+      "bytes": 2467
+    }
+  },
+  "project_parameters": {
+    "vertices": 5,
+    "triangles": 3,
+    "edited_local_z": {
+      "vertex_2": 0.5,
+      "vertex_4": -0.25
+    },
+    "local_to_world": [
+      1.5,
+      0.0,
+      0.0,
+      0.0,
+      0.375,
+      -0.75,
+      0.0,
+      0.0,
+      0.25,
+      0.5,
+      2.0,
+      0.0,
+      262144.0,
+      -131072.0,
+      4096.0,
+      1.0
+    ],
+    "canvas": [
+      512,
+      512
+    ],
+    "camera": "SourceCameraFrame orthographic, identity view rotation, zoom 13.65, 45 degree FOV parameter, zero plane offset",
+    "candidate_grid_xy": [
+      96,
+      160,
+      224,
+      288,
+      352,
+      416
+    ]
+  },
+  "build": {
+    "wasm_bindgen_cli": "0.2.129",
+    "files": {
+      "crates/obrush-gpu/src/view.rs": {
+        "sha256": "5952562e420727f7e5232123a64377427c1f00ea2d2e6e7dc97268169ba04651",
+        "bytes": 5852
+      },
+      "crates/obrush-gpu/src/draw.wgsl": {
+        "sha256": "4fa24cbf84a79be830516e517fda752467a8fcf63057214d49c3c68a86022575",
+        "bytes": 1217
+      },
+      "crates/obrush-gpu/src/lib.rs": {
+        "sha256": "c3d1db65a5449d3bcab7bd7d8e550c49b5714d4eae7e531b0beb95b36c259b57",
+        "bytes": 51889
+      },
+      "crates/obrush-gpu/src/surface.rs": {
+        "sha256": "40a36ffac6c5c81f060aa49e67cd0e36d17a26ce7151cafd4d3c30c14c18d8b5",
+        "bytes": 14060
+      },
+      "crates/obrush-gpu/src/bin/document_probe.rs": {
+        "sha256": "48dd88657632cf2fb874d01ede1407a92d916e651faadd42884eaaa715c8bce6",
+        "bytes": 6144
+      },
+      "target/wasm32-unknown-unknown/web-release/obrush_gpu.wasm": {
+        "sha256": "cdb3e02861b83f4d68d2e1f891c98cb502d50012b5ea0f3a409267aceac6016d",
+        "bytes": 2276766
+      },
+      ".artifacts/gpu-document-c114/public/pkg/resident_bg.wasm": {
+        "sha256": "8820ed08549ebb1ff8544f05e3ab920f054c5bb6b0538bdb77e9ba90ca4e19ca",
+        "bytes": 1204758
+      }
+    }
+  },
+  "results": {
+    "files": {
+      ".artifacts/gpu-document-c115/native-transformed/native.json": {
+        "sha256": "94e8a96521f6d2ad44facffff9c22d186e1394b8c5e10c02852788ca82db84b7",
+        "bytes": 10034
+      },
+      ".artifacts/gpu-document-c114/browser-c115/result.json": {
+        "sha256": "1a6563871912a2fdc07a5eb1058ec9e5dab1a8a165c826b74cf5f63b9239d628",
+        "bytes": 80137
+      },
+      ".artifacts/gpu-document-c115/native-transformed/native.png": {
+        "sha256": "2e0c6be85d0762aecd61be5f00cfda1b3a0580761a6c6a042d15bd53be4799e1",
+        "bytes": 34641
+      },
+      ".artifacts/gpu-document-c115/native-local/native.png": {
+        "sha256": "eeebe546c77f3a28e07b7ce63446abf66ca1d40ac0741e21e534bc1e1726462a",
+        "bytes": 34170
+      },
+      ".artifacts/gpu-document-c114/browser-c115/browser.png": {
+        "sha256": "2e0c6be85d0762aecd61be5f00cfda1b3a0580761a6c6a042d15bd53be4799e1",
+        "bytes": 34641
+      },
+      ".artifacts/gpu-document-c114/browser-c115/canvas.png": {
+        "sha256": "64eb3dbe212642f5dc5fcbe4e6aa31229050ac5eab012e45662a6c2918802df0",
+        "bytes": 12385
+      },
+      ".artifacts/gpu-normal-c115/native-camera/perspective.png": {
+        "sha256": "5b2d9d6cc8df7c56a9c4d28af53b944e626dea8d918eff59a83f4b565ba85b57",
+        "bytes": 207180
+      },
+      ".artifacts/gpu-normal-c115/native-camera/orthographic.png": {
+        "sha256": "556fba60439cd51f5e09723cd9601d42e6eb3039974f42c982cf7bbe87cb1f74",
+        "bytes": 177680
+      }
+    },
+    "visible_rays": 7,
+    "native_browser_gpu_local_exact": true,
+    "gpu_cpu_faces_equal": true,
+    "max_world_hit_component_error": 8.578626875532791e-08,
+    "native_browser_offscreen_rgba_changed_channels": 0,
+    "browser_canvas_offscreen_rgb_changed_channels": 0,
+    "baseline_local_normal_changed_pixels": 23120,
+    "baseline_local_normal_changed_channels": 67441,
+    "baseline_local_normal_max_channel_change": 31,
+    "pixel_256_256_transformed_rgba": [
+      88,
+      5,
+      144,
+      255
+    ],
+    "pixel_256_256_local_normal_rgba": [
+      79,
+      5,
+      128,
+      255
+    ],
+    "million_vertex_local_camera_perspective_regression_sha256": "5b2d9d6cc8df7c56a9c4d28af53b944e626dea8d918eff59a83f4b565ba85b57",
+    "million_vertex_local_camera_orthographic_regression_sha256": "556fba60439cd51f5e09723cd9601d42e6eb3039974f42c982cf7bbe87cb1f74"
+  },
+  "browser_observation": {
+    "status": "PASS transformed .obrush isolated browser WebGPU draw and paired pick",
+    "indexed_draws": 2,
+    "eight_byte_pick_maps": 14,
+    "megabyte_diagnostic_image_maps": 1,
+    "gpu_errors": [],
+    "exceptions": [],
+    "console_errors": [],
+    "blocked_external_requests": [],
+    "owned_chrome_exit": 0,
+    "owned_servers_closed": 1
+  },
+  "validation": {
+    "cargo_fmt_all_check": "PASS",
+    "workspace_tests": {
+      "status": "PASS",
+      "passed": 2448,
+      "failed": 0,
+      "suites": 77,
+      "log_sha256": "80d6aedaff020f20b68bbffcdb52e92632ae39a26d6896dd9b7d91323c7c3e32"
+    },
+    "gpu_crate_tests": {
+      "status": "PASS",
+      "log_sha256": "a16f4956a96f84a0d1e1f2e8387a814dc9156ba7d9f3ea6a8fe7a0991f12c126"
+    },
+    "native_strict_clippy": {
+      "status": "PASS",
+      "log_sha256": "c9ca83d3dacfcf9f102e989696a4c5f99f1d59e3962cc63b230eb2427dfb856c"
+    },
+    "wasm_strict_clippy": {
+      "status": "PASS",
+      "log_sha256": "f354f4c9d42134d472de5827796e8f3e1130e860be698d01077365805e2e019b"
+    },
+    "gpu_wasm_release_and_bindgen": "PASS",
+    "browser_owned_run": "PASS",
+    "gpu_wasm_release_log_sha256": "a620ae1226efe4d81ff1753b689a5bd51ec06cdffbb06d229c3a7a9c45fb310f",
+    "wasm_bindgen_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preserved_failed_check": {
+    "failure": "First workspace run: memory accounting test expected former 96-byte view uniform rather than 160 bytes; corrected expected allocation to use VIEW_UNIFORM_BYTES.",
+    "log_sha256": "e3ca3f4a0df75b17e22a43d614176c44a3836dedc268634db31bc7605f1418b6"
+  },
+  "limitations": [
+    "Isolated single-subtool GPU canvas only; not installed in normal OBrush studio",
+    "No reference SculptGL/ZBrush appearance or brush parity inference",
+    "Saved UV/material/render settings ignored by draw shader",
+    "No multiple subtools, live brush/history transactions, CPU fallback or recovery",
+    "No sustained browser responsiveness measurement"
+  ]
+}

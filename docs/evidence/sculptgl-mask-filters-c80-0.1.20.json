@@ -1,0 +1,91 @@
+{
+  "feature": "SculptGL Masking Blur and Sharpen optional response",
+  "status": "Paired one-cube reference comparison and shared-core/native-browser workflow pass; full SculptGL parity remains open",
+  "reference_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+  "fixture": {
+    "path": "crates/obrush-core/tests/fixtures/independent-filter-cube.obj",
+    "sha256": "c9038e8adcbe5649273871feba73699753fa9abee0984575e14f41c9d610dde7",
+    "bytes": 252
+  },
+  "source_sha256": {
+    "crates/obrush-core/src/mask_filter.rs": "1be268ccb764640f71b3eecb17f45bab23e414c9a77ba48e75561c696eed6b7c",
+    "crates/obrush-core/src/document.rs": "8946505831513496c19894d8b7b7cb80370bf348f6f6a8121932335f6eb37cbc",
+    "crates/obrush-core/tests/mask_filter_sculptgl.rs": "3ebef8982c5502d13065766fe1d13492fd4fb020e49bacf71de851877fa7c495",
+    "crates/obrush-core/examples/sculptgl_mask_filter_fixture.rs": "e5edbd12b8d97db04bd8b2f9596dc5ec15415ffeb5b739e93f75043f42ec7a83",
+    "crates/obrush-app/src/app.rs": "f12a1d878faf2db2bcb190ce77ba689bc26b4cbf10b0526448cce8a31c8c7413",
+    "scripts/check-sculptgl-reference.mjs": "5696b37e1e9ecdda82790549b43ff1204cd5ba9592b26b8d2ae4fa72488cea62",
+    "scripts/check-mask-filters.mjs": "e087640005bd2751b1e5bc38251c9bcb123c09295323cf4eed704a7cec2957da"
+  },
+  "reference_runtime": {
+    "path": ".artifacts/sculptgl-reference-runtime/mask-filters-c80-weights-642d98d5-cf95-4be7-b0cd-b4d279ae3db3/result.json",
+    "sha256": "8c5f81734e49a8f786b558a052ee11aae7841ad120412aaeaa256aff71366ac5",
+    "bytes": 119057,
+    "status": "passed reference-only mask filter workflows",
+    "cases": 3,
+    "javascript_exceptions": 0,
+    "console_errors": 0,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    }
+  },
+  "obrush_core_output": {
+    "path": ".artifacts/sculptgl-mask-filters-c80-own.json",
+    "sha256": "0e8c82e4ca9f67c92d9bc3241f6ecec00947ec6d11907568285bd8f4fee3a07d",
+    "bytes": 2043
+  },
+  "paired_comparison": {
+    "path": ".artifacts/sculptgl-mask-filters-c80-comparison.json",
+    "sha256": "a3155d6260cb10b7006ed1892d49686682ef3df4e887fff4c737da50cdd325ba",
+    "bytes": 5910,
+    "blur_max_unprotected_weight_error": 2.9802322387695312e-08,
+    "sharpen_max_unprotected_weight_error": 0,
+    "matched_vertices": 8,
+    "conversion": "U=1-P; compare by exact source position because SculptGL reorders import IDs"
+  },
+  "browser_runtime": {
+    "path": ".artifacts/mask-filter-browser/sculptgl-filters-c80-full-aa4fd79a-2127-4192-b2fe-ac31987b6f64/result.json",
+    "sha256": "6b8d15888a2ccb47aad0562ada5da9ea56da861202260a05b446fe43eb6883e7",
+    "bytes": 41324340,
+    "status": "passed mask filter browser workflows",
+    "cases": 17,
+    "saved_snapshots": 179,
+    "web_wasm_sha256": "776ec4fb6b90d1dbdf6f4f0e3672783362ed2986517b933f32300d0ec80e0d89",
+    "javascript_exceptions": 0,
+    "console_errors": 0,
+    "gl_errors": 0,
+    "js_errors": 0,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    }
+  },
+  "checks": {
+    "format": "passed",
+    "workspace_all_targets": "2365 passed, 0 failed, 1 intentionally ignored",
+    "native_workspace_strict_clippy": "passed",
+    "wasm_workspace_strict_clippy": "passed",
+    "official_web_build": "passed",
+    "official_macos_package": "passed; ad-hoc signature verified",
+    "javascript_syntax": "passed"
+  },
+  "workspace_test_log": {
+    "path": ".artifacts/sculptgl-mask-filters-c80-workspace-tests.log",
+    "sha256": "f7ff72cb6082e8032bd5a254f109339bf4f7dad59b5a9dc4f921a78f724362ad",
+    "bytes": 12073
+  },
+  "preserved_failed_or_preliminary_receipts": [
+    ".artifacts/sculptgl-reference-runtime/mask-filters-c80-8fc955d6-2883-4cdb-a802-9d2d1737553a/result.json",
+    ".artifacts/mask-filter-browser/sculptgl-filters-c80-target-febb6836-4f55-4399-9fe9-ac2ae80429de/result.json",
+    ".artifacts/mask-filter-browser/sculptgl-filters-c80-target2-0c823b00-875e-413c-acb3-c5f67417437e/result.json"
+  ],
+  "limitations": [
+    "One closed triangulated cube paired with pinned reference; a separate quad-grid boundary analytic test has no browser reference pair",
+    "Different original-face ring order may differ by f32 rounding on arbitrary valence; dynamic/nonmanifold topology unverified",
+    "No physical pen/native GUI, repeated-action long-session or 1M performance claim",
+    "Default OBrush graph filters retained; only opted-in Blur and Sharpen use the source response",
+    "SculptGL and ZBrush parity remain open"
+  ]
+}

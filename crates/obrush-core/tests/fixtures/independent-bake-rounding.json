@@ -1,0 +1,137 @@
+{
+  "origin": "independent author fields/scalars; no OBrush/reference consumer output",
+  "source_scene": {
+    "version": 3,
+    "byte_order": "little_endian",
+    "display": {
+      "show_grid": true,
+      "show_symmetry_line": true,
+      "show_contour": false
+    },
+    "camera": {
+      "projection": 0,
+      "mode": 1,
+      "fov_degrees": 1.0,
+      "use_pivot": true
+    },
+    "meshes": [
+      {
+        "render": {
+          "shader": 0,
+          "matcap": 3,
+          "show_wireframe": false,
+          "flat_shading": false,
+          "opacity": 1.0
+        },
+        "center": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "matrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          100000.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": 1.0,
+        "positions": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.00390625,
+            1.0,
+            0.0
+          ],
+          [
+            0.0078125,
+            0.0,
+            1.0
+          ]
+        ],
+        "colors": null,
+        "materials": null,
+        "faces": [
+          [
+            0,
+            1,
+            2,
+            4294967295
+          ]
+        ],
+        "uv": null
+      }
+    ]
+  },
+  "expectation": {
+    "world_positions_f32": [
+      [
+        100000.0,
+        0.0,
+        0.0
+      ],
+      [
+        100000.0,
+        1.0,
+        0.0
+      ],
+      [
+        100000.0078125,
+        0.0,
+        1.0
+      ]
+    ],
+    "world_then_inverse_local_f32": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0078125,
+        0.0,
+        1.0
+      ]
+    ],
+    "original_local_positions": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.00390625,
+        1.0,
+        0.0
+      ],
+      [
+        0.0078125,
+        0.0,
+        1.0
+      ]
+    ],
+    "lost_local_vertex_component_count": 1,
+    "max_local_roundtrip_absolute_error": 0.00390625,
+    "bake_is_not_a_lossless_default_import_policy": true
+  }
+}

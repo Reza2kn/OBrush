@@ -1,0 +1,639 @@
+{
+  "feature": "Marching Cubes same-byte rich UV source voxel RGB/material/weight transfer",
+  "status": "One resolution-16 sphere paired; all native mapped attributes exact, browser within save rounding; SculptGL and ZBrush parity open",
+  "reference_source_commit": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+  "reference_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+  "source": [
+    {
+      "path": "crates/obrush-core/src/remesh.rs",
+      "sha256": "2a899757dc88f273d379a2abb2b1bc7d59d6af82ba0ca82204305bfb631966de",
+      "bytes": 67331
+    },
+    {
+      "path": "crates/obrush-core/tests/remesh.rs",
+      "sha256": "13fff65ac0410c0dfe963dd591f901e5dac909957c8af76df30025052a3f6d8e",
+      "bytes": 25401
+    },
+    {
+      "path": "crates/obrush-core/examples/mc_reference_fixture.rs",
+      "sha256": "41d84e5ac2cc859ee50ca5d14ef3295b94c0e68fc0b17f75da17477114c167c3",
+      "bytes": 1656
+    },
+    {
+      "path": "scripts/compare-mc-remesh.py",
+      "sha256": "748061478c7efbfe0db75ab67002698882e40ae85cfe3669f3818793fed669c1",
+      "bytes": 7132
+    },
+    {
+      "path": "docs/SCULPTGL_MARCHING_CUBES_CHANNELS_C91.md",
+      "sha256": "ebc46c5929bec90587426ea2812f06796af083e4435d9c61df0fd6cd8b04b84b",
+      "bytes": 2660
+    },
+    {
+      "path": "docs/FEATURE_PARITY.md",
+      "sha256": "d2fa04dcec777513d81acddcb635608275ed076aaea46cd47cb29b66eb67c431",
+      "bytes": 72907
+    },
+    {
+      "path": "docs/SCULPTGL_PARITY.md",
+      "sha256": "f11ed5feede923316484c6ef0291dce85ea75137a6df37008e9447fbd6d68b02",
+      "bytes": 175189
+    }
+  ],
+  "fixture": {
+    "path": "crates/obrush-core/tests/fixtures/independent-seamed-sphere.obj",
+    "sha256": "4bfebeb8ac713741ee5b70dedcefd8d746e21f610ebc788783f1008cc9d375ed",
+    "bytes": 86901
+  },
+  "parameters": {
+    "resolution": 16,
+    "relax_topology": [
+      false,
+      true
+    ],
+    "source_vertices": 266,
+    "source_triangles": 528,
+    "source_uv_coordinates": 1584,
+    "source_uv_faces": 528,
+    "source_protected_vertices": 7,
+    "allow_uv_loss": true
+  },
+  "reference": {
+    "before": {
+      "path": ".artifacts/sculptgl-reference-runtime/mc-c87-c8d3ce59-b6f4-4ca3-b657-16b9ebbb19e4/mc-remesh-false-before.json",
+      "sha256": "e523ba68c097abe13ab4819a8e2d986293904149cd976742b18414664eeb34e4",
+      "bytes": 222486
+    },
+    "outputs": [
+      {
+        "path": ".artifacts/sculptgl-reference-runtime/mc-c87-c8d3ce59-b6f4-4ca3-b657-16b9ebbb19e4/mc-remesh-false-after.json",
+        "sha256": "b82697a2af107afddabc1dde9a5c62bd97ac53ef0811323207d25139af27dfac",
+        "bytes": 479918
+      },
+      {
+        "path": ".artifacts/sculptgl-reference-runtime/mc-c87-c8d3ce59-b6f4-4ca3-b657-16b9ebbb19e4/mc-remesh-true-after.json",
+        "sha256": "dcec2c8cf3eff3e1031d38fc574907dc64fe4ceb4e7c9671974ce2a315f79d96",
+        "bytes": 520080
+      }
+    ]
+  },
+  "local": {
+    "native_output": {
+      "path": ".artifacts/mc-c91-rich-uv-core-final.json",
+      "sha256": "1e1c9bb14b7e87e06d6fb8a7ce70af74a818ff9dcdaf57a7189b1bb1afc02244",
+      "bytes": 604285
+    },
+    "browser_run": {
+      "path": ".artifacts/mask-filter-browser/mc-c91-rich-uv-27179e2a-578e-4503-8ab3-8fd8c616edc2/result.json",
+      "sha256": "16796a261bdfc2fe590fc73f4e19f940de1949722b15345800e54e58a92ae48c",
+      "bytes": 2556013
+    },
+    "web_wasm": {
+      "path": "web/dist/pkg/obrush_app_bg.wasm",
+      "sha256": "885e725a53b7f0739f471c92d2aa465c0cb3e3f92a29c8a4c0c3d0e35d7bec64",
+      "bytes": 23331479
+    },
+    "macos_executable": {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/OBRush",
+      "sha256": "784821f5e540f4090c7d834c321ba0ea58eb9e241c2aeb7d8ec68ff66eca1245",
+      "bytes": 26410928
+    },
+    "live_8792_served_wasm": {
+      "bytes": 23331479,
+      "sha256": "885e725a53b7f0739f471c92d2aa465c0cb3e3f92a29c8a4c0c3d0e35d7bec64"
+    },
+    "browser_status": "passed Marching Cubes browser workflow",
+    "browser_exceptions": [],
+    "browser_console_errors": [],
+    "browser_runtime_errors": {
+      "gl": [],
+      "js": []
+    },
+    "browser_cases": [
+      {
+        "name": "marching-cubes-relaxed-false-visible-workflow",
+        "vertices": 1172,
+        "triangles": 2340,
+        "gates": {
+          "visible_control": true,
+          "closed_solid": true,
+          "triangular_output": true,
+          "history_exact": true,
+          "obj_roundtrip": true,
+          "visible_gpu_save_exact": true
+        },
+        "topology": {
+          "vertices": 1172,
+          "faces": 2340,
+          "edges": 3510,
+          "components": 1,
+          "euler": 2,
+          "signed_volume": 4.2079338572456395,
+          "min_double_area": 2.1871201269898535e-09
+        }
+      },
+      {
+        "name": "marching-cubes-relaxed-true-visible-workflow",
+        "vertices": 1172,
+        "triangles": 2340,
+        "gates": {
+          "visible_control": true,
+          "closed_solid": true,
+          "triangular_output": true,
+          "history_exact": true,
+          "obj_roundtrip": true,
+          "visible_gpu_save_exact": true
+        },
+        "topology": {
+          "vertices": 1172,
+          "faces": 2340,
+          "edges": 3510,
+          "components": 1,
+          "euler": 2,
+          "signed_volume": 4.205185780242605,
+          "min_double_area": 0.0015774501824928283
+        }
+      }
+    ],
+    "browser_snapshot_shas": {
+      "marching-cubes-false-before.obrush": "f1ba0d9dc15fecc060cae73ad0e2d71458694135b853028f4d7814cb356a2aae",
+      "marching-cubes-false-uv-rejected.obrush": "f1ba0d9dc15fecc060cae73ad0e2d71458694135b853028f4d7814cb356a2aae",
+      "marching-cubes-false-after.obrush": "85412bcd9ded394c68571adcc14242f20b8c612ff12df0e26f2b3fe9b0035d44",
+      "marching-cubes-false-undo.obrush": "f1ba0d9dc15fecc060cae73ad0e2d71458694135b853028f4d7814cb356a2aae",
+      "marching-cubes-false-redo.obrush": "85412bcd9ded394c68571adcc14242f20b8c612ff12df0e26f2b3fe9b0035d44",
+      "marching-cubes-false-obj-import.obrush": "5f96fa59e1e26a7da705d18baab584b1007cb86406d58e1040e0c911d98b87b6",
+      "marching-cubes-true-before.obrush": "f1ba0d9dc15fecc060cae73ad0e2d71458694135b853028f4d7814cb356a2aae",
+      "marching-cubes-true-uv-rejected.obrush": "f1ba0d9dc15fecc060cae73ad0e2d71458694135b853028f4d7814cb356a2aae",
+      "marching-cubes-true-after.obrush": "ceca863e9062bc7133ee213e762135f6a9e2193dbb4fd47a9aaaaaa8edd3eefa",
+      "marching-cubes-true-undo.obrush": "f1ba0d9dc15fecc060cae73ad0e2d71458694135b853028f4d7814cb356a2aae",
+      "marching-cubes-true-redo.obrush": "ceca863e9062bc7133ee213e762135f6a9e2193dbb4fd47a9aaaaaa8edd3eefa",
+      "marching-cubes-true-obj-import.obrush": "2c472390d5a392f3ad52e289926b527778c23750b58649a1cadcedec810e3561"
+    }
+  },
+  "comparison": {
+    "before_browser": {
+      "record": {
+        "path": ".artifacts/mc-c91-rich-uv-before-comparison.json",
+        "sha256": "83ac2e5c7882946be51963eb6f0057a1f56e92fed1739d09d34ac139513d9811",
+        "bytes": 4106
+      },
+      "results": {
+        "reference_snapshots": {
+          "false": {
+            "path": ".artifacts/sculptgl-reference-runtime/mc-c87-c8d3ce59-b6f4-4ca3-b657-16b9ebbb19e4/mc-remesh-false-after.json",
+            "sha256": "b82697a2af107afddabc1dde9a5c62bd97ac53ef0811323207d25139af27dfac"
+          },
+          "true": {
+            "path": ".artifacts/sculptgl-reference-runtime/mc-c87-c8d3ce59-b6f4-4ca3-b657-16b9ebbb19e4/mc-remesh-true-after.json",
+            "sha256": "dcec2c8cf3eff3e1031d38fc574907dc64fe4ceb4e7c9671974ce2a315f79d96"
+          }
+        },
+        "obrush_snapshot": {
+          "browser_projects": [
+            {
+              "path": ".artifacts/mask-filter-browser/mc-c90-rich-uv-2e255c18-2710-482a-a941-680c1647f6da/marching-cubes-false-after.obrush",
+              "sha256": "ab32cb56c85623a6c6d62efd5661ca039fbb2861034af3fb06970001b917bdff"
+            },
+            {
+              "path": ".artifacts/mask-filter-browser/mc-c90-rich-uv-2e255c18-2710-482a-a941-680c1647f6da/marching-cubes-true-after.obrush",
+              "sha256": "2805fac7ce9196bddc38211224293b613973a111668e5181670f567442ea700a"
+            }
+          ]
+        },
+        "cases": [
+          {
+            "relaxed": false,
+            "reference": {
+              "vertices": 1172,
+              "triangles": 2340,
+              "signed_world_volume": 4.207933080357755
+            },
+            "obrush": {
+              "vertices": 1172,
+              "triangles": 2340,
+              "signed_world_volume": 4.207933844615049
+            },
+            "reference_to_obrush_nearest_world": {
+              "maximum": 2.3633570493221745e-07,
+              "rms": 1.0490753656226264e-07,
+              "median": 9.190251826259439e-08,
+              "p95": 1.659503265652377e-07,
+              "exact_within_1e_6": 1172
+            },
+            "obrush_to_reference_nearest_world": {
+              "maximum": 2.3633570493221745e-07,
+              "rms": 1.0490753656226264e-07,
+              "median": 9.190251826259439e-08,
+              "p95": 1.659503265652377e-07,
+              "exact_within_1e_6": 1172
+            }
+          },
+          {
+            "relaxed": true,
+            "reference": {
+              "vertices": 1172,
+              "triangles": 2340,
+              "signed_world_volume": 4.205184996322868
+            },
+            "obrush": {
+              "vertices": 1172,
+              "triangles": 2340,
+              "signed_world_volume": 4.205185785836187
+            },
+            "reference_to_obrush_nearest_world": {
+              "maximum": 3.275738495026354e-07,
+              "rms": 1.2668048604290413e-07,
+              "median": 1.1209727969863961e-07,
+              "p95": 2.0188726823212078e-07,
+              "exact_within_1e_6": 1172
+            },
+            "obrush_to_reference_nearest_world": {
+              "maximum": 3.275738495026354e-07,
+              "rms": 1.2668048604290413e-07,
+              "median": 1.1209727969863961e-07,
+              "p95": 2.0188726823212078e-07,
+              "exact_within_1e_6": 1172
+            }
+          }
+        ],
+        "unrelaxed_face_mapping": {
+          "mapped_vertices": 1172,
+          "oriented_reference_faces": 2340,
+          "oriented_obrush_faces": 2340,
+          "oriented_intersection": 2340,
+          "unoriented_intersection": 2340
+        },
+        "relaxed_mapped_position_difference": {
+          "maximum": 3.275738495026354e-07,
+          "rms": 1.2668048604290413e-07
+        },
+        "attribute_differences": [
+          {
+            "relaxed": false,
+            "rgb": {
+              "values_compared": 3516,
+              "maximum_abs_difference": 0.18820220586090086,
+              "rms_abs_difference": 0.019706754929491015
+            },
+            "roughness_metallic": {
+              "values_compared": 2344,
+              "maximum_abs_difference": 0.3203440346812439,
+              "rms_abs_difference": 0.03254810374770528
+            },
+            "unmasked_weight": {
+              "values_compared": 1172,
+              "maximum_abs_difference": 1.3465118353650496e-08,
+              "rms_abs_difference": 2.1745020373012983e-09
+            }
+          },
+          {
+            "relaxed": true,
+            "rgb": {
+              "values_compared": 3516,
+              "maximum_abs_difference": 0.18696025586090093,
+              "rms_abs_difference": 0.020520771750587384
+            },
+            "roughness_metallic": {
+              "values_compared": 2344,
+              "maximum_abs_difference": 0.44938868181640623,
+              "rms_abs_difference": 0.03702024017413144
+            },
+            "unmasked_weight": {
+              "values_compared": 1172,
+              "maximum_abs_difference": 1.3465118353650496e-08,
+              "rms_abs_difference": 2.1745020373012983e-09
+            }
+          }
+        ]
+      }
+    },
+    "native": {
+      "record": {
+        "path": ".artifacts/mc-c91-rich-uv-core-final-comparison.json",
+        "sha256": "bc25976282399e63619f06808276a893f0bb22211b276f2c516c74ee485f4717",
+        "bytes": 3537
+      },
+      "results": {
+        "reference_snapshots": {
+          "false": {
+            "path": ".artifacts/sculptgl-reference-runtime/mc-c87-c8d3ce59-b6f4-4ca3-b657-16b9ebbb19e4/mc-remesh-false-after.json",
+            "sha256": "b82697a2af107afddabc1dde9a5c62bd97ac53ef0811323207d25139af27dfac"
+          },
+          "true": {
+            "path": ".artifacts/sculptgl-reference-runtime/mc-c87-c8d3ce59-b6f4-4ca3-b657-16b9ebbb19e4/mc-remesh-true-after.json",
+            "sha256": "dcec2c8cf3eff3e1031d38fc574907dc64fe4ceb4e7c9671974ce2a315f79d96"
+          }
+        },
+        "obrush_snapshot": {
+          "path": ".artifacts/mc-c91-rich-uv-core-final.json",
+          "sha256": "1e1c9bb14b7e87e06d6fb8a7ce70af74a818ff9dcdaf57a7189b1bb1afc02244"
+        },
+        "cases": [
+          {
+            "relaxed": false,
+            "reference": {
+              "vertices": 1172,
+              "triangles": 2340,
+              "signed_world_volume": 4.207933080357755
+            },
+            "obrush": {
+              "vertices": 1172,
+              "triangles": 2340,
+              "signed_world_volume": 4.2079338572456395
+            },
+            "reference_to_obrush_nearest_world": {
+              "maximum": 2.3143999929750734e-07,
+              "rms": 1.0250821640622712e-07,
+              "median": 8.999292495353291e-08,
+              "p95": 1.5957938238004922e-07,
+              "exact_within_1e_6": 1172
+            },
+            "obrush_to_reference_nearest_world": {
+              "maximum": 2.3143999929750734e-07,
+              "rms": 1.0250821640622712e-07,
+              "median": 8.999292495353291e-08,
+              "p95": 1.5957938238004922e-07,
+              "exact_within_1e_6": 1172
+            }
+          },
+          {
+            "relaxed": true,
+            "reference": {
+              "vertices": 1172,
+              "triangles": 2340,
+              "signed_world_volume": 4.205184996322868
+            },
+            "obrush": {
+              "vertices": 1172,
+              "triangles": 2340,
+              "signed_world_volume": 4.205185780242605
+            },
+            "reference_to_obrush_nearest_world": {
+              "maximum": 3.3404118413619183e-07,
+              "rms": 1.2535495948773879e-07,
+              "median": 1.111431828206865e-07,
+              "p95": 1.9775088104181992e-07,
+              "exact_within_1e_6": 1172
+            },
+            "obrush_to_reference_nearest_world": {
+              "maximum": 3.3404118413619183e-07,
+              "rms": 1.2535495948773879e-07,
+              "median": 1.111431828206865e-07,
+              "p95": 1.9775088104181992e-07,
+              "exact_within_1e_6": 1172
+            }
+          }
+        ],
+        "unrelaxed_face_mapping": {
+          "mapped_vertices": 1172,
+          "oriented_reference_faces": 2340,
+          "oriented_obrush_faces": 2340,
+          "oriented_intersection": 2340,
+          "unoriented_intersection": 2340
+        },
+        "relaxed_mapped_position_difference": {
+          "maximum": 3.3404118413619183e-07,
+          "rms": 1.2535495948773879e-07
+        },
+        "attribute_differences": [
+          {
+            "relaxed": false,
+            "rgb": {
+              "values_compared": 3516,
+              "maximum_abs_difference": 0.0,
+              "rms_abs_difference": 0.0
+            },
+            "roughness_metallic": {
+              "values_compared": 2344,
+              "maximum_abs_difference": 0.0,
+              "rms_abs_difference": 0.0
+            },
+            "unmasked_weight": {
+              "values_compared": 1172,
+              "maximum_abs_difference": 0.0,
+              "rms_abs_difference": 0.0
+            }
+          },
+          {
+            "relaxed": true,
+            "rgb": {
+              "values_compared": 3516,
+              "maximum_abs_difference": 0.0,
+              "rms_abs_difference": 0.0
+            },
+            "roughness_metallic": {
+              "values_compared": 2344,
+              "maximum_abs_difference": 0.0,
+              "rms_abs_difference": 0.0
+            },
+            "unmasked_weight": {
+              "values_compared": 1172,
+              "maximum_abs_difference": 0.0,
+              "rms_abs_difference": 0.0
+            }
+          }
+        ]
+      }
+    },
+    "browser": {
+      "record": {
+        "path": ".artifacts/mc-c91-rich-uv-browser-comparison.json",
+        "sha256": "92dc473887b49ac6a26b34c3e3cf9e0edf17b373afcd3bab00ab832494562575",
+        "bytes": 4125
+      },
+      "results": {
+        "reference_snapshots": {
+          "false": {
+            "path": ".artifacts/sculptgl-reference-runtime/mc-c87-c8d3ce59-b6f4-4ca3-b657-16b9ebbb19e4/mc-remesh-false-after.json",
+            "sha256": "b82697a2af107afddabc1dde9a5c62bd97ac53ef0811323207d25139af27dfac"
+          },
+          "true": {
+            "path": ".artifacts/sculptgl-reference-runtime/mc-c87-c8d3ce59-b6f4-4ca3-b657-16b9ebbb19e4/mc-remesh-true-after.json",
+            "sha256": "dcec2c8cf3eff3e1031d38fc574907dc64fe4ceb4e7c9671974ce2a315f79d96"
+          }
+        },
+        "obrush_snapshot": {
+          "browser_projects": [
+            {
+              "path": ".artifacts/mask-filter-browser/mc-c91-rich-uv-27179e2a-578e-4503-8ab3-8fd8c616edc2/marching-cubes-false-after.obrush",
+              "sha256": "85412bcd9ded394c68571adcc14242f20b8c612ff12df0e26f2b3fe9b0035d44"
+            },
+            {
+              "path": ".artifacts/mask-filter-browser/mc-c91-rich-uv-27179e2a-578e-4503-8ab3-8fd8c616edc2/marching-cubes-true-after.obrush",
+              "sha256": "ceca863e9062bc7133ee213e762135f6a9e2193dbb4fd47a9aaaaaa8edd3eefa"
+            }
+          ]
+        },
+        "cases": [
+          {
+            "relaxed": false,
+            "reference": {
+              "vertices": 1172,
+              "triangles": 2340,
+              "signed_world_volume": 4.207933080357755
+            },
+            "obrush": {
+              "vertices": 1172,
+              "triangles": 2340,
+              "signed_world_volume": 4.207933844615049
+            },
+            "reference_to_obrush_nearest_world": {
+              "maximum": 2.3633570493221745e-07,
+              "rms": 1.0490753656226264e-07,
+              "median": 9.190251826259439e-08,
+              "p95": 1.659503265652377e-07,
+              "exact_within_1e_6": 1172
+            },
+            "obrush_to_reference_nearest_world": {
+              "maximum": 2.3633570493221745e-07,
+              "rms": 1.0490753656226264e-07,
+              "median": 9.190251826259439e-08,
+              "p95": 1.659503265652377e-07,
+              "exact_within_1e_6": 1172
+            }
+          },
+          {
+            "relaxed": true,
+            "reference": {
+              "vertices": 1172,
+              "triangles": 2340,
+              "signed_world_volume": 4.205184996322868
+            },
+            "obrush": {
+              "vertices": 1172,
+              "triangles": 2340,
+              "signed_world_volume": 4.205185785836187
+            },
+            "reference_to_obrush_nearest_world": {
+              "maximum": 3.275738495026354e-07,
+              "rms": 1.2668048604290413e-07,
+              "median": 1.1209727969863961e-07,
+              "p95": 2.0188726823212078e-07,
+              "exact_within_1e_6": 1172
+            },
+            "obrush_to_reference_nearest_world": {
+              "maximum": 3.275738495026354e-07,
+              "rms": 1.2668048604290413e-07,
+              "median": 1.1209727969863961e-07,
+              "p95": 2.0188726823212078e-07,
+              "exact_within_1e_6": 1172
+            }
+          }
+        ],
+        "unrelaxed_face_mapping": {
+          "mapped_vertices": 1172,
+          "oriented_reference_faces": 2340,
+          "oriented_obrush_faces": 2340,
+          "oriented_intersection": 2340,
+          "unoriented_intersection": 2340
+        },
+        "relaxed_mapped_position_difference": {
+          "maximum": 3.275738495026354e-07,
+          "rms": 1.2668048604290413e-07
+        },
+        "attribute_differences": [
+          {
+            "relaxed": false,
+            "rgb": {
+              "values_compared": 3516,
+              "maximum_abs_difference": 2.978515623031086e-08,
+              "rms_abs_difference": 9.442730794860251e-09
+            },
+            "roughness_metallic": {
+              "values_compared": 2344,
+              "maximum_abs_difference": 2.9753112751329525e-08,
+              "rms_abs_difference": 1.0145759914476807e-08
+            },
+            "unmasked_weight": {
+              "values_compared": 1172,
+              "maximum_abs_difference": 1.3465118353650496e-08,
+              "rms_abs_difference": 2.1745020373012983e-09
+            }
+          },
+          {
+            "relaxed": true,
+            "rgb": {
+              "values_compared": 3516,
+              "maximum_abs_difference": 2.978515623031086e-08,
+              "rms_abs_difference": 9.442730794860251e-09
+            },
+            "roughness_metallic": {
+              "values_compared": 2344,
+              "maximum_abs_difference": 2.9753112751329525e-08,
+              "rms_abs_difference": 1.0145759914476807e-08
+            },
+            "unmasked_weight": {
+              "values_compared": 1172,
+              "maximum_abs_difference": 1.3465118353650496e-08,
+              "rms_abs_difference": 2.1745020373012983e-09
+            }
+          }
+        ]
+      }
+    }
+  },
+  "checks": {
+    "cargo_fmt_all_check": "passed",
+    "workspace_test_rounds": 70,
+    "workspace_tests_passed": 2385,
+    "workspace_tests_failed": 0,
+    "strict_native_clippy": "passed on final source",
+    "strict_wasm_clippy": "passed on final source",
+    "wasm_target_check": "passed",
+    "web_build": "passed after final core edit",
+    "macos_package": "passed after final core edit",
+    "browser_visible_workflow": "passed",
+    "logs": [
+      {
+        "path": ".artifacts/mc-c91-final-clippy-native.log",
+        "sha256": "116bd41f6e767df68b7f46e4e872a46820139ae4b84eee553926d4511158f78f",
+        "bytes": 223
+      },
+      {
+        "path": ".artifacts/mc-c91-final-clippy-wasm.log",
+        "sha256": "d26e0bf617aa8472f91518beb5dba3bf15de3bfddf93f564ab29293a81350864",
+        "bytes": 222
+      },
+      {
+        "path": ".artifacts/mc-c91-final-workspace-tests.log",
+        "sha256": "e07cb8df4d5857fd497af0dfb5339f55e3c9041bf29e3055a148c02b794e319e",
+        "bytes": 228528
+      },
+      {
+        "path": ".artifacts/mc-c91-wasm-check.log",
+        "sha256": "8d1ed2c9c1639b617bbc22971572bf51ca1ef13456b62378539d3cd4e5351807",
+        "bytes": 222
+      },
+      {
+        "path": ".artifacts/mc-c91-build-web.log",
+        "sha256": "698294a8bf49ac471862ee97bbfdbe006904cdcbae0bf989e89671783d328579",
+        "bytes": 279
+      },
+      {
+        "path": ".artifacts/mc-c91-package-macos.log",
+        "sha256": "a7f0840d496a926fe323f6dc289579646f6f94bb46bb6ac8632c8065561f9920",
+        "bytes": 407
+      },
+      {
+        "path": ".artifacts/mc-c91-browser.log",
+        "sha256": "f38162be8755246319c12dc38122d529be5ee7f13332f7ca84f7bfca53b96e36",
+        "bytes": 1211
+      }
+    ]
+  },
+  "retained_failed_checks": [
+    {
+      "path": ".artifacts/mc-c91-clippy-native.log",
+      "sha256": "75b985ea790d09feee2ac895228c13aae271045b0e1793ba8b960bba0b308ac6",
+      "bytes": 900
+    }
+  ],
+  "limitations": [
+    "One closed triangular sphere at resolution 16; no arbitrary topology inference",
+    "Per-corner UVs intentionally discarded on remesh and restored by undo",
+    "Selected multi-mesh fusion, broader shapes/resolutions and sustained performance remain open",
+    "Browser GPU buffer witness covers positions, normals, masks and RGB; material channels are verified in saved project and numeric comparison",
+    "Browser uses WASM CPU geometry and WebGL2; WebGPU compute/draw not integrated",
+    "Synthetic isolated browser input; physical pen, native GUI and ZBrush brush parity not checked"
+  ]
+}

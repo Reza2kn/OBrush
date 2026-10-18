@@ -1,0 +1,873 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-10-15T22:08:33.062567-07:00",
+  "status": "Delivered C50 expected-domain buffer ownership reuse; current scoped functional/memory checks pass; sender timing qualification FAIL; full parity unfinished",
+  "preview": "http://127.0.0.1:8813/",
+  "source_manifest": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate50/source/manifest.json",
+    "bytes": 92136,
+    "sha256": "c628444095f7c240c2f9b4e8b7051ddc9e8ee81cfee19949ac074b34225ec5df"
+  },
+  "build": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate50/build-record.json",
+    "bytes": 9354,
+    "sha256": "d16de8451bb031ace6486d48d165ae5d5acac6dc4ae068c1f1ac9c30db7ea949"
+  },
+  "checked_receipt": {
+    "path": ".artifacts/sculptgl-domain-reuse-c50-stage/FINAL_CHECKED_RECEIPT.json",
+    "bytes": 2873,
+    "sha256": "b1391cd9c4fc04fcae4f226b4b86997efbec26103a50794704028c07533892b1"
+  },
+  "source_checks": {
+    "path": ".artifacts/sculptgl-domain-reuse-c50-stage/CHECKS02.json",
+    "bytes": 2025,
+    "sha256": "0b8856cd0828ce259061358126464f030f46eafd06ea95fa7f383b629d49c5d9"
+  },
+  "source_rows": 511,
+  "product_rows": 384,
+  "tests": {
+    "workspace": 2317,
+    "core": 1597,
+    "app": 720,
+    "ignored": 1
+  },
+  "wasm": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate50/source/web/dist/pkg/obrush_app_bg.wasm",
+    "bytes": 23247749,
+    "sha256": "5cd5dea816f7c541c6efbbe5f76349c5078dd7839d7c764a59ee92fb5fe737f9"
+  },
+  "implementation": {
+    "path": "crates/obrush-core/src/source_geometry.rs",
+    "bytes": 97826,
+    "sha256": "d853b27c26720bb537a0984a8208d2a21d160d804274295b6432563e286b93ce"
+  },
+  "changed_files": [
+    "crates/obrush-core/src/source_geometry.rs"
+  ],
+  "scope": "Warm geometry dabs retain their already fully checked owned expected-domain normal/mask/RGB/material/UV buffers. Cold domain capture stays before writes. Only expected Legacy normal words advance after all fallible candidate/cache/state checks. Every standalone/exclusiveDocument public entry still validates the complete actual domain; controlled mirrored staging remains deeply owned/atomic. No pointer/epoch authorization, brush arithmetic, public schema/API/layout or allocation limit change.",
+  "production_identity": {
+    "path": ".artifacts/sculptgl-domain-reuse-c50-stage/PRODUCTION_IDENTITY.json",
+    "bytes": 636,
+    "sha256": "ed4360a398df98227a9743c394f764c442b06c33d2d015210a5dbb0dc073999e"
+  },
+  "native_matrix": {
+    "protocol": {
+      "path": ".artifacts/sculptgl-domain-reuse-c50-stage/COMPARISON_PROTOCOL.json",
+      "bytes": 1419,
+      "sha256": "193fc94becd64c1b3d35a34e53d8edb66511218c4ebab9374691cb318f1d579b"
+    },
+    "bare": {
+      "path": ".artifacts/sculptgl-domain-reuse-c50-stage/DAB_COMPARISON.json",
+      "bytes": 17191,
+      "sha256": "08683bb06221373cfe80e8c219c3780e1a7dedd7c2f530e0bac0da35f66ec92e"
+    },
+    "controlled": {
+      "path": ".artifacts/sculptgl-domain-reuse-c50-stage/CONTROLLED_COMPARISON.json",
+      "bytes": 19834,
+      "sha256": "b688aff98349361e2d36e5db9f30037ade7cc0ef815c0162b22ddb93c0ca9590"
+    },
+    "audit": {
+      "path": ".artifacts/sculptgl-domain-reuse-c50-stage/NATIVE_MATRIX_AUDIT.json",
+      "bytes": 4520,
+      "sha256": "fc73bf6ab15e33d56f33869171ada858022240d826eef1c210f5289bc3492f43"
+    },
+    "rows": [
+      {
+        "mode": "bare",
+        "vertices": 10242,
+        "faces": 20480,
+        "cold_old_peak": 4332704,
+        "cold_new_peak": 4332704,
+        "warm_old_peak_median": 2456722,
+        "warm_new_peak_median": 2169946,
+        "peak_saved_bytes": [
+          0,
+          286776,
+          286776,
+          286776,
+          286776,
+          286776,
+          286776,
+          286776
+        ],
+        "allocation_calls_saved": [
+          0,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "output_bytes": 9090514,
+        "output_sha256": "3c40b4c154a99b369a0a2148091eddd95670437d46bd87f3772b9fa78bdabde0"
+      },
+      {
+        "mode": "bare",
+        "vertices": 40962,
+        "faces": 81920,
+        "cold_old_peak": 17108224,
+        "cold_new_peak": 17108224,
+        "warm_old_peak_median": 9604618,
+        "warm_new_peak_median": 8457682,
+        "peak_saved_bytes": [
+          0,
+          1146936,
+          1146936,
+          1146936,
+          1146936,
+          1146936,
+          1146936,
+          1146936
+        ],
+        "allocation_calls_saved": [
+          0,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "output_bytes": 36842188,
+        "output_sha256": "a08cb02ad02693197ab2eeb1ace782e39e4a9ec6d755b881f4b74ecbbf814a56"
+      },
+      {
+        "mode": "bare",
+        "vertices": 163842,
+        "faces": 327680,
+        "cold_old_peak": 68210392,
+        "cold_new_peak": 68210392,
+        "warm_old_peak_median": 38196170,
+        "warm_new_peak_median": 33608594,
+        "peak_saved_bytes": [
+          0,
+          4587576,
+          4587576,
+          4587576,
+          4587576,
+          4587576,
+          4587576,
+          4587576
+        ],
+        "allocation_calls_saved": [
+          0,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "output_bytes": 149052077,
+        "output_sha256": "46e12d9bbabdde1a49418e5713b1a830c620ff7674d9f6db0e6ec6d32d8c3f77"
+      },
+      {
+        "mode": "controlled mirror",
+        "vertices": 10242,
+        "faces": 20480,
+        "cold_old_peak": 6417050,
+        "cold_new_peak": 6130274,
+        "warm_old_peak_median": 4598682,
+        "warm_new_peak_median": 4311906,
+        "peak_saved_bytes": [
+          286776,
+          286776,
+          286776,
+          286776,
+          286776,
+          286776,
+          286776,
+          286776
+        ],
+        "allocation_calls_saved": [
+          3,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "output_bytes": 9119642,
+        "output_sha256": "d49b485daea1ed5671145b8abbe26fb7cf800de39475cdb428648de3b291b944"
+      },
+      {
+        "mode": "controlled mirror",
+        "vertices": 40962,
+        "faces": 81920,
+        "cold_old_peak": 25191466,
+        "cold_new_peak": 24044530,
+        "warm_old_peak_median": 17918034,
+        "warm_new_peak_median": 16771098,
+        "peak_saved_bytes": [
+          1146936,
+          1146936,
+          1146936,
+          1146936,
+          1146936,
+          1146936,
+          1146936,
+          1146936
+        ],
+        "allocation_calls_saved": [
+          3,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "output_bytes": 36871676,
+        "output_sha256": "2dde2605aa0d4f04d9b3efb7bae8ed2526cf70f834c054ad32135997ddbb1092"
+      },
+      {
+        "mode": "controlled mirror",
+        "vertices": 163842,
+        "faces": 327680,
+        "cold_old_peak": 100289162,
+        "cold_new_peak": 95701586,
+        "warm_old_peak_median": 71194962,
+        "warm_new_peak_median": 66607386,
+        "peak_saved_bytes": [
+          4587576,
+          4587576,
+          4587576,
+          4587576,
+          4587576,
+          4587576,
+          4587576,
+          4587576
+        ],
+        "allocation_calls_saved": [
+          3,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "output_bytes": 149084409,
+        "output_sha256": "701ffc9e21528592e675e0f37f4f8a1ee6a5148c903f8a5551ff5ff8dc8ccba4"
+      }
+    ],
+    "scope": "All6fixture/mode pairs,8usefuldabs per10K/40K/163K fixture,wholeMesh/normals/tree/reports/proxy/generation/center/controlledtracks byte-identical toC49.",
+    "limits": "Requested native allocation excluding preexisting Mesh/allocatoroverhead/RSS/browser/GPU. Barecold unchanged; warm163Kpeak38,196,170->33,608,594(12.01%); controlledmirrorwarm71,194,962->66,607,386(6.44%). No end-to-end speedup or largeediting admission established."
+  },
+  "normal_browser": {
+    "audit": {
+      "path": ".artifacts/sculptgl-normal-c50-consumer-stage/POST_AUDIT01.json",
+      "bytes": 231257,
+      "sha256": "9b061798a46e406b0e0329c086fc0dbd6f03778220ddd83f1375018596d4d849"
+    },
+    "result": {
+      "path": ".artifacts/sculptgl-normal-consumer-runtime/candidate50-normal-2392e6dc-48a6-44de-bfc0-0c046faa3c22/result.json",
+      "bytes": 27499847,
+      "sha256": "d97b983b19525a18deceb1077d923a86b3ff31f04f7b56bf8d70b45ba7769730"
+    },
+    "cases": 20,
+    "actual_complete_downloads": 126,
+    "saved_GPU_comparisons": 118,
+    "wholePNGs": 17,
+    "closure": "Chromeexit0,one serverclosed,ownedPIDabsent; no recordedexceptions/consoleerrors",
+    "limits": "Scoped normal consumers, not all317+5reference/native/physical/performance gates."
+  },
+  "paired_crease_history": {
+    "audit": {
+      "path": ".artifacts/sculptgl-crease-history-c50-stage/ROOT_HISTORY_AUDIT.json",
+      "bytes": 34938,
+      "sha256": "1f3c42beaab23b5cee65467610918d6db102836b5dd89b9c95af457ee25e8ce2"
+    },
+    "independent_math": {
+      "path": ".artifacts/sculptgl-crease-history-c50-stage/ROOT_INDEPENDENT_HISTORY_MATH.json",
+      "bytes": 13070,
+      "sha256": "a363e4c036937d8e8587b10a891eab5cdee8258cb5ef112c9ac2c4bbdad054dc"
+    },
+    "result": {
+      "path": ".artifacts/sculptgl-crease-runtime/candidate50-history-CW03-bdc55297-0236-4c6e-bad2-87f57624a30f/result.json",
+      "bytes": 41284667,
+      "sha256": "e8f2a5f02f34b2a080886082e0262937ffd6e5e3432a69e4ff6e45acb7d8b39c"
+    },
+    "raw_records": 547,
+    "whole_downloads": 36,
+    "actual_GPU_snapshots": 24,
+    "independent_own_math_passes": 12,
+    "scope": "Original CW03three mirrored Crease strokes,six current-field Undo/Redo states,pinnedhostedreference; original1e-6max/RMS,256frame/32MiBrecording caps unchanged.",
+    "closure": "Chromeexit0,both serversclosed,no recordedexceptions/consoleerrors"
+  },
+  "image_identity": {
+    "path": ".artifacts/sculptgl-domain-reuse-c50-stage/IMAGE_IDENTITY_CHECK.json",
+    "bytes": 3954,
+    "sha256": "043c83a3bbbd5745d2a0c58aaa0aeb876758d9358e9bcaddb44cd3f0c7264c2d"
+  },
+  "visual_scope": "Three complete currentnormal/CW03PNGs byte-identical to already reviewedC49. Two whole original/phase performance PNGs separately viewed: ID-colored finite sphere and useful raised circularstroke visible. No beauty/imageequivalence/globalintersection claim.",
+  "sustained_100K60": {
+    "status": "FAILED original sender maximum in all3currenttrials; no full performance pass promoted",
+    "helper": {
+      "path": ".artifacts/sculptgl-sustained-performance-c50-stage/HELPER_MANIFEST01.json",
+      "bytes": 5919,
+      "sha256": "72af66cf6f542ccba1e3aa9ad654611609944262c4b46aa3c4931207d3592769"
+    },
+    "protocol": {
+      "path": ".artifacts/sculptgl-sustained-performance-c50-stage/SUSTAINED_PREREGISTRATION.json",
+      "bytes": 6241,
+      "sha256": "d2e8a7b15625abdb6fe3eac44b9e83ee7d0d2fa776106b5498f06c06b7e83a2b"
+    },
+    "trials": [
+      {
+        "name": "Original exact sender",
+        "audit": {
+          "path": ".artifacts/sculptgl-sustained-performance-c50-stage/ROOT_100K_60S_AUDIT01.json",
+          "bytes": 6791,
+          "sha256": "e75e22664c41d7f7cb4ea77940b359ab89173c6e6bca971f49603b61680a6a4e"
+        },
+        "result": {
+          "path": ".artifacts/sculptgl-sustained-performance-c50-stage/actual/SP-LONG00-100k-60s-root-3e439fd0-d346-4583-92b6-76f55da1e836/result.json",
+          "bytes": 13877384,
+          "sha256": "6ab18c04fc148fbd6abc34eda28205f2aa82c1ab289f15cebf07ab6bcdcc91b0"
+        },
+        "status": "FAIL one or more named local data/scalar gates",
+        "failed_checks": [
+          "pacing_max_le100ms"
+        ],
+        "metrics": {
+          "actual_pointer_contact_ms": 60096,
+          "scheduled_motion_requests": 24000,
+          "delivered_pointer_moves": 14676,
+          "motion_send_lateness_ms": {
+            "count": 24000,
+            "minimum": 0,
+            "P50": 0.0,
+            "P95": 0.6475830000017595,
+            "P99": 24.980500000005122,
+            "maximum": 317.262625000003
+          },
+          "motion_ack_elapsed_ms": {
+            "count": 24000,
+            "minimum": 0.20629100000223843,
+            "P50": 2.8201670000016748,
+            "P95": 13.048666000002413,
+            "P99": 19.40950000000157,
+            "maximum": 384.7640420000025
+          },
+          "independentRAF_active_interval_ms": {
+            "count": 3600,
+            "minimum": 4.799999952316284,
+            "P50": 16.299999952316284,
+            "P95": 27.0,
+            "P99": 27.69999998807907,
+            "maximum": 68.39999997615814
+          },
+          "independentRAF_active_timestamp_interval_ms": {
+            "count": 3600,
+            "minimum": 16.5,
+            "P50": 16.69999999999709,
+            "P95": 16.799999999995634,
+            "P99": 16.80000000000291,
+            "maximum": 66.69999999999891
+          },
+          "appRAF_active_callback_CPU_ms": {
+            "count": 3602,
+            "minimum": 0,
+            "P50": 4.800000011920929,
+            "P95": 14.599999964237213,
+            "P99": 15.5,
+            "maximum": 59.5
+          },
+          "appRAF_active_sum_CPU_per_shared_timestamp_ms": {
+            "count": 3601,
+            "minimum": 0,
+            "P50": 4.800000011920929,
+            "P95": 14.599999964237213,
+            "P99": 15.5,
+            "maximum": 59.5
+          },
+          "Source_original_Brush_callback_CPU_ms": {
+            "count": 0
+          },
+          "Source_original_Brush_callbacks": 0,
+          "longtasks": [
+            [
+              8404.800000011921,
+              63
+            ],
+            [
+              8556.300000011921,
+              59
+            ]
+          ],
+          "seen": {
+            "events": 29356,
+            "draws": 78716,
+            "uploads": 134498,
+            "appRAF": 3726,
+            "pumpRAF": 3725,
+            "sourceDabs": 0,
+            "longtasks": 2
+          },
+          "Root_before_queue": {
+            "applied_dabs": 0,
+            "coalesced_dabs": 0,
+            "maximum_input_age_ms": 50,
+            "maximum_pending_dabs": 32,
+            "oldest_pending_age_ms": 0,
+            "peak_pending_dabs": 0,
+            "pending_dabs": 0,
+            "processed_dabs": 0,
+            "released_strokes": 0
+          },
+          "Root_tail_first": {
+            "applied_dabs": 1142,
+            "coalesced_dabs": 4,
+            "maximum_input_age_ms": 50,
+            "maximum_pending_dabs": 32,
+            "oldest_pending_age_ms": 0,
+            "peak_pending_dabs": 9,
+            "pending_dabs": 0,
+            "processed_dabs": 1142,
+            "released_strokes": 1
+          },
+          "Root_tail_last": {
+            "applied_dabs": 1142,
+            "coalesced_dabs": 4,
+            "maximum_input_age_ms": 50,
+            "maximum_pending_dabs": 32,
+            "oldest_pending_age_ms": 0,
+            "peak_pending_dabs": 9,
+            "pending_dabs": 0,
+            "processed_dabs": 1142,
+            "released_strokes": 1
+          },
+          "last_candidate_upload_after_pointerup_ms": 41.60000002384186,
+          "scope": "DOM/CPU/RAF/upload submission only; upload last is all-buffer metadata, not actual last position edit or GPU completion"
+        },
+        "geometry": {
+          "changed_original_vertices": 4069,
+          "maximum_position_change": 0.22033405303955078,
+          "RMS_position_change": 0.01335795646658357,
+          "before_minimum_normalized_quality": 0.0007395786042558039,
+          "after_minimum_normalized_quality": 0.0007395786042558039,
+          "after_degenerate_faces": 0,
+          "faces_reversed_against_original_cross": 0,
+          "maximum_original_edge_stretch_ratio": 2.2242903512002887,
+          "minimum_face_normal_original_alignment": 0.4950778982738518,
+          "complete_adjacent_face_pairs": 298800,
+          "before_maximum_adjacent_angle_degrees": 0.9002909196599697,
+          "after_maximum_adjacent_angle_degrees": 31.11286478509169,
+          "new_adjacent_pairs_over90degrees": 0,
+          "scope": "Whole original triangle/edge/closed-adjacency metrics; no global self-intersection, visual or retained-normal-field equivalence proof. Adjacent angles are descriptive supplemental metrics, not a retroactive new acceptance gate"
+        },
+        "closure": {
+          "observed_owned_process_absent": true,
+          "owned_pid": 57441,
+          "actual_exit_code": 0,
+          "actual_signal": null,
+          "actual_servers_closed": 1,
+          "exit_status": "Actual exit0 recorded",
+          "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+        },
+        "whole_PNG": {
+          "side": "root",
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c50-stage/actual/SP-LONG00-100k-60s-root-3e439fd0-d346-4583-92b6-76f55da1e836/root-admission-complete.png",
+          "bytes": 296224,
+          "sha256": "af84fda858e189c170cfc0fb1f4b476c2ff0b377e3aa3db12c97fbecf5a9b2cb",
+          "scope": "Complete ordinary browser surface; no cropped pixel gate substitution"
+        },
+        "scope": "Original thresholds unchanged. Failed sender maximum remainsfailed; no selection of green retry as qualification."
+      },
+      {
+        "name": "PassiveGCdiagnostic",
+        "audit": {
+          "path": ".artifacts/sculptgl-producer-diagnostics-c50-stage/ROOT_100K_60S_AUDIT.json",
+          "bytes": 6815,
+          "sha256": "bbee5d9d301a61c8fac42ecd1e8fb503686ca3eece074d0097066167316c01f6"
+        },
+        "result": {
+          "path": ".artifacts/sculptgl-sustained-performance-c50-stage/actual/SP-LONG00-100k-60s-root-4ef92002-097a-4e20-a97a-be618e6740ad/result.json",
+          "bytes": 14160602,
+          "sha256": "c60ca472b74c59979721f7503fb21a0c35c1814bc4226c63bb4d37e50b17b381"
+        },
+        "status": "FAIL one or more named local data/scalar gates",
+        "failed_checks": [
+          "pacing_max_le100ms"
+        ],
+        "metrics": {
+          "actual_pointer_contact_ms": 60079.59999996424,
+          "scheduled_motion_requests": 24000,
+          "delivered_pointer_moves": 14587,
+          "motion_send_lateness_ms": {
+            "count": 24000,
+            "minimum": 0,
+            "P50": 0.0,
+            "P95": 0.5373340000005555,
+            "P99": 1.55733400000463,
+            "maximum": 106.43145899999945
+          },
+          "motion_ack_elapsed_ms": {
+            "count": 24000,
+            "minimum": 0.1809159999975236,
+            "P50": 2.7872294999979204,
+            "P95": 13.118750000001455,
+            "P99": 23.246542000000773,
+            "maximum": 332.16816599999584
+          },
+          "independentRAF_active_interval_ms": {
+            "count": 3600,
+            "minimum": 4.899999976158142,
+            "P50": 16.30000001192093,
+            "P95": 27.19999998807907,
+            "P99": 27.69999998807907,
+            "maximum": 64.39999997615814
+          },
+          "independentRAF_active_timestamp_interval_ms": {
+            "count": 3600,
+            "minimum": 16.5,
+            "P50": 16.69999999999709,
+            "P95": 16.70000000001164,
+            "P99": 16.80000000000291,
+            "maximum": 50.0
+          },
+          "appRAF_active_callback_CPU_ms": {
+            "count": 3602,
+            "minimum": 0,
+            "P50": 4.699999988079071,
+            "P95": 14.600000023841858,
+            "P99": 15,
+            "maximum": 55.39999997615814
+          },
+          "appRAF_active_sum_CPU_per_shared_timestamp_ms": {
+            "count": 3601,
+            "minimum": 0,
+            "P50": 4.699999988079071,
+            "P95": 14.600000023841858,
+            "P99": 15,
+            "maximum": 55.39999997615814
+          },
+          "Source_original_Brush_callback_CPU_ms": {
+            "count": 0
+          },
+          "Source_original_Brush_callbacks": 0,
+          "longtasks": [
+            [
+              7622.900000035763,
+              57
+            ],
+            [
+              7761.5,
+              55
+            ]
+          ],
+          "seen": {
+            "events": 29178,
+            "draws": 79134,
+            "uploads": 135212,
+            "appRAF": 3727,
+            "pumpRAF": 3726,
+            "sourceDabs": 0,
+            "longtasks": 2
+          },
+          "Root_before_queue": {
+            "applied_dabs": 0,
+            "coalesced_dabs": 0,
+            "maximum_input_age_ms": 50,
+            "maximum_pending_dabs": 32,
+            "oldest_pending_age_ms": 0,
+            "peak_pending_dabs": 0,
+            "pending_dabs": 0,
+            "processed_dabs": 0,
+            "released_strokes": 0
+          },
+          "Root_tail_first": {
+            "applied_dabs": 1145,
+            "coalesced_dabs": 0,
+            "maximum_input_age_ms": 50,
+            "maximum_pending_dabs": 32,
+            "oldest_pending_age_ms": 0,
+            "peak_pending_dabs": 3,
+            "pending_dabs": 0,
+            "processed_dabs": 1145,
+            "released_strokes": 1
+          },
+          "Root_tail_last": {
+            "applied_dabs": 1145,
+            "coalesced_dabs": 0,
+            "maximum_input_age_ms": 50,
+            "maximum_pending_dabs": 32,
+            "oldest_pending_age_ms": 0,
+            "peak_pending_dabs": 3,
+            "pending_dabs": 0,
+            "processed_dabs": 1145,
+            "released_strokes": 1
+          },
+          "last_candidate_upload_after_pointerup_ms": 45.10000002384186,
+          "scope": "DOM/CPU/RAF/upload submission only; upload last is all-buffer metadata, not actual last position edit or GPU completion"
+        },
+        "geometry": {
+          "changed_original_vertices": 4064,
+          "maximum_position_change": 0.22041642665863037,
+          "RMS_position_change": 0.013353643796341245,
+          "before_minimum_normalized_quality": 0.0007395786042558039,
+          "after_minimum_normalized_quality": 0.0007395786042558039,
+          "after_degenerate_faces": 0,
+          "faces_reversed_against_original_cross": 0,
+          "maximum_original_edge_stretch_ratio": 2.222808763022185,
+          "minimum_face_normal_original_alignment": 0.49844068528685354,
+          "complete_adjacent_face_pairs": 298800,
+          "before_maximum_adjacent_angle_degrees": 0.9002909196599697,
+          "after_maximum_adjacent_angle_degrees": 31.042915550886374,
+          "new_adjacent_pairs_over90degrees": 0,
+          "scope": "Whole original triangle/edge/closed-adjacency metrics; no global self-intersection, visual or retained-normal-field equivalence proof. Adjacent angles are descriptive supplemental metrics, not a retroactive new acceptance gate"
+        },
+        "closure": {
+          "observed_owned_process_absent": true,
+          "owned_pid": 58107,
+          "actual_exit_code": 0,
+          "actual_signal": null,
+          "actual_servers_closed": 1,
+          "exit_status": "Actual exit0 recorded",
+          "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+        },
+        "whole_PNG": {
+          "side": "root",
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-sustained-performance-c50-stage/actual/SP-LONG00-100k-60s-root-4ef92002-097a-4e20-a97a-be618e6740ad/root-admission-complete.png",
+          "bytes": 296088,
+          "sha256": "69fe74136d288bbc67b7a697cccb84c6fbe7613887e5e805e0e3188326586aa4",
+          "scope": "Complete ordinary browser surface; no cropped pixel gate substitution"
+        },
+        "scope": "Original thresholds unchanged. Failed sender maximum remainsfailed; no selection of green retry as qualification."
+      },
+      {
+        "name": "Passivewall/threadCPUphase diagnostic",
+        "audit": {
+          "path": ".artifacts/sculptgl-producer-phase-c50-stage/ROOT_AUDIT.json",
+          "bytes": 6839,
+          "sha256": "c53dfbf43d6d0b9c3eacef3414b944fe6c75aac4c654abf751f4a1508c071971"
+        },
+        "result": {
+          "path": ".artifacts/sculptgl-producer-phase-c50-stage/actual/SP-LONG00-100k-60s-root-e15e3f11-cc6a-4d3d-bace-610396552eb2/result.json",
+          "bytes": 14238687,
+          "sha256": "0e67083df71092ab67ba186f305b10a3cc94f1d031a4198809f004e420bcef2f"
+        },
+        "status": "FAIL one or more named local data/scalar gates",
+        "failed_checks": [
+          "pacing_max_le100ms"
+        ],
+        "metrics": {
+          "actual_pointer_contact_ms": 60098.700000047684,
+          "scheduled_motion_requests": 24000,
+          "delivered_pointer_moves": 15058,
+          "motion_send_lateness_ms": {
+            "count": 24000,
+            "minimum": 0,
+            "P50": 0.0,
+            "P95": 0.5695419999974547,
+            "P99": 2.439834000000701,
+            "maximum": 123.66266700000051
+          },
+          "motion_ack_elapsed_ms": {
+            "count": 24000,
+            "minimum": 0.19887500000186265,
+            "P50": 2.815311999998812,
+            "P95": 12.744582999999693,
+            "P99": 16.299125000001368,
+            "maximum": 169.1972910000004
+          },
+          "independentRAF_active_interval_ms": {
+            "count": 3601,
+            "minimum": 4.800000011920929,
+            "P50": 16.299999952316284,
+            "P95": 26.900000035762787,
+            "P99": 27.5,
+            "maximum": 67.39999997615814
+          },
+          "independentRAF_active_timestamp_interval_ms": {
+            "count": 3601,
+            "minimum": 16.5,
+            "P50": 16.69999999999709,
+            "P95": 16.70000000001164,
+            "P99": 16.80000000000291,
+            "maximum": 50.0
+          },
+          "appRAF_active_callback_CPU_ms": {
+            "count": 3603,
+            "minimum": 0,
+            "P50": 4.699999988079071,
+            "P95": 14.400000035762787,
+            "P99": 15.300000011920929,
+            "maximum": 57.89999997615814
+          },
+          "appRAF_active_sum_CPU_per_shared_timestamp_ms": {
+            "count": 3602,
+            "minimum": 0,
+            "P50": 4.699999988079071,
+            "P95": 14.400000035762787,
+            "P99": 15.300000011920929,
+            "maximum": 57.89999997615814
+          },
+          "Source_original_Brush_callback_CPU_ms": {
+            "count": 0
+          },
+          "Source_original_Brush_callbacks": 0,
+          "longtasks": [
+            [
+              7648.299999952316,
+              60
+            ],
+            [
+              7801.699999988079,
+              58
+            ]
+          ],
+          "seen": {
+            "events": 30120,
+            "draws": 79112,
+            "uploads": 135176,
+            "appRAF": 3727,
+            "pumpRAF": 3726,
+            "sourceDabs": 0,
+            "longtasks": 2
+          },
+          "Root_before_queue": {
+            "applied_dabs": 0,
+            "coalesced_dabs": 0,
+            "maximum_input_age_ms": 50,
+            "maximum_pending_dabs": 32,
+            "oldest_pending_age_ms": 0,
+            "peak_pending_dabs": 0,
+            "pending_dabs": 0,
+            "processed_dabs": 0,
+            "released_strokes": 0
+          },
+          "Root_tail_first": {
+            "applied_dabs": 1146,
+            "coalesced_dabs": 0,
+            "maximum_input_age_ms": 50,
+            "maximum_pending_dabs": 32,
+            "oldest_pending_age_ms": 0,
+            "peak_pending_dabs": 4,
+            "pending_dabs": 0,
+            "processed_dabs": 1146,
+            "released_strokes": 1
+          },
+          "Root_tail_last": {
+            "applied_dabs": 1146,
+            "coalesced_dabs": 0,
+            "maximum_input_age_ms": 50,
+            "maximum_pending_dabs": 32,
+            "oldest_pending_age_ms": 0,
+            "peak_pending_dabs": 4,
+            "pending_dabs": 0,
+            "processed_dabs": 1146,
+            "released_strokes": 1
+          },
+          "last_candidate_upload_after_pointerup_ms": 41.59999996423721,
+          "scope": "DOM/CPU/RAF/upload submission only; upload last is all-buffer metadata, not actual last position edit or GPU completion"
+        },
+        "geometry": {
+          "changed_original_vertices": 4063,
+          "maximum_position_change": 0.22029685974121094,
+          "RMS_position_change": 0.013353539947928593,
+          "before_minimum_normalized_quality": 0.0007395786042558039,
+          "after_minimum_normalized_quality": 0.0007395786042558039,
+          "after_degenerate_faces": 0,
+          "faces_reversed_against_original_cross": 0,
+          "maximum_original_edge_stretch_ratio": 2.219859685855315,
+          "minimum_face_normal_original_alignment": 0.4980698163000246,
+          "complete_adjacent_face_pairs": 298800,
+          "before_maximum_adjacent_angle_degrees": 0.9002909196599697,
+          "after_maximum_adjacent_angle_degrees": 30.75929469063354,
+          "new_adjacent_pairs_over90degrees": 0,
+          "scope": "Whole original triangle/edge/closed-adjacency metrics; no global self-intersection, visual or retained-normal-field equivalence proof. Adjacent angles are descriptive supplemental metrics, not a retroactive new acceptance gate"
+        },
+        "closure": {
+          "observed_owned_process_absent": true,
+          "owned_pid": 63924,
+          "actual_exit_code": 0,
+          "actual_signal": null,
+          "actual_servers_closed": 1,
+          "exit_status": "Actual exit0 recorded",
+          "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+        },
+        "whole_PNG": {
+          "side": "root",
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-producer-phase-c50-stage/actual/SP-LONG00-100k-60s-root-e15e3f11-cc6a-4d3d-bace-610396552eb2/root-admission-complete.png",
+          "bytes": 296057,
+          "sha256": "2340ca31262aab058faccb61f40bf3e5c7ffcc9a3e6908cb3955808c47bbfd95",
+          "scope": "Complete ordinary browser surface; no cropped pixel gate substitution"
+        },
+        "scope": "Original thresholds unchanged. Failed sender maximum remainsfailed; no selection of green retry as qualification."
+      }
+    ],
+    "scope": "Original24,000motions/60s/400Hz fixedSourceDraw configuration and2srelease tail. Othernamed CPU/RAF/data/history/memory/release gates pass in eachtrial, but they do not repair the failedsenderpacing gate. Neither original nor diagnostic trial treated as physical latency or per-dab matched reference output.",
+    "limits": "Remaining10K/100K/1M60/120smatrix anddefault/adaptive/otherbrush/native/physical/HiDPIqualification open; priorC46senderfailures unchanged."
+  },
+  "sender_diagnostics": {
+    "GC_preregistration": {
+      "path": ".artifacts/sculptgl-producer-diagnostics-c50-stage/PREREGISTRATION.json",
+      "bytes": 1226,
+      "sha256": "e98a9344b173d6129e721b2ad88df2022c2f94682eeaab7598c262a2143e5bec"
+    },
+    "GC_data": {
+      "path": ".artifacts/sculptgl-producer-diagnostics-c50-stage/actual-node-gc.json",
+      "bytes": 17380,
+      "sha256": "4f6e5b1810eac98547cce655f6d6a9cf7e275a19920e0b94f0217664092613f8"
+    },
+    "corrected_memory_GC_correlation": {
+      "path": ".artifacts/sculptgl-producer-diagnostics-c50-stage/CORRECTED_MEMORY_GC_CORRELATION.json",
+      "bytes": 1358,
+      "sha256": "4ef7a654a256e90e99495bc797b7f8c80a0f694b0802fc6f3f56b354cc831d39"
+    },
+    "phase_preregistration": {
+      "path": ".artifacts/sculptgl-producer-phase-c50-stage/PREREGISTRATION.json",
+      "bytes": 7722,
+      "sha256": "7135f86efefc56befef517e78526361e0b89511820cf198768d067b4cfa68c85"
+    },
+    "phase_launch": {
+      "path": ".artifacts/sculptgl-producer-phase-c50-stage/LAUNCH.json",
+      "bytes": 899,
+      "sha256": "0a19cc62a2b6c53394145273adba30d6067ca25f70c1cf0f768e8985f05c07af"
+    },
+    "phase_analysis": {
+      "path": ".artifacts/sculptgl-producer-phase-c50-stage/PHASE_ANALYSIS.json",
+      "bytes": 10757,
+      "sha256": "58d84c71e431d26f096f12f51c19c74d94df2275a1c0c19f9044ffea1a816132"
+    },
+    "finding": "PassiveGCmax during firstdiagnostic input2.8477ms and no overlap withlargestgaps. Passivephase runlargestwait123.714ms has mainthreadCPU0.183ms; timerwait/resume partition, not a demonstrated heavy synchronous sender calculation. Exact OS/system cause remainsunassigned. OriginalGC_CORRELATION used wrongmemoryfield; correctedrecord explicitly preserves error and confirms actualphaseabsence.",
+    "limits": "Observer adds CPUreads; no causalOS/scheduler claim, no blindretry, no cap/timing/inputchange. Both diagnostic original-gate audits remainFAIL."
+  },
+  "promotion": {
+    "path": ".artifacts/sculptgl-main-c50-promotion-stage/PROMOTED.json",
+    "bytes": 1716,
+    "sha256": "98e55e5f77ff4e11d40463f5d7e34d4cc3522c88ecd39fc9595059b42e47ca39"
+  },
+  "promotion_decision": {
+    "path": ".artifacts/sculptgl-main-c50-promotion-stage/DECISION.json",
+    "bytes": 2318,
+    "sha256": "3d6c06a7a771c4bad788f2e0cf4bade2b5f2b6e2e62ede518d1965a2e0dbb6bf"
+  },
+  "HTTP": {
+    "path": ".artifacts/sculptgl-main-c50-promotion-stage/HTTP_VERIFIED.json",
+    "bytes": 5042,
+    "sha256": "2db31498459d9487575a649a866e1e5eb5c304532e80817db62fe61a542e974e"
+  },
+  "retained_orchestration_failure": {
+    "path": ".artifacts/sculptgl-domain-reuse-c50-stage/PROMOTION_ATTEMPT01_FAILURE.json",
+    "bytes": 391,
+    "sha256": "61a4373f9d31ec57a107392c3f4bc550b260a5d7fa9ee0327c7c555198d8f029"
+  },
+  "native": "Bothofficialscripts and current ad-hoc signature verify; nativebundle unopened/uninstalled.",
+  "remaining": [
+    "All317stable SculptGLworkflowIDs+5hostedcontrols remainactive; no familyparity promoted.",
+    "1Mcombinedraw/editablestaging,tree/state/editingscratch admission stillfail underexistingcaps.",
+    "Wholeproxy/touched andcontrolledtransactioncopies remain; changeonly with completebefore/after math/rollback/ownership evidence.",
+    "Fulltopology/dynamicdecimation/Reverse/materialinterchange/nativephysical/HiDPI/usability/reference/quality/performance gates remain open."
+  ]
+}

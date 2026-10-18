@@ -1,0 +1,392 @@
+{
+  "feature": "Marching Cubes same-byte UV-bearing source order and explicit loss",
+  "status": "One resolution-16 sphere paired; full remesh and SculptGL parity open",
+  "reference_source_commit": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+  "reference_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+  "source": [
+    {
+      "path": "crates/obrush-core/src/remesh.rs",
+      "sha256": "5b6bb37adc6d2a58611f84987f8667064c1ebc4ca48103cb7d2ae1daab7e13ff",
+      "bytes": 63988
+    },
+    {
+      "path": "crates/obrush-core/tests/remesh.rs",
+      "sha256": "f3c272eb3857b1c07ec213f1d3d2d12a41c4fbf61c2af7b6fe6eeed5cfcc3fa1",
+      "bytes": 24410
+    },
+    {
+      "path": "crates/obrush-core/tests/attributes_v6.rs",
+      "sha256": "737380378173c082179e4bf1ac4207892f353772fb0cbf5941bdb589f643bff5",
+      "bytes": 32300
+    },
+    {
+      "path": "crates/obrush-core/examples/mc_reference_fixture.rs",
+      "sha256": "0dbf6a29554d2f3c546931a351b27d4f088a216168270a35208550d41df54dc8",
+      "bytes": 1580
+    },
+    {
+      "path": "crates/obrush-app/src/app.rs",
+      "sha256": "7f1dcb2f538c46b22f76a3f8ffb59af32896de0d9332b6968017715019b5b8ee",
+      "bytes": 489834
+    },
+    {
+      "path": "crates/obrush-app/src/preferences_host.rs",
+      "sha256": "0176b77c226962bf97094567a017ce6892702833dada6baeef763b0976959f22",
+      "bytes": 44918
+    },
+    {
+      "path": "scripts/check-mc-browser.mjs",
+      "sha256": "84c15cb4bae69d2e63c6357882172829a50a59fcdb70e62bb65dcf87f4a76293",
+      "bytes": 120551
+    },
+    {
+      "path": "crates/obrush-core/tests/fixtures/independent-seamed-sphere.obj",
+      "sha256": "4bfebeb8ac713741ee5b70dedcefd8d746e21f610ebc788783f1008cc9d375ed",
+      "bytes": 86901
+    },
+    {
+      "path": "docs/SCULPTGL_MARCHING_CUBES_UV_C90.md",
+      "sha256": "e02aff7b26c820ad5bab02d66f7ff5e274c18100c39ec60438d1af4cfdfd440c",
+      "bytes": 2718
+    },
+    {
+      "path": "docs/SCULPTGL_PARITY.md",
+      "sha256": "bd1b25894925a9a89605be358afa42669a4915f123aa97fe02af49335fc01eda",
+      "bytes": 174962
+    },
+    {
+      "path": "docs/FEATURE_PARITY.md",
+      "sha256": "f40bff2e3592064d8c6cfb495c62e55344bb272a6a9621db6b78da05cfd113d2",
+      "bytes": 72275
+    }
+  ],
+  "fixture": {
+    "path": "crates/obrush-core/tests/fixtures/independent-seamed-sphere.obj",
+    "sha256": "4bfebeb8ac713741ee5b70dedcefd8d746e21f610ebc788783f1008cc9d375ed",
+    "bytes": 86901
+  },
+  "parameters": {
+    "resolution": 16,
+    "relax_topology": [
+      false,
+      true
+    ],
+    "source_vertices": 266,
+    "source_triangles": 528,
+    "source_uv_coordinates": 1584,
+    "source_uv_faces": 528,
+    "source_protected_vertices": 7,
+    "allow_uv_loss_default": false,
+    "allow_uv_loss_accepted": true
+  },
+  "reference": {
+    "source_before": {
+      "path": ".artifacts/sculptgl-reference-runtime/mc-c87-c8d3ce59-b6f4-4ca3-b657-16b9ebbb19e4/mc-remesh-false-before.json",
+      "sha256": "e523ba68c097abe13ab4819a8e2d986293904149cd976742b18414664eeb34e4",
+      "bytes": 222486
+    },
+    "outputs": [
+      {
+        "path": ".artifacts/sculptgl-reference-runtime/mc-c87-c8d3ce59-b6f4-4ca3-b657-16b9ebbb19e4/mc-remesh-false-after.json",
+        "sha256": "b82697a2af107afddabc1dde9a5c62bd97ac53ef0811323207d25139af27dfac",
+        "bytes": 479918
+      },
+      {
+        "path": ".artifacts/sculptgl-reference-runtime/mc-c87-c8d3ce59-b6f4-4ca3-b657-16b9ebbb19e4/mc-remesh-true-after.json",
+        "sha256": "dcec2c8cf3eff3e1031d38fc574907dc64fe4ceb4e7c9671974ce2a315f79d96",
+        "bytes": 520080
+      }
+    ]
+  },
+  "local": {
+    "native_fixture": {
+      "path": ".artifacts/mc-c90-rich-uv-core.json",
+      "sha256": "754a7117758b7d2c52bb70dbe4828bf4a46e7baeb4930687d83261fc44040132",
+      "bytes": 370171
+    },
+    "browser_run": {
+      "path": ".artifacts/mask-filter-browser/mc-c90-rich-uv-2e255c18-2710-482a-a941-680c1647f6da/result.json",
+      "sha256": "0563ab2c08a18f7a03be8f8339b90b29098ab692206e6c89c12f393a861d9fd9",
+      "bytes": 2564801
+    },
+    "web_wasm": {
+      "path": "web/dist/pkg/obrush_app_bg.wasm",
+      "sha256": "29d5f81c5cd85689d7c6f00618d1a0d9966383d27b03e02fb72773c2080f6a3e",
+      "bytes": 23331205
+    },
+    "macos_executable": {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/OBRush",
+      "sha256": "a068e1a7f274c526ca451ab77135ea2d93ed39f821d26cb85943d20a0ce94e04",
+      "bytes": 26413440
+    },
+    "browser_status": "passed Marching Cubes browser workflow",
+    "browser_exceptions": [],
+    "browser_console_errors": [],
+    "browser_cases": [
+      {
+        "name": "marching-cubes-relaxed-false-visible-workflow",
+        "vertices": 1172,
+        "triangles": 2340,
+        "gates": {
+          "visible_control": true,
+          "closed_solid": true,
+          "triangular_output": true,
+          "history_exact": true,
+          "obj_roundtrip": true,
+          "visible_gpu_save_exact": true
+        },
+        "closed_topology": {
+          "vertices": 1172,
+          "faces": 2340,
+          "edges": 3510,
+          "components": 1,
+          "euler": 2,
+          "signed_volume": 4.2079338572456395,
+          "min_double_area": 2.1871201269898535e-09
+        }
+      },
+      {
+        "name": "marching-cubes-relaxed-true-visible-workflow",
+        "vertices": 1172,
+        "triangles": 2340,
+        "gates": {
+          "visible_control": true,
+          "closed_solid": true,
+          "triangular_output": true,
+          "history_exact": true,
+          "obj_roundtrip": true,
+          "visible_gpu_save_exact": true
+        },
+        "closed_topology": {
+          "vertices": 1172,
+          "faces": 2340,
+          "edges": 3510,
+          "components": 1,
+          "euler": 2,
+          "signed_volume": 4.205185780242605,
+          "min_double_area": 0.0015774501824928283
+        }
+      }
+    ],
+    "browser_snapshot_shas": {
+      "marching-cubes-false-before.obrush": "f1ba0d9dc15fecc060cae73ad0e2d71458694135b853028f4d7814cb356a2aae",
+      "marching-cubes-false-uv-rejected.obrush": "f1ba0d9dc15fecc060cae73ad0e2d71458694135b853028f4d7814cb356a2aae",
+      "marching-cubes-false-after.obrush": "ab32cb56c85623a6c6d62efd5661ca039fbb2861034af3fb06970001b917bdff",
+      "marching-cubes-false-undo.obrush": "f1ba0d9dc15fecc060cae73ad0e2d71458694135b853028f4d7814cb356a2aae",
+      "marching-cubes-false-redo.obrush": "ab32cb56c85623a6c6d62efd5661ca039fbb2861034af3fb06970001b917bdff",
+      "marching-cubes-false-obj-import.obrush": "9de09f3a1b184bba6015d1cbe14765da0d5474c84757148184214d40445971f5",
+      "marching-cubes-true-before.obrush": "f1ba0d9dc15fecc060cae73ad0e2d71458694135b853028f4d7814cb356a2aae",
+      "marching-cubes-true-uv-rejected.obrush": "f1ba0d9dc15fecc060cae73ad0e2d71458694135b853028f4d7814cb356a2aae",
+      "marching-cubes-true-after.obrush": "2805fac7ce9196bddc38211224293b613973a111668e5181670f567442ea700a",
+      "marching-cubes-true-undo.obrush": "f1ba0d9dc15fecc060cae73ad0e2d71458694135b853028f4d7814cb356a2aae",
+      "marching-cubes-true-redo.obrush": "2805fac7ce9196bddc38211224293b613973a111668e5181670f567442ea700a",
+      "marching-cubes-true-obj-import.obrush": "b93863e9ed9a59e7c724f6aed32f9f15eaede4008d22db01098f62ee3eeb2bf0"
+    }
+  },
+  "comparison": {
+    "native": {
+      "receipt": {
+        "path": ".artifacts/mc-c90-rich-uv-core-comparison.json",
+        "sha256": "28e77f05ba595ea7f5523655da75f192cc343662cc8c81ca28d4098dee715e43",
+        "bytes": 2593
+      },
+      "unrelaxed_face_mapping": {
+        "mapped_vertices": 1172,
+        "oriented_reference_faces": 2340,
+        "oriented_obrush_faces": 2340,
+        "oriented_intersection": 2340,
+        "unoriented_intersection": 2340
+      },
+      "relaxed_mapped_position_difference": {
+        "maximum": 3.3404118413619183e-07,
+        "rms": 1.2535495948773879e-07
+      },
+      "cases": [
+        {
+          "relaxed": false,
+          "reference_to_obrush_nearest_world": {
+            "maximum": 2.3143999929750734e-07,
+            "rms": 1.0250821640622712e-07,
+            "median": 8.999292495353291e-08,
+            "p95": 1.5957938238004922e-07,
+            "exact_within_1e_6": 1172
+          },
+          "obrush_to_reference_nearest_world": {
+            "maximum": 2.3143999929750734e-07,
+            "rms": 1.0250821640622712e-07,
+            "median": 8.999292495353291e-08,
+            "p95": 1.5957938238004922e-07,
+            "exact_within_1e_6": 1172
+          }
+        },
+        {
+          "relaxed": true,
+          "reference_to_obrush_nearest_world": {
+            "maximum": 3.3404118413619183e-07,
+            "rms": 1.2535495948773879e-07,
+            "median": 1.111431828206865e-07,
+            "p95": 1.9775088104181992e-07,
+            "exact_within_1e_6": 1172
+          },
+          "obrush_to_reference_nearest_world": {
+            "maximum": 3.3404118413619183e-07,
+            "rms": 1.2535495948773879e-07,
+            "median": 1.111431828206865e-07,
+            "p95": 1.9775088104181992e-07,
+            "exact_within_1e_6": 1172
+          }
+        }
+      ],
+      "unmasked_weight_difference": [
+        {
+          "relaxed": false,
+          "mapped_unique_vertices": 1172,
+          "maximum_abs_difference": 0.0,
+          "rms_abs_difference": 0.0
+        },
+        {
+          "relaxed": true,
+          "mapped_unique_vertices": 1172,
+          "maximum_abs_difference": 0.0,
+          "rms_abs_difference": 0.0
+        }
+      ]
+    },
+    "browser": {
+      "receipt": {
+        "path": ".artifacts/mc-c90-rich-uv-browser-comparison.json",
+        "sha256": "b29e4cdb4243f55ab9ac228c27950f80fddf27c0cc2b0e7ded3e930457773a76",
+        "bytes": 2963
+      },
+      "unrelaxed_face_mapping": {
+        "mapped_vertices": 1172,
+        "oriented_reference_faces": 2340,
+        "oriented_obrush_faces": 2340,
+        "oriented_intersection": 2340,
+        "unoriented_intersection": 2340
+      },
+      "relaxed_mapped_position_difference": {
+        "maximum": 3.275738495026354e-07,
+        "rms": 1.2668048604290413e-07
+      },
+      "cases": [
+        {
+          "relaxed": false,
+          "reference_to_obrush_nearest_world": {
+            "maximum": 2.3633570493221745e-07,
+            "rms": 1.0490753656226264e-07,
+            "median": 9.190251826259439e-08,
+            "p95": 1.659503265652377e-07,
+            "exact_within_1e_6": 1172
+          },
+          "obrush_to_reference_nearest_world": {
+            "maximum": 2.3633570493221745e-07,
+            "rms": 1.0490753656226264e-07,
+            "median": 9.190251826259439e-08,
+            "p95": 1.659503265652377e-07,
+            "exact_within_1e_6": 1172
+          }
+        },
+        {
+          "relaxed": true,
+          "reference_to_obrush_nearest_world": {
+            "maximum": 3.275738495026354e-07,
+            "rms": 1.2668048604290413e-07,
+            "median": 1.1209727969863961e-07,
+            "p95": 2.0188726823212078e-07,
+            "exact_within_1e_6": 1172
+          },
+          "obrush_to_reference_nearest_world": {
+            "maximum": 3.275738495026354e-07,
+            "rms": 1.2668048604290413e-07,
+            "median": 1.1209727969863961e-07,
+            "p95": 2.0188726823212078e-07,
+            "exact_within_1e_6": 1172
+          }
+        }
+      ],
+      "unmasked_weight_difference": [
+        {
+          "relaxed": false,
+          "mapped_unique_vertices": 1172,
+          "maximum_abs_difference": 1.3465118353650496e-08,
+          "rms_abs_difference": 2.1745020373012983e-09
+        },
+        {
+          "relaxed": true,
+          "mapped_unique_vertices": 1172,
+          "maximum_abs_difference": 1.3465118353650496e-08,
+          "rms_abs_difference": 2.1745020373012983e-09
+        }
+      ]
+    }
+  },
+  "checks": {
+    "cargo_fmt_all_check": "passed",
+    "workspace_test_rounds": 70,
+    "workspace_tests_passed": 2385,
+    "workspace_tests_failed": 0,
+    "strict_native_clippy": "passed",
+    "strict_wasm_clippy": "passed",
+    "wasm_target_check": "passed",
+    "web_build": "passed",
+    "macos_package": "passed",
+    "browser_visible_workflow": "passed",
+    "logs": [
+      {
+        "path": ".artifacts/mc-c90-clippy-native-2.log",
+        "sha256": "ab86c21754b54be25fcdab83551b011f1fe7f0aced8edb5faebbf818ddc95460",
+        "bytes": 223
+      },
+      {
+        "path": ".artifacts/mc-c90-clippy-wasm-2.log",
+        "sha256": "a12c1a56afd4b3aef48bed5547986c2c59b46b2fc5e95a717af9a800053a0705",
+        "bytes": 223
+      },
+      {
+        "path": ".artifacts/mc-c90-workspace-tests.log",
+        "sha256": "a167f4ad79ba71277654eee6c7ebceec8e91c4552cc5696f0e2edc2173951972",
+        "bytes": 228528
+      },
+      {
+        "path": ".artifacts/mc-c90-wasm-check.log",
+        "sha256": "89634483f2a5240406415997534bda0da2216462633b08be15b129a5ed6dca6c",
+        "bytes": 222
+      },
+      {
+        "path": ".artifacts/mc-c90-build-web.log",
+        "sha256": "69bc970635fa797c069860b71f3a09ed13cf3585e8626736a4fe5954da037729",
+        "bytes": 279
+      },
+      {
+        "path": ".artifacts/mc-c90-package-macos.log",
+        "sha256": "eedcc80b53a7517dc87accb71ac9e57f9b5e60f9e00add1d90368c52083ba516",
+        "bytes": 407
+      },
+      {
+        "path": ".artifacts/mc-c90-browser.log",
+        "sha256": "597eebb4ed19aae666deaa9133b9b3b1b3ea866b52321bc6ada4b0954ba3f751",
+        "bytes": 1211
+      }
+    ]
+  },
+  "retained_failed_checks": [
+    {
+      "path": ".artifacts/mc-c90-uv-focused.log",
+      "sha256": "572c28141a6a16d41735bcc6eb99e580efe405cbe80938dee6d6077b41f48cfd",
+      "bytes": 946
+    },
+    {
+      "path": ".artifacts/mc-c90-clippy-native.log",
+      "sha256": "b374c1cab5d62c67bcd87f266ba215655da2ea9241f2a578f2ccce8309fe0d49",
+      "bytes": 1166
+    }
+  ],
+  "limitations": [
+    "One authored closed triangular sphere at one resolution; no arbitrary topology inference",
+    "UVs are intentionally discarded on accepted remesh; quad UV source order not paired",
+    "Voxel RGB and roughness/metallic transfer, selected multi-mesh fusion and sustained performance remain open",
+    "Browser uses WASM CPU geometry and WebGL2; WebGPU compute/draw not integrated",
+    "Synthetic isolated browser input; physical pen, native GUI and ZBrush brush parity not checked"
+  ]
+}

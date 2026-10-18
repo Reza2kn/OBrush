@@ -1,0 +1,393 @@
+{
+  "status": "Compared scoped FP01 current C40 two useful Flatten strokes then retained-normal imported-alpha mirrored Paint; full SculptGL/ZBrush parity remains open",
+  "date_utc": "2026-10-15T18:44:13.482193+00:00",
+  "version": "0.1.20",
+  "build_sha256": "6791d5c64083b8a12d6078e81511b63b1f49d2f4e9b81b83a96d15e25508af9b",
+  "source_manifest_sha256": "750ff90cecb95d409e11686e7863321671ff40863865c4ff17907e06c3812f13",
+  "wasm_sha256": "d1e71ed49b4fe78e8254866ea1324f63196a3ede9118cfc3043c20cc6685c96f",
+  "unchanged_checked_source": {
+    "product_files_exact": 377,
+    "workspace_tests": 2254,
+    "core": 1557,
+    "app": 697,
+    "ignored": 1,
+    "five_required_checks_sha256": "659ad4ebdd5505bb81b56a5b7e80afe55bb5115ab593f2b838aed87161391334",
+    "scope": "Actual pinned C40 product unchanged; new consumer evidence only. Native packaging previously signed, unopened/uninstalled."
+  },
+  "helper_manifest_sha256": "0801f206f5ecfead3eac2e0b82712dadb281086b1c6de3b02ffb4516fda52f80",
+  "preregistration_sha256": "1ce31701b4dec234ce90cfc0e69f65ebe29930e695aff3601f63d2f0f88678f3",
+  "helper_checks_sha256": "ebbac33b507facd95c081fa4fb532b85d51a2c6d675cb5cee26c0e1e2cd3c178",
+  "protocol_manifest_sha256": "8a08629b1450d8456143bf4a738f0b847f18ee7e28f9e38cf410cb71e22efcf2",
+  "result_sha256": "f5d8e158ceda4249a2be69bf5ab0bd7d2fa23f2bde5a0bf013ffd510ad4c3d88",
+  "whole_artifact_audit_sha256": "6e6fcfa33a16c8b0c138d9cf27f7a10846d5adfa76b9f0ef069c6be0c7c07aeb",
+  "independent_Python_math_sha256": "7d1a94431a3cf77fc7c57ceba7c61d33521cc5ef4e825e075320dbe4182d24d4",
+  "whole_PNG_review_sha256": "6b895b4984d9e11353eb7cecbf6b02d7a092534b6848f99859ce2bd655a63c13",
+  "pinned_reference_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+  "fixture": "Unchanged independently authored six-vertex/two-sheet SGL and asymmetric opaque4x4gray PNG, imported with normal public file controls",
+  "fixture_asset_sha256": "a006bc08371ba9aaa7ac5424e3af464660519d1e5385d28fb237b37f0c3b6fcc",
+  "alpha_png_sha256": "407cd04a7f930a226f09f5545e87acad8714ee3e1442534ef25c06a92bac695f",
+  "parameters": {
+    "flatten": "500px then370px; intensity.25; Negative/culling/alpha/mirror/continuousoff; pressurefactors0; Prevent folds off",
+    "paint": "500px,intensity.25,hardness.75,allRGB/RMwritechannels,asymmetricgray4x4MeanRGBalpha,Xsymmetryon,relativeoffset0,culling/Lock/continuousoff,pressurefactors0",
+    "camera_input": "DPR1,1024x768viewport,ordinary Front/Frame before first press; fixed worldseed[-.25,.25,.5] once-floor local contact and96pxhorizontal stroke; no contact search/refit/reset/reimport/rearm during sequence",
+    "handoff": "Per-tool Paint alpha imported before original single recording arm; Source genuine Paint toolselection+symmetrycheckbox; Root genuine Paint toolselection+normal x/KeyX88 pressrelease, actual false->true asserted. Public document and normalproducer preserved at transition."
+  },
+  "phases": [
+    {
+      "side": "source",
+      "phase": "first500",
+      "changed_vertices": 3,
+      "paired": null,
+      "verified_ordered_passes": 1
+    },
+    {
+      "side": "source",
+      "phase": "second370",
+      "changed_vertices": 1,
+      "paired": null,
+      "verified_ordered_passes": 1
+    },
+    {
+      "side": "source",
+      "phase": "Paint500",
+      "changed_vertices": 2,
+      "paired": null,
+      "verified_ordered_passes": 2
+    },
+    {
+      "side": "root",
+      "phase": "first500",
+      "changed_vertices": 3,
+      "paired": {
+        "label": "Actual paired Flatten final original positions",
+        "rows": 6,
+        "words": 18,
+        "word_difference_count": 3,
+        "max_absolute_difference": 1.862645149230957e-09,
+        "RMS": 6.698800135105875e-10,
+        "differences": [
+          {
+            "row": 3,
+            "column": 2,
+            "expected_word": 993919463,
+            "actual_word": 993919456,
+            "expected": 0.0028992833103984594,
+            "actual": 0.002899281680583954,
+            "absolute_difference": 1.6298145055770874e-09
+          },
+          {
+            "row": 4,
+            "column": 2,
+            "expected_word": 990665747,
+            "actual_word": 990665741,
+            "expected": 0.0021417185198515654,
+            "actual": 0.0021417171228677034,
+            "absolute_difference": 1.3969838619232178e-09
+          },
+          {
+            "row": 5,
+            "column": 2,
+            "expected_word": 1017299369,
+            "actual_word": 1017299368,
+            "expected": 0.019867734983563423,
+            "actual": 0.019867733120918274,
+            "absolute_difference": 1.862645149230957e-09
+          }
+        ],
+        "exact_words": false,
+        "expected_sha256": "1e2674d9a51ed51186fe4ef3d1fb720f5d4c2873a1452c48779460ba91110bef",
+        "actual_sha256": "ffcbae7c5602c830f2dbb41166ab740928637587175d57569a0216a114bf5d1b"
+      },
+      "verified_ordered_passes": 1
+    },
+    {
+      "side": "root",
+      "phase": "second370",
+      "changed_vertices": 1,
+      "paired": {
+        "label": "Actual paired Flatten final original positions",
+        "rows": 6,
+        "words": 18,
+        "word_difference_count": 4,
+        "max_absolute_difference": 1.862645149230957e-09,
+        "RMS": 6.698800149258193e-10,
+        "differences": [
+          {
+            "row": 3,
+            "column": 2,
+            "expected_word": 993919463,
+            "actual_word": 993919456,
+            "expected": 0.0028992833103984594,
+            "actual": 0.002899281680583954,
+            "absolute_difference": 1.6298145055770874e-09
+          },
+          {
+            "row": 4,
+            "column": 2,
+            "expected_word": 990665747,
+            "actual_word": 990665741,
+            "expected": 0.0021417185198515654,
+            "actual": 0.0021417171228677034,
+            "absolute_difference": 1.3969838619232178e-09
+          },
+          {
+            "row": 5,
+            "column": 0,
+            "expected_word": 871900188,
+            "actual_word": 871900162,
+            "expected": 1.15549681822813e-07,
+            "actual": 1.155494970817017e-07,
+            "absolute_difference": 1.8474111129762605e-13
+          },
+          {
+            "row": 5,
+            "column": 2,
+            "expected_word": 1017626920,
+            "actual_word": 1017626919,
+            "expected": 0.020477846264839172,
+            "actual": 0.020477844402194023,
+            "absolute_difference": 1.862645149230957e-09
+          }
+        ],
+        "exact_words": false,
+        "expected_sha256": "d12b09c392faa1970269c00b8bade737f295460ac49408c18d7eee8d41480b3d",
+        "actual_sha256": "6bd178bd5da5bdf39931c681401ba9129ca3585e4fbbbf7ddb7a45c2fb9389c8"
+      },
+      "verified_ordered_passes": 1
+    },
+    {
+      "side": "root",
+      "phase": "Paint500",
+      "changed_vertices": 2,
+      "paired": {
+        "colors": {
+          "label": "Paired warm alpha/mirror colors",
+          "rows": 6,
+          "words": 18,
+          "word_difference_count": 0,
+          "max_absolute_difference": 0,
+          "RMS": 0,
+          "differences": [],
+          "exact_words": true,
+          "expected_sha256": "fda1b3177612279724c54d06ff4a39e7447a14001cc8231c74b0ff4ff7529641",
+          "actual_sha256": "fda1b3177612279724c54d06ff4a39e7447a14001cc8231c74b0ff4ff7529641"
+        },
+        "materials": {
+          "label": "Paired warm alpha/mirror materials",
+          "rows": 6,
+          "words": 12,
+          "word_difference_count": 0,
+          "max_absolute_difference": 0,
+          "RMS": 0,
+          "differences": [],
+          "exact_words": true,
+          "expected_sha256": "4720785b2a9eee7c386c0a669cb323bb333505c463bd06c173758c7c58c3b3bf",
+          "actual_sha256": "4720785b2a9eee7c386c0a669cb323bb333505c463bd06c173758c7c58c3b3bf"
+        }
+      },
+      "verified_ordered_passes": 2
+    }
+  ],
+  "warm_normal_proof": {
+    "outside_original_ids": [
+      3,
+      4
+    ],
+    "wrong_fresh_normal_word_differences": 6,
+    "actual_full_GPU_matches_retained_field": true,
+    "Root_actual_Paint_producer": {
+      "generation": 2,
+      "kind": "RetainedGeometry",
+      "normal_policy": {
+        "face_origin": "StoredOriginalFaces",
+        "faces": 2,
+        "policy": "StaticSelectedRefresh",
+        "quads": 0,
+        "storage": {
+          "peak_bytes": 856,
+          "retained_bytes": 856
+        },
+        "supplied_face_order_preserved": true,
+        "unused_vertices": 0,
+        "vertices": 6,
+        "zero_face_normals": 0,
+        "zero_vertex_normals": 0
+      }
+    },
+    "independent_Python_warm_normal_reconstruction_exact": true,
+    "contact_limitation": "Both actual Paint contacts hit unchanged +Z upper sheet. Whole retained lower normal field/GPU/producer is checked, but fresh-vs-retained alpha picked-direction effect is not discriminated by these contacts. A back-view cohort is still required."
+  },
+  "Paint_math": {
+    "each_host_own_full_RGB_RM_words_exact": true,
+    "all32_alpha_frame_words_independently_exact_including_signedzero": true,
+    "each_host_primary_only_counterfactual_RGB_word_differences": 6,
+    "paired_full_RGB_RM_word_differences": 0,
+    "paired_maximum": 0,
+    "paired_RMS": 0,
+    "original_bounds": {
+      "pair_maximum": 1e-06,
+      "pair_RMS": 1e-06,
+      "picked_normal_absolute": 1e-12,
+      "report_maximum_weight_absolute": "8*Number.EPSILON"
+    },
+    "alpha_normal_scope": "Both actual Paint picked normals are+Z from unchanged upper triangle. General tilted-frame helper literal passes, but this is not an actual noncardinal picked-direction comparison.",
+    "actual_Source_original_callbacks": 2,
+    "Root_atomic_kernel_requests": 1,
+    "Root_ordered_passes_per_request": 2
+  },
+  "history": {
+    "three_full_Undo_and_three_Redo_groups_each": true,
+    "all_expected_complete_public_files_exact": true,
+    "Root_retained_producer_removal_and_restoration": true
+  },
+  "quiet": [
+    {
+      "side": "source",
+      "phase": "first500",
+      "samples": 32,
+      "milliseconds": 516.0
+    },
+    {
+      "side": "source",
+      "phase": "second370",
+      "samples": 31,
+      "milliseconds": 500.09999999403954
+    },
+    {
+      "side": "source",
+      "phase": "Paint500",
+      "samples": 32,
+      "milliseconds": 504.5
+    },
+    {
+      "side": "root",
+      "phase": "first500",
+      "samples": 31,
+      "milliseconds": 500.10000002384186
+    },
+    {
+      "side": "root",
+      "phase": "second370",
+      "samples": 31,
+      "milliseconds": 500.0
+    },
+    {
+      "side": "root",
+      "phase": "Paint500",
+      "samples": 32,
+      "milliseconds": 515.7999999821186
+    }
+  ],
+  "raw_evidence": {
+    "raw_records_rehashed": 599,
+    "raw_bytes": 227038119,
+    "gzip_bytes": 20857841,
+    "complete_public_downloads": 36,
+    "actual_completed_GUID_files_rehashed": 36,
+    "complete_single_recording_prefixes": [
+      {
+        "side": "source",
+        "frames": 68,
+        "bytes": 4333591
+      },
+      {
+        "side": "root",
+        "frames": 216,
+        "bytes": 10012670
+      }
+    ],
+    "original_GPU_frame_cap": 256,
+    "original_GPU_byte_cap": 33554432,
+    "all_original_resource_caps_unchanged": true
+  },
+  "whole_images": {
+    "result_sha256": "f5d8e158ceda4249a2be69bf5ab0bd7d2fa23f2bde5a0bf013ffd510ad4c3d88",
+    "images": [
+      {
+        "side": "source",
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-runtime/candidate40-warmAlphaMirrorKeyboard-FP01-250f20fa-c83e-4e3c-8a8a-bcfc2025960e/source-FP01 completed source actual warm normals and Paint-shot1.png",
+        "bytes": 66325,
+        "sha256": "85e69613fae3c0ee1ed78a8d29f6817cfbc706f052a8555c2010d3f2800203be",
+        "original_label": "FP01 completed source actual warm normals and Paint",
+        "owned_serial": 1,
+        "complete_identity": {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-runtime/candidate40-warmAlphaMirrorKeyboard-FP01-250f20fa-c83e-4e3c-8a8a-bcfc2025960e/source-FP01 completed source actual warm normals and Paint-shot1.png",
+          "kind": "complete-PNG",
+          "bytes": 66325,
+          "sha256": "85e69613fae3c0ee1ed78a8d29f6817cfbc706f052a8555c2010d3f2800203be",
+          "before": {
+            "dev": "16777231",
+            "ino": "87458550",
+            "bytes": 66325,
+            "mtime_ms": 1792089656392.7124
+          },
+          "deduplicated": false,
+          "after": {
+            "dev": "16777231",
+            "ino": "87458550",
+            "bytes": 66325,
+            "mtime_ms": 1792089656392.7124
+          }
+        },
+        "scope": "Complete ordinary browser surface; exact bytes retained, no crop/pixel substitute"
+      },
+      {
+        "side": "root",
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-runtime/candidate40-warmAlphaMirrorKeyboard-FP01-250f20fa-c83e-4e3c-8a8a-bcfc2025960e/root-FP01 completed root actual warm normals and Paint-shot1.png",
+        "bytes": 174433,
+        "sha256": "66e5a76e5ec694e21219e2099faafed48ea36eac8e109e1a42ebaeb608f8ecab",
+        "original_label": "FP01 completed root actual warm normals and Paint",
+        "owned_serial": 1,
+        "complete_identity": {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-runtime/candidate40-warmAlphaMirrorKeyboard-FP01-250f20fa-c83e-4e3c-8a8a-bcfc2025960e/root-FP01 completed root actual warm normals and Paint-shot1.png",
+          "kind": "complete-PNG",
+          "bytes": 174433,
+          "sha256": "66e5a76e5ec694e21219e2099faafed48ea36eac8e109e1a42ebaeb608f8ecab",
+          "before": {
+            "dev": "16777231",
+            "ino": "87459262",
+            "bytes": 174433,
+            "mtime_ms": 1792089739340.915
+          },
+          "deduplicated": false,
+          "after": {
+            "dev": "16777231",
+            "ino": "87459262",
+            "bytes": 174433,
+            "mtime_ms": 1792089739340.915
+          }
+        },
+        "scope": "Complete ordinary browser surface; exact bytes retained, no crop/pixel substitute"
+      }
+    ],
+    "whole_image_review": "Both whole PNGs viewed at native full surface. Root Paint selection and retained selected-refresh normals generation2 label visible. Source Files menu/red contour/double red points differ from Root panels/orange ring/double orange dots; blue numerical triangle visible. Full image/shader/pixel likeness is not established."
+  },
+  "cleanup": {
+    "owned_chrome_exit_code": 0,
+    "owned_chrome_signal": null,
+    "owned_servers_closed": 2
+  },
+  "owned_PID_absence_verified": true,
+  "preserved_failures": {
+    "initial_actual_result_sha256": "2013434cc9d1144487c691f104f291e75e5eb067159240868159ca2ca7b0c847",
+    "initial_actual_failure": "All6useful phases, own field/GPU/math and Source history passed; Root256frame recording cap failed during final history. Full failed prefix/observations retained. Neither cap nor prefixes discarded; keyboard route derivative independently registered before new run.",
+    "initial_root_prefix": {
+      "frames": 256,
+      "bytes": 11867048
+    },
+    "literal_contract": "Initial tilted test checked columnmajor slot2 instead of6; originalfailedscript/log retained, helper implementation unchanged.",
+    "binding": "Initial code-label text replacement changed c37 substrings inside embedded hashes; closed identity adapter rejected before browser. Exact recipe re-embedded, failed manifest/script/checks retained.",
+    "repair_helpers": "Two wrong-cwd preservation helpers raised FileNotFound before edits; repeated old bindingcheck rejected, logs retained. Later paths absolute."
+  },
+  "limitations": [
+    "One scoped current browser comparison; full317ID+5families and ZBrush parity remain unverified",
+    "Actual alpha contacts are+Z on upper sheet; fresh-vs-retained picked-direction effect still needs back-view deformed sheet cohort",
+    "Per-object/shared-tool relative offset lifetime, nonzero warmoffset, broader alpha/pose/continuous/dynamic/Lock and full lifecycle remain gaps",
+    "Images are numerical fixtures, not consumer visual-quality or image/shader/GPU appearance parity",
+    "Synthetic browser pen evidence remains historical C38; native/physical pen unverified",
+    "No fresh input latency, long-session performance, nativeGUI/physical/HiDPI/complete translation gate"
+  ],
+  "preview": "http://127.0.0.1:8805/",
+  "fixture_asset_path": "FL01-independent-two-sheets.sgl",
+  "fixture_manifest_sha256": "cf5d88c5793dcc662f9d5bbb237ac7b3e61cf45a1194885353a0baedf8c08a66"
+}

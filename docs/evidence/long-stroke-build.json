@@ -1,0 +1,884 @@
+{
+  "schema_version": 1,
+  "version": "0.1.5",
+  "captured_local_date": "2026-10-12",
+  "recorded_utc": "2026-10-12T22:23:58.351639+00:00",
+  "status": "Scoped sustained-input/browser, shared geometry, serialization and build gates pass; existing folded mesh and reference/platform gaps remain",
+  "platform": {
+    "system": "Darwin",
+    "machine": "arm64",
+    "macos_version": "26.5.1",
+    "cpu": "Apple M2",
+    "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+    "wasm_bindgen_cli": "wasm-bindgen 0.2.129",
+    "wasm_bindgen_lock_version": "0.2.129"
+  },
+  "source": {
+    "git_commit": null,
+    "state": "Uncommitted workspace with no resolved HEAD; exact source bound by hashes",
+    "scope": "Rust sources, manifests, tests and fixtures; scripts, static web host, AGENTS and CI. Excludes documentation, built web/dist and ignored tooling/output.",
+    "manifest": {
+      "path": ".artifacts/long-stroke-build/source-manifest.json",
+      "sha256": "de5a130fec3cd972560944ecbd19e8c327190f577efe40cfb17ec2c0b8d7f4da",
+      "size_bytes": 6041
+    },
+    "files": [
+      {
+        "path": ".github/workflows/ci.yml",
+        "sha256": "18a21786db96c1b0920517261105517287dcac547f488db4250140fbf50f9926",
+        "size_bytes": 874
+      },
+      {
+        "path": "AGENTS.md",
+        "sha256": "b9aebf717528d1887a30f15d23ca492cac78e86542f0f7f77e72ee21545cebd4",
+        "size_bytes": 1312
+      },
+      {
+        "path": "Cargo.lock",
+        "sha256": "f4137786aa1413b6a48c493ac5a5ee07732f00c135cc5a4cb027507b3cd585c7",
+        "size_bytes": 92194
+      },
+      {
+        "path": "Cargo.toml",
+        "sha256": "105d64d38bc58abcdb6f78c693ba3b01257d2838cb03db425bb07c6cde1c5c9f",
+        "size_bytes": 637
+      },
+      {
+        "path": "crates/obrush-app/Cargo.toml",
+        "sha256": "318757f9510bd65452c00e004a252d874e233f01426345218ca4456c8b80bb6b",
+        "size_bytes": 774
+      },
+      {
+        "path": "crates/obrush-app/src/app.rs",
+        "sha256": "d2ac54a1881a93d03dd8d1236ebb2be77fa4f204a0b7c07a2330176846f210c4",
+        "size_bytes": 52578
+      },
+      {
+        "path": "crates/obrush-app/src/dab_queue.rs",
+        "sha256": "38c71e0fcc000c28473035d7170a1c57b9e2b682f37252df032f24098c078d04",
+        "size_bytes": 14679
+      },
+      {
+        "path": "crates/obrush-app/src/lib.rs",
+        "sha256": "c73605d2c246752b0817418b4402c1802e9ddd997bd60a74a5eefd5586490cca",
+        "size_bytes": 1839
+      },
+      {
+        "path": "crates/obrush-app/src/main.rs",
+        "sha256": "59f837631d853d5d431139fa10dfd2c07667f8dbf2b8a3cc7ff771d3068b7819",
+        "size_bytes": 676
+      },
+      {
+        "path": "crates/obrush-app/src/renderer.rs",
+        "sha256": "3ccf212965fcffe457ad672c0430caf2abfe40f3128bae0547e783977d46e205",
+        "size_bytes": 44613
+      },
+      {
+        "path": "crates/obrush-app/src/stroke.rs",
+        "sha256": "0a0298b462f22399e18b1a54502f73f805f8c4ad3b9ecbaa105c3f46178f2407",
+        "size_bytes": 4880
+      },
+      {
+        "path": "crates/obrush-core/Cargo.toml",
+        "sha256": "05bde7e131c4bc2f53709cfc3d5fcc12f2363105fba5f65ee18fa8c34e8039ce",
+        "size_bytes": 250
+      },
+      {
+        "path": "crates/obrush-core/examples/core_performance_probe.rs",
+        "sha256": "ecbbaf2697a627aade994847b8481da753417eb8279ff90201f1dd6f0f9a76a2",
+        "size_bytes": 5426
+      },
+      {
+        "path": "crates/obrush-core/examples/core_timing.rs",
+        "sha256": "df4dee7deaced269cc87d8f18786ab96b0e9d7407d1b6b8456fb62d1484b3f17",
+        "size_bytes": 3524
+      },
+      {
+        "path": "crates/obrush-core/examples/crease_stability_probe.rs",
+        "sha256": "f90b8334b2ade954dfa3ac9c545866c5b40bb34c6af2e5d415f475599099b461",
+        "size_bytes": 11682
+      },
+      {
+        "path": "crates/obrush-core/examples/draw_overlap_probe.rs",
+        "sha256": "a2c2e388c3273dfef9096098878aaa55899841df17a8dd6b3890fc9e0a11fd26",
+        "size_bytes": 15078
+      },
+      {
+        "path": "crates/obrush-core/examples/inspect_obj.rs",
+        "sha256": "555070d52b662cbf5eb6a7fde8e97b7b6995aaefb61c341901b681f63342c90d",
+        "size_bytes": 1548
+      },
+      {
+        "path": "crates/obrush-core/examples/long_stroke_probe.rs",
+        "sha256": "ef94ce9c6c9fc47702bfbcd9da7f79e34664a71cac57f3b5a343748b60a1e136",
+        "size_bytes": 4733
+      },
+      {
+        "path": "crates/obrush-core/examples/smooth_subdivision_probe.rs",
+        "sha256": "8e70150d11e660962767363f9af07a47a4001bfe15029f8eda345c42c11ecb03",
+        "size_bytes": 2487
+      },
+      {
+        "path": "crates/obrush-core/src/brush.rs",
+        "sha256": "22c47de749152d2f8591da4592164e413bdd5ab1ccb318b22df6b68f594c9e5c",
+        "size_bytes": 27721
+      },
+      {
+        "path": "crates/obrush-core/src/document.rs",
+        "sha256": "65e7aef9818482ba06529d75916cd76f5a8e71787905ec16e99fe4d1c658d879",
+        "size_bytes": 8597
+      },
+      {
+        "path": "crates/obrush-core/src/lib.rs",
+        "sha256": "8ccbd35d907490d6ebc8b5c4dd1f699ab1e6ae5ced427ca3158d94558d6037db",
+        "size_bytes": 508
+      },
+      {
+        "path": "crates/obrush-core/src/mesh.rs",
+        "sha256": "4db1884082d155c81c5acbcf154046370cdca2fa7d087f293c71f12802320f98",
+        "size_bytes": 58738
+      },
+      {
+        "path": "crates/obrush-core/src/refinement.rs",
+        "sha256": "26eec51be37a104e439fea9d7075e5557a60a662e156146a8566f40a84a42935",
+        "size_bytes": 30089
+      },
+      {
+        "path": "crates/obrush-core/src/tests.rs",
+        "sha256": "c835a43ae938ab1a03c1d994a49ca69f2d94eb460203892c7ef70bb82951bd42",
+        "size_bytes": 27573
+      },
+      {
+        "path": "crates/obrush-core/tests/brush_stability.rs",
+        "sha256": "0e29dcbe1efefa96af57e0c8a1679e4f6483850611a8bbbc88fdd5bab065f8f4",
+        "size_bytes": 22358
+      },
+      {
+        "path": "crates/obrush-core/tests/crease_detail.rs",
+        "sha256": "3745006623aa534f33f9877961c1378f82b392b196e3e7854046f8ba542ceb73",
+        "size_bytes": 7249
+      },
+      {
+        "path": "crates/obrush-core/tests/draw_surface.rs",
+        "sha256": "c9fa089743ebd82b734745be1e5afb06bc5d82c4abc0cf5b9f3b0408166cc5ff",
+        "size_bytes": 5789
+      },
+      {
+        "path": "crates/obrush-core/tests/fixtures/zbrush_mrgb.obj",
+        "sha256": "9f75bcbc98ddfcb570d9087c5f6b3f6acb02fa6fe5b73e610abd670e0edc5c84",
+        "size_bytes": 303
+      },
+      {
+        "path": "crates/obrush-core/tests/mrgb_import.rs",
+        "sha256": "4794fe0c95fdfe6f48e619b8db018400ae2313cd02e76368d41a2ed85ef25c2c",
+        "size_bytes": 2631
+      },
+      {
+        "path": "crates/obrush-core/tests/patch_refinement.rs",
+        "sha256": "90e0beb74aaa1d4b7b6aebffcc9d6de0692e38c7ad882379048a1a822f9993db",
+        "size_bytes": 16645
+      },
+      {
+        "path": "crates/obrush-core/tests/sculpt_workflow.rs",
+        "sha256": "676ad74bdbb44998fcffd44f11fe92aff3792551722dfceaa8d04fa3ecd47ab5",
+        "size_bytes": 6339
+      },
+      {
+        "path": "scripts/build-web.sh",
+        "sha256": "72a2dc23d8d7d17d87258a2bf5c03d6eda1e8e0f883301ff8e49cf3697229cf6",
+        "size_bytes": 756
+      },
+      {
+        "path": "scripts/compare-obj.py",
+        "sha256": "a249c861d98415f664bd53583a45443c4fb96a5d94f4ff96b98263f5e8ab112e",
+        "size_bytes": 2371
+      },
+      {
+        "path": "scripts/package-macos.sh",
+        "sha256": "38969140160df3225e11d09645dc1a5dcb608cc86f97feb66d110fabdad3468c",
+        "size_bytes": 1336
+      },
+      {
+        "path": "scripts/serve-web.py",
+        "sha256": "ca9125f60f4f99537b04d97eafc05d90b580eeb4c885976540397a2d44676d1e",
+        "size_bytes": 758
+      },
+      {
+        "path": "web/index.html",
+        "sha256": "6a149029a16775777204420e394c507dce1bc8d43b74a94c1d0dd32ce38741af",
+        "size_bytes": 3421
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "web/dist/index.html",
+      "sha256": "6a149029a16775777204420e394c507dce1bc8d43b74a94c1d0dd32ce38741af",
+      "size_bytes": 3421
+    },
+    {
+      "path": "web/dist/pkg/obrush_app.js",
+      "sha256": "251b568aa0498657cf5cca722790ac4960fb319274b8b5c65c436a79e4abe4ad",
+      "size_bytes": 89648
+    },
+    {
+      "path": "web/dist/pkg/obrush_app_bg.wasm",
+      "sha256": "deee04f729ed17e04a0955e7d221adea1934cba49aafcdee91464ba7dffee4cb",
+      "size_bytes": 3471262
+    },
+    {
+      "path": "target/release/obrush",
+      "sha256": "20e91f0e48f5f4497a93a3f8bda9779ab0154a1e1f9871d8e45b1ba045a0cab9",
+      "size_bytes": 6095184
+    },
+    {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/OBrush",
+      "sha256": "c3229938e905e1fe6b6e267ed5e3ea9c814f1c5bf5075f68cb25e4d7f90e857d",
+      "size_bytes": 6077888
+    },
+    {
+      "path": ".artifacts/OBrush.app/Contents/Info.plist",
+      "sha256": "9bf34d1f7d1fa37e45f711c5e47ceca867a1f4493667e636affddcceb5c0303b",
+      "size_bytes": 607
+    }
+  ],
+  "native_bundle_version": "0.1.5",
+  "checks": [
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "started_utc": "2026-10-12T22:08:24.879239+00:00",
+      "elapsed_seconds": 0.16076041700034693,
+      "exit_code": 0,
+      "log": ".artifacts/long-stroke-build/format-final.log",
+      "log_artifact": {
+        "path": ".artifacts/long-stroke-build/format-final.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      }
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--workspace"
+      ],
+      "started_utc": "2026-10-12T22:08:25.040509+00:00",
+      "elapsed_seconds": 103.93168533300013,
+      "exit_code": 0,
+      "log": ".artifacts/long-stroke-build/workspace-tests-final.log",
+      "log_artifact": {
+        "path": ".artifacts/long-stroke-build/workspace-tests-final.log",
+        "sha256": "ab720504d28e75086a533fe1e6a4f54b87558bba59e985cbe7cad4fbe4ea8cfa",
+        "size_bytes": 10229
+      }
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--workspace",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "started_utc": "2026-10-12T22:10:08.972856+00:00",
+      "elapsed_seconds": 1.3566786250012228,
+      "exit_code": 0,
+      "log": ".artifacts/long-stroke-build/clippy-native-final.log",
+      "log_artifact": {
+        "path": ".artifacts/long-stroke-build/clippy-native-final.log",
+        "sha256": "1ebfb660e609752372f98283361e9ba348e537c399f709855b376e0f9beedef8",
+        "size_bytes": 220
+      }
+    },
+    {
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "-p",
+        "obrush-core",
+        "--target",
+        "wasm32-unknown-unknown"
+      ],
+      "started_utc": "2026-10-12T22:10:10.329889+00:00",
+      "elapsed_seconds": 0.43418491700140294,
+      "exit_code": 0,
+      "log": ".artifacts/long-stroke-build/check-core-wasm-final.log",
+      "log_artifact": {
+        "path": ".artifacts/long-stroke-build/check-core-wasm-final.log",
+        "sha256": "5c611aab47f92228e47a0f60bf67e6665009b8875751c51497da2c2dd3594125",
+        "size_bytes": 147
+      }
+    },
+    {
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "-p",
+        "obrush-app",
+        "--target",
+        "wasm32-unknown-unknown"
+      ],
+      "started_utc": "2026-10-12T22:10:10.764395+00:00",
+      "elapsed_seconds": 1.0269213749998016,
+      "exit_code": 0,
+      "log": ".artifacts/long-stroke-build/check-app-wasm-final.log",
+      "log_artifact": {
+        "path": ".artifacts/long-stroke-build/check-app-wasm-final.log",
+        "sha256": "437c8e0318eb207b90b938ce3e0c7565791d52509ab4fcb9c054f448b1ed8098",
+        "size_bytes": 220
+      }
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "-p",
+        "obrush-app",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "started_utc": "2026-10-12T22:10:11.791821+00:00",
+      "elapsed_seconds": 1.049358582999048,
+      "exit_code": 0,
+      "log": ".artifacts/long-stroke-build/clippy-wasm-final.log",
+      "log_artifact": {
+        "path": ".artifacts/long-stroke-build/clippy-wasm-final.log",
+        "sha256": "eca4d0b653f52f45a9e4767946f6ae29e31cd484a4406fbf6d8862ab0005c835",
+        "size_bytes": 220
+      }
+    },
+    {
+      "command": [
+        "scripts/build-web.sh"
+      ],
+      "started_utc": "2026-10-12T22:10:12.841533+00:00",
+      "elapsed_seconds": 4.017755666000085,
+      "exit_code": 0,
+      "log": ".artifacts/long-stroke-build/build-web-final.log",
+      "log_artifact": {
+        "path": ".artifacts/long-stroke-build/build-web-final.log",
+        "sha256": "9dbae0a28f76506af05e2767d28879205e566b25f051d34faaf449b213113ae4",
+        "size_bytes": 276
+      }
+    },
+    {
+      "command": [
+        "scripts/package-macos.sh"
+      ],
+      "started_utc": "2026-10-12T22:10:16.859647+00:00",
+      "elapsed_seconds": 3.6952124999988882,
+      "exit_code": 0,
+      "log": ".artifacts/long-stroke-build/package-macos-final.log",
+      "log_artifact": {
+        "path": ".artifacts/long-stroke-build/package-macos-final.log",
+        "sha256": "605c1bf043be85498fcad18a99d7665c28afd08aba02971ccae042d95c51baf2",
+        "size_bytes": 404
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/codesign",
+        "--verify",
+        "--deep",
+        "--strict",
+        ".artifacts/OBrush.app"
+      ],
+      "started_utc": "2026-10-12T22:10:20.555210+00:00",
+      "elapsed_seconds": 0.008004332999917096,
+      "exit_code": 0,
+      "log": ".artifacts/long-stroke-build/codesign-final.log",
+      "log_artifact": {
+        "path": ".artifacts/long-stroke-build/codesign-final.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      }
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "started_utc": "2026-10-12T22:10:20.563513+00:00",
+      "elapsed_seconds": 0.012965834001079202,
+      "exit_code": 0,
+      "log": ".artifacts/long-stroke-build/diff-final.log",
+      "log_artifact": {
+        "path": ".artifacts/long-stroke-build/diff-final.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      }
+    }
+  ],
+  "tests": {
+    "workspace_total": 97,
+    "core": 83,
+    "app": 14
+  },
+  "served_browser_wasm": {
+    "url": "http://127.0.0.1:8787/pkg/obrush_app_bg.wasm",
+    "status": 200,
+    "sha256": "deee04f729ed17e04a0955e7d221adea1934cba49aafcdee91464ba7dffee4cb"
+  },
+  "original_user_files": [
+    {
+      "path": "/Users/Ajab/Downloads/Untitled_sculpture (1).obrush",
+      "sha256": "4adc8aa9333903ab0684c1f2e54a995dc6a4e7a3b85fc6e911df9d7deb0c4786",
+      "size_bytes": 8000012
+    },
+    {
+      "path": "/Users/Ajab/Downloads/Untitled_sculpture (1).obj",
+      "sha256": "282d72002460d692c1444abd9480a11f16958ce660ca86d1352875778cced40e",
+      "size_bytes": 10211247
+    }
+  ],
+  "reference_identity": {
+    "name": "ZBrush",
+    "version": "2026.2.1",
+    "historical_record": "docs/evidence/zbrush-native-inspection.json",
+    "scope": "Historical reference identity only; no reference sculpt/appearance/performance comparison in this update"
+  },
+  "implementation": {
+    "queue_capacity_dabs": 32,
+    "stale_input_discard_threshold_ms": 50,
+    "interactive_between_dabs_budget_ms": 8,
+    "interactive_maximum_dabs_per_redraw": 64,
+    "release": "Commit existing visible stroke plus at most latest pending endpoint, clear all pending work, preserve one whole-stroke undo. Older unprocessed dabs intentionally coalesced.",
+    "shared_geometry_detail_tools": [
+      "Draw",
+      "Clay",
+      "Inflate",
+      "Flatten",
+      "Crease"
+    ],
+    "detail_limit_added_vertices_per_dab": 1024,
+    "normals_and_guards": "Shared local face/edge incidence; picking/influence selection and GPU mesh uploads remain full-mesh work."
+  },
+  "preserved_root_check_failures": {
+    "formatting": {
+      "path": ".artifacts/long-stroke-build/format-attempt1-failed.log",
+      "sha256": "10241d8aeb6cde4550aeafd3aa68ad85e44513da75e7a5d674682c7d02a7d41c",
+      "size_bytes": 6401
+    },
+    "verification": {
+      "path": ".artifacts/long-stroke-build/verification-attempt1.json",
+      "sha256": "fc9fe07678d476f62bc5f9bb4010594a87eb0bdd56ca545992baa5114fff1ea8",
+      "size_bytes": 285
+    },
+    "reason": "Direct rustfmt edition2024 formatting differed from cargo workspace formatting; corrected with cargo fmt --all, all final checks pass."
+  },
+  "limits": [
+    "Coalescing prioritizes recent movement rather than lossless replay of overloaded samples.",
+    "The age threshold and redraw budget are checked between atomic operations and do not guarantee a maximum physical input latency.",
+    "Previously folded geometry is not automatically healed.",
+    "Headless browser and windowless shader checks do not establish physical input-to-photon latency, tablet/native GUI behavior or ZBrush parity."
+  ],
+  "feature_ids": [
+    "F01",
+    "F02",
+    "F03",
+    "F04",
+    "F05",
+    "F06",
+    "F10",
+    "F11",
+    "F12",
+    "F13",
+    "F16",
+    "T02",
+    "H02"
+  ],
+  "evidence_records": [
+    {
+      "path": "docs/evidence/long-stroke-browser.json",
+      "sha256": "e0c0238579d8a0c1e5a11fe7ee2a153893642e84b3a7e366a3ce9225cf97b75d",
+      "size_bytes": 466663
+    },
+    {
+      "path": "docs/evidence/long-stroke-core.json",
+      "sha256": "be95a99d61019174499aac87dac47c52920d606358cf5bc5fa690a4d1f302734",
+      "size_bytes": 31074
+    },
+    {
+      "path": "docs/evidence/long-stroke-geometry.json",
+      "sha256": "4610ca8b558628c14883bc12b2cc4f0b8e5b3bbd849d88051eefac0ea6f7a4af",
+      "size_bytes": 75915
+    }
+  ],
+  "browser_runtime": {
+    "method": "Synthetic isolated headlessChrome/WASM/WebGL2 and controlled no-window CGL visualization; no physical mouse/pen latency, nativeGUI, full platform matrix, general self-intersection guarantee or ZBrush parity.",
+    "wasm_sha256": "deee04f729ed17e04a0955e7d221adea1934cba49aafcdee91464ba7dffee4cb",
+    "baseline_draw_release_tail_ms": 12774.8,
+    "final_original_project_cases": [
+      {
+        "brush": "Draw",
+        "last_mesh_upload_after_dom_release_ms": 19.2,
+        "mesh_submission_gap_p95_ms": 27.6,
+        "maximum_mesh_submission_gap_ms": 62.3,
+        "main_tasks_over_50ms": 0,
+        "delivered_dom_events": 502,
+        "sent_events": 503,
+        "queue_after": {
+          "applied_dabs": 772,
+          "coalesced_dabs": 362,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 14,
+          "pending_dabs": 0,
+          "processed_dabs": 1366,
+          "released_strokes": 1
+        },
+        "pre_save_gpu_matches_saved_mesh": true,
+        "two_saves_exactly_equal": true,
+        "undo_exact_original_and_redo_exact_final": true
+      },
+      {
+        "brush": "Crease",
+        "last_mesh_upload_after_dom_release_ms": 20.4,
+        "mesh_submission_gap_p95_ms": 27.1,
+        "maximum_mesh_submission_gap_ms": 53.6,
+        "main_tasks_over_50ms": 0,
+        "delivered_dom_events": 498,
+        "sent_events": 503,
+        "queue_after": {
+          "applied_dabs": 815,
+          "coalesced_dabs": 264,
+          "maximum_input_age_ms": 50,
+          "maximum_pending_dabs": 32,
+          "oldest_pending_age_ms": 0,
+          "peak_pending_dabs": 11,
+          "pending_dabs": 0,
+          "processed_dabs": 1464,
+          "released_strokes": 1
+        },
+        "pre_save_gpu_matches_saved_mesh": true,
+        "two_saves_exactly_equal": true,
+        "undo_exact_original_and_redo_exact_final": true
+      }
+    ],
+    "limits": [
+      "One20-second scenario per brush per build, one user model, oneAppleM2/Chrome155/ANGLEMetal/DPR1; no broad capacity or platform claim.",
+      "Input event coalescing and deliberate final overload coalescing mean shape equality with old FIFO is not expected. Actual coalesced/applied/processed counters are reported, not called lossless replay.",
+      "Final public oldest-pending-age samples are queued-input age, not physical input/display latency or an unconditional hard execution bound.",
+      "Imported sharp faces/slivers can remain outside edited regions; runtime/closed-topology checks do not establish global surface repair.",
+      "Camera framing is deterministic from original mesh; windowless CGL uses matched double-precision camera calculation and is not a pixel-identical browser presentation check.",
+      "No load/save persistence across browser restarts, tablet pressure, alternate browsers/GPU, million-vertex imported model or nativeGUI validation in this record."
+    ]
+  },
+  "native_cpu_scope": {
+    "included": "Current-surface raycast and core brush/refinement, individually measured by native Instant. Combined is sum; total CPU wall includes loop overhead.",
+    "excluded": "Project loading/initial normal rebuild, history/UI/input-queue scheduling, renderer/GPU upload, final metrics and mesh export.",
+    "quantiles": "Sorted samples; upper median index floor(n/2); p95 index min(floor(.95*n),n-1).",
+    "controls": "Final native timing scheduled after parent validation/build jobs and before browser measurement to avoid heavy-job overlap. One matched final run, not an aggregate benchmark.",
+    "limits": "Nominal20s input duration differs from compute runtime. Native CPU cost is not application FPS/browser latency or a hard real-time bound; OS/background/thermal variation remains."
+  },
+  "native_paired_summary": [
+    {
+      "brush": "Draw",
+      "baseline_combined": {
+        "max_ms": 135.894334,
+        "mean_ms": 7.912224869166659,
+        "p50_ms": 4.7082500000000005,
+        "p95_ms": 17.019292,
+        "samples": 1200
+      },
+      "final_combined": {
+        "max_ms": 22.051666,
+        "mean_ms": 5.519676820000009,
+        "p50_ms": 3.679293,
+        "p95_ms": 11.715791,
+        "samples": 1200
+      },
+      "final_mesh_byte_identical_to_baseline": false,
+      "field_comparison": {
+        "positions": {
+          "baseline_count": 68648,
+          "updated_count": 68968,
+          "original_vertex_count_compared": 61580,
+          "original_vertex_f32_bit_differences": 4622,
+          "original_vertex_max_displacement_difference_world": 0.031344733318445984,
+          "original_vertex_rms_displacement_difference_world": 0.0007643695679933712
+        },
+        "normals": {
+          "baseline_count": 68648,
+          "updated_count": 68968,
+          "original_vertex_count_compared": 61580,
+          "original_vertex_f32_bit_differences": 5187
+        },
+        "masks": {
+          "baseline_count": 68648,
+          "updated_count": 68968,
+          "original_vertex_count_compared": 61580,
+          "original_vertex_f32_bit_differences": 0
+        },
+        "colors": {
+          "baseline_count": 68648,
+          "updated_count": 68968,
+          "original_vertex_count_compared": 61580,
+          "original_vertex_f32_bit_differences": 0
+        },
+        "triangles": {
+          "baseline_count": 137292,
+          "updated_count": 137932,
+          "arrays_exactly_equal": false
+        },
+        "original_attribute_preservation": {
+          "masks": {
+            "updated_equals_initial_f32_bits": true
+          },
+          "colors": {
+            "updated_equals_initial_f32_bits": true
+          }
+        }
+      }
+    },
+    {
+      "brush": "Crease",
+      "baseline_combined": {
+        "max_ms": 23.015291,
+        "mean_ms": 2.35754292583333,
+        "p50_ms": 2.263917,
+        "p95_ms": 2.6832499999999997,
+        "samples": 1200
+      },
+      "final_combined": {
+        "max_ms": 48.767875,
+        "mean_ms": 4.867248106666675,
+        "p50_ms": 3.307166,
+        "p95_ms": 11.783667,
+        "samples": 1200
+      },
+      "final_mesh_byte_identical_to_baseline": false,
+      "field_comparison": {
+        "positions": {
+          "baseline_count": 61580,
+          "updated_count": 65486,
+          "original_vertex_count_compared": 61580,
+          "original_vertex_f32_bit_differences": 6891,
+          "original_vertex_max_displacement_difference_world": 0.07582907287567028,
+          "original_vertex_rms_displacement_difference_world": 0.008578276244050867
+        },
+        "normals": {
+          "baseline_count": 61580,
+          "updated_count": 65486,
+          "original_vertex_count_compared": 61580,
+          "original_vertex_f32_bit_differences": 7500
+        },
+        "masks": {
+          "baseline_count": 61580,
+          "updated_count": 65486,
+          "original_vertex_count_compared": 61580,
+          "original_vertex_f32_bit_differences": 0
+        },
+        "colors": {
+          "baseline_count": 61580,
+          "updated_count": 65486,
+          "original_vertex_count_compared": 61580,
+          "original_vertex_f32_bit_differences": 0
+        },
+        "triangles": {
+          "baseline_count": 123156,
+          "updated_count": 130968,
+          "arrays_exactly_equal": false
+        },
+        "original_attribute_preservation": {
+          "masks": {
+            "updated_equals_initial_f32_bits": true
+          },
+          "colors": {
+            "updated_equals_initial_f32_bits": true
+          }
+        }
+      }
+    }
+  ],
+  "geometry_limits": {
+    "surface_detail_tools": [
+      "Draw",
+      "Clay",
+      "Inflate",
+      "Flatten",
+      "Crease"
+    ],
+    "no_topology_tools": [
+      "Move",
+      "Smooth",
+      "Mask",
+      "Paint"
+    ],
+    "target_edge_length": "0.12*brush radius",
+    "max_added_vertices_per_accepted_dab": 1024,
+    "rounds": 2,
+    "added_vertices_per_round": 512,
+    "symmetry_group_policy": "Exact reflected-coordinate groups admitted/pruned together; protected-edge midpoints can split when adjacent to an editable face. No welding or approximate imported-symmetry inference.",
+    "child_preflight": "Every planned child standard quality>=min(parent standard quality,0.15)*(1-1e-5). At most8 pruning passes, then skip remainder and report detail_limited. This threshold alone does not describe the entire deformed mesh.",
+    "deformation_guards": {
+      "crease": "qLongest>=min(previous qLongest,0.1), new adjacent angle<=max(previous angle,90deg)",
+      "move": "qLongest>=min(previous qLongest,0.02), new adjacent angle<=max(previous angle,150deg)",
+      "other_surface_tools": "qLongest>=min(previous qLongest,0.1), new adjacent angle<=max(previous angle,60deg)",
+      "local_orientation": "new_cross dot old_cross>=0.05*old_cross_squared",
+      "step_backtracking": "Shared alpha1,1/2,...1/4096, then reject whole deformation.",
+      "roundoff": "32*f64 epsilon relative tolerance for old-quality/fold normalization feasibility.",
+      "bad_topology": "Reject touched collapsed or non-manifold topology; selected refinement malformed/duplicate/inconsistent winding or unrepresentable midpoint rejected atomically."
+    },
+    "allocation_ceiling_vertices": 1000000,
+    "allocation_ceiling_triangles": 2000000
+  },
+  "optional_smoothed_preview": {
+    "operation": "Existing pure-core Document::subdivide_smooth once, original user project loaded into a separate document; no production-source change.",
+    "label": "Optional smoothed preview; not a complete geometric repair.",
+    "measured": {
+      "case": "single_loop_smooth_subdivision_preview",
+      "max_original_mask_difference": 0.0,
+      "max_original_rgb_difference": 3.5762786865234375e-07,
+      "max_original_vertex_displacement": 0.010950918309390545,
+      "original_color_prefix_bit_equal": false,
+      "original_mask_prefix_bit_equal": true,
+      "original_metrics": {
+        "bounds": [
+          [
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          [
+            1.0,
+            1.0,
+            2.444972276687622
+          ]
+        ],
+        "faces_standard_below_015": 64,
+        "folds_over_60": 210,
+        "folds_over_90": 78,
+        "max_fold_degrees": 149.9999813835879,
+        "min_quality_longest": 0.020000001042248715,
+        "min_quality_standard": 0.04055303360347116,
+        "severe_fold_length": 1.0192062901801278,
+        "severe_fold_severity": 47.700800542104425,
+        "sharp_fold_length": 2.8193303052415333,
+        "signed_volume": 4.33614527280467,
+        "triangles": 123156,
+        "vertices": 61580
+      },
+      "preview_metrics": {
+        "bounds": [
+          [
+            -0.999933123588562,
+            -0.999933123588562,
+            -0.999933123588562
+          ],
+          [
+            0.999933123588562,
+            0.999933123588562,
+            2.4446792602539062
+          ]
+        ],
+        "faces_standard_below_015": 12,
+        "folds_over_60": 14,
+        "folds_over_90": 2,
+        "max_fold_degrees": 92.46658878098096,
+        "min_quality_longest": 0.013201954672850923,
+        "min_quality_standard": 0.028501341347622677,
+        "severe_fold_length": 0.00987919794433139,
+        "severe_fold_severity": 0.024360992805309525,
+        "sharp_fold_length": 0.08214860375110361,
+        "signed_volume": 4.335648844448181,
+        "triangles": 492624,
+        "vertices": 246314
+      },
+      "rms_original_vertex_displacement": 0.00047018147620361486,
+      "subdivide_elapsed_ms": 87.34475
+    },
+    "relative_signed_volume_change": -0.00011448609888664585,
+    "maximum_bounds_coordinate_change": 0.0002930164337158203,
+    "severe_fold_length_reduction_fraction": 0.9903069692176003,
+    "severe_fold_severity_reduction_fraction": 0.9994892959336436,
+    "max_original_displacement_screening_limit": 0.03,
+    "rms_original_displacement_screening_limit": 0.002,
+    "relative_volume_change_screening_limit": 0.01,
+    "max_bounds_coordinate_change_screening_limit": 0.015,
+    "shape_screening_passed": true,
+    "complete_repair_quality_gate_passed": false,
+    "quality_failure": "Min standard quality decreases0.040553->0.028501;12 sub0.15 faces and2>90deg hinges remain. Conforming Loop refinement smooths the surface but does not remesh skinny triangles.",
+    "original_untouched": true,
+    "masks_note": "Input masks uniformly zero; original prefix remains bit equal. Loop ordinarily interpolates masks/colors.",
+    "rgb_note": "Input RGB is constant; interpolation introduces at most3.576e-7 original-prefix floating-point difference, not bit-identical color preservation.",
+    "runtime_note": "One native subdivision87.3ms; geometry grows4x in face count to492,624. No interactive/browser latency guarantee for this larger copy.",
+    "private_artifacts": {
+      "loop-preview-output.jsonl": {
+        "path": ".artifacts/crease-detail-experiments/loop-preview-output.jsonl",
+        "sha256": "fb3b378e57a19acc65cbc96b4d3ea1969bbaad00a3b615507daa8ba46115cc86",
+        "bytes": 1354
+      },
+      "candidate-user-loop-preview.obrush": {
+        "path": ".artifacts/crease-detail-experiments/candidate-user-loop-preview.obrush",
+        "sha256": "676727a359640d07f11af4d840494503e7cb88a533c6997e8f1332458d7322fb",
+        "bytes": 33967386
+      },
+      "candidate-user-loop-preview.obj": {
+        "path": ".artifacts/crease-detail-experiments/candidate-user-loop-preview.obj",
+        "sha256": "3a1ef479d649129d8760998fda8a4122e5c61e72b52a8cbac62c745f70cd0f82",
+        "bytes": 43897247
+      },
+      "src/bin/loop_preview.rs": {
+        "path": ".artifacts/crease-detail-experiments/src/bin/loop_preview.rs",
+        "sha256": "8f12fd4ec5de3d84d440cc62883e58fb4680c053244974b86c5d7a6e1afde87a",
+        "bytes": 3914
+      }
+    },
+    "serialization_validation": {
+      "command": "cargo run --release --bin validate_loop_preview",
+      "record_path": ".artifacts/crease-detail-experiments/loop-preview-validation.json",
+      "record_sha256": "4ad795e45ba952caa8dd8c74caafed69218ca468df1f68ad2c72f8ebda0bfafb",
+      "script_sha256": "d92b5d1625c732bde884dd6933fe08f01de0aa680b86c0cb3a0d8b77d255baa8",
+      "result": {
+        "finite_valid_attributes": true,
+        "name": "User sculpt \u2014 optional Loop subdivision preview",
+        "serialized_surface_bit_equal_to_shared_core_operation": true,
+        "triangles": 492624,
+        "validated_serialized_project": true,
+        "vertices": 246314
+      },
+      "scope": "Saved JSON parsed with Document::from_json, mesh validated, descriptive project name checked, and all loaded surface fields bit-compared to the existing pure-core one-Loop operation on the untouched original. No display/GPU used. Validation ran only after measured native/browser cases completed."
+    }
+  },
+  "manual_visual_inspection": {
+    "original_and_preview_full_and_tight_front_views_inspected": true,
+    "observation": "Softer jagged ridges and broad form retained in the separate one-Loop preview. Tight frontal view retains thin forehead lines and corrugated folded rims; not fully repaired.",
+    "camera": {
+      "yaw": 0,
+      "pitch": 0,
+      "distance": 1.6,
+      "target": [
+        0,
+        0,
+        1
+      ],
+      "width": 1153,
+      "height": 912
+    },
+    "records": {
+      "path": "docs/evidence/long-stroke-browser.json",
+      "sha256": "e0c0238579d8a0c1e5a11fe7ee2a153893642e84b3a7e366a3ce9225cf97b75d",
+      "size_bytes": 466663
+    },
+    "scope": "Controlled existing shaders/rendered meshes; no native GUI or ZBrush visual comparison."
+  }
+}

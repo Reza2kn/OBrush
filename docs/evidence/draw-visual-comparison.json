@@ -1,0 +1,789 @@
+{
+  "status": "Final OBrush0.1.3 controlled offline Draw visual fixtures passed",
+  "date": "2026-10-12",
+  "method": "Windowless macOS CGL; exact renderer sculpt/composite GLSL; real indexed OBJ geometry/normals; RGBA8/depth24, actual4xMSAA, transparent resolve/composite onto samebackground. No screenshot editing, desktop/browserUI or accessibility control.",
+  "fixture_origin": "Independently authored OBrush sphere/ray stress fixtures; no proprietary assets.",
+  "baseline_probe": {
+    "path": ".artifacts/draw-overlap-baseline/output.jsonl",
+    "sha256": "3f4eae432c0f48987dd0ec558afea4e8aa64e720e9bb8b6b793049c806c25a02"
+  },
+  "final_probe": {
+    "path": ".artifacts/draw-overlap-final/output.jsonl",
+    "sha256": "104b995e9ccf784cbc31b025a356350c5a8b99e935d94ee5afda10a8672cd1ad"
+  },
+  "final_fixture_manifest": {
+    "path": ".artifacts/draw-overlap-final/fixture-hashes.json",
+    "sha256": "640e0ca11544a62f48a76f1684fc56d780417fe005a3c9c1d43d50a2a8d51c42"
+  },
+  "cases": [
+    {
+      "fixture": "line_control_level6_rounds1.obj",
+      "input_rays_and_settings_match": true,
+      "render_settings_match": true,
+      "visual_result": "passed recorded offline views",
+      "observation": "Rounded single-line boundary; reduced seam pinch.",
+      "baseline": {
+        "input": ".artifacts/draw-overlap-baseline/obj/line_control_level6_rounds1.obj",
+        "input_sha256": "b96f234c9b6a3e10da53ef813d63deeca15edc6746e76a14846b6eb7218849a5",
+        "output": ".artifacts/offline-mesh-render/draw-line-baseline-default.png",
+        "output_sha256": "dc1ca433afe11be6ce47d28810ae159c74792b62efbc6223831cfbeeabe9adc5",
+        "renderer_source": "crates/obrush-app/src/renderer.rs",
+        "renderer_source_sha256": "3ccf212965fcffe457ad672c0430caf2abfe40f3128bae0547e783977d46e205",
+        "harness_source": ".artifacts/offline-mesh-render/render_mesh.py",
+        "harness_source_sha256": "f79fb2488eb98c3f1e2f0fc8af69ae67d21a6af40b79cfaa129637089b6ca801",
+        "vertices": 40962,
+        "triangles": 81920,
+        "camera_yaw_pitch_distance": [
+          0.35,
+          0.18,
+          4.0
+        ],
+        "camera_target": [
+          0,
+          0,
+          0
+        ],
+        "width": 1200,
+        "height": 1000,
+        "supersampling_per_axis": 1,
+        "actual_msaa_samples": 4,
+        "approximate_framebuffer_bytes": 52800000,
+        "uniform_color": [
+          0.61,
+          0.38,
+          0.28
+        ],
+        "show_mask": false,
+        "vertex_color": false,
+        "gl_version": "4.1 Metal - 90.5",
+        "gl_renderer": "Apple M2",
+        "method": "headless CGL, exact OBrush sculpt+composite shaders, real indexed mesh, depth-tested4xMSAA RGBA8/depth24, same transparent resolve/composite; no window/UI/browser automation",
+        "limitations": "Offline controlled geometry/shader visualization; does not verify live UI input, egui callback state/restoration or WebGL; OBJ fixtures do not retain OBrush masks."
+      },
+      "final_0_1_3": {
+        "input": ".artifacts/draw-overlap-final/obj/line_control_level6_rounds1.obj",
+        "input_sha256": "9f777a971be903b28659ea6ad04a8cf8c224c82e745ab0fb07c7cba0a1bb7b47",
+        "output": ".artifacts/offline-mesh-render/draw-line-final-default.png",
+        "output_sha256": "dcb21f042e1505c036fb9921ea7e546db573c3d6355064639952e0f3f6a48350",
+        "renderer_source": "crates/obrush-app/src/renderer.rs",
+        "renderer_source_sha256": "3ccf212965fcffe457ad672c0430caf2abfe40f3128bae0547e783977d46e205",
+        "harness_source": ".artifacts/offline-mesh-render/render_mesh.py",
+        "harness_source_sha256": "f79fb2488eb98c3f1e2f0fc8af69ae67d21a6af40b79cfaa129637089b6ca801",
+        "vertices": 41962,
+        "triangles": 83920,
+        "camera_yaw_pitch_distance": [
+          0.35,
+          0.18,
+          4.0
+        ],
+        "camera_target": [
+          0,
+          0,
+          0
+        ],
+        "width": 1200,
+        "height": 1000,
+        "supersampling_per_axis": 1,
+        "actual_msaa_samples": 4,
+        "approximate_framebuffer_bytes": 52800000,
+        "uniform_color": [
+          0.61,
+          0.38,
+          0.28
+        ],
+        "show_mask": false,
+        "vertex_color": false,
+        "gl_version": "4.1 Metal - 90.5",
+        "gl_renderer": "Apple M2",
+        "method": "headless CGL, exact OBrush sculpt+composite shaders, real indexed mesh, depth-tested4xMSAA RGBA8/depth24, same transparent resolve/composite; no window/UI/browser automation",
+        "limitations": "Offline controlled geometry/shader visualization; does not verify live UI input, egui callback state/restoration or WebGL; OBJ fixtures do not retain OBrush masks."
+      },
+      "baseline_geometry_diagnostics": {
+        "adjacent_angle_over_30_edges": 10,
+        "adjacent_angle_over_60_edges": 4,
+        "adjacent_angle_over_90_edges": 0,
+        "edited_patch_adjacent_angle_p95_degrees": 8.511035912512684,
+        "edited_patch_edge_length_p95_world": 0.025078412627230165,
+        "edited_patch_normal_laplacian_mean": 0.03294189826760975,
+        "edited_patch_normal_laplacian_p95": 0.08500702552427095,
+        "edited_vertices": 1187,
+        "max_adjacent_normal_angle_degrees": 70.02290427418095,
+        "max_edge_length_over_initial_median": 1.5279021163225797,
+        "max_edge_length_world": 0.029999724998659653,
+        "max_normalized_normal_laplacian": 0.1716255134854318,
+        "max_radial_height": 0.08921230122204893,
+        "max_vertex_displacement": 0.08925603718087619,
+        "min_edge_length_world": 0.01221964175087573,
+        "min_triangle_quality": 0.8117778286611999,
+        "nonfinite_vertices": 0,
+        "original_vertex_edge_max_stretch": 1.488285831851559
+      },
+      "final_geometry_diagnostics": {
+        "adjacent_angle_over_30_edges": 8,
+        "adjacent_angle_over_60_edges": 0,
+        "adjacent_angle_over_90_edges": 0,
+        "edited_patch_adjacent_angle_p95_degrees": 6.92648284406117,
+        "edited_patch_edge_length_p95_world": 0.021086288736194555,
+        "edited_patch_normal_laplacian_mean": 0.023557550034048306,
+        "edited_patch_normal_laplacian_p95": 0.06678648780494185,
+        "edited_vertices": 2187,
+        "max_adjacent_normal_angle_degrees": 39.26404901342479,
+        "max_edge_length_over_initial_median": 1.0999278046087724,
+        "max_edge_length_world": 0.02159662671065768,
+        "max_normalized_normal_laplacian": 0.1699339247860945,
+        "max_radial_height": 0.08682973041238384,
+        "max_vertex_displacement": 0.08688006895944471,
+        "min_edge_length_world": 0.008590643571941314,
+        "min_triangle_quality": 0.5720660230658102,
+        "nonfinite_vertices": 0,
+        "original_vertex_edge_max_stretch": 1.2329403838761333
+      }
+    },
+    {
+      "fixture": "line_overlap_level6_rounds4.obj",
+      "input_rays_and_settings_match": true,
+      "render_settings_match": true,
+      "visual_result": "passed recorded offline views",
+      "observation": "Raised volume retained with smooth repeated-line boundaries.",
+      "baseline": {
+        "input": ".artifacts/draw-overlap-baseline/obj/line_overlap_level6_rounds4.obj",
+        "input_sha256": "2952fadbd3af62273a085d9bac6feaaa4bafbb9edd4fa2fa93bdb4b42c19a87b",
+        "output": ".artifacts/offline-mesh-render/draw-line-overlap-baseline-default.png",
+        "output_sha256": "acd5fc633f81500a24556d755995e6f7b8ccf45fe2fd8d03f649c93b5be208a5",
+        "renderer_source": "crates/obrush-app/src/renderer.rs",
+        "renderer_source_sha256": "3ccf212965fcffe457ad672c0430caf2abfe40f3128bae0547e783977d46e205",
+        "harness_source": ".artifacts/offline-mesh-render/render_mesh.py",
+        "harness_source_sha256": "f79fb2488eb98c3f1e2f0fc8af69ae67d21a6af40b79cfaa129637089b6ca801",
+        "vertices": 40962,
+        "triangles": 81920,
+        "camera_yaw_pitch_distance": [
+          0.35,
+          0.18,
+          4.0
+        ],
+        "camera_target": [
+          0,
+          0,
+          0
+        ],
+        "width": 1200,
+        "height": 1000,
+        "supersampling_per_axis": 1,
+        "actual_msaa_samples": 4,
+        "approximate_framebuffer_bytes": 52800000,
+        "uniform_color": [
+          0.61,
+          0.38,
+          0.28
+        ],
+        "show_mask": false,
+        "vertex_color": false,
+        "gl_version": "4.1 Metal - 90.5",
+        "gl_renderer": "Apple M2",
+        "method": "headless CGL, exact OBrush sculpt+composite shaders, real indexed mesh, depth-tested4xMSAA RGBA8/depth24, same transparent resolve/composite; no window/UI/browser automation",
+        "limitations": "Offline controlled geometry/shader visualization; does not verify live UI input, egui callback state/restoration or WebGL; OBJ fixtures do not retain OBrush masks."
+      },
+      "final_0_1_3": {
+        "input": ".artifacts/draw-overlap-final/obj/line_overlap_level6_rounds4.obj",
+        "input_sha256": "5e957c0df2638ebba89e21e200f001517cb785196873a29be20d9893b517c8bf",
+        "output": ".artifacts/offline-mesh-render/draw-line-overlap-final-default.png",
+        "output_sha256": "a3f932d907469125e3339fd5bd8ac80b3163bb5905208a20a0d9b863d83c67dc",
+        "renderer_source": "crates/obrush-app/src/renderer.rs",
+        "renderer_source_sha256": "3ccf212965fcffe457ad672c0430caf2abfe40f3128bae0547e783977d46e205",
+        "harness_source": ".artifacts/offline-mesh-render/render_mesh.py",
+        "harness_source_sha256": "f79fb2488eb98c3f1e2f0fc8af69ae67d21a6af40b79cfaa129637089b6ca801",
+        "vertices": 44338,
+        "triangles": 88672,
+        "camera_yaw_pitch_distance": [
+          0.35,
+          0.18,
+          4.0
+        ],
+        "camera_target": [
+          0,
+          0,
+          0
+        ],
+        "width": 1200,
+        "height": 1000,
+        "supersampling_per_axis": 1,
+        "actual_msaa_samples": 4,
+        "approximate_framebuffer_bytes": 52800000,
+        "uniform_color": [
+          0.61,
+          0.38,
+          0.28
+        ],
+        "show_mask": false,
+        "vertex_color": false,
+        "gl_version": "4.1 Metal - 90.5",
+        "gl_renderer": "Apple M2",
+        "method": "headless CGL, exact OBrush sculpt+composite shaders, real indexed mesh, depth-tested4xMSAA RGBA8/depth24, same transparent resolve/composite; no window/UI/browser automation",
+        "limitations": "Offline controlled geometry/shader visualization; does not verify live UI input, egui callback state/restoration or WebGL; OBJ fixtures do not retain OBrush masks."
+      },
+      "baseline_geometry_diagnostics": {
+        "adjacent_angle_over_30_edges": 124,
+        "adjacent_angle_over_60_edges": 28,
+        "adjacent_angle_over_90_edges": 5,
+        "edited_patch_adjacent_angle_p95_degrees": 21.177945099311398,
+        "edited_patch_edge_length_p95_world": 0.05520507686756964,
+        "edited_patch_normal_laplacian_mean": 0.051169762252996284,
+        "edited_patch_normal_laplacian_p95": 0.18974219925971467,
+        "edited_vertices": 1187,
+        "max_adjacent_normal_angle_degrees": 149.9999656233786,
+        "max_edge_length_over_initial_median": 7.096864058561029,
+        "max_edge_length_world": 0.13934398534778453,
+        "max_normalized_normal_laplacian": 0.5312738778322768,
+        "max_radial_height": 0.32214993869107367,
+        "max_vertex_displacement": 0.32300960626592756,
+        "min_edge_length_world": 0.009937673362653587,
+        "min_triangle_quality": 0.4778426026948704,
+        "nonfinite_vertices": 0,
+        "original_vertex_edge_max_stretch": 6.810924470935224
+      },
+      "final_geometry_diagnostics": {
+        "adjacent_angle_over_30_edges": 15,
+        "adjacent_angle_over_60_edges": 0,
+        "adjacent_angle_over_90_edges": 0,
+        "edited_patch_adjacent_angle_p95_degrees": 9.593155622804897,
+        "edited_patch_edge_length_p95_world": 0.020632192941622888,
+        "edited_patch_normal_laplacian_mean": 0.02682891675701742,
+        "edited_patch_normal_laplacian_p95": 0.09561973874196047,
+        "edited_vertices": 4563,
+        "max_adjacent_normal_angle_degrees": 59.99943054796052,
+        "max_edge_length_over_initial_median": 1.099528593449454,
+        "max_edge_length_world": 0.02158878836494953,
+        "max_normalized_normal_laplacian": 0.17864889435905845,
+        "max_radial_height": 0.3033354159280659,
+        "max_vertex_displacement": 0.3030168595583214,
+        "min_edge_length_world": 0.004158977941309624,
+        "min_triangle_quality": 0.3011739120914927,
+        "nonfinite_vertices": 0,
+        "original_vertex_edge_max_stretch": 1.2360924022887032
+      }
+    },
+    {
+      "fixture": "crossing_level6_rounds4.obj",
+      "input_rays_and_settings_match": true,
+      "render_settings_match": true,
+      "visual_result": "passed recorded offline views",
+      "observation": "Crossing-stroke corners no longer show the baseline folded/angular lips.",
+      "baseline": {
+        "input": ".artifacts/draw-overlap-baseline/obj/crossing_level6_rounds4.obj",
+        "input_sha256": "d6b68f2d95f8fbdf8169f284bcc791774b6f6724405dff896bd9823e9a00bea8",
+        "output": ".artifacts/offline-mesh-render/draw-crossing-baseline-default.png",
+        "output_sha256": "4d473025126cc2e64e2dc5dbf98ca658b1d3f4456b2500b3a2cc0025ff70d354",
+        "renderer_source": "crates/obrush-app/src/renderer.rs",
+        "renderer_source_sha256": "3ccf212965fcffe457ad672c0430caf2abfe40f3128bae0547e783977d46e205",
+        "harness_source": ".artifacts/offline-mesh-render/render_mesh.py",
+        "harness_source_sha256": "f79fb2488eb98c3f1e2f0fc8af69ae67d21a6af40b79cfaa129637089b6ca801",
+        "vertices": 40962,
+        "triangles": 81920,
+        "camera_yaw_pitch_distance": [
+          0.35,
+          0.18,
+          4.0
+        ],
+        "camera_target": [
+          0,
+          0,
+          0
+        ],
+        "width": 1200,
+        "height": 1000,
+        "supersampling_per_axis": 1,
+        "actual_msaa_samples": 4,
+        "approximate_framebuffer_bytes": 52800000,
+        "uniform_color": [
+          0.61,
+          0.38,
+          0.28
+        ],
+        "show_mask": false,
+        "vertex_color": false,
+        "gl_version": "4.1 Metal - 90.5",
+        "gl_renderer": "Apple M2",
+        "method": "headless CGL, exact OBrush sculpt+composite shaders, real indexed mesh, depth-tested4xMSAA RGBA8/depth24, same transparent resolve/composite; no window/UI/browser automation",
+        "limitations": "Offline controlled geometry/shader visualization; does not verify live UI input, egui callback state/restoration or WebGL; OBJ fixtures do not retain OBrush masks."
+      },
+      "final_0_1_3": {
+        "input": ".artifacts/draw-overlap-final/obj/crossing_level6_rounds4.obj",
+        "input_sha256": "28d3f32eb86e3b9e244e5c19fccb6b8c8b8ea93bc489bcc2426bb1dfcccea08a",
+        "output": ".artifacts/offline-mesh-render/draw-crossing-final-default.png",
+        "output_sha256": "efd458e82ee2d0baacb10316742682eeeba979dc287fcb6719ddf6be9124e162",
+        "renderer_source": "crates/obrush-app/src/renderer.rs",
+        "renderer_source_sha256": "3ccf212965fcffe457ad672c0430caf2abfe40f3128bae0547e783977d46e205",
+        "harness_source": ".artifacts/offline-mesh-render/render_mesh.py",
+        "harness_source_sha256": "f79fb2488eb98c3f1e2f0fc8af69ae67d21a6af40b79cfaa129637089b6ca801",
+        "vertices": 45064,
+        "triangles": 90124,
+        "camera_yaw_pitch_distance": [
+          0.35,
+          0.18,
+          4.0
+        ],
+        "camera_target": [
+          0,
+          0,
+          0
+        ],
+        "width": 1200,
+        "height": 1000,
+        "supersampling_per_axis": 1,
+        "actual_msaa_samples": 4,
+        "approximate_framebuffer_bytes": 52800000,
+        "uniform_color": [
+          0.61,
+          0.38,
+          0.28
+        ],
+        "show_mask": false,
+        "vertex_color": false,
+        "gl_version": "4.1 Metal - 90.5",
+        "gl_renderer": "Apple M2",
+        "method": "headless CGL, exact OBrush sculpt+composite shaders, real indexed mesh, depth-tested4xMSAA RGBA8/depth24, same transparent resolve/composite; no window/UI/browser automation",
+        "limitations": "Offline controlled geometry/shader visualization; does not verify live UI input, egui callback state/restoration or WebGL; OBJ fixtures do not retain OBrush masks."
+      },
+      "baseline_geometry_diagnostics": {
+        "adjacent_angle_over_30_edges": 197,
+        "adjacent_angle_over_60_edges": 73,
+        "adjacent_angle_over_90_edges": 41,
+        "edited_patch_adjacent_angle_p95_degrees": 16.106413750041195,
+        "edited_patch_edge_length_p95_world": 0.03631130048761688,
+        "edited_patch_normal_laplacian_mean": 0.052893926967981175,
+        "edited_patch_normal_laplacian_p95": 0.1468202994033491,
+        "edited_vertices": 2541,
+        "max_adjacent_normal_angle_degrees": 149.99982405182618,
+        "max_edge_length_over_initial_median": 6.949988951342523,
+        "max_edge_length_world": 0.13646015347227872,
+        "max_normalized_normal_laplacian": 0.5275883757867749,
+        "max_radial_height": 0.3212930915115465,
+        "max_vertex_displacement": 0.32174549855726214,
+        "min_edge_length_world": 0.0031172111020784468,
+        "min_triangle_quality": 0.2080705499187361,
+        "nonfinite_vertices": 0,
+        "original_vertex_edge_max_stretch": 6.66996710530568
+      },
+      "final_geometry_diagnostics": {
+        "adjacent_angle_over_30_edges": 62,
+        "adjacent_angle_over_60_edges": 0,
+        "adjacent_angle_over_90_edges": 0,
+        "edited_patch_adjacent_angle_p95_degrees": 9.339417374258028,
+        "edited_patch_edge_length_p95_world": 0.02073658194269797,
+        "edited_patch_normal_laplacian_mean": 0.028308401946334678,
+        "edited_patch_normal_laplacian_p95": 0.0865600424566709,
+        "edited_vertices": 6643,
+        "max_adjacent_normal_angle_degrees": 59.999582913596136,
+        "max_edge_length_over_initial_median": 1.0998886598192015,
+        "max_edge_length_world": 0.021595858118933303,
+        "max_normalized_normal_laplacian": 0.34026264503984427,
+        "max_radial_height": 0.29782195231288666,
+        "max_vertex_displacement": 0.2975898382020008,
+        "min_edge_length_world": 0.0037247145818556445,
+        "min_triangle_quality": 0.27759830870090507,
+        "nonfinite_vertices": 0,
+        "original_vertex_edge_max_stretch": 1.2432004696185741
+      }
+    },
+    {
+      "fixture": "loops_level6_rounds8.obj",
+      "input_rays_and_settings_match": true,
+      "render_settings_match": true,
+      "visual_result": "passed recorded offline views",
+      "observation": "Round ring boundaries without the baseline folded lips and faceted inner highlights.",
+      "baseline": {
+        "input": ".artifacts/draw-overlap-baseline/obj/loops_level6_rounds8.obj",
+        "input_sha256": "ae77d4d721ce43db1968ed13ab5694c2ad11b5a3753345644ef35bc75e0f192d",
+        "output": ".artifacts/offline-mesh-render/draw-loops-baseline-default.png",
+        "output_sha256": "baaf17bb69ab0a66e23f1c6b78352553b8e011999f5b4d85f694a10fdcb54491",
+        "renderer_source": "crates/obrush-app/src/renderer.rs",
+        "renderer_source_sha256": "3ccf212965fcffe457ad672c0430caf2abfe40f3128bae0547e783977d46e205",
+        "harness_source": ".artifacts/offline-mesh-render/render_mesh.py",
+        "harness_source_sha256": "f79fb2488eb98c3f1e2f0fc8af69ae67d21a6af40b79cfaa129637089b6ca801",
+        "vertices": 40962,
+        "triangles": 81920,
+        "camera_yaw_pitch_distance": [
+          0.35,
+          0.18,
+          4.0
+        ],
+        "camera_target": [
+          0,
+          0,
+          0
+        ],
+        "width": 1200,
+        "height": 1000,
+        "supersampling_per_axis": 1,
+        "actual_msaa_samples": 4,
+        "approximate_framebuffer_bytes": 52800000,
+        "uniform_color": [
+          0.61,
+          0.38,
+          0.28
+        ],
+        "show_mask": false,
+        "vertex_color": false,
+        "gl_version": "4.1 Metal - 90.5",
+        "gl_renderer": "Apple M2",
+        "method": "headless CGL, exact OBrush sculpt+composite shaders, real indexed mesh, depth-tested4xMSAA RGBA8/depth24, same transparent resolve/composite; no window/UI/browser automation",
+        "limitations": "Offline controlled geometry/shader visualization; does not verify live UI input, egui callback state/restoration or WebGL; OBJ fixtures do not retain OBrush masks."
+      },
+      "final_0_1_3": {
+        "input": ".artifacts/draw-overlap-final/obj/loops_level6_rounds8.obj",
+        "input_sha256": "00d5f273b2e77fe8653b19e8d98f6b7dd5e4c25339d3a330ef59b9ce3beca56e",
+        "output": ".artifacts/offline-mesh-render/draw-loops-final-default.png",
+        "output_sha256": "779b158fafa310893b46db900cc1ccc5880188b662726931669d27e92c86782a",
+        "renderer_source": "crates/obrush-app/src/renderer.rs",
+        "renderer_source_sha256": "3ccf212965fcffe457ad672c0430caf2abfe40f3128bae0547e783977d46e205",
+        "harness_source": ".artifacts/offline-mesh-render/render_mesh.py",
+        "harness_source_sha256": "f79fb2488eb98c3f1e2f0fc8af69ae67d21a6af40b79cfaa129637089b6ca801",
+        "vertices": 49868,
+        "triangles": 99732,
+        "camera_yaw_pitch_distance": [
+          0.35,
+          0.18,
+          4.0
+        ],
+        "camera_target": [
+          0,
+          0,
+          0
+        ],
+        "width": 1200,
+        "height": 1000,
+        "supersampling_per_axis": 1,
+        "actual_msaa_samples": 4,
+        "approximate_framebuffer_bytes": 52800000,
+        "uniform_color": [
+          0.61,
+          0.38,
+          0.28
+        ],
+        "show_mask": false,
+        "vertex_color": false,
+        "gl_version": "4.1 Metal - 90.5",
+        "gl_renderer": "Apple M2",
+        "method": "headless CGL, exact OBrush sculpt+composite shaders, real indexed mesh, depth-tested4xMSAA RGBA8/depth24, same transparent resolve/composite; no window/UI/browser automation",
+        "limitations": "Offline controlled geometry/shader visualization; does not verify live UI input, egui callback state/restoration or WebGL; OBJ fixtures do not retain OBrush masks."
+      },
+      "baseline_geometry_diagnostics": {
+        "adjacent_angle_over_30_edges": 443,
+        "adjacent_angle_over_60_edges": 213,
+        "adjacent_angle_over_90_edges": 101,
+        "edited_patch_adjacent_angle_p95_degrees": 40.74537801541946,
+        "edited_patch_edge_length_p95_world": 0.07129206973493107,
+        "edited_patch_normal_laplacian_mean": 0.06965693349135196,
+        "edited_patch_normal_laplacian_p95": 0.3000056367809511,
+        "edited_vertices": 2196,
+        "max_adjacent_normal_angle_degrees": 149.9999974981398,
+        "max_edge_length_over_initial_median": 7.314176597706383,
+        "max_edge_length_world": 0.14361082701484892,
+        "max_normalized_normal_laplacian": 0.5566184905795192,
+        "max_radial_height": 0.31403152615637997,
+        "max_vertex_displacement": 0.31444707391764287,
+        "min_edge_length_world": 0.00996977853267945,
+        "min_triangle_quality": 0.18267169481814266,
+        "nonfinite_vertices": 0,
+        "original_vertex_edge_max_stretch": 6.970095475961424
+      },
+      "final_geometry_diagnostics": {
+        "adjacent_angle_over_30_edges": 59,
+        "adjacent_angle_over_60_edges": 0,
+        "adjacent_angle_over_90_edges": 0,
+        "edited_patch_adjacent_angle_p95_degrees": 10.17498103181985,
+        "edited_patch_edge_length_p95_world": 0.020406604320894684,
+        "edited_patch_normal_laplacian_mean": 0.025587462406686426,
+        "edited_patch_normal_laplacian_p95": 0.09770082520726155,
+        "edited_vertices": 11104,
+        "max_adjacent_normal_angle_degrees": 59.99999790390413,
+        "max_edge_length_over_initial_median": 1.0999250668321254,
+        "max_edge_length_world": 0.02159657295554756,
+        "max_normalized_normal_laplacian": 0.3143717145621783,
+        "max_radial_height": 0.33679311788097976,
+        "max_vertex_displacement": 0.337609130899943,
+        "min_edge_length_world": 0.002798588169617146,
+        "min_triangle_quality": 0.20996666010595702,
+        "nonfinite_vertices": 0,
+        "original_vertex_edge_max_stretch": 1.2323727787613206
+      }
+    },
+    {
+      "fixture": "silhouette_tilted_level6_rounds8.obj",
+      "input_rays_and_settings_match": true,
+      "render_settings_match": true,
+      "visual_result": "passed recorded offline views",
+      "observation": "Large baseline silhouette teeth are absent in default and stroke-aligned views.",
+      "baseline": {
+        "input": ".artifacts/draw-overlap-baseline/obj/silhouette_tilted_level6_rounds8.obj",
+        "input_sha256": "7f017831b4b6d69365a1271fc9e8238f171c4f66bd78257bb6dcc3041071b791",
+        "output": ".artifacts/offline-mesh-render/draw-tilted-baseline-default.png",
+        "output_sha256": "28d699a1429398a06f4db2e6f0bbce116209c1a7ffbf52bfacfbd486b670e033",
+        "renderer_source": "crates/obrush-app/src/renderer.rs",
+        "renderer_source_sha256": "3ccf212965fcffe457ad672c0430caf2abfe40f3128bae0547e783977d46e205",
+        "harness_source": ".artifacts/offline-mesh-render/render_mesh.py",
+        "harness_source_sha256": "f79fb2488eb98c3f1e2f0fc8af69ae67d21a6af40b79cfaa129637089b6ca801",
+        "vertices": 40962,
+        "triangles": 81920,
+        "camera_yaw_pitch_distance": [
+          0.35,
+          0.18,
+          4.0
+        ],
+        "camera_target": [
+          0,
+          0,
+          0
+        ],
+        "width": 1200,
+        "height": 1000,
+        "supersampling_per_axis": 1,
+        "actual_msaa_samples": 4,
+        "approximate_framebuffer_bytes": 52800000,
+        "uniform_color": [
+          0.61,
+          0.38,
+          0.28
+        ],
+        "show_mask": false,
+        "vertex_color": false,
+        "gl_version": "4.1 Metal - 90.5",
+        "gl_renderer": "Apple M2",
+        "method": "headless CGL, exact OBrush sculpt+composite shaders, real indexed mesh, depth-tested4xMSAA RGBA8/depth24, same transparent resolve/composite; no window/UI/browser automation",
+        "limitations": "Offline controlled geometry/shader visualization; does not verify live UI input, egui callback state/restoration or WebGL; OBJ fixtures do not retain OBrush masks."
+      },
+      "final_0_1_3": {
+        "input": ".artifacts/draw-overlap-final/obj/silhouette_tilted_level6_rounds8.obj",
+        "input_sha256": "2653c5b7d01b45e2bb78be3deb9fa15f5268089edac62535686be06d7330b518",
+        "output": ".artifacts/offline-mesh-render/draw-tilted-final-default.png",
+        "output_sha256": "f2affc64e2b38ea7c684123a264af478ff0fb86e628a5b6c314310d235c67fe9",
+        "renderer_source": "crates/obrush-app/src/renderer.rs",
+        "renderer_source_sha256": "3ccf212965fcffe457ad672c0430caf2abfe40f3128bae0547e783977d46e205",
+        "harness_source": ".artifacts/offline-mesh-render/render_mesh.py",
+        "harness_source_sha256": "f79fb2488eb98c3f1e2f0fc8af69ae67d21a6af40b79cfaa129637089b6ca801",
+        "vertices": 46907,
+        "triangles": 93810,
+        "camera_yaw_pitch_distance": [
+          0.35,
+          0.18,
+          4.0
+        ],
+        "camera_target": [
+          0,
+          0,
+          0
+        ],
+        "width": 1200,
+        "height": 1000,
+        "supersampling_per_axis": 1,
+        "actual_msaa_samples": 4,
+        "approximate_framebuffer_bytes": 52800000,
+        "uniform_color": [
+          0.61,
+          0.38,
+          0.28
+        ],
+        "show_mask": false,
+        "vertex_color": false,
+        "gl_version": "4.1 Metal - 90.5",
+        "gl_renderer": "Apple M2",
+        "method": "headless CGL, exact OBrush sculpt+composite shaders, real indexed mesh, depth-tested4xMSAA RGBA8/depth24, same transparent resolve/composite; no window/UI/browser automation",
+        "limitations": "Offline controlled geometry/shader visualization; does not verify live UI input, egui callback state/restoration or WebGL; OBJ fixtures do not retain OBrush masks."
+      },
+      "baseline_geometry_diagnostics": {
+        "adjacent_angle_over_30_edges": 294,
+        "adjacent_angle_over_60_edges": 148,
+        "adjacent_angle_over_90_edges": 76,
+        "edited_patch_adjacent_angle_p95_degrees": 29.177604444508574,
+        "edited_patch_edge_length_p95_world": 0.06744154230960978,
+        "edited_patch_normal_laplacian_mean": 0.05581001756590519,
+        "edited_patch_normal_laplacian_p95": 0.20331377341559415,
+        "edited_vertices": 1978,
+        "max_adjacent_normal_angle_degrees": 137.747521366757,
+        "max_edge_length_over_initial_median": 8.85323739909215,
+        "max_edge_length_world": 0.17382964817134883,
+        "max_normalized_normal_laplacian": 0.6430041691246042,
+        "max_radial_height": 0.32587893571984117,
+        "max_vertex_displacement": 0.3681600250262042,
+        "min_edge_length_world": 0.00045002010301686823,
+        "min_triangle_quality": 0.034634656158654985,
+        "nonfinite_vertices": 0,
+        "original_vertex_edge_max_stretch": 8.853201285239132
+      },
+      "final_geometry_diagnostics": {
+        "adjacent_angle_over_30_edges": 14,
+        "adjacent_angle_over_60_edges": 0,
+        "adjacent_angle_over_90_edges": 0,
+        "edited_patch_adjacent_angle_p95_degrees": 10.893545684481312,
+        "edited_patch_edge_length_p95_world": 0.02038779263440827,
+        "edited_patch_normal_laplacian_mean": 0.02590090665200903,
+        "edited_patch_normal_laplacian_p95": 0.09326329504502634,
+        "edited_vertices": 7964,
+        "max_adjacent_normal_angle_degrees": 55.17866892857364,
+        "max_edge_length_over_initial_median": 1.1000867119066506,
+        "max_edge_length_world": 0.021599746789611494,
+        "max_normalized_normal_laplacian": 0.23394813974511078,
+        "max_radial_height": 0.2662179059131533,
+        "max_vertex_displacement": 0.31189756003134367,
+        "min_edge_length_world": 0.0028128438960303382,
+        "min_triangle_quality": 0.1986754244546394,
+        "nonfinite_vertices": 0,
+        "original_vertex_edge_max_stretch": 1.2411361764223083
+      }
+    },
+    {
+      "fixture": "repeated_point_tip_level6_rounds128.obj",
+      "input_rays_and_settings_match": true,
+      "render_settings_match": true,
+      "visual_result": "passed recorded offline views",
+      "observation": "Baseline flat/triangular caps are replaced by round protruding tips.",
+      "baseline": {
+        "input": ".artifacts/draw-overlap-baseline/obj/repeated_point_tip_level6_rounds128.obj",
+        "input_sha256": "69a46cdd586161fbc353bbfee1b7ddd9c571dac870af710c0d6b559a8b0faef7",
+        "output": ".artifacts/offline-mesh-render/draw-point-baseline-default.png",
+        "output_sha256": "44fae30451475696b2d9d9cf14206b55be08720e037728bd0b29bf997ff033e0",
+        "renderer_source": "crates/obrush-app/src/renderer.rs",
+        "renderer_source_sha256": "3ccf212965fcffe457ad672c0430caf2abfe40f3128bae0547e783977d46e205",
+        "harness_source": ".artifacts/offline-mesh-render/render_mesh.py",
+        "harness_source_sha256": "f79fb2488eb98c3f1e2f0fc8af69ae67d21a6af40b79cfaa129637089b6ca801",
+        "vertices": 40962,
+        "triangles": 81920,
+        "camera_yaw_pitch_distance": [
+          0.35,
+          0.18,
+          4.0
+        ],
+        "camera_target": [
+          0,
+          0,
+          0
+        ],
+        "width": 1200,
+        "height": 1000,
+        "supersampling_per_axis": 1,
+        "actual_msaa_samples": 4,
+        "approximate_framebuffer_bytes": 52800000,
+        "uniform_color": [
+          0.61,
+          0.38,
+          0.28
+        ],
+        "show_mask": false,
+        "vertex_color": false,
+        "gl_version": "4.1 Metal - 90.5",
+        "gl_renderer": "Apple M2",
+        "method": "headless CGL, exact OBrush sculpt+composite shaders, real indexed mesh, depth-tested4xMSAA RGBA8/depth24, same transparent resolve/composite; no window/UI/browser automation",
+        "limitations": "Offline controlled geometry/shader visualization; does not verify live UI input, egui callback state/restoration or WebGL; OBJ fixtures do not retain OBrush masks."
+      },
+      "final_0_1_3": {
+        "input": ".artifacts/draw-overlap-final/obj/repeated_point_tip_level6_rounds128.obj",
+        "input_sha256": "ada9bf9620977f07a5c820ec3b16440ba15e80820dc541ff25380748978f5f09",
+        "output": ".artifacts/offline-mesh-render/draw-point-final-default.png",
+        "output_sha256": "e1346aaa45abe1408b1c8c9d8c74eeb49d9ae030581da5b6bcbc9d307e91a870",
+        "renderer_source": "crates/obrush-app/src/renderer.rs",
+        "renderer_source_sha256": "3ccf212965fcffe457ad672c0430caf2abfe40f3128bae0547e783977d46e205",
+        "harness_source": ".artifacts/offline-mesh-render/render_mesh.py",
+        "harness_source_sha256": "f79fb2488eb98c3f1e2f0fc8af69ae67d21a6af40b79cfaa129637089b6ca801",
+        "vertices": 43750,
+        "triangles": 87496,
+        "camera_yaw_pitch_distance": [
+          0.35,
+          0.18,
+          4.0
+        ],
+        "camera_target": [
+          0,
+          0,
+          0
+        ],
+        "width": 1200,
+        "height": 1000,
+        "supersampling_per_axis": 1,
+        "actual_msaa_samples": 4,
+        "approximate_framebuffer_bytes": 52800000,
+        "uniform_color": [
+          0.61,
+          0.38,
+          0.28
+        ],
+        "show_mask": false,
+        "vertex_color": false,
+        "gl_version": "4.1 Metal - 90.5",
+        "gl_renderer": "Apple M2",
+        "method": "headless CGL, exact OBrush sculpt+composite shaders, real indexed mesh, depth-tested4xMSAA RGBA8/depth24, same transparent resolve/composite; no window/UI/browser automation",
+        "limitations": "Offline controlled geometry/shader visualization; does not verify live UI input, egui callback state/restoration or WebGL; OBJ fixtures do not retain OBrush masks."
+      },
+      "baseline_geometry_diagnostics": {
+        "adjacent_angle_over_30_edges": 24,
+        "adjacent_angle_over_60_edges": 6,
+        "adjacent_angle_over_90_edges": 0,
+        "edited_patch_adjacent_angle_p95_degrees": 18.581816052216062,
+        "edited_patch_edge_length_p95_world": 0.053147202972990366,
+        "edited_patch_normal_laplacian_mean": 0.05023703793824545,
+        "edited_patch_normal_laplacian_p95": 0.08507082776949809,
+        "edited_vertices": 606,
+        "max_adjacent_normal_angle_degrees": 76.19898433099085,
+        "max_edge_length_over_initial_median": 12.091772072064007,
+        "max_edge_length_world": 0.23741693465382133,
+        "max_normalized_normal_laplacian": 0.7863172338337762,
+        "max_radial_height": 0.41950246315403805,
+        "max_vertex_displacement": 0.44425315877442695,
+        "min_edge_length_world": 0.017298928463098016,
+        "min_triangle_quality": 0.5492592227531208,
+        "nonfinite_vertices": 0,
+        "original_vertex_edge_max_stretch": 11.937704289183628
+      },
+      "final_geometry_diagnostics": {
+        "adjacent_angle_over_30_edges": 0,
+        "adjacent_angle_over_60_edges": 0,
+        "adjacent_angle_over_90_edges": 0,
+        "edited_patch_adjacent_angle_p95_degrees": 9.634627505520884,
+        "edited_patch_edge_length_p95_world": 0.020599461567742325,
+        "edited_patch_normal_laplacian_mean": 0.023166966619997044,
+        "edited_patch_normal_laplacian_p95": 0.06456936630112922,
+        "edited_vertices": 3394,
+        "max_adjacent_normal_angle_degrees": 26.502621990867656,
+        "max_edge_length_over_initial_median": 1.1000834471496077,
+        "max_edge_length_world": 0.021599682687459643,
+        "max_normalized_normal_laplacian": 0.29897392451888744,
+        "max_radial_height": 0.37974568594674674,
+        "max_vertex_displacement": 0.38380879348324887,
+        "min_edge_length_world": 0.002400972353705415,
+        "min_triangle_quality": 0.22540662203706516,
+        "nonfinite_vertices": 0,
+        "original_vertex_edge_max_stretch": 1.2312626197243104
+      }
+    }
+  ],
+  "additional_recorded_views": [
+    {
+      "path": ".artifacts/offline-mesh-render/draw-loops-baseline-front.json",
+      "sha256": "92afc823ea517b627d048fe8dc64af0db1d4666c6664e7154d05ba88f44e8f72"
+    },
+    {
+      "path": ".artifacts/offline-mesh-render/draw-loops-final-front.json",
+      "sha256": "83db0fff942fadad5df5caf990e7d2c16af8f40be57a106c71ae574bdf27d1e2"
+    },
+    {
+      "path": ".artifacts/offline-mesh-render/draw-tilted-baseline-stroke-view.json",
+      "sha256": "05336b8e65bd859375bb8d9c96ca82dd6f0a2c99480d9f561deadf805c17feaf"
+    },
+    {
+      "path": ".artifacts/offline-mesh-render/draw-tilted-final-stroke-view.json",
+      "sha256": "adfea7e4e50e05121b13a49af6041a0cd7198fdbfc0483d7c7d444e93a6e73ff"
+    }
+  ],
+  "failures_retained": [
+    ".artifacts/offline-mesh-render/draw-loops-baseline-default.png",
+    ".artifacts/offline-mesh-render/draw-tilted-baseline-default.png",
+    ".artifacts/offline-mesh-render/draw-point-baseline-default.png",
+    ".artifacts/offline-mesh-render/draw-loops-intermediate-default.png",
+    ".artifacts/offline-mesh-render/draw-tilted-intermediate-default.png"
+  ],
+  "limitations": [
+    "Controlled independently authored fixtures, not exact user session replay.",
+    "Offline CGL geometry/shader visualization does not verify native eframeUI, browser input, egui callback state/restoration or WebGL runtime.",
+    "No ZBrush brush/rendering parity or general global self-intersection guarantee.",
+    "Numerical diagnostics are from the pinned CPU probe, not pixel-equivalence measurements."
+  ]
+}

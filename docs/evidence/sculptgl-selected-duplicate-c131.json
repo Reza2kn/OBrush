@@ -1,0 +1,123 @@
+{
+  "case": "C131 selected-group Duplicate",
+  "reference_commit": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+  "fixture": {
+    "path": ".artifacts/scene-multiselect-c130/independent-three-closed-boxes.sgl",
+    "bytes": 1560,
+    "sha256": "939110d73dec934f0af70fb5c364eeb18f3ce18608449fe76804896c50c9c0ae"
+  },
+  "reference": {
+    "result_path": ".artifacts/scene-duplicate-c131/source-1792283969136/result.json",
+    "status": "PASS source selected-group duplicate and two-step history",
+    "before": {
+      "parts": 3,
+      "selected_indices": [
+        2,
+        1
+      ],
+      "active_index": 2
+    },
+    "after": {
+      "parts": 5,
+      "selected_indices": [
+        1
+      ],
+      "active_index": 1
+    },
+    "undo_one": {
+      "parts": 4,
+      "selected_indices": [
+        3
+      ],
+      "active_index": 3
+    },
+    "undo_two": {
+      "parts": 3,
+      "selected_indices": [
+        2,
+        1
+      ],
+      "active_index": 2
+    },
+    "redo_two": {
+      "parts": 5,
+      "selected_indices": [
+        1
+      ],
+      "active_index": 1
+    },
+    "console_errors": [],
+    "exceptions": []
+  },
+  "obrush_browser": {
+    "result_path": ".artifacts/scene-duplicate-c131/root-1792284147185/result.json",
+    "status": "PASS OBrush selected-group duplicate and two-step history",
+    "after": {
+      "parts": 5,
+      "selected_ids": [
+        2
+      ],
+      "project_sha256": "2f7ea4787a2468f7b12024bb68b76757988f51d2f629889f05ae8bfc7542180a"
+    },
+    "undo_one": {
+      "parts": 4,
+      "selected_ids": [
+        4
+      ],
+      "project_sha256": null
+    },
+    "undo_two": {
+      "parts": 3,
+      "selected_ids": [
+        3,
+        2
+      ],
+      "project_sha256": "1159d48c65b426d5f407bf4085567d1b00dc8c65da38442e958e4b3e3206f0bd"
+    },
+    "redo_two": {
+      "parts": 5,
+      "selected_ids": [
+        2
+      ],
+      "project_sha256": "2f7ea4787a2468f7b12024bb68b76757988f51d2f629889f05ae8bfc7542180a"
+    },
+    "wasm_sha256": "a7bec4a32a948ab861a14c4559710f207cf0e5be21a5b801576dffbd7f3de42a",
+    "console_errors": [],
+    "exceptions": [],
+    "cleanup_errors": []
+  },
+  "limitations": [
+    "One independent three-box fixture",
+    "Source copy reorders vertex arrays; behavior and unordered geometry checked",
+    "Native GUI interaction and large-scene latency untested",
+    "Complete SculptGL parity not established"
+  ],
+  "checks": {
+    "fmt": "pass",
+    "workspace_all_targets": {
+      "binaries": 100,
+      "passed": 2457,
+      "failed": 0,
+      "ignored": 1,
+      "log": ".artifacts/scene-duplicate-c131/workspace-tests.log"
+    },
+    "strict_native_clippy": {
+      "status": "pass",
+      "log": ".artifacts/scene-duplicate-c131/clippy-native.log"
+    },
+    "strict_wasm_clippy": {
+      "status": "pass",
+      "log": ".artifacts/scene-duplicate-c131/clippy-wasm.log"
+    },
+    "official_web_build": {
+      "status": "pass",
+      "log": ".artifacts/scene-duplicate-c131/build-web.log"
+    },
+    "official_macos_package": {
+      "status": "pass",
+      "log": ".artifacts/scene-duplicate-c131/package-macos.log",
+      "codesign_verify_deep_strict": "pass",
+      "executable_sha256": "5d13eee35e7167283efeef6eaeaf225f7f2e0057e384de04042ac2de3f0f774f"
+    }
+  }
+}

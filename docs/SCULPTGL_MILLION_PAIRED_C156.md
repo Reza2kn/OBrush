@@ -1,0 +1,25 @@
+# C156: pinned SculptGL and current OBrush million-vertex sustained Brush runs
+
+The previously frozen 1M/60-second protocol was run sequentially in separately owned Chrome instances on the same Mac, browser class, independently authored UV-free SGL3 sphere and 1024×768 visible viewport. Each requested 24,000 mouse moves (400/s), a 64 CSS-pixel Source Ordinary Brush at intensity 0.25, no clay, accumulation, alpha, symmetry or fold prevention, followed by release, complete Save, stable Save, Undo and Redo. The pinned SculptGL hosted kernel is SHA-256 `79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600`; the input fixture is `dfb5316f62e392e633f03cb662dcb12215ed165a71a9ae72a3fd639528731afe`. The protocol is `234870ed03a240931a22f421968917efaeed8becc1df834c998bbe3e9c101a33`.
+
+| Observed cohort | Pinned SculptGL | OBrush before changed-row accounting | OBrush after |
+| --- | ---: | ---: | ---: |
+| Browser WASM SHA-256 | JavaScript reference | `e90e387ea20279bf8d203c3decf79fb79cfb30ad682d03033bb6e8d081136e48` | `b1c3a1080c11e20bd717e406bb1f42d38528fbeaabaad4e8b29ee2c30ea19b69` |
+| Delivered pointer moves | 19,573 | 712 | 741 |
+| Applied Brush dabs | 1,139 | 657 | 669 |
+| Independent RAF interval P95 / max | 21.5 / 29.1 ms | 93.2 / 432.8 ms | 91.9 / 407.8 ms |
+| App frame summed CPU P95 | 0.2 ms | 92.7 ms | 91.4 ms |
+| Queued brush dab mean CPU | 2.11 ms | 39.15 ms | 37.44 ms |
+| Release acknowledgement after request | 10.8 ms | 277.7 ms | 278.2 ms |
+| Original vertices changed | 37,282 | 40,607 | 40,627 |
+| Maximum/RMS position change | 0.210879 / 0.012258 | 0.213692 / 0.012848 | 0.213161 / 0.012867 |
+
+All three complete output pairs passed the independent bounded decoder's one-object, exact topology/channel, finite useful shape and exact before/Undo, after/stable/Redo checks. No new degenerate face, original-cross reversal or adjacent face fold over 90 degrees was found; maximum original-edge stretch remained below 4. The source passes all four local responsiveness gates (RAF P95 ≤33.34 ms, max ≤250 ms, summed app CPU P95 ≤16.667 ms, released state observed by 100 ms). Both OBrush runs fail all four. In the optimized OBrush run the first released-state observation was 280.9 ms after the release request, even though its queue was empty then.
+
+The Rust change removes two full-position changed-row scans and a million-entry scratch reservation from each local Source dab. It uses the already bounded proposal indices, deduplicates them after the final write, and refreshes normals for exactly those changed vertices. This remains in shared core for native and WASM. The distinct OBrush runs delivered different pointer events, so the 1.3 ms RAF-P95 and 1.7 ms mean-dab differences are observations, **not** a controlled causal speed ratio or equal-output claim. Source and OBrush likewise saw different delivered event sequences, so their changed-vertex counts and displacement magnitudes are descriptive, **not** a matched brush-response error measurement. The output geometry and history gates passing does not establish brush, appearance or SculptGL parity.
+
+The first short reference diagnostic failed because its startup sphere remained selectable; it is preserved at `.artifacts/gpu-pointer-c146/c156-reference-10s-r0/result.json`. A corrected 10-second diagnostic cleared the scene and passed on the intended 999,002-vertex mesh. The full-run artifacts are `SP-LONG00-1m-60s-source-e29f4b22-d1aa-43f6-9f8d-cce40833a8a7`, `SP-LONG00-1m-60s-root-f7a5e9db-7e6c-4cb8-861d-3580fa42dd8f` and `SP-LONG00-1m-60s-root-59c21889-652e-4659-ac9a-709f998f3b8a` under `.artifacts/sculptgl-sparse-guard-c69-stage/bench/actual/`. Each retains `result.json`, `scalar-recording.json`, all public Save outputs and `audit-c156.json`. Their respective result SHA-256 values are `c78afe36edd653ea866e725cd20400c09de28a683951c268cf452334ecda87e5`, `9543a4eef4ba3614e36d3f3416a65b3e5800510a714b1e3bae0cf70a7b63d733` and `d606aad2f37a0a234d874f2ba8bab0b58db30fbe5e94ff4e76ed7b752a11fdf4`. These are local ignored evidence, not public fixtures.
+
+The remaining dominant cost is the synchronous WASM Source dab and full viewport update at this size. The shared core still takes a complete pre-dab position copy and validates a retained state; the normal studio does not yet run its Source brush on the GPU. Directly removing geometry checks or changing source semantics would not prove parity. Next performance work needs a bounded sparse undo/rollback representation or an integrated resident GPU path, followed by this exact protocol and a fixed delivered-contact numerical comparison.
+
+Final source checks passed: `cargo fmt --all -- --check`, `cargo test --workspace --all-targets` (2,478 passed, zero failed, one ignored across 101 groups), strict native and WASM-target Clippy, `scripts/build-web.sh`, `scripts/package-macos.sh` and `git diff --check`. The 91 focused source-geometry tests also passed. The browser runs and full independent audits above are the consumer checks; they establish useful behavior and the remaining failed responsiveness gates, not parity.

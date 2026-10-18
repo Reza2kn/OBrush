@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-10-16T15:40:17.675717+00:00",
+  "status": "Additive C56HP01pass andnative-onlyC57portableangle rootcauseprobe; neither candidate promoted",
+  "parent_C56_evidence": {
+    "path": "docs/evidence/sculptgl-capacity-c56-0.1.20.json",
+    "bytes": 7563,
+    "sha256": "cd61fc0777edb766c9872da1edfa7a1b791d0fa8f53ce552a9fb14269b434a40"
+  },
+  "HP01": {
+    "post": {
+      "path": ".artifacts/sculptgl-crease-paint-history-c56-stage/actual-HP01/POST.json",
+      "bytes": 727,
+      "sha256": "6613f70a22f50cfd7964febd1840236d52cbc477b94280d23f97e15f123c2809"
+    },
+    "audit": {
+      "path": ".artifacts/sculptgl-crease-paint-history-c56-stage/ROOT_PAINT_HISTORY_AUDIT.json",
+      "bytes": 36834,
+      "sha256": "2a11a039d5b05aabb58f02baf984649dc243915e2c19f5f9868af27bb5316328"
+    },
+    "independent_math": {
+      "path": ".artifacts/sculptgl-crease-paint-history-c56-stage/ROOT_INDEPENDENT_PAINT_HISTORY_MATH.json",
+      "bytes": 19837,
+      "sha256": "5827415d79c3d3ce53a4b76992925f77044243560645353a7bc0405f4292fbda"
+    },
+    "scope": "Actual two-host sparse6vertex mirroredCrease/Paint/current-fieldhistory,38wholefiles/24GPUstates; nofullfamily/dense/performance/nativephysical claim"
+  },
+  "native_only_C57_probe": {
+    "protocol": {
+      "path": ".artifacts/sculptgl-portable-normals-c57-stage/NATIVE_PROBE_PREREGISTRATION01.json",
+      "bytes": 822,
+      "sha256": "b4204a891d5296109ed260fa1b6fd0028288386dd130d79782d71152da70dbc6"
+    },
+    "result": {
+      "path": ".artifacts/sculptgl-portable-normals-c57-stage/NATIVE_PROBE_RESULT01.json",
+      "bytes": 409,
+      "sha256": "26024045a5d6b6dd133dd75231ee7212f91546c91a39abae8c198abd05b562d5"
+    },
+    "scope": "C57nativepublicload/save matchesall367660491bytes of fixedoldC56browserbeforeproject; freshC57browser/native2dabhistory/completeGPUproof remainsrequired"
+  },
+  "C57_source_checks": {
+    "path": ".artifacts/sculptgl-portable-normals-c57-stage/CHECKS02.json",
+    "bytes": 2026,
+    "sha256": "e6a17156462f53fe7587030f0cbdefb9ec864deacd04a5d474ebdf80ae04bbea"
+  },
+  "C57_source": {
+    "path": ".artifacts/sculptgl-portable-normals-c57-stage/PRECHECK_MANIFEST.json",
+    "bytes": 92357,
+    "sha256": "a373ce8b6f4d45b64516c8a87a966416d6bc14df3d69c441c5e65105521d0a9c"
+  },
+  "C57_tests": {
+    "workspace": 2341,
+    "core": 1620,
+    "app": 721,
+    "ignored": 1
+  },
+  "versioned_default_fixture": {
+    "path": ".artifacts/sculptgl-portable-normals-c57-stage/PORTABLE_FIXTURE_PROVENANCE01.json",
+    "bytes": 942,
+    "sha256": "b57917bcf545cbdb5bb0fe39c9c22e19ab16c7eb8102174a7dac7a7827fad9fb"
+  },
+  "retained_failures": "C56wholepublicnativeWASMcache12worddifference remainsfailed forC56. C57firstfourdefaultfixturechecks failedoriginalplatformwordprecondition; exactoldgeometry/rays/RGB/masks/basefile unchanged, separatelyversioned90derivednormalwordcache adaptscurrentportableconstructor; completeword/scalar/cap assertions retained.",
+  "main": "C54/8817unchanged",
+  "remaining": "All317+5 workflow/nativephysical/quality/performance gates remainopen; C57build/runtime qualification pending"
+}

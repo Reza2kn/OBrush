@@ -1,0 +1,33 @@
+{
+  "scope": "Two selected nested opaque parts; combined selected contour",
+  "reference_revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+  "fixture": {
+    "path": ".artifacts/contour-occlusion-c127/independent-opaque-selected-back.sgl",
+    "bytes": 700,
+    "sha256": "d4f7f1b612666dfd0d9d610d6ae8aad26b320ccaf5e0c25d44508e692f0e18ed"
+  },
+  "obrush_web_wasm_sha256": "5c78d1ce06ee2fcaf017d888c00c24299dcc634eb0779abcebb538134ec3918f",
+  "source_result": ".artifacts/contour-multiselect-c128/source-1792282747473/result.json",
+  "source_physical_selection_attempt": {"result": ".artifacts/contour-multiselect-c128/source-ui-1792282902995/result.json", "status": "FAIL source physical multi-select", "viewport_point": [300, 190], "canvas_point": [300, 150], "pick_hit": false, "selected_indices_after": [1]},
+  "obrush_result": ".artifacts/contour-multiselect-c128/root-1792282759895/startup.json",
+  "source_selection": {"method": "setOrUnsetMesh(front, true)", "selected_indices": [1, 0]},
+  "obrush_selection": {"method": "normal scene-panel Ctrl-click", "selected_ids": [2, 1], "first_row_rect": [1435, 227, 1520.78125, 253]},
+  "viewport_pixels_each": [1140, 825],
+  "source_off_on_png_sha256": ["ed700d68985975faf40719d6e418225adbb1c8781451799d767651f93b628f95", "a3cd9ce17b40b4df3ac8b024b8331b8514668baa0b152d3fbe3b027a901954da"],
+  "obrush_off_on_png_sha256": ["7447d71ac95832a621704be6637b4045adf47ad1c387594ab9c693bd50d9bd7e", "e9ca40779e41a17f7b178589fcce518b7dbcd3ff35a984bab30db4fc702e5621"],
+  "response": {
+    "outer_combined_silhouette_only_in_both": true,
+    "source_changed_pixels": 4808,
+    "obrush_changed_pixels": 4800,
+    "source_bbox_xyxy": [270, 112, 870, 713],
+    "obrush_bbox_xyxy": [270, 113, 870, 712],
+    "binary_mask_iou": 0.6013333333333334,
+    "source_mask_within_one_pixel_of_obrush": 1.0,
+    "obrush_mask_within_one_pixel_of_source": 1.0,
+    "obrush_off_again_viewport_rgb_equal": true
+  },
+  "obrush_saved_project_sha256_off_on_off": "ee02be41506c6da3138f1eee7b461b81aeac6f53649331e16ae22195340b6eb6",
+  "obrush_saved_project_bytes": 3730,
+  "browser_errors_each": 0,
+  "limitations": ["source selection invoked its application method rather than a physical Shift-click", "two nested planar parts at DPR=1 only", "three-part selection and downstream operation scope untested", "exact color and alpha samples untested", "physical high-DPI and native GUI untested", "full SculptGL parity open"]
+}

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "reference": "ZBrush2026.2.1 desktop",
+  "primary_evidence": "Format header and actual bytes emitted by the reference application in the recorded live OBJ interchange fixture.",
+  "reference_export": {
+    "path_label": ".artifacts/zbrush-roundtrip.obj",
+    "sha256": "1569b9882bd523290390be88d8eef467f22ca233b34fff32ddfce8cf7c5e92af"
+  },
+  "format_header": "The following MRGB block contains ZBrush Vertex Color (Polypaint) and masking output as 4 hexadecimal values per vertex. The vertex color format is MMRRGGBB with up to 64 entries per MRGB line.",
+  "observations": {
+    "entry_format": "MMRRGGBB",
+    "hex_digits_per_vertex": 8,
+    "byte_order": [
+      "MM",
+      "RR",
+      "GG",
+      "BB"
+    ],
+    "maximum_entries_per_line_documented_by_export": 64,
+    "mrgb_lines": 161,
+    "entries_per_line_range": [
+      2,
+      64
+    ],
+    "complete_entry_count": 10242,
+    "mask_byte_histogram": {
+      "ff": 10242
+    },
+    "mask_direction": "Not established by this unmasked/default-state fixture alone.",
+    "rgb_quantization_comparison": {
+      "source_sha256": "8bba2ea46b8178683b1e2db9c2221f13b0a14f12e508682ec30fa02660def50d",
+      "source_vertex_rgb_count": 10242,
+      "decoded_reference_rgb_count": 10242,
+      "method": "Interpret RR/GG/BB as unsigned 8-bit channels divided by255, then compare with source inline vertex RGB by vertex order. This analyzes fixture bytes, not an OBrush decoder execution.",
+      "max_component_absolute_error": 0.0037254901960783737,
+      "rms_component_absolute_error": 0.003165720532892072,
+      "unsigned_8bit_step": 0.00392156862745098,
+      "within_one_8bit_step": true
+    }
+  },
+  "relationship_to_other_formats": [
+    "OBJ #MRGB uses a leading mask byte according to the export header; Draw:MRGB describes material/color painting channels and is a different context.",
+    "The GoZ SDK treats mask and polypaint as separate data and does not establish this OBJ byte range."
+  ],
+  "limitations": [
+    "No controlled ClearMask/MaskAll/partial-mask OBJ export comparison has been recorded.",
+    "UV, material and nontrivial masking interchange remain unverified.",
+    "The color decoder validates MM syntax but ignores its mask semantics and initializes imported masks to unmasked; this is an explicitly unsupported field, not full mask interoperability."
+  ]
+}

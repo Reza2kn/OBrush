@@ -1,0 +1,206 @@
+{
+  "id": "SGL-STATIC-FRAME-C105",
+  "scope": "Versioned normal-frame static detail transport through actual Rust document navigation, three same-byte pinned source direct coarse-edit fixtures, scoped browser UI and history; not complete SculptGL/ZBrush parity",
+  "reference": {
+    "revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "result_path": ".artifacts/sculptgl-reference-runtime/uv-coarse-predictions-c102-c5c906f3-b53d-47a3-8714-72342ba07999/result.json",
+    "result_sha256": "2f581826ceddaa94b53c9854f1defa71c86cbf3214a6d8736bc636f16069c960",
+    "browser": "Chrome/155.0.8059.80",
+    "status": "completed reference-only controlled coarse-edit subdivision fixtures",
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "exceptions": 0,
+    "console_errors": 0,
+    "blocked_external_requests": [
+      "https://fonts.googleapis.com/css?family=Open+Sans:400,600"
+    ]
+  },
+  "reference_uv_subdivision_result": {
+    "path": ".artifacts/sculptgl-reference-runtime/uv-subdivision-c100-0fcc99ee-04ba-4439-8e77-a9891c24990e/result.json",
+    "sha256": "c9f17e844ba0176a052e22d30868b35afd7dfd3de8e75ef462f0ebe9288e8dfb"
+  },
+  "implementation": {
+    "new_schemes": [
+      "sculptgl_static_smooth_v3",
+      "sculptgl_static_linear_edges_v3"
+    ],
+    "retained_old_schemes": [
+      "sculptgl_static_smooth_v1",
+      "sculptgl_static_linear_edges_v1",
+      "sculptgl_static_smooth_v2",
+      "sculptgl_static_linear_edges_v2"
+    ],
+    "ring_cache": "Topology/UV-only Arc map rebuilt on validated load, retained across document/history snapshots, trimmed with level deletion",
+    "source_manifest_sha256": {
+      "crates/obrush-core/src/lib.rs": "580d84eeea0a0a850e0871c0e6ba49d005850f819eb6bdd5cf5a9f85408427f6",
+      "crates/obrush-core/src/source_ring.rs": "2fe03a047fd831f9e53ab20990533aed76304c6bef7edddbf0e448a3997935d0",
+      "crates/obrush-core/src/multires.rs": "ddcc23739581c067ae1beb0928637dacc882465728f554cbe4a94a22b1a142e8",
+      "crates/obrush-core/src/document.rs": "6dc7bb14bae9a784ded8c0a66b939582946162917d25c5fa2cc5e8fd289f3a24",
+      "crates/obrush-app/src/ui_text.rs": "63312b238df98f29acba2d2f29118458af59d38ebaed5f98f08172d5d5d3064f",
+      "crates/obrush-core/tests/source_static_ring.rs": "41a108c47e5bd0420e3ab325112eb434ed6360bbabda65a82f562b67bb23d62d",
+      "crates/obrush-core/tests/static_subdivision.rs": "c9bd04bff042495f98497903a99c7c00ab5887c14e311a4e30c84cebd6a99297",
+      "crates/obrush-core/tests/fixtures/source-static-ring-reference.json": "09a0d7d44ec540f8fe72914b5b73d62aa462745b2d03c39b42853da19d7c920c",
+      "scripts/check-sculptgl-paint-static.mjs": "35e80e4ed3c9cdce47372a532f5d1e0df9421bf49619bd92eb16c19600f54ea7",
+      "scripts/compare-uv-coarse-edit.py": "710db115038e805cba43136036961d7efb31f380f022976b2137a151c52eb89c",
+      "Cargo.lock": "42b7e17d68fa40ac3cdf147581afaaa571cb6c6436b9b62486d30fd0a728db3d"
+    },
+    "git_state": "Local working tree has no resolvable HEAD; file SHA-256 manifest is the source identity"
+  },
+  "controlled_coarse_edit": {
+    "operation": "Actual OBrush Document Add Level, Lower, direct physical coarse-vertex edit, Higher; pinned SculptGL actual UI import/Subdivide/Lower/Higher with same direct typed-array edit",
+    "edit_delta": [
+      0.125,
+      -0.09375,
+      0.0625
+    ],
+    "comparison_path": ".artifacts/sculptgl-ring-c105/product-comparison.json",
+    "comparison_sha256": "4d9e8fc1d7f83c0991fb169d3ffa343ac3e05209ae5a4c5394513a1e9fc2af25",
+    "fixtures": [
+      {
+        "name": "independent-seamed-tetra",
+        "path": "crates/obrush-core/tests/fixtures/independent-seamed-tetra.obj",
+        "sha256": "f038d1990b21472c2f2970b59950c12801219716f298bb991a260bed1c87dcc2",
+        "coarse_edit_delta": [
+          0.125,
+          -0.09375,
+          0.0625
+        ],
+        "fine_vertices": 10,
+        "native_probe_path": ".artifacts/sculptgl-ring-c105/product-probes/independent-seamed-tetra.json",
+        "native_probe_sha256": "79f049b9b6e6374ac2cc6ada5808770902e5f90dda02aef7789b805c466ddb4e",
+        "final_position_max_component_error": 1.4901161193847656e-08,
+        "final_position_rms_component_error": 6.664001874625056e-09
+      },
+      {
+        "name": "independent-seamed-quad-cube",
+        "path": "crates/obrush-core/tests/fixtures/independent-seamed-quad-cube.obj",
+        "sha256": "8b76a6ee950a7cf29701aa01c267772c023f668d67c66514885092bab0fdc4c0",
+        "coarse_edit_delta": [
+          0.125,
+          -0.09375,
+          0.0625
+        ],
+        "fine_vertices": 26,
+        "native_probe_path": ".artifacts/sculptgl-ring-c105/product-probes/independent-seamed-quad-cube.json",
+        "native_probe_sha256": "a40237f099ef0271a68941cafad3f86a1e913e864c2ff29175daf0bed6890aab",
+        "final_position_max_component_error": 5.960464477539063e-08,
+        "final_position_rms_component_error": 1.785590319380993e-08
+      },
+      {
+        "name": "independent-seamed-pyramid",
+        "path": "crates/obrush-core/tests/fixtures/independent-seamed-pyramid.obj",
+        "sha256": "8a4bb88bf941a1f88e882c0b769da1369549e5ef6c96dc1c928b7987d5c78081",
+        "coarse_edit_delta": [
+          0.125,
+          -0.09375,
+          0.0625
+        ],
+        "fine_vertices": 14,
+        "native_probe_path": ".artifacts/sculptgl-ring-c105/product-probes/independent-seamed-pyramid.json",
+        "native_probe_sha256": "e84ac4b353be7ee005879661a11b307aa255ae2de2ba74cc51f216305490e511",
+        "final_position_max_component_error": 2.9802322387695312e-08,
+        "final_position_rms_component_error": 9.788913145889409e-09
+      }
+    ],
+    "largest_max_component_error": 5.960464477539063e-08,
+    "old_mixed_pyramid_max_displacement_error": 0.03743258,
+    "normal_brush_response_compared": false
+  },
+  "browser": {
+    "result_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-paint-static-runtime/c105-final-v3-delete-cdc3bc17-da33-41c4-a791-61e9b3cf5fbd/result.json",
+    "result_sha256": "f98f48c4afb901f578cf3fc1c3c2a60c703b633fa9249001db9b7a3d283d1859",
+    "status": "passed scoped local host gates; reference parity unverified",
+    "chrome": "Chrome/155.0.8059.80",
+    "wasm_sha256": "c486c24296c854016352df645051bbc7862530d7b74fac13a113b2fce088dcad",
+    "cases": 7,
+    "downloads": 43,
+    "gpu_checks": 43,
+    "all_declared_gates_passed": true,
+    "exceptions": 0,
+    "console_errors": 0,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "coarse_draw": {
+      "fixture": "independent-v6-welded-grid-quads-uv.obrush",
+      "changed_coarse_vertices": 18,
+      "coarse_vertices": 1538,
+      "changed_fine_vertices": 174,
+      "fine_vertices": 6146,
+      "coarse_max_displacement": 0.01595562197393095,
+      "fine_max_displacement": 0.013758449032178141,
+      "gates": {
+        "new_v3_scheme": true,
+        "useful_coarse_draw": true,
+        "useful_transported_fine": true,
+        "brush_undo_redo_exact": true,
+        "normal_project_reload_exact": true,
+        "v3_delete_lower_singleton": true,
+        "delete_lower_undo_redo_exact": true,
+        "release_quiet": true,
+        "visible_gpu_save_exact": true
+      }
+    }
+  },
+  "builds": {
+    "wasm_path": "web/dist/pkg/obrush_app_bg.wasm",
+    "wasm_sha256": "c486c24296c854016352df645051bbc7862530d7b74fac13a113b2fce088dcad",
+    "wasm_bindgen_cli": "0.2.129",
+    "macos_app_path": ".artifacts/OBrush.app",
+    "macos_executable_sha256": "2aad824edc561df880a99f190208eb606a631d5e2bce2b727318ab54d36d1cb4",
+    "macos_codesign_verified": true
+  },
+  "checks": {
+    "cargo_fmt_check": "passed",
+    "workspace_tests": {
+      "exit_code": 0,
+      "groups": 71,
+      "passed": 2401,
+      "failed": 0,
+      "log_path": ".artifacts/sculptgl-ring-c105-workspace-tests-final.log",
+      "log_sha256": "26406b93df6ec09f46d4f74f1291f768081abce4753bcb253ae693f9f54a6c13"
+    },
+    "focused_static_tests": {
+      "exit_code": 0,
+      "passed": 42
+    },
+    "focused_levels_reverse_tests": {
+      "exit_code": 0,
+      "passed": 50
+    },
+    "strict_native_clippy": "passed",
+    "strict_wasm_clippy": "passed",
+    "wasm_check": "passed",
+    "official_web_build": "passed",
+    "official_macos_package": "passed",
+    "logs_sha256": {
+      ".artifacts/sculptgl-ring-c105-static-tests-final.log": "77028160a7a20dfaf77e426ffc3cd9d857b9aad2464a9d531540a0b2dd1d8687",
+      ".artifacts/sculptgl-ring-c105-levels-reverse.log": "5c81594e7a9327c6d6eef96b114cb22d2545963761cea44394a63033613cb685",
+      ".artifacts/sculptgl-ring-c105-clippy-native-final.log": "0ffbffb31ddbf92a4a5a7cddef185599e4334ad3fb356e7f759f37c8c4a627cb",
+      ".artifacts/sculptgl-ring-c105-clippy-wasm-final.log": "4856aff17843814a07773f51f73c1a4a67808ae49f3535170dea47237ca839dd",
+      ".artifacts/sculptgl-ring-c105-check-wasm-final.log": "55ba28c335d0704aa17d9454b48d904288d5fe76c121425f10a13e74d81e9b9e",
+      ".artifacts/sculptgl-ring-c105-build-web-final.log": "3e54605ac6b8badf2988990cdd41188df980a8729d291334a2550777c1db296e",
+      ".artifacts/sculptgl-ring-c105-package-macos-final.log": "cd3514c19bcaf1ac3f61cb94218f84d44493f99501d7dc98e63603d751d1e8eb",
+      ".artifacts/sculptgl-ring-c105-workspace-tests-final.log": "26406b93df6ec09f46d4f74f1291f768081abce4753bcb253ae693f9f54a6c13"
+    }
+  },
+  "failed_checks": {
+    "summary_path": ".artifacts/sculptgl-ring-c105/failed-checks.json",
+    "summary_sha256": "e55f03673d6b8084cd06fedde401882a1938e5dcec694f8f53ea7c41940b3634",
+    "note": "Exploratory legacy OBJ parser and whole-project navigation equality failures were corrected; raw initial stdout was not retained, observed failure details are summarized honestly."
+  },
+  "limitations": [
+    "Only three small direct coarse-edit reference fixtures and one subdivision level have numerical product/reference agreement",
+    "Local two-level edit/reload/return test and deletion tests are not paired with SculptGL",
+    "Browser Draw and delete workflow has no matched reference brush response",
+    "No 60/120-second million-vertex real-time performance qualification",
+    "Native GUI feel and complete 317-ID-plus-hosted-control SculptGL inventory remain open",
+    "ZBrush 2026.2.1 feature parity remains open"
+  ]
+}

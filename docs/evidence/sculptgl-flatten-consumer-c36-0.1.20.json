@@ -1,0 +1,60 @@
+{
+  "status": "Eight initial compared Flatten browser bodies; full Flatten/SculptGL parity unverified",
+  "version": "0.1.20",
+  "candidate": "C36 unchanged",
+  "baseline": "Pinned317SculptGLIDs+5appearancecontrols, ZBrush2026.2.1 target unchanged",
+  "index": {
+    "path": ".artifacts/sculptgl-flatten-c36-cold-noop-stage/ROOT_INITIAL8_CLOSED.json",
+    "sha256": "f1dac3f6ecaf1b2f3dd7306d6384cce6d1732816f76e9c064f46f68698abd3a4"
+  },
+  "build": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate36/build-record.json",
+    "sha256": "65ffac65b5efd4b805bba2657f873205be71e22a5c340e5b1391462a49be6abc"
+  },
+  "source": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate36/source/manifest.json",
+    "sha256": "52b2158741221bc884dcf9826b3c85c7929de0c60eb88ea9a5ad16410aa306a7"
+  },
+  "case_ids": [
+    "FL00",
+    "FL01",
+    "FL02",
+    "FL03",
+    "FL04",
+    "FL05",
+    "FL06",
+    "FL07"
+  ],
+  "protocols": {
+    "FL00_to_FL04": {
+      "path": ".artifacts/sculptgl-flatten-c36-camera-seed-stage/protocol/manifest.json",
+      "sha256": "c71b1e88fa2f2cc0e959cbac452bc77051ac7ff60865ee959ae8957e85a9f438"
+    },
+    "FL05_to_FL07": {
+      "path": ".artifacts/sculptgl-flatten-c36-cold-noop-stage/protocol/manifest.json",
+      "sha256": "0b9b2ef6ce8fcd879fa3c387cbeeb979f7e3a41614908a5389a4ac03cb9faad5"
+    },
+    "note": "Explicitcase-to-helper/protocol mappings retained; not a uniform single protocol result."
+  },
+  "evidence": {
+    "raw_records": 1973,
+    "raw_bytes": 575425410,
+    "downloads": 120,
+    "whole_image_review": {
+      "path": ".artifacts/sculptgl-flatten-c36-camera-seed-stage/ROOT_WHOLE_IMAGE_REVIEW.json",
+      "sha256": "2d2196d990e829019c33376d86c2c4b3675df12e305e10c6cb331bce78d8d0fe"
+    }
+  },
+  "compared_behavior": "Real defaults/option-only, negativefalse/true, front-only weighted plane and culling write scope, coldzeroIntensity/allprotected andbackground nohit. Own fullposition/normal/GPU words checked independently, complete publicfiles/onegroupUndoRedo orpriorRedo, stoppedqueues/errors/realquietRAFs andownedclosure. SourceGL1forwardeduploads vsRootGL2GPUreadback distinct.",
+  "numerical": "FL01max1.862645149230957e-9 andFL03max3.725290298461914e-9, each3worddifferences; FL02andnonmutatingpairedfixtures exactpositionwords. Allwithin preregistered1e-6 envelope; all word differences retained.",
+  "policy_differences": "ColdRootzero/protectedshortcut omitsselection/normalcachewhenabsent, whileSourcedoesnominal work. Explicitbefore/aftercache0andseednormals equalityrequired. Sourcepickednoops clearredo/recordnominalstates; Rootpreserves genuinepriorRedo. No identicalbookkeeping/fullparity claim.",
+  "failures": {
+    "fractional_input_pairing": "618bc401f3d446487e93961b55c7e66ec2d6079fd9baf81951dd89fb61ed0be0",
+    "camera_after_history_seed": "4741d7cf764290a55521f255bdad5689f15b60b89a10e63ab469c0188b1bb701",
+    "cold_noop_count_assumption": "8d8c2c8899500fae6a5b14a034f297a9912b912d9cb46d6351cf28235268be88"
+  },
+  "input_setup": "Sharedonce-floored viewport-local integerpositions before input; Sourcegenuineorthographiccontrol beforehistoryseed. Originalfractional/camera/countfailures retained; no productprecision/threshold/cap changes.",
+  "remaining": "Warm/repeatedFlatten andPaint handover, importedalpha/mirror/continuous/heldsettings/lifecycle, originalexactcorner/dyadic radius, largergeometry, nativeGUI/physicalpressure/HiDPI/latency andfull317+5 remain open. No productchanges after C36 and no broadened parity/completion claim.",
+  "preview": "http://127.0.0.1:8801/",
+  "goal_runtime": "Observedblocked savedgoal/user-onlyresume requested; currentauthorizedturn continues."
+}

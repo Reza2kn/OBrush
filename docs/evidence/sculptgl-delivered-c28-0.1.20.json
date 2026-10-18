@@ -1,0 +1,214 @@
+{
+  "status": "Delivered C28 shared bounded dense heldS picker and truthful availability/status; full SculptGL parity unverified",
+  "version": "0.1.20",
+  "utc": "2026-10-15T06:40:18.397068+00:00",
+  "source_manifest_sha256": "fe50247869b1d5de487f84190e7f6bb5e28f3779b7532048619dc29b3246dc92",
+  "build_sha256": "cac846104d4e6306d188f49b40f7499162d46b7c31c901f0436d685995cf5565",
+  "source_checks_sha256": "366fe65aca89270835d80de6fff6fcec9dd3e4271f3663360c72d3678304f64a",
+  "tests": {
+    "total": 2211,
+    "core": 1547,
+    "app": 664,
+    "ignored": 1
+  },
+  "required_checks": [
+    "cargo fmt --all -- --check",
+    "cargo test --workspace --locked",
+    "cargo clippy --workspace --all-targets --locked -- -D warnings",
+    "cargo check --workspace --all-targets --target wasm32-unknown-unknown --locked",
+    "cargo clippy --workspace --all-targets --target wasm32-unknown-unknown --locked -- -D warnings"
+  ],
+  "artifacts": {
+    "web_script_pass": true,
+    "macos_script_pass": true,
+    "wasm": {
+      "path": "pkg/obrush_app_bg.wasm",
+      "bytes": 23078236,
+      "sha256": "c3d1ee45f289e1fac5d41d35c74ac6dac8d380d38197da925af97577da6c5d77"
+    },
+    "macos_installed": false,
+    "macos_opened": false
+  },
+  "shared_picker": {
+    "implementation": "Original small complete linear API remains unchanged. New opaque query admission incrementally validates an owned immutable mesh Arc, then prepares a bounded hierarchy. Dense leaves use the same original scalar predicate; exact first-quad-half, ordinal tie and corner policies remain. Incomplete work is a typed error, never partial hit or delayed replay. Host retains part/revision/pose/view/preferences/epoch/focus/release guards and caches rejected publications.",
+    "limits": {
+      "dense_faces": 131072,
+      "index_charged_bytes": 67108864,
+      "mesh_plus_index_charged_bytes": 134217728,
+      "builder_operations_per_step": 16384,
+      "query_node_certificates_per_batch": 4096,
+      "query_face_tests_per_batch": 8192,
+      "query_triangle_tests_per_batch": 8192,
+      "corner_reads_per_batch": 1024,
+      "dense_local_origin_abs_max": 1000000,
+      "dense_local_normalized_direction_abs_max": 2
+    },
+    "native_scoped_checks": {
+      "interval": 34,
+      "old_and_new_picker": 89,
+      "host_modal": 54,
+      "scope": "Included in actual full workspace; only named independent fixed-input scopes, not universal/reference/performance proof."
+    },
+    "fixed_default65_input_sha256": "1ffb55f1a72e505cf4de24179503964f9863c887cfa6e7e9a150b97ae7127094",
+    "finite_domain_review_sha256": "ccd90748070325b870f81ecc1cc82a19b2c9f3252cd92eac1d99ec29698c6fd5",
+    "new_readiness_regression_actual_failure_sha256": "bf88b0f0f165f1a72d93223e1a0ad63d410319e9999e85f560c7343ab7560877",
+    "source_failures_index_sha256": "30245dccb9780278cad1f737d5dcdac3ffbeb2483c2684c534fe1d106bf83156"
+  },
+  "browser": {
+    "normal20_result": "2faa2b58050b9055d58b922c3fe6e799f06f7d96e6d27eefe21b03d1309ea3a3",
+    "Lock3_result": "3648f7e7158877d4754de082ec71d0c28ba0c214ba0c25c6a8af485479f9b1f8",
+    "denseS4_result": "a56034102280658449adce4e9f1f5de382a9b2776e6ddbc1c69db1eff93148ed",
+    "all27cases_separate_frozen_consumers_pass": true,
+    "all_owned_Chrome_exit0_signal_null_servers_closed": true,
+    "exceptions": [],
+    "console_errors": [],
+    "dense_input": {
+      "project_fixture_sha256": "20d34a3c9e3cdc867e535ce52cfefeb557f8d071462ecd50cdba1158a566c886",
+      "vertices": 40962,
+      "triangles": 81920,
+      "contact": "Fixed independently authored sphere world origin projected through actual view64/projection32/LTRB viewport; no hit/outcome search",
+      "channel_comparison": {
+        "expected": [
+          0.125,
+          0.25,
+          0.375,
+          0.5,
+          0.25
+        ],
+        "actual": [
+          0.125,
+          0.25,
+          0.3750000298023224,
+          0.5,
+          0.25
+        ],
+        "max_abs": 2.9802322387695312e-08,
+        "tolerance": 1e-06
+      },
+      "actual_preparation": {
+        "face_rows": 0,
+        "index_capacities": [
+          81920,
+          81920,
+          81920,
+          40959
+        ],
+        "index_operations": 2051,
+        "index_peak_bytes": 12455592,
+        "index_total_operations": 985091,
+        "indexed": true,
+        "mesh_storage_bytes": 2949440,
+        "operations": 2051,
+        "ready": true,
+        "total_operations": 1107973,
+        "triangle_rows": 81920,
+        "uv_coordinate_rows": 0,
+        "uv_face_rows": 0,
+        "vertex_rows": 40962
+      }
+    },
+    "dense_cases": [
+      {
+        "name": "DS01-default-dense-preparation-never-replays-early-held-S",
+        "gates": {
+          "preparing_first_press": true,
+          "early_press_never_armed": true,
+          "ready_indexed": true
+        }
+      },
+      {
+        "name": "DS02-fresh-S-samples-all-five-dense-targets",
+        "gates": {
+          "actual_fresh_hold": true,
+          "actual_dense_sample": true,
+          "five_targets_useful": true
+        }
+      },
+      {
+        "name": "DS03-keyup-stops-sampling-with-exact-data",
+        "gates": {
+          "actual_keyup": true,
+          "no_trailing_samples": true,
+          "whole_saved_exact": true,
+          "whole_GPU_streams_exact": true
+        }
+      },
+      {
+        "name": "DS04-dense-sampler-preserves-prior-redo-and-publication",
+        "gates": {
+          "prior_redo_exact": true,
+          "undo_exact": true,
+          "no_active_query_after_publication": true
+        }
+      }
+    ],
+    "actual_downloads": 6,
+    "full_raw_GPU_bytes": 8847648,
+    "full_raw_GPU_files": 9,
+    "full_contiguous_raw_chunks": 141,
+    "literal_before_after_three_streams_equal": true,
+    "whole_saved_document_and_prior_redo_exact": true,
+    "raw_audit_sha256": "b520d479e7f8336f3e13b930d0e8ffd16817caa70910208bd0f7c218b0354555",
+    "whole_four_screenshot_review_sha256": "17c2d6fdbb21d6e3c4f94a8795f453594624efba6a33248768bb51751b2927fd",
+    "failed_new_observer_runs_retained": [
+      {
+        "stage": "sculptgl-dense-s-consumer-stage",
+        "post_sha256": "7f0803bff92cbd9f373ede9d3847894452817eebff397df523d95315f7abf40e",
+        "result_sha256": "6db22dbf708183fc4ceb993b18fb61f3f0347080f39cf2608d1c0725c56f439f",
+        "cases": [],
+        "failure": "Error: Actual control layout/enabled state did not stabilize across distinct completed frames: source_paint.mode.source\n    at stableLayoutControl (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-dense-s-consumer-stage/source-ready/harness.mjs:84:126)\n    at async action (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-dense-s-consumer-stage/source-ready/harness.mjs:91:14)\n    at async runDenseConsumers (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-dense-s-consumer-stage/source-ready/dense-consumer-cases.mjs:19:242)\n    at async file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-dense-s-consumer-stage/source-ready/harness.mjs:195:813",
+        "ChromeClosed": true
+      },
+      {
+        "stage": "sculptgl-dense-s-consumer-stage-v2",
+        "post_sha256": "6b2ac7609a0ef3a4a0d8329487a76aaed212ee31a66cf1ac6ce4c5b88ffef2f1",
+        "result_sha256": "6ea68ffb26fe4209de28a6759b2490422accf4c5196b9a53aed9f400efeddcfe",
+        "cases": [],
+        "failure": "Error: CDP timeout Runtime.evaluate\n    at Timeout._onTimeout (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-dense-s-consumer-stage-v2/source-ready/harness.mjs:48:369)\n    at listOnTimeout (node:internal/timers:585:17)\n    at process.processTimers (node:internal/timers:521:7)",
+        "ChromeClosed": true
+      },
+      {
+        "stage": "sculptgl-dense-s-consumer-stage-v3",
+        "post_sha256": "c1a7a66f0f3f109460c88e86005645023980a78c9a18ee67c73fd3ad3fb9ba1b",
+        "result_sha256": "642e4cb3319c6a9117b8f812dfd90455a0e616525b53055fce8567ebd973833a",
+        "cases": [],
+        "failure": "Error: Dense S consumer: Actual current preference rectangle preferences.shortcuts\n    at need (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-dense-s-consumer-stage-v3/source-ready/dense-consumer-cases.mjs:5:32)\n    at pref (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-dense-s-consumer-stage-v3/source-ready/dense-consumer-cases.mjs:29:136)\n    at async runDenseConsumers (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-dense-s-consumer-stage-v3/source-ready/dense-consumer-cases.mjs:32:33)\n    at async file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-dense-s-consumer-stage-v3/source-ready/harness.mjs:195:813",
+        "ChromeClosed": true
+      },
+      {
+        "stage": "sculptgl-dense-s-consumer-stage-v4",
+        "post_sha256": "c942923aecb3fb77bd34e82ec59ecaa49cb15cc0702a02ca346abaaf660dec38",
+        "result_sha256": "bb08549d356b7ce0ddb7840c8f9ae66060745f31deac3bb69591ba3b6b6996eb",
+        "cases": [
+          "DS01-default-dense-preparation-never-replays-early-held-S"
+        ],
+        "failure": "Error: Actual dense picked sample\n    at waitFor (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-dense-s-consumer-stage-v4/source-ready/harness.mjs:57:132)\n    at async runDenseConsumers (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-dense-s-consumer-stage-v4/source-ready/dense-consumer-cases.mjs:42:191)\n    at async file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-dense-s-consumer-stage-v4/source-ready/harness.mjs:195:813",
+        "ChromeClosed": true
+      },
+      {
+        "stage": "sculptgl-dense-s-consumer-stage-v5",
+        "post_sha256": "e8eecab6da81b20e569a810f624b58f4964b70185d0e1afa9d349f3f28092fae",
+        "result_sha256": "97d08d3bbc16129adacfcfd4a331ee7ce969804682d597e78c280064a8d9d079",
+        "cases": [
+          "DS01-default-dense-preparation-never-replays-early-held-S",
+          "DS02-fresh-S-samples-all-five-dense-targets"
+        ],
+        "failure": "Error: Actual download completion missing dense-s-after-release\n    at assert (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-dense-s-consumer-stage-v5/source-ready/harness.mjs:19:87)\n    at downloaded (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-dense-s-consumer-stage-v5/source-ready/harness.mjs:124:225)\n    at async snapshot (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-dense-s-consumer-stage-v5/source-ready/harness.mjs:125:39)\n    at async snap (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-dense-s-consumer-stage-v5/source-ready/dense-consumer-cases.mjs:29:40)\n    at async runDenseConsumers (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-dense-s-consumer-stage-v5/source-ready/dense-consumer-cases.mjs:44:644)\n    at async file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-dense-s-consumer-stage-v5/source-ready/harness.mjs:195:813",
+        "ChromeClosed": true
+      }
+    ],
+    "observer_corrections": "Normal symmetryOff prerequisite; closed-token bounded GPU chunk transport after monolithic return timeout; actual Help/OpenPreferences/HideHelp/profile/titlebar close; independent fixed world-origin projection and correct LTRB coordinates after cubeUndo retains changed camera; supported Source toolbar Save and Control+Y/Z instead of inherited OBrushCommand shortcut assumptions. No product math/target tolerance/work budget/time limit changed to pass."
+  },
+  "ui": "Source Paint availability note now names supported Lock and heldS while retaining missing alpha/mirror/inverse/rotation and Legacyfill scope. Footer reflects current arm/sample/release/stop.",
+  "main_transfer_sha256": "c245c7150d1a547656e57b6cd3bd208a77ebc57425c97039681662e1bdb3560a",
+  "preview": {
+    "url": "http://127.0.0.1:8795/",
+    "all19HTTP_sha256": "c32985e40771caec0822494e61c46425f68b25beb7800e895e6d2a6d725b0ff5"
+  },
+  "remaining": [
+    "Source/reference picking, masks, camera and brush response comparisons including V8Math.hypot and full signed/degenerate/affine/UV/mirror/alpha/dynamic cases",
+    "Larger mesh capacity and long-session/p50-p95/input-to-display/release-tail performance; no C28performance claim from work counts",
+    "Full Source cursor appearance, full locale mapping and current lifecycle/modal/Flatten references",
+    "Native GUI, physical pen/touch/pressure and full317pinned IDs+5hosted appearance controls remain required; no parity percentage or completion claim"
+  ]
+}

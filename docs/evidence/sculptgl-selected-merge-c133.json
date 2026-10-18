@@ -1,0 +1,230 @@
+{
+  "independent_three_boxes": {
+    "source_record": ".artifacts/scene-merge-c133/source-1792285148993/result.json",
+    "source_record_sha256": "49cb41117a4060d1754f2806eca6d6ff6377390594cb56523f8a011f277bb542",
+    "obrush_record": ".artifacts/scene-merge-c133/root-1792285758417/result.json",
+    "obrush_record_sha256": "8df2a774adde6813fd84f7bbc645317b65e09f791b5390dfb5e9ce3cd057bd59",
+    "vertices": [
+      16,
+      16
+    ],
+    "oriented_faces": [
+      12,
+      12
+    ],
+    "world_position_sets_exact": true,
+    "oriented_world_face_multisets_exact": true,
+    "max_rgb_component_difference": 2.384185793236071e-08,
+    "max_material_component_difference": 0.0,
+    "tolerances": {
+      "rgb": 3e-08,
+      "material": 1e-08
+    },
+    "status": "PASS",
+    "reference_scene": {
+      "before_selected_indices": [
+        2,
+        1
+      ],
+      "before_active_index": 2,
+      "after_part_count": 2,
+      "after_merged_id": 100,
+      "undo_part_count": 3,
+      "redo_part_count": 2
+    },
+    "obrush_scene": {
+      "before_selected_ids": [
+        3,
+        2
+      ],
+      "after_selected_ids": [
+        3
+      ],
+      "after_active_id": 3,
+      "before_project": {
+        "sha256": "2536cb091e14340b8d48b7f76656b0985ae849f165403f3dd40b98ba0bf94628",
+        "bytes": 7778
+      },
+      "after_project": {
+        "sha256": "cd43f58ec2b4b1367b5e7d281b29e4401cb819ddfa570a0899d1f2599c90167a",
+        "bytes": 4800
+      },
+      "undo_project": {
+        "name": "independent-three-closed-boxes.obrush",
+        "sha256": "2536cb091e14340b8d48b7f76656b0985ae849f165403f3dd40b98ba0bf94628",
+        "bytes": 7778
+      },
+      "redo_project": {
+        "sha256": "cd43f58ec2b4b1367b5e7d281b29e4401cb819ddfa570a0899d1f2599c90167a",
+        "bytes": 4800
+      },
+      "visible_report": "Merged 2 parts into 16 points; baked 2 poses, detached UVs from 0 parts, and rounded 0 mask values. Undo restores the originals."
+    }
+  },
+  "independent_affine_two_meshes": {
+    "source_record": ".artifacts/scene-merge-c133/affine-source-1792285523631/result.json",
+    "source_record_sha256": "b0e4cb1132474e2abe9b2362195a8e9d11a761aa34930eda759a48f6ac4051ae",
+    "obrush_record": ".artifacts/scene-merge-c133/affine-root-1792285758419/result.json",
+    "obrush_record_sha256": "5ebbd3a4f63774cf1959e8383748ca711ba0075a422403b442d4cc051606d2c5",
+    "vertices": [
+      7,
+      7
+    ],
+    "oriented_faces": [
+      2,
+      2
+    ],
+    "world_position_sets_exact": true,
+    "oriented_world_face_multisets_exact": true,
+    "max_rgb_component_difference": 0.0,
+    "max_material_component_difference": 7.152557379708213e-09,
+    "tolerances": {
+      "rgb": 3e-08,
+      "material": 1e-08
+    },
+    "status": "PASS",
+    "reference_scene": {
+      "before_selected_indices": [
+        1,
+        0
+      ],
+      "before_active_index": 0,
+      "after_part_count": 1,
+      "after_merged_id": 96,
+      "undo_part_count": 2,
+      "redo_part_count": 1
+    },
+    "obrush_scene": {
+      "before_selected_ids": [
+        2,
+        1
+      ],
+      "after_selected_ids": [
+        1
+      ],
+      "after_active_id": 1,
+      "before_project": {
+        "sha256": "7806128a01d641f774943b3a708ce8afa9f9db7df8330bfa5336f84b4800542b",
+        "bytes": 3133
+      },
+      "after_project": {
+        "sha256": "81a481d12111ce87bbb961f03bc155433b40e44115774e8b912e6dae0efe93fa",
+        "bytes": 1086
+      },
+      "undo_project": {
+        "name": "independent-affine-two-mesh.obrush",
+        "sha256": "7806128a01d641f774943b3a708ce8afa9f9db7df8330bfa5336f84b4800542b",
+        "bytes": 3133
+      },
+      "redo_project": {
+        "sha256": "81a481d12111ce87bbb961f03bc155433b40e44115774e8b912e6dae0efe93fa",
+        "bytes": 1086
+      },
+      "visible_report": "Merged 2 parts into 7 points; baked 2 poses, detached UVs from 1 parts, and rounded 3 mask values. Undo restores the originals."
+    }
+  },
+  "scope": "Positions, oriented faces, RGB and the two shared material channels; masks, UVs, source provenance, camera and latency are separate gates",
+  "status": "PASS",
+  "reference_commit": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+  "fixtures": {
+    "independent_three_boxes": {
+      "path": ".artifacts/scene-multiselect-c130/independent-three-closed-boxes.sgl",
+      "bytes": 1560,
+      "sha256": "939110d73dec934f0af70fb5c364eeb18f3ce18608449fe76804896c50c9c0ae"
+    },
+    "independent_affine_two_meshes": {
+      "path": "crates/obrush-core/tests/fixtures/independent-affine-two-mesh.sgl",
+      "bytes": 540,
+      "sha256": "99e107226fd5bdfeb687a4d92a61eebcec1abb2e910184e35aa58808ace105fd"
+    }
+  },
+  "obrush_wasm_sha256": "ada7759d13e7e3320cf74512ca53c98098841d761960692bfe6a14e25f701fb9",
+  "comparator": {
+    "path": "scripts/compare-selected-merge.py",
+    "sha256": "2321740bc9a43ac254029c27442d9c4f28801a5c8705f1bcff91beb6d2bc8286"
+  },
+  "current_build_regressions": [
+    {
+      "case": "selected_delete",
+      "path": ".artifacts/scene-multiselect-c130/root-1792285611080/result.json",
+      "status": "PASS"
+    },
+    {
+      "case": "selected_duplicate",
+      "path": ".artifacts/scene-duplicate-c131/root-1792285611075/result.json",
+      "status": "PASS"
+    },
+    {
+      "case": "selected_isolate_show_all",
+      "path": ".artifacts/scene-isolate-c132/root-1792285611077/result.json",
+      "status": "PASS"
+    },
+    {
+      "case": "selected_keyboard",
+      "path": ".artifacts/scene-isolate-c132/keyboard-1792285611076/result.json",
+      "status": "PASS"
+    }
+  ],
+  "retained_failures": [
+    {
+      "path": ".artifacts/scene-merge-c133/affine-source-1792285473508/result.json",
+      "reason": "Harness waited for 3 meshes after switching to a 2-mesh fixture"
+    },
+    {
+      "path": ".artifacts/scene-merge-c133/affine-source-1792285501230/result.json",
+      "reason": "Diagnostic confirmed source already imported 2 meshes; stale wait condition corrected"
+    },
+    {
+      "check": "First posed Rust merge",
+      "reason": "Mixed mask conventions require an explicit rounding policy"
+    },
+    {
+      "check": "Second posed Rust merge",
+      "reason": "Mixed UV presence requires an explicit detach policy"
+    },
+    {
+      "check": "Existing scene-order test",
+      "reason": "Expected old insertion position; changed to source append order with identity/attribute checks retained"
+    }
+  ],
+  "limitations": [
+    "Only two independent merged geometry fixtures",
+    "Affine source selection called the application selection method instead of a physical hit",
+    "Reference static merge third material channel and mask behavior not paired",
+    "UV seam diversity, hidden selected parts, native GUI and sustained performance unverified"
+  ],
+  "browser_messages": {
+    "independent_three_boxes": "Merged 2 parts into 16 points; baked 2 poses, detached UVs from 0 parts, and rounded 0 mask values. Undo restores the originals.",
+    "independent_affine_two_meshes": "Merged 2 parts into 7 points; baked 2 poses, detached UVs from 1 parts, and rounded 3 mask values. Undo restores the originals."
+  },
+  "checks": {
+    "fmt": "pass",
+    "workspace_all_targets": {
+      "status": "pass",
+      "summaries": 100,
+      "passed": 2460,
+      "failed": 0,
+      "ignored": 1,
+      "log": ".artifacts/scene-merge-c133/workspace-tests.log"
+    },
+    "strict_native_clippy": {
+      "status": "pass",
+      "log": ".artifacts/scene-merge-c133/clippy-native.log"
+    },
+    "strict_wasm_clippy": {
+      "status": "pass",
+      "log": ".artifacts/scene-merge-c133/clippy-wasm.log"
+    },
+    "official_web_build": {
+      "status": "pass",
+      "log": ".artifacts/scene-merge-c133/build-web-final.log"
+    },
+    "official_macos_package": {
+      "status": "pass",
+      "log": ".artifacts/scene-merge-c133/package-macos.log",
+      "codesign": "pass",
+      "executable_sha256": "1cea2d1839d5fcbdc45d221000e1c98921fa09c7b065cafd4c87b386dfaf67b3",
+      "native_gui_interaction": "untested"
+    }
+  }
+}

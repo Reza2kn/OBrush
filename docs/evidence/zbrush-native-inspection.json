@@ -1,0 +1,342 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-12T18:16:50.326644+00:00",
+  "target": {
+    "name": "ZBrush",
+    "version": "2026.2.1",
+    "path_label": "ZBrush.app/Contents/MacOS/ZBrush",
+    "sha256": "a56a4bcd0a842cdcdf103f9e5b4e13b277e7806b91396ad54a9fb7e7d14e460a",
+    "size_bytes": 702614928,
+    "format": "mach-o-universal",
+    "architecture": "arm64"
+  },
+  "tool": {
+    "name": "rea-agents",
+    "package_version": "6.4.0",
+    "source_commit": "ec2d251c0ad8382e0665546be5ec8f5f1c175962"
+  },
+  "commands": [
+    "node .tools/rea/scripts/rea.mjs inspect-macho <target> --json",
+    "node .tools/rea/scripts/rea.mjs inspect-artifact <target> --json"
+  ],
+  "operations": {
+    "inspect_macho": {
+      "evidence_id": "ev_0c8b41fe99c4b08cc71b90b6f35a33984c1bbcaf3a861d37a5a05dd279345815",
+      "provider": {
+        "id": "native-macos",
+        "name": "macOS native inspection utilities",
+        "version": null
+      },
+      "full_local_output_sha256": "ebb11872c3c1fff4413007e380306550c786179d220e9e36719a4bc7790438e6"
+    },
+    "inspect_artifact": {
+      "evidence_id": "ev_156669002c07527c2a3d2a6240962e2467e44252fcb445540bd4e816fdb06181",
+      "provider": {
+        "id": "rea-artifact-graph",
+        "name": "REA safe artifact graph provider",
+        "version": "1"
+      },
+      "full_local_output_sha256": "3b901fdead0412827329ed5e035e56c8e11046c6aebde32024b965d32fa7ca8c",
+      "graph_sha256": "f06006d7c2c977cc6364811766c592059cd492532dc2cd0d1277da46823051ad",
+      "node_count": 3,
+      "root_hash_status": "verified"
+    }
+  },
+  "observations": {
+    "selected_architecture": {
+      "name": "arm64",
+      "container_file_offset": 422248448
+    },
+    "architectures": {
+      "items": [
+        {
+          "name": "x86_64",
+          "cpu_type": "CPU_TYPE_X86_64",
+          "cpu_subtype": "CPU_SUBTYPE_X86_64_ALL",
+          "file_offset": 16384,
+          "size": 422225488,
+          "alignment": 16384
+        },
+        {
+          "name": "arm64",
+          "cpu_type": "CPU_TYPE_ARM64",
+          "cpu_subtype": "CPU_SUBTYPE_ARM64_ALL",
+          "file_offset": 422248448,
+          "size": 280366480,
+          "alignment": 16384
+        }
+      ],
+      "total": 2,
+      "exhaustive": true,
+      "limitations": []
+    },
+    "uuid": "D1A36BD8-F55D-383B-8517-4CD9881ACD6B",
+    "build_metadata": {
+      "items": [
+        {
+          "platform": "1",
+          "minimum_os": "11.5",
+          "sdk": "15.5",
+          "tools": [
+            {
+              "name": "3",
+              "version": "1167.5"
+            }
+          ]
+        }
+      ],
+      "total": 1,
+      "exhaustive": true,
+      "limitations": []
+    },
+    "entrypoints": {
+      "items": [
+        {
+          "file_offset": 8778732
+        }
+      ],
+      "total": 1,
+      "exhaustive": true,
+      "limitations": []
+    },
+    "dependencies": {
+      "items": [
+        {
+          "path": "@rpath/libfreetype.6.dylib",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "6.18.3",
+          "compatibility_version": "6.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "3502.1.255",
+          "compatibility_version": "150.0.0"
+        },
+        {
+          "path": "@rpath/lcms2.framework/Versions/A/lcms2",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "1.0.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "@executable_path/../Frameworks/libpng16.16.dylib",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "54.0.0",
+          "compatibility_version": "54.0.0"
+        },
+        {
+          "path": "@rpath/Python.framework/Versions/3.11/Python",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "3.11.0",
+          "compatibility_version": "3.11.0"
+        },
+        {
+          "path": "@rpath/SDL2.framework/Versions/A/SDL2",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "15.0.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "@executable_path/../Frameworks/superlu.framework/superlu",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "1.0.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "@rpath/lib3mf.framework/lib3mf",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "1.0.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "@rpath/libkeyshot.dylib",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "0.0.0",
+          "compatibility_version": "0.0.0"
+        },
+        {
+          "path": "@rpath/libtbb.dylib",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "12.7.0",
+          "compatibility_version": "12.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "1.0.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "@rpath/libsubstance_connector.dylib",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "0.0.0",
+          "compatibility_version": "0.0.0"
+        },
+        {
+          "path": "@executable_path/../../../bin/redshift/libredshift-core.dylib",
+          "kind": "LC_LOAD_WEAK_DYLIB",
+          "current_version": "0.0.0",
+          "compatibility_version": "0.0.0"
+        },
+        {
+          "path": "@rpath/libomp.dylib",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "5.0.0",
+          "compatibility_version": "5.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "1226.0.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/Security.framework/Versions/A/Security",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "61439.120.27",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/SystemConfiguration.framework/Versions/A/SystemConfiguration",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "1351.120.3",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/usr/lib/libiconv.2.dylib",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "7.0.0",
+          "compatibility_version": "7.0.0"
+        },
+        {
+          "path": "/usr/lib/libxml2.2.dylib",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "10.9.0",
+          "compatibility_version": "10.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/AddressBook.framework/Versions/A/AddressBook",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "2695.255.71",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "2575.60.5",
+          "compatibility_version": "45.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/Carbon.framework/Versions/A/Carbon",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "170.0.0",
+          "compatibility_version": "2.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "24.0.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/CoreAudio.framework/Versions/A/CoreAudio",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "1.0.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/AVFoundation.framework/Versions/A/AVFoundation",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "2.0.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "275.0.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/Metal.framework/Versions/A/Metal",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "368.12.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/MetalKit.framework/Versions/A/MetalKit",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "168.6.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/QuartzCore.framework/Versions/A/QuartzCore",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "1.11.0",
+          "compatibility_version": "1.2.0"
+        },
+        {
+          "path": "/usr/lib/libobjc.A.dylib",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "228.0.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "3502.1.255",
+          "compatibility_version": "300.0.0"
+        },
+        {
+          "path": "/usr/lib/libc++.1.dylib",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "1900.180.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/usr/lib/libSystem.B.dylib",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "1351.0.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/AVFAudio.framework/Versions/A/AVFAudio",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "1.0.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/ApplicationServices.framework/Versions/A/ApplicationServices",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "65.0.0",
+          "compatibility_version": "1.0.0"
+        },
+        {
+          "path": "/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "1889.5.3",
+          "compatibility_version": "64.0.0"
+        }
+      ],
+      "total": 36,
+      "exhaustive": true,
+      "limitations": []
+    },
+    "imports": {
+      "returned_items": 1295,
+      "total": null,
+      "exhaustive": false
+    },
+    "exports": {
+      "returned_items": 1,
+      "total": null,
+      "exhaustive": false
+    }
+  },
+  "limitations": [
+    "Imports and exports combine dyld_info and nm; stripped or toolchain-hidden symbols may be absent.",
+    "vtool output is retained as provenance but only otool build metadata is normalized.",
+    "Static metadata only; no brush algorithm, live behavior, performance or feature parity established.",
+    "This record identifies the inspected bytes; later OBrush builds require a new hash and inspection."
+  ]
+}

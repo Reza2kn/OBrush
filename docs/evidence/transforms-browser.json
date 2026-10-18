@@ -1,0 +1,929 @@
+{
+  "schema_version": 1,
+  "version": "0.1.11",
+  "recorded_at_utc": "2026-10-13T17:47:03.843722+00:00",
+  "status": "Eight scoped browser workflows and43behavior gates pass on frozen final bytes; exact packed visible buffers, shader preview offsets, save/history, composition and controls checked",
+  "git": "Unborn main; source/build/helper hashes identify execution",
+  "raw_result": {
+    "path": ".artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/result.json",
+    "bytes": 4012898,
+    "sha256": "dd3e4a11b4d95983144e912fb167c866d2d5b46ec452ece2c9333981eda5c637"
+  },
+  "bound_summary": {
+    "path": ".artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/summary.json",
+    "bytes": 36732,
+    "sha256": "f23b80a2123c8c1c1a38c19cfdc949086f8b02742c6709d3c35cfe46121eeaea"
+  },
+  "summary": {
+    "status": "passed eight transform browser workflows",
+    "raw_result": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/result.json",
+    "raw_sha256": "dd3e4a11b4d95983144e912fb167c866d2d5b46ec452ece2c9333981eda5c637",
+    "method": "Isolated CLI headless Chrome/CDP; no desktop, CUA, accessibility, user-tab, or physical device control",
+    "browser": {
+      "protocolVersion": "1.3",
+      "product": "Chrome/155.0.8059.40",
+      "revision": "@cfaadc5a132d78e1828635aa8405a499f3e14864",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "jsVersion": "15.5.35.20"
+    },
+    "wasm": {
+      "sha256": "9b4d6c1c826dda9a18e13ade0876222fa4f915c95342295a41953e2157d0ab1d",
+      "served_sha256": "9b4d6c1c826dda9a18e13ade0876222fa4f915c95342295a41953e2157d0ab1d",
+      "bytes": 4152477
+    },
+    "helper_sha256": "57297aa3259204a6319f042e923ee2c7e72d35329a38db560bb6df12c2bedcc1",
+    "contract": {
+      "point_absolute_tolerance": 2e-06,
+      "normal_absolute_tolerance": 2e-05,
+      "layer_f64_absolute_tolerance": 2e-13,
+      "whole_part_affine": "p = pivot + scale*(Rz*Ry*Rx)*(p-pivot) + translation; fixed world X then Y then Z; layer delta has no translation",
+      "identity_history_attrs": "Exact canonical saved bytes, f32 bits and immutable inactive state",
+      "preview": "Actual shader offset, unchanged VBO/IBO bytes/identities/upload counts until one release commit",
+      "visible_control_clip_tolerance": 0.01,
+      "release_to_first_committed_render_max_ms": 100,
+      "release_boundary": "Atomically observed document/snapshot revisions, cleared drag and shader preview, scene frame at or after actual pointerup, expected one active upload or no-op counts, pending dabs zero; 266-point authored active fixture only",
+      "release_probe_incremental_delays_ms_after_boundary": [
+        0,
+        200,
+        800
+      ],
+      "timing_scope": "Short synthetic gestures only; no input-to-photon, native, large-scene or sustained-session claim"
+    },
+    "case_count": 8,
+    "gates": 43,
+    "failed_gates": [],
+    "cases": [
+      {
+        "name": "numeric-whole-part-translation",
+        "gates": {
+          "fully_masked_points_moved": true,
+          "complete_metadata_retained": true,
+          "inactive_uploads_unchanged": true,
+          "history_exact": true
+        }
+      },
+      {
+        "name": "numeric-rotation-scale-pivot-rich-state",
+        "gates": {
+          "scalar_affinity": true,
+          "hidden_faded_layer_preserved": true,
+          "recording_layer_retained": true,
+          "origin_level_target_retained": true,
+          "fresh_canonical_reload": true
+        }
+      },
+      {
+        "name": "transformed-layer-composition-level-target-retention",
+        "gates": {
+          "show_is_useful": true,
+          "layer_composition_exact": true,
+          "bake_retains_visible_shape": true,
+          "target_available_on_origin": true,
+          "level_return_exact": true
+        }
+      },
+      {
+        "name": "world-axis-gizmo-preview-one-commit",
+        "gates": {
+          "no_preview_uploads": true,
+          "no_preview_revision_or_dirty_change": true,
+          "one_commit_revision": true,
+          "axis_only": true,
+          "one_history_state": true,
+          "quiet_release": true
+        }
+      },
+      {
+        "name": "free-plane-total-displacement-event-chunking",
+        "gates": {
+          "same_frozen_before": true,
+          "same_final_project": true,
+          "both_quiet": true,
+          "both_preview_models_unchanged": true,
+          "both_commit_once": true,
+          "both_histories_exact": true
+        }
+      },
+      {
+        "name": "preview-cancel-exact-return-preserve-redo",
+        "gates": {
+          "escape_canonical_unchanged": true,
+          "escape_redo_retained": true,
+          "escape_model_unchanged": true,
+          "exact_return_model_unchanged": true,
+          "exact_return_zero": true,
+          "exact_return_canonical": true,
+          "exact_return_redo": true,
+          "quiet": true
+        }
+      },
+      {
+        "name": "save-barrier-late-release-invalid-atomic-redo",
+        "gates": {
+          "save_commits_visible_preview": true,
+          "late_release_no_extra_edit": true,
+          "one_undo": true,
+          "invalid_preserves_document": true,
+          "invalid_preserves_redo": true,
+          "quiet": true
+        }
+      },
+      {
+        "name": "legacy-v2-v3-v4-transforms-without-schema-promotion",
+        "gates": {
+          "versions_retained": true,
+          "all_histories_exact": true,
+          "all_scalar_gates": true
+        }
+      }
+    ],
+    "snapshots": {
+      "count": 57,
+      "exact_visible_vbo_solid_ibo_pairs": 102,
+      "all_gpu_saved_scene_exact": true,
+      "object_contracts": 102,
+      "f64_layer_compositions": 20,
+      "morph_target_contracts": 23
+    },
+    "numerical_affinity": {
+      "maximums": {
+        "point_max": 1.1920928955078125e-07,
+        "normal_max": 3.838761104268951e-06,
+        "layer_max": 4.440892098500626e-16,
+        "target_max": 1.1920928955078125e-07,
+        "pivot_max": 0
+      },
+      "measurements": [
+        {
+          "case": "numeric-whole-part-translation",
+          "point_max": 1.1920928955078125e-07,
+          "normal_max": 5.212435572748975e-07,
+          "layer_max": 0,
+          "target_max": 1.1920928955078125e-07,
+          "point_components": 7146,
+          "layer_components": 2394,
+          "pivot_max": 0
+        },
+        {
+          "case": "numeric-rotation-scale-pivot-rich-state",
+          "point_max": 1.1911650643625649e-07,
+          "normal_max": 1.4233443750288899e-06,
+          "layer_max": 4.440892098500626e-16,
+          "target_max": 1.1833799185012595e-07,
+          "point_components": 7146,
+          "layer_components": 2394,
+          "pivot_max": 0
+        },
+        {
+          "case": "world-axis-gizmo-preview-one-commit",
+          "point_max": 1.1920928955078125e-07,
+          "normal_max": 2.38642731645311e-07,
+          "layer_max": 0,
+          "target_max": 0,
+          "point_components": 798,
+          "layer_components": 0
+        },
+        {
+          "case": "free-plane-total-displacement-event-chunking",
+          "trial": 1,
+          "point_max": 1.1920928955078125e-07,
+          "normal_max": 5.037184826472973e-07,
+          "layer_max": 0,
+          "target_max": 0,
+          "point_components": 798,
+          "layer_components": 0
+        },
+        {
+          "case": "free-plane-total-displacement-event-chunking",
+          "trial": 20,
+          "point_max": 1.1920928955078125e-07,
+          "normal_max": 5.037184826472973e-07,
+          "layer_max": 0,
+          "target_max": 0,
+          "point_components": 798,
+          "layer_components": 0
+        },
+        {
+          "case": "save-barrier-late-release-invalid-atomic-redo",
+          "point_max": 8.940696716308594e-08,
+          "normal_max": 2.6054616834858546e-07,
+          "layer_max": 0,
+          "target_max": 0,
+          "point_components": 798,
+          "layer_components": 0
+        },
+        {
+          "case": "legacy-v2-v3-v4-transforms-without-schema-promotion",
+          "trial": 2,
+          "point_max": 5.960464477539063e-08,
+          "normal_max": 3.838761104268951e-06,
+          "layer_max": 0,
+          "target_max": 0,
+          "point_components": 122886,
+          "layer_components": 0,
+          "pivot_max": 0
+        },
+        {
+          "case": "legacy-v2-v3-v4-transforms-without-schema-promotion",
+          "trial": 3,
+          "point_max": 5.960464477539063e-08,
+          "normal_max": 3.838761104268951e-06,
+          "layer_max": 0,
+          "target_max": 0,
+          "point_components": 122886,
+          "layer_components": 368658,
+          "pivot_max": 0
+        },
+        {
+          "case": "legacy-v2-v3-v4-transforms-without-schema-promotion",
+          "trial": 4,
+          "point_max": 5.960464477539063e-08,
+          "normal_max": 3.838761104268951e-06,
+          "layer_max": 0,
+          "target_max": 5.960464477539063e-08,
+          "point_components": 245772,
+          "layer_components": 0,
+          "pivot_max": 0
+        }
+      ]
+    },
+    "release_phase_measurements": [
+      {
+        "name": "axis-gizmo-release",
+        "expected_commit_count": 1,
+        "expected_revision": 3,
+        "release_to_first_observed_committed_render_ms": 2.2999999970197678,
+        "finalization_poll_count": 1,
+        "quiet_probe_offsets_from_boundary_ms": [
+          2.3999999910593033,
+          206.79999999701977,
+          1011.3999999910593
+        ],
+        "quiet": true,
+        "pending_dabs_zero_every_poll": true,
+        "raf_samples": 61,
+        "raf_p95_ms": 16.800000000000182,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "before_uploads": [
+          {
+            "active": false,
+            "vertex_key": 3,
+            "index_key": 4,
+            "vertex_uploads": 2,
+            "index_uploads": 2
+          },
+          {
+            "active": true,
+            "vertex_key": 6,
+            "index_key": 7,
+            "vertex_uploads": 1,
+            "index_uploads": 1
+          }
+        ],
+        "committed_uploads": [
+          {
+            "active": false,
+            "vertex_key": 3,
+            "index_key": 4,
+            "vertex_uploads": 2,
+            "index_uploads": 2
+          },
+          {
+            "active": true,
+            "vertex_key": 6,
+            "index_key": 7,
+            "vertex_uploads": 2,
+            "index_uploads": 2
+          }
+        ]
+      },
+      {
+        "name": "free-1-release",
+        "expected_commit_count": 1,
+        "expected_revision": 3,
+        "release_to_first_observed_committed_render_ms": 12.200000002980232,
+        "finalization_poll_count": 3,
+        "quiet_probe_offsets_from_boundary_ms": [
+          3.2999999970197678,
+          206.40000000596046,
+          1011.4000000059605
+        ],
+        "quiet": true,
+        "pending_dabs_zero_every_poll": true,
+        "raf_samples": 62,
+        "raf_p95_ms": 16.700000000000273,
+        "raf_max_ms": 16.700000000000273,
+        "longtasks": [],
+        "before_uploads": [
+          {
+            "active": false,
+            "vertex_key": 3,
+            "index_key": 4,
+            "vertex_uploads": 2,
+            "index_uploads": 2
+          },
+          {
+            "active": true,
+            "vertex_key": 6,
+            "index_key": 7,
+            "vertex_uploads": 1,
+            "index_uploads": 1
+          }
+        ],
+        "committed_uploads": [
+          {
+            "active": false,
+            "vertex_key": 3,
+            "index_key": 4,
+            "vertex_uploads": 2,
+            "index_uploads": 2
+          },
+          {
+            "active": true,
+            "vertex_key": 6,
+            "index_key": 7,
+            "vertex_uploads": 2,
+            "index_uploads": 2
+          }
+        ]
+      },
+      {
+        "name": "free-20-release",
+        "expected_commit_count": 1,
+        "expected_revision": 3,
+        "release_to_first_observed_committed_render_ms": 11.300000011920929,
+        "finalization_poll_count": 3,
+        "quiet_probe_offsets_from_boundary_ms": [
+          3.3999999910593033,
+          207.0,
+          1013.8999999910593
+        ],
+        "quiet": true,
+        "pending_dabs_zero_every_poll": true,
+        "raf_samples": 62,
+        "raf_p95_ms": 16.799999999999727,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "before_uploads": [
+          {
+            "active": false,
+            "vertex_key": 3,
+            "index_key": 4,
+            "vertex_uploads": 2,
+            "index_uploads": 2
+          },
+          {
+            "active": true,
+            "vertex_key": 6,
+            "index_key": 7,
+            "vertex_uploads": 1,
+            "index_uploads": 1
+          }
+        ],
+        "committed_uploads": [
+          {
+            "active": false,
+            "vertex_key": 3,
+            "index_key": 4,
+            "vertex_uploads": 2,
+            "index_uploads": 2
+          },
+          {
+            "active": true,
+            "vertex_key": 6,
+            "index_key": 7,
+            "vertex_uploads": 2,
+            "index_uploads": 2
+          }
+        ]
+      },
+      {
+        "name": "exact-return-release",
+        "expected_commit_count": 0,
+        "expected_revision": 8,
+        "release_to_first_observed_committed_render_ms": 19.200000002980232,
+        "finalization_poll_count": 5,
+        "quiet_probe_offsets_from_boundary_ms": [
+          3.0,
+          208.90000000596046,
+          1013.2999999970198
+        ],
+        "quiet": true,
+        "pending_dabs_zero_every_poll": true,
+        "raf_samples": 62,
+        "raf_p95_ms": 16.700000000000728,
+        "raf_max_ms": 16.80000000000109,
+        "longtasks": [],
+        "before_uploads": [
+          {
+            "active": false,
+            "vertex_key": 3,
+            "index_key": 4,
+            "vertex_uploads": 2,
+            "index_uploads": 2
+          },
+          {
+            "active": true,
+            "vertex_key": 6,
+            "index_key": 7,
+            "vertex_uploads": 7,
+            "index_uploads": 7
+          }
+        ],
+        "committed_uploads": [
+          {
+            "active": false,
+            "vertex_key": 3,
+            "index_key": 4,
+            "vertex_uploads": 2,
+            "index_uploads": 2
+          },
+          {
+            "active": true,
+            "vertex_key": 6,
+            "index_key": 7,
+            "vertex_uploads": 7,
+            "index_uploads": 7
+          }
+        ]
+      },
+      {
+        "name": "held-save-late-release",
+        "expected_commit_count": 0,
+        "expected_revision": 3,
+        "release_to_first_observed_committed_render_ms": 20.5,
+        "finalization_poll_count": 6,
+        "quiet_probe_offsets_from_boundary_ms": [
+          2.7000000029802322,
+          207.0,
+          1014.1000000089407
+        ],
+        "quiet": true,
+        "pending_dabs_zero_every_poll": true,
+        "raf_samples": 62,
+        "raf_p95_ms": 16.700000000000273,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": [],
+        "before_uploads": [
+          {
+            "active": false,
+            "vertex_key": 3,
+            "index_key": 4,
+            "vertex_uploads": 2,
+            "index_uploads": 2
+          },
+          {
+            "active": true,
+            "vertex_key": 6,
+            "index_key": 7,
+            "vertex_uploads": 2,
+            "index_uploads": 2
+          }
+        ],
+        "committed_uploads": [
+          {
+            "active": false,
+            "vertex_key": 3,
+            "index_key": 4,
+            "vertex_uploads": 2,
+            "index_uploads": 2
+          },
+          {
+            "active": true,
+            "vertex_key": 6,
+            "index_key": 7,
+            "vertex_uploads": 2,
+            "index_uploads": 2
+          }
+        ]
+      }
+    ],
+    "setup_draw_releases": [
+      {
+        "name": "setup-first-layer",
+        "quiet": true,
+        "probe_count": 3
+      },
+      {
+        "name": "setup-second-layer",
+        "quiet": true,
+        "probe_count": 3
+      }
+    ],
+    "runtime": {
+      "pages": 12,
+      "gl_errors": [],
+      "js_errors": [],
+      "cdp_exceptions": [],
+      "console_errors": [],
+      "actual_4x_msaa_every_page": true,
+      "clip_bounds": {
+        "checked_states": 420,
+        "visible_control_checks": 3290,
+        "failures": []
+      }
+    },
+    "screenshots": [
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/initial-controls.png",
+        "sha256": "66fd873a37216ff5991eefdc7ccfd1384a9685a4eebd4204e6cba84acd27032d",
+        "bytes": 215192
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/translation-preview.png",
+        "sha256": "c2c3f31e78a0e2c2e28421f3996389dc2a15e44dcf95f8b7d835e6717aa6b82f",
+        "bytes": 213593
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/transform-final-controls.png",
+        "sha256": "dc00f84bc1562535e68a1f88d0fc9db77f7792195b6f8b19a6b58eeda75de066",
+        "bytes": 238659
+      }
+    ],
+    "visual_inspection": "ASCII rotation caption readable; all numeric inputs, Scale, Part center/World origin, Apply/Reset fit. Axis handles/arrows/free center visible. Final counters 40,962/81,920 and Add subdivision level/Lower/Higher remain visible and fit. Independently coarse patterned-mask fixture is intentionally faceted, not a appearance/parity benchmark.",
+    "legacy_fixture_hashes": [
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/baseline-2e0bdefc-5c0f-4e09-aedb-c97b8a21e24f/sphere-outbound-initial.obrush",
+        "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb"
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/persisted-two-layers.obrush",
+        "sha256": "e1ebf89237c20f0c1bb391853d312455e5f0d7dc5a506a8a72f26ea82e151c6b"
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/fresh-loaded-v4.obrush",
+        "sha256": "cf9e500e7ab7ff7cdc6bd2ff7e2724084653d519732390cbdc7791c65dec02ff"
+      }
+    ],
+    "independent_fixture_and_snapshot_hashes": [
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/Fully masked rich transform.obrush",
+        "sha256": "c0c9e50514f37f8cf810b95564b661f1f2b38c44a3f8bf19a994f4904ae32cad",
+        "bytes": 295740
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/Independent transform pair.obrush",
+        "sha256": "c82945508abd2597458c79c5f47f7811729c9f7fe49f4cb275d5bfeabc794eb2",
+        "bytes": 106500
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/Transformed rich reload.obrush",
+        "sha256": "326c094b96719f71bb06cb9bcc2763024da33bc1f161b562fe62e6699da2b561",
+        "bytes": 301447
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/axis-gizmo-redo.obrush",
+        "sha256": "c7e60855dfc95aefddce59363b13633845916da85303c1e3260a8c7d9d42b7d5",
+        "bytes": 61144
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/axis-gizmo-undo.obrush",
+        "sha256": "e036c5ee8f16b7b4157117f4e65e5a2ce7f80a272c0c7ba3f03830120950db68",
+        "bytes": 60762
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/cancel-redo-anchor.obrush",
+        "sha256": "e036c5ee8f16b7b4157117f4e65e5a2ce7f80a272c0c7ba3f03830120950db68",
+        "bytes": 60762
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/escape-canceled.obrush",
+        "sha256": "e036c5ee8f16b7b4157117f4e65e5a2ce7f80a272c0c7ba3f03830120950db68",
+        "bytes": 60762
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/escape-redo-retained.obrush",
+        "sha256": "57244009882804fff4224131d6420373569d8c726540bdad431a8e5df7895081",
+        "bytes": 61764
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/exact-return-after.obrush",
+        "sha256": "e036c5ee8f16b7b4157117f4e65e5a2ce7f80a272c0c7ba3f03830120950db68",
+        "bytes": 60762
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/exact-return-before.obrush",
+        "sha256": "e036c5ee8f16b7b4157117f4e65e5a2ce7f80a272c0c7ba3f03830120950db68",
+        "bytes": 60762
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/exact-return-redo.obrush",
+        "sha256": "57244009882804fff4224131d6420373569d8c726540bdad431a8e5df7895081",
+        "bytes": 61764
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/free-1-after.obrush",
+        "sha256": "57244009882804fff4224131d6420373569d8c726540bdad431a8e5df7895081",
+        "bytes": 61764
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/free-1-before.obrush",
+        "sha256": "e036c5ee8f16b7b4157117f4e65e5a2ce7f80a272c0c7ba3f03830120950db68",
+        "bytes": 60762
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/free-1-redo.obrush",
+        "sha256": "57244009882804fff4224131d6420373569d8c726540bdad431a8e5df7895081",
+        "bytes": 61764
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/free-1-undo.obrush",
+        "sha256": "e036c5ee8f16b7b4157117f4e65e5a2ce7f80a272c0c7ba3f03830120950db68",
+        "bytes": 60762
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/free-20-after.obrush",
+        "sha256": "57244009882804fff4224131d6420373569d8c726540bdad431a8e5df7895081",
+        "bytes": 61764
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/free-20-before.obrush",
+        "sha256": "e036c5ee8f16b7b4157117f4e65e5a2ce7f80a272c0c7ba3f03830120950db68",
+        "bytes": 60762
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/free-20-redo.obrush",
+        "sha256": "57244009882804fff4224131d6420373569d8c726540bdad431a8e5df7895081",
+        "bytes": 61764
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/free-20-undo.obrush",
+        "sha256": "e036c5ee8f16b7b4157117f4e65e5a2ce7f80a272c0c7ba3f03830120950db68",
+        "bytes": 60762
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/gizmo-axis-after.obrush",
+        "sha256": "c7e60855dfc95aefddce59363b13633845916da85303c1e3260a8c7d9d42b7d5",
+        "bytes": 61144
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/gizmo-axis-before.obrush",
+        "sha256": "e036c5ee8f16b7b4157117f4e65e5a2ce7f80a272c0c7ba3f03830120950db68",
+        "bytes": 60762
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/held-save-after-late-release.obrush",
+        "sha256": "6b2c7729eea17b295a77d2b705a7a19d62e8084621ded82eda4d0aeb8b830b73",
+        "bytes": 61669
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/held-save-before.obrush",
+        "sha256": "e036c5ee8f16b7b4157117f4e65e5a2ce7f80a272c0c7ba3f03830120950db68",
+        "bytes": 60762
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/held-save-commits-preview.obrush",
+        "sha256": "6b2c7729eea17b295a77d2b705a7a19d62e8084621ded82eda4d0aeb8b830b73",
+        "bytes": 61669
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/held-save-redo.obrush",
+        "sha256": "6b2c7729eea17b295a77d2b705a7a19d62e8084621ded82eda4d0aeb8b830b73",
+        "bytes": 61669
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/held-save-undo.obrush",
+        "sha256": "e036c5ee8f16b7b4157117f4e65e5a2ce7f80a272c0c7ba3f03830120950db68",
+        "bytes": 60762
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/invalid-transform-after.obrush",
+        "sha256": "e036c5ee8f16b7b4157117f4e65e5a2ce7f80a272c0c7ba3f03830120950db68",
+        "bytes": 60762
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/invalid-transform-before.obrush",
+        "sha256": "e036c5ee8f16b7b4157117f4e65e5a2ce7f80a272c0c7ba3f03830120950db68",
+        "bytes": 60762
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/invalid-transform-redo.obrush",
+        "sha256": "6b2c7729eea17b295a77d2b705a7a19d62e8084621ded82eda4d0aeb8b830b73",
+        "bytes": 61669
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/legacy-2-after.obrush",
+        "sha256": "118dd68a8b5c0a1053e3defa12bbd02896a2021e099e593e5be3f9073b3ad3f7",
+        "bytes": 5315836
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/legacy-2-before.obrush",
+        "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+        "bytes": 5317105
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/legacy-2-redo.obrush",
+        "sha256": "118dd68a8b5c0a1053e3defa12bbd02896a2021e099e593e5be3f9073b3ad3f7",
+        "bytes": 5315836
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/legacy-2-undo.obrush",
+        "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+        "bytes": 5317105
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/legacy-3-after.obrush",
+        "sha256": "8b00c04b02fc0919606470793533aa4a7c96acbdbebed24e87ef539c979cd96c",
+        "bytes": 10611771
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/legacy-3-before.obrush",
+        "sha256": "e1ebf89237c20f0c1bb391853d312455e5f0d7dc5a506a8a72f26ea82e151c6b",
+        "bytes": 10615170
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/legacy-3-redo.obrush",
+        "sha256": "8b00c04b02fc0919606470793533aa4a7c96acbdbebed24e87ef539c979cd96c",
+        "bytes": 10611771
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/legacy-3-undo.obrush",
+        "sha256": "e1ebf89237c20f0c1bb391853d312455e5f0d7dc5a506a8a72f26ea82e151c6b",
+        "bytes": 10615170
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/legacy-4-after.obrush",
+        "sha256": "c1562b31f1f4d9b9104b39bd2391045f7bdc193b75cbc8c8880632933b9b2c00",
+        "bytes": 8326803
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/legacy-4-before.obrush",
+        "sha256": "cf9e500e7ab7ff7cdc6bd2ff7e2724084653d519732390cbdc7791c65dec02ff",
+        "bytes": 8330668
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/legacy-4-redo.obrush",
+        "sha256": "c1562b31f1f4d9b9104b39bd2391045f7bdc193b75cbc8c8880632933b9b2c00",
+        "bytes": 8326803
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/legacy-4-undo.obrush",
+        "sha256": "cf9e500e7ab7ff7cdc6bd2ff7e2724084653d519732390cbdc7791c65dec02ff",
+        "bytes": 8330668
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/numeric-rotate-scale-after.obrush",
+        "sha256": "55bda8869c648170e627c47714a8b0cfe23de468d45bda02927d9d796effd1ae",
+        "bytes": 305009
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/numeric-rotate-scale-before.obrush",
+        "sha256": "b6f167ddb503c59775ec58f088ee50c28bac24f664944eb0350c93218cff077e",
+        "bytes": 301048
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/numeric-rotate-scale-redo.obrush",
+        "sha256": "55bda8869c648170e627c47714a8b0cfe23de468d45bda02927d9d796effd1ae",
+        "bytes": 305009
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/numeric-rotate-scale-reloaded.obrush",
+        "sha256": "55bda8869c648170e627c47714a8b0cfe23de468d45bda02927d9d796effd1ae",
+        "bytes": 305009
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/numeric-rotate-scale-undo.obrush",
+        "sha256": "b6f167ddb503c59775ec58f088ee50c28bac24f664944eb0350c93218cff077e",
+        "bytes": 301048
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/numeric-translation-after.obrush",
+        "sha256": "46f5b22ce75deaf4120d01b84dbdf507c65519ff8d061730356f6cb51c4d4b27",
+        "bytes": 298562
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/numeric-translation-before.obrush",
+        "sha256": "eecc3a8f8671dd9161fb9b979fdba1e859228a49f9909b531576feabf49b111b",
+        "bytes": 300060
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/numeric-translation-redo.obrush",
+        "sha256": "46f5b22ce75deaf4120d01b84dbdf507c65519ff8d061730356f6cb51c4d4b27",
+        "bytes": 298562
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/numeric-translation-undo.obrush",
+        "sha256": "eecc3a8f8671dd9161fb9b979fdba1e859228a49f9909b531576feabf49b111b",
+        "bytes": 300060
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/rich-empty-layer-0.obrush",
+        "sha256": "0a4f620adc338ab0eb7318025766a150e1e77fd30e7806588f27ae27f9821789",
+        "bytes": 297094
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/rich-empty-layer-1.obrush",
+        "sha256": "894e7f00eaf3824e7427d8efd351c2bd82ab35daa00bacfaa9a4dd3224d9286d",
+        "bytes": 300933
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/rich-transform-baseline.obrush",
+        "sha256": "b6f167ddb503c59775ec58f088ee50c28bac24f664944eb0350c93218cff077e",
+        "bytes": 301048
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/show-transformed-hidden-layer-redo.obrush",
+        "sha256": "3231ad87c86815fa752a267f669aef62867a196b4a1be0d7f342597980bab0ce",
+        "bytes": 304989
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/show-transformed-hidden-layer-undo.obrush",
+        "sha256": "55bda8869c648170e627c47714a8b0cfe23de468d45bda02927d9d796effd1ae",
+        "bytes": 305009
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/transformed-baked.obrush",
+        "sha256": "ffd74050c3640f88082bd02ccae61ed8a24ec81836b3e254723a69d9e3c57f04",
+        "bytes": 274471
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/transformed-hidden-layer-shown.obrush",
+        "sha256": "3231ad87c86815fa752a267f669aef62867a196b4a1be0d7f342597980bab0ce",
+        "bytes": 304989
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/transformed-high-level.obrush",
+        "sha256": "0c5b86383ac95bd050fb577fbdd4b7d9e1b2ba2ca92084f8763e053937b0b01c",
+        "bytes": 274471
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/transformed-layers-before.obrush",
+        "sha256": "55bda8869c648170e627c47714a8b0cfe23de468d45bda02927d9d796effd1ae",
+        "bytes": 305009
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/final-f9bc06a4-1228-4958-be7a-3bb3f64d073c/transformed-low-reselected.obrush",
+        "sha256": "ffd74050c3640f88082bd02ccae61ed8a24ec81836b3e254723a69d9e3c57f04",
+        "bytes": 274471
+      }
+    ],
+    "preserved_earlier_failures": [
+      {
+        "raw_path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/candidate-bf7f7a11-5736-4ef6-82c0-2c6a14f29d7a/result.json",
+        "raw_sha256": "db02567241dd449ba3e05c61807a63f653b54236795276bc6a54eb216e6fe3df",
+        "diagnosis_path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/candidate-bf7f7a11-5736-4ef6-82c0-2c6a14f29d7a/diagnosis.json",
+        "diagnosis_sha256": "8a3d754d72339e99904b07cf9655a29d5d7c1df6f45fad7b5942e1dfcb8af40f"
+      },
+      {
+        "raw_path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/axis-focused-b2c8a5d9-3d18-4784-ab77-e3b2e1c24e15/result.json",
+        "raw_sha256": "43eee4bc2209510fd826e0683748f73a322ace1dcc5772d36e55374c4fe47c48",
+        "diagnosis_path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/axis-focused-b2c8a5d9-3d18-4784-ab77-e3b2e1c24e15/diagnosis.json",
+        "diagnosis_sha256": "a5d66329eca184dca3a550ef59ded57d5826b299b43eba1dc96a64d5574f4004"
+      }
+    ],
+    "release_failure_diagnosis": "Original gate compared a pre-commit GPU frame to later CPU state and later GPU buffers. Focused release polls observed old preview at +0.2ms and exactly one committed render/upload at +9.9ms; subsequent polls were stable. This run records atomic CPU/buffer observations and preregistered <=100ms first-committed-render gate, followed by unchanged quiet 0/200/800ms probes.",
+    "limitations": [
+      "Independent OBrush transform foundation; no reference Gizmo/Transpose or family parity",
+      "World active-only positive uniform transforms; masked/local/multi-selection/nonuniform/persistent pivots/deformers/Stager remain gaps",
+      "Owned synthetic headless mouse events, packed VBO/IBO and actual preview uniforms; native/physical devices and input-to-photon remain unverified",
+      "Short gestures and quiet releases; large/long-session performance excluded",
+      "Public file input/download bytes; native picker/download filesystem persistence untested",
+      "Release boundary only authored active 266-point/inactive 266-point fixture; native/physical input-to-photon and sustained or large-scene latency unverified",
+      "probe.at is observation start, before synchronous buffer readback and asynchronous hashing; frame_at and pointerup are browser performance timestamps, not presentation time"
+    ],
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "build_scope": "Final fresh runtime on immutable OBrush0.1.11 source/build/web bundle; seven required checks completed before owned browser launched, without overlapping owned CPU checks.",
+    "frozen_release": {
+      "version": "0.1.11",
+      "bundle_path": "/Users/Ajab/AI/OBrush/.artifacts/transform-release-0.1.11-final",
+      "source_manifest_path": "/Users/Ajab/AI/OBrush/.artifacts/transform-release-0.1.11-final/source-manifest.json",
+      "source_manifest_sha256": "c9789e17a89b50a2be346fad7e9f2f57f634fd017dce1fcca04c899a70bfc493",
+      "build_record_path": "/Users/Ajab/AI/OBrush/.artifacts/transform-release-0.1.11-final/build-record.json",
+      "build_record_sha256": "4864c81a75839219b2e420b3e5993b1b3de44c1d627601bc9430819802fff3b7",
+      "frozen_helper_path": "/Users/Ajab/AI/OBrush/.artifacts/transform-release-0.1.11-final/source/scripts/check-transforms.mjs",
+      "frozen_helper_sha256": "57297aa3259204a6319f042e923ee2c7e72d35329a38db560bb6df12c2bedcc1",
+      "compiled_required_check_count": 7,
+      "all_required_checks_exit_zero": true,
+      "test_totals": {
+        "core": 247,
+        "app": 35,
+        "total": 282
+      },
+      "wasm_sha256": "9b4d6c1c826dda9a18e13ade0876222fa4f915c95342295a41953e2157d0ab1d",
+      "served_wasm_sha256": "9b4d6c1c826dda9a18e13ade0876222fa4f915c95342295a41953e2157d0ab1d",
+      "immutable_build_note_superseded": "The frozen build record says final frozen browser runtime pending. This final eight-workflow/43-gate receipt supplies that completed runtime verification without changing the immutable build record."
+    },
+    "candidate_preliminary": {
+      "raw_path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/candidate-boundary-0a536958-7b6f-4d2c-ac4e-24e544d36a2e/result.json",
+      "raw_sha256": "30e116caf2cbe81a9899cb45cb2c4a6783019263099cae2bcf2f612085e27639",
+      "summary_path": "/Users/Ajab/AI/OBrush/.artifacts/transform-browser/candidate-boundary-0a536958-7b6f-4d2c-ac4e-24e544d36a2e/summary.json",
+      "summary_sha256": "901b6c927491dd0585f2c82e02380a5a719c8bd758475e56a39c66622c0161a2",
+      "scope": "Passed candidate eight-workflow correctness receipt, superseded for final release by this fresh frozen runtime."
+    }
+  },
+  "reference_execution": false,
+  "limitations": [
+    "Independent OBrush transform foundation; no reference Gizmo/Transpose or family parity",
+    "World active-only positive uniform transforms; masked/local/multi-selection/nonuniform/persistent pivots/deformers/Stager remain gaps",
+    "Owned synthetic headless mouse events, packed VBO/IBO and actual preview uniforms; native/physical devices and input-to-photon remain unverified",
+    "Short gestures and quiet releases; large/long-session performance excluded",
+    "Public file input/download bytes; native picker/download filesystem persistence untested",
+    "Release boundary only authored active 266-point/inactive 266-point fixture; native/physical input-to-photon and sustained or large-scene latency unverified",
+    "probe.at is observation start, before synchronous buffer readback and asynchronous hashing; frame_at and pointerup are browser performance timestamps, not presentation time"
+  ]
+}

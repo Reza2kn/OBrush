@@ -1,0 +1,53 @@
+{
+  "scope": "Same-fixture pinned SculptGL and frozen OBrush contour response; no parity promotion",
+  "reference": {
+    "revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "passive_wrapper_sha256": "a87cc1246a6bc39cebf81b78dcf6d6c5c6201ef72710dab7f177d1fe4acd11f0",
+    "result": ".artifacts/contour-paired-c124/source-1792281100277/result.json",
+    "transparent_pre_fxaa_nonzero_alpha_pixels": 4692,
+    "transparent_readback_gl_error": 0
+  },
+  "fixture": {
+    "path": ".artifacts/sculptgl-large-sustained-c57-stage/fixtures/independent-id-sphere-10k.sgl",
+    "sha256": "39ddfd1559fde94aa5f6d2602beffc6cf9f77fb7f934989ee9f8677739f47c1b",
+    "vertices": 10114,
+    "faces": 20224
+  },
+  "obrush": {
+    "browser_snapshot": ".artifacts/contour-paired-c124/web-dist",
+    "browser_wasm_sha256": "b646dba6cd369658f45610e53c8c4db27a53fc31478fdca457bfea931a19bfb2",
+    "result": ".artifacts/contour-paired-c124/root-source-scene-1792281168212/startup.json",
+    "off_on_off_saved_project_bytes": 3414644,
+    "off_on_off_saved_project_sha256": "4b1e672659e9b2d26481cf2107eb54b7a1144d8ed0dcf7c6bbfc843ee78e5864"
+  },
+  "response": {
+    "method": "Per host RGB off/on difference; normalize changed pixels by 2*pi*mean radius estimated from changed-pixel bounding box; not raw pixel alignment",
+    "source_changed_pixels": 7889,
+    "source_bbox_xyxy_in_canvas_crop": [350, 141, 940, 732],
+    "source_changed_pixels_per_estimated_perimeter": 4.252576955298772,
+    "obrush_changed_pixels": 9724,
+    "obrush_bbox_xyxy_in_viewport_crop": [222, 65, 918, 762],
+    "obrush_changed_pixels_per_estimated_perimeter": 4.443999042715263,
+    "obrush_relative_excess_percent": 4.501319774542267,
+    "reference_screenshots_sha256": ["7b6ac14024294edb437f1cf41fc3900db1f7106ddfce00acc80a555c5dc0f4b4", "a8cf8cd2789e2687c23a88c0341533313a1340185bae11b8d9fed5f586c667e4"],
+    "obrush_screenshots_sha256": ["2a00a1a2f0030c09d47d82d77602bb41c1042efe66752eae816a4e2052ae5687", "01eef0c96b15ca5cc4014b464489421f1ab9a656df7f51b8e8184e6b469ff963"]
+  },
+  "validation": {
+    "source_browser_errors": 0,
+    "obrush_browser_errors": 0,
+    "owned_browsers_closed": true,
+    "format": "pass",
+    "native_strict_clippy": "pass",
+    "wasm_strict_clippy": "pass",
+    "web_build": "pass",
+    "macos_package_signature": "pass",
+    "workspace_tests": "pass: 2457 passed across 80 test-result summaries, 0 failed; retained log .artifacts/contour-paired-c124/workspace-tests.log",
+    "pixel_color_and_camera_parity": "open",
+    "full_sculptgl_parity": "open"
+  },
+  "retained_failures": [
+    "An initial root import wait incorrectly required a second subtool; SGL import replaced the document and the corrected count gate passed.",
+    "The first root OCR pass missed the small checkbox label; upsampled right-panel OCR passed."
+  ]
+}

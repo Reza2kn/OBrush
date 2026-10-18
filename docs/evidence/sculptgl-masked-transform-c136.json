@@ -1,0 +1,204 @@
+{
+  "scope": "C136 opt-in selected-group mask-weighted translation; no SculptGL or ZBrush parity promotion",
+  "reference": {
+    "name": "SculptGL",
+    "commit": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "source_file": ".tools/sculptgl-reference/upstream/src/editing/tools/Transform.js",
+    "source_formula": "old*(1-unprotected)+transformed*unprotected",
+    "runtime_compared": false
+  },
+  "workspace": {
+    "git_head": null,
+    "note": "Working tree has no resolved HEAD; source file hashes bind this local run",
+    "code": {
+      "crates/obrush-core/src/document.rs": {
+        "path": "crates/obrush-core/src/document.rs",
+        "sha256": "2aaa3c341c3a2f12441c6dbcc2177467153565b2fabd3cd6505f4192022abf43",
+        "bytes": 193718
+      },
+      "crates/obrush-app/src/app.rs": {
+        "path": "crates/obrush-app/src/app.rs",
+        "sha256": "11743d9bbabacc63b04c14534c2eca9a8ef6c63064c9db0fe487e8acf04fcf55",
+        "bytes": 508756
+      },
+      "scripts/check-transforms.mjs": {
+        "path": "scripts/check-transforms.mjs",
+        "sha256": "edfcac7cb7ddb6f7e179f9836f2faf5550848763ecf2493387722b24b5813e72",
+        "bytes": 87888
+      }
+    }
+  },
+  "fixture": {
+    "generated_scene": {
+      "path": ".artifacts/transform-browser/mask-gizmo-final-c136-f1772198-1b95-4505-847b-f1fd0d155165/Independent transform pair.obrush",
+      "sha256": "c82945508abd2597458c79c5f47f7811729c9f7fe49f4cb275d5bfeabc794eb2",
+      "bytes": 106500
+    },
+    "independent_posed_sgl": {
+      "path": "crates/obrush-core/tests/fixtures/independent-affine-two-mesh.sgl",
+      "sha256": "99e107226fd5bdfeb687a4d92a61eebcec1abb2e910184e35aa58808ace105fd",
+      "bytes": 540
+    }
+  },
+  "browser": {
+    "status": "passed eleven transform browser workflows",
+    "chrome": "Chrome/155.0.8059.80",
+    "wasm_sha256": "37f5a5d60c6d62f87f5f1eb2ef4918b134c455539c39380cdad9a0598b2906e6",
+    "served_wasm_sha256": "37f5a5d60c6d62f87f5f1eb2ef4918b134c455539c39380cdad9a0598b2906e6",
+    "cases": 11,
+    "all_case_gates": true,
+    "focused_cases": [
+      {
+        "name": "selected-group-mask-weighted-numeric-translation",
+        "statistics": {
+          "max_error": 2.674999998279748e-07,
+          "fully_protected": 76,
+          "partial": 380,
+          "changed": 456
+        },
+        "history": {
+          "undo_exact": true,
+          "redo_exact": true
+        },
+        "gates": {
+          "visible_option_enabled": true,
+          "partial_and_protected": true,
+          "weighted_response": true,
+          "changed_vertices": true,
+          "history_exact": true
+        }
+      },
+      {
+        "name": "selected-group-mask-weighted-gizmo-preview-commit",
+        "preview_translation": [
+          0.03170299530029297,
+          0,
+          0
+        ],
+        "statistics": {
+          "max_error": 1.6639318472979475e-07,
+          "fully_protected": 76,
+          "partial": 380,
+          "changed": 456
+        },
+        "history": {
+          "undo_exact": true,
+          "redo_exact": true
+        },
+        "gates": {
+          "rigid_preview": true,
+          "preview_buffers_unchanged": true,
+          "preview_model_unchanged": true,
+          "weighted_commit": true,
+          "protected_and_partial": true,
+          "changed_vertices": true,
+          "quiet_release": true,
+          "history_exact": true
+        }
+      }
+    ],
+    "raw_result": {
+      "path": ".artifacts/transform-browser/mask-gizmo-final-c136-f1772198-1b95-4505-847b-f1fd0d155165/result.json",
+      "sha256": "849c82ff1db6c7dfa02c97bbaf108d4e515041bb13d8878ec04d58bcae051b49",
+      "bytes": 25727664
+    },
+    "snapshots": {
+      "masked-gizmo-before.obrush": {
+        "path": ".artifacts/transform-browser/mask-gizmo-final-c136-f1772198-1b95-4505-847b-f1fd0d155165/masked-gizmo-before.obrush",
+        "sha256": "ef72ebc49b29720f3883db0cd10fca18da9564d142230b3eb4922cf898ab7c2a",
+        "bytes": 60881
+      },
+      "masked-gizmo-after.obrush": {
+        "path": ".artifacts/transform-browser/mask-gizmo-final-c136-f1772198-1b95-4505-847b-f1fd0d155165/masked-gizmo-after.obrush",
+        "sha256": "c854874a7c62f1175c1b569d55777074500b989acf6eb646be29732401bb7e7d",
+        "bytes": 61601
+      },
+      "masked-gizmo-undo.obrush": {
+        "path": ".artifacts/transform-browser/mask-gizmo-final-c136-f1772198-1b95-4505-847b-f1fd0d155165/masked-gizmo-undo.obrush",
+        "sha256": "ef72ebc49b29720f3883db0cd10fca18da9564d142230b3eb4922cf898ab7c2a",
+        "bytes": 60881
+      },
+      "masked-gizmo-redo.obrush": {
+        "path": ".artifacts/transform-browser/mask-gizmo-final-c136-f1772198-1b95-4505-847b-f1fd0d155165/masked-gizmo-redo.obrush",
+        "sha256": "c854874a7c62f1175c1b569d55777074500b989acf6eb646be29732401bb7e7d",
+        "bytes": 61601
+      }
+    },
+    "js_errors": 0,
+    "gl_errors": 0,
+    "actual_4x_msaa": true
+  },
+  "checks": {
+    "fmt": "pass",
+    "workspace_all_targets": {
+      "passed": 2464,
+      "failed": 0,
+      "ignored": 1,
+      "summaries": 100
+    },
+    "strict_native_clippy": "pass",
+    "strict_wasm_clippy": "pass",
+    "official_web_build": "pass",
+    "official_macos_package": "pass",
+    "codesign_deep_strict": "pass",
+    "native_executable": {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/OBrush",
+      "sha256": "5bdaf989fc019159a01aec66b885fcfc6e618f309af4f60e96192011c8c95b95",
+      "bytes": 26985664
+    },
+    "logs": {
+      "build_web": {
+        "path": ".artifacts/scene-mask-transform-c136-build-web.log",
+        "sha256": "4083ee8dd095a2ffc9e54e618d4f76e04eeea0785e19c833c8b6fdab7e25f8cd",
+        "bytes": 419
+      },
+      "workspace_tests": {
+        "path": ".artifacts/scene-mask-transform-c136-tests.log",
+        "sha256": "2d74d833cb937e2650771eccddc1b63628b6000b09f7dcd550a088155697d261",
+        "bytes": 242343
+      },
+      "clippy_native": {
+        "path": ".artifacts/scene-mask-transform-c136-clippy-native.log",
+        "sha256": "63b587145ba56695159edd8475b5192e73d8e894a7c8032462e725876990e0e1",
+        "bytes": 540
+      },
+      "clippy_wasm": {
+        "path": ".artifacts/scene-mask-transform-c136-clippy-wasm.log",
+        "sha256": "62dd3562f5db26a3e1852c3c588ec35c62cacde8410a00636b4fda18d1a65e5f",
+        "bytes": 296
+      },
+      "macos_package": {
+        "path": ".artifacts/scene-mask-transform-c136-package-macos.log",
+        "sha256": "8b5ca201b960b0c9e6db1aadf4f9e562ef2cda195629e347aa4969f26229138d",
+        "bytes": 407
+      }
+    }
+  },
+  "failed_checks": [
+    {
+      "kind": "preview-harness-assumption",
+      "failure": "Error: Actual per-draw shader preview offset mismatch",
+      "result": {
+        "path": ".artifacts/transform-browser/mask-gizmo-c136-5811a34c-f9f1-4143-96f9-e5dcfac50951/result.json",
+        "sha256": "cada553954dc4d22e80177c94d2bcd2ccb54b6030190cfec9c2002b8efc75cc4",
+        "bytes": 20606700
+      }
+    },
+    {
+      "kind": "upload-harness-assumption",
+      "failure": "Error: No expected committed render within 100 ms of release for authored 266-point fixture",
+      "result": {
+        "path": ".artifacts/transform-browser/mask-gizmo-retry-c136-e648e0a0-9ae1-43c4-b816-b520749a4ba9/result.json",
+        "sha256": "bb16e90cb3ab102e49ab6421ea0613ec854cd778cd036241b9978fe3fac36041",
+        "bytes": 25799357
+      }
+    }
+  ],
+  "limitations": [
+    "Source formula inspected; no matched SculptGL runtime transform comparison",
+    "Retained levels/layers/Morph Targets rejected for mask-weighted transform",
+    "Masked rotation/scale and source gizmo handle family not delivered",
+    "Only short two-sphere normal-browser gestures; native GUI and sustained latency unverified",
+    "Fold guard can reject larger weighted displacements instead of matching SculptGL"
+  ]
+}

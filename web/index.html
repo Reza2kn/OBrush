@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <meta name="theme-color" content="#1b1d21">
+  <title>OBrush · Open sculpting studio</title>
+  <style>
+    html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#14161a;color:#dadce1;font:14px system-ui,sans-serif}
+    canvas{display:block;width:100%;height:100%;outline:none;touch-action:none}
+    #loading{position:absolute;inset:0;display:grid;place-content:center;text-align:center;gap:12px}
+    #loading strong{font-size:32px;letter-spacing:.15em} #loading strong span{color:#f38955}
+    #loading p{color:#8d939c;max-width:440px;line-height:1.6} #loading button{padding:10px 20px;background:#282b31;color:inherit;border:1px solid #555b66;border-radius:5px;cursor:pointer}
+    #notice{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);max-width:600px;background:#50382b;padding:14px 20px;border:1px solid #f38955;border-radius:6px;display:none;z-index:100}
+  </style>
+</head>
+<body>
+  <canvas id="obrush_canvas" tabindex="0" aria-label="OBrush 3D sculpting studio. Press H for keyboard controls."></canvas>
+  <div id="loading"><strong><span>O</span>BRUSH</strong><p id="loading-message">Starting the Rust sculpting engine…</p></div>
+  <div id="notice" role="alert"></div>
+  <input id="import-file" type="file" accept=".obj,.ply,.stl,.sgl,.obrush" hidden>
+  <input id="alpha-file" type="file" accept="image/png,image/jpeg,.png,.jpg,.jpeg" hidden>
+  <input id="uv-texture-file" type="file" accept="image/png,.png" hidden>
+  <input id="background-file" type="file" accept="image/png,image/jpeg,.png,.jpg,.jpeg" hidden>
+  <script type="module">
+    import { createViewportTextureInput } from './viewport-texture-input.js';
+    import { createUVBakeWorkers } from './uv-bake-input.js';
+    import { createStartupModelInput } from './startup-model-input.js';
+    import { createResidentPointerStudio } from './resident-pointer.js';
+    const canvas=document.getElementById('obrush_canvas');
+    const input=document.getElementById('import-file');
+    let handle;
+    // Stop browser chrome from consuming only the explicit Source fixed Ctrl
+    // actions. This probe is read-only; shared Rust owns command resolution.
+    window.addEventListener('keydown',event=>{
+      if(event.target===canvas&&handle?.source_shortcut_profile()&&event.ctrlKey){
+        const key=event.key.toLowerCase();
+        if(['z','y','o','i','e','d'].includes(key)||(key==='n'&&event.altKey))event.preventDefault();
+      }
+    },true);
+    // Read-only stroke diagnostics; no geometry or application state is changed.
+    window.obrushSculptMetrics=()=>handle ? JSON.parse(handle.sculpt_metrics()) : {};
+    window.obrushBrushMetrics=()=>handle ? JSON.parse(handle.brush_metrics()) : {};
+    window.obrushUVRenderMetrics=()=>handle ? JSON.parse(handle.uv_render_metrics()) : {};
+    // One-use document handoff for the separately owned WebGPU viewport.
+    // Studio input and the shared Rust document remain authoritative.
+    window.obrushResidentBegin=()=>JSON.parse(handle.resident_studio_begin());
+    window.obrushResidentBeginUpload=()=>handle.resident_studio_begin_upload();
+    window.obrushResidentRay=(x,y)=>handle.resident_studio_ray(x,y);
+    window.obrushResidentCommit=(id,bytes)=>handle.resident_studio_commit(id,bytes);
+    window.obrushResidentCancel=id=>handle.resident_studio_cancel(id);
+    let noticeTimer;
+    const notice=message=>{ const el=document.getElementById('notice'); el.textContent=message; el.style.display='block'; clearTimeout(noticeTimer); noticeTimer=setTimeout(()=>el.style.display='none',8000); };
+    const startupModels=createStartupModelInput(()=>handle,canvas,notice);
+    let residentPointer;
+    window.obrushResidentPointerStart=()=>residentPointer.start();
+    window.obrushResidentPointerStop=()=>residentPointer.stop();
+    window.obrushResidentPointerStatus=()=>residentPointer?.status()||{phase:'idle'};
+    window.obrushReadStartupModel=startupModels.start;
+    window.obrushCancelStartupModel=startupModels.cancel;
+    const bakeWorkers=createUVBakeWorkers(()=>handle,()=>new Worker(new URL('./uv-bake-worker.js',import.meta.url),{type:'module'}),notice);
+    window.obrushStartUVBake=bakeWorkers.start;
+    window.obrushCancelUVBake=bakeWorkers.cancel;
+    window.obrushPickFile=()=>{ input.value=''; input.click(); };
+    // Same native-array order rule as pinned ImportSGL. Capture it explicitly;
+    // version0 never guesses an order from its all-zero version word.
+    const nativeWords=new Uint8Array(new Uint32Array([0x01020304]).buffer);
+    const nativeLittle=nativeWords[0]===4;
+    window.obrushSourceSglNativeOrder=()=>({little:nativeLittle,bytes:Array.from(nativeWords)});
+    window.obrushSourceSglNativeLittle=()=>nativeLittle;
+    if(!nativeLittle&&nativeWords[0]!==1)throw new Error('Unsupported typed-array byte order');
+    const sourceSglInput=document.createElement('input');sourceSglInput.id='source-sgl-file';sourceSglInput.type='file';sourceSglInput.accept='.sgl,.obj,.ply,.stl';sourceSglInput.multiple=true;sourceSglInput.hidden=true;document.body.append(sourceSglInput);
+    let sourceSglRequestId=0;
+    window.obrushPickSourceSgl=id=>{sourceSglRequestId=id;sourceSglInput.value='';sourceSglInput.click();};
+    sourceSglInput.addEventListener('cancel',()=>handle.cancel_source_sgl_file_request(sourceSglRequestId));
+    let sourceFileBatchBusy=false;
+    const addSourceFiles=async(files,firstRequestId)=>{
+      if(!files.length)return;
+      if(sourceFileBatchBusy){
+        if(firstRequestId!==null)handle.cancel_source_sgl_file_request(firstRequestId);
+        notice('Source Add is already reading files.');
+        return;
+      }
+      sourceFileBatchBusy=true;
+      let id=firstRequestId;
+      const failures=[];
+      try{
+        for(let index=0;index<files.length;index++){
+          const file=files[index];
+          try{
+            if(id===null || index)id=handle.begin_next_source_sgl_file_request(nativeLittle);
+            if(file.size>128*1024*1024)throw Error('file exceeds the 128 MiB import limit');
+            handle.load_source_sgl_for_request(id,file.name,new Uint8Array(await file.arrayBuffer()),nativeLittle);
+          }catch(error){
+            if(id!==null)handle.cancel_source_sgl_file_request(id);
+            failures.push(`file ${index+1}: ${error}`);
+          }
+        }
+      }finally{
+        sourceFileBatchBusy=false;
+        if(failures.length)notice(`Source Add rejected ${failures.join('; ')}`);
+        canvas.focus();
+      }
+    };
+    sourceSglInput.addEventListener('change',async()=>{
+      const files=Array.from(sourceSglInput.files);
+      await addSourceFiles(files,sourceSglRequestId);
+    });
+    window.addEventListener('dragover',event=>{
+      if(event.dataTransfer?.types?.includes('Files'))event.preventDefault();
+    });
+    window.addEventListener('drop',event=>{
+      event.preventDefault();
+      if(!handle?.source_shortcut_profile()){
+        notice('Use Open or Add to import a file in this workspace.');
+        return;
+      }
+      const files=Array.from(event.dataTransfer?.files||[]).filter(file=>/\.(obj|sgl|ply|stl)$/i.test(file.name));
+      void addSourceFiles(files,null);
+    });
+    const alphaInput=document.getElementById('alpha-file');
+    let alphaRequestId=0;
+    window.obrushPickAlpha=requestId=>{ alphaRequestId=requestId; alphaInput.value=''; alphaInput.click(); };
+    alphaInput.addEventListener('change',async()=>{
+      const file=alphaInput.files[0]; if(!file)return;
+      const requestId=alphaRequestId;
+      try {
+        if(file.size>16*1024*1024)throw new Error('Alpha image exceeds the 16 MiB limit.');
+        // Original bytes share the desktop Rust decoder. Canvas2D would erase
+        // hidden RGB under alpha=0 and change the Mean RGB conversion.
+        const bytes=new Uint8Array(await file.arrayBuffer());
+        handle.load_alpha_image_for_request(requestId,file.name,bytes);canvas.focus();
+      } catch(error){notice(`Alpha import failed: ${error}`);}
+    });
+    window.obrushPickUVTexture=createViewportTextureInput(document.getElementById('uv-texture-file'),()=>handle,canvas,notice);
+    window.obrushPickBackground=createViewportTextureInput(document.getElementById('background-file'),()=>handle,canvas,notice,{current:'background_request_is_current',cancel:'cancel_background_request',load:'load_background_image_for_request',label:'Background image'});
+    for(const type of ['pointerdown','pointermove','pointerup','pointercancel']){
+      // Mouse chords may be pointermove events, so eframe's pointerdown mapping
+      // alone cannot cancel a region. Observe actual buttons before the runner.
+      document.addEventListener(type,event=>{
+        if(handle && (event.pointerType==='mouse' || event.pointerType==='pen')){
+          if(type==='pointercancel')handle.cancel_pointer_contact();
+          else {
+            const bounds=canvas.getBoundingClientRect();
+            handle.set_navigation_pointer(event.buttons,event.clientX-bounds.left,event.clientY-bounds.top,event.shiftKey);
+          }
+        }
+      },{capture:true});
+      canvas.addEventListener(type,event=>{
+        if(!handle)return;
+        if(event.pointerType==='pen'){
+          if(event.buttons || type==='pointerdown' || type==='pointerup' || type==='pointercancel')
+            handle.set_input_pressure(event.pressure,true,type==='pointerup'||type==='pointercancel');
+        }else if(event.pointerType==='mouse')handle.set_input_pressure(1,false,false);
+        const sourceRect=canvas.getBoundingClientRect();
+        handle.set_source_paint_input(event.pointerType==='pen'?event.pressure:0.5,event.pointerType==='pen',type==='pointerup'||type==='pointercancel',event.clientX-sourceRect.left,event.clientY-sourceRect.top,type==='pointercancel');
+      },{capture:true});
+    }
+    window.addEventListener('blur',()=>handle?.cancel_pointer_contact());
+    const topologyWorkers=new Map();
+    window.obrushStartTopology=(id,project,operation)=>{
+      const worker=new Worker(new URL('./topology-worker.js',import.meta.url),{type:'module'});
+      topologyWorkers.set(id,worker);
+      const finish=(success,contents)=>{
+        if(topologyWorkers.get(id)!==worker)return;
+        topologyWorkers.delete(id);worker.terminate();handle.complete_topology(id,success,contents);
+      };
+      worker.onmessage=event=>finish(event.data.success,event.data.contents);
+      worker.onerror=event=>{event.preventDefault();finish(false,event.message||'Background worker failed.');};
+      try { worker.postMessage({id,project,operation}); }
+      catch(error){topologyWorkers.delete(id);worker.terminate();throw error;}
+    };
+    window.obrushCancelTopology=id=>{
+      const worker=topologyWorkers.get(id);if(worker){topologyWorkers.delete(id);worker.terminate();}
+    };
+    window.obrushDownload=(name,contents)=>{
+      const url=URL.createObjectURL(new Blob([contents],{type:'text/plain;charset=utf-8'}));
+      const anchor=document.createElement('a'); anchor.href=url; anchor.download=name;
+      document.body.append(anchor); anchor.click(); anchor.remove(); setTimeout(()=>URL.revokeObjectURL(url),10000);
+    };
+    window.obrushDownloadBytes=(name,contents)=>{
+      const url=URL.createObjectURL(new Blob([contents],{type:'application/octet-stream'}));
+      const anchor=document.createElement('a'); anchor.href=url; anchor.download=name;
+      document.body.append(anchor); anchor.click(); anchor.remove(); setTimeout(()=>URL.revokeObjectURL(url),10000);
+    };
+    input.addEventListener('change',async()=>{
+      const file=input.files[0]; if(!file)return;
+      try {
+        const limit=handle.document_input_limit(file.name);
+        if(file.size>limit)throw new Error(`File exceeds the ${limit/(1024*1024)} MiB import limit.`);
+        handle.load_document_bytes(file.name,new Uint8Array(await file.arrayBuffer())); canvas.focus();
+      }
+      catch(error){ notice(`Import failed: ${error}`); }
+    });
+    canvas.addEventListener('contextmenu',e=>e.preventDefault());
+    try {
+      // This tiny valid module contains one v128.const instruction. Keep the
+      // portable Rust/WASM build available when the browser lacks SIMD.
+      const simdProbe=Uint8Array.from([0,97,115,109,1,0,0,0,1,5,1,96,0,1,123,3,2,1,0,10,22,1,20,0,253,12,...Array(16).fill(0),11]);
+      const allowSimd=!new URLSearchParams(window.location.search).has('wasm-scalar')&&WebAssembly.validate(simdProbe);
+      let appModule=null,wasmBackend='scalar';
+      if(allowSimd){
+        try { appModule=await import('./pkg-simd/obrush_app.js'); await appModule.default(); wasmBackend='simd'; }
+        catch { appModule=null; }
+      }
+      if(!appModule){appModule=await import('./pkg/obrush_app.js');await appModule.default();}
+      window.obrushWasmBackend=wasmBackend;
+      handle=new appModule.WebHandle(); await handle.start_with_query(canvas,window.location.search,navigator.language||'');
+      const brushPreview=new URLSearchParams(window.location.search).has('webgpu-brush-preview');
+      const gpuPick=!brushPreview&&new URLSearchParams(window.location.search).has('webgpu-gpu-pick');
+      const depthPick=!brushPreview&&new URLSearchParams(window.location.search).has('webgpu-depth-pick');
+      const profileStages=new URLSearchParams(window.location.search).has('webgpu-profile-stages');
+      residentPointer=createResidentPointerStudio(handle,canvas,notice,{gpuPick,depthPick,brush:brushPreview,profileStages});
+      document.getElementById('loading').remove(); canvas.focus();
+      if(new URLSearchParams(window.location.search).has('webgpu-preview')||brushPreview){
+        const button=document.createElement('button');
+        button.textContent=brushPreview?'WebGPU Brush · GPU-owned pick preview':depthPick?'WebGPU Inflate · depth pick preview':gpuPick?'WebGPU Inflate · GPU-owned ray pick preview':'WebGPU Inflate preview';
+        button.style.cssText='position:fixed;right:16px;top:16px;z-index:12;background:#292d35;color:#ffb483;border:1px solid #a86745;padding:8px 11px;border-radius:4px;cursor:pointer';
+        button.onclick=()=>window.obrushResidentPointerStart().catch(error=>notice(`WebGPU preview unavailable: ${error}`));
+        document.body.append(button);
+      }
+      setInterval(()=>{
+        if(handle.has_panicked()){
+          notice(`OBrush stopped: ${handle.panic_message() || 'Unexpected engine error'}. Reload to restart.`);
+        }
+      },2000);
+    } catch(error){
+      document.getElementById('loading-message').textContent=`Could not start OBrush: ${error}. A browser with WebGL2 support is required.`;
+      console.error(error);
+    }
+  </script>
+</body>
+</html>

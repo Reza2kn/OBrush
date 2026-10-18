@@ -1,0 +1,88 @@
+{
+  "utc": "2026-10-15T08:19:33.887252+00:00",
+  "version": "0.1.20",
+  "status": "Delivered SourcecameraReset/Frame foundation andscopedactualreferencecomparison; fullSculptGLparityUNVERIFIED,goalactive",
+  "problem": "Sourcecameraopt-instillusedLegacyFrame formula. FixedtetraSourcezoom2.43916180378013 vsRoot3.455842579536619 causedmax109.647171pixelXYdifference whiledepth/rotationmatched.",
+  "change": [
+    "Source-enabledFrame/Frameall nowfitmesh-onlyinitiallooseworldbounds with .8boxradius*currentSourcefrustumfit, preservinghiddenGrid clipbounds separately",
+    "Sourcecontroller usesexistingboundedcache,metadataaffines,precisebootFOV/renderpixelunits andatomictypedfitrefusal",
+    "NormalResetviewbuttonwhenSourceframingenabled setsimmediatecenter0/quatId/zoom80 endpoint; sameprojectiontype/FOV anddocument/history preserved",
+    "DefaultLegacycameramathunchanged;sourceemptySceneFrame resetsSourceview;LegacyemptySceneFrame unchanged"
+  ],
+  "binding": {
+    "source_manifest": "df8eb60e982c58a349278c3c8ebd68698f3502af318bb9c04ce417e3ebe9437d",
+    "build": "7b42d9a656f2d4b8c15f5da68918c32a2c5b915199516f2bc5383e4df4ad75e7",
+    "wasm": {
+      "path": "pkg/obrush_app_bg.wasm",
+      "bytes": 19172345,
+      "sha256": "10ca6b172b5332b070e01e6dd59f5ff09510f3d6260ebfeb48bfd2683115bac0"
+    },
+    "checked_receipt": "7aeeb1a3e4133659263340714043cd7ab9375b9c25208a2609f929829e688001",
+    "checks": "e45cc69d0711b36a1c84fa09e214aa8c5fd2f8b2a4856bcd2aaac571785dc5c4",
+    "main_transfer": "d6290ecf323892c3ccfd4a5fb542fba9109c309393ed583aa9456c9a13668a58",
+    "previewHTTP": "9cfacd0a8afdfa95182b2530933665664154eaf088e1c001576ede12820bce54"
+  },
+  "validation": {
+    "workspace": 2223,
+    "core": 1551,
+    "app": 672,
+    "ignored": 1,
+    "all5required_checks": "PASS",
+    "officialweb_macos_scripts": "PASS",
+    "native_opened": false,
+    "native_installed": false,
+    "scoped_camera_native_tests": 43,
+    "new_native_tests": 8,
+    "captured_native_zoom": 2.4391618037801366,
+    "reference_zoom": 2.43916180378013,
+    "native_zoom_abs_difference": 6.661338147750939e-15,
+    "native_scope": "Referencefourvertexorthographicfixture plus independently authoredreset/empty/collapsed/affine/DPR/invalid/perspectivecases; notallactualreference/nativeUI scopes"
+  },
+  "actual_browser": {
+    "originalnormal20_Lock3_closed": "7ffba4933000aa69514e4354ff520f0f854015c9e0036017625249d834c56fa2",
+    "default4": "d006f15ec7e94a0b58d0e623fe3095392cc68bad58696eeb248bfe8f46e3800f",
+    "larger4": "36fcc61eab2ca2d3ed587f4970b2127049abdfe981db95f2c8d9d7acafee0407",
+    "default_wholebytes_audit": "91da5b31e3b86263a8e05c542a382c329929b10d5b5328618495f381f8d5a60d",
+    "large_wholebytes_audit": "0c43134fdb20a7ec622bb00946873a46d180119e7f5920f6462efd82f962724c",
+    "newpaired_SM00": "57fb630416f38533cd0f9a37d65b07f0676f94cd6c993b0a6b003ecf343d2de5",
+    "paired_camera_raw_audit": "01879c9f9efb6ce3860d3bc3a8abee82226b38e7da45d41502920371c4bfe31a",
+    "whole8PNG_review": "d756e728bc8a1ad088c09c962566062adde0b0777105742ba9bc395ed7f490d6",
+    "paired_scope": {
+      "actual_reference_bundle": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+      "source_upstream_relation": "unestablished",
+      "DPR": 1,
+      "viewports": [
+        1024,
+        768
+      ],
+      "projection": "orthographic40degrees",
+      "geometry": "sameindependenttetra4vertices4originalfaces",
+      "actualall4vertex_XY_max": 0,
+      "actualall4vertex_depth_max": 0,
+      "actualnormalrotation_max": 0,
+      "both_foreignCube_priorRedo_Undo": "exactwholepublicfiles",
+      "GPU_scope": "Fulloriginalsmallfixturearmedprefixes andattributes; foreignCubefile/historytrialoutsideGPUwindow, noforeignCubeGPUequalityclaim",
+      "raw_packet_records": 154,
+      "raw_packet_bytes": 27396843,
+      "downloaded_files": 14,
+      "actual_Smooth_strokes": 0,
+      "meaning": "SM00normaldefaults/options/reset-frame only; no Smoothbrushgeometryparity conclusion"
+    },
+    "owned_cleanup": "AllChromeexit0signalnull/ownedserversclosed; errors[]/console[]/cleanup[]; pairedPIDabsence independentlyaudited"
+  },
+  "preserved_failures": [
+    "NativefirsttestcompileprivateMeshconstructor/leadingdotfloats then repairedtest; actualoldSourcefitnumericfailurebeforeproductedit",
+    "SM00C30 earlySource-onlynumericsetup eaeef9fa; modepublication78ff5690; absentUVparser679ec412; camera109px mismatchf80ac33f, allrawownedrunsretained",
+    "C31browserprepguardrefusedoldC30stageoverwrite before anybrowser; dynamicpathcorrected/newrootbrowser02",
+    "C31firstpairedcamera/body/historypassedbutforeigndefaultCubeGPUcapturedinsmallfixturewindowhitunchanged32MiBcap,a436ea1c;fullfailurepreserved. NewextraCPUhistorytrialmovedafteroriginalcapturedisarm; no errorclearing/tracedrops/capraise",
+    "IndependentSmoothboundaryexpectedliteralcorrectedfromprimaryrule, notproduct/math retune; helpernegative-testsyntax/raw-owner fixtureerrorspreserved"
+  ],
+  "limits": [
+    "Other15Smoothcases, fixedwarm/coalescedschedule andfocusSM04/SM15 gaps remainopen",
+    "No SourceResetanimation/navigationgain/generalhistorydependent octreebounds orpickedpivot parity",
+    "No actualperspective/HiDPI/nativeGUI/physicalpen orlongsession/p50p95performance comparison inferred",
+    "No newpixelcomparison gate; original37appearancecases notrerunonC31",
+    "Complete317pinnedSculptGLIDs+5appearancecontrols andZBrush2026.2.1goalremainactive"
+  ],
+  "preview": "http://127.0.0.1:8797/"
+}

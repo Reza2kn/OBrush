@@ -1,0 +1,57 @@
+{
+  "scope": "C72 exact static-stream reuse trial rejected after large browser timing; final product restored to C71",
+  "date": "2026-10-17",
+  "protocol_sha256": "234870ed03a240931a22f421968917efaeed8becc1df834c998bbe3e9c101a33",
+  "fixture_sha256": "dfb5316f62e392e633f03cb662dcb12215ed165a71a9ae72a3fd639528731afe",
+  "browser": "Chrome/155.0.8059.80 headless, owned profiles and loopback servers",
+  "parameters": {"vertices": 999002, "triangles": 1998000, "seconds": 60, "scheduled_motion_requests": 24000, "requests_per_second": 400, "brush": "Source Brush ordinary; fixed topology; radius 64 CSS px; intensity 0.25; no clay, accumulation, mirror or alpha"},
+  "candidates": [
+    {
+      "kind": "exact CPU triangle/material witness",
+      "wasm_sha256": "91786989e54ca86f830ca59f41c874bc272b8de278d90e8d1cf22bef6056866f",
+      "result": ".artifacts/sculptgl-sparse-guard-c69-stage/bench/actual/SP-LONG00-1m-60s-root-e0ff5575-cd8f-4da4-a0b9-fd80e2f0180f/result.json",
+      "scalar_sha256": "b71b96c1a39fd3a074b1deffdbfe3088e636f67f772590def13a226de2a14757",
+      "delivered_moves": 631,
+      "active_cpu_frame_p95_ms": 108.0,
+      "full_index_uploads": 0,
+      "full_material_uploads": 0,
+      "after_equals_redo_sha256": "b405499ca6af8545bc5089802108d342453710b5fc040b186d571a20ea7c66d0"
+    },
+    {
+      "kind": "byte-wise triangle witness",
+      "wasm_sha256": "d9a4a280395abed159d65d4c58d3cef1867d7127e92e9f8db6924acfa92af1f9",
+      "result": ".artifacts/sculptgl-sparse-guard-c69-stage/bench/actual/SP-LONG00-1m-60s-root-f5d39ab6-0854-4fae-ba9f-968534f1a731/result.json",
+      "scalar_sha256": "4f41b2bade7c5ec1740eeb6fee5ca5b65340af6f22fabaa701837d7575ae573c",
+      "delivered_moves": 636,
+      "active_cpu_frame_p95_ms": 111.3,
+      "full_index_uploads": 0,
+      "full_material_uploads": 0,
+      "after_equals_redo_sha256": "d8c85efaf896abd51a03fe8c1db1cca08492cabd11e87c734353241a0e56d283"
+    }
+  ],
+  "restored_baseline": {
+    "wasm_sha256": "d1dfe41a3c2582616bc8181e3fcae6747bdf97628ca78f9b6ce6a940df53dbf1",
+    "result": ".artifacts/sculptgl-sparse-guard-c69-stage/bench/actual/SP-LONG00-1m-60s-root-e03c7e02-a7cf-4a06-90ae-61d2cc8197f4/result.json",
+    "scalar_sha256": "09654c3811f4991ee4c48d6a6437de14006a17595ae714ae811b8d7b5db4ad95",
+    "delivered_moves": 684,
+    "active_cpu_frame_p95_ms": 97.3,
+    "full_index_uploads": 631,
+    "full_material_uploads": 631,
+    "after_equals_redo_sha256": "7e8adb650decb68a46a56c4d6c76ceca99005cbbc36182fce4569bb884aaeaac"
+  },
+  "retained_setup_failures": [
+    ".artifacts/sculptgl-sparse-guard-c69-stage/bench/actual/SP-LONG00-1m-60s-root-76d854b9-be08-4cd3-9990-3d0fa0471274/result.json",
+    ".artifacts/sculptgl-sparse-guard-c69-stage/bench/actual/SP-LONG00-1m-60s-root-a92f2a8c-e1dc-4b80-802a-fbe093350140/result.json",
+    ".artifacts/sculptgl-sparse-guard-c69-stage/bench/actual/SP-LONG00-1m-60s-root-2b73b625-f429-4393-a5b0-7b3cc564eb2e/result.json"
+  ],
+  "setup_helper_final_sha256": "e6999e0818127e82b6a1d148198b1f61e7d120b96283984ae782958d8df7f44a",
+  "browser_mask_extraction_regression": {
+    "candidate": "exact CPU triangle/material witness",
+    "result": ".artifacts/mask-filter-browser/static-upload-c72-1934dc0c-6961-4f1d-9e0d-6c18d75b6147/result.json",
+    "cases": 10,
+    "status": "passed mask filter browser workflows",
+    "index_reuse_gate": true
+  },
+  "decision": "reject and remove static CPU witness; no product performance or parity promotion",
+  "limitations": ["Different delivered contact counts preclude causal speed ratio", "Offline full mesh/shape audit is deferred for these new cohorts", "Current baseline still fails responsiveness gates", "No integrated WebGPU product path"]
+}

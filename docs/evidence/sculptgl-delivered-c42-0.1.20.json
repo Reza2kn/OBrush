@@ -1,0 +1,1826 @@
+{
+  "schema_version": 1,
+  "checked_at_utc": "2026-10-15T21:08:03.142225+00:00",
+  "status": "Delivered C42 scoped shared Source normal-history correction; SculptGL/ZBrush parity remains incomplete",
+  "version": "0.1.20",
+  "candidate": "C42",
+  "reference": {
+    "hosted_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "upstream_revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "hosted_upstream_equivalence": "unestablished",
+    "history_contract": "StateGeometry restores captured positions, then refreshes incident face normals and captured vertex rows from the CURRENT field; attribute history preserves current normals, unrelated meshes are untouched."
+  },
+  "implementation": {
+    "shared_core": "crates/obrush-core/src/source_history.rs",
+    "selected_union": "Original pre-culling/pre-mask selection union, including cold no-contribution selections before later useful writes; immutable Arc event attached after accepted dabs for open-gesture Undo.",
+    "transactions": "Fallible storage/normal reconstruction before stack exchange; budget rejection preserves document/history. Other-part current producers retain exact identity when their target geometry matches.",
+    "host": "Controlled Source geometry uses controlled kernel with and without alpha/mirror; ordinary Source Paint/Lock marks attribute history.",
+    "compatibility": "Legacy/generic and old narrow core APIs retain original normal-snapshot behavior."
+  },
+  "checks": {
+    "source_manifest": {
+      "path": ".artifacts/sculptgl-release-0.1.20-candidate42/source/manifest.json",
+      "bytes": 92146,
+      "sha256": "0576486ff902865e881b07db877cfd5c7c495489c1284f7b42d7be21bd26c498"
+    },
+    "active_stage_manifest": {
+      "path": ".artifacts/sculptgl-composite20-candidate42-history-stage/ACTIVE_SOURCE_MANIFEST.json",
+      "bytes": 91970,
+      "sha256": "f589d728a6766b26944eba5a365c2f148b7d84906b7085f6e1c2a1faa4ae26d5"
+    },
+    "source_rows": 510,
+    "actual_checks": {
+      "path": ".artifacts/sculptgl-composite20-candidate42-history-stage/root-check01/RESULT.json",
+      "bytes": 2583,
+      "sha256": "a150d46edb1ec387394ee5f51793ba7594b533fe2e724f57535823540f58cb0b"
+    },
+    "checked_receipt": {
+      "path": ".artifacts/sculptgl-composite20-candidate42-history-stage/FINAL_CHECKED_RECEIPT.json",
+      "bytes": 4194,
+      "sha256": "59d6ee2f416997f4b4f64efde9b4088182f5b281ca1acb79a7351ab02088ad01"
+    },
+    "tests": {
+      "core": 1579,
+      "host": 706,
+      "total": 2285,
+      "ignored": 1
+    },
+    "new_tests": {
+      "core": 11,
+      "host": 3,
+      "scope": [
+        "Current-field captured-row history, partial redo and open-gesture Undo",
+        "Protected/culled/no-contribution selection capture",
+        "Source attributes preserve current field",
+        "Other-part current-field preservation through history",
+        "Atomic memory rejection, no-op/cancel redo preservation",
+        "Actual no-alpha/no-mirror host and new stroke after Undo"
+      ]
+    },
+    "required_commands": [
+      [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      [
+        "cargo",
+        "check",
+        "--workspace",
+        "--all-targets",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ]
+    ]
+  },
+  "build": {
+    "record": {
+      "path": ".artifacts/sculptgl-release-0.1.20-candidate42/build-record.json",
+      "bytes": 10063,
+      "sha256": "8cd0686dd68b821aab2897ba9bd0c6be1c840314d0339e331764606aef0c1824"
+    },
+    "web_WASM": {
+      "path": "pkg/obrush_app_bg.wasm",
+      "bytes": 23248427,
+      "sha256": "15ec6fb4cf9a1b0f8075a0fc15cf066e2dcf7b5ce268a4aa692beb973b0c0407"
+    },
+    "web_files": 19,
+    "notices": 9,
+    "macOS": {
+      "binary": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.20-candidate42/source/.artifacts/OBrush.app/Contents/MacOS/OBrush",
+        "bytes": 26393248,
+        "sha256": "54535e37722806289612a8b4d0a26181ed0a31e68b0213dea0e880eeb60a40d7"
+      },
+      "ad_hoc_signature_verified_by_package_script": true,
+      "installed": false,
+      "opened": false
+    },
+    "official_builds": [
+      {
+        "key": "web",
+        "argv": [
+          "bash",
+          "scripts/build-web.sh"
+        ],
+        "exit_code": 0,
+        "seconds": 28.2749756660196,
+        "log": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.20-candidate42/web.log",
+        "log_sha256": "c76bbef16a10cd6b7fc658190a4a9203e975ef00876970cbc7a3c79c6a56f588",
+        "owned_process_closed": true
+      },
+      {
+        "key": "macos",
+        "argv": [
+          "bash",
+          "scripts/package-macos.sh"
+        ],
+        "exit_code": 0,
+        "seconds": 32.439452666963916,
+        "log": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.20-candidate42/macos.log",
+        "log_sha256": "2c7b247b889f7875a483ead75763509d7baf5e10459d372112c059089d6e9c10",
+        "owned_process_closed": true
+      }
+    ]
+  },
+  "actual_browser_comparisons": [
+    {
+      "case": "CW03",
+      "result": {
+        "path": ".artifacts/sculptgl-crease-runtime/candidate42-history-CW03-462e0be8-e574-4a2a-a256-64ecdafeb389/result.json",
+        "bytes": 41896816,
+        "sha256": "41e89378e543f8ea902667f08bb3ca7afa2029e2188d74caddc94093de06e203"
+      },
+      "helper_manifest": {
+        "path": ".artifacts/sculptgl-crease-history-c42-stage/MANIFEST.json",
+        "bytes": 31435,
+        "sha256": "6d20c2f2f9e17bdcd08b9d242722c5f38fa27801141c5942e58ba76a4a79a7c2"
+      },
+      "protocol_manifest": {
+        "path": ".artifacts/sculptgl-crease-history-c42-stage/protocol/manifest.json",
+        "bytes": 434,
+        "sha256": "c1cb02d8a3d5d6e4e3064b7c5efa0f50817e5e4f361cbd3d88fac8f93b69f8f8"
+      },
+      "artifact_audit": {
+        "path": ".artifacts/sculptgl-crease-history-c42-stage/ROOT_HISTORY_AUDIT.json",
+        "bytes": 34937,
+        "sha256": "d40b3bf2828818b0c471195663bed6d205099a95cacb114b1752d301aadd02e7"
+      },
+      "independent_math": {
+        "path": ".artifacts/sculptgl-crease-history-c42-stage/ROOT_INDEPENDENT_HISTORY_MATH.json",
+        "bytes": 13070,
+        "sha256": "99c55aa6224890553ccb67bd2e990128b086138d001cff8f194e921acaac9d13"
+      },
+      "whole_png_review": {
+        "path": ".artifacts/sculptgl-crease-history-c42-stage/ROOT_WHOLE_PNG_REVIEW.json",
+        "bytes": 3387,
+        "sha256": "17ba61d61e1c397ba457cfd227d901e7312b036dcb235e144f4b599dbe79f3aa"
+      },
+      "raw_records": 549,
+      "whole_public_downloads": 36,
+      "GPU_snapshots": 24,
+      "independent_forward_passes": 12,
+      "quiet": [
+        {
+          "side": "source",
+          "phase": "A",
+          "samples": 32,
+          "milliseconds": 516.5
+        },
+        {
+          "side": "source",
+          "phase": "B",
+          "samples": 32,
+          "milliseconds": 514.5
+        },
+        {
+          "side": "source",
+          "phase": "C",
+          "samples": 32,
+          "milliseconds": 501.7999999821186
+        },
+        {
+          "side": "root",
+          "phase": "A",
+          "samples": 31,
+          "milliseconds": 500.39999997615814
+        },
+        {
+          "side": "root",
+          "phase": "B",
+          "samples": 31,
+          "milliseconds": 500.0
+        },
+        {
+          "side": "root",
+          "phase": "C",
+          "samples": 32,
+          "milliseconds": 516.7000000178814
+        }
+      ],
+      "prefixes": [
+        {
+          "side": "source",
+          "frames": 70,
+          "bytes": 4555748
+        },
+        {
+          "side": "root",
+          "frames": 199,
+          "bytes": 9224233
+        }
+      ],
+      "paired_positions": [
+        {
+          "phase": "A",
+          "label": "Actual paired Flatten final original positions",
+          "rows": 6,
+          "words": 18,
+          "word_difference_count": 11,
+          "max_absolute_difference": 5.960464477539063e-08,
+          "RMS": 1.986948675659414e-08,
+          "differences": [
+            {
+              "row": 0,
+              "column": 0,
+              "expected_word": 3212749693,
+              "actual_word": 3212749694,
+              "expected": -0.9948042035102844,
+              "actual": -0.9948042631149292,
+              "absolute_difference": 5.960464477539063e-08
+            },
+            {
+              "row": 0,
+              "column": 1,
+              "expected_word": 984313230,
+              "actual_word": 984313228,
+              "expected": 0.0013078914489597082,
+              "actual": 0.0013078912161290646,
+              "absolute_difference": 2.3283064365386963e-10
+            },
+            {
+              "row": 1,
+              "column": 0,
+              "expected_word": 1065266045,
+              "actual_word": 1065266046,
+              "expected": 0.9948042035102844,
+              "actual": 0.9948042631149292,
+              "absolute_difference": 5.960464477539063e-08
+            },
+            {
+              "row": 1,
+              "column": 1,
+              "expected_word": 984313231,
+              "actual_word": 984313228,
+              "expected": 0.00130789156537503,
+              "actual": 0.0013078912161290646,
+              "absolute_difference": 3.4924596548080444e-10
+            },
+            {
+              "row": 2,
+              "column": 0,
+              "expected_word": 2871965646,
+              "actual_word": 2878069240,
+              "expected": -6.207229825624938e-13,
+              "actual": -9.937042508290084e-13,
+              "absolute_difference": 3.7298126826651457e-13
+            },
+            {
+              "row": 3,
+              "column": 1,
+              "expected_word": 968500080,
+              "actual_word": 968500073,
+              "expected": 0.0003550308756530285,
+              "actual": 0.0003550306719262153,
+              "absolute_difference": 2.0372681319713593e-10
+            },
+            {
+              "row": 3,
+              "column": 2,
+              "expected_word": 976814347,
+              "actual_word": 976814339,
+              "expected": 0.0007057345355860889,
+              "actual": 0.0007057340699248016,
+              "absolute_difference": 4.656612873077393e-10
+            },
+            {
+              "row": 4,
+              "column": 1,
+              "expected_word": 968500080,
+              "actual_word": 968500073,
+              "expected": 0.0003550308756530285,
+              "actual": 0.0003550306719262153,
+              "absolute_difference": 2.0372681319713593e-10
+            },
+            {
+              "row": 4,
+              "column": 2,
+              "expected_word": 976814347,
+              "actual_word": 976814339,
+              "expected": 0.0007057345355860889,
+              "actual": 0.0007057340699248016,
+              "absolute_difference": 4.656612873077393e-10
+            },
+            {
+              "row": 5,
+              "column": 0,
+              "expected_word": 720519898,
+              "actual_word": 2855198158,
+              "expected": 4.3034223103435854e-13,
+              "actual": -1.553125846247977e-13,
+              "absolute_difference": 5.856548156591562e-13
+            },
+            {
+              "row": 5,
+              "column": 2,
+              "expected_word": 1001495963,
+              "actual_word": 1001495962,
+              "expected": 0.005420399364084005,
+              "actual": 0.005420398898422718,
+              "absolute_difference": 4.656612873077393e-10
+            }
+          ],
+          "exact_words": false,
+          "expected_sha256": "64b121e5e777e57231ef28051bd04aaf8060eedfdd936f6947aafa6097ad954b",
+          "actual_sha256": "a1b6b7fc275a4eb045941a89e8c6c9cb17fe7650814bbf494995f0c8548bdf66"
+        },
+        {
+          "phase": "B",
+          "label": "Actual paired Flatten final original positions",
+          "rows": 6,
+          "words": 18,
+          "word_difference_count": 11,
+          "max_absolute_difference": 5.960464477539063e-08,
+          "RMS": 1.9871911823455354e-08,
+          "differences": [
+            {
+              "row": 0,
+              "column": 0,
+              "expected_word": 3212749693,
+              "actual_word": 3212749694,
+              "expected": -0.9948042035102844,
+              "actual": -0.9948042631149292,
+              "absolute_difference": 5.960464477539063e-08
+            },
+            {
+              "row": 0,
+              "column": 1,
+              "expected_word": 984313230,
+              "actual_word": 984313228,
+              "expected": 0.0013078914489597082,
+              "actual": 0.0013078912161290646,
+              "absolute_difference": 2.3283064365386963e-10
+            },
+            {
+              "row": 1,
+              "column": 0,
+              "expected_word": 1065266045,
+              "actual_word": 1065266046,
+              "expected": 0.9948042035102844,
+              "actual": 0.9948042631149292,
+              "absolute_difference": 5.960464477539063e-08
+            },
+            {
+              "row": 1,
+              "column": 1,
+              "expected_word": 984313231,
+              "actual_word": 984313228,
+              "expected": 0.00130789156537503,
+              "actual": 0.0013078912161290646,
+              "absolute_difference": 3.4924596548080444e-10
+            },
+            {
+              "row": 2,
+              "column": 0,
+              "expected_word": 736670143,
+              "actual_word": 2895737937,
+              "expected": 1.6533925921088932e-12,
+              "actual": -4.3614352580878535e-12,
+              "absolute_difference": 6.014827850196747e-12
+            },
+            {
+              "row": 3,
+              "column": 1,
+              "expected_word": 968500080,
+              "actual_word": 968500073,
+              "expected": 0.0003550308756530285,
+              "actual": 0.0003550306719262153,
+              "absolute_difference": 2.0372681319713593e-10
+            },
+            {
+              "row": 3,
+              "column": 2,
+              "expected_word": 976814347,
+              "actual_word": 976814339,
+              "expected": 0.0007057345355860889,
+              "actual": 0.0007057340699248016,
+              "absolute_difference": 4.656612873077393e-10
+            },
+            {
+              "row": 4,
+              "column": 1,
+              "expected_word": 968500080,
+              "actual_word": 968500073,
+              "expected": 0.0003550308756530285,
+              "actual": 0.0003550306719262153,
+              "absolute_difference": 2.0372681319713593e-10
+            },
+            {
+              "row": 4,
+              "column": 2,
+              "expected_word": 976814347,
+              "actual_word": 976814339,
+              "expected": 0.0007057345355860889,
+              "actual": 0.0007057340699248016,
+              "absolute_difference": 4.656612873077393e-10
+            },
+            {
+              "row": 5,
+              "column": 0,
+              "expected_word": 724990753,
+              "actual_word": 2857849563,
+              "expected": 6.483026463756369e-13,
+              "actual": -1.912458228890343e-13,
+              "absolute_difference": 8.395484692646712e-13
+            },
+            {
+              "row": 5,
+              "column": 2,
+              "expected_word": 1002590667,
+              "actual_word": 1002590664,
+              "expected": 0.005930160637944937,
+              "actual": 0.005930159240961075,
+              "absolute_difference": 1.3969838619232178e-09
+            }
+          ],
+          "exact_words": false,
+          "expected_sha256": "bacf065089be66ab1e7565ac99438ba2c1b283f82715fffa9f2f9db06c98ded2",
+          "actual_sha256": "00b95079ca48bede7ee3d839252cda42041621fa6a6bcf27a8709f60c18cd320"
+        },
+        {
+          "phase": "C",
+          "label": "Actual paired Flatten final original positions",
+          "rows": 6,
+          "words": 18,
+          "word_difference_count": 12,
+          "max_absolute_difference": 5.960464477539063e-08,
+          "RMS": 2.4372403878240686e-08,
+          "differences": [
+            {
+              "row": 0,
+              "column": 0,
+              "expected_word": 3212478670,
+              "actual_word": 3212478671,
+              "expected": -0.9786499738693237,
+              "actual": -0.9786500334739685,
+              "absolute_difference": 5.960464477539063e-08
+            },
+            {
+              "row": 0,
+              "column": 1,
+              "expected_word": 1001396660,
+              "actual_word": 1001396653,
+              "expected": 0.005374157801270485,
+              "actual": 0.005374154541641474,
+              "absolute_difference": 3.259629011154175e-09
+            },
+            {
+              "row": 1,
+              "column": 0,
+              "expected_word": 1064995022,
+              "actual_word": 1064995023,
+              "expected": 0.9786499738693237,
+              "actual": 0.9786500334739685,
+              "absolute_difference": 5.960464477539063e-08
+            },
+            {
+              "row": 1,
+              "column": 1,
+              "expected_word": 1001396660,
+              "actual_word": 1001396653,
+              "expected": 0.005374157801270485,
+              "actual": 0.005374154541641474,
+              "absolute_difference": 3.259629011154175e-09
+            },
+            {
+              "row": 2,
+              "column": 0,
+              "expected_word": 759963633,
+              "actual_word": 2906565695,
+              "expected": 1.1603149864536366e-11,
+              "actual": -1.0838495899390121e-11,
+              "absolute_difference": 2.2441645763926488e-11
+            },
+            {
+              "row": 2,
+              "column": 2,
+              "expected_word": 1056638990,
+              "actual_word": 1056638992,
+              "expected": 0.4902958273887634,
+              "actual": 0.4902958869934082,
+              "absolute_difference": 5.960464477539063e-08
+            },
+            {
+              "row": 3,
+              "column": 1,
+              "expected_word": 985552145,
+              "actual_word": 985552137,
+              "expected": 0.0014521201374009252,
+              "actual": 0.0014521192060783505,
+              "absolute_difference": 9.313225746154785e-10
+            },
+            {
+              "row": 3,
+              "column": 2,
+              "expected_word": 993855723,
+              "actual_word": 993855714,
+              "expected": 0.002884442685171962,
+              "actual": 0.002884440589696169,
+              "absolute_difference": 2.0954757928848267e-09
+            },
+            {
+              "row": 4,
+              "column": 1,
+              "expected_word": 985552144,
+              "actual_word": 985552137,
+              "expected": 0.0014521200209856033,
+              "actual": 0.0014521192060783505,
+              "absolute_difference": 8.149072527885437e-10
+            },
+            {
+              "row": 4,
+              "column": 2,
+              "expected_word": 993855722,
+              "actual_word": 993855714,
+              "expected": 0.002884442452341318,
+              "actual": 0.002884440589696169,
+              "absolute_difference": 1.862645149230957e-09
+            },
+            {
+              "row": 5,
+              "column": 0,
+              "expected_word": 2870703962,
+              "actual_word": 748123933,
+              "expected": -5.523269558729837e-13,
+              "actual": 4.304902354729245e-12,
+              "absolute_difference": 4.857229310602229e-12
+            },
+            {
+              "row": 5,
+              "column": 2,
+              "expected_word": 1018801879,
+              "actual_word": 1018801878,
+              "expected": 0.02266637794673443,
+              "actual": 0.02266637608408928,
+              "absolute_difference": 1.862645149230957e-09
+            }
+          ],
+          "exact_words": false,
+          "expected_sha256": "6454f866b39b0b36d10a3fbc351d7e7efd66f05a39ef255941dddea560a15639",
+          "actual_sha256": "0cffbfaf6c2181bf427512f3665463b6b1ff4e953f71062eaa00e00a58b9f33c"
+        }
+      ],
+      "history": [
+        {
+          "step": "UndoC",
+          "difference": {
+            "label": "Paired current-field history UndoC",
+            "rows": 6,
+            "words": 18,
+            "word_difference_count": 12,
+            "max_absolute_difference": 1.1920928955078125e-07,
+            "RMS": 4.8673021912055873e-08,
+            "differences": [
+              {
+                "row": 0,
+                "column": 0,
+                "expected_word": 2859605760,
+                "actual_word": 0,
+                "expected": -2.1504673042294087e-13,
+                "actual": 0,
+                "absolute_difference": 2.1504673042294087e-13
+              },
+              {
+                "row": 0,
+                "column": 1,
+                "expected_word": 997252339,
+                "actual_word": 997252340,
+                "expected": 0.003675278974696994,
+                "actual": 0.0036752792075276375,
+                "absolute_difference": 2.3283064365386963e-10
+              },
+              {
+                "row": 0,
+                "column": 2,
+                "expected_word": 1073150195,
+                "actual_word": 1073150196,
+                "expected": 1.9294723272323608,
+                "actual": 1.9294724464416504,
+                "absolute_difference": 1.1920928955078125e-07
+              },
+              {
+                "row": 1,
+                "column": 0,
+                "expected_word": 2859605760,
+                "actual_word": 0,
+                "expected": -2.1504673042294087e-13,
+                "actual": 0,
+                "absolute_difference": 2.1504673042294087e-13
+              },
+              {
+                "row": 1,
+                "column": 1,
+                "expected_word": 997252339,
+                "actual_word": 997252340,
+                "expected": 0.003675278974696994,
+                "actual": 0.0036752792075276375,
+                "absolute_difference": 2.3283064365386963e-10
+              },
+              {
+                "row": 1,
+                "column": 2,
+                "expected_word": 1073150195,
+                "actual_word": 1073150196,
+                "expected": 1.9294723272323608,
+                "actual": 1.9294724464416504,
+                "absolute_difference": 1.1920928955078125e-07
+              },
+              {
+                "row": 2,
+                "column": 0,
+                "expected_word": 2859605760,
+                "actual_word": 0,
+                "expected": -2.1504673042294087e-13,
+                "actual": 0,
+                "absolute_difference": 2.1504673042294087e-13
+              },
+              {
+                "row": 2,
+                "column": 1,
+                "expected_word": 997252339,
+                "actual_word": 997252340,
+                "expected": 0.003675278974696994,
+                "actual": 0.0036752792075276375,
+                "absolute_difference": 2.3283064365386963e-10
+              },
+              {
+                "row": 2,
+                "column": 2,
+                "expected_word": 1073150195,
+                "actual_word": 1073150196,
+                "expected": 1.9294723272323608,
+                "actual": 1.9294724464416504,
+                "absolute_difference": 1.1920928955078125e-07
+              },
+              {
+                "row": 3,
+                "column": 1,
+                "expected_word": 3156931558,
+                "actual_word": 3156931556,
+                "expected": -0.010434126481413841,
+                "actual": -0.010434124618768692,
+                "absolute_difference": 1.862645149230957e-09
+              },
+              {
+                "row": 4,
+                "column": 1,
+                "expected_word": 3156931558,
+                "actual_word": 3156931556,
+                "expected": -0.010434126481413841,
+                "actual": -0.010434124618768692,
+                "absolute_difference": 1.862645149230957e-09
+              },
+              {
+                "row": 5,
+                "column": 1,
+                "expected_word": 3156931558,
+                "actual_word": 3156931556,
+                "expected": -0.010434126481413841,
+                "actual": -0.010434124618768692,
+                "absolute_difference": 1.862645149230957e-09
+              }
+            ],
+            "exact_words": false,
+            "expected_sha256": "438cca482f69b82ece5bca72e597d142a04dd9828bb43c66136f7b869897844c",
+            "actual_sha256": "81f354e7bb15f6b323f315163621e58699d5e5569b0e8a24c78c71f0082e8df3"
+          }
+        },
+        {
+          "step": "UndoB",
+          "difference": {
+            "label": "Paired current-field history UndoB",
+            "rows": 6,
+            "words": 18,
+            "word_difference_count": 11,
+            "max_absolute_difference": 1.1920928955078125e-07,
+            "RMS": 4.867104185240529e-08,
+            "differences": [
+              {
+                "row": 0,
+                "column": 0,
+                "expected_word": 2859605760,
+                "actual_word": 0,
+                "expected": -2.1504673042294087e-13,
+                "actual": 0,
+                "absolute_difference": 2.1504673042294087e-13
+              },
+              {
+                "row": 0,
+                "column": 1,
+                "expected_word": 997252339,
+                "actual_word": 997252340,
+                "expected": 0.003675278974696994,
+                "actual": 0.0036752792075276375,
+                "absolute_difference": 2.3283064365386963e-10
+              },
+              {
+                "row": 0,
+                "column": 2,
+                "expected_word": 1073150195,
+                "actual_word": 1073150196,
+                "expected": 1.9294723272323608,
+                "actual": 1.9294724464416504,
+                "absolute_difference": 1.1920928955078125e-07
+              },
+              {
+                "row": 1,
+                "column": 0,
+                "expected_word": 2859605760,
+                "actual_word": 0,
+                "expected": -2.1504673042294087e-13,
+                "actual": 0,
+                "absolute_difference": 2.1504673042294087e-13
+              },
+              {
+                "row": 1,
+                "column": 1,
+                "expected_word": 997252339,
+                "actual_word": 997252340,
+                "expected": 0.003675278974696994,
+                "actual": 0.0036752792075276375,
+                "absolute_difference": 2.3283064365386963e-10
+              },
+              {
+                "row": 1,
+                "column": 2,
+                "expected_word": 1073150195,
+                "actual_word": 1073150196,
+                "expected": 1.9294723272323608,
+                "actual": 1.9294724464416504,
+                "absolute_difference": 1.1920928955078125e-07
+              },
+              {
+                "row": 2,
+                "column": 0,
+                "expected_word": 2859613952,
+                "actual_word": 0,
+                "expected": -2.1515775272540338e-13,
+                "actual": 0,
+                "absolute_difference": 2.1515775272540338e-13
+              },
+              {
+                "row": 2,
+                "column": 1,
+                "expected_word": 997260488,
+                "actual_word": 997260489,
+                "expected": 0.003677176311612129,
+                "actual": 0.003677176544442773,
+                "absolute_difference": 2.3283064365386963e-10
+              },
+              {
+                "row": 2,
+                "column": 2,
+                "expected_word": 1073400726,
+                "actual_word": 1073400727,
+                "expected": 1.9593379497528076,
+                "actual": 1.9593380689620972,
+                "absolute_difference": 1.1920928955078125e-07
+              },
+              {
+                "row": 3,
+                "column": 1,
+                "expected_word": 3156931558,
+                "actual_word": 3156931556,
+                "expected": -0.010434126481413841,
+                "actual": -0.010434124618768692,
+                "absolute_difference": 1.862645149230957e-09
+              },
+              {
+                "row": 4,
+                "column": 1,
+                "expected_word": 3156931558,
+                "actual_word": 3156931556,
+                "expected": -0.010434126481413841,
+                "actual": -0.010434124618768692,
+                "absolute_difference": 1.862645149230957e-09
+              }
+            ],
+            "exact_words": false,
+            "expected_sha256": "55cc716f0bfd4536c353b4a80142f485ec4bdbfc5599cb2d1f749c08da52848d",
+            "actual_sha256": "1d3492b7087c3e0f314f9838de2cdd19f981dcdd42bf12b1ef48625738d519d0"
+          }
+        },
+        {
+          "step": "UndoA",
+          "difference": {
+            "label": "Paired current-field history UndoA",
+            "rows": 6,
+            "words": 18,
+            "word_difference_count": 0,
+            "max_absolute_difference": 0,
+            "RMS": 0,
+            "differences": [],
+            "exact_words": true,
+            "expected_sha256": "02ae08a2b93db20f63dc01a5764435b7315c5ffc0d305ca0d8c13dd6454b9adb",
+            "actual_sha256": "02ae08a2b93db20f63dc01a5764435b7315c5ffc0d305ca0d8c13dd6454b9adb"
+          }
+        },
+        {
+          "step": "RedoA",
+          "difference": {
+            "label": "Paired current-field history RedoA",
+            "rows": 6,
+            "words": 18,
+            "word_difference_count": 9,
+            "max_absolute_difference": 1.1920928955078125e-07,
+            "RMS": 4.8667081491423136e-08,
+            "differences": [
+              {
+                "row": 0,
+                "column": 0,
+                "expected_word": 2859613952,
+                "actual_word": 0,
+                "expected": -2.1515775272540338e-13,
+                "actual": 0,
+                "absolute_difference": 2.1515775272540338e-13
+              },
+              {
+                "row": 0,
+                "column": 1,
+                "expected_word": 997260488,
+                "actual_word": 997260489,
+                "expected": 0.003677176311612129,
+                "actual": 0.003677176544442773,
+                "absolute_difference": 2.3283064365386963e-10
+              },
+              {
+                "row": 0,
+                "column": 2,
+                "expected_word": 1073400726,
+                "actual_word": 1073400727,
+                "expected": 1.9593379497528076,
+                "actual": 1.9593380689620972,
+                "absolute_difference": 1.1920928955078125e-07
+              },
+              {
+                "row": 1,
+                "column": 0,
+                "expected_word": 2859613952,
+                "actual_word": 0,
+                "expected": -2.1515775272540338e-13,
+                "actual": 0,
+                "absolute_difference": 2.1515775272540338e-13
+              },
+              {
+                "row": 1,
+                "column": 1,
+                "expected_word": 997260488,
+                "actual_word": 997260489,
+                "expected": 0.003677176311612129,
+                "actual": 0.003677176544442773,
+                "absolute_difference": 2.3283064365386963e-10
+              },
+              {
+                "row": 1,
+                "column": 2,
+                "expected_word": 1073400726,
+                "actual_word": 1073400727,
+                "expected": 1.9593379497528076,
+                "actual": 1.9593380689620972,
+                "absolute_difference": 1.1920928955078125e-07
+              },
+              {
+                "row": 2,
+                "column": 0,
+                "expected_word": 2859613952,
+                "actual_word": 0,
+                "expected": -2.1515775272540338e-13,
+                "actual": 0,
+                "absolute_difference": 2.1515775272540338e-13
+              },
+              {
+                "row": 2,
+                "column": 1,
+                "expected_word": 997260488,
+                "actual_word": 997260489,
+                "expected": 0.003677176311612129,
+                "actual": 0.003677176544442773,
+                "absolute_difference": 2.3283064365386963e-10
+              },
+              {
+                "row": 2,
+                "column": 2,
+                "expected_word": 1073400726,
+                "actual_word": 1073400727,
+                "expected": 1.9593379497528076,
+                "actual": 1.9593380689620972,
+                "absolute_difference": 1.1920928955078125e-07
+              }
+            ],
+            "exact_words": false,
+            "expected_sha256": "c15d2a1bac6098aca9cdf8fdcc7b728279cba039db44b5f604a81c0dd014c6f1",
+            "actual_sha256": "54f7d66ec528bbfef4f3384d827ebf03848c7bbdf142cf2fff81b1b5791a473c"
+          }
+        },
+        {
+          "step": "RedoB",
+          "difference": {
+            "label": "Paired current-field history RedoB",
+            "rows": 6,
+            "words": 18,
+            "word_difference_count": 10,
+            "max_absolute_difference": 1.1920928955078125e-07,
+            "RMS": 4.866906171219766e-08,
+            "differences": [
+              {
+                "row": 0,
+                "column": 0,
+                "expected_word": 2859613952,
+                "actual_word": 0,
+                "expected": -2.1515775272540338e-13,
+                "actual": 0,
+                "absolute_difference": 2.1515775272540338e-13
+              },
+              {
+                "row": 0,
+                "column": 1,
+                "expected_word": 997260488,
+                "actual_word": 997260489,
+                "expected": 0.003677176311612129,
+                "actual": 0.003677176544442773,
+                "absolute_difference": 2.3283064365386963e-10
+              },
+              {
+                "row": 0,
+                "column": 2,
+                "expected_word": 1073400726,
+                "actual_word": 1073400727,
+                "expected": 1.9593379497528076,
+                "actual": 1.9593380689620972,
+                "absolute_difference": 1.1920928955078125e-07
+              },
+              {
+                "row": 1,
+                "column": 0,
+                "expected_word": 2859613952,
+                "actual_word": 0,
+                "expected": -2.1515775272540338e-13,
+                "actual": 0,
+                "absolute_difference": 2.1515775272540338e-13
+              },
+              {
+                "row": 1,
+                "column": 1,
+                "expected_word": 997260488,
+                "actual_word": 997260489,
+                "expected": 0.003677176311612129,
+                "actual": 0.003677176544442773,
+                "absolute_difference": 2.3283064365386963e-10
+              },
+              {
+                "row": 1,
+                "column": 2,
+                "expected_word": 1073400726,
+                "actual_word": 1073400727,
+                "expected": 1.9593379497528076,
+                "actual": 1.9593380689620972,
+                "absolute_difference": 1.1920928955078125e-07
+              },
+              {
+                "row": 2,
+                "column": 0,
+                "expected_word": 2859605760,
+                "actual_word": 0,
+                "expected": -2.1504673042294087e-13,
+                "actual": 0,
+                "absolute_difference": 2.1504673042294087e-13
+              },
+              {
+                "row": 2,
+                "column": 1,
+                "expected_word": 997252339,
+                "actual_word": 997252340,
+                "expected": 0.003675278974696994,
+                "actual": 0.0036752792075276375,
+                "absolute_difference": 2.3283064365386963e-10
+              },
+              {
+                "row": 2,
+                "column": 2,
+                "expected_word": 1073150195,
+                "actual_word": 1073150196,
+                "expected": 1.9294723272323608,
+                "actual": 1.9294724464416504,
+                "absolute_difference": 1.1920928955078125e-07
+              },
+              {
+                "row": 5,
+                "column": 1,
+                "expected_word": 3156931558,
+                "actual_word": 3156931556,
+                "expected": -0.010434126481413841,
+                "actual": -0.010434124618768692,
+                "absolute_difference": 1.862645149230957e-09
+              }
+            ],
+            "exact_words": false,
+            "expected_sha256": "c967ad134767fc6e42480078cd1b8d1fa9350c8641f85f043debc7acb1b3b8eb",
+            "actual_sha256": "0b468228dbd66ff089939bee4d0756050466b1e1ff4151e17b171522eaaac049"
+          }
+        },
+        {
+          "step": "RedoC",
+          "difference": {
+            "label": "Paired current-field history RedoC",
+            "rows": 6,
+            "words": 18,
+            "word_difference_count": 9,
+            "max_absolute_difference": 1.1920928955078125e-07,
+            "RMS": 6.775871174381521e-08,
+            "differences": [
+              {
+                "row": 0,
+                "column": 1,
+                "expected_word": 1016805627,
+                "actual_word": 1016805565,
+                "expected": 0.018948068842291832,
+                "actual": 0.01894795335829258,
+                "absolute_difference": 1.1548399925231934e-07
+              },
+              {
+                "row": 0,
+                "column": 2,
+                "expected_word": 1072113132,
+                "actual_word": 1072113133,
+                "expected": 1.805844783782959,
+                "actual": 1.8058449029922485,
+                "absolute_difference": 1.1920928955078125e-07
+              },
+              {
+                "row": 1,
+                "column": 1,
+                "expected_word": 1016805627,
+                "actual_word": 1016805565,
+                "expected": 0.018948068842291832,
+                "actual": 0.01894795335829258,
+                "absolute_difference": 1.1548399925231934e-07
+              },
+              {
+                "row": 1,
+                "column": 2,
+                "expected_word": 1072113132,
+                "actual_word": 1072113133,
+                "expected": 1.805844783782959,
+                "actual": 1.8058449029922485,
+                "absolute_difference": 1.1920928955078125e-07
+              },
+              {
+                "row": 2,
+                "column": 1,
+                "expected_word": 1016805627,
+                "actual_word": 1016805565,
+                "expected": 0.018948068842291832,
+                "actual": 0.01894795335829258,
+                "absolute_difference": 1.1548399925231934e-07
+              },
+              {
+                "row": 2,
+                "column": 2,
+                "expected_word": 1072113132,
+                "actual_word": 1072113133,
+                "expected": 1.805844783782959,
+                "actual": 1.8058449029922485,
+                "absolute_difference": 1.1920928955078125e-07
+              },
+              {
+                "row": 3,
+                "column": 0,
+                "expected_word": 796140669,
+                "actual_word": 0,
+                "expected": 2.2204633964850728e-10,
+                "actual": 0,
+                "absolute_difference": 2.2204633964850728e-10
+              },
+              {
+                "row": 4,
+                "column": 0,
+                "expected_word": 796140669,
+                "actual_word": 0,
+                "expected": 2.2204633964850728e-10,
+                "actual": 0,
+                "absolute_difference": 2.2204633964850728e-10
+              },
+              {
+                "row": 5,
+                "column": 0,
+                "expected_word": 796140669,
+                "actual_word": 0,
+                "expected": 2.2204633964850728e-10,
+                "actual": 0,
+                "absolute_difference": 2.2204633964850728e-10
+              }
+            ],
+            "exact_words": false,
+            "expected_sha256": "a2b0a693163de2e9e6b05bd3dd34ddbec178bf81839452fbeda84594a381fb3e",
+            "actual_sha256": "5b567067ceb10d33be3f56d817cd63c4a5a885303b67df962bc022bd1a8898cc"
+          }
+        }
+      ],
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_servers_closed": 2
+      }
+    },
+    {
+      "case": "CW04",
+      "result": {
+        "path": ".artifacts/sculptgl-crease-runtime/candidate42-history-CW04-ffc91623-1278-44a8-a332-80e2c5a03d1c/result.json",
+        "bytes": 44951698,
+        "sha256": "b8bb450b38766d3823167e9062d7ce71bef823dedfaba28c7b976862ba1bf278"
+      },
+      "helper_manifest": {
+        "path": ".artifacts/sculptgl-crease-postundo-c42-stage/MANIFEST.json",
+        "bytes": 31482,
+        "sha256": "3be3881cf83918be937a9c295f7324d1e3f45ac6b2fc3b68a2e20751c724b543"
+      },
+      "protocol_manifest": {
+        "path": ".artifacts/sculptgl-crease-postundo-c42-stage/protocol/manifest.json",
+        "bytes": 397,
+        "sha256": "39a36456ba17f8d575b48346c38da0b3b9820ac1f492a9f94055d258e7fe20fa"
+      },
+      "artifact_audit": {
+        "path": ".artifacts/sculptgl-crease-postundo-c42-stage/ROOT_POSTUNDO_AUDIT.json",
+        "bytes": 32455,
+        "sha256": "d2c40fcb17f145341a29b37714ffaee60172c4833062ed45c5b221c7a5ce6ffa"
+      },
+      "independent_math": {
+        "path": ".artifacts/sculptgl-crease-postundo-c42-stage/ROOT_INDEPENDENT_POSTUNDO_MATH.json",
+        "bytes": 13179,
+        "sha256": "7acc4a63daba9377265aac8ea36c1d424bfa082f9474a594909af7e41fc7175e"
+      },
+      "whole_png_review": {
+        "path": ".artifacts/sculptgl-crease-postundo-c42-stage/ROOT_WHOLE_PNG_REVIEW.json",
+        "bytes": 3526,
+        "sha256": "c642b936b9f650fcd6c1922ee9d095e3fab5dd46580c0288df8030decb761f1d"
+      },
+      "raw_records": 629,
+      "whole_public_downloads": 36,
+      "GPU_snapshots": 22,
+      "independent_forward_passes": 16,
+      "quiet": [
+        {
+          "side": "source",
+          "phase": "A",
+          "samples": 31,
+          "milliseconds": 500.0
+        },
+        {
+          "side": "source",
+          "phase": "B",
+          "samples": 32,
+          "milliseconds": 510.40000000596046
+        },
+        {
+          "side": "source",
+          "phase": "C",
+          "samples": 32,
+          "milliseconds": 502.80000001192093
+        },
+        {
+          "side": "source",
+          "phase": "D",
+          "samples": 32,
+          "milliseconds": 507.90000000596046
+        },
+        {
+          "side": "root",
+          "phase": "A",
+          "samples": 31,
+          "milliseconds": 500.7000000178814
+        },
+        {
+          "side": "root",
+          "phase": "B",
+          "samples": 32,
+          "milliseconds": 516.6999999880791
+        },
+        {
+          "side": "root",
+          "phase": "C",
+          "samples": 32,
+          "milliseconds": 516.2000000178814
+        },
+        {
+          "side": "root",
+          "phase": "D",
+          "samples": 31,
+          "milliseconds": 500.0
+        }
+      ],
+      "prefixes": [
+        {
+          "side": "source",
+          "frames": 71,
+          "bytes": 4615931
+        },
+        {
+          "side": "root",
+          "frames": 205,
+          "bytes": 9502429
+        }
+      ],
+      "paired_positions": [
+        {
+          "phase": "A",
+          "label": "Actual paired Flatten final original positions",
+          "rows": 6,
+          "words": 18,
+          "word_difference_count": 11,
+          "max_absolute_difference": 5.960464477539063e-08,
+          "RMS": 1.986948675659414e-08,
+          "differences": [
+            {
+              "row": 0,
+              "column": 0,
+              "expected_word": 3212749693,
+              "actual_word": 3212749694,
+              "expected": -0.9948042035102844,
+              "actual": -0.9948042631149292,
+              "absolute_difference": 5.960464477539063e-08
+            },
+            {
+              "row": 0,
+              "column": 1,
+              "expected_word": 984313230,
+              "actual_word": 984313228,
+              "expected": 0.0013078914489597082,
+              "actual": 0.0013078912161290646,
+              "absolute_difference": 2.3283064365386963e-10
+            },
+            {
+              "row": 1,
+              "column": 0,
+              "expected_word": 1065266045,
+              "actual_word": 1065266046,
+              "expected": 0.9948042035102844,
+              "actual": 0.9948042631149292,
+              "absolute_difference": 5.960464477539063e-08
+            },
+            {
+              "row": 1,
+              "column": 1,
+              "expected_word": 984313231,
+              "actual_word": 984313228,
+              "expected": 0.00130789156537503,
+              "actual": 0.0013078912161290646,
+              "absolute_difference": 3.4924596548080444e-10
+            },
+            {
+              "row": 2,
+              "column": 0,
+              "expected_word": 2871965646,
+              "actual_word": 2878069240,
+              "expected": -6.207229825624938e-13,
+              "actual": -9.937042508290084e-13,
+              "absolute_difference": 3.7298126826651457e-13
+            },
+            {
+              "row": 3,
+              "column": 1,
+              "expected_word": 968500080,
+              "actual_word": 968500073,
+              "expected": 0.0003550308756530285,
+              "actual": 0.0003550306719262153,
+              "absolute_difference": 2.0372681319713593e-10
+            },
+            {
+              "row": 3,
+              "column": 2,
+              "expected_word": 976814347,
+              "actual_word": 976814339,
+              "expected": 0.0007057345355860889,
+              "actual": 0.0007057340699248016,
+              "absolute_difference": 4.656612873077393e-10
+            },
+            {
+              "row": 4,
+              "column": 1,
+              "expected_word": 968500080,
+              "actual_word": 968500073,
+              "expected": 0.0003550308756530285,
+              "actual": 0.0003550306719262153,
+              "absolute_difference": 2.0372681319713593e-10
+            },
+            {
+              "row": 4,
+              "column": 2,
+              "expected_word": 976814347,
+              "actual_word": 976814339,
+              "expected": 0.0007057345355860889,
+              "actual": 0.0007057340699248016,
+              "absolute_difference": 4.656612873077393e-10
+            },
+            {
+              "row": 5,
+              "column": 0,
+              "expected_word": 720519898,
+              "actual_word": 2855198158,
+              "expected": 4.3034223103435854e-13,
+              "actual": -1.553125846247977e-13,
+              "absolute_difference": 5.856548156591562e-13
+            },
+            {
+              "row": 5,
+              "column": 2,
+              "expected_word": 1001495963,
+              "actual_word": 1001495962,
+              "expected": 0.005420399364084005,
+              "actual": 0.005420398898422718,
+              "absolute_difference": 4.656612873077393e-10
+            }
+          ],
+          "exact_words": false,
+          "expected_sha256": "64b121e5e777e57231ef28051bd04aaf8060eedfdd936f6947aafa6097ad954b",
+          "actual_sha256": "a1b6b7fc275a4eb045941a89e8c6c9cb17fe7650814bbf494995f0c8548bdf66"
+        },
+        {
+          "phase": "B",
+          "label": "Actual paired Flatten final original positions",
+          "rows": 6,
+          "words": 18,
+          "word_difference_count": 11,
+          "max_absolute_difference": 5.960464477539063e-08,
+          "RMS": 1.9871911823455354e-08,
+          "differences": [
+            {
+              "row": 0,
+              "column": 0,
+              "expected_word": 3212749693,
+              "actual_word": 3212749694,
+              "expected": -0.9948042035102844,
+              "actual": -0.9948042631149292,
+              "absolute_difference": 5.960464477539063e-08
+            },
+            {
+              "row": 0,
+              "column": 1,
+              "expected_word": 984313230,
+              "actual_word": 984313228,
+              "expected": 0.0013078914489597082,
+              "actual": 0.0013078912161290646,
+              "absolute_difference": 2.3283064365386963e-10
+            },
+            {
+              "row": 1,
+              "column": 0,
+              "expected_word": 1065266045,
+              "actual_word": 1065266046,
+              "expected": 0.9948042035102844,
+              "actual": 0.9948042631149292,
+              "absolute_difference": 5.960464477539063e-08
+            },
+            {
+              "row": 1,
+              "column": 1,
+              "expected_word": 984313231,
+              "actual_word": 984313228,
+              "expected": 0.00130789156537503,
+              "actual": 0.0013078912161290646,
+              "absolute_difference": 3.4924596548080444e-10
+            },
+            {
+              "row": 2,
+              "column": 0,
+              "expected_word": 736670143,
+              "actual_word": 2895737937,
+              "expected": 1.6533925921088932e-12,
+              "actual": -4.3614352580878535e-12,
+              "absolute_difference": 6.014827850196747e-12
+            },
+            {
+              "row": 3,
+              "column": 1,
+              "expected_word": 968500080,
+              "actual_word": 968500073,
+              "expected": 0.0003550308756530285,
+              "actual": 0.0003550306719262153,
+              "absolute_difference": 2.0372681319713593e-10
+            },
+            {
+              "row": 3,
+              "column": 2,
+              "expected_word": 976814347,
+              "actual_word": 976814339,
+              "expected": 0.0007057345355860889,
+              "actual": 0.0007057340699248016,
+              "absolute_difference": 4.656612873077393e-10
+            },
+            {
+              "row": 4,
+              "column": 1,
+              "expected_word": 968500080,
+              "actual_word": 968500073,
+              "expected": 0.0003550308756530285,
+              "actual": 0.0003550306719262153,
+              "absolute_difference": 2.0372681319713593e-10
+            },
+            {
+              "row": 4,
+              "column": 2,
+              "expected_word": 976814347,
+              "actual_word": 976814339,
+              "expected": 0.0007057345355860889,
+              "actual": 0.0007057340699248016,
+              "absolute_difference": 4.656612873077393e-10
+            },
+            {
+              "row": 5,
+              "column": 0,
+              "expected_word": 724990753,
+              "actual_word": 2857849563,
+              "expected": 6.483026463756369e-13,
+              "actual": -1.912458228890343e-13,
+              "absolute_difference": 8.395484692646712e-13
+            },
+            {
+              "row": 5,
+              "column": 2,
+              "expected_word": 1002590667,
+              "actual_word": 1002590664,
+              "expected": 0.005930160637944937,
+              "actual": 0.005930159240961075,
+              "absolute_difference": 1.3969838619232178e-09
+            }
+          ],
+          "exact_words": false,
+          "expected_sha256": "bacf065089be66ab1e7565ac99438ba2c1b283f82715fffa9f2f9db06c98ded2",
+          "actual_sha256": "00b95079ca48bede7ee3d839252cda42041621fa6a6bcf27a8709f60c18cd320"
+        },
+        {
+          "phase": "C",
+          "label": "Actual paired Flatten final original positions",
+          "rows": 6,
+          "words": 18,
+          "word_difference_count": 12,
+          "max_absolute_difference": 5.960464477539063e-08,
+          "RMS": 2.4372403878240686e-08,
+          "differences": [
+            {
+              "row": 0,
+              "column": 0,
+              "expected_word": 3212478670,
+              "actual_word": 3212478671,
+              "expected": -0.9786499738693237,
+              "actual": -0.9786500334739685,
+              "absolute_difference": 5.960464477539063e-08
+            },
+            {
+              "row": 0,
+              "column": 1,
+              "expected_word": 1001396660,
+              "actual_word": 1001396653,
+              "expected": 0.005374157801270485,
+              "actual": 0.005374154541641474,
+              "absolute_difference": 3.259629011154175e-09
+            },
+            {
+              "row": 1,
+              "column": 0,
+              "expected_word": 1064995022,
+              "actual_word": 1064995023,
+              "expected": 0.9786499738693237,
+              "actual": 0.9786500334739685,
+              "absolute_difference": 5.960464477539063e-08
+            },
+            {
+              "row": 1,
+              "column": 1,
+              "expected_word": 1001396660,
+              "actual_word": 1001396653,
+              "expected": 0.005374157801270485,
+              "actual": 0.005374154541641474,
+              "absolute_difference": 3.259629011154175e-09
+            },
+            {
+              "row": 2,
+              "column": 0,
+              "expected_word": 759963633,
+              "actual_word": 2906565695,
+              "expected": 1.1603149864536366e-11,
+              "actual": -1.0838495899390121e-11,
+              "absolute_difference": 2.2441645763926488e-11
+            },
+            {
+              "row": 2,
+              "column": 2,
+              "expected_word": 1056638990,
+              "actual_word": 1056638992,
+              "expected": 0.4902958273887634,
+              "actual": 0.4902958869934082,
+              "absolute_difference": 5.960464477539063e-08
+            },
+            {
+              "row": 3,
+              "column": 1,
+              "expected_word": 985552145,
+              "actual_word": 985552137,
+              "expected": 0.0014521201374009252,
+              "actual": 0.0014521192060783505,
+              "absolute_difference": 9.313225746154785e-10
+            },
+            {
+              "row": 3,
+              "column": 2,
+              "expected_word": 993855723,
+              "actual_word": 993855714,
+              "expected": 0.002884442685171962,
+              "actual": 0.002884440589696169,
+              "absolute_difference": 2.0954757928848267e-09
+            },
+            {
+              "row": 4,
+              "column": 1,
+              "expected_word": 985552144,
+              "actual_word": 985552137,
+              "expected": 0.0014521200209856033,
+              "actual": 0.0014521192060783505,
+              "absolute_difference": 8.149072527885437e-10
+            },
+            {
+              "row": 4,
+              "column": 2,
+              "expected_word": 993855722,
+              "actual_word": 993855714,
+              "expected": 0.002884442452341318,
+              "actual": 0.002884440589696169,
+              "absolute_difference": 1.862645149230957e-09
+            },
+            {
+              "row": 5,
+              "column": 0,
+              "expected_word": 2870703962,
+              "actual_word": 748123933,
+              "expected": -5.523269558729837e-13,
+              "actual": 4.304902354729245e-12,
+              "absolute_difference": 4.857229310602229e-12
+            },
+            {
+              "row": 5,
+              "column": 2,
+              "expected_word": 1018801879,
+              "actual_word": 1018801878,
+              "expected": 0.02266637794673443,
+              "actual": 0.02266637608408928,
+              "absolute_difference": 1.862645149230957e-09
+            }
+          ],
+          "exact_words": false,
+          "expected_sha256": "6454f866b39b0b36d10a3fbc351d7e7efd66f05a39ef255941dddea560a15639",
+          "actual_sha256": "0cffbfaf6c2181bf427512f3665463b6b1ff4e953f71062eaa00e00a58b9f33c"
+        },
+        {
+          "phase": "D",
+          "label": "Actual paired Flatten final original positions",
+          "rows": 6,
+          "words": 18,
+          "word_difference_count": 12,
+          "max_absolute_difference": 5.960464477539063e-08,
+          "RMS": 2.436597744485433e-08,
+          "differences": [
+            {
+              "row": 0,
+              "column": 0,
+              "expected_word": 3212478670,
+              "actual_word": 3212478671,
+              "expected": -0.9786499738693237,
+              "actual": -0.9786500334739685,
+              "absolute_difference": 5.960464477539063e-08
+            },
+            {
+              "row": 0,
+              "column": 1,
+              "expected_word": 1001396659,
+              "actual_word": 1001396653,
+              "expected": 0.005374157335609198,
+              "actual": 0.005374154541641474,
+              "absolute_difference": 2.7939677238464355e-09
+            },
+            {
+              "row": 1,
+              "column": 0,
+              "expected_word": 1064995022,
+              "actual_word": 1064995023,
+              "expected": 0.9786499738693237,
+              "actual": 0.9786500334739685,
+              "absolute_difference": 5.960464477539063e-08
+            },
+            {
+              "row": 1,
+              "column": 1,
+              "expected_word": 1001396659,
+              "actual_word": 1001396653,
+              "expected": 0.005374157335609198,
+              "actual": 0.005374154541641474,
+              "absolute_difference": 2.7939677238464355e-09
+            },
+            {
+              "row": 2,
+              "column": 0,
+              "expected_word": 759963637,
+              "actual_word": 2906565695,
+              "expected": 1.1603153333983318e-11,
+              "actual": -1.0838495899390121e-11,
+              "absolute_difference": 2.244164923337344e-11
+            },
+            {
+              "row": 2,
+              "column": 2,
+              "expected_word": 1056638990,
+              "actual_word": 1056638992,
+              "expected": 0.4902958273887634,
+              "actual": 0.4902958869934082,
+              "absolute_difference": 5.960464477539063e-08
+            },
+            {
+              "row": 3,
+              "column": 1,
+              "expected_word": 985552145,
+              "actual_word": 985552137,
+              "expected": 0.0014521201374009252,
+              "actual": 0.0014521192060783505,
+              "absolute_difference": 9.313225746154785e-10
+            },
+            {
+              "row": 3,
+              "column": 2,
+              "expected_word": 993855723,
+              "actual_word": 993855714,
+              "expected": 0.002884442685171962,
+              "actual": 0.002884440589696169,
+              "absolute_difference": 2.0954757928848267e-09
+            },
+            {
+              "row": 4,
+              "column": 1,
+              "expected_word": 985552144,
+              "actual_word": 985552137,
+              "expected": 0.0014521200209856033,
+              "actual": 0.0014521192060783505,
+              "absolute_difference": 8.149072527885437e-10
+            },
+            {
+              "row": 4,
+              "column": 2,
+              "expected_word": 993855722,
+              "actual_word": 993855714,
+              "expected": 0.002884442452341318,
+              "actual": 0.002884440589696169,
+              "absolute_difference": 1.862645149230957e-09
+            },
+            {
+              "row": 5,
+              "column": 0,
+              "expected_word": 2870703957,
+              "actual_word": 748123933,
+              "expected": -5.523266848224406e-13,
+              "actual": 4.304902354729245e-12,
+              "absolute_difference": 4.857229039551686e-12
+            },
+            {
+              "row": 5,
+              "column": 2,
+              "expected_word": 1018801879,
+              "actual_word": 1018801878,
+              "expected": 0.02266637794673443,
+              "actual": 0.02266637608408928,
+              "absolute_difference": 1.862645149230957e-09
+            }
+          ],
+          "exact_words": false,
+          "expected_sha256": "7d94c955741f16fbcbed06ec50b084862aa8487c3ec094017968caa7c699eab9",
+          "actual_sha256": "e6b40b1b01a53730f8c1d8f82016af3742ed031591188536e5e4eacefdf10d4f"
+        }
+      ],
+      "history": null,
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_servers_closed": 2
+      }
+    }
+  ],
+  "totals": {
+    "raw_records": 1178,
+    "whole_public_downloads": 72,
+    "GPU_snapshots": 46,
+    "independent_forward_passes": 28,
+    "quiet_windows": 14
+  },
+  "numerical": {
+    "own_forward_and_history_GPU_positions_normals": "Exact Float32 words independently reconstructed in JavaScript and separate Python",
+    "own_whole_history_files": "Exact complete public files on corresponding history states",
+    "paired_forward_maximum": 5.960464477539063e-08,
+    "paired_forward_RMS_maximum": 2.4372403878240686e-08,
+    "paired_history_normal_maximum": 1.1920928955078125e-07,
+    "paired_history_normal_RMS_maximum": 6.775871174381521e-08,
+    "original_paired_maximum_and_RMS_tolerance": 1e-06,
+    "CW03_differences_from_original_snapshot_words": {
+      "Source": [
+        10,
+        10,
+        0,
+        0,
+        0,
+        0
+      ],
+      "Root": [
+        8,
+        8,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "CW04_new_D_vs_original_C": "Source5/Root1 position words differ, maximum1.1920928955078125e-7; wrong-old-warm-field primary candidate differs in3 words on each host."
+  },
+  "preserved_failures": {
+    "original_host_regressions": {
+      "path": ".artifacts/sculptgl-composite20-candidate42-history-stage/REGRESSION_RECEIPT.json",
+      "bytes": 1669,
+      "sha256": "6da3311d880dceaa099e8bd0c4526c227ca9368f2576a1b20e83dfa0d99769ab"
+    },
+    "implementation_failure_index": {
+      "path": ".artifacts/sculptgl-composite20-candidate42-history-stage/IMPLEMENTATION_FAILURES.json",
+      "bytes": 2674,
+      "sha256": "141d881099e13c8dd1e2b1004292a9443ed9e188cc5600befbe7dfca6f53f06a"
+    },
+    "unrelated_part_failed_test": {
+      "path": ".artifacts/sculptgl-composite20-candidate42-history-stage/core_unrelated_before02.log",
+      "bytes": 1670,
+      "sha256": "010901b52b4867e7fb5ec808b02de4259028386c1bb0238a7e6c7c6d789f4423"
+    },
+    "CW03_audit_count_assumption": {
+      "path": ".artifacts/sculptgl-crease-history-c42-stage/FAILED_AUDIT01.json",
+      "bytes": 951,
+      "sha256": "bd3cca51799c5020029f55597a26000f890d98c2c90cc3f684d65d3c169f50c8"
+    },
+    "CW04_setup": "root-run01.log retains failed cwd-relative runner creation; no browser started. Actual run is root-run02.log.",
+    "historical_C41": {
+      "path": "docs/evidence/sculptgl-crease-history-c41-0.1.20.json",
+      "bytes": 21760,
+      "sha256": "2cf2c5c26ee622953b80ce9b5096b6c735fe2ba60806b63323c9cd4c7546cc19"
+    }
+  },
+  "promotion": {
+    "receipt": {
+      "path": ".artifacts/sculptgl-main-c42-promotion-stage/PROMOTED.json",
+      "bytes": 2549,
+      "sha256": "0090aff2492653c8aa1a172b972173b73b891492e99ba396198553da7c14c2e5"
+    },
+    "HTTP_verification": {
+      "path": ".artifacts/sculptgl-main-c42-promotion-stage/HTTP_VERIFIED.json",
+      "bytes": 3595,
+      "sha256": "64ec081ffba1a42dc84dd83c21bd2d1b43d897084406384aa9949989a12653ad"
+    },
+    "main_product_files": 383,
+    "replaced_backed_up": 8,
+    "new_files": 3,
+    "protected_git_index_AGENTS_README_feature_contract": "unchanged; checkpoint changes below are intentional additive documentation",
+    "preview": "http://127.0.0.1:8807/",
+    "preview_exec_session": 17225,
+    "old_previews_and_user_sessions": "preserved"
+  },
+  "limits": [
+    "Full317 stable IDs plus5 hosted controls remain open; no feature-family or percentage promotion.",
+    "Only one independent6vertex/two-sheet static None-alpha/mirror0/DPR1 fixture in paired CW03/CW04; broader tools/options/poses/culling/alpha/Continuous/Lock/dynamic/hierarchy and dense quality remain required.",
+    "Source Paint current-field attribute history and unrelated-part preservation have shared-core/host tests; their new multi-stroke paired browser expansion remains required.",
+    "Existing generic/Legacy and narrow Source APIs intentionally retain established snapshot history; the actual controlled Source geometry host uses selected-current-field semantics.",
+    "Native package is built/ad-hoc-signature-verified but unopened/uninstalled; native GUI and physical pen/tablet/touch/HiDPI remain unverified.",
+    "Short post-release quiet windows do not establish sustained responsiveness or physical input-to-photon latency; no performance parity is claimed.",
+    "Full PNG reviews retain cursor/contour/shading/UI differences; this sparse fixture cannot establish dense sculpt quality or image parity.",
+    "Older checks retain original immutable build bindings and do not automatically validate C42. All original failing runs/checks remain preserved."
+  ]
+}

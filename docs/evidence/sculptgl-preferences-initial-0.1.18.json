@@ -1,0 +1,285 @@
+{
+  "scope": "Local browser per-tool preference and temporary-tool consumer observations, not SculptGL/ZBrush parity. Original2failedruns preserved.",
+  "runs": [
+    {
+      "result_path": ".artifacts/sculptgl-preferences-runtime/candidate2-preferences-cf571c27-a9d0-481e-8083-ec2875b71404/result.json",
+      "result_sha256": "b47acb81e372eb0f45d123dde1e3aef8a5e21a55878a2123c40db5449c8cd5e0",
+      "harness_sha256": "12caee2aca7dfcf806ca6842ef5477ba5eced9a2e94eb46f33aba6bae8a12d7b",
+      "binding": {
+        "candidate": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.17-candidate2",
+        "source_root": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.17-candidate2/source",
+        "status": "immutable candidate binding",
+        "manifest_sha256": "1482c860bdff5a528e1fa924f48909f318144cac4f6a103a4d4c7332efbcf477",
+        "build_sha256": "11d1ca57dd99fae1c84e124ef3e9c4fb57dc8b435a5032c9f74be67f9e382e16",
+        "checked_source_files": 151
+      },
+      "status": "failed local host run",
+      "failure": "Error: Normal Paint swatch did not set blue RGB\n    at waitFor (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-preferences-preparation/frozen-source/harness.mjs:165:154)\n    at async toolPreferenceCase (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-preferences-preparation/frozen-source/harness.mjs:265:1036)\n    at async file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-preferences-preparation/frozen-source/harness.mjs:299:161",
+      "completed_case_gates": [
+        {
+          "name": "frozen-host-startup",
+          "gates": {
+            "actual_startup": true,
+            "default_radius_strength": true,
+            "production_download_completed": true,
+            "visible_gpu_save_exact": true
+          }
+        }
+      ],
+      "downloads": 4,
+      "independent_GPU_reconstructions": 4,
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      },
+      "owned_pid_absent": true
+    },
+    {
+      "result_path": ".artifacts/sculptgl-preferences-runtime/candidate1-0.1.18-preferences-dc0c4046-3bbf-4700-a3e3-1b56b4ea74d9/result.json",
+      "result_sha256": "bb16a7f99a4248dd75036982d301d96fd9668788a05df4873dc1f209c4c825ed",
+      "harness_sha256": "12caee2aca7dfcf806ca6842ef5477ba5eced9a2e94eb46f33aba6bae8a12d7b",
+      "binding": {
+        "candidate": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.18-candidate1",
+        "source_root": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.18-candidate1/source",
+        "status": "immutable candidate binding",
+        "manifest_sha256": "09b9e9d51219944baa26e1e1cb5b3928b2a3d5acf3554eb8eba0958c2c5fee49",
+        "build_sha256": "6562869a0ff9c9789167b1771f8bc4b050b74a2e7d9101d0ad919058361bc0d8",
+        "checked_source_files": 157
+      },
+      "status": "failed local host run",
+      "failure": "Error: Failed declared host case: normal-png-alpha-mean_rgb-matches-independent-gray\n    at assert (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-preferences-preparation/frozen-source/harness.mjs:22:34)\n    at finishCase (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-preferences-preparation/frozen-source/harness.mjs:215:209)\n    at async alphaConversionCase (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-preferences-preparation/frozen-source/harness.mjs:275:950)\n    at async alphaCases (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-preferences-preparation/frozen-source/harness.mjs:279:191)\n    at async file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-preferences-preparation/frozen-source/harness.mjs:299:161",
+      "completed_case_gates": [
+        {
+          "name": "frozen-host-startup",
+          "gates": {
+            "actual_startup": true,
+            "default_radius_strength": true,
+            "production_download_completed": true,
+            "visible_gpu_save_exact": true
+          }
+        },
+        {
+          "name": "all14-normal-tile-shortcut-preference-retention",
+          "gates": {
+            "ordered14_roster": true,
+            "all_saved_rows_exact": true,
+            "selected_view_matches_saved_rows": true,
+            "paint_normal_color_and_material_targets": true,
+            "other_color_material_targets_preserved": true,
+            "unsupported_lock_disabled": true,
+            "settings_leave_full_document_exact": true,
+            "settings_leave_document_revision": true,
+            "prior_geometry_redo_exact": true,
+            "complete_gpu_exact": true
+          }
+        },
+        {
+          "name": "temporary-shift-smooth",
+          "gates": {
+            "matching_source_fixture": true,
+            "matching_saved_effective_options": true,
+            "hover_own_options": true,
+            "press_hover_consistent": true,
+            "temporary_selection_retained": true,
+            "all_saved_tool_rows_retained": true,
+            "useful_effective_tool": true,
+            "actual_explicit_and_temporary_outputs_exact": true,
+            "whole_history_exact": true,
+            "post_completion_quiet": true,
+            "complete_gpu_exact": true
+          }
+        },
+        {
+          "name": "temporary-ctrl-mask",
+          "gates": {
+            "matching_source_fixture": true,
+            "matching_saved_effective_options": true,
+            "hover_own_options": true,
+            "press_hover_consistent": true,
+            "temporary_selection_retained": true,
+            "all_saved_tool_rows_retained": true,
+            "useful_effective_tool": true,
+            "actual_explicit_and_temporary_outputs_exact": true,
+            "whole_history_exact": true,
+            "post_completion_quiet": true,
+            "complete_gpu_exact": true
+          }
+        },
+        {
+          "name": "temporary-ctrl-shift-mask-priority",
+          "gates": {
+            "matching_source_fixture": true,
+            "matching_saved_effective_options": true,
+            "hover_own_options": true,
+            "press_hover_consistent": true,
+            "temporary_selection_retained": true,
+            "all_saved_tool_rows_retained": true,
+            "useful_effective_tool": true,
+            "actual_explicit_and_temporary_outputs_exact": true,
+            "whole_history_exact": true,
+            "post_completion_quiet": true,
+            "complete_gpu_exact": true
+          }
+        },
+        {
+          "name": "normal-png-alpha-mean_rgb-matches-independent-gray",
+          "gates": {
+            "original_png_bytes_bound": true,
+            "normal_conversion_recorded": true,
+            "decoded_dimensions_and_library_bytes": true,
+            "matching_before_document": true,
+            "useful_material_only_response": true,
+            "actual_stroke_outputs_exact": false,
+            "history_exact": true,
+            "complete_gpu_exact": true,
+            "post_completion_quiet": true
+          }
+        }
+      ],
+      "downloads": 38,
+      "independent_GPU_reconstructions": 38,
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      },
+      "owned_pid_absent": true
+    }
+  ],
+  "independent_full_data": {
+    "receipt": ".artifacts/sculptgl-preferences-preparation/consolidated-initial-runs.json",
+    "sha256": "630e7b24ebf12668f4c8f750a1badb4b921bbd73878415eb0a8f388e6fa4ece0",
+    "downloads": 42,
+    "exact_original40byte_optional8byte_material_andUV_pairs": 42,
+    "successful_case_observations": 6
+  },
+  "alpha_comparison_characterization": {
+    "path": ".artifacts/sculptgl-preferences-runtime/candidate1-0.1.18-preferences-dc0c4046-3bbf-4700-a3e3-1b56b4ea74d9/alpha-comparison-diagnostic.json",
+    "sha256": "1c678ea5979087e338e003dc0ff021a59030a1b11acb8b95215cb5ea6a2d3bca",
+    "viewport_left": [
+      255.875,
+      294.875
+    ],
+    "start_pointer_x": [
+      810,
+      830
+    ],
+    "differing_material_rows": 33,
+    "maximum_roughness_absolute_difference": 0.0006278599999999801,
+    "conclusion": "Normal distinct alpha filenames changed panel width and camera/contact. Exact output failed; no converter defect is inferred. Original distinct names/bytes must be retried on a product layout fix."
+  },
+  "additional_actual_web_assets": {
+    "path": ".artifacts/sculptgl-preferences-runtime/candidate1-0.1.18-preferences-dc0c4046-3bbf-4700-a3e3-1b56b4ea74d9/additional-web-assets.json",
+    "sha256": "56843fa7a3e09326b9f51b1d889c1a130ffb5ef440b98a20bab347a128fe4b72",
+    "UV_input_successful_requests": 10,
+    "UV_worker_successful_requests": 0,
+    "bake_executed": false
+  },
+  "pending": [
+    "Compound release stability/history/captured settings final gate; separate completion-aware check preregistered butunrun",
+    "Preferences across process restart/serialization",
+    "Physical pressure/device/native GUI/paired reference brush response",
+    "Normal UVbake consumer cohort (separate frozen fb459 source, not run)"
+  ],
+  "candidate2_followup": {
+    "result_path": ".artifacts/sculptgl-preferences-runtime/candidate2-0.1.18-alpha-release-fcc967a0-acd2-4efd-aa51-2763d2a40a41/result.json",
+    "result_sha256": "9579c3ad564441935190627478f212e88a05646ecf9507c1b8e93102973caa3d",
+    "status": "failed local host run",
+    "failure": "Error: Geometry or pending dabs changed after release: captured-release-changed-release-frame\n    at assert (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-preferences-preparation/frozen-source/harness.mjs:22:34)\n    at quiet (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-preferences-preparation/frozen-source/harness.mjs:206:323)\n    at async releaseTrial (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-preferences-preparation/frozen-source/harness.mjs:281:1391)\n    at async releaseSettingCase (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-preferences-preparation/frozen-source/harness.mjs:282:221)\n    at async file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-preferences-preparation/frozen-source/harness.mjs:299:161",
+    "harness_sha256": "12caee2aca7dfcf806ca6842ef5477ba5eced9a2e94eb46f33aba6bae8a12d7b",
+    "binding": {
+      "candidate": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.18-candidate2",
+      "source_root": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.18-candidate2/source",
+      "status": "immutable candidate binding",
+      "manifest_sha256": "063a50a5cec6886e0dd0ae166b8190ea5d7d7cf214f2c01e4cb6e45636ed62c5",
+      "build_sha256": "181512d0ce527ccb87340c81e6fe2d9f5cadcf5eee98c64752a90e247e922775",
+      "checked_source_files": 158
+    },
+    "completed_case_gates": [
+      {
+        "name": "frozen-host-startup",
+        "gates": {
+          "actual_startup": true,
+          "default_radius_strength": true,
+          "production_download_completed": true,
+          "visible_gpu_save_exact": true
+        }
+      },
+      {
+        "name": "normal-png-alpha-mean_rgb-matches-independent-gray",
+        "gates": {
+          "original_png_bytes_bound": true,
+          "normal_conversion_recorded": true,
+          "decoded_dimensions_and_library_bytes": true,
+          "matching_before_document": true,
+          "useful_material_only_response": true,
+          "actual_stroke_outputs_exact": true,
+          "history_exact": true,
+          "complete_gpu_exact": true,
+          "post_completion_quiet": true
+        }
+      },
+      {
+        "name": "normal-png-alpha-weighted_opacity-matches-independent-gray",
+        "gates": {
+          "original_png_bytes_bound": true,
+          "normal_conversion_recorded": true,
+          "decoded_dimensions_and_library_bytes": true,
+          "matching_before_document": true,
+          "useful_material_only_response": true,
+          "actual_stroke_outputs_exact": true,
+          "history_exact": true,
+          "complete_gpu_exact": true,
+          "post_completion_quiet": true
+        }
+      },
+      {
+        "name": "normal-shared-alpha-library-clear-remove-and-builtins",
+        "gates": {
+          "one_import_shared_without_duplication": true,
+          "clear_only_selected_reference": true,
+          "remove_all_shared_references": true,
+          "builtin_dimensions_and_no_import_storage": true,
+          "full_document_exact": true,
+          "prior_redo_exact": true,
+          "complete_gpu_exact": true
+        }
+      },
+      {
+        "name": "normal-malformed-alpha-keeps-library-document-and-redo",
+        "gates": {
+          "actual_two_png_rejections": true,
+          "prior_library_and_tool_rows_exact": true,
+          "full_document_exact": true,
+          "prior_redo_exact": true,
+          "complete_gpu_exact": true
+        }
+      }
+    ],
+    "original_distinct_alpha_names_retained": true,
+    "actual_both_conversion_camera_contact_pointer_equal": true,
+    "downloads_and_saved_GPU_pairs": 43,
+    "diagnostic": {
+      "path": ".artifacts/sculptgl-preferences-runtime/candidate2-0.1.18-alpha-release-fcc967a0-acd2-4efd-aa51-2763d2a40a41/layout-release-diagnostic.json",
+      "sha256": "5e2c43967cc057067276cd6ebd0bbfa0888e8b8f5536d8a7b2ebaaa6b22a31ac"
+    },
+    "release_completion_new_helper": {
+      "sha256": "c3efea73d7c48e73704d60734e1bfdea61a3495ecad33c4cd924d4a24d1e9dc4",
+      "status": "preregistered/unexecuted; separate actual renderer acknowledgment, originalstrictfailure unchanged"
+    },
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "owned_pid_absent": true
+  },
+  "all_three_original_run_reconstructions": {
+    "path": ".artifacts/sculptgl-preferences-preparation/consolidated-layout-runs.json",
+    "sha256": "c7e2847b23d5d4ba9324e9457cf464b1c552f46f26d7659fee37248bb9805443",
+    "actual_project_GPU_pairs": 85,
+    "all_exact": true,
+    "failed_original_runs": 3
+  }
+}

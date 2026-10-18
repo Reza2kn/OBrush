@@ -1,0 +1,259 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-10-15T18:28:43.294110-07:00",
+  "status": "Delivered checked C47: shared normal-state initialization reuses four owned buffers; scoped native memory and browser/reference checks pass; full parity remains unverified",
+  "preview": "http://127.0.0.1:8810/",
+  "source_manifest": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate47/source/manifest.json",
+    "bytes": 92126,
+    "sha256": "117603bd092168e0bbb4fed4682079a9dd9b666d72b68af0dc5cb8629688ca37"
+  },
+  "build": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate47/build-record.json",
+    "bytes": 9364,
+    "sha256": "d081dda86420e7cb174e2c5f6f51a54fd814314fefba1630017b2e084ea13923"
+  },
+  "checked_receipt": {
+    "path": ".artifacts/sculptgl-normal-ownership-c47-stage/FINAL_CHECKED_RECEIPT.json",
+    "bytes": 2936,
+    "sha256": "fb8a01ffd8918da7eb012427d787002e753c44d2f3a80939c28965ad4fa05c8e"
+  },
+  "checks": {
+    "path": ".artifacts/sculptgl-normal-ownership-c47-stage/CHECKS02.json",
+    "bytes": 2026,
+    "sha256": "8bae0a66d05a0264eb2ef86240c9dc1ebe16363021ab5d8095b88d233974bc7a"
+  },
+  "tests": {
+    "workspace": 2307,
+    "core": 1587,
+    "app": 720,
+    "ignored": 1
+  },
+  "source_rows": 511,
+  "product_rows": 384,
+  "wasm": {
+    "path": "pkg/obrush_app_bg.wasm",
+    "bytes": 23249646,
+    "sha256": "1d922debea9e2bc807cc08fc40139d4f63d9fc505c00b23933cbd1d7b7a12a34"
+  },
+  "implementation": {
+    "path": ".artifacts/sculptgl-normal-ownership-c47-stage/IMPLEMENTATION.json",
+    "bytes": 1152,
+    "sha256": "45188405abbd70bc5285f11aae1cbfea7d2a6ff4539c8c87f81ca51f6c6e9e83"
+  },
+  "math_identity": {
+    "path": ".artifacts/sculptgl-normal-ownership-c47-stage/MATH_IDENTITY.json",
+    "bytes": 863,
+    "sha256": "88b93ba6c4b9dac392047c35050692e7977d77e4e04fe1a75b2ff0025988bce1"
+  },
+  "changed_files": [
+    "crates/obrush-core/src/source_normals.rs",
+    "crates/obrush-core/src/source_geometry.rs"
+  ],
+  "scope": "Transfer the initial normal field original-face rows, exact position words, face normals and vertex normals into retained geometry state instead of copying them. No public API/schema change, no arithmetic/history/renderer change, no changed resource cap/admission formula. Historical selected-row caches are retained rather than reconstructed from current positions.",
+  "allocation": {
+    "comparison": {
+      "path": ".artifacts/sculptgl-normal-ownership-c47-stage/ALLOCATION_COMPARISON.json",
+      "bytes": 5970,
+      "sha256": "d71640e6d8187426cdf4d2cff4815acab8892b319fbf97f6f10f046a77c14269"
+    },
+    "reproduction": {
+      "path": ".artifacts/sculptgl-normal-ownership-c47-stage/PROBE_EXECUTION_RECIPE.json",
+      "bytes": 1689,
+      "sha256": "58c74cd24dc415161fd976a57d670285f49d96705a7ed619f733641f651bf9f1"
+    },
+    "probe_source": {
+      "path": ".artifacts/sculptgl-normal-ownership-c47-stage/probe/src/main.rs",
+      "bytes": 2729,
+      "sha256": "a3d39755925dc85501a2f61911c894e0798929ea4b87f4d8ccb46339a8e4181c"
+    },
+    "baseline": {
+      "path": ".artifacts/sculptgl-normal-ownership-c47-stage/BASELINE_ALLOCATION.json",
+      "bytes": 2539,
+      "sha256": "68cd1f994eca8dcb4519a16ed70b31689fafaa37136e0ab9c15398a2574012bf"
+    },
+    "candidate": {
+      "path": ".artifacts/sculptgl-normal-ownership-c47-stage/CANDIDATE_ALLOCATION.json",
+      "bytes": 2539,
+      "sha256": "0679624af1bc542bc07eac8a766063189760265ec6ee0f46590dbfc1f6c2ea7d"
+    },
+    "successful_fixtures": [
+      {
+        "vertices": 10242,
+        "triangles": 20480,
+        "baseline_peak_requested_bytes": 3537088,
+        "candidate_peak_requested_bytes": 2717840,
+        "saved_peak_requested_bytes": 819248,
+        "saved_peak_percent": 23.16165161850652,
+        "retained_requested_bytes": 2717840,
+        "output_bytes": 6847980,
+        "output_sha256": "9e53b750b617ee12dfe61fd404eb97f850847c137a18c1bf025c6251dd699342"
+      },
+      {
+        "vertices": 40962,
+        "triangles": 81920,
+        "baseline_peak_requested_bytes": 13926592,
+        "candidate_peak_requested_bytes": 10649744,
+        "saved_peak_requested_bytes": 3276848,
+        "saved_peak_percent": 23.529432039080344,
+        "retained_requested_bytes": 10649744,
+        "output_bytes": 27678865,
+        "output_sha256": "eceea897cdd72786ddaed8a58e4b966929d69c118155237d087d42a66492dc23"
+      },
+      {
+        "vertices": 163842,
+        "triangles": 327680,
+        "baseline_peak_requested_bytes": 55484608,
+        "candidate_peak_requested_bytes": 42377360,
+        "saved_peak_requested_bytes": 13107248,
+        "saved_peak_percent": 23.62321456790323,
+        "retained_requested_bytes": 42377360,
+        "output_bytes": 111797625,
+        "output_sha256": "734c238c705232ad1fda28b25c6bfa09ef942254dccf100a4d18d8ffbc0f7408"
+      }
+    ],
+    "output_scope": "Entire JSON outputs containing face/vertex normals, ordered-tree snapshot, normal report, generation and interaction center are byte-identical in each accepted fixture. Private witness transfer is separately exercised by pointer/capacity and mesh-edit/signed-zero unit checks. Input Mesh is unchanged.",
+    "larger_rejection": "655362 vertices/1310720 triangles remains StorageLimit on both versions. No extra capacity admission is inferred.",
+    "limits": "Native release single-thread requested-size allocation accounting excludes preexisting Mesh, allocator overhead/RSS, browser/GPU and stroke latency. Cumulative realloc request sizes do not measure copied bytes or bandwidth."
+  },
+  "million_vertex_diagnosis": {
+    "path": ".artifacts/sculptgl-normal-ownership-c47-stage/CAPACITY_DIAGNOSIS.json",
+    "bytes": 1614,
+    "sha256": "1efba3ccd881ff3f65cd6ae156250b7d5acf3a1f2959ffa3e488d5c8da8c2ebf"
+  },
+  "normal_browser": {
+    "audit": {
+      "path": ".artifacts/sculptgl-normal-c47-consumer-stage/POST_AUDIT01.json",
+      "bytes": 231257,
+      "sha256": "c752acf17104dbd08a4a93275985d015e4e098c697e6f1305232120a62b96a19"
+    },
+    "helper": {
+      "path": ".artifacts/sculptgl-normal-c47-consumer-stage/manifest.json",
+      "bytes": 2324,
+      "sha256": "340e3605bda1bcb68b4be4bfaac7f167d0c2152335686e620fbfc752ae17976d"
+    },
+    "actual_result": {
+      "path": ".artifacts/sculptgl-normal-consumer-runtime/candidate47-normal-d68b0405-3d74-4c85-a7ce-3a219dbb001f/result.json",
+      "bytes": 27510660,
+      "sha256": "daf445ace0deba4bd196c22651c6accb48b2a85d1f8f12b46d7d31d6a6c60d8c"
+    },
+    "cases": 20,
+    "complete_actual_downloads": 126,
+    "saved_GPU_comparisons": 118,
+    "wholePNGs": 17,
+    "closure": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "limits": [
+      "GPU/geometry correspondence is the original independent JavaScript consumer oracle, not a second Python arithmetic reconstruction",
+      "Scoped current C47 browser checks; no full SculptGL/native/physical/large-capacity/performance parity"
+    ]
+  },
+  "paired_crease_history": {
+    "helper": {
+      "path": ".artifacts/sculptgl-crease-history-c47-stage/MANIFEST.json",
+      "bytes": 31424,
+      "sha256": "8d68f381944bdc05a11869f7efd0d9484dc914518bd9b2cc91c3436d7f8763a8"
+    },
+    "protocol": {
+      "path": ".artifacts/sculptgl-crease-history-c47-stage/protocol/manifest.json",
+      "bytes": 434,
+      "sha256": "c1cb02d8a3d5d6e4e3064b7c5efa0f50817e5e4f361cbd3d88fac8f93b69f8f8"
+    },
+    "result": {
+      "path": ".artifacts/sculptgl-crease-runtime/candidate47-history-CW03-0879faea-ccfd-415b-8b9b-e5198e1fed60/result.json",
+      "bytes": 41594934,
+      "sha256": "7596af57c4da8ade456921054c98458cd8f50ee7037d1e89909fdca43e9a4fff"
+    },
+    "audit": {
+      "path": ".artifacts/sculptgl-crease-history-c47-stage/ROOT_HISTORY_AUDIT.json",
+      "bytes": 34937,
+      "sha256": "b387deb730cd2c888675ccd9db6c1704c92002e9d09681738d83d4514d5aa882"
+    },
+    "independent_math": {
+      "path": ".artifacts/sculptgl-crease-history-c47-stage/ROOT_INDEPENDENT_HISTORY_MATH.json",
+      "bytes": 13070,
+      "sha256": "dec145e77608990aa4f2de3f4a5632c0c15a61adb1cb5b531b1be4cb82e6d284"
+    },
+    "whole_downloads": 36,
+    "actual_GPU_snapshots": 24,
+    "numeric_passes": 12,
+    "scope": "Unchanged CW03 six-vertex two-sheet fixture, three mirrored Crease strokes, six current-field Undo/Redo steps. Original max/RMS1e-6 limits and recording caps retained. Both own math and actual GPU streams independently verified.",
+    "closure": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_servers_closed": 2
+    },
+    "limits": [
+      "CW03 selected-current-field history verified on this fixture; original C41 CW00/CW01 failures and CW02 gap remain historical",
+      "One independent6vertex static fixture; no alpha/pressure/nonzerooffset/pose/culling/Lock/dynamic/nativephysical/HiDPI/performance or full317+5 parity",
+      "Small middle stroke cannot discriminate wrong mirror direction through final f32 coordinates; its actual picked direction is independently verified",
+      "Source GL1 upload observation differs from Root GL2 actual GPU readback"
+    ]
+  },
+  "visual_review": {
+    "path": ".artifacts/sculptgl-normal-ownership-c47-stage/WHOLE_PNG_REVIEW.json",
+    "bytes": 3414,
+    "sha256": "a8deea6a56f1bf98686d98066ae023dd42448707f80ae202e74c5c91fd49d63a"
+  },
+  "promotion": {
+    "path": ".artifacts/sculptgl-main-c47-promotion-stage/PROMOTED.json",
+    "bytes": 1685,
+    "sha256": "e3dec14ca21b900cb98180f4b8cefc6f0c364fb5a7a4768fc4c60bb9262addb0"
+  },
+  "HTTP": {
+    "path": ".artifacts/sculptgl-main-c47-promotion-stage/HTTP_VERIFIED.json",
+    "bytes": 3408,
+    "sha256": "57724f65ddfeb1c608ef90308daffbd862d6d4b902aae5665d2b32e32681cee7"
+  },
+  "native": "Both official build scripts and macOS ad-hoc signature verification passed. Native app unopened/uninstalled; no native GUI or physical tablet claim.",
+  "performance": "No C47 sustained trace run. C46 timing results remain historical and retain both10K60 producer failures. Current measurement concerns native seed allocation only.",
+  "retained_failures": {
+    "probe_mask_setup": {
+      "path": ".artifacts/sculptgl-normal-ownership-c47-stage/failed-probe-mask01/BASELINE_ALLOCATION.json",
+      "bytes": 2136,
+      "sha256": "a38b8bd8b59526289f40cb5909f870c0dc71a19936874d6b9e2f8dc54bca2df4"
+    },
+    "ownership_test_fixture": {
+      "path": ".artifacts/sculptgl-normal-ownership-c47-stage/ownership-tests01.log",
+      "bytes": 1430,
+      "sha256": "c60d72482a8a061f3612576fb98a87bc1b51a461ed4d6d86fd2fa484a5e90d47"
+    },
+    "normal_binding_setup": [
+      {
+        "path": ".artifacts/sculptgl-normal-c47-consumer-stage/failed-binding01/bind01.log",
+        "bytes": 486,
+        "sha256": "53e97d8719e9f071f02f938b1c6164ca002c94d1a19192c4da5e3442ed491199"
+      },
+      {
+        "path": ".artifacts/sculptgl-normal-c47-consumer-stage/failed-binding02/bind02.log",
+        "bytes": 1390,
+        "sha256": "40ecc90c087c550f7c5b030e6ff0f28260bd55e0e572d2f2ef5b4aaf9b66f620"
+      }
+    ],
+    "history_binding_setup": [
+      {
+        "path": ".artifacts/sculptgl-crease-history-c47-stage/failed-binding01/bind01.log",
+        "bytes": 719,
+        "sha256": "84b7ad9a2de6e1837bd82b2e18360c66a5aa12593f9979cee1a443e2202de552"
+      },
+      {
+        "path": ".artifacts/sculptgl-crease-history-c47-stage/failed-binding02/bind02.log",
+        "bytes": 1369,
+        "sha256": "f41579426c0e4bc2bdf458a14ca2fbf3b28e5a2f23b3764afac7991ee30a8718"
+      }
+    ],
+    "normal_audit_empty_scene_setup": {
+      "path": ".artifacts/sculptgl-normal-c47-consumer-stage/failed-audit01/audit01.log",
+      "bytes": 247,
+      "sha256": "0b2749d72d6bbd5a13f848edf18275eb737e50f51bd68a7a8871db239b7f0097"
+    }
+  },
+  "remaining": [
+    "All original317 stable SculptGL workflows and5 hosted appearance controls remain active; no full family parity promoted.",
+    "Million-vertex combined raw/editable staging, ordered-tree retention, local transaction scratch/history and interactive capacity remain open; raw SGL decode alone succeeds.",
+    "Further source brush/default/adaptive/alpha/pose/Continuous/Lock/topology/full rendering/HiDPI/native/physical and paired sustained performance gates remain open."
+  ]
+}

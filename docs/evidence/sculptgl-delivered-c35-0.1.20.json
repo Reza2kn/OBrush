@@ -1,0 +1,97 @@
+{
+  "status": "Delivered local compared foundation; full SculptGL and ZBrush parity unverified",
+  "candidate": "C35",
+  "version": "0.1.20",
+  "baseline": "All317stableSculptGLIDs+5appearancecontrols retained; ZBrush2026.2.1 unchanged",
+  "change": "Bounded actual per-apply input/contact/outcome chronology permits independent coalesced Smooth normal reconstruction. 64-row prefix explicitly incomplete on overflow/allocation; actual sculpting/history continue. Geometry response help accurately identifies fixedtopology, alpha and mirror support. No core kernel changes.",
+  "source": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate35/source/manifest.json",
+    "sha256": "5c51dd26722b1e2dc5f9566e39c8e74bcae637990417dc634b21ebfeda2773b3"
+  },
+  "build": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate35/build-record.json",
+    "sha256": "c357ddd519a663d536fe71bcb4d4dbdb7738846bab5f30a9e4902408499fd7ee"
+  },
+  "receipt": {
+    "path": ".artifacts/sculptgl-composite20-candidate35-dab-trace-stage/FINAL_CHECKED_RECEIPT.json",
+    "sha256": "0b218ee2a37f7e0d848e1eb1f4b0cb725ec045e1ebae0db91e7a9176e6668a48"
+  },
+  "checks": {
+    "record": {
+      "path": ".artifacts/sculptgl-composite20-candidate35-dab-trace-stage/root-check02/RESULT.json",
+      "sha256": "a8eea961e547485a1beef662eddf74eebf13026fd33d5477089087bc5f9c1187"
+    },
+    "all_five": "PASS fmt/native strict/workspace/WASMalltargets/WASMstrict",
+    "total": 2233,
+    "core": 1553,
+    "app": 680,
+    "ignored": 1
+  },
+  "artifacts": {
+    "wasm": {
+      "path": "pkg/obrush_app_bg.wasm",
+      "bytes": 23189896,
+      "sha256": "b214d20dfdfc6f662c6d93f38ca382501d5c860bf4036212204159235f12664b"
+    },
+    "web": "officialscriptPASS",
+    "macos": "officialscriptPASS signed, unopened and uninstalled"
+  },
+  "regressions": {
+    "current_normal20Lock3": {
+      "path": ".artifacts/sculptgl-composite20-candidate35-dab-trace-stage/root-browser02/CLOSED.json",
+      "sha256": "a78b8062ac457a2ac3c9dc33136f0505a7593d3b0ef24f4577defd2bfa1e014f"
+    },
+    "historical_C34_dense8_only": "Preserved C34 evidence; not rerun or claimed current C35."
+  },
+  "actual_reference": {
+    "SM04_coalesced": {
+      "path": ".artifacts/sculptgl-composite20-candidate35-dab-trace-stage/ROOT_SM04_REFERENCE_AUDIT.json",
+      "sha256": "b7bca3649a76a642bf32a95645c383e718ab6b3923558fbd04e3c830e13bb365"
+    },
+    "SM11_original_quad_degree2": {
+      "path": ".artifacts/sculptgl-composite20-candidate35-dab-trace-stage/ROOT_SM11_REFERENCE_AUDIT.json",
+      "sha256": "acdfcd22c17df097a554de297547c38bb7de4acd9697cadeabebd05db67334d8"
+    },
+    "SM12_boundary_neighbor": {
+      "path": ".artifacts/sculptgl-composite20-candidate35-dab-trace-stage/ROOT_SM12_REFERENCE_AUDIT.json",
+      "sha256": "83e927c706846051c60dac5aff10a2fc7d0855a72a249691a00408a85ca07646"
+    },
+    "helper": {
+      "path": ".artifacts/sculptgl-source-smooth-c35-dab-trace-stage/MANIFEST.json",
+      "sha256": "51cff49f61069897287b5998ddb2217f7b969fd8380e3487592fc0a417f632f7"
+    },
+    "protocol": {
+      "path": ".artifacts/sculptgl-source-smooth-c35-dab-trace-stage/protocol/manifest.json",
+      "sha256": "26168035a9409747ad28621c2c6d54e47b4022824c04791323f75c701ae3e0b3"
+    },
+    "scope": "Actual fixed independent4vertex/quad/grid fixtures, ordinary UI/DPR1, factors0/alphaNone/mirroroff. SM04 both4actualdabs; independent Root everydab selected/math/warmnormal schedule/fullGPU; final12positionwords0differences against actual reference; wholefile onegroupundo/redo and31/32quietRAF 500/515.6ms. SourceGL1 forwardeduploads distinct from RootGL2 actualmemory readback. SM12 exactcurrent boundaryneighbor literal passed; originalSM11/12failedcontacts preserved in separatelypreregistered derivative."
+  },
+  "preserved_failures": {
+    "strict_copy_lint": {
+      "path": ".artifacts/sculptgl-composite20-candidate35-dab-trace-stage/root-check01/RESULT.json",
+      "sha256": "a23b16bf9832ea583ee77f48f844ceb757c01a58e4f9ae7819ec47d1931f08dd"
+    },
+    "SM11_original_contact": "a8df8514dee6c328f4d6908a311d643291311283be88835e33eee956f553cb54",
+    "SM12_original_contact": "9863fa1a797ec4836082824146ea8f18c88a5c999c58b6cb3b1a84b57a7d017e",
+    "priorC33ShiftGPU": "507c1588fff91467401e4be6daeb05268e31dfd4f35120cc31e0c25cbb99d2a1"
+  },
+  "images": {
+    "path": ".artifacts/sculptgl-composite20-candidate35-dab-trace-stage/ROOT_WHOLE_SCREENSHOT_REVIEW.json",
+    "sha256": "b333b07d7bd46c28f919673f18a08b4b4812f1304dfa29d2b03ecc186f0c36a5"
+  },
+  "main_transfer": {
+    "path": ".artifacts/sculptgl-main-c35-promotion-stage/PROMOTED.json",
+    "sha256": "5219f6f2bca940c35fcf5cfbaa87a751283b9ad861447d9b5616612e70eee1ed"
+  },
+  "preview": {
+    "url": "http://127.0.0.1:8800/",
+    "server_session": 18468,
+    "HTTP19": {
+      "path": ".artifacts/sculptgl-main-c35-promotion-stage/PREVIEW_HTTP.json",
+      "sha256": "86a3e9dfc37f73b24954576a6e6079da01b666c33109d2646d14cfe05d5319f7"
+    },
+    "older_previews_and_user8792": "preserved"
+  },
+  "remaining": "OtherSmooth/currentbuildcoverage,SM15heldsettingfocusroute,Flatten/lifecycle,activehover/fullappearance,completeLocale/nativephysical/HiDPI/pressure/densegeometry/longsession/p50p95inputlatency/all317+5 remain open. No percentage or fullparity claim.",
+  "goal_runtime": "Savedgoal observedblocked; user-only /goal resume requested; authorized currentturn work continues."
+}

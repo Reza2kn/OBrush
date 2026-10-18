@@ -1,0 +1,395 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-10-15T18:51:40.733157-07:00",
+  "status": "Delivered C48 compact static tree; exact output comparisons and current browser/reference regression checks pass; full parity unverified",
+  "preview": "http://127.0.0.1:8811/",
+  "source_manifest": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate48/source/manifest.json",
+    "bytes": 92132,
+    "sha256": "7519783745135e1cc44f655bfd8de141df113a59d5d811aeaeb92a2a1005183b"
+  },
+  "build": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate48/build-record.json",
+    "bytes": 9355,
+    "sha256": "340d30ac84e1174fc611421dd51d9e1577bbe2d99848a58836a79bb0f44f6c46"
+  },
+  "checked_receipt": {
+    "path": ".artifacts/sculptgl-compact-tree-c48-stage/FINAL_CHECKED_RECEIPT.json",
+    "bytes": 2907,
+    "sha256": "b8f2b4f26a5c44bc0a84c5da0c4a83498e33f5a5f8560082043fc7c25a3d785c"
+  },
+  "source_checks": {
+    "path": ".artifacts/sculptgl-compact-tree-c48-stage/CHECKS02.json",
+    "bytes": 2025,
+    "sha256": "d20ffbee9726b9ac00ba37da8a5f9ff0c5d6345ad64e4d5f5df5892b39914886"
+  },
+  "source_rows": 511,
+  "product_rows": 384,
+  "tests": {
+    "workspace": 2310,
+    "core": 1590,
+    "app": 720,
+    "ignored": 1
+  },
+  "wasm": {
+    "path": "pkg/obrush_app_bg.wasm",
+    "bytes": 23247493,
+    "sha256": "17586499153a1db481056fad65dc6bc29ac06474e0bdf23d41cfb78827771975"
+  },
+  "implementation": {
+    "path": ".artifacts/sculptgl-compact-tree-c48-stage/IMPLEMENTATION.json",
+    "bytes": 2575,
+    "sha256": "60e1c667bf470f9bd5b781785416fe76ee94bbd444c8b890a80711c2356f90a5"
+  },
+  "changed_file": "crates/obrush-core/src/source_ordered_tree.rs",
+  "scope": "Lossless private storage: derive original midpoint from stored historical face bounds; keep leaf cell slot/face positions and incident starts/counts as u32. Public snapshot shape, live/stale handle serial semantics, face/corner order and normal/geometry arithmetic retained. All original cap values unchanged.",
+  "resource_caps": {
+    "tree_bytes": 67108864,
+    "normal_state_bytes": 134217728,
+    "scratch_bytes": 134217728,
+    "operation_bytes": 268435456
+  },
+  "native_allocator_comparison": {
+    "protocol": {
+      "path": ".artifacts/sculptgl-compact-tree-c48-stage/COMPARISON_PROTOCOL.json",
+      "bytes": 1352,
+      "sha256": "150d32e3c7f87332f9bbcd541f6072b94a1d82344c1a757d81c74aac90ac0ed6"
+    },
+    "comparison": {
+      "path": ".artifacts/sculptgl-compact-tree-c48-stage/ALLOCATION_COMPARISON.json",
+      "bytes": 5419,
+      "sha256": "f470feb1eef1bd3804e2b4c451710bfc5a58915b9225c3faadfe08afb4f3706a"
+    },
+    "baseline": {
+      "path": ".artifacts/sculptgl-compact-tree-c48-stage/BASELINE_ALLOCATION.json",
+      "bytes": 2539,
+      "sha256": "a1f1b30edd2db0a0484da3a36e83e918c0ca60f57b09e0c72514ebcf7da0de61"
+    },
+    "candidate": {
+      "path": ".artifacts/sculptgl-compact-tree-c48-stage/CANDIDATE_ALLOCATION.json",
+      "bytes": 2536,
+      "sha256": "5a1f80bc54c3310b8ecb4e60c3915557915a6137333b7b8f9c63a4d8526e7809"
+    },
+    "probe": {
+      "path": ".artifacts/sculptgl-compact-tree-c48-stage/probe/src/main.rs",
+      "bytes": 2853,
+      "sha256": "fc2407682e176fe93900d45e06e8d8960c1f81e4f4894521679531d48a5e42a6"
+    },
+    "successful_rows": [
+      {
+        "level": 5,
+        "vertices": 10242,
+        "triangles": 20480,
+        "status": "seeded",
+        "baseline": {
+          "allocation_calls": 1737,
+          "level": 5,
+          "peak_requested_delta": 2717840,
+          "retained_requested_delta": 2717840,
+          "scope": "single-thread release CPU allocator requested sizes; excludes input Mesh, allocator overhead/RSS/GPU/browser, no latency claim",
+          "total_requested_bytes": 154251256,
+          "triangles": 20480,
+          "vertices": 10242
+        },
+        "candidate": {
+          "allocation_calls": 1736,
+          "level": 5,
+          "peak_requested_delta": 2103428,
+          "retained_requested_delta": 2103428,
+          "scope": "single-thread release CPU allocator requested sizes; excludes input Mesh, allocator overhead/RSS/GPU/browser, no latency claim",
+          "total_requested_bytes": 153595876,
+          "triangles": 20480,
+          "vertices": 10242
+        },
+        "saved_requested_bytes": 614412,
+        "saved_peak_percent": 22.606628793453623,
+        "semantic_output_bytes": 6847922,
+        "semantic_output_sha256": "59cfacdd88e9cd1b4133818b428adf46e1aefac82f1b99c1e3b3669fca8250fe",
+        "baseline_state_approximate_bytes": 2718312,
+        "candidate_state_approximate_bytes": 2103852
+      },
+      {
+        "level": 6,
+        "vertices": 40962,
+        "triangles": 81920,
+        "status": "seeded",
+        "baseline": {
+          "allocation_calls": 5841,
+          "level": 6,
+          "peak_requested_delta": 10649744,
+          "retained_requested_delta": 10649744,
+          "scope": "single-thread release CPU allocator requested sizes; excludes input Mesh, allocator overhead/RSS/GPU/browser, no latency claim",
+          "total_requested_bytes": 1511189752,
+          "triangles": 81920,
+          "vertices": 40962
+        },
+        "candidate": {
+          "allocation_calls": 5840,
+          "level": 6,
+          "peak_requested_delta": 8192132,
+          "retained_requested_delta": 8192132,
+          "scope": "single-thread release CPU allocator requested sizes; excludes input Mesh, allocator overhead/RSS/GPU/browser, no latency claim",
+          "total_requested_bytes": 1508568292,
+          "triangles": 81920,
+          "vertices": 40962
+        },
+        "saved_requested_bytes": 2457612,
+        "saved_peak_percent": 23.076723722185246,
+        "semantic_output_bytes": 27678805,
+        "semantic_output_sha256": "f1352262c628b1404d2d1bcca97cf3741d4150f72e876e6377898e2d82188388",
+        "baseline_state_approximate_bytes": 10650216,
+        "candidate_state_approximate_bytes": 8192556
+      },
+      {
+        "level": 7,
+        "vertices": 163842,
+        "triangles": 327680,
+        "status": "seeded",
+        "baseline": {
+          "allocation_calls": 22233,
+          "level": 7,
+          "peak_requested_delta": 42377360,
+          "retained_requested_delta": 42377360,
+          "scope": "single-thread release CPU allocator requested sizes; excludes input Mesh, allocator overhead/RSS/GPU/browser, no latency claim",
+          "total_requested_bytes": 20895115144,
+          "triangles": 327680,
+          "vertices": 163842
+        },
+        "candidate": {
+          "allocation_calls": 22232,
+          "level": 7,
+          "peak_requested_delta": 32546948,
+          "retained_requested_delta": 32546948,
+          "scope": "single-thread release CPU allocator requested sizes; excludes input Mesh, allocator overhead/RSS/GPU/browser, no latency claim",
+          "total_requested_bytes": 20884629364,
+          "triangles": 327680,
+          "vertices": 163842
+        },
+        "saved_requested_bytes": 9830412,
+        "saved_peak_percent": 23.19732045601708,
+        "semantic_output_bytes": 111797565,
+        "semantic_output_sha256": "5e2243fb26fe8d8de9c4f9a03d9f7ce2e5ba2ede76128c90d4a1d8022941daf4",
+        "baseline_state_approximate_bytes": 42377832,
+        "candidate_state_approximate_bytes": 32547372
+      }
+    ],
+    "semantic_scope": "Whole saved normal/tree/report/generation/center JSON is byte-identical except the preregistered storage report exclusion. Three fixtures10K/40K/163K. Retained and peak requested bytes both reduced; one fewer allocation.655K fixture remains rejected.",
+    "limits": "Native release requested-size allocator accounting excludes input Mesh, allocator/RSS overhead, browser/GPU and stroke latency; no speed claim."
+  },
+  "private_differential_comparison": {
+    "result": {
+      "path": ".artifacts/sculptgl-compact-tree-c48-stage/TREE_COMPARISON.json",
+      "bytes": 2400,
+      "sha256": "f9ea6561c8d836ed459d33b3e0e4b8691479ad8ef43a36139971dd76a1842343"
+    },
+    "driver": {
+      "path": ".artifacts/sculptgl-compact-tree-c48-stage/RUN_TREE_COMPARISON.py",
+      "bytes": 1616,
+      "sha256": "676247287fdd0dae27f454a51c19fe98494752dcde2f9e4ac6388824a98dfe5f"
+    },
+    "probe": {
+      "path": ".artifacts/sculptgl-compact-tree-c48-stage/tree-probe/src/main.rs",
+      "bytes": 5517,
+      "sha256": "8ec19f8c8380bcda8a77b72abbbf798b0d728dc1a024a0e19143e91c3623fdd1"
+    },
+    "baseline_runtime_embedded_module": {
+      "path": ".artifacts/sculptgl-compact-tree-c48-stage/baseline-tree-sequence.json.included.rs",
+      "bytes": 43246,
+      "sha256": "c47226ae70cc1761412f25930a2b352fd5f73d63b55a81fe8e3ec334d1b12cb1"
+    },
+    "candidate_runtime_embedded_module": {
+      "path": ".artifacts/sculptgl-compact-tree-c48-stage/candidate-tree-sequence.json.included.rs",
+      "bytes": 47565,
+      "sha256": "e2fb80b81de4ad707b52e133d7dcb1770a2aa97ce094bf7f3925e5a57bbb59ac"
+    },
+    "baseline_sequence": {
+      "path": ".artifacts/sculptgl-compact-tree-c48-stage/baseline-tree-sequence.json",
+      "bytes": 401375,
+      "sha256": "3fde0869616b67e149150304a87ca00d48f5ee25d81b00fb2321a6b1b9754486"
+    },
+    "candidate_sequence": {
+      "path": ".artifacts/sculptgl-compact-tree-c48-stage/candidate-tree-sequence.json",
+      "bytes": 401375,
+      "sha256": "3fde0869616b67e149150304a87ca00d48f5ee25d81b00fb2321a6b1b9754486"
+    },
+    "sequence_bytes": 401375,
+    "sequence_sha256": "3fde0869616b67e149150304a87ca00d48f5ee25d81b00fb2321a6b1b9754486",
+    "scope": "Seven complete seed/migration/prune/stale-handle/recycled-balance/partial-history/root-rebuild phases; every snapshot, bound/cell float word, selected/candidate/visited order and sampled incident rows identical. Runtime emitted exact included production modules, independently hash-verified."
+  },
+  "larger_component": {
+    "public_comparison": {
+      "path": ".artifacts/sculptgl-compact-tree-c48-stage/PUBLIC_CAPACITY_COMPARISON.json",
+      "bytes": 2175,
+      "sha256": "05b6b94eea79a94db93a745c93c1e3073c32b9cb38d10b87fd65b3fe1c629ac1"
+    },
+    "public_probe": {
+      "path": ".artifacts/sculptgl-compact-tree-c48-stage/public-capacity-probe/src/main.rs",
+      "bytes": 2838,
+      "sha256": "5a3b9d90aa6e4c4fefc84c2d4515a50f53e0c86d312fc90cdd8529294ab3f331"
+    },
+    "vertices": 399202,
+    "triangles": 798400,
+    "old": "C47 tree and public state seed reject StorageLimit",
+    "new_tree_retained_bytes": 50588228,
+    "new_state_approximate_bytes": 82524588,
+    "new_private_queries": [
+      {
+        "candidates": 1568,
+        "center": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "exact_independent_full_vertex_set": true,
+        "radius_squared": 0.01,
+        "selected": 639,
+        "visited": 36
+      },
+      {
+        "candidates": 24161,
+        "center": [
+          0.7,
+          0.1,
+          0.6
+        ],
+        "exact_independent_full_vertex_set": true,
+        "radius_squared": 0.16,
+        "selected": 10918,
+        "visited": 935
+      },
+      {
+        "candidates": 798400,
+        "center": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "exact_independent_full_vertex_set": true,
+        "radius_squared": 4.0,
+        "selected": 399202,
+        "visited": 24128
+      }
+    ],
+    "new_public_query": "Still StorageLimit due217165120-byte global scratch estimate; no host import/sculpt success.",
+    "independent_shape_validation": {
+      "every_position_finite": true,
+      "all_face_indices_in_range": true,
+      "minimum_cross_squared": 9.613366010127873e-14,
+      "minimum_outward_dot": 9.301582716142454e-07,
+      "maximum_radial_error": 4.501367734111028e-08
+    },
+    "limits": "Analytic native component, not actual browser/editing/nativeGUI or reference capacity proof."
+  },
+  "million_vertex_diagnosis": {
+    "path": ".artifacts/sculptgl-compact-tree-c48-stage/CAPACITY_DIAGNOSIS.json",
+    "bytes": 1482,
+    "sha256": "21e5b2fcf98e95870dfbb0ddaadb0c009dea48e25297582e647b5128065506e0"
+  },
+  "normal_browser": {
+    "audit": {
+      "path": ".artifacts/sculptgl-normal-c48-consumer-stage/POST_AUDIT01.json",
+      "bytes": 231257,
+      "sha256": "01fda20c487557ec306443e901a3b3dfd7f280e5d0b8235f776b6fca18fd0318"
+    },
+    "helper": {
+      "path": ".artifacts/sculptgl-normal-c48-consumer-stage/manifest.json",
+      "bytes": 2343,
+      "sha256": "2ebf120c68569c526f1f3e964e818715c20ecb5dc2d1d6810a7a0aaf237f0d7a"
+    },
+    "actual_result": {
+      "path": ".artifacts/sculptgl-normal-consumer-runtime/candidate48-normal-066282a2-45e4-489e-a2ae-2cd9822331dd/result.json",
+      "bytes": 27503007,
+      "sha256": "4e2c15460f1a996f2b05003076ad6f6d9644eb2b5309bfb9fca84be3f2487973"
+    },
+    "cases": 20,
+    "complete_downloads": 126,
+    "saved_GPU_comparisons": 118,
+    "wholePNGs": 17,
+    "closure": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "limits": [
+      "GPU/geometry correspondence is the original independent JavaScript consumer oracle, not a second Python arithmetic reconstruction",
+      "Scoped current C48 browser checks; no full SculptGL/native/physical/large-capacity/performance parity"
+    ]
+  },
+  "paired_crease_history": {
+    "helper": {
+      "path": ".artifacts/sculptgl-crease-history-c48-stage/MANIFEST.json",
+      "bytes": 31141,
+      "sha256": "4dd6dd8423e87993c1461db21537367c1cf32c1c6e0840fde027c158ded33dfe"
+    },
+    "contracts": {
+      "path": ".artifacts/sculptgl-crease-history-c48-stage/root-check01/RESULT.json",
+      "bytes": 58817,
+      "sha256": "29b10c61994bb36b34d3f49f8ff33aca31c5e4788482d50bb9c79738531e555e"
+    },
+    "protocol": {
+      "path": ".artifacts/sculptgl-crease-history-c48-stage/protocol/manifest.json",
+      "bytes": 434,
+      "sha256": "c1cb02d8a3d5d6e4e3064b7c5efa0f50817e5e4f361cbd3d88fac8f93b69f8f8"
+    },
+    "actual_result": {
+      "path": ".artifacts/sculptgl-crease-runtime/candidate48-history-CW03-1c1f110e-0b2d-4bb0-afa8-104ef4b9d808/result.json",
+      "bytes": 41796520,
+      "sha256": "1df5f99e9aa86e3b1b36fa985e3c63d3ff2cc97d6434b505b34ae2bb5203a5a4"
+    },
+    "audit": {
+      "path": ".artifacts/sculptgl-crease-history-c48-stage/ROOT_HISTORY_AUDIT.json",
+      "bytes": 34925,
+      "sha256": "2be3cb373f914f190ffabe7b9a61f44ea76fd0084f436b9daac24721c0f6f853"
+    },
+    "independent_math": {
+      "path": ".artifacts/sculptgl-crease-history-c48-stage/ROOT_INDEPENDENT_HISTORY_MATH.json",
+      "bytes": 13070,
+      "sha256": "e9fc985d46937c4aa4bd9d1b18e7aad07c53a2febccecbce9292372d7f2f4c2f"
+    },
+    "raw_records": 539,
+    "whole_downloads": 36,
+    "actual_GPU_snapshots": 24,
+    "exact_own_math_passes": 12,
+    "scope": "Original CW03 mirrored three-stroke6vertex fixture and six Undo/Redo steps from current normal field on both hosts. Original max/RMS1e-6,256frame/32MiB capture limits retained. SourceGL1 upload observation and RootGL2readback remain distinct.",
+    "limits": [
+      "CW03 selected-current-field history verified on this fixture; original C41 CW00/CW01 failures and CW02 gap remain historical",
+      "One independent6vertex static fixture; no alpha/pressure/nonzerooffset/pose/culling/Lock/dynamic/nativephysical/HiDPI/performance or full317+5 parity",
+      "Small middle stroke cannot discriminate wrong mirror direction through final f32 coordinates; its actual picked direction is independently verified",
+      "Source GL1 upload observation differs from Root GL2 actual GPU readback"
+    ],
+    "closure": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_servers_closed": 2
+    }
+  },
+  "whole_image_identity": {
+    "path": ".artifacts/sculptgl-compact-tree-c48-stage/IMAGE_IDENTITY_CHECK.json",
+    "bytes": 5851,
+    "sha256": "2177048174368a3946b140684b2c6369c61a1a09d913eb276201d153ef78de51"
+  },
+  "visual_scope": "All three current whole PNG files verified byte-identical to C47 images already inspected. Source contour/cursor/panels/framing differ from OBrush; no image-parity or general sculpt-quality claim.",
+  "retained_unqualified_attempt": {
+    "path": ".artifacts/sculptgl-compact-tree-c48-stage/failed-symlink-binding01/DIAGNOSIS.json",
+    "bytes": 555,
+    "sha256": "c65e23e528195ec4e23d70e9b18a3c5c5e471f21b67e7d9ab87b4b051593d482"
+  },
+  "promotion": {
+    "path": ".artifacts/sculptgl-main-c48-promotion-stage/PROMOTED.json",
+    "bytes": 1425,
+    "sha256": "dde2757358a75af9a82a4147ae374ed11cc582a8f82fc697d9517c30c32a2ced"
+  },
+  "HTTP": {
+    "path": ".artifacts/sculptgl-main-c48-promotion-stage/HTTP_VERIFIED.json",
+    "bytes": 3332,
+    "sha256": "7c533f9adc7ba4b953896f8538cb89e548e001e541937ec2723eae7be6fa9fa3"
+  },
+  "native": "Both official scripts and macOS ad-hoc signature verification pass; package unopened/uninstalled.",
+  "performance": "No C48 sustained trace rerun; C46 timings and both10K60producer failures remain historical. Allocation requested bytes do not measure per-dab/physical/display latency.",
+  "remaining": [
+    "Complete317stable SculptGL workflows+5hosted appearance controls remain active; no family parity promoted.",
+    "1M raw SGL decoder succeeds but combined raw/editable staging rejects; tree preflight119880016bytes still exceeds64MiB, although lower than C47\u2019s183816032.",
+    "1M scratch estimate543456320bytes exceeds128MiB;399Kpublic selection still rejects its217165120-byte scratch estimate. Need bounded local read/edit transactions and full useful import/sculpt/history/GPU proof.",
+    "Dynamic topology/remeshing/multiresolution, full brush/control/raster/lifecycle/reference rendering, nativeGUI/physical tablet/touch/HiDPI and full comparative performance remain open."
+  ]
+}

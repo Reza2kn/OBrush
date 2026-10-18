@@ -1,0 +1,79 @@
+{
+  "utc": "2026-10-15T07:16:51.196857+00:00",
+  "version": "0.1.20",
+  "status": "Delivered local larger readonlySourcePaintS capacity andcompacthierarchy; fullSculptGLparity UNVERIFIED,goalactive",
+  "change": [
+    "Denseoriginalfaceceiling131072->393216 viaoneshared exportedconstant; actual64MiBindex/128MiBcombined budgets stillmandatory",
+    "Leaf8 instead4 reducesinternalnodes, scalarpredicate/tie/quadprecedence andfixedperbatchworkcaps unchanged",
+    "Hostdiagnosticcap uses sharedconstant; no format/history/brush/scalarformula changes"
+  ],
+  "bindings": {
+    "source_manifest": "0336268e575c7f94702b7a937858abc8be32999227be40905af7b3cfb05fdac2",
+    "build": "4bb2fbe474b7a719dda817818a6543698aa797b37bfc1c2d7b85b420df382a7f",
+    "wasm": {
+      "path": "pkg/obrush_app_bg.wasm",
+      "bytes": 23078235,
+      "sha256": "0067bac56654c2dff71aea07b5f7353b168b864f86f9c6d6b24b12d7798618b6"
+    },
+    "checks": "fc8ef9ea9e385457eb3fa3e877bad89e5f91880b99c576ecc31eaeddf1c01a31",
+    "checked_receipt": "50fe41e562fcffbe4a53b9565ad50c2ef2ea41ee1b8de03ae1abcf629b5b6413",
+    "main_promotion": "1d79aa77dea8effbf254a7531a16d85a6773818f938f95af2dddc22f1d9c980c",
+    "preview_http": "5c974ed2954bf3cf9ecf22aaee302018d93361688eaaa9a5a6d24e1ee0333472"
+  },
+  "checks": {
+    "workspace": 2215,
+    "core": 1551,
+    "app": 664,
+    "ignored": 1,
+    "fmt": "PASS",
+    "native_strict": "PASS",
+    "WASM_alltargets": "PASS",
+    "WASM_strict": "PASS",
+    "official_web_macos_scripts": "PASS",
+    "native_opened": false,
+    "native_installed": false
+  },
+  "local_browser": {
+    "original_normal20_Lock3_closed": "2c03c5af15de148fcc7badab6a8565733fc43a2535d91e9f17d6e891b79f4413",
+    "default4_result": "0d75e3a11425b56a5d9e7dd8a02a7e5298d28752de04c0652ef432ea99d44545",
+    "larger4_result": "78ef29c04035c548e41df132745dcbe125ea30761014bda8422cc675ec1d8477",
+    "large_geometry": [
+      163842,
+      327680
+    ],
+    "large_index_bytes": 28839592,
+    "all31_actualcases": true,
+    "default_raw_audit": "c20ecc6c92f02f71bf31bb28c54f20191b81d764ad4e28e79f88fdebbeb9ebd6",
+    "large_raw_audit": "5a7ecb6da21561d4de2c76796128a401bc06453f0c16f8fc79f91c85e785079d",
+    "whole6PNG_review": "39d9ec5dc801f24c3d82508f402880f683dda3edf2ac9b5aa4b02e3a80792e95",
+    "gates": "EarlyheldSnotreplayed;freshSfivechannels<=1e-6; actualkeyupquiet; literalwholeGPU+savedfileexact;priorRedo/Undo exact; ownedChrome0signalnull/serverclosed/errors[]"
+  },
+  "CPU": {
+    "default65comparison": "c1d32129553b4ebdaf27c2a68ffc2d7743050c2ab08bc158ea3baabcc69eb3b7",
+    "fixed_browser_ray": "p34exact scalar3095nodes4072faces",
+    "fixed9_grid": "p35all9exact,max3465nodes4784faces",
+    "unchanged_caps": {
+      "nodes": 4096,
+      "faces": 8192,
+      "triangles": 8192,
+      "corners": 1024,
+      "index_bytes": 67108864,
+      "combined_bytes": 134217728
+    }
+  },
+  "preserved_failures": [
+    "C29baselinehigherIndexFaces,q11",
+    "ActualC29largerLS4 aa8c8e2d6c9592255ee6caa66b9d67fcd3ee49b0c8e38690d274efdbc0a5a7f6:LS01pass thenRayWorkBudgetinput1",
+    "C30fixedexactobliqueCPUreproductionfailure",
+    "Nearfirsttraversalexperimentfailed,sourcepreservedandnotshipped",
+    "Leaf8firstscoped41pass4structuraltestfailures,p03p08p20p28; explicitstructuralfixturechanges recorded,allnumerical/refusal gates retained",
+    "Rootindependentaudit expected already-renamedChromeGUID tempfile; repairedbyactualharnessnormalrename chain,allbytes/events still checked"
+  ],
+  "limits": [
+    "This is readonlyS sampling capacity, not sculpting/Move/Crease quality, arbitrarymesh or1M capacity proof",
+    "CompleteSource/hostedcamera/math, full317IDs+5appearance controls, lifecycle/cursor/Flatten/Smooth/reference/native/physical/pressure/longsession/p50p95/latency remain open",
+    "Typedbudget/invalidrayrefusal remainsrequired; no universalcompleteness or real-time claim",
+    "C29unpromoted; userfiles,mainignoredwebdist,gitindex,andallolderpreviews preserved"
+  ],
+  "preview": "http://127.0.0.1:8796/"
+}

@@ -1,0 +1,55 @@
+{
+  "scope": "Isolated browser WebGPU result to shared WASM sparse document commit; not normal studio or performance parity",
+  "fixture": {
+    "path": "crates/obrush-gpu/tests/fixtures/resident-sphere-162.obrush",
+    "sha256": "ab16459719d55e25d49fa8c2cc0fd16809749a991a6d08e960f6a822d34afe0a",
+    "vertices": 162,
+    "triangles": 320
+  },
+  "parameters": {
+    "center": [0, 0, 1],
+    "radius": 0.5,
+    "intensity_f32": 0.10000000149011612,
+    "passes": 1
+  },
+  "source_sha256": {
+    "crates/obrush-core/src/resident_point_program.rs": "12bff5450fb870ea2dbc9bb68714e5677361a290ede61b1a80a31aac295e4122",
+    "crates/obrush-gpu/src/lib.rs": "058c9c5ae56d7c09407bd7c308c843207960fbafd505c673647f59a2e091f1d4"
+  },
+  "build_sha256": {
+    "raw_gpu_wasm": "95553e18f32164d1770d54b563595643e23dffd86b1728e03b5eb239bfb36f02",
+    "bound_gpu_wasm": "ac0cd614c2f68fbb4bc989b521836bd3171c0ef9cee4c8fa72b10917c029927e",
+    "wasm_bindgen_cli": "0.2.129"
+  },
+  "browser": {
+    "result": ".artifacts/gpu-sparse-c118/browser-final/result.json",
+    "result_sha256": "f45257e6fa0da188f190a83595b4aa4fa27c4105e851befdfd36f1eef8c9b042",
+    "gpu_positions_sha256": "602ae3297642001c1249fb6d953b8c7b4bcf87eb69897410d8df826ac2d20337",
+    "accepted_project_sha256": "78ee164193035562df3690cd6c399dd9a1f8fa8c1aefc132eb986a86d4cc47c5",
+    "changed_indices": [25, 84, 85, 88, 89, 147, 149],
+    "sparse_record_bytes": 140,
+    "full_gpu_readback_bytes": 2592,
+    "invalid_rejected": true,
+    "stale_rejected": true,
+    "undo_exact": true,
+    "redo_exact": true,
+    "visible_canvas_changed": true,
+    "owned_browser_exit_code": 0,
+    "server_closed": true
+  },
+  "checks": {
+    "workspace_all_targets_tests": "passed",
+    "focused_sparse_tests_after_final_edit": "2 passed",
+    "cargo_fmt_check": "passed after formatting correction",
+    "strict_native_workspace_clippy": "passed after divisibility lint correction",
+    "strict_core_gpu_wasm_clippy": "passed",
+    "gpu_wasm_release_and_bindgen": "passed",
+    "final_owned_browser_replay": "passed"
+  },
+  "limitations": [
+    "Sparse records were built in JavaScript after complete GPU position readback; no transfer or latency reduction measured",
+    "Only an isolated point program and single-subtool diagnostic canvas were exercised",
+    "Normal studio still uses CPU/WASM geometry and WebGL2",
+    "No SculptGL brush response or sustained performance parity established"
+  ]
+}

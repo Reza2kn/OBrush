@@ -1,0 +1,796 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-10-16T00:19:16.018185-07:00",
+  "status": "Unreleased C54 native capacity diagnostic; current delivered product remains C53 with original limits",
+  "current_delivery": {
+    "path": "docs/evidence/sculptgl-delivered-c53-0.1.20.json",
+    "bytes": 56068,
+    "sha256": "cb7aed013130f899076027097390f1ecb7108959c6d17a13e1eecb14c9aa6589"
+  },
+  "protocol": {
+    "path": ".artifacts/sculptgl-capacity-ledger-c54-stage/PREREGISTRATION.json",
+    "bytes": 5715,
+    "sha256": "63082b10b50468a35d5e08ebea015ea27cd3125583600743768cba5e082ab93b"
+  },
+  "helper": {
+    "path": ".artifacts/sculptgl-capacity-ledger-c54-stage/HELPER_PREREGISTRATION.json",
+    "bytes": 4289,
+    "sha256": "cd2cb5bcf24be20dd9a8e981a397b96d39e50a371df284026f5fa6cc4345ac32"
+  },
+  "source_helper": {
+    "path": ".artifacts/sculptgl-capacity-ledger-c54-stage/probe/src/main.rs",
+    "bytes": 7298,
+    "sha256": "b00685243221b75c37fdeb427aae16b2bd9cd98d407f39b0b1ee9363e7bf0ae9"
+  },
+  "runner": {
+    "path": ".artifacts/sculptgl-capacity-ledger-c54-stage/RUN.py",
+    "bytes": 5273,
+    "sha256": "49aaa473e9ba91ed51ccccfb8e841bd5b6164cead11eee7e4a5fc5d29bc20c52"
+  },
+  "result": {
+    "path": ".artifacts/sculptgl-capacity-ledger-c54-stage/RESULT.json",
+    "bytes": 29275,
+    "sha256": "2d37b3b8fcdbf273198de2969f1c7d9c302df1240ac7c11f546f1f202c0d0097"
+  },
+  "independent_audit": {
+    "path": ".artifacts/sculptgl-capacity-ledger-c54-stage/AUDIT.json",
+    "bytes": 23913,
+    "sha256": "9fa3796aadd184526e47e3edc678cf80b849a5ed4cce99181c9e97a4f860e9e6"
+  },
+  "audit_script": {
+    "path": ".artifacts/sculptgl-capacity-ledger-c54-stage/AUDIT.py",
+    "bytes": 8537,
+    "sha256": "b126fd48a04d6679261f814bb5d699bed54b1e03e4956dbdf8e858e9c40b9c27"
+  },
+  "source_scope": "Two exact511-row C53 source copies. Baseline unchanged; diagnostic alters only8 explicit allocation-limit constants. Reversing those8 lines reconstructs all original bytes. Vertex/triangle counts, finite validation, algorithms, serialization schema and history logic unchanged. Not a release build or accepted resource policy.",
+  "observations": [
+    {
+      "fixture": "100k",
+      "vertices": 99602,
+      "faces": 199200,
+      "origin_entire_SGL_exact": true,
+      "origin_hex_characters": 13546064,
+      "version": 7,
+      "changed_vertices": 525,
+      "maximum_f32_coordinate_change": 0.008774757385253906,
+      "changed_outside_original_radius": 0,
+      "whole_unrelated_scene_attributes_topology_exact": true,
+      "preserved_f32_channel_hashes": {
+        "colors": "98decda5545f4e3251ba752a1a0caa5d6f74cc5d6d11199ad07bbf027eebe576",
+        "materials": "b929e03d2b52e25dd01bceb55ee6d870971530eff2534f10cbead2ecc1ec143d",
+        "masks": "16aa6896c51cfc79d308fbccd9819855d95b7a1cc31636d8c44beb5d247b6bd5"
+      },
+      "whole_Undo_Redo_reload_exact": true,
+      "before_JSON_bytes": 35016871,
+      "after_JSON_bytes": 35017299
+    },
+    {
+      "fixture": "1m",
+      "vertices": 999002,
+      "faces": 1998000,
+      "origin_entire_SGL_exact": true,
+      "origin_hex_characters": 135864464,
+      "version": 7,
+      "changed_vertices": 5215,
+      "maximum_f32_coordinate_change": 0.008779466152191162,
+      "changed_outside_original_radius": 0,
+      "whole_unrelated_scene_attributes_topology_exact": true,
+      "preserved_f32_channel_hashes": {
+        "colors": "f69045dfcc48ef535df2e43407f64d9601e37144dcbc4c038fe46d76a247187f",
+        "materials": "0d77ab05fc0fc2888d7337e9cdd2f7b45ab2127dc5625d2b2012e0e11986d602",
+        "masks": "a76b6659a61be6eb8c26929cd424bd5198c4fcc6c850308e0bf7d46911a57b3b"
+      },
+      "whole_Undo_Redo_reload_exact": true,
+      "before_JSON_bytes": 367660487,
+      "after_JSON_bytes": 367663092
+    }
+  ],
+  "maximum_observed_global_requested_live_bytes": 1272496604,
+  "native_lifetime_phases": [
+    {
+      "side": "baseline",
+      "fixture": "100k",
+      "error": null,
+      "phases": [
+        {
+          "allocation_calls": 1,
+          "error": null,
+          "live_after": 6774029,
+          "live_before": 997,
+          "peak_above_entry": 6773032,
+          "peak_global_live": 6774029,
+          "phase": "read_input",
+          "requested_total": 6773032,
+          "retained_delta": 6773032,
+          "seconds": 0.001641583
+        },
+        {
+          "allocation_calls": 5,
+          "error": null,
+          "live_after": 13548090,
+          "live_before": 6774978,
+          "peak_above_entry": 6773112,
+          "peak_global_live": 13548090,
+          "phase": "raw_decode",
+          "requested_total": 6773112,
+          "retained_delta": 6773112,
+          "seconds": 0.009652291
+        },
+        {
+          "allocation_calls": 16,
+          "error": null,
+          "live_after": 23908567,
+          "live_before": 13549499,
+          "peak_above_entry": 11952680,
+          "peak_global_live": 25502179,
+          "phase": "stage",
+          "requested_total": 12749884,
+          "retained_delta": 10359068,
+          "seconds": 0.076468
+        },
+        {
+          "allocation_calls": 65,
+          "error": null,
+          "live_after": 17141463,
+          "live_before": 17138521,
+          "peak_above_entry": 73882340,
+          "peak_global_live": 91020861,
+          "phase": "install",
+          "requested_total": 151354292,
+          "retained_delta": 2942,
+          "seconds": 0.2150185
+        },
+        {
+          "allocation_calls": 37,
+          "error": null,
+          "live_after": 84251081,
+          "live_before": 17142217,
+          "peak_above_entry": 73882692,
+          "peak_global_live": 91024909,
+          "phase": "before_save",
+          "requested_total": 140991772,
+          "retained_delta": 67108864,
+          "seconds": 0.194289917
+        },
+        {
+          "allocation_calls": 12,
+          "error": null,
+          "live_after": 27501713,
+          "live_before": 17143103,
+          "peak_above_entry": 10358610,
+          "peak_global_live": 27501713,
+          "phase": "begin",
+          "requested_total": 10358610,
+          "retained_delta": 10358610,
+          "seconds": 0.00277375
+        },
+        {
+          "allocation_calls": 26814,
+          "error": null,
+          "live_after": 56396569,
+          "live_before": 27502465,
+          "peak_above_entry": 52798450,
+          "peak_global_live": 80300915,
+          "phase": "cold_dab",
+          "requested_total": 17531675824,
+          "retained_delta": 28894104,
+          "seconds": 0.025856416
+        },
+        {
+          "allocation_calls": 6416,
+          "error": null,
+          "live_after": 56414901,
+          "live_before": 56414189,
+          "peak_above_entry": 28886670,
+          "peak_global_live": 85300859,
+          "phase": "warm_dab",
+          "requested_total": 30394504,
+          "retained_delta": 712,
+          "seconds": 0.005572416
+        },
+        {
+          "allocation_calls": 9,
+          "error": null,
+          "live_after": 56432393,
+          "live_before": 56432393,
+          "peak_above_entry": 56,
+          "peak_global_live": 56432449,
+          "phase": "end",
+          "requested_total": 272,
+          "retained_delta": 0,
+          "seconds": 0.014961167
+        },
+        {
+          "allocation_calls": 37,
+          "error": null,
+          "live_after": 123542263,
+          "live_before": 56433399,
+          "peak_above_entry": 73882692,
+          "peak_global_live": 130316091,
+          "phase": "after_save",
+          "requested_total": 140991772,
+          "retained_delta": 67108864,
+          "seconds": 0.197858542
+        },
+        {
+          "allocation_calls": 6382,
+          "error": null,
+          "live_after": 68000360,
+          "live_before": 56434156,
+          "peak_above_entry": 14771076,
+          "peak_global_live": 71205232,
+          "phase": "undo",
+          "requested_total": 15188276,
+          "retained_delta": 11566204,
+          "seconds": 0.004080417
+        },
+        {
+          "allocation_calls": 37,
+          "error": null,
+          "live_after": 135109975,
+          "live_before": 68001111,
+          "peak_above_entry": 73882692,
+          "peak_global_live": 141883803,
+          "phase": "undo_save",
+          "requested_total": 140991772,
+          "retained_delta": 67108864,
+          "seconds": 0.19823425
+        },
+        {
+          "allocation_calls": 6378,
+          "error": null,
+          "live_after": 68001935,
+          "live_before": 68001867,
+          "peak_above_entry": 14771076,
+          "peak_global_live": 82772943,
+          "phase": "redo",
+          "requested_total": 15185340,
+          "retained_delta": 68,
+          "seconds": 0.004559292
+        },
+        {
+          "allocation_calls": 37,
+          "error": null,
+          "live_after": 135111550,
+          "live_before": 68002686,
+          "peak_above_entry": 73882692,
+          "peak_global_live": 141885378,
+          "phase": "redo_save",
+          "requested_total": 140991772,
+          "retained_delta": 67108864,
+          "seconds": 0.196080083
+        },
+        {
+          "allocation_calls": 3,
+          "error": null,
+          "live_after": 35065903,
+          "live_before": 48604,
+          "peak_above_entry": 35017475,
+          "peak_global_live": 35066079,
+          "phase": "read_reload",
+          "requested_total": 35017563,
+          "retained_delta": 35017299,
+          "seconds": 0.006079
+        },
+        {
+          "allocation_calls": 139,
+          "error": null,
+          "live_after": 55471351,
+          "live_before": 35066661,
+          "peak_above_entry": 27178398,
+          "peak_global_live": 62245059,
+          "phase": "reload",
+          "requested_total": 43203217,
+          "retained_delta": 20404690,
+          "seconds": 0.0912185
+        },
+        {
+          "allocation_calls": 37,
+          "error": null,
+          "live_after": 87563669,
+          "live_before": 20454805,
+          "peak_above_entry": 73882692,
+          "peak_global_live": 94337497,
+          "phase": "reload_save",
+          "requested_total": 140991772,
+          "retained_delta": 67108864,
+          "seconds": 0.195650042
+        }
+      ]
+    },
+    {
+      "side": "baseline",
+      "fixture": "1m",
+      "error": "stage: Combined raw/editable staged allocations exceed the selected storage limit",
+      "phases": [
+        {
+          "allocation_calls": 1,
+          "error": null,
+          "live_after": 67933225,
+          "live_before": 993,
+          "peak_above_entry": 67932232,
+          "peak_global_live": 67933225,
+          "phase": "read_input",
+          "requested_total": 67932232,
+          "retained_delta": 67932232,
+          "seconds": 0.007468791
+        },
+        {
+          "allocation_calls": 5,
+          "error": null,
+          "live_after": 135866486,
+          "live_before": 67934174,
+          "peak_above_entry": 67932312,
+          "peak_global_live": 135866486,
+          "phase": "raw_decode",
+          "requested_total": 67932312,
+          "retained_delta": 67932312,
+          "seconds": 0.073421584
+        },
+        {
+          "allocation_calls": 1,
+          "error": "Combined raw/editable staged allocations exceed the selected storage limit",
+          "live_after": 67935657,
+          "live_before": 135867895,
+          "peak_above_entry": 74,
+          "peak_global_live": 135867969,
+          "phase": "stage",
+          "requested_total": 74,
+          "retained_delta": -67932238,
+          "seconds": 0.037900917
+        }
+      ]
+    },
+    {
+      "side": "diagnostic",
+      "fixture": "100k",
+      "error": null,
+      "phases": [
+        {
+          "allocation_calls": 1,
+          "error": null,
+          "live_after": 6774035,
+          "live_before": 1003,
+          "peak_above_entry": 6773032,
+          "peak_global_live": 6774035,
+          "phase": "read_input",
+          "requested_total": 6773032,
+          "retained_delta": 6773032,
+          "seconds": 0.001673625
+        },
+        {
+          "allocation_calls": 5,
+          "error": null,
+          "live_after": 13548096,
+          "live_before": 6774984,
+          "peak_above_entry": 6773112,
+          "peak_global_live": 13548096,
+          "phase": "raw_decode",
+          "requested_total": 6773112,
+          "retained_delta": 6773112,
+          "seconds": 0.017885208
+        },
+        {
+          "allocation_calls": 16,
+          "error": null,
+          "live_after": 23908573,
+          "live_before": 13549505,
+          "peak_above_entry": 11952680,
+          "peak_global_live": 25502185,
+          "phase": "stage",
+          "requested_total": 12749884,
+          "retained_delta": 10359068,
+          "seconds": 0.085049791
+        },
+        {
+          "allocation_calls": 65,
+          "error": null,
+          "live_after": 17141469,
+          "live_before": 17138527,
+          "peak_above_entry": 73882340,
+          "peak_global_live": 91020867,
+          "phase": "install",
+          "requested_total": 151354292,
+          "retained_delta": 2942,
+          "seconds": 0.211311542
+        },
+        {
+          "allocation_calls": 37,
+          "error": null,
+          "live_after": 84251087,
+          "live_before": 17142223,
+          "peak_above_entry": 73882692,
+          "peak_global_live": 91024915,
+          "phase": "before_save",
+          "requested_total": 140991772,
+          "retained_delta": 67108864,
+          "seconds": 0.196396417
+        },
+        {
+          "allocation_calls": 12,
+          "error": null,
+          "live_after": 27501719,
+          "live_before": 17143109,
+          "peak_above_entry": 10358610,
+          "peak_global_live": 27501719,
+          "phase": "begin",
+          "requested_total": 10358610,
+          "retained_delta": 10358610,
+          "seconds": 0.002721333
+        },
+        {
+          "allocation_calls": 26814,
+          "error": null,
+          "live_after": 56396575,
+          "live_before": 27502471,
+          "peak_above_entry": 52798450,
+          "peak_global_live": 80300921,
+          "phase": "cold_dab",
+          "requested_total": 17531675824,
+          "retained_delta": 28894104,
+          "seconds": 0.025040042
+        },
+        {
+          "allocation_calls": 6416,
+          "error": null,
+          "live_after": 56414907,
+          "live_before": 56414195,
+          "peak_above_entry": 28886670,
+          "peak_global_live": 85300865,
+          "phase": "warm_dab",
+          "requested_total": 30394504,
+          "retained_delta": 712,
+          "seconds": 0.00369225
+        },
+        {
+          "allocation_calls": 9,
+          "error": null,
+          "live_after": 56432399,
+          "live_before": 56432399,
+          "peak_above_entry": 56,
+          "peak_global_live": 56432455,
+          "phase": "end",
+          "requested_total": 272,
+          "retained_delta": 0,
+          "seconds": 0.015241833
+        },
+        {
+          "allocation_calls": 37,
+          "error": null,
+          "live_after": 123542269,
+          "live_before": 56433405,
+          "peak_above_entry": 73882692,
+          "peak_global_live": 130316097,
+          "phase": "after_save",
+          "requested_total": 140991772,
+          "retained_delta": 67108864,
+          "seconds": 0.196882084
+        },
+        {
+          "allocation_calls": 6382,
+          "error": null,
+          "live_after": 68000366,
+          "live_before": 56434162,
+          "peak_above_entry": 14771076,
+          "peak_global_live": 71205238,
+          "phase": "undo",
+          "requested_total": 15188276,
+          "retained_delta": 11566204,
+          "seconds": 0.003949208
+        },
+        {
+          "allocation_calls": 37,
+          "error": null,
+          "live_after": 135109981,
+          "live_before": 68001117,
+          "peak_above_entry": 73882692,
+          "peak_global_live": 141883809,
+          "phase": "undo_save",
+          "requested_total": 140991772,
+          "retained_delta": 67108864,
+          "seconds": 0.197479041
+        },
+        {
+          "allocation_calls": 6378,
+          "error": null,
+          "live_after": 68001941,
+          "live_before": 68001873,
+          "peak_above_entry": 14771076,
+          "peak_global_live": 82772949,
+          "phase": "redo",
+          "requested_total": 15185340,
+          "retained_delta": 68,
+          "seconds": 0.004193292
+        },
+        {
+          "allocation_calls": 37,
+          "error": null,
+          "live_after": 135111556,
+          "live_before": 68002692,
+          "peak_above_entry": 73882692,
+          "peak_global_live": 141885384,
+          "phase": "redo_save",
+          "requested_total": 140991772,
+          "retained_delta": 67108864,
+          "seconds": 0.196160667
+        },
+        {
+          "allocation_calls": 3,
+          "error": null,
+          "live_after": 35065909,
+          "live_before": 48610,
+          "peak_above_entry": 35017479,
+          "peak_global_live": 35066089,
+          "phase": "read_reload",
+          "requested_total": 35017569,
+          "retained_delta": 35017299,
+          "seconds": 0.006467583
+        },
+        {
+          "allocation_calls": 139,
+          "error": null,
+          "live_after": 55471357,
+          "live_before": 35066667,
+          "peak_above_entry": 27178398,
+          "peak_global_live": 62245065,
+          "phase": "reload",
+          "requested_total": 43203217,
+          "retained_delta": 20404690,
+          "seconds": 0.092610166
+        },
+        {
+          "allocation_calls": 37,
+          "error": null,
+          "live_after": 87563675,
+          "live_before": 20454811,
+          "peak_above_entry": 73882692,
+          "peak_global_live": 94337503,
+          "phase": "reload_save",
+          "requested_total": 140991772,
+          "retained_delta": 67108864,
+          "seconds": 0.197038375
+        }
+      ]
+    },
+    {
+      "side": "diagnostic",
+      "fixture": "1m",
+      "error": null,
+      "phases": [
+        {
+          "allocation_calls": 1,
+          "error": null,
+          "live_after": 67933231,
+          "live_before": 999,
+          "peak_above_entry": 67932232,
+          "peak_global_live": 67933231,
+          "phase": "read_input",
+          "requested_total": 67932232,
+          "retained_delta": 67932232,
+          "seconds": 0.007540625
+        },
+        {
+          "allocation_calls": 5,
+          "error": null,
+          "live_after": 135866492,
+          "live_before": 67934180,
+          "peak_above_entry": 67932312,
+          "peak_global_live": 135866492,
+          "phase": "raw_decode",
+          "requested_total": 67932312,
+          "retained_delta": 67932312,
+          "seconds": 0.072136292
+        },
+        {
+          "allocation_calls": 16,
+          "error": null,
+          "live_after": 239764569,
+          "live_before": 135867901,
+          "peak_above_entry": 119880680,
+          "peak_global_live": 255748581,
+          "phase": "stage",
+          "requested_total": 127873084,
+          "retained_delta": 103896668,
+          "seconds": 0.671965
+        },
+        {
+          "allocation_calls": 68,
+          "error": null,
+          "live_after": 171838265,
+          "live_before": 171835323,
+          "peak_above_entry": 604803588,
+          "peak_global_live": 776638911,
+          "phase": "install",
+          "requested_total": 1245575188,
+          "retained_delta": 2942,
+          "seconds": 2.102264291
+        },
+        {
+          "allocation_calls": 40,
+          "error": null,
+          "live_after": 708709931,
+          "live_before": 171839019,
+          "peak_above_entry": 604803940,
+          "peak_global_live": 776642959,
+          "phase": "before_save",
+          "requested_total": 1141675068,
+          "retained_delta": 536870912,
+          "seconds": 1.9375005
+        },
+        {
+          "allocation_calls": 12,
+          "error": null,
+          "live_after": 275736115,
+          "live_before": 171839905,
+          "peak_above_entry": 103896210,
+          "peak_global_live": 275736115,
+          "phase": "begin",
+          "requested_total": 103896210,
+          "retained_delta": 103896210,
+          "seconds": 0.032135708
+        },
+        {
+          "allocation_calls": 200301,
+          "error": null,
+          "live_after": 558600687,
+          "live_before": 275736867,
+          "peak_above_entry": 515283566,
+          "peak_global_live": 791020433,
+          "phase": "cold_dab",
+          "requested_total": 996184364500,
+          "retained_delta": 282863820,
+          "seconds": 0.273251792
+        },
+        {
+          "allocation_calls": 47406,
+          "error": null,
+          "live_after": 558621811,
+          "live_before": 558618307,
+          "peak_above_entry": 282383298,
+          "peak_global_live": 841001605,
+          "phase": "warm_dab",
+          "requested_total": 297491668,
+          "retained_delta": 3504,
+          "seconds": 0.065451541
+        },
+        {
+          "allocation_calls": 46777,
+          "error": null,
+          "live_after": 558640523,
+          "live_before": 558639303,
+          "peak_above_entry": 141002848,
+          "peak_global_live": 699642151,
+          "phase": "end",
+          "requested_total": 479028609,
+          "retained_delta": 1220,
+          "seconds": 0.164053875
+        },
+        {
+          "allocation_calls": 40,
+          "error": null,
+          "live_after": 1095512441,
+          "live_before": 558641529,
+          "peak_above_entry": 604803940,
+          "peak_global_live": 1163445469,
+          "phase": "after_save",
+          "requested_total": 1141675068,
+          "retained_delta": 536870912,
+          "seconds": 1.967689208
+        },
+        {
+          "allocation_calls": 47990,
+          "error": null,
+          "live_after": 667685478,
+          "live_before": 558642286,
+          "peak_above_entry": 141217556,
+          "peak_global_live": 699859842,
+          "phase": "undo",
+          "requested_total": 145525680,
+          "retained_delta": 109043192,
+          "seconds": 0.04773175
+        },
+        {
+          "allocation_calls": 40,
+          "error": null,
+          "live_after": 1204557141,
+          "live_before": 667686229,
+          "peak_above_entry": 604803940,
+          "peak_global_live": 1272490169,
+          "phase": "undo_save",
+          "requested_total": 1141675068,
+          "retained_delta": 536870912,
+          "seconds": 1.972171916
+        },
+        {
+          "allocation_calls": 47988,
+          "error": null,
+          "live_after": 667691913,
+          "live_before": 667686985,
+          "peak_above_entry": 141217556,
+          "peak_global_live": 808904541,
+          "phase": "redo",
+          "requested_total": 145516604,
+          "retained_delta": 4928,
+          "seconds": 0.051781917
+        },
+        {
+          "allocation_calls": 40,
+          "error": null,
+          "live_after": 1204563576,
+          "live_before": 667692664,
+          "peak_above_entry": 604803940,
+          "peak_global_live": 1272496604,
+          "phase": "redo_save",
+          "requested_total": 1141675068,
+          "retained_delta": 536870912,
+          "seconds": 1.982308
+        },
+        {
+          "allocation_calls": 3,
+          "error": null,
+          "live_after": 367711698,
+          "live_before": 48606,
+          "peak_above_entry": 367663268,
+          "peak_global_live": 367711874,
+          "phase": "read_reload",
+          "requested_total": 367663356,
+          "retained_delta": 367663092,
+          "seconds": 0.221408583
+        },
+        {
+          "allocation_calls": 160,
+          "error": null,
+          "live_after": 539644858,
+          "live_before": 367712456,
+          "peak_above_entry": 239865310,
+          "peak_global_live": 607577766,
+          "phase": "reload",
+          "requested_total": 372896145,
+          "retained_delta": 171932402,
+          "seconds": 0.962224875
+        },
+        {
+          "allocation_calls": 40,
+          "error": null,
+          "live_after": 708853431,
+          "live_before": 171982519,
+          "peak_above_entry": 604803940,
+          "peak_global_live": 776786459,
+          "phase": "reload_save",
+          "requested_total": 1141675068,
+          "retained_delta": 536870912,
+          "seconds": 1.932575084
+        }
+      ]
+    }
+  ],
+  "failures": [
+    {
+      "path": ".artifacts/sculptgl-capacity-ledger-c54-stage/BUILD01_FAILURE.json",
+      "bytes": 410,
+      "sha256": "3592df6ba7aa7c87f04df54bfdaa62f91979bfdfc3b995be8ea23a5799934d2d"
+    },
+    {
+      "path": ".artifacts/sculptgl-capacity-ledger-c54-stage/RUN01_FAILURE.json",
+      "bytes": 456,
+      "sha256": "ab1906e7d5f364d99af31eff6d70837dc93547aaa092becd07f38f7a2be49c40"
+    }
+  ],
+  "findings": [
+    "Delivered C53 raw1Mdecode succeeds; staging rejects the full fixture at its original combined raw/editable limit. That failure remains failed.",
+    "In the diagnostic branch, same999002vertex/1998000triangle fixture imports, applies2usefulfixed-contact Draw dabs, and preserves complete Undo/Redo/save/reload. All non-position/normal fields remain equal; RGB/RM/masks are additionally checked by exactf32word hashes. Entire original SGL remains byte-exact in project origin.",
+    "Whole1Mproject JSON is367660487bytes before and367663092after. The unchanged original67932232-byte origin alone requires135864464hexcharacters, exceeding128MiB before any editable fields. An import/tree-only fix cannot complete save/reload.",
+    "Largest measured requested-live native allocation is1272496604bytes during redo save with retained history. This is one fixture/workflow observation, not a proved worst-case process bound.",
+    "The five100Kproject outputs are literally equal between original and diagnostic limits.15completegzipoutputs were independently decompressed/length/CRC/digestchecked.",
+    "Save buffers retain a536870912-byte capacity for the367663092-byte output. An isolated C54 product candidate now bounds large output growth at8MiB; validation/build/browser remain separate. No product limits were increased."
+  ],
+  "limits": [
+    "Native sequential requested byte observations, not allocator overhead/RSS/browser/GPU or a proved worst-case bound.",
+    "Requested total sums full allocator/reallocator request sizes. Realloc may be in place; a very large sum does not establish copied bytes, physical allocation or memory traffic.",
+    "One fixed contact/two useful ordinary Source Draw dabs, no mirror/alpha/culling/Continuous/guard. Other modes and full317+5 remain open.",
+    "Time observations come from standalone release probe; no causal speedup or calibrated browser/physical latency inferred.",
+    "Only diagnostic constants differ. Product limits, schema, main source and all earlier failed gates remain unchanged.",
+    "Large encoded JSON and simultaneous retained history make a tree/import-only change insufficient. Current native observation does not authorize larger production limits without an explicit resource policy and browser/save/history proof."
+  ],
+  "remaining": "All317stable workflow IDs+5hostedcontrols and ZBrush2026.2.1 remain active. No1Mbrowser/nativeGUI/GPU/quality/performance or family parity qualification."
+}

@@ -1,0 +1,93 @@
+{
+  "feature": "Mask extraction from a version 7 posed source into a plain world-space part",
+  "status": "Compared with pinned SculptGL on one translated source; zero-thickness unordered points exact, nonzero reference has collapsed open geometry; OBrush browser and core checks pass",
+  "reference_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+  "settings": {
+    "threshold": 0.5,
+    "selection": "whole incident faces",
+    "surface_offset_world": 0.01,
+    "thickness_world": [
+      0,
+      -0.125,
+      0.125
+    ]
+  },
+  "fixtures": {
+    "independent_sgl": {
+      "path": "crates/obrush-core/tests/fixtures/independent-affine-extract.sgl",
+      "sha256": "c68a1a71d0bc6b19df1821560e95f4e62a22d58a704a0a428da69bb15f03e659"
+    },
+    "independent_obrush": {
+      "path": "crates/obrush-core/tests/fixtures/independent-affine-extract.obrush",
+      "sha256": "f27d9e2be12e0daeb85660ac96be19962f7c8f51362cc0c060b132257a02ad2a"
+    }
+  },
+  "source_sha256": {
+    "crates/obrush-core/src/extract.rs": "ad7517cff648ec04a81f9b5434db90ebce327b76f90f8705a0ea1e2e3b22559f",
+    "crates/obrush-core/src/document.rs": "1f3fe748902b392950349e3d64fd216624eeedc83dc8b7a74807b1001424c12d",
+    "crates/obrush-core/tests/document_scene_v7.rs": "c7484d7a253fe798294788aaa9b6d30559b755bc2fa6bf33344c402b270e4997",
+    "crates/obrush-core/examples/affine_extract_fixture.rs": "c0b5a63ea2b516807a9a2ca519656defbbf864ac230e18176e33bc23509f838b",
+    "crates/obrush-core/examples/compare_affine_extract.rs": "261ea8c804b359a35dcd3bfc46027d7159bb2b22a8c971ea651003a56db8f8b4",
+    "scripts/check-sculptgl-reference.mjs": "67e810419e55d158254f9df69120865d32e028078630ad638369491004ac909d",
+    "scripts/check-mask-filters.mjs": "5731ae581e7942b0630728f3346a8dec72984cf01bf832c62c440c6a2c4998a2",
+    "scripts/compare-mask-extract-reference.py": "da0ae91612620a1fa6d6cd90f5d3d22153e1d7cf89f7322f493b5cf83062decf"
+  },
+  "reference_runtime": {
+    "path": ".artifacts/sculptgl-reference-runtime/extract-affine-c79-0e76a47f-5667-436b-872c-d62cdbba2e0f/result.json",
+    "sha256": "228a22e8aca90ba533b37692930c26c9fa2b79dd6a53f221d67faf2457b410b6",
+    "normal_ui_cases": 3
+  },
+  "obrush_core_runtime": {
+    "path": ".artifacts/affine-extract-c79-own.json",
+    "sha256": "d4baa269853997629cc2a8e200aa508593ddac763210e84982c0bb0bbaf3dd7e"
+  },
+  "paired_comparison": {
+    "path": ".artifacts/affine-extract-c79-comparison.json",
+    "sha256": "02b21f24241c1498ab9cb51c0e76e8dd2189ea3d8d978df5a7f49c0dad749272",
+    "zero_max_nearest_gap": 0,
+    "inward_max_nearest_gap": 1.185917389,
+    "outward_max_nearest_gap": 1.18591739,
+    "nonzero_reference_boundary_edges": 6,
+    "nonzero_obrush_boundary_edges": 0
+  },
+  "browser_runtime": {
+    "path": ".artifacts/mask-filter-browser/posed-extract-c79-final-3635556c-b0a7-4f48-9260-65a6ffc9f4cc/result.json",
+    "sha256": "d42fd6badfd7c1bfba07ce85f1ba0a28c61de4039b08409eb9c66349dd382c30",
+    "status": "passed mask filter browser workflows",
+    "cases": 16,
+    "saved_snapshots": 171,
+    "wasm_sha256": "9af5a6866c2460ea2d29ac7f21a7bc0c9cd6829970e4c1f0516344042fc4d494",
+    "runtime_gl_errors": 0,
+    "runtime_js_errors": 0,
+    "exceptions": 0,
+    "console_errors": 0,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    }
+  },
+  "checks": {
+    "format": "passed",
+    "workspace_all_targets": "passed; one intentionally ignored snapshot-generation test",
+    "native_workspace_strict_clippy": "passed",
+    "wasm_core_strict_clippy": "passed",
+    "javascript_syntax": "passed",
+    "official_web_build": "passed",
+    "official_macos_package": "passed; ad-hoc signature verified"
+  },
+  "preserved_failed_browser_harness_receipts": [
+    ".artifacts/mask-filter-browser/posed-extract-c79-8de3dad6-f3d5-4711-8596-2f9cfb2fecea/result.json",
+    ".artifacts/mask-filter-browser/posed-extract-c79-fixed-29639ab6-ea36-4de5-8c01-270562d314be/result.json",
+    ".artifacts/mask-filter-browser/posed-extract-c79-target-31513ad0-3f52-442b-af65-2a672b23386d/result.json",
+    ".artifacts/mask-filter-browser/posed-extract-c79-target2-f303fab1-2b17-43a9-9c04-655b3fef0bd6/result.json",
+    ".artifacts/mask-filter-browser/posed-extract-c79-target3-4b271942-f9fa-451e-92f6-bae0d03ba2cc/result.json",
+    ".artifacts/mask-filter-browser/posed-extract-c79-full-51daaae4-5dcf-43d2-9f88-ff46dffb314e/result.json"
+  ],
+  "limitations": [
+    "Only a flat translated triangle is paired with SculptGL; reflected pose checked in OBrush core/browser, not reference",
+    "Reference nonzero shell has collapsed faces and open edges, and is deliberately not reproduced",
+    "Curved posed surfaces, nonuniform masks, arbitrary nonuniform transforms, native GUI, sustained responsiveness and ZBrush extraction remain unverified",
+    "Browser remains Rust/WASM CPU geometry with WebGL2 drawing; separate WebGPU prototypes are not production brushes"
+  ]
+}

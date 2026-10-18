@@ -1,0 +1,250 @@
+{
+  "feature": "Surface Nets quad remesh then static smooth retained subdivision and Draw",
+  "status": "Paired 16-resolution closed sphere quad/position comparison passes and OBrush sculpt workflow passes; full SculptGL parity open",
+  "reference_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+  "source": [
+    {
+      "path": "crates/obrush-core/tests/remesh.rs",
+      "sha256": "b60f4e7544167dc8871963d36ca249fb80756d242beae128c4c2ae24979d1114",
+      "bytes": 19490
+    },
+    {
+      "path": "scripts/check-mask-filters.mjs",
+      "sha256": "6a4cf0890620b94665e01907ef2df9c92e8d629eebd81da8f8916889fef437d1",
+      "bytes": 115712
+    },
+    {
+      "path": "scripts/check-sculptgl-remesh-subdivide.mjs",
+      "sha256": "ad0bc867646d00165ea1aa52136af17e35f3ca6bca1dd143bbe5251bdd79bd7d",
+      "bytes": 54786
+    },
+    {
+      "path": "scripts/compare-surface-nets-subdivision.py",
+      "sha256": "56c4ad8ba28ad728a5326b57ef8de52aef7344e8b851a2d04f48cd1577ea1b09",
+      "bytes": 5723
+    },
+    {
+      "path": "docs/SCULPTGL_REMESH_SUBDIVIDE_C86.md",
+      "sha256": "ec5eaddf16a4f26229ebdb3661160e4541ac428fca7ef93a92f499ccb8729e61",
+      "bytes": 2958
+    },
+    {
+      "path": "docs/FEATURE_PARITY.md",
+      "sha256": "8c967068575be68833fc3b2ee4baabf2d1ae83eec12098f8947e39bc3336b244",
+      "bytes": 69310
+    },
+    {
+      "path": "docs/SCULPTGL_PARITY.md",
+      "sha256": "bfff601feec49767c586ae411305f650b33c190a5284cf11338fbd289e218363",
+      "bytes": 174040
+    }
+  ],
+  "historical_32_harnesses": [
+    {
+      "path": ".artifacts/smooth-nets-subdivide-c86-32-harness.mjs",
+      "sha256": "c5392398fd3b5ca374d5b005aab3b4d6798b82b3578b839c7ae6b8c3e358a7a9",
+      "bytes": 115394
+    },
+    {
+      "path": ".artifacts/smooth-nets-subdivide-c86-32-reference.mjs",
+      "sha256": "113c0728b194375ceb6b2060aa72d3d21be4af64e221120c573e985668e959b0",
+      "bytes": 54688
+    }
+  ],
+  "fixtures": [
+    {
+      "path": "crates/obrush-core/tests/fixtures/independent-reference-sphere.obj",
+      "sha256": "165e2cfacb2f0d99312fd3f4f3f79c2696be3eee9b05047ac7f57c891783ba9b",
+      "bytes": 24272
+    },
+    {
+      "path": ".artifacts/sculptgl-reference-runtime/smooth-nets-subdivide-c86-small-69c70cb8-a791-44f5-868e-db26c8ceb86a/independent-seamed-sphere.obj",
+      "sha256": "4bfebeb8ac713741ee5b70dedcefd8d746e21f610ebc788783f1008cc9d375ed",
+      "bytes": 86901
+    }
+  ],
+  "fixture_geometry_check": {
+    "vertices_each": 266,
+    "triangles_each": 528,
+    "max_position_difference": 0,
+    "face_id_sequence_exact": true
+  },
+  "reference": {
+    "result": {
+      "path": ".artifacts/sculptgl-reference-runtime/smooth-nets-subdivide-c86-small-69c70cb8-a791-44f5-868e-db26c8ceb86a/result.json",
+      "sha256": "4fc42e85085824cc3be3bc1937cf4034f4ff5a358d6bc0ef8f3418da7a7922bf",
+      "bytes": 230356
+    },
+    "remesh_snapshot": {
+      "path": ".artifacts/sculptgl-reference-runtime/smooth-nets-subdivide-c86-small-69c70cb8-a791-44f5-868e-db26c8ceb86a/block-remesh-false-after.json",
+      "sha256": "a41225c7a0c763a76bd980bfa152b123ec25e91fe2117b8133a8b9226dd59510",
+      "bytes": 430400
+    },
+    "subdivided_snapshot": {
+      "path": ".artifacts/sculptgl-reference-runtime/smooth-nets-subdivide-c86-small-69c70cb8-a791-44f5-868e-db26c8ceb86a/smooth-surface-nets-subdivided.json",
+      "sha256": "9587aa7e646ff499d69b21916773958687e80906f6ae7268f59d2883d56a4d96",
+      "bytes": 1773344
+    },
+    "gates": {
+      "quad_child_count": true,
+      "retained_level": true,
+      "all_positions_finite": true,
+      "all_faces_valid": true
+    }
+  },
+  "obrush_16": {
+    "result": {
+      "path": ".artifacts/mask-filter-browser/smooth-nets-subdivide-c86-small-b7ba9127-98ed-43c7-9f94-396c4cf05607/result.json",
+      "sha256": "fcc00b40a6a4bbc5435d6f73d1f66b6dad2b352977d5d9b7c2b3d3b230afae16",
+      "bytes": 3351262
+    },
+    "remesh_snapshot": {
+      "path": ".artifacts/mask-filter-browser/smooth-nets-subdivide-c86-small-b7ba9127-98ed-43c7-9f94-396c4cf05607/smooth-nets-obj-import.obrush",
+      "sha256": "b2acd364d26e996c1a41e9a7ecf2a061d4e2d42a91d0471c2264be33ef46de80",
+      "bytes": 182000
+    },
+    "fine_snapshot": {
+      "path": ".artifacts/mask-filter-browser/smooth-nets-subdivide-c86-small-b7ba9127-98ed-43c7-9f94-396c4cf05607/smooth-nets-subdivided.obrush",
+      "sha256": "49eda4689cdae3c4092b5ced3e17e0aaed4da541689db9dc02f9af4b8d223e3c",
+      "bytes": 942666
+    },
+    "edited_snapshot": {
+      "path": ".artifacts/mask-filter-browser/smooth-nets-subdivide-c86-small-b7ba9127-98ed-43c7-9f94-396c4cf05607/smooth-nets-subdivided-sculpted.obrush",
+      "sha256": "5eb8e86bb4a80a11122071eadd29fe7366615577af1c8811091bbed685fc2eb0",
+      "bytes": 942651
+    },
+    "moved_vertices": 72,
+    "gates": {
+      "quad_child_count": true,
+      "draw_useful": true,
+      "quad_faces_retained": true,
+      "coarse_exact": true,
+      "fine_navigation_exact": true,
+      "subdivision_history_exact": true,
+      "sculpt_history_exact": true,
+      "visible_gpu_save_exact": true
+    },
+    "wasm": {
+      "sha256": "e64dadb0f902f0bf37f1f7251e753810e6efd74e1c546f6e0844660cd3e072ed",
+      "served_sha256": "e64dadb0f902f0bf37f1f7251e753810e6efd74e1c546f6e0844660cd3e072ed",
+      "bytes": 23286985
+    }
+  },
+  "comparison": {
+    "artifact": {
+      "path": ".artifacts/smooth-nets-subdivide-c86-small-comparison.json",
+      "sha256": "eaa8ecf6aa3c73e041478d6ada3d8ea3f21ec391bde23d0de1e493161b02b73e",
+      "bytes": 1011
+    },
+    "metrics": {
+      "reference_snapshot": ".artifacts/sculptgl-reference-runtime/smooth-nets-subdivide-c86-small-69c70cb8-a791-44f5-868e-db26c8ceb86a/smooth-surface-nets-subdivided.json",
+      "reference_snapshot_sha256": "9587aa7e646ff499d69b21916773958687e80906f6ae7268f59d2883d56a4d96",
+      "obrush_project": ".artifacts/mask-filter-browser/smooth-nets-subdivide-c86-small-b7ba9127-98ed-43c7-9f94-396c4cf05607/smooth-nets-subdivided.obrush",
+      "obrush_project_sha256": "49eda4689cdae3c4092b5ced3e17e0aaed4da541689db9dc02f9af4b8d223e3c",
+      "world_tolerance": 2e-06,
+      "reference_vertices": 4690,
+      "obrush_vertices": 4690,
+      "reference_quads": 4688,
+      "obrush_quads": 4688,
+      "missing_nearest_candidates": 0,
+      "nonunique_nearest_ids": 0,
+      "max_nearest_world_error": 2.413276510406288e-07,
+      "rms_nearest_world_error": 7.932993666302398e-08,
+      "unmatched_reference_oriented_quads": 0,
+      "unmatched_obrush_oriented_quads": 0,
+      "cell_size_for_candidate_search": 0.09996071889493763,
+      "within_tolerance_and_same_topology": true
+    },
+    "tolerance_provenance": "2e-6 world units set in comparator before paired run; observed max was 2.413e-7"
+  },
+  "obrush_32": {
+    "result": {
+      "path": ".artifacts/mask-filter-browser/smooth-nets-subdivide-sculpt-c86-53120017-1206-488e-8029-217ae001eb41/result.json",
+      "sha256": "5798f1bd5396d39b4706871fce5ae227ce95f4bd8c1cd8e223949230e8745fb6",
+      "bytes": 3341079
+    },
+    "fine_vertices": 18978,
+    "fine_quads": 18976,
+    "moved_vertices": 298,
+    "gates": {
+      "quad_child_count": true,
+      "draw_useful": true,
+      "quad_faces_retained": true,
+      "coarse_exact": true,
+      "fine_navigation_exact": true,
+      "subdivision_history_exact": true,
+      "sculpt_history_exact": true,
+      "visible_gpu_save_exact": true
+    }
+  },
+  "failed_reference_32": [
+    {
+      "artifact": {
+        "path": ".artifacts/sculptgl-reference-runtime/smooth-nets-subdivide-c86-69416f9b-3985-43bd-9277-18397312229f/result.json",
+        "sha256": "a5566f69b63e513f14e1c252426452ca8702eb1e3a6c7a3d566d11883aa622f0",
+        "bytes": 741465
+      },
+      "failure": "Error: CDP timeout Runtime.evaluate request 83\n    at Timeout._onTimeout (file:///Users/Ajab/AI/OBrush/scripts/check-sculptgl-remesh-subdivide.mjs:141:81)\n    at listOnTimeout (node:internal/timers:585:17)\n    at process.processTimers (node:internal/timers:521:7)"
+    },
+    {
+      "artifact": {
+        "path": ".artifacts/sculptgl-reference-runtime/smooth-nets-subdivide-c86-retry-e7a73b8e-3719-47fd-b240-152e30112d5a/result.json",
+        "sha256": "04247a0901deb29e96d8e10cfa1b698731834f70db10623ed15a6a542064537e",
+        "bytes": 741591
+      },
+      "failure": "Error: CDP timeout Runtime.evaluate request 83\n    at Timeout._onTimeout (file:///Users/Ajab/AI/OBrush/scripts/check-sculptgl-remesh-subdivide.mjs:143:81)\n    at listOnTimeout (node:internal/timers:585:17)\n    at process.processTimers (node:internal/timers:521:7)"
+    }
+  ],
+  "build_identity": {
+    "web_wasm": {
+      "path": "web/dist/pkg/obrush_app_bg.wasm",
+      "sha256": "e64dadb0f902f0bf37f1f7251e753810e6efd74e1c546f6e0844660cd3e072ed",
+      "bytes": 23286985
+    },
+    "macos_executable": {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/OBrush",
+      "sha256": "86c19a9496c35c68c54130fbf82db7030f6bbfab3c2bcbfba07756459b91f74e",
+      "bytes": 26447712
+    },
+    "note": "Runtime binaries unchanged from C85; C86 changed tests, independent comparison scripts and docs only"
+  },
+  "validation": {
+    "cargo_fmt": "passed",
+    "targeted_core_test": "passed",
+    "workspace_tests": "passed: 2,374 passed, 0 failed, 1 ignored in 83 groups",
+    "strict_native_clippy": "passed -D warnings",
+    "strict_wasm_clippy": "passed -D warnings",
+    "wasm_check": "passed",
+    "browser_16_and_32": "passed",
+    "reference_16": "passed",
+    "reference_32": "two timed-out attempts; no completed output",
+    "workspace_log": {
+      "path": ".artifacts/smooth-nets-subdivide-c86-workspace-tests.log",
+      "sha256": "be94065cf6c6a31b88f3867be1cec9bc3c2f12d0515563c87a6648887bfa6f10",
+      "bytes": 230527
+    },
+    "native_clippy_log": {
+      "path": ".artifacts/smooth-nets-subdivide-c86-native-clippy.log",
+      "sha256": "46f21f393546668abcb8e6b34b72c64adbf97387e245435593f02c6a9095d68b",
+      "bytes": 148
+    },
+    "wasm_check_log": {
+      "path": ".artifacts/smooth-nets-subdivide-c86-wasm-check.log",
+      "sha256": "2bc683fb4e4f4f21ee9ee39e2b8ecce2efe20d3b1be57bda5316aa519ab3d30a",
+      "bytes": 72
+    },
+    "wasm_clippy_log": {
+      "path": ".artifacts/smooth-nets-subdivide-c86-wasm-clippy.log",
+      "sha256": "a41051563a4cb5fc1b1bcdd9aa0ba28ca80f7736d629d90cc138218756e8e3a9",
+      "bytes": 72
+    }
+  },
+  "limits": [
+    "One closed paired 16-resolution sphere for complete face/position comparison",
+    "Reference subdivision at 32 did not complete under bounded observation",
+    "Static retained subdivision only; adaptive topology refinement on retained quads remains unavailable",
+    "No reference Draw response comparison",
+    "Native GUI and physical pen input not checked",
+    "Full remesh/UV/material/fusion/Marching Cubes and sustained browser responsiveness open"
+  ]
+}

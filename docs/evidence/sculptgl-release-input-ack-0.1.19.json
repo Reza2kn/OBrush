@@ -1,0 +1,363 @@
+{
+  "scope": "Passed separate actual processed-input\u2192normalSave\u2192savedCPU/GPU release/history contract on immutable19C3. Every earlier failed status remains failed; no reference/native/physical latency claim.",
+  "recorded_at": "2026-10-14T05:43:28.582701+00:00",
+  "result": {
+    "path": ".artifacts/sculptgl-preferences-runtime/candidate3-0.1.19-release-input-ack-f2935cb1-0616-4857-bd33-0ddfaa99c69a/result.json",
+    "sha256": "9cf0947cff97403330cf4802f71db8edf62d34a24067acebca08598dacdc5dc2",
+    "raw_status": "passed scoped local host gates; reference parity unverified",
+    "harness_sha256": "8d5324450f64cd550816584f7abbc388efb60649acb70c1cfbb40ba85c568094",
+    "preregistration_sha256": "ac918d37805b4ccb4208da647265bc4f1af6bc970255bbc50b7d20aec4b64170",
+    "candidate": {
+      "candidate": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.19-candidate3",
+      "source_root": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.19-candidate3/source",
+      "status": "immutable candidate binding",
+      "manifest_sha256": "06472b8d14a5647dc0bb64ada2e54f10b5397926f14dc943cad5fba1b5628e56",
+      "build_sha256": "378a6b1a485a7a5a64e6d0658e8a54efd8670530b677668035e844472371eb93",
+      "checked_source_files": 169
+    },
+    "WASM_sha256": "59491afb243778fcbccf9af9bd8a5c6298204a92a32b2efc8fb2c7702eb978d1",
+    "case_gates": {
+      "source_fixture_and_camera_exact": true,
+      "actual_release_and_setting_same_frame": true,
+      "actual_events_trusted": true,
+      "new_radius_committed_exact": true,
+      "old_captured_endpoint_exact": true,
+      "final_endpoint_useful": true,
+      "new_settings_future_output_differs": true,
+      "whole_single_stroke_history_exact": true,
+      "complete_gpu_exact": true,
+      "post_completion_quiet": true
+    },
+    "actual_downloads": 41,
+    "runtime_saved_GPU_pairs": 37,
+    "owned_pid": 84281,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "postclosure_sha256": "e88df8d6da5e9d4521d390665a6b7381f2fb819cf71c66f5a85dc97fa00cdc8d"
+  },
+  "expected_new_radius": 0.15300001204013824,
+  "processed_input_acknowledgments": [
+    {
+      "stage": "changed-release-command-before-probe-Save",
+      "pre_delivery_frame": 39,
+      "actual_egui_frame": 45,
+      "actual_radius_at_ack": 0.15300001204013824,
+      "before_shortcuts": {
+        "bracket_pressed": true,
+        "buttons": [],
+        "command": false,
+        "focused_id": null,
+        "frame": 45,
+        "input_focused": true,
+        "input_time": 2.3307999999970197,
+        "keys": [
+          {
+            "key": "OpenBracket",
+            "pressed": true,
+            "repeat": false
+          },
+          {
+            "key": "OpenBracket",
+            "pressed": false,
+            "repeat": false
+          }
+        ],
+        "phase": "before_shortcuts",
+        "primary_down": false,
+        "primary_released": false,
+        "radius": 0.18000000715255737,
+        "stroke_active": false,
+        "text_event_count": 1,
+        "wants_keyboard": false
+      },
+      "after_shortcuts": {
+        "bracket_pressed": true,
+        "buttons": [],
+        "command": false,
+        "focused_id": null,
+        "frame": 45,
+        "input_focused": true,
+        "input_time": 2.3307999999970197,
+        "keys": [
+          {
+            "key": "OpenBracket",
+            "pressed": true,
+            "repeat": false
+          },
+          {
+            "key": "OpenBracket",
+            "pressed": false,
+            "repeat": false
+          }
+        ],
+        "phase": "after_shortcuts",
+        "primary_down": false,
+        "primary_released": false,
+        "radius": 0.15300001204013824,
+        "stroke_active": false,
+        "text_event_count": 1,
+        "wants_keyboard": false
+      },
+      "no_probe_Save_in_bracket_frame": true,
+      "read_only_observation_count": 3,
+      "acknowledged": true
+    },
+    {
+      "stage": "fresh-new-radius-before-probe-Save",
+      "pre_delivery_frame": 40,
+      "actual_egui_frame": 43,
+      "actual_radius_at_ack": 0.15300001204013824,
+      "before_shortcuts": {
+        "bracket_pressed": true,
+        "buttons": [],
+        "command": false,
+        "focused_id": null,
+        "frame": 43,
+        "input_focused": true,
+        "input_time": 2.1319000000059605,
+        "keys": [
+          {
+            "key": "OpenBracket",
+            "pressed": true,
+            "repeat": false
+          },
+          {
+            "key": "OpenBracket",
+            "pressed": false,
+            "repeat": false
+          }
+        ],
+        "phase": "before_shortcuts",
+        "primary_down": false,
+        "primary_released": false,
+        "radius": 0.18000000715255737,
+        "stroke_active": false,
+        "text_event_count": 1,
+        "wants_keyboard": false
+      },
+      "after_shortcuts": {
+        "bracket_pressed": true,
+        "buttons": [],
+        "command": false,
+        "focused_id": null,
+        "frame": 43,
+        "input_focused": true,
+        "input_time": 2.1319000000059605,
+        "keys": [
+          {
+            "key": "OpenBracket",
+            "pressed": true,
+            "repeat": false
+          },
+          {
+            "key": "OpenBracket",
+            "pressed": false,
+            "repeat": false
+          }
+        ],
+        "phase": "after_shortcuts",
+        "primary_down": false,
+        "primary_released": false,
+        "radius": 0.15300001204013824,
+        "stroke_active": false,
+        "text_event_count": 1,
+        "wants_keyboard": false
+      },
+      "no_probe_Save_in_bracket_frame": true,
+      "read_only_observation_count": 2,
+      "acknowledged": true
+    }
+  ],
+  "trials": [
+    {
+      "name": "old-settings",
+      "initial_radius": 0.18000000715255737,
+      "final_radius": 0.18000000715255737,
+      "before_project_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "after_project_sha256": "39e249d0a0ad285edb712740a02c446f021841053630b88c0ae8134f58b6c5d6",
+      "GPU_sha256": "94c6da59b25fa01efb0b05d98ca4faded0a4c942a69947b2223968c7f5fbab7a",
+      "preimport_project_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "redo_stroke_sha256": "39e249d0a0ad285edb712740a02c446f021841053630b88c0ae8134f58b6c5d6",
+      "actual_relevant_DOM_events": [
+        {
+          "type": "pointerup",
+          "key": null,
+          "buttons": 0,
+          "x": 859,
+          "y": 513,
+          "shift": false,
+          "ctrl": false,
+          "alt": false,
+          "trusted": true,
+          "scene_frame_at": 2354.8999999910593,
+          "at": 2355.2999999970198,
+          "DOM_target": {
+            "tag": "CANVAS",
+            "id": "obrush_canvas"
+          },
+          "DOM_active_element": {
+            "tag": "CANVAS",
+            "id": "obrush_canvas"
+          }
+        }
+      ],
+      "same_rendered_frame": true,
+      "quiet_pass": true
+    },
+    {
+      "name": "early-endpoint",
+      "initial_radius": 0.18000000715255737,
+      "final_radius": 0.18000000715255737,
+      "before_project_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "after_project_sha256": "90c916afcfc7227ffdf80dbb28bcb2fbefed93369047d85b6d8fcc447a97e4c2",
+      "GPU_sha256": "706bfd5eb526e8bfd9962a09908c32fccf08de2d940d1df1f3acccf176d264ce",
+      "preimport_project_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "redo_stroke_sha256": "90c916afcfc7227ffdf80dbb28bcb2fbefed93369047d85b6d8fcc447a97e4c2",
+      "actual_relevant_DOM_events": [
+        {
+          "type": "pointerup",
+          "key": null,
+          "buttons": 0,
+          "x": 811,
+          "y": 513,
+          "shift": false,
+          "ctrl": false,
+          "alt": false,
+          "trusted": true,
+          "scene_frame_at": 2317.5,
+          "at": 2318,
+          "DOM_target": {
+            "tag": "CANVAS",
+            "id": "obrush_canvas"
+          },
+          "DOM_active_element": {
+            "tag": "CANVAS",
+            "id": "obrush_canvas"
+          }
+        }
+      ],
+      "same_rendered_frame": true,
+      "quiet_pass": true
+    },
+    {
+      "name": "changed-release-frame",
+      "initial_radius": 0.18000000715255737,
+      "final_radius": 0.15300001204013824,
+      "before_project_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "after_project_sha256": "39e249d0a0ad285edb712740a02c446f021841053630b88c0ae8134f58b6c5d6",
+      "GPU_sha256": "94c6da59b25fa01efb0b05d98ca4faded0a4c942a69947b2223968c7f5fbab7a",
+      "preimport_project_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "redo_stroke_sha256": "39e249d0a0ad285edb712740a02c446f021841053630b88c0ae8134f58b6c5d6",
+      "actual_relevant_DOM_events": [
+        {
+          "type": "pointerup",
+          "key": null,
+          "buttons": 0,
+          "x": 859,
+          "y": 513,
+          "shift": false,
+          "ctrl": false,
+          "alt": false,
+          "trusted": true,
+          "scene_frame_at": 2301,
+          "at": 2301.4000000059605,
+          "DOM_target": {
+            "tag": "CANVAS",
+            "id": "obrush_canvas"
+          },
+          "DOM_active_element": {
+            "tag": "CANVAS",
+            "id": "obrush_canvas"
+          }
+        },
+        {
+          "type": "keydown",
+          "key": "[",
+          "buttons": null,
+          "x": null,
+          "y": null,
+          "shift": false,
+          "ctrl": false,
+          "alt": false,
+          "trusted": true,
+          "scene_frame_at": 2301,
+          "at": 2303,
+          "DOM_target": {
+            "tag": "CANVAS",
+            "id": "obrush_canvas"
+          },
+          "DOM_active_element": {
+            "tag": "CANVAS",
+            "id": "obrush_canvas"
+          }
+        }
+      ],
+      "same_rendered_frame": true,
+      "quiet_pass": true
+    },
+    {
+      "name": "new-settings-control",
+      "initial_radius": 0.15300001204013824,
+      "final_radius": 0.15300001204013824,
+      "before_project_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "after_project_sha256": "a340e3148b14f202aaf8c76071c34e1db103c5a29ca1f85de1e3bb99e1b1997c",
+      "GPU_sha256": "54a05f8048b331efdb48cc64f11f4a6f5ec4416c4ea4e91c26251babc1f6464c",
+      "preimport_project_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "redo_stroke_sha256": "a340e3148b14f202aaf8c76071c34e1db103c5a29ca1f85de1e3bb99e1b1997c",
+      "actual_relevant_DOM_events": [
+        {
+          "type": "pointerup",
+          "key": null,
+          "buttons": 0,
+          "x": 859,
+          "y": 513,
+          "shift": false,
+          "ctrl": false,
+          "alt": false,
+          "trusted": true,
+          "scene_frame_at": 2585.0999999940395,
+          "at": 2585.5999999940395,
+          "DOM_target": {
+            "tag": "CANVAS",
+            "id": "obrush_canvas"
+          },
+          "DOM_active_element": {
+            "tag": "CANVAS",
+            "id": "obrush_canvas"
+          }
+        }
+      ],
+      "same_rendered_frame": true,
+      "quiet_pass": true
+    }
+  ],
+  "historical_failed_scopes": [
+    "Original immediate0ms quiet GPU transition",
+    "c3ef ordinary trial still used immediate GPU condition",
+    "842 incorrect twoUndo assumption and probeSave collision",
+    "8724 candidate2 probeSave collision",
+    "dabde candidate3 actual trace-confirmed probeSave collision"
+  ],
+  "scope_difference": "Original actual compound tile\u2192drag\u2192same rendered frame release/bracket batch is unchanged. Before injecting unrelated normal Save, require new OpenBracket pressed after_shortcuts plus paired before row, no S pressed, frame greater than captured baseline, bounded120read-onlyRAF. It does not predicate on expected radius/focus/success or use arbitrary delay. Every exact final radius/old endpoint/useful future output/history/GPU/quiet gate unchanged.",
+  "limits": [
+    "Actual normalSave still affects scheduling; no physical/paired performance evidence",
+    "All earlier raw failures stay failed; separate completion scope only",
+    "37runtime saved/GPU pairs independently packed by original helper, second Python reconstruction pending coordinated CPU slot",
+    "No nativeGUI/physical tablet or full source brush mathematical parity claim"
+  ]
+}

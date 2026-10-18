@@ -1,0 +1,10 @@
+# Independently created CC0 fixture. Unused vertex bounds the box around origin.
+v 0 0 0
+v 2 0 0
+v 0 2 0
+v 0 0 -1
+v 2 0 -1
+v 0 2 -1
+v -2 -2 1
+f 1 2 3
+f 4 5 6

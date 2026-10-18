@@ -1,0 +1,2644 @@
+{
+  "status": "passed eight morph-target browser workflows",
+  "raw_result": {
+    "path": ".artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/result.json",
+    "bytes": 614568,
+    "sha256": "4e628cfa4bd31cb0bf9f13f0dfd00862196fbb98cf76c6fab31552a6e868808a"
+  },
+  "harness": {
+    "path": ".artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/harness.mjs",
+    "sha256": "e9f148fa7502cc9bdd87cc2a870cd7a5126ab36c28bf4329364c763a8d7dea4f",
+    "bytes": 50921
+  },
+  "frozen_release": {
+    "web": ".artifacts/morph-release-0.1.9-scroll-final/web",
+    "source_manifest": {
+      "path": ".artifacts/morph-release-0.1.9-scroll-final/source-manifest.json",
+      "sha256": "115227bd5aeca189cac4f4dceaa0877fff2fb5c0300942a9ab04abc2d5a8ec9c",
+      "bytes": 11409
+    },
+    "build_record": {
+      "path": ".artifacts/morph-release-0.1.9-scroll-final/build-record.json",
+      "sha256": "c292f522f3bff1cbe8d2d53b5c4e50e9f0648132233b179ba23eb8fab9aaa05c",
+      "bytes": 9820
+    },
+    "frozen_helper": {
+      "path": ".artifacts/morph-release-0.1.9-scroll-final/source/scripts/check-morph.mjs",
+      "sha256": "e9f148fa7502cc9bdd87cc2a870cd7a5126ab36c28bf4329364c763a8d7dea4f",
+      "bytes": 50921
+    },
+    "wasm": {
+      "sha256": "9391e86690f0320224f789626f56043a757dc8b111008635ff17297aa6d5de86",
+      "served_sha256": "9391e86690f0320224f789626f56043a757dc8b111008635ff17297aa6d5de86",
+      "bytes": 3946530
+    }
+  },
+  "pending_runtime_note_supersession": {
+    "source_record": ".artifacts/morph-release-0.1.9-scroll-final/build-record.json",
+    "immutable_note": "Required source/build checks pass; actual browser Morph runtime pending",
+    "superseded_only_for": "The eight named browser workflows on this exact WASM/helper/source bundle now pass. This runtime receipt supersedes the pending browser-runtime note; it does not rewrite the immutable build record or establish native GUI, physical devices or reference parity."
+  },
+  "preregistered_contract": {
+    "draw_radius": 0.18,
+    "draw_strength": 0.35,
+    "symmetry_x": true,
+    "draw_min_displacement": 0.002,
+    "local_morph_min_changed_vertices": 5,
+    "local_morph_min_squared_error_reduction_fraction": 0.01,
+    "local_morph_max_vertex_squared_error_increase": 1e-12,
+    "local_morph_viewport_trace": [
+      [
+        -90,
+        -40
+      ],
+      [
+        -50,
+        -10
+      ]
+    ],
+    "stored_f64_composition": "For each component, start at stored f64 base; add visible Math.fround(intensity)*offset contributions only when nonzero, in entry order; Math.fround result and compare exact f32 bits including signed zero",
+    "history": "Exact canonical captured project bytes and packed mesh bits",
+    "gpu": "Exact packed f32 vertex-buffer digest; index buffers are not read back, and ordered triangles are checked separately in public Save data",
+    "release_probe_incremental_delays_ms": [
+      0,
+      200,
+      800
+    ],
+    "release_probe_timestamp": "Probe start before asynchronous vertex-buffer readback and sculpt-metric observation; not finalization completion or input-to-photon latency"
+  },
+  "cases": [
+    {
+      "name": "store-draw-restore-history",
+      "draw_difference": {
+        "changed_vertices": 850,
+        "max_displacement": 0.02551279856227842,
+        "rms_displacement": 0.00150523612867463
+      },
+      "history": {
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      "gates": {
+        "store_exact_positions": true,
+        "draw_keeps_target_bits": true,
+        "restore_exact_target_positions": true,
+        "restore_keeps_base_channels": true,
+        "noop_restore_preserves_project": true,
+        "noop_restore_preserves_redo": true
+      }
+    },
+    {
+      "name": "swap-delete-history",
+      "swap_history": {
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      "delete_history": {
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      "gates": {
+        "swap_mesh_is_previous_target": true,
+        "swap_target_is_previous_mesh": true,
+        "double_swap_exact_positions": true,
+        "double_swap_exact_target": true,
+        "swap_preserves_base_channels": true,
+        "delete_has_no_target": true,
+        "delete_undo_restores_canonical_project": true
+      }
+    },
+    {
+      "name": "local-morph-masks-pressure-radius",
+      "fixture": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/authored-half-masked-target.obrush",
+        "sha256": "6bc8833a6eb205d77386edbc2a2f7a3c86cca4f0a913de82da6d0470ced7469b",
+        "bytes": 8244486
+      },
+      "error": {
+        "before_squared_error": 0.09280905963156345,
+        "after_squared_error": 0.05373601847029082,
+        "reduction_fraction": 0.421004601451476,
+        "changed_vertices": 375,
+        "fully_masked_vertices": 20353,
+        "fully_masked_changed": 0,
+        "max_vertex_squared_error_increase": 0
+      },
+      "history": {
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      "pressure_trials": [
+        {
+          "force": 1,
+          "error": {
+            "before_squared_error": 0.09280905963156345,
+            "after_squared_error": 0.05373601847029082,
+            "reduction_fraction": 0.421004601451476,
+            "changed_vertices": 375,
+            "fully_masked_vertices": 20353,
+            "fully_masked_changed": 0,
+            "max_vertex_squared_error_increase": 0
+          },
+          "history": {
+            "undo_exact": true,
+            "redo_exact": true
+          },
+          "target_unchanged": true,
+          "channels_unchanged": true
+        },
+        {
+          "force": 0.5,
+          "error": {
+            "before_squared_error": 0.09280905963156345,
+            "after_squared_error": 0.07359074880500834,
+            "reduction_fraction": 0.2070736510298522,
+            "changed_vertices": 129,
+            "fully_masked_vertices": 20353,
+            "fully_masked_changed": 0,
+            "max_vertex_squared_error_increase": 0
+          },
+          "history": {
+            "undo_exact": true,
+            "redo_exact": true
+          },
+          "target_unchanged": true,
+          "channels_unchanged": true
+        }
+      ],
+      "gates": {
+        "target_error_decreases": true,
+        "useful_local_change": true,
+        "fully_masked_positions_exact": true,
+        "no_new_target_error": true,
+        "base_channels_exact": true,
+        "target_bits_exact": true,
+        "half_radius_footprint_smaller": true,
+        "half_force_moves_less": true,
+        "pressure_protection_exact": true
+      }
+    },
+    {
+      "name": "v4-fresh-open-invalid-noop-redo",
+      "invalid_fixture": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/invalid-target-count.obrush",
+        "sha256": "c75e489bf2deb083ebf9cd64a022fbc162ae853d1875ac4f4cc63f55384d30b4",
+        "bytes": 8244450
+      },
+      "notice": "Import failed: Morph Target has invalid indices at face 81913",
+      "gates": {
+        "fresh_canonical_bytes_exact": true,
+        "zero_pressure_project_exact": true,
+        "invalid_preserves_project": true,
+        "invalid_preserves_redo": true
+      }
+    },
+    {
+      "name": "legacy-v2-v3-open",
+      "fixtures": [
+        {
+          "version": "v2",
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/baseline-2e0bdefc-5c0f-4e09-aedb-c97b8a21e24f/sphere-outbound-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "semantic_and_gpu_mesh_exact": true,
+          "no_target": true
+        },
+        {
+          "version": "v3",
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/persisted-two-layers.obrush",
+          "sha256": "e1ebf89237c20f0c1bb391853d312455e5f0d7dc5a506a8a72f26ea82e151c6b",
+          "semantic_and_gpu_mesh_exact": true,
+          "no_target": true
+        }
+      ],
+      "gates": {
+        "v2_semantic_fields_exact": true,
+        "v3_semantic_fields_exact": true,
+        "no_legacy_targets": true
+      }
+    },
+    {
+      "name": "explicit-topology-invalidates-undo-restores",
+      "history": {
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      "gates": {
+        "refine_changed_topology": true,
+        "target_dropped_atomically": true,
+        "undo_restores_canonical_target_project": true
+      }
+    },
+    {
+      "name": "signed-zero-subdivision-target-origin",
+      "fixture": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/independent-small-v2.obrush",
+        "sha256": "7fa432b5fc9941f095c32c8175606361fb664e345054dcacc8adc39e991e7f82",
+        "provenance": "Independently authored latitude12/longitude24 closed sphere, first pole X=-0.0"
+      },
+      "gates": {
+        "signed_zero_import": true,
+        "signed_zero_stored_target": true,
+        "creation_level_zero": true,
+        "target_bits_retained_all_levels": true,
+        "unavailable_restore_disabled_noop": true,
+        "lower_positions_exact": true,
+        "higher_canonical_project_exact": true
+      }
+    },
+    {
+      "name": "geometry-layer-coexistence",
+      "local_error": {
+        "before_squared_error": 0.0002495440577868213,
+        "after_squared_error": 5.380396582360669e-05,
+        "reduction_fraction": 0.784390915573033,
+        "changed_vertices": 12,
+        "fully_masked_vertices": 0,
+        "fully_masked_changed": 0,
+        "max_vertex_squared_error_increase": 0
+      },
+      "morph_history": {
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      "restore_history": {
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      "swap_history": {
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      "bake_history": {
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      "gates": {
+        "local_error_decreases": true,
+        "recording_stays_selected": true,
+        "full_restore_exact_target_positions": true,
+        "restore_preserves_target_bits": true,
+        "double_swap_exact_positions": true,
+        "double_swap_exact_target": true,
+        "base_channels_unchanged": true,
+        "bake_keeps_target_available": true,
+        "bake_keeps_visible_mesh": true
+      }
+    }
+  ],
+  "snapshot_count": 66,
+  "stored_target_snapshot_count": 58,
+  "layer_composition_snapshot_count": 15,
+  "all_gpu_vertex_snapshots_exact": true,
+  "all_layer_compositions_exact": true,
+  "all_target_snapshots_validated": true,
+  "target_position_bits_checks": "Stored targets hashed as packed f32 components plus exact scheme, creation level and ordered faces; original Store, Swap twice, signed-zero import/store/navigation and all named canonical history gates pass.",
+  "page_count": 9,
+  "runtime_errors": {
+    "gl": [],
+    "js": []
+  },
+  "cdp_exceptions": [],
+  "console_errors": [],
+  "actual_4x_msaa_each_page": true,
+  "scroll_actions": [
+    {
+      "key": "scroll-for.morph.restore",
+      "pointer": [
+        1430.78125,
+        750
+      ],
+      "before_rect": [
+        1383,
+        958,
+        1478.5625,
+        984
+      ],
+      "delta_y": 350,
+      "at_epoch_ms": 1791863304438,
+      "after_rect": [
+        1383,
+        719,
+        1478.5625,
+        745
+      ]
+    }
+  ],
+  "actual_scroll_wheel_events": [
+    {
+      "x": 1430,
+      "y": 750,
+      "delta_x": 0,
+      "delta_y": 350,
+      "trusted": true,
+      "at": 12570.199999999255
+    }
+  ],
+  "actual_scroll_pointer_events": [
+    {
+      "type": "pointermove",
+      "pointer_type": "mouse",
+      "pressure": 0,
+      "x": 1430.78125,
+      "y": 750,
+      "buttons": 0,
+      "trusted": true,
+      "at": 12503.89999999851
+    }
+  ],
+  "strokes": [
+    {
+      "name": "useful-draw-with-target",
+      "pointer_type": "mouse",
+      "force": 0.5,
+      "from": [
+        705,
+        473
+      ],
+      "to": [
+        745,
+        503
+      ],
+      "steps": 14,
+      "quiet": true,
+      "first_probe_start_after_dom_release_ms": 7.0,
+      "probe_pending_dabs": [
+        0,
+        0,
+        0
+      ],
+      "frame_gap_p95_ms": 16.700000000000273,
+      "frame_gap_max_ms": 16.800000000000182,
+      "long_tasks": []
+    },
+    {
+      "name": "masked-local-morph",
+      "pointer_type": "mouse",
+      "force": 0.5,
+      "from": [
+        705,
+        473
+      ],
+      "to": [
+        745,
+        503
+      ],
+      "steps": 12,
+      "quiet": true,
+      "first_probe_start_after_dom_release_ms": 6.300000000745058,
+      "probe_pending_dabs": [
+        0,
+        0,
+        0
+      ],
+      "frame_gap_p95_ms": 16.700000000000273,
+      "frame_gap_max_ms": 16.800000000000182,
+      "long_tasks": []
+    },
+    {
+      "name": "pressure-radius-1",
+      "pointer_type": "pen",
+      "force": 1,
+      "from": [
+        705,
+        473
+      ],
+      "to": [
+        745,
+        503
+      ],
+      "steps": 12,
+      "quiet": true,
+      "first_probe_start_after_dom_release_ms": 6.300000000745058,
+      "probe_pending_dabs": [
+        0,
+        0,
+        0
+      ],
+      "frame_gap_p95_ms": 16.700000000000273,
+      "frame_gap_max_ms": 16.800000000000182,
+      "long_tasks": []
+    },
+    {
+      "name": "pressure-radius-0.5",
+      "pointer_type": "pen",
+      "force": 0.5,
+      "from": [
+        705,
+        473
+      ],
+      "to": [
+        745,
+        503
+      ],
+      "steps": 12,
+      "quiet": true,
+      "first_probe_start_after_dom_release_ms": 6.0,
+      "probe_pending_dabs": [
+        0,
+        0,
+        0
+      ],
+      "frame_gap_p95_ms": 16.700000000000273,
+      "frame_gap_max_ms": 16.800000000000182,
+      "long_tasks": []
+    },
+    {
+      "name": "v4-redo-target-draw",
+      "pointer_type": "mouse",
+      "force": 0.5,
+      "from": [
+        795,
+        403
+      ],
+      "to": [
+        810,
+        413
+      ],
+      "steps": 8,
+      "quiet": true,
+      "first_probe_start_after_dom_release_ms": 6.899999998509884,
+      "probe_pending_dabs": [
+        0,
+        0,
+        0
+      ],
+      "frame_gap_p95_ms": 16.799999999999727,
+      "frame_gap_max_ms": 16.800000000000182,
+      "long_tasks": []
+    },
+    {
+      "name": "zero-pressure-morph",
+      "pointer_type": "pen",
+      "force": 0,
+      "from": [
+        860,
+        488
+      ],
+      "to": [
+        885,
+        498
+      ],
+      "steps": 8,
+      "quiet": true,
+      "first_probe_start_after_dom_release_ms": 6.099999997764826,
+      "probe_pending_dabs": [
+        0,
+        0,
+        0
+      ],
+      "frame_gap_p95_ms": 16.800000000000182,
+      "frame_gap_max_ms": 16.800000000000182,
+      "long_tasks": []
+    },
+    {
+      "name": "morph-layer-recorded-draw",
+      "pointer_type": "mouse",
+      "force": 0.5,
+      "from": [
+        735,
+        493
+      ],
+      "to": [
+        760,
+        508
+      ],
+      "steps": 10,
+      "quiet": true,
+      "first_probe_start_after_dom_release_ms": 1.800000000745058,
+      "probe_pending_dabs": [
+        0,
+        0,
+        0
+      ],
+      "frame_gap_p95_ms": 16.799999999999272,
+      "frame_gap_max_ms": 16.80000000000109,
+      "long_tasks": []
+    },
+    {
+      "name": "morph-layer-local-return",
+      "pointer_type": "mouse",
+      "force": 0.5,
+      "from": [
+        735,
+        493
+      ],
+      "to": [
+        760,
+        508
+      ],
+      "steps": 10,
+      "quiet": true,
+      "first_probe_start_after_dom_release_ms": 3.599999997764826,
+      "probe_pending_dabs": [
+        0,
+        0,
+        0
+      ],
+      "frame_gap_p95_ms": 16.799999999999272,
+      "frame_gap_max_ms": 16.80000000000109,
+      "long_tasks": []
+    }
+  ],
+  "fixtures": [
+    {
+      "case": "local-morph-masks-pressure-radius",
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/authored-half-masked-target.obrush",
+      "sha256": "6bc8833a6eb205d77386edbc2a2f7a3c86cca4f0a913de82da6d0470ced7469b",
+      "bytes": 8244486
+    },
+    {
+      "case": "v4-fresh-open-invalid-noop-redo",
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/invalid-target-count.obrush",
+      "sha256": "c75e489bf2deb083ebf9cd64a022fbc162ae853d1875ac4f4cc63f55384d30b4",
+      "bytes": 8244450
+    },
+    {
+      "case": "legacy-v2-v3-open",
+      "version": "v2",
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/baseline-2e0bdefc-5c0f-4e09-aedb-c97b8a21e24f/sphere-outbound-initial.obrush",
+      "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "semantic_and_gpu_mesh_exact": true,
+      "no_target": true
+    },
+    {
+      "case": "legacy-v2-v3-open",
+      "version": "v3",
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/persisted-two-layers.obrush",
+      "sha256": "e1ebf89237c20f0c1bb391853d312455e5f0d7dc5a506a8a72f26ea82e151c6b",
+      "semantic_and_gpu_mesh_exact": true,
+      "no_target": true
+    },
+    {
+      "case": "signed-zero-subdivision-target-origin",
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/independent-small-v2.obrush",
+      "sha256": "7fa432b5fc9941f095c32c8175606361fb664e345054dcacc8adc39e991e7f82",
+      "provenance": "Independently authored latitude12/longitude24 closed sphere, first pole X=-0.0"
+    }
+  ],
+  "preserved_failures": [
+    {
+      "runtime": {
+        "path": ".artifacts/morph-browser-0.1.9/candidate-1-480faa16-1fdc-4218-a734-c960e24de76a/result.json",
+        "sha256": "69658009fef8552c0f9ea0d8e6edef72cfa16cfef5f32ab342cf5b6fe8164b13",
+        "bytes": 227781
+      },
+      "diagnosis": {
+        "path": ".artifacts/morph-browser-0.1.9/candidate-1-480faa16-1fdc-4218-a734-c960e24de76a/diagnosis.json",
+        "sha256": "ab7e60b9a0dda850fb8fdd7d4919c462fe61386df2a4558c14ccad7e5a0492fb",
+        "bytes": 1290
+      },
+      "scope": "Harness contact miss: positive screen-offset Morph only grazed the Draw patch near negative screen offsets; gate failed and thresholds were retained."
+    },
+    {
+      "runtime": {
+        "path": ".artifacts/morph-browser-0.1.9/fixture-final-b3348715-13ab-4555-b61f-b212891e7e5d/result.json",
+        "sha256": "cb2387f5167727d32974edf764e9eb35c9c8b83435bf42f271742826f1007c15",
+        "bytes": 485917
+      },
+      "diagnosis": {
+        "path": ".artifacts/morph-browser-0.1.9/fixture-final-b3348715-13ab-4555-b61f-b212891e7e5d/diagnosis.json",
+        "sha256": "1caa2bef4b6d8ee54ea52c02a9d125a828bb1d2a146cfad77692c690b5f2a223",
+        "bytes": 1823
+      },
+      "scope": "Harness oracle treated null active hierarchy slot as absent; active mesh is independently stored in document.mesh at any level."
+    },
+    {
+      "runtime": {
+        "path": ".artifacts/morph-browser-0.1.9/oracle-final-e357db29-98bb-448b-a286-5d6eea84d392/result.json",
+        "sha256": "e85a753de7a3db84209802502809a70ed74150a9e18889d76d7cb34611b2b3c3",
+        "bytes": 638886
+      },
+      "diagnosis": {
+        "path": ".artifacts/morph-browser-0.1.9/oracle-final-e357db29-98bb-448b-a286-5d6eea84d392/diagnosis.json",
+        "sha256": "97f9189aea1db1ee44eb38d592b3d51da73d317f056af19c4a86c77626b84483",
+        "bytes": 1242
+      },
+      "scope": "Harness wheel dispatch omitted actual panel pointer hover; egui routed wheel to previous sculpt pointer and zoomed rather than scrolling."
+    }
+  ],
+  "screenshots": [
+    {
+      "path": ".artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/initial-controls.png",
+      "sha256": "7701f9ddb57d8300b414071a434836de2615d654ae1df9add4bdb0f86ea2f911",
+      "bytes": 212609
+    },
+    {
+      "path": ".artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/local-morph-pressure-half.png",
+      "sha256": "0d65dfc3b8181ac6652108efe97c050e696060cca46010485c7a5148eb229244",
+      "bytes": 260829
+    },
+    {
+      "path": ".artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/morph-final-controls.png",
+      "sha256": "c4696d66609b9447c9db40eec4eeb52f937c4d17d6ceeb83205d847e81e8e6c4",
+      "bytes": 241892
+    }
+  ],
+  "cleanup": {
+    "owned_chrome_exit_code": 0,
+    "owned_chrome_signal": null,
+    "owned_server_closed": true
+  },
+  "timing_scope": "Quiet CPU slot, isolated headless Chrome, trusted synthetic events. Probe timestamps are starts before asynchronous vertex-buffer readback and metric observation, not operation completion or input-to-photon latency. rAF/long-task data covers the named gesture-and-release intervals only. Index buffers are not read back.",
+  "limitations": [
+    "One geometry-only f32 position target, bound to exact vertex/ordered-face correspondence at its creation subdivision level; no reference equivalence is claimed.",
+    "Owned headless Chrome and trusted synthetic mouse/pen events; native GUI, physical devices and input-to-photon latency remain unverified.",
+    "Target and visible position bits, canonical captured Save bytes, GPU buffers and named history operations are checked independently; masks/colors remain base channels.",
+    "Fresh public file input and captured download bytes are exercised; physical file-picker/download persistence is outside this harness.",
+    "Explicit topology changes invalidate the target atomically; unavailable targets remain stored across subdivision navigation."
+  ],
+  "visual_observation": "Inspected initial controls, masked half-pressure Morph and final combined-layer screenshots. Morph and target controls are readable/reachable, the model stays visible after real inspector scrolling, and local edits remain shallow. The authored mask is a binary vertex channel and shows a stepped color boundary; the independently authored1,058-vertex hierarchy fixture intentionally has a coarse silhouette. These PNGs do not establish reference appearance or native GUI fidelity.",
+  "exact_gate_count": 48,
+  "all_exact_gates_pass": true,
+  "schema_version": 1,
+  "version": "0.1.9",
+  "recorded_at_utc": "2026-10-13T03:52:42.603563+00:00",
+  "raw_summary": {
+    "path": ".artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/summary.json",
+    "bytes": 22300,
+    "sha256": "fd97622807ab5cee8c1f6ba173735edca09596867da9c408abbc069e9ad94f20"
+  },
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/155.0.8059.39",
+    "revision": "@3ff7ac5a9224be9156d7f8703a06e22890aafd34",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+    "jsVersion": "15.5.35.20"
+  },
+  "environment": {
+    "host": "Apple M2, macOS26.5.1arm64",
+    "viewport_css": [
+      1600,
+      1000
+    ],
+    "device_scale_factor": 1,
+    "context": "WebGL2; allocated4xMSAA on each of9pages",
+    "input": "Trusted synthetic CDP mouse/pen events in owned isolated headless Chrome; no user/native desktop interaction",
+    "concurrency_scope": "No concurrent owned Rust/build jobs during browser traces; unrelated user processes were not controlled"
+  },
+  "snapshot_identities": [
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/fresh-sphere.obrush",
+      "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "bytes": 5317105,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 95.60000000149012
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": false
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/stored-sphere.obrush",
+      "sha256": "704ef644a0b562aba1eda94515ed7c387723a51217c3511630654feaf8ed6b40",
+      "bytes": 8330298,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 1340.7000000029802
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/drawn-target-sphere.obrush",
+      "sha256": "cf9e500e7ab7ff7cdc6bd2ff7e2724084653d519732390cbdc7791c65dec02ff",
+      "bytes": 8330668,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 3381.2000000029802
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/fully-restored-sphere.obrush",
+      "sha256": "704ef644a0b562aba1eda94515ed7c387723a51217c3511630654feaf8ed6b40",
+      "bytes": 8330298,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 5510.900000002235
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/restore-target-undo.obrush",
+      "sha256": "cf9e500e7ab7ff7cdc6bd2ff7e2724084653d519732390cbdc7791c65dec02ff",
+      "bytes": 8330668,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 6541.300000000745
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/restore-target-redo.obrush",
+      "sha256": "704ef644a0b562aba1eda94515ed7c387723a51217c3511630654feaf8ed6b40",
+      "bytes": 8330298,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 7741.20000000298
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/before-noop-restore-with-redo.obrush",
+      "sha256": "704ef644a0b562aba1eda94515ed7c387723a51217c3511630654feaf8ed6b40",
+      "bytes": 8330298,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 9143.5
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/noop-restore-with-redo.obrush",
+      "sha256": "704ef644a0b562aba1eda94515ed7c387723a51217c3511630654feaf8ed6b40",
+      "bytes": 8330298,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 10340.300000000745
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/redo-after-noop-restore.obrush",
+      "sha256": "cf9e500e7ab7ff7cdc6bd2ff7e2724084653d519732390cbdc7791c65dec02ff",
+      "bytes": 8330668,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 11357.5
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/before-swap.obrush",
+      "sha256": "cf9e500e7ab7ff7cdc6bd2ff7e2724084653d519732390cbdc7791c65dec02ff",
+      "bytes": 8330668,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 11357.5
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/swapped-once.obrush",
+      "sha256": "9381a7970bda9db5037e14b97703913a4c39105791e9d4dd4915c16642b6f294",
+      "bytes": 8330322,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 13428.20000000298
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "9139aefdd33cf3b9eb30634ef8ccb35828c55f538ee436b7702a9a23ae13255b",
+        "target_sha256": "252f8b8ab7f953a2f58a9713b379d64d29f3d6f27bc1666e3b83b3aa27274134"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/swap-target-undo.obrush",
+      "sha256": "cf9e500e7ab7ff7cdc6bd2ff7e2724084653d519732390cbdc7791c65dec02ff",
+      "bytes": 8330668,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 14440.800000000745
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/swap-target-redo.obrush",
+      "sha256": "9381a7970bda9db5037e14b97703913a4c39105791e9d4dd4915c16642b6f294",
+      "bytes": 8330322,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 15607.60000000149
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "9139aefdd33cf3b9eb30634ef8ccb35828c55f538ee436b7702a9a23ae13255b",
+        "target_sha256": "252f8b8ab7f953a2f58a9713b379d64d29f3d6f27bc1666e3b83b3aa27274134"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/swapped-twice.obrush",
+      "sha256": "cf9e500e7ab7ff7cdc6bd2ff7e2724084653d519732390cbdc7791c65dec02ff",
+      "bytes": 8330668,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 16841.400000002235
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/target-deleted.obrush",
+      "sha256": "498c3c5de7b1737f0a405dacea1c6c110dd1962e948816b353c259c2f6c65a28",
+      "bytes": 5317475,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 17923.20000000298
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": false
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/delete-target-undo.obrush",
+      "sha256": "cf9e500e7ab7ff7cdc6bd2ff7e2724084653d519732390cbdc7791c65dec02ff",
+      "bytes": 8330668,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 18757.400000002235
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/delete-target-redo.obrush",
+      "sha256": "498c3c5de7b1737f0a405dacea1c6c110dd1962e948816b353c259c2f6c65a28",
+      "bytes": 5317475,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 19873.800000000745
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": false
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/target-returned.obrush",
+      "sha256": "cf9e500e7ab7ff7cdc6bd2ff7e2724084653d519732390cbdc7791c65dec02ff",
+      "bytes": 8330668,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 20841.400000002235
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/masked-before-morph.obrush",
+      "sha256": "077d27d07dfeed37a478f8fee54f907e975b3ac35587854dbd6484000b6ace20",
+      "bytes": 8330668,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "155d8974bfc70100bc6c267709685763140e2916dae968e62e71fb6cf52869ca",
+        "last_upload_at": 560.8999999985099
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/masked-after-morph.obrush",
+      "sha256": "4768f06e69bbbd69f71d434f809797a3847b3e9c2f3a8b464e4d6abc933f6ea1",
+      "bytes": 8330610,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "1d38c15ca143b99a9e5f4eec46c35d0f4f93498582a242463f5a1cb0b59d255c",
+        "last_upload_at": 2712.7999999970198
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/local-morph-undo.obrush",
+      "sha256": "077d27d07dfeed37a478f8fee54f907e975b3ac35587854dbd6484000b6ace20",
+      "bytes": 8330668,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "155d8974bfc70100bc6c267709685763140e2916dae968e62e71fb6cf52869ca",
+        "last_upload_at": 4699.099999997765
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/local-morph-redo.obrush",
+      "sha256": "4768f06e69bbbd69f71d434f809797a3847b3e9c2f3a8b464e4d6abc933f6ea1",
+      "bytes": 8330610,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "1d38c15ca143b99a9e5f4eec46c35d0f4f93498582a242463f5a1cb0b59d255c",
+        "last_upload_at": 5832.39999999851
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/pressure-1-before.obrush",
+      "sha256": "077d27d07dfeed37a478f8fee54f907e975b3ac35587854dbd6484000b6ace20",
+      "bytes": 8330668,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "155d8974bfc70100bc6c267709685763140e2916dae968e62e71fb6cf52869ca",
+        "last_upload_at": 502.0999999977648
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/pressure-1-after.obrush",
+      "sha256": "4768f06e69bbbd69f71d434f809797a3847b3e9c2f3a8b464e4d6abc933f6ea1",
+      "bytes": 8330610,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "1d38c15ca143b99a9e5f4eec46c35d0f4f93498582a242463f5a1cb0b59d255c",
+        "last_upload_at": 3115.39999999851
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/pressure-morph-1-undo.obrush",
+      "sha256": "077d27d07dfeed37a478f8fee54f907e975b3ac35587854dbd6484000b6ace20",
+      "bytes": 8330668,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "155d8974bfc70100bc6c267709685763140e2916dae968e62e71fb6cf52869ca",
+        "last_upload_at": 5102.099999997765
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/pressure-morph-1-redo.obrush",
+      "sha256": "4768f06e69bbbd69f71d434f809797a3847b3e9c2f3a8b464e4d6abc933f6ea1",
+      "bytes": 8330610,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "1d38c15ca143b99a9e5f4eec46c35d0f4f93498582a242463f5a1cb0b59d255c",
+        "last_upload_at": 6218.79999999702
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/pressure-0.5-before.obrush",
+      "sha256": "077d27d07dfeed37a478f8fee54f907e975b3ac35587854dbd6484000b6ace20",
+      "bytes": 8330668,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "155d8974bfc70100bc6c267709685763140e2916dae968e62e71fb6cf52869ca",
+        "last_upload_at": 510.5
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/pressure-0.5-after.obrush",
+      "sha256": "ea615060e377c41b28100a965db8cc87929f0ba6e21d7f1421540905e32c389e",
+      "bytes": 8330640,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "e73010c22cabac02fb7eb72244f027654237d4ec4ea70be41db941fc5d54ef3b",
+        "last_upload_at": 3126
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/pressure-morph-0.5-undo.obrush",
+      "sha256": "077d27d07dfeed37a478f8fee54f907e975b3ac35587854dbd6484000b6ace20",
+      "bytes": 8330668,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "155d8974bfc70100bc6c267709685763140e2916dae968e62e71fb6cf52869ca",
+        "last_upload_at": 5147.699999999255
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/pressure-morph-0.5-redo.obrush",
+      "sha256": "ea615060e377c41b28100a965db8cc87929f0ba6e21d7f1421540905e32c389e",
+      "bytes": 8330640,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "e73010c22cabac02fb7eb72244f027654237d4ec4ea70be41db941fc5d54ef3b",
+        "last_upload_at": 6264.199999999255
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/fresh-loaded-v4.obrush",
+      "sha256": "cf9e500e7ab7ff7cdc6bd2ff7e2724084653d519732390cbdc7791c65dec02ff",
+      "bytes": 8330668,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 513
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/v4-redo-target.obrush",
+      "sha256": "712506c1d6a5de9207127fe75d451ee88a37aab4bf80a6c48fdec4dd1b71e572",
+      "bytes": 8330766,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "f6e801ca7b63d2d64fc558349e515131a06a0814123f18117713d4909a777eca",
+        "last_upload_at": 2144.300000000745
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/v4-before-invalid-with-redo.obrush",
+      "sha256": "cf9e500e7ab7ff7cdc6bd2ff7e2724084653d519732390cbdc7791c65dec02ff",
+      "bytes": 8330668,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 4270.400000002235
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/v4-after-zero-pressure-with-redo.obrush",
+      "sha256": "cf9e500e7ab7ff7cdc6bd2ff7e2724084653d519732390cbdc7791c65dec02ff",
+      "bytes": 8330668,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 4270.400000002235
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/v4-after-invalid-with-redo.obrush",
+      "sha256": "cf9e500e7ab7ff7cdc6bd2ff7e2724084653d519732390cbdc7791c65dec02ff",
+      "bytes": 8330668,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 4270.400000002235
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/v4-redo-after-invalid.obrush",
+      "sha256": "712506c1d6a5de9207127fe75d451ee88a37aab4bf80a6c48fdec4dd1b71e572",
+      "bytes": 8330766,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "f6e801ca7b63d2d64fc558349e515131a06a0814123f18117713d4909a777eca",
+        "last_upload_at": 9151.60000000149
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+        "target_sha256": "92321549d3faffc3a3eca432473e50ae2db669cf2808f6aaad1132fcd8148f21"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/legacy-v2.obrush",
+      "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "bytes": 5317105,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 483
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": false
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/legacy-v3.obrush",
+      "sha256": "e1ebf89237c20f0c1bb391853d312455e5f0d7dc5a506a8a72f26ea82e151c6b",
+      "bytes": 10615170,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "514f293c03eef71de912a4f2782ffd9bb0d3505c90fb97ae267a7cd2ad2000fc",
+        "last_upload_at": 512.1999999992549
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      },
+      "morph": {
+        "present": false
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/small-before-refine.obrush",
+      "sha256": "be94f6f10afce564712f163d432f3a2183224ef24d4ee357a55fa1d3afd80c01",
+      "bytes": 45572,
+      "vertices": 266,
+      "triangles": 528,
+      "gpu": {
+        "bytes": 10640,
+        "sha256": "54b7e3b817794ed6f16923bb3ba73af6961a0d49464885f857014a27d78759e2",
+        "last_upload_at": 798.1000000014901
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "56db84b9d2f4781ba8f7e4149c5a886e8ea80bb33271ee0c2ef6240f1a5934ec",
+        "target_sha256": "cd5874cd2f059697bc9a0128ba9d28b04a31d94bcf8925bcf7985afac4872781"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/small-refined-target-invalid.obrush",
+      "sha256": "384dd1e1caca14b7fa4ad85a9e44a37b02b792078b388ebe72f679a202786835",
+      "bytes": 124850,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "f9d1ddad652bda866be74c89a1b4e5bc44d761ccf053ad875902a8dcf1b32672",
+        "last_upload_at": 1599.300000000745
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": false
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/explicit-refine-target-invalidation-undo.obrush",
+      "sha256": "be94f6f10afce564712f163d432f3a2183224ef24d4ee357a55fa1d3afd80c01",
+      "bytes": 45572,
+      "vertices": 266,
+      "triangles": 528,
+      "gpu": {
+        "bytes": 10640,
+        "sha256": "54b7e3b817794ed6f16923bb3ba73af6961a0d49464885f857014a27d78759e2",
+        "last_upload_at": 2335.300000000745
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "56db84b9d2f4781ba8f7e4149c5a886e8ea80bb33271ee0c2ef6240f1a5934ec",
+        "target_sha256": "cd5874cd2f059697bc9a0128ba9d28b04a31d94bcf8925bcf7985afac4872781"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/explicit-refine-target-invalidation-redo.obrush",
+      "sha256": "384dd1e1caca14b7fa4ad85a9e44a37b02b792078b388ebe72f679a202786835",
+      "bytes": 124850,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "f9d1ddad652bda866be74c89a1b4e5bc44d761ccf053ad875902a8dcf1b32672",
+        "last_upload_at": 3001.199999999255
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": false
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/small-refine-undone.obrush",
+      "sha256": "be94f6f10afce564712f163d432f3a2183224ef24d4ee357a55fa1d3afd80c01",
+      "bytes": 45572,
+      "vertices": 266,
+      "triangles": 528,
+      "gpu": {
+        "bytes": 10640,
+        "sha256": "54b7e3b817794ed6f16923bb3ba73af6961a0d49464885f857014a27d78759e2",
+        "last_upload_at": 3682.199999999255
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "56db84b9d2f4781ba8f7e4149c5a886e8ea80bb33271ee0c2ef6240f1a5934ec",
+        "target_sha256": "cd5874cd2f059697bc9a0128ba9d28b04a31d94bcf8925bcf7985afac4872781"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/signed-zero-import.obrush",
+      "sha256": "4fa5b38e5feb26df7f9612424ef223a7738655dcaae01413b76f5419f412f2fa",
+      "bytes": 30307,
+      "vertices": 266,
+      "triangles": 528,
+      "gpu": {
+        "bytes": 10640,
+        "sha256": "54b7e3b817794ed6f16923bb3ba73af6961a0d49464885f857014a27d78759e2",
+        "last_upload_at": 442.80000000074506
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": false
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/signed-zero-coarse-target.obrush",
+      "sha256": "be94f6f10afce564712f163d432f3a2183224ef24d4ee357a55fa1d3afd80c01",
+      "bytes": 45572,
+      "vertices": 266,
+      "triangles": 528,
+      "gpu": {
+        "bytes": 10640,
+        "sha256": "54b7e3b817794ed6f16923bb3ba73af6961a0d49464885f857014a27d78759e2",
+        "last_upload_at": 1222.6000000014901
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "56db84b9d2f4781ba8f7e4149c5a886e8ea80bb33271ee0c2ef6240f1a5934ec",
+        "target_sha256": "cd5874cd2f059697bc9a0128ba9d28b04a31d94bcf8925bcf7985afac4872781"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/high-with-unavailable-coarse-target.obrush",
+      "sha256": "63e4c377aa05ed449c2b83336c1e8474dd6d831ccae32fcc6df2171365517db5",
+      "bytes": 176204,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "1c6609661afd5cf3f90c85de69b62eee981c291a2a9ea3afd441d2d713f5ad3b",
+        "last_upload_at": 2010.6000000014901
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": false,
+        "position_bits_sha256": "56db84b9d2f4781ba8f7e4149c5a886e8ea80bb33271ee0c2ef6240f1a5934ec",
+        "target_sha256": "cd5874cd2f059697bc9a0128ba9d28b04a31d94bcf8925bcf7985afac4872781"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/unavailable-restore-attempt.obrush",
+      "sha256": "63e4c377aa05ed449c2b83336c1e8474dd6d831ccae32fcc6df2171365517db5",
+      "bytes": 176204,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "1c6609661afd5cf3f90c85de69b62eee981c291a2a9ea3afd441d2d713f5ad3b",
+        "last_upload_at": 2010.6000000014901
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": false,
+        "position_bits_sha256": "56db84b9d2f4781ba8f7e4149c5a886e8ea80bb33271ee0c2ef6240f1a5934ec",
+        "target_sha256": "cd5874cd2f059697bc9a0128ba9d28b04a31d94bcf8925bcf7985afac4872781"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/low-with-available-target.obrush",
+      "sha256": "059a01449df950eb15f7b5ae739753c242feace49ec44a938cebaafef73864b0",
+      "bytes": 176204,
+      "vertices": 266,
+      "triangles": 528,
+      "gpu": {
+        "bytes": 10640,
+        "sha256": "54b7e3b817794ed6f16923bb3ba73af6961a0d49464885f857014a27d78759e2",
+        "last_upload_at": 3472.10000000149
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": true,
+        "position_bits_sha256": "56db84b9d2f4781ba8f7e4149c5a886e8ea80bb33271ee0c2ef6240f1a5934ec",
+        "target_sha256": "cd5874cd2f059697bc9a0128ba9d28b04a31d94bcf8925bcf7985afac4872781"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/high-returned-target-retained.obrush",
+      "sha256": "63e4c377aa05ed449c2b83336c1e8474dd6d831ccae32fcc6df2171365517db5",
+      "bytes": 176204,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "1c6609661afd5cf3f90c85de69b62eee981c291a2a9ea3afd441d2d713f5ad3b",
+        "last_upload_at": 4288.89999999851
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 0,
+        "available": false,
+        "position_bits_sha256": "56db84b9d2f4781ba8f7e4149c5a886e8ea80bb33271ee0c2ef6240f1a5934ec",
+        "target_sha256": "cd5874cd2f059697bc9a0128ba9d28b04a31d94bcf8925bcf7985afac4872781"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/fine-stored-target.obrush",
+      "sha256": "0c880a4bc13b59313f270822728f0b6bbf381916785349340976eb99f22555e9",
+      "bytes": 227359,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "1c6609661afd5cf3f90c85de69b62eee981c291a2a9ea3afd441d2d713f5ad3b",
+        "last_upload_at": 5105
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 1,
+        "available": true,
+        "position_bits_sha256": "fd1dd8dd2127ac4c97618fe529697ab2a34c0cd22dc02390241a0dc826cae1d4",
+        "target_sha256": "86cd8a358ef8f1effe659bb8ac14e779c586440ca71717a29538508c992e0ee4"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/fine-empty-recording-layer.obrush",
+      "sha256": "0f1fb2be94b496698b53452cf10c8da41768193bc7daa151eebbd05ba706fbb8",
+      "bytes": 335535,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "1c6609661afd5cf3f90c85de69b62eee981c291a2a9ea3afd441d2d713f5ad3b",
+        "last_upload_at": 5922.300000000745
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": true,
+        "vertices": 1058,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 1,
+        "available": true,
+        "position_bits_sha256": "fd1dd8dd2127ac4c97618fe529697ab2a34c0cd22dc02390241a0dc826cae1d4",
+        "target_sha256": "86cd8a358ef8f1effe659bb8ac14e779c586440ca71717a29538508c992e0ee4"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/fine-recorded-layer.obrush",
+      "sha256": "649719cfb3d98714864dc591b721a71e4fe35ec9b4ef5e8ef10335893beecdc2",
+      "bytes": 336296,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "1da5488418265778522832922ad7186610a088c329b45c2537a0334ee0342058",
+        "last_upload_at": 7324.699999999255
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": true,
+        "vertices": 1058,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 1,
+        "available": true,
+        "position_bits_sha256": "fd1dd8dd2127ac4c97618fe529697ab2a34c0cd22dc02390241a0dc826cae1d4",
+        "target_sha256": "86cd8a358ef8f1effe659bb8ac14e779c586440ca71717a29538508c992e0ee4"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/fine-morphed-layer.obrush",
+      "sha256": "2254551a985175e960c791e8b262a057074d6fa5ab94f962c99fe6cfd4a29867",
+      "bytes": 336306,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "653e30adc9c35cd3c43fba212f1c37c45c5fc4cd58bbb8b92d160781190c2271",
+        "last_upload_at": 9541
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": true,
+        "vertices": 1058,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 1,
+        "available": true,
+        "position_bits_sha256": "fd1dd8dd2127ac4c97618fe529697ab2a34c0cd22dc02390241a0dc826cae1d4",
+        "target_sha256": "86cd8a358ef8f1effe659bb8ac14e779c586440ca71717a29538508c992e0ee4"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/recorded-layer-local-morph-undo.obrush",
+      "sha256": "649719cfb3d98714864dc591b721a71e4fe35ec9b4ef5e8ef10335893beecdc2",
+      "bytes": 336296,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "1da5488418265778522832922ad7186610a088c329b45c2537a0334ee0342058",
+        "last_upload_at": 11105.699999999255
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": true,
+        "vertices": 1058,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 1,
+        "available": true,
+        "position_bits_sha256": "fd1dd8dd2127ac4c97618fe529697ab2a34c0cd22dc02390241a0dc826cae1d4",
+        "target_sha256": "86cd8a358ef8f1effe659bb8ac14e779c586440ca71717a29538508c992e0ee4"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/recorded-layer-local-morph-redo.obrush",
+      "sha256": "2254551a985175e960c791e8b262a057074d6fa5ab94f962c99fe6cfd4a29867",
+      "bytes": 336306,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "653e30adc9c35cd3c43fba212f1c37c45c5fc4cd58bbb8b92d160781190c2271",
+        "last_upload_at": 11805.699999999255
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": true,
+        "vertices": 1058,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 1,
+        "available": true,
+        "position_bits_sha256": "fd1dd8dd2127ac4c97618fe529697ab2a34c0cd22dc02390241a0dc826cae1d4",
+        "target_sha256": "86cd8a358ef8f1effe659bb8ac14e779c586440ca71717a29538508c992e0ee4"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/fine-layer-full-restored.obrush",
+      "sha256": "0f1fb2be94b496698b53452cf10c8da41768193bc7daa151eebbd05ba706fbb8",
+      "bytes": 335535,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "1c6609661afd5cf3f90c85de69b62eee981c291a2a9ea3afd441d2d713f5ad3b",
+        "last_upload_at": 12872.10000000149
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": true,
+        "vertices": 1058,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 1,
+        "available": true,
+        "position_bits_sha256": "fd1dd8dd2127ac4c97618fe529697ab2a34c0cd22dc02390241a0dc826cae1d4",
+        "target_sha256": "86cd8a358ef8f1effe659bb8ac14e779c586440ca71717a29538508c992e0ee4"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/recorded-layer-full-restore-undo.obrush",
+      "sha256": "2254551a985175e960c791e8b262a057074d6fa5ab94f962c99fe6cfd4a29867",
+      "bytes": 336306,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "653e30adc9c35cd3c43fba212f1c37c45c5fc4cd58bbb8b92d160781190c2271",
+        "last_upload_at": 13456.39999999851
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": true,
+        "vertices": 1058,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 1,
+        "available": true,
+        "position_bits_sha256": "fd1dd8dd2127ac4c97618fe529697ab2a34c0cd22dc02390241a0dc826cae1d4",
+        "target_sha256": "86cd8a358ef8f1effe659bb8ac14e779c586440ca71717a29538508c992e0ee4"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/recorded-layer-full-restore-redo.obrush",
+      "sha256": "0f1fb2be94b496698b53452cf10c8da41768193bc7daa151eebbd05ba706fbb8",
+      "bytes": 335535,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "1c6609661afd5cf3f90c85de69b62eee981c291a2a9ea3afd441d2d713f5ad3b",
+        "last_upload_at": 14155.699999999255
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": true,
+        "vertices": 1058,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 1,
+        "available": true,
+        "position_bits_sha256": "fd1dd8dd2127ac4c97618fe529697ab2a34c0cd22dc02390241a0dc826cae1d4",
+        "target_sha256": "86cd8a358ef8f1effe659bb8ac14e779c586440ca71717a29538508c992e0ee4"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/fine-layer-before-swap.obrush",
+      "sha256": "2254551a985175e960c791e8b262a057074d6fa5ab94f962c99fe6cfd4a29867",
+      "bytes": 336306,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "653e30adc9c35cd3c43fba212f1c37c45c5fc4cd58bbb8b92d160781190c2271",
+        "last_upload_at": 14855.89999999851
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": true,
+        "vertices": 1058,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 1,
+        "available": true,
+        "position_bits_sha256": "fd1dd8dd2127ac4c97618fe529697ab2a34c0cd22dc02390241a0dc826cae1d4",
+        "target_sha256": "86cd8a358ef8f1effe659bb8ac14e779c586440ca71717a29538508c992e0ee4"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/fine-layer-swapped.obrush",
+      "sha256": "2b90007e6e46b12124990460ee42b25b3da77a3d5bc9fa4e4e34f0d97c716545",
+      "bytes": 335537,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "1c6609661afd5cf3f90c85de69b62eee981c291a2a9ea3afd441d2d713f5ad3b",
+        "last_upload_at": 15638.5
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": true,
+        "vertices": 1058,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 1,
+        "available": true,
+        "position_bits_sha256": "3a59871203e74a6115d8dd6a9588029b28d5316c2a652759d0d34c126a850d09",
+        "target_sha256": "c97d759143a348e7e141827c48aab090a4eab152ddb3f688ae7f4a4239b64b6b"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/recorded-layer-swap-undo.obrush",
+      "sha256": "2254551a985175e960c791e8b262a057074d6fa5ab94f962c99fe6cfd4a29867",
+      "bytes": 336306,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "653e30adc9c35cd3c43fba212f1c37c45c5fc4cd58bbb8b92d160781190c2271",
+        "last_upload_at": 16222.300000000745
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": true,
+        "vertices": 1058,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 1,
+        "available": true,
+        "position_bits_sha256": "fd1dd8dd2127ac4c97618fe529697ab2a34c0cd22dc02390241a0dc826cae1d4",
+        "target_sha256": "86cd8a358ef8f1effe659bb8ac14e779c586440ca71717a29538508c992e0ee4"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/recorded-layer-swap-redo.obrush",
+      "sha256": "2b90007e6e46b12124990460ee42b25b3da77a3d5bc9fa4e4e34f0d97c716545",
+      "bytes": 335537,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "1c6609661afd5cf3f90c85de69b62eee981c291a2a9ea3afd441d2d713f5ad3b",
+        "last_upload_at": 16922.39999999851
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": true,
+        "vertices": 1058,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 1,
+        "available": true,
+        "position_bits_sha256": "3a59871203e74a6115d8dd6a9588029b28d5316c2a652759d0d34c126a850d09",
+        "target_sha256": "c97d759143a348e7e141827c48aab090a4eab152ddb3f688ae7f4a4239b64b6b"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/fine-layer-swap-twice.obrush",
+      "sha256": "2254551a985175e960c791e8b262a057074d6fa5ab94f962c99fe6cfd4a29867",
+      "bytes": 336306,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "653e30adc9c35cd3c43fba212f1c37c45c5fc4cd58bbb8b92d160781190c2271",
+        "last_upload_at": 17721.89999999851
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": true,
+        "vertices": 1058,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 1,
+        "available": true,
+        "position_bits_sha256": "fd1dd8dd2127ac4c97618fe529697ab2a34c0cd22dc02390241a0dc826cae1d4",
+        "target_sha256": "86cd8a358ef8f1effe659bb8ac14e779c586440ca71717a29538508c992e0ee4"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/fine-layer-baked-target-retained.obrush",
+      "sha256": "3ae0c7f6dc984c3dea552336df04fee74ad0144459ab27907fcb2e13b2764480",
+      "bytes": 227370,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "653e30adc9c35cd3c43fba212f1c37c45c5fc4cd58bbb8b92d160781190c2271",
+        "last_upload_at": 18389.300000000745
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 1,
+        "available": true,
+        "position_bits_sha256": "fd1dd8dd2127ac4c97618fe529697ab2a34c0cd22dc02390241a0dc826cae1d4",
+        "target_sha256": "86cd8a358ef8f1effe659bb8ac14e779c586440ca71717a29538508c992e0ee4"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/coexisting-layer-bake-undo.obrush",
+      "sha256": "2254551a985175e960c791e8b262a057074d6fa5ab94f962c99fe6cfd4a29867",
+      "bytes": 336306,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "653e30adc9c35cd3c43fba212f1c37c45c5fc4cd58bbb8b92d160781190c2271",
+        "last_upload_at": 19123.300000000745
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": true,
+        "vertices": 1058,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 1,
+        "available": true,
+        "position_bits_sha256": "fd1dd8dd2127ac4c97618fe529697ab2a34c0cd22dc02390241a0dc826cae1d4",
+        "target_sha256": "86cd8a358ef8f1effe659bb8ac14e779c586440ca71717a29538508c992e0ee4"
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/coexisting-layer-bake-redo.obrush",
+      "sha256": "3ae0c7f6dc984c3dea552336df04fee74ad0144459ab27907fcb2e13b2764480",
+      "bytes": 227370,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "653e30adc9c35cd3c43fba212f1c37c45c5fc4cd58bbb8b92d160781190c2271",
+        "last_upload_at": 19822.5
+      },
+      "gpu_matches_saved_mesh": true,
+      "composition": {
+        "present": false
+      },
+      "morph": {
+        "present": true,
+        "scheme": "positions_f32_v1",
+        "creation_level": 1,
+        "available": true,
+        "position_bits_sha256": "fd1dd8dd2127ac4c97618fe529697ab2a34c0cd22dc02390241a0dc826cae1d4",
+        "target_sha256": "86cd8a358ef8f1effe659bb8ac14e779c586440ca71717a29538508c992e0ee4"
+      }
+    }
+  ],
+  "stroke_parameters": [
+    {
+      "name": "useful-draw-with-target",
+      "brush": "Draw",
+      "settings": {
+        "adaptive_detail": false,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "recording_layer": null,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "from": [
+        705,
+        473
+      ],
+      "to": [
+        745,
+        503
+      ],
+      "steps": 14,
+      "spacing_ms": 35,
+      "viewport": {
+        "raw": [
+          225,
+          31,
+          1140,
+          912
+        ],
+        "cx": 795,
+        "cy": 513
+      },
+      "pointer_type": "mouse",
+      "force": 0.5
+    },
+    {
+      "name": "masked-local-morph",
+      "brush": "Morph",
+      "settings": {
+        "adaptive_detail": false,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "recording_layer": null,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "from": [
+        705,
+        473
+      ],
+      "to": [
+        745,
+        503
+      ],
+      "steps": 12,
+      "spacing_ms": 35,
+      "viewport": {
+        "raw": [
+          225,
+          31,
+          1140,
+          912
+        ],
+        "cx": 795,
+        "cy": 513
+      },
+      "pointer_type": "mouse",
+      "force": 0.5
+    },
+    {
+      "name": "pressure-radius-1",
+      "brush": "Morph",
+      "settings": {
+        "adaptive_detail": false,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "pressure": 1,
+        "pressure_radius": true,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "recording_layer": null,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "from": [
+        705,
+        473
+      ],
+      "to": [
+        745,
+        503
+      ],
+      "steps": 12,
+      "spacing_ms": 35,
+      "viewport": {
+        "raw": [
+          225,
+          31,
+          1140,
+          912
+        ],
+        "cx": 795,
+        "cy": 513
+      },
+      "pointer_type": "pen",
+      "force": 1
+    },
+    {
+      "name": "pressure-radius-0.5",
+      "brush": "Morph",
+      "settings": {
+        "adaptive_detail": false,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "pressure": 1,
+        "pressure_radius": true,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "recording_layer": null,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "from": [
+        705,
+        473
+      ],
+      "to": [
+        745,
+        503
+      ],
+      "steps": 12,
+      "spacing_ms": 35,
+      "viewport": {
+        "raw": [
+          225,
+          31,
+          1140,
+          912
+        ],
+        "cx": 795,
+        "cy": 513
+      },
+      "pointer_type": "pen",
+      "force": 0.5
+    },
+    {
+      "name": "v4-redo-target-draw",
+      "brush": "Draw",
+      "settings": {
+        "adaptive_detail": false,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "recording_layer": null,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "from": [
+        795,
+        403
+      ],
+      "to": [
+        810,
+        413
+      ],
+      "steps": 8,
+      "spacing_ms": 35,
+      "viewport": {
+        "raw": [
+          225,
+          31,
+          1140,
+          912
+        ],
+        "cx": 795,
+        "cy": 513
+      },
+      "pointer_type": "mouse",
+      "force": 0.5
+    },
+    {
+      "name": "zero-pressure-morph",
+      "brush": "Morph",
+      "settings": {
+        "adaptive_detail": false,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "recording_layer": null,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "from": [
+        860,
+        488
+      ],
+      "to": [
+        885,
+        498
+      ],
+      "steps": 8,
+      "spacing_ms": 35,
+      "viewport": {
+        "raw": [
+          225,
+          31,
+          1140,
+          912
+        ],
+        "cx": 795,
+        "cy": 513
+      },
+      "pointer_type": "pen",
+      "force": 0
+    },
+    {
+      "name": "morph-layer-recorded-draw",
+      "brush": "Draw",
+      "settings": {
+        "adaptive_detail": false,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "recording_layer": 0,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 1,
+        "subdivision_levels": 2,
+        "symmetry_x": true,
+        "triangles": 2112,
+        "vertices": 1058
+      },
+      "from": [
+        735,
+        493
+      ],
+      "to": [
+        760,
+        508
+      ],
+      "steps": 10,
+      "spacing_ms": 35,
+      "viewport": {
+        "raw": [
+          225,
+          31,
+          1140,
+          912
+        ],
+        "cx": 795,
+        "cy": 513
+      },
+      "pointer_type": "mouse",
+      "force": 0.5
+    },
+    {
+      "name": "morph-layer-local-return",
+      "brush": "Morph",
+      "settings": {
+        "adaptive_detail": false,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "recording_layer": 0,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 1,
+        "subdivision_levels": 2,
+        "symmetry_x": true,
+        "triangles": 2112,
+        "vertices": 1058
+      },
+      "from": [
+        735,
+        493
+      ],
+      "to": [
+        760,
+        508
+      ],
+      "steps": 10,
+      "spacing_ms": 35,
+      "viewport": {
+        "raw": [
+          225,
+          31,
+          1140,
+          912
+        ],
+        "cx": 795,
+        "cy": 513
+      },
+      "pointer_type": "mouse",
+      "force": 0.5
+    }
+  ],
+  "equality_scopes": {
+    "gpu": "Exact packed position/normal/mask/RGB vertex bytes; index buffer not read back. Ordered saved triangles checked separately.",
+    "target": "58 snapshots validate creation-level ordered correspondence, f32 hashes and diagnostic availability; explicit Store/Restore/Swap/Undo/Redo gates check expected position/target bits.",
+    "layers": "15 layered snapshots match independently ordered f64 composition converted to f32 including signed zero.",
+    "legacy": "v2/v3 editable fields and packed mesh bits preserved; no claim that an older encoder produces identical canonical byte spelling."
+  }
+}

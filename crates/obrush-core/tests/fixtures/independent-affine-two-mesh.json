@@ -1,0 +1,309 @@
+{
+  "origin": "independent author fields/scalars; no OBrush/reference consumer output",
+  "source_scene": {
+    "version": 3,
+    "byte_order": "little_endian",
+    "display": {
+      "show_grid": true,
+      "show_symmetry_line": true,
+      "show_contour": false
+    },
+    "camera": {
+      "projection": 0,
+      "mode": 1,
+      "fov_degrees": 1.0,
+      "use_pivot": true
+    },
+    "meshes": [
+      {
+        "render": {
+          "shader": 0,
+          "matcap": 3,
+          "show_wireframe": false,
+          "flat_shading": false,
+          "opacity": 1.0
+        },
+        "center": [
+          123.0,
+          -99.0,
+          0.25
+        ],
+        "matrix": [
+          -2.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          3.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.5,
+          0.0,
+          4.0,
+          -2.0,
+          1.0,
+          1.0
+        ],
+        "scale": 9.0,
+        "positions": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            2.0,
+            0.0,
+            0.0
+          ],
+          [
+            2.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "colors": null,
+        "materials": [
+          [
+            0.0,
+            -0.0,
+            1.401298464324817e-45
+          ],
+          [
+            -0.0,
+            0.5,
+            -0.0
+          ],
+          [
+            0.18000000715255737,
+            1.0,
+            0.3333333432674408
+          ],
+          [
+            1.0,
+            0.25,
+            0.9999999403953552
+          ]
+        ],
+        "faces": [
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ],
+        "uv": {
+          "coordinates": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              1.0
+            ],
+            [
+              0.0,
+              1.0
+            ],
+            [
+              -0.0,
+              0.0
+            ]
+          ],
+          "face_indices": [
+            [
+              4,
+              1,
+              2,
+              3
+            ]
+          ]
+        }
+      },
+      {
+        "render": {
+          "shader": 0,
+          "matcap": 3,
+          "show_wireframe": false,
+          "flat_shading": false,
+          "opacity": 0.6499999761581421
+        },
+        "center": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "matrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.5,
+          1.0
+        ],
+        "scale": 1.0,
+        "positions": [
+          [
+            1.0,
+            -2.0,
+            0.0
+          ],
+          [
+            4.0,
+            -2.0,
+            0.0
+          ],
+          [
+            2.5,
+            2.0,
+            0.0
+          ]
+        ],
+        "colors": [
+          [
+            0.25,
+            0.5,
+            0.75
+          ],
+          [
+            0.5,
+            0.75,
+            0.25
+          ],
+          [
+            0.75,
+            0.25,
+            0.5
+          ]
+        ],
+        "materials": null,
+        "faces": [
+          [
+            0,
+            1,
+            2,
+            4294967295
+          ]
+        ],
+        "uv": null
+      }
+    ]
+  },
+  "expectation": {
+    "matrix_determinant": -3.0,
+    "mesh0_world_positions": [
+      [
+        4.0,
+        -2.0,
+        1.0
+      ],
+      [
+        0.0,
+        -2.0,
+        1.0
+      ],
+      [
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        5.0,
+        1.0,
+        1.0
+      ]
+    ],
+    "mesh0_derived_init_local_center": [
+      1.0,
+      0.5,
+      0.0
+    ],
+    "encoded_center_must_remain_raw": [
+      123.0,
+      -99.0,
+      0.25
+    ],
+    "encoded_scale_must_remain_raw": 9.0,
+    "pinned_live_scale_f64": 2.23606797749979,
+    "pinned_export_scale_f32": 2.2360680103302,
+    "inverse_transpose_local_normal_world": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "oriented_world_triangle_normal": [
+      0.0,
+      0.0,
+      -1.0
+    ],
+    "normal_vectors_are_before_gl_front_facing_policy": true,
+    "world_ray": {
+      "origin": [
+        2.5,
+        -0.5,
+        3.0
+      ],
+      "direction": [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    "mesh0_local_ray": {
+      "origin": [
+        1.0,
+        0.5,
+        4.0
+      ],
+      "unnormalized_direction": [
+        0.0,
+        0.0,
+        -2.0
+      ]
+    },
+    "true_world_hit_distances": [
+      2.0,
+      2.5
+    ],
+    "pinned_local_distance_times_scale": [
+      8.94427190999916,
+      2.5
+    ],
+    "nearest_world_object": 0,
+    "pinned_scale_metric_nearest_object": 1,
+    "pinned_world_radius": 0.2,
+    "pinned_mesh0_local_radius": 0.08944271909999159,
+    "missing_rgb_effective_white_but_absence_retained": true,
+    "missing_mesh1_materials_effective_defaults": [
+      0.18000000715255737,
+      0.07999999821186066,
+      1.0
+    ],
+    "camera_fov_must_not_silently_clamp_to_host_ui_minimum": 1.0,
+    "environment_not_encoded": true,
+    "unused_equal_valued_uv_ids_preserved": true
+  }
+}

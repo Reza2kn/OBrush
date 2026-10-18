@@ -1,0 +1,486 @@
+{
+  "feature": "C98 posed-source pre-rounding voxel bounds",
+  "reference": {
+    "upstream_revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "hosted_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "diagnostic_copy_is_not_parity_oracle": true,
+    "diagnostic_output_equal_to_unmodified": {
+      "false": {
+        "positions": true,
+        "faces": true,
+        "colors": true,
+        "materials": true,
+        "matrix": true
+      },
+      "true": {
+        "positions": true,
+        "faces": true,
+        "colors": true,
+        "materials": true,
+        "matrix": true
+      }
+    },
+    "reference_step": 0.17187500186264515,
+    "previous_obrush_step": 0.171875
+  },
+  "parameters": {
+    "source_selected_order": "right then left",
+    "source_left_shear_x_by_y": 0.15,
+    "source_left_translation_x": -0.3,
+    "source_right_translation_x": 0.3,
+    "resolution": 16,
+    "relax": [
+      false,
+      true
+    ],
+    "mode": "Marching Cubes",
+    "colors": [
+      "red",
+      "blue"
+    ],
+    "roughness": 0.4,
+    "metalness": 0.6,
+    "unmasked_weight": 1.0
+  },
+  "native_comparison": {
+    "unrelaxed_face_mapping": {
+      "mapped_vertices": 1034,
+      "oriented_reference_faces": 2064,
+      "oriented_obrush_faces": 2064,
+      "oriented_intersection": 2064,
+      "unoriented_intersection": 2064
+    },
+    "relaxed_face_mapping": {
+      "oriented_reference_faces": 2064,
+      "oriented_obrush_faces": 2064,
+      "oriented_intersection": 2064
+    },
+    "cases": [
+      {
+        "relaxed": false,
+        "reference": {
+          "vertices": 1034,
+          "triangles": 2064,
+          "signed_world_volume": 10.296275338922344
+        },
+        "obrush": {
+          "vertices": 1034,
+          "triangles": 2064,
+          "signed_world_volume": 10.296277012433912
+        },
+        "reference_to_obrush_nearest_world": {
+          "maximum": 1.9613365113206618e-07,
+          "rms": 1.183279413466119e-07,
+          "median": 1.1491268478935353e-07,
+          "p95": 1.6624627648649566e-07,
+          "exact_within_1e_6": 1034
+        },
+        "obrush_to_reference_nearest_world": {
+          "maximum": 1.9613365113206618e-07,
+          "rms": 1.183279413466119e-07,
+          "median": 1.1491268478935353e-07,
+          "p95": 1.6624627648649566e-07,
+          "exact_within_1e_6": 1034
+        }
+      },
+      {
+        "relaxed": true,
+        "reference": {
+          "vertices": 1034,
+          "triangles": 2064,
+          "signed_world_volume": 10.281394331658255
+        },
+        "obrush": {
+          "vertices": 1034,
+          "triangles": 2064,
+          "signed_world_volume": 10.281395756901201
+        },
+        "reference_to_obrush_nearest_world": {
+          "maximum": 2.7120256502276934e-07,
+          "rms": 1.2064584753019478e-07,
+          "median": 1.1029881583879804e-07,
+          "p95": 1.9146152998868572e-07,
+          "exact_within_1e_6": 1034
+        },
+        "obrush_to_reference_nearest_world": {
+          "maximum": 2.7120256502276934e-07,
+          "rms": 1.2064584753019478e-07,
+          "median": 1.1029881583879804e-07,
+          "p95": 1.9146152998868572e-07,
+          "exact_within_1e_6": 1034
+        }
+      }
+    ],
+    "attribute_differences": [
+      {
+        "relaxed": false,
+        "rgb": {
+          "values_compared": 3102,
+          "maximum_abs_difference": 0.0,
+          "rms_abs_difference": 0.0
+        },
+        "roughness_metallic": {
+          "values_compared": 2068,
+          "maximum_abs_difference": 0.0,
+          "rms_abs_difference": 0.0
+        },
+        "unmasked_weight": {
+          "values_compared": 1034,
+          "maximum_abs_difference": 0.0,
+          "rms_abs_difference": 0.0
+        }
+      },
+      {
+        "relaxed": true,
+        "rgb": {
+          "values_compared": 3102,
+          "maximum_abs_difference": 0.0,
+          "rms_abs_difference": 0.0
+        },
+        "roughness_metallic": {
+          "values_compared": 2068,
+          "maximum_abs_difference": 0.0,
+          "rms_abs_difference": 0.0
+        },
+        "unmasked_weight": {
+          "values_compared": 1034,
+          "maximum_abs_difference": 0.0,
+          "rms_abs_difference": 0.0
+        }
+      }
+    ]
+  },
+  "browser_comparison": {
+    "unrelaxed_face_mapping": {
+      "mapped_vertices": 1034,
+      "oriented_reference_faces": 2064,
+      "oriented_obrush_faces": 2064,
+      "oriented_intersection": 2064,
+      "unoriented_intersection": 2064
+    },
+    "relaxed_face_mapping": {
+      "oriented_reference_faces": 2064,
+      "oriented_obrush_faces": 2064,
+      "oriented_intersection": 2064
+    },
+    "cases": [
+      {
+        "relaxed": false,
+        "reference": {
+          "vertices": 1034,
+          "triangles": 2064,
+          "signed_world_volume": 10.296275338922344
+        },
+        "obrush": {
+          "vertices": 1034,
+          "triangles": 2064,
+          "signed_world_volume": 10.296277074752913
+        },
+        "reference_to_obrush_nearest_world": {
+          "maximum": 2.0445783648564735e-07,
+          "rms": 1.1630772182970493e-07,
+          "median": 1.1073164486752232e-07,
+          "p95": 1.7879439493466915e-07,
+          "exact_within_1e_6": 1034
+        },
+        "obrush_to_reference_nearest_world": {
+          "maximum": 2.0445783648564735e-07,
+          "rms": 1.1630772182970493e-07,
+          "median": 1.1073164486752232e-07,
+          "p95": 1.7879439493466915e-07,
+          "exact_within_1e_6": 1034
+        }
+      },
+      {
+        "relaxed": true,
+        "reference": {
+          "vertices": 1034,
+          "triangles": 2064,
+          "signed_world_volume": 10.281394331658255
+        },
+        "obrush": {
+          "vertices": 1034,
+          "triangles": 2064,
+          "signed_world_volume": 10.281395791596998
+        },
+        "reference_to_obrush_nearest_world": {
+          "maximum": 3.134211629254566e-07,
+          "rms": 1.2073423662062314e-07,
+          "median": 1.0730719413372187e-07,
+          "p95": 1.9363499829966762e-07,
+          "exact_within_1e_6": 1034
+        },
+        "obrush_to_reference_nearest_world": {
+          "maximum": 3.134211629254566e-07,
+          "rms": 1.2073423662062314e-07,
+          "median": 1.0730719413372187e-07,
+          "p95": 1.9363499829966762e-07,
+          "exact_within_1e_6": 1034
+        }
+      }
+    ],
+    "attribute_differences": [
+      {
+        "relaxed": false,
+        "rgb": {
+          "values_compared": 3102,
+          "maximum_abs_difference": 2.9302215542870158e-08,
+          "rms_abs_difference": 4.0964344755233455e-09
+        },
+        "roughness_metallic": {
+          "values_compared": 2068,
+          "maximum_abs_difference": 2.384185793236071e-08,
+          "rms_abs_difference": 1.737759083115635e-08
+        },
+        "unmasked_weight": {
+          "values_compared": 1034,
+          "maximum_abs_difference": 0.0,
+          "rms_abs_difference": 0.0
+        }
+      },
+      {
+        "relaxed": true,
+        "rgb": {
+          "values_compared": 3102,
+          "maximum_abs_difference": 2.9302215542870158e-08,
+          "rms_abs_difference": 4.0964344755233455e-09
+        },
+        "roughness_metallic": {
+          "values_compared": 2068,
+          "maximum_abs_difference": 2.384185793236071e-08,
+          "rms_abs_difference": 1.737759083115635e-08
+        },
+        "unmasked_weight": {
+          "values_compared": 1034,
+          "maximum_abs_difference": 0.0,
+          "rms_abs_difference": 0.0
+        }
+      }
+    ]
+  },
+  "browser": {
+    "status": "passed Marching Cubes browser workflow",
+    "wasm": {
+      "sha256": "a7a166a926d1484023b983f6af60558d0c1f589fea5ec5e06c35ceab132a9a84",
+      "served_sha256": "a7a166a926d1484023b983f6af60558d0c1f589fea5ec5e06c35ceab132a9a84",
+      "bytes": 23428712
+    },
+    "cases": [
+      {
+        "name": "marching-cubes-posed-fusion-relaxed-false-visible-workflow",
+        "gates": {
+          "visible_selection": true,
+          "explicit_mixed_uv_loss": true,
+          "explicit_pose_loss": true,
+          "closed_solid": true,
+          "history_exact": true,
+          "visible_gpu_save_exact": true
+        }
+      },
+      {
+        "name": "marching-cubes-posed-fusion-relaxed-true-visible-workflow",
+        "gates": {
+          "visible_selection": true,
+          "explicit_mixed_uv_loss": true,
+          "explicit_pose_loss": true,
+          "closed_solid": true,
+          "history_exact": true,
+          "visible_gpu_save_exact": true
+        }
+      }
+    ],
+    "exceptions": [],
+    "console_errors": [],
+    "runtime_errors": {
+      "gl": [],
+      "js": []
+    },
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    }
+  },
+  "failed_checks": [
+    "C97 browser RGB maximum 1.0 and RMS 0.3311 on the same fixture, preserved.",
+    "An f32-bucket color ownership trial remained unmatched: maximum RGB 0.7223 and RMS 0.1604; reverted."
+  ],
+  "limitations": [
+    "One independently authored posed SGL pair, one resolution and two relaxation settings",
+    "No arbitrary affine/UV/complex attribute or other selected-remesh-mode parity",
+    "No sustained million-vertex responsiveness or production WebGPU claim",
+    "No native GUI or physical stylus check"
+  ],
+  "files": {
+    "fixture": {
+      "path": "crates/obrush-core/tests/fixtures/independent-posed-fusion.sgl",
+      "sha256": "b7c3ad813abfa4f22c0bbe8ab93598b923e9472b19eed943457f337ffa25bbb9",
+      "bytes": 1244
+    },
+    "fixture_generator": {
+      "path": "crates/obrush-core/examples/posed_fusion_fixture.rs",
+      "sha256": "f4c33187bc398559cc01cc224929118472dab0f62366d3e5647da57cc1608753",
+      "bytes": 2538
+    },
+    "core_document": {
+      "path": "crates/obrush-core/src/document.rs",
+      "sha256": "6c2c70eb70acedef19032d2d88122502539ab4eb0b8c3bdafc3027d83856730b",
+      "bytes": 171206
+    },
+    "core_remesh": {
+      "path": "crates/obrush-core/src/remesh.rs",
+      "sha256": "91ff7d7295e4f202dfd14a2e2a8387d659a90b5beaca57019f10c56979523971",
+      "bytes": 71850
+    },
+    "core_regression_test": {
+      "path": "crates/obrush-core/tests/remesh.rs",
+      "sha256": "10808af5f6415d3a1ef2635e69a0dfcd3cbd411252dc968af011216573fd9cc0",
+      "bytes": 38170
+    },
+    "native_probe": {
+      "path": "crates/obrush-core/examples/posed_fusion_probe.rs",
+      "sha256": "76062086f164a80a1a452b4389b47aaf94d3ccf4ea92d7b29156c3104e37b956",
+      "bytes": 1656
+    },
+    "reference_harness": {
+      "path": "scripts/check-sculptgl-mc.mjs",
+      "sha256": "26f9bbe8994eaed597372225c3bc2734cb9f75a0fab8f7ab4818dba871d8bd4c",
+      "bytes": 63726
+    },
+    "browser_harness": {
+      "path": "scripts/check-mc-browser.mjs",
+      "sha256": "abcee4007d1bfa4fe43e4f286867b6a3f497283a58c29787db83ac4cf1ec619b",
+      "bytes": 128461
+    },
+    "comparison_script": {
+      "path": "scripts/compare-mc-remesh.py",
+      "sha256": "4fb93e96960b3e0d5dd2987773857afc3e18cf414b8bfd95425da45d59428c4a",
+      "bytes": 8384
+    },
+    "reference_run": {
+      "path": ".artifacts/sculptgl-reference-runtime/posed-fusion-c97-98261ac7-2088-486a-b2b0-95dda60f3fd3/result.json",
+      "sha256": "be71e108f831bdb6b5e12276aa4a04de3cbe85c2fe6a6968ea1cc9c9536e2ad0",
+      "bytes": 91611
+    },
+    "original_reference_relax_off": {
+      "path": ".artifacts/sculptgl-reference-runtime/posed-fusion-c97-98261ac7-2088-486a-b2b0-95dda60f3fd3/mc-posed-fusion-false-after.json",
+      "sha256": "5a9fc36608de5089a2ca0d91ec43a843cb72e212af22c015f656664e5597cb92",
+      "bytes": 345170
+    },
+    "original_reference_relax_on": {
+      "path": ".artifacts/sculptgl-reference-runtime/posed-fusion-c97-98261ac7-2088-486a-b2b0-95dda60f3fd3/mc-posed-fusion-true-after.json",
+      "sha256": "9548e9bd0327f3f51283f64205240749da12f33f87fd9182887e2c802033d86e",
+      "bytes": 375758
+    },
+    "diagnostic_bundle": {
+      "path": ".artifacts/posed-voxel-debug/mirror/sculptgl.js",
+      "sha256": "05e0635d98e856e38c58910e4169a6780392eb30e42cf54b0b78e14dd55783bd",
+      "bytes": 471497
+    },
+    "diagnostic_harness": {
+      "path": ".artifacts/posed-voxel-debug/check-voxel-debug.mjs",
+      "sha256": "5212191fdba7116598b635059b054dba5c6707c252bf06f0deaf2021daa7343d",
+      "bytes": 63890
+    },
+    "diagnostic_run": {
+      "path": ".artifacts/sculptgl-reference-runtime/posed-voxel-prepared-fe974601-4350-47ee-a05a-4ff136346960/result.json",
+      "sha256": "923431f125230bfee558bc4ed95f53105d6363cfc1bb24ffbb4544e62f1fda34",
+      "bytes": 92588
+    },
+    "diagnostic_field": {
+      "path": ".artifacts/sculptgl-reference-runtime/posed-voxel-prepared-fe974601-4350-47ee-a05a-4ff136346960/posed-voxels-false.json",
+      "sha256": "fbbeee8370ac0b1d86711d239eb308d86b84375fb113ab5bbb3f3bc277e347d2",
+      "bytes": 226239
+    },
+    "native_probe_output": {
+      "path": ".artifacts/posed-voxel-debug/obrush-probe-prebounds-21.json",
+      "sha256": "64ce6f0441f5c6e9df3105f80cc0c6d592c4377c7f146dcca8db6977787429d6",
+      "bytes": 353226
+    },
+    "native_comparison": {
+      "path": ".artifacts/posed-voxel-debug/prebounds-comparison.json",
+      "sha256": "75f8d77fe62a36777dd577cbea26ce01f78c491a35efe17a518849de2532d0de",
+      "bytes": 3732
+    },
+    "browser_run": {
+      "path": ".artifacts/mask-filter-browser/posed-fusion-c98-53768456-0cd6-4d6d-a369-b1b3a75b1f01/result.json",
+      "sha256": "266966a3faad42e5891e0c3dcd95c96fa5bc1aaa4394e7d80a24e47be895b5d9",
+      "bytes": 2231169
+    },
+    "browser_comparison": {
+      "path": ".artifacts/c98-posed-comparison.json",
+      "sha256": "05e20e710618d6a85e84493616152f9fd7d2b599065f95805eafb932721a327a",
+      "bytes": 4259
+    },
+    "prior_failure_comparison": {
+      "path": ".artifacts/posed-fusion-c97-final-comparison.json",
+      "sha256": "70fd9e6150c94ab32380cc1699dfcb73c8ecba7969db46885686531216cf068f",
+      "bytes": 4220
+    },
+    "rejected_bucket_tie_comparison": {
+      "path": ".artifacts/posed-voxel-debug/bucket-tie-comparison.json",
+      "sha256": "466e2ca4855b08204050940175990d58b52141151f0be98ee875368634ce2bda",
+      "bytes": 3784
+    },
+    "web_build_log": {
+      "path": ".artifacts/c98-build-web.log",
+      "sha256": "8619bee6554502f0ea972eceef2270de63f298d243b6448f161b8b9bcf294d9d",
+      "bytes": 279
+    },
+    "browser_log": {
+      "path": ".artifacts/c98-browser.log",
+      "sha256": "66d2cbc35ab19bdd65747f81784dcfcc0e15ddccf279761901169c98c08045d5",
+      "bytes": 1313
+    },
+    "wasm": {
+      "path": "web/dist/pkg/obrush_app_bg.wasm",
+      "sha256": "a7a166a926d1484023b983f6af60558d0c1f589fea5ec5e06c35ceab132a9a84",
+      "bytes": 23428712
+    },
+    "workspace_tests": {
+      "path": ".artifacts/c98-workspace-test.log",
+      "sha256": "4e3eb49a7eff5592df606a844294e28176d8f3f5448753062c025a9713bd55d7",
+      "bytes": 229000
+    },
+    "native_clippy": {
+      "path": ".artifacts/c98-clippy-native.log",
+      "sha256": "41c4647ca311bcfcfebf7172f30aa6b96aea046253c636bd87a55ed9ab12dfdb",
+      "bytes": 223
+    },
+    "wasm_clippy": {
+      "path": ".artifacts/c98-clippy-wasm.log",
+      "sha256": "44472d576c8acc254661e99209a607eb237c3d38fb8f34dbfb95868b7d2e240a",
+      "bytes": 223
+    },
+    "wasm_check": {
+      "path": ".artifacts/c98-wasm-check.log",
+      "sha256": "6e80543f9f52fb7351a51e01d6f8ab789cf433f3f3a2192fb5c6921a6eac21bd",
+      "bytes": 222
+    },
+    "macos_package": {
+      "path": ".artifacts/c98-package-macos.log",
+      "sha256": "acfdf1d5de1809b96a3b27c51e0fd93a7c5068eee76537eb53b3f8150505a448",
+      "bytes": 407
+    },
+    "macos_binary": {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/OBrush",
+      "sha256": "dc024b4d025df4add0b96583002108e5531310e99f1c1d7ccbbffede4c71cf22",
+      "bytes": 26758384
+    }
+  },
+  "checks": {
+    "cargo_fmt": "passed",
+    "workspace_tests": {
+      "passed": 2391,
+      "ignored": 1,
+      "sections": 70,
+      "failed": 0
+    },
+    "native_strict_clippy": "passed",
+    "wasm_strict_clippy": "passed",
+    "wasm_target_check": "passed",
+    "official_web_build": "passed",
+    "official_macos_package": "passed; ad-hoc signature verified",
+    "isolated_browser": "both named posed-fusion workflows passed; GPU/save and history gates passed"
+  }
+}

@@ -1,0 +1,1491 @@
+{
+  "scope": "Completed actual normal-browser Continuous consumer cohort on immutable 0.1.19 candidate3. Local workflow proof only; source math/native/physical latency parity unverified.",
+  "recorded_at": "2026-10-14T06:22:51.534572+00:00",
+  "result": {
+    "path": ".artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/result.json",
+    "sha256": "de62d442b094363c7d25e3e99b5b1e577eba762752a4b020ab14b008fc57b12d",
+    "raw_status": "passed scoped local host gates; reference parity unverified",
+    "harness_sha256": "7d243b0a85b8eff9b7a0f17764632d05cfa50d0e14fb92ef988b10b197084b34",
+    "preregistration_sha256": "4fe7e90cf46c706470dde95ab5f5b157a1f86aa4f0d4b60906bc25f5387ad1fd",
+    "postbuild_binding_sha256": "d4902e38fb5306d276b133091ec663d0bc3742f834ef6a8afecc17a2a07500a6",
+    "candidate": {
+      "candidate": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.19-candidate3",
+      "source_root": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.19-candidate3/source",
+      "status": "immutable candidate binding",
+      "manifest_sha256": "06472b8d14a5647dc0bb64ada2e54f10b5397926f14dc943cad5fba1b5628e56",
+      "build_sha256": "378a6b1a485a7a5a64e6d0658e8a54efd8670530b677668035e844472371eb93",
+      "checked_source_files": 169
+    },
+    "web_files": [
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.19-candidate3/web/index.html",
+        "relative_path": "index.html",
+        "bytes": 7550,
+        "sha256": "f5cd67e7016d971646843f2e00d48e1049ddb9800627c0d590d6d6f5aedbdc94"
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.19-candidate3/web/pkg/obrush_app.js",
+        "relative_path": "pkg/obrush_app.js",
+        "bytes": 106886,
+        "sha256": "56a52d739b1bd1dd82011e5bfe8f0b62e7d47a02f4e0b13d5817aee3ea82e09a"
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.19-candidate3/web/pkg/obrush_app_bg.wasm",
+        "relative_path": "pkg/obrush_app_bg.wasm",
+        "bytes": 4997150,
+        "sha256": "59491afb243778fcbccf9af9bd8a5c6298204a92a32b2efc8fb2c7702eb978d1"
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.19-candidate3/web/topology-worker.js",
+        "relative_path": "topology-worker.js",
+        "bytes": 448,
+        "sha256": "3318e34033bd56bee4c8cd7a0cbe140f2ab40731a788d1dc909ebd23da90a9c2"
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.19-candidate3/web/viewport-texture-input.js",
+        "relative_path": "viewport-texture-input.js",
+        "bytes": 1959,
+        "sha256": "fc2d78d3686f605f76be4925ab32e96a7a0b8d0fc34ac50f2f90a4b432e31afe"
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.19-candidate3/web/uv-bake-input.js",
+        "relative_path": "uv-bake-input.js",
+        "bytes": 1849,
+        "sha256": "342ee8df2ec4ea5f043a22008f4110d00a6149f560be959fb4de3a7096e88837"
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.19-candidate3/web/uv-bake-worker.js",
+        "relative_path": "uv-bake-worker.js",
+        "bytes": 574,
+        "sha256": "732e45cfb92cc6142d4a103a7dd7f9c4916c058de8327175bc430ede399636e4"
+      }
+    ],
+    "actual_downloads": 214,
+    "runtime_saved_GPU_pairs": 189,
+    "owned_pid": 92841,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "postclosure_sha256": "b2fb87e3e52d22b0bc5dd45724cb830352d728cd22059188ab0c438ab516003d"
+  },
+  "cases": [
+    {
+      "name": "frozen-host-startup",
+      "gates": {
+        "actual_startup": true,
+        "default_radius_strength": true,
+        "production_download_completed": true,
+        "visible_gpu_save_exact": true
+      }
+    },
+    {
+      "name": "actual-continuous-stationary-draw",
+      "gates": {
+        "both_trials_pass": true,
+        "useful_timer_response_differs": true
+      },
+      "trials": [
+        {
+          "kind": "Draw",
+          "continuous_requested": false,
+          "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_sha256": "995c392f01eb6265f2aac4b8d405f4afa2899426122b9021a99ef38d024a358f",
+          "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "redo_stroke_sha256": "995c392f01eb6265f2aac4b8d405f4afa2899426122b9021a99ef38d024a358f",
+          "initial_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": false,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "completed_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": false,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "selected_channel_difference": {
+            "changed": 26,
+            "original_count": 2522,
+            "after_count": 2522,
+            "max": 0.0037868278653926985,
+            "rms": 0.0001830915391548146
+          },
+          "gates": {
+            "requested_mode": true,
+            "timer_policy": true,
+            "timer_attempts": true,
+            "clock_stopped": true,
+            "useful_selected_channel": true,
+            "only_selected_channels": true,
+            "one_complete_history": true,
+            "complete_gpu_exact": true,
+            "quiet_release": true
+          },
+          "whole_stroke_history": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        },
+        {
+          "kind": "Draw",
+          "continuous_requested": true,
+          "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_sha256": "ef978c8d14d8dd3f5d903d85092f2c91e8df665ac7127c01cf55cd08ba1bea02",
+          "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "redo_stroke_sha256": "ef978c8d14d8dd3f5d903d85092f2c91e8df665ac7127c01cf55cd08ba1bea02",
+          "initial_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": true,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "completed_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 9,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": 2647800,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": true,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "selected_channel_difference": {
+            "changed": 26,
+            "original_count": 2522,
+            "after_count": 2522,
+            "max": 0.028421052687395542,
+            "rms": 0.001459800875856552
+          },
+          "gates": {
+            "requested_mode": true,
+            "timer_policy": true,
+            "timer_attempts": true,
+            "clock_stopped": true,
+            "useful_selected_channel": true,
+            "only_selected_channels": true,
+            "one_complete_history": true,
+            "complete_gpu_exact": true,
+            "quiet_release": true
+          },
+          "whole_stroke_history": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "actual-continuous-stationary-clay",
+      "gates": {
+        "both_trials_pass": true,
+        "useful_timer_response_differs": true
+      },
+      "trials": [
+        {
+          "kind": "Clay",
+          "continuous_requested": false,
+          "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_sha256": "01d790f02596422fc9744e41a99304f0d5ecaae3485e23ff04a582105ef25b1b",
+          "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "redo_stroke_sha256": "01d790f02596422fc9744e41a99304f0d5ecaae3485e23ff04a582105ef25b1b",
+          "initial_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": false,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "completed_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": false,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "selected_channel_difference": {
+            "changed": 26,
+            "original_count": 2522,
+            "after_count": 2522,
+            "max": 0.004170839401221221,
+            "rms": 0.00021164287210011476
+          },
+          "gates": {
+            "requested_mode": true,
+            "timer_policy": true,
+            "timer_attempts": true,
+            "clock_stopped": true,
+            "useful_selected_channel": true,
+            "only_selected_channels": true,
+            "one_complete_history": true,
+            "complete_gpu_exact": true,
+            "quiet_release": true
+          },
+          "whole_stroke_history": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        },
+        {
+          "kind": "Clay",
+          "continuous_requested": true,
+          "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_sha256": "a7bc27d47577d003fac2b57485fac9831d79d4117ac34b0de073184a9bf4cd88",
+          "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "redo_stroke_sha256": "a7bc27d47577d003fac2b57485fac9831d79d4117ac34b0de073184a9bf4cd88",
+          "initial_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": true,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "completed_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 18,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": 2787000,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": true,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "selected_channel_difference": {
+            "changed": 26,
+            "original_count": 2522,
+            "after_count": 2522,
+            "max": 0.07000662160928794,
+            "rms": 0.004158161975420303
+          },
+          "gates": {
+            "requested_mode": true,
+            "timer_policy": true,
+            "timer_attempts": true,
+            "clock_stopped": true,
+            "useful_selected_channel": true,
+            "only_selected_channels": true,
+            "one_complete_history": true,
+            "complete_gpu_exact": true,
+            "quiet_release": true
+          },
+          "whole_stroke_history": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "actual-continuous-stationary-inflate",
+      "gates": {
+        "both_trials_pass": true,
+        "useful_timer_response_differs": true
+      },
+      "trials": [
+        {
+          "kind": "Inflate",
+          "continuous_requested": false,
+          "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_sha256": "5a33b1f1381c34f6930af838414dd54d0bbb6a3489bb9c7604a3d6c5cde07ff9",
+          "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "redo_stroke_sha256": "5a33b1f1381c34f6930af838414dd54d0bbb6a3489bb9c7604a3d6c5cde07ff9",
+          "initial_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": false,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "completed_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": false,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "selected_channel_difference": {
+            "changed": 26,
+            "original_count": 2522,
+            "after_count": 2522,
+            "max": 0.0046031771496845035,
+            "rms": 0.00021900539416679502
+          },
+          "gates": {
+            "requested_mode": true,
+            "timer_policy": true,
+            "timer_attempts": true,
+            "clock_stopped": true,
+            "useful_selected_channel": true,
+            "only_selected_channels": true,
+            "one_complete_history": true,
+            "complete_gpu_exact": true,
+            "quiet_release": true
+          },
+          "whole_stroke_history": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        },
+        {
+          "kind": "Inflate",
+          "continuous_requested": true,
+          "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_sha256": "5180dc9f051e484a43a005ce8280ce7f4fa60bdb88be9e3e858eada48bc0b9e4",
+          "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "redo_stroke_sha256": "5180dc9f051e484a43a005ce8280ce7f4fa60bdb88be9e3e858eada48bc0b9e4",
+          "initial_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": true,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "completed_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 13,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": 2682700,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": true,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "selected_channel_difference": {
+            "changed": 26,
+            "original_count": 2522,
+            "after_count": 2522,
+            "max": 0.056566547868251785,
+            "rms": 0.002675441915181945
+          },
+          "gates": {
+            "requested_mode": true,
+            "timer_policy": true,
+            "timer_attempts": true,
+            "clock_stopped": true,
+            "useful_selected_channel": true,
+            "only_selected_channels": true,
+            "one_complete_history": true,
+            "complete_gpu_exact": true,
+            "quiet_release": true
+          },
+          "whole_stroke_history": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "actual-continuous-stationary-smooth",
+      "gates": {
+        "both_trials_pass": true,
+        "useful_timer_response_differs": true
+      },
+      "trials": [
+        {
+          "kind": "Smooth",
+          "continuous_requested": false,
+          "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_sha256": "edd76630eddef050f85d954737b91bf1238b9f2d28fe704871377a79b70c3bc3",
+          "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "redo_stroke_sha256": "edd76630eddef050f85d954737b91bf1238b9f2d28fe704871377a79b70c3bc3",
+          "initial_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": false,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "completed_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": false,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "selected_channel_difference": {
+            "changed": 25,
+            "original_count": 2522,
+            "after_count": 2522,
+            "max": 0.0013904326515916403,
+            "rms": 6.282061905962414e-05
+          },
+          "gates": {
+            "requested_mode": true,
+            "timer_policy": true,
+            "timer_attempts": true,
+            "clock_stopped": true,
+            "useful_selected_channel": true,
+            "only_selected_channels": true,
+            "one_complete_history": true,
+            "complete_gpu_exact": true,
+            "quiet_release": true
+          },
+          "whole_stroke_history": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        },
+        {
+          "kind": "Smooth",
+          "continuous_requested": true,
+          "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_sha256": "030632b6fc46bb7d7f156d4c986af04990ec2265a239bc8db2ae42605a8df69d",
+          "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "redo_stroke_sha256": "030632b6fc46bb7d7f156d4c986af04990ec2265a239bc8db2ae42605a8df69d",
+          "initial_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": true,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "completed_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 13,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": 2813800,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": true,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "selected_channel_difference": {
+            "changed": 26,
+            "original_count": 2522,
+            "after_count": 2522,
+            "max": 0.011355216559410526,
+            "rms": 0.0005992384255814996
+          },
+          "gates": {
+            "requested_mode": true,
+            "timer_policy": true,
+            "timer_attempts": true,
+            "clock_stopped": true,
+            "useful_selected_channel": true,
+            "only_selected_channels": true,
+            "one_complete_history": true,
+            "complete_gpu_exact": true,
+            "quiet_release": true
+          },
+          "whole_stroke_history": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "actual-continuous-stationary-flatten",
+      "gates": {
+        "both_trials_pass": true,
+        "useful_timer_response_differs": true
+      },
+      "trials": [
+        {
+          "kind": "Flatten",
+          "continuous_requested": false,
+          "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_sha256": "a9fbaa4613ec8a9cb19fc4cf5def772bb97fc49c32d2c07afc9aae748136695e",
+          "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "redo_stroke_sha256": "a9fbaa4613ec8a9cb19fc4cf5def772bb97fc49c32d2c07afc9aae748136695e",
+          "initial_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": false,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "completed_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": false,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "selected_channel_difference": {
+            "changed": 26,
+            "original_count": 2522,
+            "after_count": 2522,
+            "max": 0.0015663415777495602,
+            "rms": 6.423764947953495e-05
+          },
+          "gates": {
+            "requested_mode": true,
+            "timer_policy": true,
+            "timer_attempts": true,
+            "clock_stopped": true,
+            "useful_selected_channel": true,
+            "only_selected_channels": true,
+            "one_complete_history": true,
+            "complete_gpu_exact": true,
+            "quiet_release": true
+          },
+          "whole_stroke_history": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        },
+        {
+          "kind": "Flatten",
+          "continuous_requested": true,
+          "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_sha256": "6735e01b6118cdb8436b2d48030d352c33d261f026684d1f1d48a3ba5b7c1fea",
+          "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "redo_stroke_sha256": "6735e01b6118cdb8436b2d48030d352c33d261f026684d1f1d48a3ba5b7c1fea",
+          "initial_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": true,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "completed_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 22,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": 2974200,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": true,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "selected_channel_difference": {
+            "changed": 26,
+            "original_count": 2522,
+            "after_count": 2522,
+            "max": 0.014948515726618665,
+            "rms": 0.0006500794253829018
+          },
+          "gates": {
+            "requested_mode": true,
+            "timer_policy": true,
+            "timer_attempts": true,
+            "clock_stopped": true,
+            "useful_selected_channel": true,
+            "only_selected_channels": true,
+            "one_complete_history": true,
+            "complete_gpu_exact": true,
+            "quiet_release": true
+          },
+          "whole_stroke_history": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "actual-continuous-stationary-crease",
+      "gates": {
+        "both_trials_pass": true,
+        "useful_timer_response_differs": true
+      },
+      "trials": [
+        {
+          "kind": "Crease",
+          "continuous_requested": false,
+          "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_sha256": "a0e33606ad7450a69c828d75ed6e7c95ad8c9db69a1f83fb5b11491dcfc82f8c",
+          "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "redo_stroke_sha256": "a0e33606ad7450a69c828d75ed6e7c95ad8c9db69a1f83fb5b11491dcfc82f8c",
+          "initial_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": false,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "completed_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": false,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "selected_channel_difference": {
+            "changed": 26,
+            "original_count": 2522,
+            "after_count": 2522,
+            "max": 0.002224902151859938,
+            "rms": 0.0001403677989547307
+          },
+          "gates": {
+            "requested_mode": true,
+            "timer_policy": true,
+            "timer_attempts": true,
+            "clock_stopped": true,
+            "useful_selected_channel": true,
+            "only_selected_channels": true,
+            "one_complete_history": true,
+            "complete_gpu_exact": true,
+            "quiet_release": true
+          },
+          "whole_stroke_history": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        },
+        {
+          "kind": "Crease",
+          "continuous_requested": true,
+          "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_sha256": "b063aebb1c3346336950530bcf2262a4b48a60ae44164fa5bf6cd8bc9ec3a8e9",
+          "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "redo_stroke_sha256": "b063aebb1c3346336950530bcf2262a4b48a60ae44164fa5bf6cd8bc9ec3a8e9",
+          "initial_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": true,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "completed_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 22,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": 2967800,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": true,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "selected_channel_difference": {
+            "changed": 26,
+            "original_count": 2522,
+            "after_count": 2522,
+            "max": 0.04801620335700058,
+            "rms": 0.002797774083527133
+          },
+          "gates": {
+            "requested_mode": true,
+            "timer_policy": true,
+            "timer_attempts": true,
+            "clock_stopped": true,
+            "useful_selected_channel": true,
+            "only_selected_channels": true,
+            "one_complete_history": true,
+            "complete_gpu_exact": true,
+            "quiet_release": true
+          },
+          "whole_stroke_history": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "actual-continuous-stationary-pinch",
+      "gates": {
+        "both_trials_pass": true,
+        "useful_timer_response_differs": true
+      },
+      "trials": [
+        {
+          "kind": "Pinch",
+          "continuous_requested": false,
+          "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_sha256": "18624f2eb09054c211a41cc5f7b74b81a2f66e20f48017268884a2a84e155cf3",
+          "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "redo_stroke_sha256": "18624f2eb09054c211a41cc5f7b74b81a2f66e20f48017268884a2a84e155cf3",
+          "initial_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": false,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "completed_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": false,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "selected_channel_difference": {
+            "changed": 26,
+            "original_count": 2522,
+            "after_count": 2522,
+            "max": 0.0009009257934941515,
+            "rms": 6.059884617851302e-05
+          },
+          "gates": {
+            "requested_mode": true,
+            "timer_policy": true,
+            "timer_attempts": true,
+            "clock_stopped": true,
+            "useful_selected_channel": true,
+            "only_selected_channels": true,
+            "one_complete_history": true,
+            "complete_gpu_exact": true,
+            "quiet_release": true
+          },
+          "whole_stroke_history": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        },
+        {
+          "kind": "Pinch",
+          "continuous_requested": true,
+          "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_sha256": "28fd302feb73144ad064741463c15acbd9ed032d46bdb1ccdcee3e1213d6aeb4",
+          "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "redo_stroke_sha256": "28fd302feb73144ad064741463c15acbd9ed032d46bdb1ccdcee3e1213d6aeb4",
+          "initial_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": true,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "completed_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 25,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": 3106900,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": true,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "selected_channel_difference": {
+            "changed": 26,
+            "original_count": 2522,
+            "after_count": 2522,
+            "max": 0.022275089451965678,
+            "rms": 0.0015724983273197627
+          },
+          "gates": {
+            "requested_mode": true,
+            "timer_policy": true,
+            "timer_attempts": true,
+            "clock_stopped": true,
+            "useful_selected_channel": true,
+            "only_selected_channels": true,
+            "one_complete_history": true,
+            "complete_gpu_exact": true,
+            "quiet_release": true
+          },
+          "whole_stroke_history": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "actual-continuous-stationary-mask",
+      "gates": {
+        "both_trials_pass": true,
+        "useful_timer_response_differs": true
+      },
+      "trials": [
+        {
+          "kind": "Mask",
+          "continuous_requested": false,
+          "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_sha256": "85db766fe9306f9ef565f4732afde282d08997b2886472ee2bbe83a8e2495826",
+          "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "redo_stroke_sha256": "85db766fe9306f9ef565f4732afde282d08997b2886472ee2bbe83a8e2495826",
+          "initial_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": false,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "completed_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": false,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "selected_channel_difference": {
+            "changed": 26,
+            "original_count": 2522,
+            "after_count": 2522,
+            "max": 0.06155921518802643,
+            "rms": 0.00292720224697609
+          },
+          "gates": {
+            "requested_mode": true,
+            "timer_policy": true,
+            "timer_attempts": true,
+            "clock_stopped": true,
+            "useful_selected_channel": true,
+            "only_selected_channels": true,
+            "one_complete_history": true,
+            "complete_gpu_exact": true,
+            "quiet_release": true
+          },
+          "whole_stroke_history": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        },
+        {
+          "kind": "Mask",
+          "continuous_requested": true,
+          "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_sha256": "e52da91bdc6aa16de3d4a86df4b91ffe55470cd1b63811127aa815b5cb386752",
+          "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "redo_stroke_sha256": "e52da91bdc6aa16de3d4a86df4b91ffe55470cd1b63811127aa815b5cb386752",
+          "initial_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": true,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "completed_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 28,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": 3091400,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": true,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "selected_channel_difference": {
+            "changed": 26,
+            "original_count": 2522,
+            "after_count": 2522,
+            "max": 1,
+            "rms": 0.06675996837173595
+          },
+          "gates": {
+            "requested_mode": true,
+            "timer_policy": true,
+            "timer_attempts": true,
+            "clock_stopped": true,
+            "useful_selected_channel": true,
+            "only_selected_channels": true,
+            "one_complete_history": true,
+            "complete_gpu_exact": true,
+            "quiet_release": true
+          },
+          "whole_stroke_history": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "actual-continuous-stationary-paint",
+      "gates": {
+        "both_trials_pass": true,
+        "useful_timer_response_differs": true
+      },
+      "trials": [
+        {
+          "kind": "Paint",
+          "continuous_requested": false,
+          "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_sha256": "af15e8c079cb742793135122a8065e05dabbde5be40b159f20377368dad47862",
+          "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "redo_stroke_sha256": "af15e8c079cb742793135122a8065e05dabbde5be40b159f20377368dad47862",
+          "initial_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": false,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "completed_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": false,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "selected_channel_difference": {
+            "changed": 26,
+            "original_count": 2522,
+            "after_count": 2522,
+            "max": 0.026903854543492232,
+            "rms": 0.0011741435195326815
+          },
+          "gates": {
+            "requested_mode": true,
+            "timer_policy": true,
+            "timer_attempts": true,
+            "clock_stopped": true,
+            "useful_selected_channel": true,
+            "only_selected_channels": true,
+            "one_complete_history": true,
+            "complete_gpu_exact": true,
+            "quiet_release": true
+          },
+          "whole_stroke_history": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        },
+        {
+          "kind": "Paint",
+          "continuous_requested": true,
+          "preimport_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "after_sha256": "2d09b16832611b69260411d5219bbedb9f2673863e15ff8ffcefd8dde7d9b734",
+          "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "redo_import_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "redo_stroke_sha256": "2d09b16832611b69260411d5219bbedb9f2673863e15ff8ffcefd8dde7d9b734",
+          "initial_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 0,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": null,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": true,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "completed_timer": {
+            "active": false,
+            "active_serial": null,
+            "consumed_tick_permissions": 29,
+            "continuous_locked_supported": false,
+            "eligible": true,
+            "expired_permits": 0,
+            "last_stop": "Released",
+            "last_tick_micros": 6430900,
+            "locked_conflict": false,
+            "outstanding_permit": false,
+            "pause_gap_micros": 100000,
+            "period_micros": 16600,
+            "requested": true,
+            "skipped_polls": 0,
+            "subtool_id": null,
+            "timer_queue_tail": 0
+          },
+          "selected_channel_difference": {
+            "changed": 26,
+            "original_count": 2522,
+            "after_count": 2522,
+            "max": 0.29110769251581753,
+            "rms": 0.01697327663413947
+          },
+          "gates": {
+            "requested_mode": true,
+            "timer_policy": true,
+            "timer_attempts": true,
+            "clock_stopped": true,
+            "useful_selected_channel": true,
+            "only_selected_channels": true,
+            "one_complete_history": true,
+            "complete_gpu_exact": true,
+            "quiet_release": true
+          },
+          "whole_stroke_history": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "actual-continuous-roster-and-lock-conflict",
+      "gates": {
+        "eligible_nine_only": true,
+        "global_selection_retention": true,
+        "locked_combination_disabled": true,
+        "document_exact": true,
+        "complete_gpu_exact": true
+      }
+    },
+    {
+      "name": "actual-continuous-leave-return",
+      "gates": {
+        "useful_before_interruption": true,
+        "one_history": true,
+        "stopped_after_release": true,
+        "quiet_tail": true,
+        "complete_gpu_exact": true
+      }
+    },
+    {
+      "name": "actual-continuous-navigation",
+      "gates": {
+        "useful_before_interruption": true,
+        "one_history": true,
+        "stopped_after_release": true,
+        "quiet_tail": true,
+        "complete_gpu_exact": true
+      }
+    },
+    {
+      "name": "actual-continuous-radius-command",
+      "gates": {
+        "useful_before_interruption": true,
+        "one_history": true,
+        "stopped_after_release": true,
+        "quiet_tail": true,
+        "complete_gpu_exact": true
+      }
+    },
+    {
+      "name": "actual-continuous-noop-zero-strength",
+      "gates": {
+        "timer_attempted": true,
+        "document_exact": true,
+        "prior_redo_exact": true,
+        "quiet_tail": true,
+        "complete_gpu_exact": true
+      }
+    },
+    {
+      "name": "actual-continuous-noop-all-paint-targets-off",
+      "gates": {
+        "timer_attempted": true,
+        "document_exact": true,
+        "prior_redo_exact": true,
+        "quiet_tail": true,
+        "complete_gpu_exact": true
+      }
+    }
+  ],
+  "processed_radius_command": {
+    "actual_after_shortcuts_frame": 84,
+    "acknowledged": true,
+    "no_probe_Save_in_bracket_frame": true,
+    "predicate": "Actual new OpenBracket pressed after_shortcuts plus paired before row, no S event; no expected-radius predicate. Bounded 120 readonly RAF before unrelated normal Save."
+  },
+  "retained_failures": [
+    {
+      "result_sha256": "97a3bf09b61ff1a5b6a5ea3e070b93c1f7babb7a34ad330edfd9eb35a4ac3a2c",
+      "status": "failed",
+      "reason": "Original second-Undo fixture assumption ignored normal fixture-import history."
+    },
+    {
+      "source_sha256": "2d92468d8e3e1d1cdbe51c95483601ed374dfb9dc847062987beaf502150567f",
+      "status": "source preparation failed",
+      "reason": "Roster TDZ before prepare-only branch; preserved original source/log."
+    }
+  ],
+  "limits": [
+    "189 runtime saved/GPU comparisons passed the browser helper; second independent 189-pair Python reconstruction preregistered but not executed at recording.",
+    "Configured period16600us/pause-gap100000us and observed permission counts are not hardware latency or source timing equality.",
+    "Normal Save/download scheduling is included after actual CPU completion and before full GPU completion/quiet0/200/800 observations.",
+    "ContinuousLocked disabled/unsupported, source response/physical pressure/native focus/device loss/restart preference persistence/performance remain separate gates."
+  ]
+}

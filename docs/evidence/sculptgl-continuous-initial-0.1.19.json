@@ -1,0 +1,216 @@
+{
+  "scope": "Initial actual Continuous Draw ordinary/on consumer attempt failed an incorrect imported-history assumption. No completed nine-tool or reference/native/timing parity claim.",
+  "recorded_at": "2026-10-14T05:08:54.288053+00:00",
+  "result": {
+    "path": ".artifacts/sculptgl-continuous-runtime/candidate1-0.1.19-Continuous-c0b9197f-3796-4be0-baa7-89cab428d98c/result.json",
+    "sha256": "97a3bf09b61ff1a5b6a5ea3e070b93c1f7babb7a34ad330edfd9eb35a4ac3a2c",
+    "raw_status": "failed local host run",
+    "harness_sha256": "3c71e7d90782f3ef9ba5e2ec9d7a71307907a6126f45efe52a498152a2c6cf53",
+    "candidate": {
+      "candidate": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.19-candidate1",
+      "source_root": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.19-candidate1/source",
+      "status": "immutable candidate binding",
+      "manifest_sha256": "848fbf9b8c3bad40500a325be8dfc522ab800686c7d86f1e7b84f364854a3cf4",
+      "build_sha256": "607d5870068c31650c568ab38d8332346f7a7f178285fbafd0fc01070daa0ed8",
+      "checked_source_files": 165
+    },
+    "wasm_sha256": "90914851073e31ee513a69a673dd68234a5f8400cdc0496000fb40f29eac7b74",
+    "actual_downloads": 15,
+    "recorded_saved_GPU_pairs": 13,
+    "failure": "Error: Failed declared host case: actual-continuous-stationary-draw",
+    "case_gates": [
+      {
+        "name": "frozen-host-startup",
+        "gates": {
+          "actual_startup": true,
+          "default_radius_strength": true,
+          "production_download_completed": true,
+          "visible_gpu_save_exact": true
+        }
+      },
+      {
+        "name": "actual-continuous-stationary-draw",
+        "gates": {
+          "both_trials_pass": false,
+          "useful_timer_response_differs": true
+        }
+      }
+    ],
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "owned_pid": 77347
+  },
+  "actual_Draw_trials": [
+    {
+      "kind": "Draw",
+      "continuous_requested": false,
+      "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "after_sha256": "995c392f01eb6265f2aac4b8d405f4afa2899426122b9021a99ef38d024a358f",
+      "initial_timer": {
+        "active": false,
+        "active_serial": null,
+        "consumed_tick_permissions": 0,
+        "continuous_locked_supported": false,
+        "eligible": true,
+        "expired_permits": 0,
+        "last_stop": "Released",
+        "last_tick_micros": null,
+        "locked_conflict": false,
+        "outstanding_permit": false,
+        "pause_gap_micros": 100000,
+        "period_micros": 16600,
+        "requested": false,
+        "skipped_polls": 0,
+        "subtool_id": null,
+        "timer_queue_tail": 0
+      },
+      "completed_timer": {
+        "active": false,
+        "active_serial": null,
+        "consumed_tick_permissions": 0,
+        "continuous_locked_supported": false,
+        "eligible": true,
+        "expired_permits": 0,
+        "last_stop": "Released",
+        "last_tick_micros": null,
+        "locked_conflict": false,
+        "outstanding_permit": false,
+        "pause_gap_micros": 100000,
+        "period_micros": 16600,
+        "requested": false,
+        "skipped_polls": 0,
+        "subtool_id": null,
+        "timer_queue_tail": 0
+      },
+      "gates": {
+        "requested_mode": true,
+        "timer_policy": true,
+        "timer_attempts": true,
+        "clock_stopped": true,
+        "useful_selected_channel": true,
+        "only_selected_channels": true,
+        "one_complete_history": false,
+        "complete_gpu_exact": true,
+        "quiet_release": true
+      },
+      "selected_channel_difference": {
+        "changed": 26,
+        "original_count": 2522,
+        "after_count": 2522,
+        "max": 0.0037868278653926985,
+        "rms": 0.0001830915391548146
+      },
+      "whole_undo_redo": {
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "quiet": true
+    },
+    {
+      "kind": "Draw",
+      "continuous_requested": true,
+      "before_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "after_sha256": "1e000117f0f1e9197e618321efc9580b3a85560bf5828d2a5e9c847c16c24869",
+      "initial_timer": {
+        "active": false,
+        "active_serial": null,
+        "consumed_tick_permissions": 0,
+        "continuous_locked_supported": false,
+        "eligible": true,
+        "expired_permits": 0,
+        "last_stop": "Released",
+        "last_tick_micros": null,
+        "locked_conflict": false,
+        "outstanding_permit": false,
+        "pause_gap_micros": 100000,
+        "period_micros": 16600,
+        "requested": true,
+        "skipped_polls": 0,
+        "subtool_id": null,
+        "timer_queue_tail": 0
+      },
+      "completed_timer": {
+        "active": false,
+        "active_serial": null,
+        "consumed_tick_permissions": 6,
+        "continuous_locked_supported": false,
+        "eligible": true,
+        "expired_permits": 0,
+        "last_stop": "Released",
+        "last_tick_micros": 2590500,
+        "locked_conflict": false,
+        "outstanding_permit": false,
+        "pause_gap_micros": 100000,
+        "period_micros": 16600,
+        "requested": true,
+        "skipped_polls": 0,
+        "subtool_id": null,
+        "timer_queue_tail": 0
+      },
+      "gates": {
+        "requested_mode": true,
+        "timer_policy": true,
+        "timer_attempts": true,
+        "clock_stopped": true,
+        "useful_selected_channel": true,
+        "only_selected_channels": true,
+        "one_complete_history": false,
+        "complete_gpu_exact": true,
+        "quiet_release": true
+      },
+      "selected_channel_difference": {
+        "changed": 26,
+        "original_count": 2522,
+        "after_count": 2522,
+        "max": 0.020190682458809547,
+        "rms": 0.0010167030458487958
+      },
+      "whole_undo_redo": {
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      "one_undo_sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+      "second_undo_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "quiet": true
+    }
+  ],
+  "history_diagnosis": "Normal fixture import has a real existing undo entry. Undo1 correctly restored imported fixture and Undo2 restored real default preimport document. The old helper incorrectly required both to restore fixture. The raw failed gate stays failed.",
+  "next_contract": {
+    "path": "scripts/check-sculptgl-continuous-history.mjs",
+    "sha256": "e15486312e426eb322923a84ef78698cb6dc02b446c8a0e4feb7ca80fe7a003b",
+    "preregistration_sha256": "66f66e94f0e6380d25c72a12102f337b230db83d4eaca073a4b82fab333b8a11",
+    "status": "frozen source-only; actual next immutable candidate execution pending",
+    "ordinary_and_on_trials": "Each trial normal Save before import captures real preimport. Undo1 fixture, Undo2 preimport, Redo1 fixture, Redo2 exact stroke. Original tile/pointer/checkbox routing and timer/channel/normal/material/protection/GPU/quiet/interruption/no-op gates unchanged. No product-focus bypass.",
+    "prepare_checks": 16
+  },
+  "unreached": [
+    "Clay",
+    "Inflate",
+    "Smooth",
+    "Flatten",
+    "Crease",
+    "Pinch",
+    "Mask",
+    "Paint",
+    "14-tool control eligibility roster",
+    "Lock conflict UI",
+    "held leave/return interruption",
+    "both-buttons navigation interruption",
+    "radius-command interruption",
+    "zero-strength timer no-op",
+    "all-Paint-targets-off timer no-op"
+  ],
+  "limits": [
+    "ContinuousLocked remains unsupported",
+    "Consumed timer permissions are attempts, not successful edits or physical clock frames",
+    "No exact source brush/timer response or physical-device/native GUI/latency claim",
+    "Normal Save captures CPU endpoint and affects scheduling; GPU completion separately observed within120read-only RAF before all quiet probes",
+    "Second independent saved/GPU reconstruction pending coordinated CPU slot; runtime independently authored packing passed",
+    "Source preparation TDZ failure and source3 failed consumer receipt remain preserved"
+  ]
+}

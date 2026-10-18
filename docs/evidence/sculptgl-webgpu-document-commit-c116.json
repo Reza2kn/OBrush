@@ -1,0 +1,122 @@
+{
+  "scope": "C116 checked native Metal resident output to shared Rust Document; no normal-studio WebGPU integration or SculptGL parity claim",
+  "source": {
+    "Cargo.lock": {
+      "sha256": "f69168207ba050479da66aa0d04a379eeeab63e3b24c5ac39421db357d441f2c",
+      "bytes": 102247
+    },
+    "crates/obrush-core/Cargo.toml": {
+      "sha256": "f669672c70da5f50f56f1e06119368dbb4231c4e89eed4d3edc99469e18e3339",
+      "bytes": 340
+    },
+    "crates/obrush-core/src/resident_point_program.rs": {
+      "sha256": "d14ad025fa65fdc2135b97309f7fb6755c84536ef0e286920de6326eff66f502",
+      "bytes": 34894
+    },
+    "crates/obrush-core/src/document.rs": {
+      "sha256": "2fb76f1dbb7ad15843da8068e9606ce01d405daa42494b0cfcb4cb3e84e6c9aa",
+      "bytes": 175233
+    },
+    "crates/obrush-gpu/src/bin/resident_commit_probe.rs": {
+      "sha256": "eb2a9ae12674001d5a6eb0fe69e5e6179c009fbd4226a77278b12eb7658e33ea",
+      "bytes": 3660
+    }
+  },
+  "dependency": {
+    "sha2": "0.10.9",
+    "wasm_bindgen_cli": "0.2.129"
+  },
+  "fixture": {
+    "origin": "independently generated Mesh::sphere(2), shared Rust",
+    "vertices": 162,
+    "triangles": 320,
+    "masks": "default fully unprotected, protected-mask rejection in unit case",
+    "parameters": {
+      "center": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "intensity": 0.10000000149011612,
+      "passes": 1,
+      "radius": 0.5
+    }
+  },
+  "native_gpu": {
+    "result": {
+      ".artifacts/resident-commit-c116-native-final.json": {
+        "sha256": "9bfeda5a4c8e9c56497cd5b6551c08239f2f4581dbf9a58b7f9edcc2adeed63f",
+        "bytes": 1351
+      },
+      ".artifacts/resident-commit-c116-native-final.log": {
+        "sha256": "2c035fff1f6be9cdb0ac57d3385306479958e5d09139910160e313f697ffd22a",
+        "bytes": 565
+      }
+    },
+    "adapter": "AdapterInfo { name: \"Apple M2\", vendor: 0, device: 0, device_type: IntegratedGpu, driver: \"\", driver_info: \"\", backend: Metal }",
+    "changed_vertices": 7,
+    "max_gpu_scalar_reference_component_error": 0.0,
+    "undo_restored_exact_json": true,
+    "redo_restored_exact_json": true,
+    "corrupt_rejected_without_mutation": true,
+    "full_position_readbacks": 1,
+    "point_passes": 1,
+    "device_errors": []
+  },
+  "validation": {
+    "fmt_all_check": "PASS",
+    "workspace": {
+      "passed": 2453,
+      "failed": 0,
+      "suites": 78,
+      "status": "PASS",
+      "log_sha256": "9ca299ef1aee505a71849f09fa5ba922325170d7e409ecdafac7dae3709e16d7"
+    },
+    "native_strict_clippy": {
+      "status": "PASS",
+      "log_sha256": "84bd9b8db3de56e37858f27393a37ed849c78dad7c8ff01ef3d15bcdf50859df"
+    },
+    "wasm_strict_clippy": {
+      "status": "PASS",
+      "log_sha256": "4cf86278c1e6d659943a46a3d7e3da429ac15be90f0f17742e24ef85228e7d3e"
+    },
+    "official_web_build": {
+      "status": "PASS",
+      "log_sha256": "1af20318b36d36996b83338bb83564875688c8d0b47ac947d9b7c19037a7b86a",
+      "wasm_sha256": "ed4d6ea888fe526b47850e670059bb9b7c80f49790b43265e3ad3e2abf53c81a",
+      "bound_wasm_sha256": "d2bf4311dbef1c68c2e4f30ec742dac05916684a60911c07d5c82f77263ce13b"
+    }
+  },
+  "normal_browser_regression": {
+    "status": "passed scoped local host gates; reference parity unverified",
+    "groups": [
+      "scene",
+      "formats"
+    ],
+    "cases": 10,
+    "downloads": 71,
+    "gpu_checks": 66,
+    "exceptions": [],
+    "console_errors": [],
+    "blocked_external_requests": [],
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "result_sha256": "995e2dc747de3b7515340e97af0f5d86d94d8389404f7daf49a6f7534055cecf",
+    "log_sha256": "223591407e0377a2a10a27b21df7ff66292bd64f62ef410d58676f042398f6b4",
+    "scope": "Existing normal scene/formats UI path only; does not call resident commit"
+  },
+  "limitations": [
+    "Full GPU position readback before each diagnostic document commit",
+    "Point program is not a production Source or SculptGL brush",
+    "Single active subtool and pose/mesh stale key; inactive scene fields are not bound",
+    "No browser WebGPU document commit or user-facing studio integration",
+    "No native GUI interaction, pen, sustained latency, SculptGL or ZBrush reference comparison"
+  ],
+  "preliminary_harness_error": {
+    "cause": "First host command omitted required frozen-web directory and interpreted --groups as a path",
+    "receipt": "Tool output retained in task transcript; corrected run overwrote the same local log, so no independent failed log hash is claimed"
+  }
+}

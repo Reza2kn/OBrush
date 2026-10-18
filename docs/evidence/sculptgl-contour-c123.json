@@ -1,0 +1,52 @@
+{
+  "scope": "SGL-RENDER-CONTOUR and color in normal studio; no full parity claim",
+  "reference": {
+    "revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "scene_sha256": "092d17a08278700d6d85d3f8b9880e9152ce8c71be607fbe1584d0c5b5602f52",
+    "shader_contour_sha256": "f897e1d572a060e9e26248bcf0727937b5974197f4c03856aa28c1aa80513b0d",
+    "outline_glsl_sha256": "b6705d079b56101a07aad9945a61d86d1b48e9ba348cf2e14cc2a3ed5e300b4a",
+    "sobel_threshold": 1.5,
+    "default_rgba": [0.3, 0, 0, 1]
+  },
+  "build": {
+    "browser_snapshot": ".artifacts/contour-c123/web-dist-final",
+    "browser_wasm_sha256": "d3eb03b04458ee32c8cad1a639535dc7dc8f7d3a5e6372aaa8bf17f4f4ec6b48",
+    "native_package": ".artifacts/OBrush.app",
+    "native_signature_valid": true,
+    "mask_allocation_cap_bytes": 67108864
+  },
+  "browser": {
+    "toggle_run": ".artifacts/contour-c123/probe-1792280384798/startup.json",
+    "color_run": ".artifacts/contour-c123/color-probe-1792280393301/startup.json",
+    "central_crop_xyxy": [450, 140, 1130, 800],
+    "full_alpha_changed_rgb_pixels": 4684,
+    "off_again_changed_rgb_pixels": 0,
+    "full_alpha_absolute_rgb_difference": [204522, 259857, 255441],
+    "half_alpha_value": 0.4981818199157715,
+    "half_alpha_absolute_rgb_difference": [101762, 129144, 126993],
+    "zero_alpha_absolute_rgb_difference": [0, 0, 0],
+    "saved_project_bytes": 5317105,
+    "saved_project_sha256_all_states": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+    "exceptions": 0,
+    "console_errors": 0,
+    "blocked_external_requests": 0,
+    "owned_process_closed": true
+  },
+  "gates": {
+    "workspace_tests": "2457 pass",
+    "format_check": "pass",
+    "strict_native_clippy": "pass",
+    "strict_wasm_clippy": "pass",
+    "official_web_build": "pass",
+    "official_macos_package": "pass",
+    "hosted_reference_pixel_comparison": "open",
+    "multi_part_occlusion_transparency_dpr_native_gui": "open",
+    "complete_sculptgl_inventory": "open",
+    "zbrush_parity": "open"
+  },
+  "retained_failures": [
+    "Strict Clippy rejected a collapsible conditional after mask disposal; corrected in final source.",
+    "First color probe clicked a different scroll position and did not toggle contour; corrected with OCR label location.",
+    "Intermediate edge click yielded alpha approximately 0.00727; final UI click yielded exact zero."
+  ]
+}

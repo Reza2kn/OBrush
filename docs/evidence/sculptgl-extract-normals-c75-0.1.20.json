@@ -1,0 +1,19 @@
+{
+  "feature": "SculptGL optional extraction source normals and border diagnostic",
+  "status": "zero-thickness sheet and cube coordinate fixtures match; nonzero border smoothing and extraction family parity remain open",
+  "reference_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+  "reference_version": "pinned SculptGL 0.1.20 mirror",
+  "settings": {"threshold": 0.5, "thickness_world": [0, -0.125, 0.125], "whole_incident_faces": true, "surface_offset": true},
+  "sources": {
+    "extract_rs_sha256": "015aec00e8db16590235d9da1b96311bed3b26460ae85244dad55856b5516f42",
+    "mask_extract_test_rs_sha256": "c0606d3909247f7da3d3c48fefc097562d01a08cea8cf990c5d708d7fee4a46e",
+    "reference_harness_sha256": "f33f4b0b488b2cbccdb6507d47726407cf40d884682de906d3d6a5f112507b23"
+  },
+  "paired_comparison": {"path": ".artifacts/sculptgl-reference-runtime/extract-c74-paired-52a94733-2e98-4317-b919-47c1da3075f3/paired-comparison-c75.json", "sha256": "1f1162d53ba3e1066d7da1764ec44b09291c2aa687bde4e139be6a2152a0667c", "zero_sheet_max_nearest": 0, "zero_cube_max_nearest": 0, "inward_cube_max_nearest": 1.289791363, "outward_cube_max_nearest": 1.399791382},
+  "reference_smoothing_diagnostic": {"path": ".artifacts/sculptgl-reference-runtime/extract-c75-diagnostic-all-d81adf94-ad17-45aa-99a6-dae18a971cc2/result.json", "sha256": "170e8e87f06fd72274a87efc922ba7628ce9f76bf4b1a45fe9dcc88807ee091b", "cases": 4, "three_pass_replay_max_coordinate_error": 0, "instrumented": true},
+  "checks": {"format": "passed", "workspace_tests": "2356 passed, one ignored", "native_strict_clippy": "passed", "wasm_core_strict_clippy": "passed", "official_web_build": "passed", "official_macos_package_signature": "passed"},
+  "web_wasm_sha256": "7497ee2e5635e0d2aff753f56aba6a842b92e59e8ac8af3a3acd6a58b7923c51",
+  "native_executable_sha256": "4f9e6e4281f7c3cfb59eb876da738f0c6aa3b50d6fe7d7c2bebb56abf5f6291e",
+  "browser": {"path": ".artifacts/mask-filter-browser/surface-normals-c75-35943e70-3b87-4331-8c74-d77787b6802b/result.json", "sha256": "3964f61b049de1f29b41e620b4755c6bce2c3acf84ac5f12f35693e2286f1a6a", "status": "passed mask filter browser workflows", "cases": 12},
+  "limitations": ["Nonzero reference smoothing not integrated", "Reference open sheet collapses four triangles and is intentionally not reproduced", "Zero-thickness point match ignores face correspondence", "Native GUI and physical stylus not checked", "WebGPU remains separate prototype; shipped browser remains WASM geometry plus WebGL2 viewport"]
+}

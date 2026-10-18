@@ -1,0 +1,262 @@
+{
+  "id": "sculptgl-source-retained-pick-c66-0.1.20",
+  "status": "Locally verified bounded CPU pick improvement; incomplete SculptGL parity; dense responsiveness fails",
+  "reference": {
+    "sculptgl_inventory": "317 pinned IDs plus five hosted controls, not completed",
+    "pinned_hosted_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e9c101a33",
+    "zbrush_desktop": "2026.2.1 longer-term target; no C66 reference brush comparison"
+  },
+  "implementation": {
+    "changed_core_files": [
+      {
+        "path": "crates/obrush-core/src/paint_preparation.rs",
+        "staged_sha256": "c20b859fdabec543b6da5fd37a58b8eba23dfa3f48a259f9405ea79a0106099c",
+        "root_before_sha256": "ecd1de6352abf2a1944680d31e7505a2158da30ab7a4fc8e91ee5bc4a2bca43e"
+      },
+      {
+        "path": "crates/obrush-core/src/source_geometry.rs",
+        "staged_sha256": "848aaa4849318bafe6b0f6b2f227cebbcb496339ee0e5acae9b724cea4a0f2a8",
+        "root_before_sha256": "753694e4c059727865188e71818e271d565577e79188ddd4703e246b5c6c7fbe"
+      },
+      {
+        "path": "crates/obrush-core/src/source_geometry_controls.rs",
+        "staged_sha256": "bce23ceaeb29eb3a72d133a6660df6eb2b2ccbfeb3e15356a401e776ce65249e",
+        "root_before_sha256": "b82e6786cd522e4589d1eaac5205b2a8acbf35c7833647a98ddfe75c7f649c11"
+      },
+      {
+        "path": "crates/obrush-core/src/source_geometry_document.rs",
+        "staged_sha256": "203f808585e8c3d8a872e2d051be6e26552f9f9eeb95f8b17b8a66c9bb224984",
+        "root_before_sha256": "2a7c8d20c21e3b39eab679ececce8f7e9eda0d15d34631d060c03c9edf287c46"
+      },
+      {
+        "path": "crates/obrush-core/src/source_ordered_tree.rs",
+        "staged_sha256": "c4e73d6b14fb3b8dee418cb64c049be1828a7065b403e3da453e707159567c28",
+        "root_before_sha256": "7ff68cfe6b446615228bf1f3483a93407613fa73d6115c0cd18ec440314025c6"
+      }
+    ],
+    "original_root_source_precheck_sha256": "57138e39fcc982352b166b5cccc9f8a695b61e6553272bf92f218dad5fdaecc0",
+    "promotion_receipt_sha256": "caf466cd4900719a0b061ea3cad1586aeb356ef4589a21143f1c19b1a9a1e94f",
+    "root_identity_receipt_sha256": "659a4a323330fe88e37c73b4058214306c59f44011e2c60e8306803867f28940",
+    "original_face_order_preserved": true,
+    "stale_or_absent_state": "full-scan fallback",
+    "primary_pick": "retained current-face candidate pruning plus original exact f64 intersection",
+    "mirror_second_pick": "original full scan"
+  },
+  "validation": {
+    "root_workspace": {
+      "groups": 77,
+      "passed": 2349,
+      "failed": 0,
+      "ignored": 1,
+      "log_sha256": "455c356013ea99a7d1bebe21657946db382fc314ed550621d880c413a7ffc3f1"
+    },
+    "root_native_clippy": {
+      "exit_code": 0,
+      "log_sha256": "2aff1a9ceaf5de1a6b49fb5caef74441ffc8092858dd21419d618d91baba16f2"
+    },
+    "root_wasm_core_clippy": {
+      "exit_code": 0,
+      "log_sha256": "29a63c0c0fe2c9c911874652b8324be15b636e4841d686020c3dc4881e7250ea"
+    },
+    "root_fmt_check": {
+      "exit_code": 0
+    },
+    "root_official_web_build": {
+      "exit_code": 0,
+      "log_sha256": "dafe241e14d05cb00b779845247f27c040da7767bc914d9c4b22188750d7954e",
+      "served_file_count": 19,
+      "wasm_sha256": "cc8c7d8cb4202fe2a6b458abd2c75810e5c147a26a72a6d84c346ff5f88050cf"
+    },
+    "root_official_macos_package": {
+      "exit_code": 0,
+      "signature_verification": "valid on disk and satisfies Designated Requirement",
+      "log_sha256": "3730b42efeb98901d7ecdc6c51c0db8f9d0154c3540b80f3b4551d4bb291cc6c",
+      "binary_sha256": "bad106ada3b1eed09283389d1cb1a3bd9a2b73de2455dd880795635680bd60f2"
+    },
+    "stage_root_web_and_binary_exact": true
+  },
+  "browser_protocol": {
+    "source_protocol_sha256": "234870ed03a240931a22f421968917efaeed8becc1df834c998bbe3e9c101a33",
+    "fixture_manifest_sha256": "f83022cb2766e44a147fb490c169e40a0a35e7a4e89c48d644566af16d0aea4a",
+    "original_offline_auditor_sha256": "8fb31d4af518a00ee6de7650365e7e2ff89f461a96b7f7688d3bec58771e0c57",
+    "browser": "Chrome 155 headless on macOS with owned profile/process, DPR 1, normal WebGL2 app path",
+    "geometry_tool": "Source ordinary Brush, clay=false, accumulate=false, prevent_folds=false, symmetry=false",
+    "radius_viewport_points": 64,
+    "intensity": 0.25,
+    "pressure_factors": [
+      0,
+      0
+    ],
+    "motion_rate_hz": 400,
+    "viewport_pixels": [
+      1024,
+      768
+    ],
+    "cohorts": [
+      {
+        "cohort": "10K_60",
+        "seconds": 60,
+        "scheduled_motions": 24000,
+        "audit_sha256": "08e03e94731b6ec1fbcc0ef38ec26d827048fce3583f0fbddb05085e7ec59405",
+        "result_sha256": "ac3b61227bffcdd8943825f29b77f18f7db33147ec76fa47014bc04c16841fbb",
+        "status": "PASS named local data/scalar gates",
+        "failed_checks": [],
+        "frame_cpu_p95_ms": 5.099999964237213,
+        "independent_raf_p95_ms": 18.400000035762787,
+        "independent_raf_max_ms": 25.600000023841858,
+        "input_send_lateness_max_ms": 27.819499999997788,
+        "changed_original_vertices": 421,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.2070419213080634,
+        "memory_sample_count": 64
+      },
+      {
+        "cohort": "10K_120",
+        "seconds": 120,
+        "scheduled_motions": 48000,
+        "audit_sha256": "7d66c7728304f6c7b6d63a3e654d500771bd9bdfecf7d0e87c22ed5bfa08ef35",
+        "result_sha256": "f31a4a461d86230eb67e13d0d23797525a93ebf43b576fc26763430b091f3cd2",
+        "status": "PASS named local data/scalar gates",
+        "failed_checks": [],
+        "frame_cpu_p95_ms": 4.800000011920929,
+        "independent_raf_p95_ms": 18.400000035762787,
+        "independent_raf_max_ms": 25.600000023841858,
+        "input_send_lateness_max_ms": 50.38987500000076,
+        "changed_original_vertices": 420,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.237096738360567,
+        "memory_sample_count": 124
+      },
+      {
+        "cohort": "100K_60",
+        "seconds": 60,
+        "scheduled_motions": 24000,
+        "audit_sha256": "dc82df37d5c31780f712ddbed637af515aa1f7bff2e7c9a3391907ab6f35cb25",
+        "result_sha256": "9cd1f93ebbe12acd6cea70670e30ff4d007cb79fc7c991ea730d654814559c77",
+        "status": "FAIL one or more named local data/scalar gates",
+        "failed_checks": [
+          "pacing_max_le100ms"
+        ],
+        "frame_cpu_p95_ms": 12.199999988079071,
+        "independent_raf_p95_ms": 24.5,
+        "independent_raf_max_ms": 55.40000003576279,
+        "input_send_lateness_max_ms": 106.87591600000451,
+        "changed_original_vertices": 4064,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.2237457008186503,
+        "memory_sample_count": 64
+      },
+      {
+        "cohort": "100K_60_REPEAT",
+        "seconds": 60,
+        "scheduled_motions": 24000,
+        "audit_sha256": "147c80769ac25dd648f12eeead186ed5bda52dd6fa71a8db7d47f246ac2f05af",
+        "result_sha256": "85a21fe4ac7a5dfecfce3ced2bce34c68e6fd17d3c25bc9b30ff2e25ac0a5a21",
+        "status": "PASS named local data/scalar gates",
+        "failed_checks": [],
+        "frame_cpu_p95_ms": 12.5,
+        "independent_raf_p95_ms": 24.400000035762787,
+        "independent_raf_max_ms": 56,
+        "input_send_lateness_max_ms": 66.80270799999926,
+        "changed_original_vertices": 4064,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.2226271513324862,
+        "memory_sample_count": 64
+      },
+      {
+        "cohort": "100K_120",
+        "seconds": 120,
+        "scheduled_motions": 48000,
+        "audit_sha256": "8a709dcca67524cfade1c3a086ec153bdea5b3253133dfe7aa0b63f90749ef4b",
+        "result_sha256": "9f65e48c55ad763a295f5cbcfb63bf886c3ca81d044d778ca3e6ac8ed187f594",
+        "status": "PASS named local data/scalar gates",
+        "failed_checks": [],
+        "frame_cpu_p95_ms": 12.399999976158142,
+        "independent_raf_p95_ms": 24.5,
+        "independent_raf_max_ms": 53.799999952316284,
+        "input_send_lateness_max_ms": 79.99712500000169,
+        "changed_original_vertices": 4059,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.235920915029947,
+        "memory_sample_count": 124
+      },
+      {
+        "cohort": "1M_60",
+        "seconds": 60,
+        "scheduled_motions": 24000,
+        "audit_sha256": "5b30f4d61e62796dba17c1196a22b297dd2b62b86aa142a852fa0e18adf584a2",
+        "result_sha256": "3f1b368b439cf8772a04c9aa8649b1253051b865c39279791ac3b1ec8a48d3f4",
+        "status": "FAIL one or more named local data/scalar gates",
+        "failed_checks": [
+          "independentRAF_P95_le33_34ms",
+          "independentRAF_max_le250ms",
+          "appRAF_summed_CPU_P95_le16_667ms",
+          "Root_queue_zero_by100ms"
+        ],
+        "frame_cpu_p95_ms": 105.90000003576279,
+        "independent_raf_p95_ms": 107.0,
+        "independent_raf_max_ms": 430.5999999642372,
+        "input_send_lateness_max_ms": 42.07549999999901,
+        "changed_original_vertices": 40452,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.154645268867009,
+        "memory_sample_count": 65
+      },
+      {
+        "cohort": "1M_120",
+        "seconds": 120,
+        "scheduled_motions": 48000,
+        "audit_sha256": "64172d7a2c4e105fb2133299af134956e7ef6995441da41729937251edf55dd7",
+        "result_sha256": "dac1a2adea64fe297445a92e0b1bcefe8a7e711420f7d0ea6d74f313981dc1f2",
+        "status": "FAIL one or more named local data/scalar gates",
+        "failed_checks": [
+          "independentRAF_P95_le33_34ms",
+          "independentRAF_max_le250ms",
+          "appRAF_summed_CPU_P95_le16_667ms",
+          "Root_queue_zero_by100ms"
+        ],
+        "frame_cpu_p95_ms": 108,
+        "independent_raf_p95_ms": 108.60000002384186,
+        "independent_raf_max_ms": 425.30000001192093,
+        "input_send_lateness_max_ms": 53.910541999997804,
+        "changed_original_vertices": 40393,
+        "after_degenerate_faces": 0,
+        "faces_reversed_against_original_cross": 0,
+        "maximum_original_edge_stretch_ratio": 2.225634278579133,
+        "memory_sample_count": 125
+      }
+    ]
+  },
+  "baseline_c58": {
+    "million_vertices_60s_audit_sha256": "465a2f719b9001a7c5fc64b5061e33006547872576c17e7bb128fc33851efb84",
+    "frame_cpu_p95_ms": 114.19999998807907,
+    "difference_note": "C66 1m60 observed 105.9 ms, but delivered/coalesced contact counts differ; no controlled speedup ratio accepted"
+  },
+  "preserved_failures": {
+    "double_state_check_1m60_audit_sha256": "fe76dc18cc4e7646621696ea300f6666a36980e3d1c6ea93227ef0d38f7b6946",
+    "double_state_check_frame_cpu_p95_ms": 194.5,
+    "double_state_check_memory_error": "Previous1Hz memory sample still pending",
+    "camera_miss_result_sha256": "52e8670d5a72fc833dea82960ef98312237e1d5547c7440a268a552b216dfdb1",
+    "camera_miss_actual_zoom": 80,
+    "camera_expected_zoom": 3.449495703728292,
+    "camera_miss_applied_dabs": 0,
+    "cdp_setup_timeout_result_sha256": "0af3365585afa94b6e3cdc08a0af028f38e1c1aeeea0f2524ca28f29ba8e53db",
+    "first_100k60_pacing_failure_audit_sha256": "dc82df37d5c31780f712ddbed637af515aa1f7bff2e7c9a3391907ab6f35cb25",
+    "first_100k60_max_lateness_ms": 106.87591600000451,
+    "repeat_100k60_audit_sha256": "147c80769ac25dd648f12eeead186ed5bda52dd6fa71a8db7d47f246ac2f05af"
+  },
+  "limitations": [
+    "Single trial per cohort except 100k60 repeat; host order and delivered callback counts differ.",
+    "1m60 and 1m120 fail frame CPU P95, independent RAF P95 and maximum, and release queue zero by 100 ms.",
+    "Whole-mesh validation/state comparison and original-face traversal remain per contact; mirror second pick is linear.",
+    "Native GUI, physical pen/device input, full browser matrix and all 317+5 SculptGL workflows are not established by these checks.",
+    "No ZBrush brush response or feature parity inference."
+  ],
+  "local_artifact_stage": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-retained-ray-c66-stage"
+}

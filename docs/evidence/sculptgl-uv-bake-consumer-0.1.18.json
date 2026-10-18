@@ -1,0 +1,2684 @@
+{
+  "status": "Scoped local UV export and separate prompt-response gates passed; original whole cohort failed and remains failed; reference parity unverified",
+  "recorded_at": "2026-10-14T05:06:29.387026+00:00",
+  "candidate": {
+    "candidate": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.18-candidate2",
+    "source_root": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.18-candidate2/source",
+    "status": "immutable candidate binding",
+    "manifest_sha256": "063a50a5cec6886e0dd0ae166b8190ea5d7d7cf214f2c01e4cb6e45636ed62c5",
+    "build_sha256": "181512d0ce527ccb87340c81e6fe2d9f5cadcf5eee98c64752a90e247e922775",
+    "checked_source_files": 158
+  },
+  "wasm_sha256": "b285fd1c291551676633a10073ce70d1b968fc7831012461d8517ed114b6a4af",
+  "full_consumer": {
+    "path": ".artifacts/sculptgl-uv-bake-runtime/candidate2-0.1.18-UV-bake-08bcdef0-7a3c-4662-815c-8b792e93664d/result.json",
+    "sha256": "6e735d4c5c81d25df553e0e2c791a0b7940a74b957140b66252f547161a90e74",
+    "harness_sha256": "fb459e7520cb169ba73dc6c530c57a313a48c48889c2c12735b471e94c41bd94",
+    "preregistration_sha256": "69b26aa1eff33a4ace38d4eee1220432d8dffcae6074454c9171d7a1319c7381",
+    "raw_status": "failed local host run",
+    "passing_case_names": [
+      "frozen-host-startup",
+      "bake-affine-256-color",
+      "bake-affine-256-roughness",
+      "bake-affine-256-metallic",
+      "bake-affine-512-color",
+      "bake-affine-512-roughness",
+      "bake-affine-512-metallic",
+      "bake-affine-1024-color",
+      "bake-affine-1024-roughness",
+      "bake-affine-1024-metallic",
+      "bake-affine-2048-color",
+      "bake-affine-2048-roughness",
+      "bake-affine-2048-metallic",
+      "bake-affine-4096-color",
+      "bake-affine-4096-roughness",
+      "bake-affine-4096-metallic",
+      "bake-corner-seams-256-color",
+      "bake-corner-seams-256-roughness",
+      "bake-corner-seams-256-metallic",
+      "bake-mask-protected-1024-color",
+      "bake-mask-protected-1024-roughness",
+      "bake-mask-protected-1024-metallic",
+      "bake-mask-unprotected-1024-color",
+      "bake-mask-unprotected-1024-roughness",
+      "bake-mask-unprotected-1024-metallic",
+      "UV-channel-export-mask-convention-does-not-darken",
+      "bake-implicit-defaults-1024-roughness",
+      "bake-implicit-defaults-1024-metallic",
+      "normal-UV-export-unavailable-without-UVs",
+      "normal-UV-worker-raster-work-limit-rejection",
+      "normal-active-UV-worker-cancel-keeps-source-and-redo"
+    ],
+    "failed_gate": "Same job ID still busy during all four normal response actions; original normal UI routing completed after worker returned",
+    "actual_downloads": 171,
+    "saved_GPU_pairs": 145,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "owned_pid": 71386
+  },
+  "prompt_responsiveness_followup": {
+    "path": ".artifacts/sculptgl-uv-bake-runtime/candidate2-0.1.18-UV-responsive-c7498293-178c-4703-ac09-a90a6ad9553f/result.json",
+    "sha256": "b5ffd602ef0b65e021c2e41224d617133bd0c7068c80f65f15f0b1bc32a60d13",
+    "harness_sha256": "bf7ab847a4fbd6035e39cc35861e25e309c34b9059f5887c8e8efab4ec5b61f5",
+    "preregistration_sha256": "a3ec3e344782e0d5ee63d58342422371af7e8a6ce79d5c4fec3803b97fe6f8b6",
+    "raw_status": "passed scoped local host gates; reference parity unverified",
+    "gates": {
+      "same_worker_active_during_camera_response": true,
+      "same_worker_active_during_preference_response": true,
+      "same_worker_active_during_style_response": true,
+      "active_size_change_keeps_captured4096": true,
+      "camera_pan_changed_eye_and_target": true,
+      "non_document_radius_preference_changed": true,
+      "request_capture_retained": true,
+      "doc_GPU_revision_dirty_preserved": true,
+      "prior_redo_exact": true,
+      "actual_owned_worker_terminated": true,
+      "no_successful_or_partial_PNG": true,
+      "actual_cancel_message": true,
+      "completed_job_disposed": true,
+      "quiet": true
+    },
+    "actual_downloads": 8,
+    "saved_GPU_pairs": 8,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "owned_pid": 77150,
+    "routing_difference": "Select output size256 while UV controls visible, normal pan/radius command, then expose and select Normal shading. Await actual popup/value/visible/stable rects via bounded read-only RAF, preserving all required actions/captured4096/same-job/cancel/doc/redo/GPU gates."
+  },
+  "fixtures_manifest_sha256": "1f2603165e428182eca85c32519f5b7f63f9c2e159372e9f52f21dafb2028447",
+  "actual_PNG_exports": [
+    {
+      "case": "bake-affine-256-color",
+      "size": 256,
+      "channel": "color",
+      "download": {
+        "name": "independent-affine-full-uv-quad_color.png",
+        "bytes": 263298,
+        "sha256": "4b068d67bb55e57688a8a575cc40b6c7fb4e7dec0742f7a05688876092940ef3"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 256,
+        "height": 256,
+        "channel": "color",
+        "implicit_materials": false,
+        "total_pixels": 65536,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "4700951d8f5f4af18d152d8b927ed4011c96ef06b06a0cc5e5afab0c56cc02c4",
+        "expected_rgba_sha256": "4700951d8f5f4af18d152d8b927ed4011c96ef06b06a0cc5e5afab0c56cc02c4",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "color",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 65536,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 131072,
+        "filled_gutter_pixels": 0,
+        "raster_work": 131072,
+        "scratch_bytes_bound": 532480,
+        "size": 256,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-affine-256-roughness",
+      "size": 256,
+      "channel": "roughness",
+      "download": {
+        "name": "independent-affine-full-uv-quad_roughness.png",
+        "bytes": 263298,
+        "sha256": "97b5aa0887d0ecbafd13ddf327e616d2d5d684472f406addc9ba6848b642dd85"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 256,
+        "height": 256,
+        "channel": "roughness",
+        "implicit_materials": false,
+        "total_pixels": 65536,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "0bc524b835221321ea4f86e53052fe0f4cda35df3119c3c4f1f9d63596d01f4e",
+        "expected_rgba_sha256": "0bc524b835221321ea4f86e53052fe0f4cda35df3119c3c4f1f9d63596d01f4e",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "roughness",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 65536,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 131072,
+        "filled_gutter_pixels": 0,
+        "raster_work": 131072,
+        "scratch_bytes_bound": 532480,
+        "size": 256,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-affine-256-metallic",
+      "size": 256,
+      "channel": "metallic",
+      "download": {
+        "name": "independent-affine-full-uv-quad_metallic.png",
+        "bytes": 263298,
+        "sha256": "7e8c8aa57086b6edad3d14457b4bd8d345e55d6dacde758f08185a91eba8d180"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 256,
+        "height": 256,
+        "channel": "metallic",
+        "implicit_materials": false,
+        "total_pixels": 65536,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "c7ceb401949f29a42fb2b464c87fe6549002b99fa1f46bbfddeb915a478a779b",
+        "expected_rgba_sha256": "c7ceb401949f29a42fb2b464c87fe6549002b99fa1f46bbfddeb915a478a779b",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "metallic",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 65536,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 131072,
+        "filled_gutter_pixels": 0,
+        "raster_work": 131072,
+        "scratch_bytes_bound": 532480,
+        "size": 256,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-affine-512-color",
+      "size": 512,
+      "channel": "color",
+      "download": {
+        "name": "independent-affine-full-uv-quad_color.png",
+        "bytes": 1052415,
+        "sha256": "64096044173a4ab925135ca8610fe0fafddc03f891e1cb01112ecf26896f07ff"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 512,
+        "height": 512,
+        "channel": "color",
+        "implicit_materials": false,
+        "total_pixels": 262144,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "ae51bbd5351f4eb8a84bac9171620d90619e58bc383769ba7fbae97e84d98e77",
+        "expected_rgba_sha256": "ae51bbd5351f4eb8a84bac9171620d90619e58bc383769ba7fbae97e84d98e77",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "color",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 262144,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 524288,
+        "filled_gutter_pixels": 0,
+        "raster_work": 524288,
+        "scratch_bytes_bound": 2113536,
+        "size": 512,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-affine-512-roughness",
+      "size": 512,
+      "channel": "roughness",
+      "download": {
+        "name": "independent-affine-full-uv-quad_roughness.png",
+        "bytes": 1052415,
+        "sha256": "2ce4a969194353021819cb55674663bf42167a3f9dcce9167c35742e65492090"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 512,
+        "height": 512,
+        "channel": "roughness",
+        "implicit_materials": false,
+        "total_pixels": 262144,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "a3134c12624d803dc3b1eae1187e9f57f5d59893371026fd683265dcef7da7e6",
+        "expected_rgba_sha256": "a3134c12624d803dc3b1eae1187e9f57f5d59893371026fd683265dcef7da7e6",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "roughness",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 262144,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 524288,
+        "filled_gutter_pixels": 0,
+        "raster_work": 524288,
+        "scratch_bytes_bound": 2113536,
+        "size": 512,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-affine-512-metallic",
+      "size": 512,
+      "channel": "metallic",
+      "download": {
+        "name": "independent-affine-full-uv-quad_metallic.png",
+        "bytes": 1052415,
+        "sha256": "08cff2d50b7c6046d9da8e93150d112fccebb704cde85216436f3224bb56f37f"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 512,
+        "height": 512,
+        "channel": "metallic",
+        "implicit_materials": false,
+        "total_pixels": 262144,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "3f44ae1edb6fb0129e4804595b408132fae74b9291a4c26e274bee2fda83a575",
+        "expected_rgba_sha256": "3f44ae1edb6fb0129e4804595b408132fae74b9291a4c26e274bee2fda83a575",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "metallic",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 262144,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 524288,
+        "filled_gutter_pixels": 0,
+        "raster_work": 524288,
+        "scratch_bytes_bound": 2113536,
+        "size": 512,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-affine-1024-color",
+      "size": 1024,
+      "channel": "color",
+      "download": {
+        "name": "independent-affine-full-uv-quad_color.png",
+        "bytes": 4208366,
+        "sha256": "fd0100c0511124e18138d64cb77b17cb37cc4e2b22e6b3412ee1585eab45fc8e"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 1024,
+        "height": 1024,
+        "channel": "color",
+        "implicit_materials": false,
+        "total_pixels": 1048576,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "8bd0381b87842615176675564eb8467b0410c2d879a1d63b7fbc66f560817fc4",
+        "expected_rgba_sha256": "8bd0381b87842615176675564eb8467b0410c2d879a1d63b7fbc66f560817fc4",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "color",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 1048576,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 2097152,
+        "filled_gutter_pixels": 0,
+        "raster_work": 2097152,
+        "scratch_bytes_bound": 8421376,
+        "size": 1024,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-affine-1024-roughness",
+      "size": 1024,
+      "channel": "roughness",
+      "download": {
+        "name": "independent-affine-full-uv-quad_roughness.png",
+        "bytes": 4208366,
+        "sha256": "1572a72cb226d60e826c8f5b5ef88a0d353f8270629b6ba565b17118d69445ab"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 1024,
+        "height": 1024,
+        "channel": "roughness",
+        "implicit_materials": false,
+        "total_pixels": 1048576,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "99f52ca576ea9270f844f4aeb6e12b8663890c3951c7efbf1f984d347578b485",
+        "expected_rgba_sha256": "99f52ca576ea9270f844f4aeb6e12b8663890c3951c7efbf1f984d347578b485",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "roughness",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 1048576,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 2097152,
+        "filled_gutter_pixels": 0,
+        "raster_work": 2097152,
+        "scratch_bytes_bound": 8421376,
+        "size": 1024,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-affine-1024-metallic",
+      "size": 1024,
+      "channel": "metallic",
+      "download": {
+        "name": "independent-affine-full-uv-quad_metallic.png",
+        "bytes": 4208366,
+        "sha256": "4e7f74c78a7771b750a842aba93ede3e8549aaccba08097e060a6c49455e68dd"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 1024,
+        "height": 1024,
+        "channel": "metallic",
+        "implicit_materials": false,
+        "total_pixels": 1048576,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "a5afe41050812a3cd4f5eb2681ec68a378964c4d24e5b22d351a7def6ab94405",
+        "expected_rgba_sha256": "a5afe41050812a3cd4f5eb2681ec68a378964c4d24e5b22d351a7def6ab94405",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "metallic",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 1048576,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 2097152,
+        "filled_gutter_pixels": 0,
+        "raster_work": 2097152,
+        "scratch_bytes_bound": 8421376,
+        "size": 1024,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-affine-2048-color",
+      "size": 2048,
+      "channel": "color",
+      "download": {
+        "name": "independent-affine-full-uv-quad_color.png",
+        "bytes": 16831158,
+        "sha256": "93187e246f85bc6a73846e187b5313ea41ecd8e6d8751c9240efe9a8a5743d69"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 2048,
+        "height": 2048,
+        "channel": "color",
+        "implicit_materials": false,
+        "total_pixels": 4194304,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "77d2b4705911f61cc91471b663520ee3f1f65385405a074f2942650faef7700a",
+        "expected_rgba_sha256": "77d2b4705911f61cc91471b663520ee3f1f65385405a074f2942650faef7700a",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "color",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 4194304,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 8388608,
+        "filled_gutter_pixels": 0,
+        "raster_work": 8388608,
+        "scratch_bytes_bound": 33619968,
+        "size": 2048,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-affine-2048-roughness",
+      "size": 2048,
+      "channel": "roughness",
+      "download": {
+        "name": "independent-affine-full-uv-quad_roughness.png",
+        "bytes": 16831158,
+        "sha256": "ba6c4a2c6dd9a29d582186cd1152aa29264a6d891b9f763f2c6d12f5cb9197f8"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 2048,
+        "height": 2048,
+        "channel": "roughness",
+        "implicit_materials": false,
+        "total_pixels": 4194304,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "874985d2484707caadbc3c16ef1cf365590d4555e887187317ee3f9ed6330bba",
+        "expected_rgba_sha256": "874985d2484707caadbc3c16ef1cf365590d4555e887187317ee3f9ed6330bba",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "roughness",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 4194304,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 8388608,
+        "filled_gutter_pixels": 0,
+        "raster_work": 8388608,
+        "scratch_bytes_bound": 33619968,
+        "size": 2048,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-affine-2048-metallic",
+      "size": 2048,
+      "channel": "metallic",
+      "download": {
+        "name": "independent-affine-full-uv-quad_metallic.png",
+        "bytes": 16831158,
+        "sha256": "c36067882f31207f23684c05ef1e7b2bbe0484c98f2f7663a81da10cfb265c36"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 2048,
+        "height": 2048,
+        "channel": "metallic",
+        "implicit_materials": false,
+        "total_pixels": 4194304,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "d017a6e16a6b3f99c93e94c06b1f4e2da0057c7d52320af20eb4d9bdd9f4911e",
+        "expected_rgba_sha256": "d017a6e16a6b3f99c93e94c06b1f4e2da0057c7d52320af20eb4d9bdd9f4911e",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "metallic",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 4194304,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 8388608,
+        "filled_gutter_pixels": 0,
+        "raster_work": 8388608,
+        "scratch_bytes_bound": 33619968,
+        "size": 2048,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-affine-4096-color",
+      "size": 4096,
+      "channel": "color",
+      "download": {
+        "name": "independent-affine-full-uv-quad_color.png",
+        "bytes": 67320264,
+        "sha256": "0d6caa2d393c952b9f7c69236d4e91db99c1e6feafbbb796e3e7790990855832"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 4096,
+        "height": 4096,
+        "channel": "color",
+        "implicit_materials": false,
+        "total_pixels": 16777216,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "98b07be2853c539b2601c03aad7b2f191b74fc228f28c313e54408b434de16ef",
+        "expected_rgba_sha256": "98b07be2853c539b2601c03aad7b2f191b74fc228f28c313e54408b434de16ef",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "color",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 16777216,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 33554432,
+        "filled_gutter_pixels": 0,
+        "raster_work": 33554432,
+        "scratch_bytes_bound": 134348800,
+        "size": 4096,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-affine-4096-roughness",
+      "size": 4096,
+      "channel": "roughness",
+      "download": {
+        "name": "independent-affine-full-uv-quad_roughness.png",
+        "bytes": 67320264,
+        "sha256": "a5ca64dcc49234e321ecdd0f798889ae88c7aa79bfe757690c7fb29c72e57b53"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 4096,
+        "height": 4096,
+        "channel": "roughness",
+        "implicit_materials": false,
+        "total_pixels": 16777216,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "bb5c706240c1b467b92c239fa87aa88a55eecba3287d9dd44b5f77e6695823ac",
+        "expected_rgba_sha256": "bb5c706240c1b467b92c239fa87aa88a55eecba3287d9dd44b5f77e6695823ac",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "roughness",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 16777216,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 33554432,
+        "filled_gutter_pixels": 0,
+        "raster_work": 33554432,
+        "scratch_bytes_bound": 134348800,
+        "size": 4096,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-affine-4096-metallic",
+      "size": 4096,
+      "channel": "metallic",
+      "download": {
+        "name": "independent-affine-full-uv-quad_metallic.png",
+        "bytes": 67320264,
+        "sha256": "3cd2e4b4fbbe8319630aab1f6b77ab5e233ce55dd9af50699557039a801974b5"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 4096,
+        "height": 4096,
+        "channel": "metallic",
+        "implicit_materials": false,
+        "total_pixels": 16777216,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "439092c8ac2f4491c1984b30fd24be411abc1bb65598f608ee6672a63f31b12c",
+        "expected_rgba_sha256": "439092c8ac2f4491c1984b30fd24be411abc1bb65598f608ee6672a63f31b12c",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "metallic",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 16777216,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 33554432,
+        "filled_gutter_pixels": 0,
+        "raster_work": 33554432,
+        "scratch_bytes_bound": 134348800,
+        "size": 4096,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-corner-seams-256-color",
+      "size": 256,
+      "channel": "color",
+      "download": {
+        "name": "independent-two-quad-corner-seams-gaps_color.png",
+        "bytes": 263298,
+        "sha256": "ecddee6254c5fb4db3b851e141503eaa5ea95dd40c88a5bb6874fc1e2d98ff1a"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "channel": "color",
+        "total_pixels": 65536,
+        "covered_pixels": 36864,
+        "covered_mismatch_pixels": 0,
+        "covered_maximum_difference": 0,
+        "examples": [],
+        "gutter_probes": [
+          {
+            "x": 0,
+            "y": 128,
+            "rgba": [
+              1,
+              127,
+              32,
+              255
+            ],
+            "covered": true,
+            "samples": 1,
+            "actual": [
+              1,
+              127,
+              32,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 255,
+            "y": 128,
+            "rgba": [
+              254,
+              127,
+              159,
+              255
+            ],
+            "covered": true,
+            "samples": 1,
+            "actual": [
+              254,
+              127,
+              159,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 95,
+            "y": 128,
+            "rgba": [
+              127,
+              127,
+              95,
+              255
+            ],
+            "covered": true,
+            "samples": 1,
+            "actual": [
+              127,
+              127,
+              95,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 96,
+            "y": 128,
+            "rgba": [
+              122,
+              127,
+              93,
+              255
+            ],
+            "covered": false,
+            "samples": 136,
+            "actual": [
+              122,
+              127,
+              93,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 103,
+            "y": 128,
+            "rgba": [
+              127,
+              127,
+              95,
+              255
+            ],
+            "covered": false,
+            "samples": 17,
+            "actual": [
+              127,
+              127,
+              95,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 104,
+            "y": 128,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "covered": false,
+            "samples": 0,
+            "actual": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 151,
+            "y": 128,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "covered": false,
+            "samples": 0,
+            "actual": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 152,
+            "y": 128,
+            "rgba": [
+              128,
+              127,
+              96,
+              255
+            ],
+            "covered": false,
+            "samples": 17,
+            "actual": [
+              128,
+              127,
+              96,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 159,
+            "y": 128,
+            "rgba": [
+              133,
+              127,
+              98,
+              255
+            ],
+            "covered": false,
+            "samples": 136,
+            "actual": [
+              133,
+              127,
+              98,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 160,
+            "y": 128,
+            "rgba": [
+              128,
+              127,
+              96,
+              255
+            ],
+            "covered": true,
+            "samples": 1,
+            "actual": [
+              128,
+              127,
+              96,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 128,
+            "y": 128,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "covered": false,
+            "samples": 0,
+            "actual": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 0,
+            "y": 31,
+            "rgba": [
+              179,
+              250,
+              114,
+              255
+            ],
+            "covered": false,
+            "samples": 136,
+            "actual": [
+              179,
+              250,
+              114,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 0,
+            "y": 24,
+            "rgba": [
+              179,
+              254,
+              114,
+              255
+            ],
+            "covered": false,
+            "samples": 17,
+            "actual": [
+              179,
+              254,
+              114,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 0,
+            "y": 23,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "covered": false,
+            "samples": 0,
+            "actual": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 95,
+            "y": 31,
+            "rgba": [
+              122,
+              250,
+              93,
+              255
+            ],
+            "covered": false,
+            "samples": 72,
+            "actual": [
+              122,
+              250,
+              93,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 96,
+            "y": 31,
+            "rgba": [
+              122,
+              250,
+              93,
+              255
+            ],
+            "covered": false,
+            "samples": 64,
+            "actual": [
+              122,
+              250,
+              93,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 103,
+            "y": 24,
+            "rgba": [
+              127,
+              254,
+              95,
+              255
+            ],
+            "covered": false,
+            "samples": 1,
+            "actual": [
+              127,
+              254,
+              95,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 128,
+            "y": 0,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "covered": false,
+            "samples": 0,
+            "actual": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 128,
+            "y": 255,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "covered": false,
+            "samples": 0,
+            "actual": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 160,
+            "y": 31,
+            "rgba": [
+              133,
+              250,
+              99,
+              255
+            ],
+            "covered": false,
+            "samples": 72,
+            "actual": [
+              133,
+              250,
+              99,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 255,
+            "y": 224,
+            "rgba": [
+              188,
+              5,
+              119,
+              255
+            ],
+            "covered": false,
+            "samples": 136,
+            "actual": [
+              188,
+              5,
+              119,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          }
+        ],
+        "rgba_sha256": "85e53dd25e7de28efcb9e3852698bff46e2fd2637836647ce5115be6ba9e6809",
+        "pass": true,
+        "limits": "All chart-covered pixels exact. Only listed uncovered gutter/hole probes use at most1u8 RGB for independent direct-vs-rolling accumulation; alpha255 exact. New gutter pixels are never neighbors in this oracle. Full arbitrary reference gutter equivalence remains open."
+      },
+      "report": {
+        "channel": "color",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 36864,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 22272,
+        "estimated_raster_work": 73728,
+        "filled_gutter_pixels": 6400,
+        "raster_work": 73728,
+        "scratch_bytes_bound": 532480,
+        "size": 256,
+        "triangles": 4
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-corner-seams-256-roughness",
+      "size": 256,
+      "channel": "roughness",
+      "download": {
+        "name": "independent-two-quad-corner-seams-gaps_roughness.png",
+        "bytes": 263298,
+        "sha256": "03dfe4c8ca5009888428e795ac5175a816f65539c1c060008a7ac2dc30a9cd09"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "channel": "roughness",
+        "total_pixels": 65536,
+        "covered_pixels": 36864,
+        "covered_mismatch_pixels": 0,
+        "covered_maximum_difference": 0,
+        "examples": [],
+        "gutter_probes": [
+          {
+            "x": 0,
+            "y": 128,
+            "rgba": [
+              1,
+              1,
+              1,
+              255
+            ],
+            "covered": true,
+            "samples": 1,
+            "actual": [
+              1,
+              1,
+              1,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 255,
+            "y": 128,
+            "rgba": [
+              254,
+              254,
+              254,
+              255
+            ],
+            "covered": true,
+            "samples": 1,
+            "actual": [
+              254,
+              254,
+              254,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 95,
+            "y": 128,
+            "rgba": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "covered": true,
+            "samples": 1,
+            "actual": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 96,
+            "y": 128,
+            "rgba": [
+              122,
+              122,
+              122,
+              255
+            ],
+            "covered": false,
+            "samples": 136,
+            "actual": [
+              122,
+              122,
+              122,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 103,
+            "y": 128,
+            "rgba": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "covered": false,
+            "samples": 17,
+            "actual": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 104,
+            "y": 128,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "covered": false,
+            "samples": 0,
+            "actual": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 151,
+            "y": 128,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "covered": false,
+            "samples": 0,
+            "actual": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 152,
+            "y": 128,
+            "rgba": [
+              128,
+              128,
+              128,
+              255
+            ],
+            "covered": false,
+            "samples": 17,
+            "actual": [
+              128,
+              128,
+              128,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 159,
+            "y": 128,
+            "rgba": [
+              133,
+              133,
+              133,
+              255
+            ],
+            "covered": false,
+            "samples": 136,
+            "actual": [
+              133,
+              133,
+              133,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 160,
+            "y": 128,
+            "rgba": [
+              128,
+              128,
+              128,
+              255
+            ],
+            "covered": true,
+            "samples": 1,
+            "actual": [
+              128,
+              128,
+              128,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 128,
+            "y": 128,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "covered": false,
+            "samples": 0,
+            "actual": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 0,
+            "y": 31,
+            "rgba": [
+              179,
+              179,
+              179,
+              255
+            ],
+            "covered": false,
+            "samples": 136,
+            "actual": [
+              179,
+              179,
+              179,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 0,
+            "y": 24,
+            "rgba": [
+              179,
+              179,
+              179,
+              255
+            ],
+            "covered": false,
+            "samples": 17,
+            "actual": [
+              179,
+              179,
+              179,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 0,
+            "y": 23,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "covered": false,
+            "samples": 0,
+            "actual": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 95,
+            "y": 31,
+            "rgba": [
+              122,
+              122,
+              122,
+              255
+            ],
+            "covered": false,
+            "samples": 72,
+            "actual": [
+              122,
+              122,
+              122,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 96,
+            "y": 31,
+            "rgba": [
+              122,
+              122,
+              122,
+              255
+            ],
+            "covered": false,
+            "samples": 64,
+            "actual": [
+              122,
+              122,
+              122,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 103,
+            "y": 24,
+            "rgba": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "covered": false,
+            "samples": 1,
+            "actual": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 128,
+            "y": 0,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "covered": false,
+            "samples": 0,
+            "actual": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 128,
+            "y": 255,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "covered": false,
+            "samples": 0,
+            "actual": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 160,
+            "y": 31,
+            "rgba": [
+              133,
+              133,
+              133,
+              255
+            ],
+            "covered": false,
+            "samples": 72,
+            "actual": [
+              133,
+              133,
+              133,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 255,
+            "y": 224,
+            "rgba": [
+              188,
+              188,
+              188,
+              255
+            ],
+            "covered": false,
+            "samples": 136,
+            "actual": [
+              188,
+              188,
+              188,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          }
+        ],
+        "rgba_sha256": "253a83ce15b2da1696276bb8538ec4db249fde1f8c212c1d010fb72593e72111",
+        "pass": true,
+        "limits": "All chart-covered pixels exact. Only listed uncovered gutter/hole probes use at most1u8 RGB for independent direct-vs-rolling accumulation; alpha255 exact. New gutter pixels are never neighbors in this oracle. Full arbitrary reference gutter equivalence remains open."
+      },
+      "report": {
+        "channel": "roughness",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 36864,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 22272,
+        "estimated_raster_work": 73728,
+        "filled_gutter_pixels": 6400,
+        "raster_work": 73728,
+        "scratch_bytes_bound": 532480,
+        "size": 256,
+        "triangles": 4
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-corner-seams-256-metallic",
+      "size": 256,
+      "channel": "metallic",
+      "download": {
+        "name": "independent-two-quad-corner-seams-gaps_metallic.png",
+        "bytes": 263298,
+        "sha256": "b1229d0e12a6b1672c75bba2aea407805f1735972d3a4ddcba7540f06332a495"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "channel": "metallic",
+        "total_pixels": 65536,
+        "covered_pixels": 36864,
+        "covered_mismatch_pixels": 0,
+        "covered_maximum_difference": 0,
+        "examples": [],
+        "gutter_probes": [
+          {
+            "x": 0,
+            "y": 128,
+            "rgba": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "covered": true,
+            "samples": 1,
+            "actual": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 255,
+            "y": 128,
+            "rgba": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "covered": true,
+            "samples": 1,
+            "actual": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 95,
+            "y": 128,
+            "rgba": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "covered": true,
+            "samples": 1,
+            "actual": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 96,
+            "y": 128,
+            "rgba": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "covered": false,
+            "samples": 136,
+            "actual": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 103,
+            "y": 128,
+            "rgba": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "covered": false,
+            "samples": 17,
+            "actual": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 104,
+            "y": 128,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "covered": false,
+            "samples": 0,
+            "actual": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 151,
+            "y": 128,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "covered": false,
+            "samples": 0,
+            "actual": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 152,
+            "y": 128,
+            "rgba": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "covered": false,
+            "samples": 17,
+            "actual": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 159,
+            "y": 128,
+            "rgba": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "covered": false,
+            "samples": 136,
+            "actual": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 160,
+            "y": 128,
+            "rgba": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "covered": true,
+            "samples": 1,
+            "actual": [
+              127,
+              127,
+              127,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 128,
+            "y": 128,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "covered": false,
+            "samples": 0,
+            "actual": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 0,
+            "y": 31,
+            "rgba": [
+              250,
+              250,
+              250,
+              255
+            ],
+            "covered": false,
+            "samples": 136,
+            "actual": [
+              250,
+              250,
+              250,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 0,
+            "y": 24,
+            "rgba": [
+              254,
+              254,
+              254,
+              255
+            ],
+            "covered": false,
+            "samples": 17,
+            "actual": [
+              254,
+              254,
+              254,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 0,
+            "y": 23,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "covered": false,
+            "samples": 0,
+            "actual": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 95,
+            "y": 31,
+            "rgba": [
+              250,
+              250,
+              250,
+              255
+            ],
+            "covered": false,
+            "samples": 72,
+            "actual": [
+              250,
+              250,
+              250,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 96,
+            "y": 31,
+            "rgba": [
+              250,
+              250,
+              250,
+              255
+            ],
+            "covered": false,
+            "samples": 64,
+            "actual": [
+              250,
+              250,
+              250,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 103,
+            "y": 24,
+            "rgba": [
+              254,
+              254,
+              254,
+              255
+            ],
+            "covered": false,
+            "samples": 1,
+            "actual": [
+              254,
+              254,
+              254,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 128,
+            "y": 0,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "covered": false,
+            "samples": 0,
+            "actual": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 128,
+            "y": 255,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "covered": false,
+            "samples": 0,
+            "actual": [
+              0,
+              0,
+              0,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 160,
+            "y": 31,
+            "rgba": [
+              250,
+              250,
+              250,
+              255
+            ],
+            "covered": false,
+            "samples": 72,
+            "actual": [
+              250,
+              250,
+              250,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          },
+          {
+            "x": 255,
+            "y": 224,
+            "rgba": [
+              5,
+              5,
+              5,
+              255
+            ],
+            "covered": false,
+            "samples": 136,
+            "actual": [
+              5,
+              5,
+              5,
+              255
+            ],
+            "rgb_max_difference": 0,
+            "pass": true
+          }
+        ],
+        "rgba_sha256": "acc450f105b6416a8f0aecd6fd953ac797b05f9625e4cb36eddb8fc9fea26601",
+        "pass": true,
+        "limits": "All chart-covered pixels exact. Only listed uncovered gutter/hole probes use at most1u8 RGB for independent direct-vs-rolling accumulation; alpha255 exact. New gutter pixels are never neighbors in this oracle. Full arbitrary reference gutter equivalence remains open."
+      },
+      "report": {
+        "channel": "metallic",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 36864,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 22272,
+        "estimated_raster_work": 73728,
+        "filled_gutter_pixels": 6400,
+        "raster_work": 73728,
+        "scratch_bytes_bound": 532480,
+        "size": 256,
+        "triangles": 4
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-mask-protected-1024-color",
+      "size": 1024,
+      "channel": "color",
+      "download": {
+        "name": "independent-affine-full-uv-quad_color.png",
+        "bytes": 4208366,
+        "sha256": "fd0100c0511124e18138d64cb77b17cb37cc4e2b22e6b3412ee1585eab45fc8e"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 1024,
+        "height": 1024,
+        "channel": "color",
+        "implicit_materials": false,
+        "total_pixels": 1048576,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "8bd0381b87842615176675564eb8467b0410c2d879a1d63b7fbc66f560817fc4",
+        "expected_rgba_sha256": "8bd0381b87842615176675564eb8467b0410c2d879a1d63b7fbc66f560817fc4",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "color",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 1048576,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 2097152,
+        "filled_gutter_pixels": 0,
+        "raster_work": 2097152,
+        "scratch_bytes_bound": 8421376,
+        "size": 1024,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-mask-protected-1024-roughness",
+      "size": 1024,
+      "channel": "roughness",
+      "download": {
+        "name": "independent-affine-full-uv-quad_roughness.png",
+        "bytes": 4208366,
+        "sha256": "1572a72cb226d60e826c8f5b5ef88a0d353f8270629b6ba565b17118d69445ab"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 1024,
+        "height": 1024,
+        "channel": "roughness",
+        "implicit_materials": false,
+        "total_pixels": 1048576,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "99f52ca576ea9270f844f4aeb6e12b8663890c3951c7efbf1f984d347578b485",
+        "expected_rgba_sha256": "99f52ca576ea9270f844f4aeb6e12b8663890c3951c7efbf1f984d347578b485",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "roughness",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 1048576,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 2097152,
+        "filled_gutter_pixels": 0,
+        "raster_work": 2097152,
+        "scratch_bytes_bound": 8421376,
+        "size": 1024,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-mask-protected-1024-metallic",
+      "size": 1024,
+      "channel": "metallic",
+      "download": {
+        "name": "independent-affine-full-uv-quad_metallic.png",
+        "bytes": 4208366,
+        "sha256": "4e7f74c78a7771b750a842aba93ede3e8549aaccba08097e060a6c49455e68dd"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 1024,
+        "height": 1024,
+        "channel": "metallic",
+        "implicit_materials": false,
+        "total_pixels": 1048576,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "a5afe41050812a3cd4f5eb2681ec68a378964c4d24e5b22d351a7def6ab94405",
+        "expected_rgba_sha256": "a5afe41050812a3cd4f5eb2681ec68a378964c4d24e5b22d351a7def6ab94405",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "metallic",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 1048576,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 2097152,
+        "filled_gutter_pixels": 0,
+        "raster_work": 2097152,
+        "scratch_bytes_bound": 8421376,
+        "size": 1024,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-mask-unprotected-1024-color",
+      "size": 1024,
+      "channel": "color",
+      "download": {
+        "name": "independent-affine-unprotected-v7_color.png",
+        "bytes": 4208366,
+        "sha256": "fd0100c0511124e18138d64cb77b17cb37cc4e2b22e6b3412ee1585eab45fc8e"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 1024,
+        "height": 1024,
+        "channel": "color",
+        "implicit_materials": false,
+        "total_pixels": 1048576,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "8bd0381b87842615176675564eb8467b0410c2d879a1d63b7fbc66f560817fc4",
+        "expected_rgba_sha256": "8bd0381b87842615176675564eb8467b0410c2d879a1d63b7fbc66f560817fc4",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "color",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 1048576,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 2097152,
+        "filled_gutter_pixels": 0,
+        "raster_work": 2097152,
+        "scratch_bytes_bound": 8421376,
+        "size": 1024,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-mask-unprotected-1024-roughness",
+      "size": 1024,
+      "channel": "roughness",
+      "download": {
+        "name": "independent-affine-unprotected-v7_roughness.png",
+        "bytes": 4208366,
+        "sha256": "1572a72cb226d60e826c8f5b5ef88a0d353f8270629b6ba565b17118d69445ab"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 1024,
+        "height": 1024,
+        "channel": "roughness",
+        "implicit_materials": false,
+        "total_pixels": 1048576,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "99f52ca576ea9270f844f4aeb6e12b8663890c3951c7efbf1f984d347578b485",
+        "expected_rgba_sha256": "99f52ca576ea9270f844f4aeb6e12b8663890c3951c7efbf1f984d347578b485",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "roughness",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 1048576,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 2097152,
+        "filled_gutter_pixels": 0,
+        "raster_work": 2097152,
+        "scratch_bytes_bound": 8421376,
+        "size": 1024,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-mask-unprotected-1024-metallic",
+      "size": 1024,
+      "channel": "metallic",
+      "download": {
+        "name": "independent-affine-unprotected-v7_metallic.png",
+        "bytes": 4208366,
+        "sha256": "4e7f74c78a7771b750a842aba93ede3e8549aaccba08097e060a6c49455e68dd"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 1024,
+        "height": 1024,
+        "channel": "metallic",
+        "implicit_materials": false,
+        "total_pixels": 1048576,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "a5afe41050812a3cd4f5eb2681ec68a378964c4d24e5b22d351a7def6ab94405",
+        "expected_rgba_sha256": "a5afe41050812a3cd4f5eb2681ec68a378964c4d24e5b22d351a7def6ab94405",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "metallic",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 1048576,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 2097152,
+        "filled_gutter_pixels": 0,
+        "raster_work": 2097152,
+        "scratch_bytes_bound": 8421376,
+        "size": 1024,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-implicit-defaults-1024-roughness",
+      "size": 1024,
+      "channel": "roughness",
+      "download": {
+        "name": "independent-implicit-material-uv-quad_roughness.png",
+        "bytes": 4208366,
+        "sha256": "794cbeae3aec06a97e6d61dbb827cbed86d53bce289437b7683d1f006baf25e5"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 1024,
+        "height": 1024,
+        "channel": "roughness",
+        "implicit_materials": true,
+        "total_pixels": 1048576,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "7be5d57e79c23f9dce6fc86c622318e6c5a1375ac3cec3d10e67ccdf8bb460bc",
+        "expected_rgba_sha256": "7be5d57e79c23f9dce6fc86c622318e6c5a1375ac3cec3d10e67ccdf8bb460bc",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "roughness",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 1048576,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 2097152,
+        "filled_gutter_pixels": 0,
+        "raster_work": 2097152,
+        "scratch_bytes_bound": 8421376,
+        "size": 1024,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    },
+    {
+      "case": "bake-implicit-defaults-1024-metallic",
+      "size": 1024,
+      "channel": "metallic",
+      "download": {
+        "name": "independent-implicit-material-uv-quad_metallic.png",
+        "bytes": 4208366,
+        "sha256": "c7cd8033b63e64e373fa302481050ec8e7d0e2c399c5d615521bb0ba5a7bbf01"
+      },
+      "header_dimensions_checked": true,
+      "independently_authored_runtime_oracle": {
+        "width": 1024,
+        "height": 1024,
+        "channel": "metallic",
+        "implicit_materials": true,
+        "total_pixels": 1048576,
+        "mismatch_pixels": 0,
+        "mismatch_channels": 0,
+        "maximum_channel_difference": 0,
+        "examples": [],
+        "actual_rgba_sha256": "a2d4805a8716ec0f0a36d163de059b53ab5b77ef113960682d0c389968e61f85",
+        "expected_rgba_sha256": "a2d4805a8716ec0f0a36d163de059b53ab5b77ef113960682d0c389968e61f85",
+        "pass": true,
+        "rule": "Independent closed-form affine channel at each dyadic pixel center, highV top row, byte=floor(255*clamp+0.5), all alpha255; no numeric tolerance."
+      },
+      "report": {
+        "channel": "metallic",
+        "clipped_uv_triangles": 0,
+        "covered_pixels": 1048576,
+        "degenerate_uv_triangles": 0,
+        "empty_black_pixels": 0,
+        "estimated_raster_work": 2097152,
+        "filled_gutter_pixels": 0,
+        "raster_work": 2097152,
+        "scratch_bytes_bound": 8421376,
+        "size": 1024,
+        "triangles": 2
+      },
+      "gates": {
+        "actual_normal_PNG_download": true,
+        "captured_size_channel_request": true,
+        "worker_return_disposed": true,
+        "full_numeric_oracle": true,
+        "report_matches_capture": true,
+        "full_source_history_GPU_preserved": true,
+        "prior_redo_exact": true,
+        "job_finished": true,
+        "prefs_preserved": true
+      }
+    }
+  ],
+  "totals": {
+    "accepted_PNGs": 26,
+    "mandatory_matrix": 15,
+    "decoded_output_pixels": 75628544,
+    "covered_exact_pixel_comparisons": 75542528,
+    "seam_uncovered_tolerance": "Only51 selected uncovered points among63 preregistered edge/gutter/hole probes allow max1u8 RGB; alpha255 exact. The12 covered probes are additionally constrained by every-covered-pixel exact gate.",
+    "seam_probe_counts": {
+      "all_selected_points": 63,
+      "covered_selected_points": 12,
+      "uncovered_selected_points": 51,
+      "rule": "All covered pixels and alpha exact; only51 selected uncovered points allow max1u8 RGB."
+    }
+  },
+  "oracle_scope": "The browser helper decoded real PNG downloads independently of Rust using PNG CRC/filter parsing and authored analytic fields. This additive consolidation checks existing recorded oracle results/file stats/PNG headers. A second independently implemented full decode/file-hash/GPU-repack pass is pending a quiet CPU slot, not claimed complete.",
+  "metadata_consolidation": {
+    "path": ".artifacts/sculptgl-uv-bake-consumer-preparation/consolidated-runtime-metadata.json",
+    "sha256": "869362d9fe57c1e12be67df5b1e3d2d7451605c4de17f684b2a4bbf02c633481"
+  },
+  "unmatched_completed_PNG": {
+    "bytes": 67320264,
+    "sha256": "3cd2e4b4fbbe8319630aab1f6b77ab5e233ce55dd9af50699557039a801974b5",
+    "accepted_export": false,
+    "source_filename_event_persisted": false,
+    "original_GUID": "a9a6ee57-3eb2-403b-8bea-ce37a7f8079e"
+  },
+  "limits": [
+    "No paired SculptGL GPU TexBake output or source raster/overlap/gutter parity claim",
+    "No native GUI or physical-device/browser matrix/performance claim",
+    "No UV generation/unwrapping or persistent texture-asset project claim",
+    "Only51 uncovered points among63 preregistered seam/edge/gutter/hole probes use max1u8 RGB; every covered pixel and alpha exact",
+    "Passive worker windows are functional observations, not benchmarks; no delayed/modified worker or clock",
+    "Original whole cohort failure and initial observer source preparation failure remain preserved"
+  ]
+}

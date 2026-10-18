@@ -1,0 +1,376 @@
+{
+  "schema_version": 1,
+  "version": "0.1.6",
+  "status": "completed prolonged imported-user-project measurement",
+  "scope": "Sustained Draw/Crease release-lag regression on immutable user-provided sculpt, isolated owned CLI Chrome/CDP; no ZBrush/SculptGL parity claim",
+  "source_manifest": {
+    "path": ".artifacts/topology-inputs-final/source-manifest.json",
+    "bytes": 8394,
+    "sha256": "59d5053a2db4dd1bc30eaa69444c9120d39cb87bd695d53528938cb441217d9a"
+  },
+  "immutable_build_record": {
+    "path": ".artifacts/topology-inputs-final/build-record.json",
+    "bytes": 4788,
+    "sha256": "b7f6a5b130d9cab760736a92509eac97bd114958e34b94d80df88aa87e2d0a2f"
+  },
+  "runtime": {
+    "sha256": "dfe8de34af906a26a80bac2bcf6e523e95a9f5df9f3549f7890230feb8cb22c4",
+    "served_sha256": "dfe8de34af906a26a80bac2bcf6e523e95a9f5df9f3549f7890230feb8cb22c4",
+    "bytes": 3736829
+  },
+  "harness": {
+    "path": ".artifacts/topology-inputs-build/check-long-stroke.mjs",
+    "bytes": 27463,
+    "sha256": "7ee015461302b9e39f9b524b49c636c81bd086cfa83615a4da060309e34d883b"
+  },
+  "raw": {
+    "path": ".artifacts/long-strokes/final-0.1.6-release-a29374fb-4091-4a7d-913d-ae6cb23f4e51/result.json",
+    "bytes": 13278394,
+    "sha256": "9bfaf99db125064e9f1245230f2de6cf16991ec095568a70e922f8e01480d103"
+  },
+  "fixture": {
+    "path": "/Users/Ajab/AI/OBrush/.artifacts/user-long-stroke-0.1.4/user.obrush",
+    "sha256": "4adc8aa9333903ab0684c1f2e54a995dc6a4e7a3b85fc6e911df9d7deb0c4786",
+    "bytes": 8000012
+  },
+  "trials": [
+    {
+      "brush": "Draw",
+      "metrics": {
+        "scheduled_duration_ms": 20080,
+        "sent_pointer_events": 503,
+        "handled_dom_pointer_events": 484,
+        "last_visible_mesh_upload_after_release_ms": 19.300000000745058,
+        "observed_quiet_after_release_ms": 1258.800000000745,
+        "callback_ms": {
+          "count": 1202,
+          "min": 0,
+          "p50": 16.40000000037253,
+          "p95": 21.199999999254942,
+          "p99": 26.199999999254942,
+          "max": 32.40000000037253,
+          "sum": 17678.69999999553
+        },
+        "raf_gap_ms": {
+          "count": 1202,
+          "min": 16.5,
+          "p50": 16.699999999999818,
+          "p95": 33.29999999999927,
+          "p99": 33.400000000001455,
+          "max": 33.400000000001455,
+          "sum": 21365.700000000157
+        },
+        "dom_queue_ms": {
+          "count": 484,
+          "min": 0.40000000037252903,
+          "p50": 12,
+          "p95": 18.90000000037253,
+          "p99": 21.600000001490116,
+          "max": 77.5,
+          "sum": 5364.00000016205
+        },
+        "mesh_draw_gap_ms": {
+          "count": 1109,
+          "min": 2.800000000745058,
+          "p50": 18.299999998882413,
+          "p95": 27.90000000037253,
+          "p99": 39.29999999888241,
+          "max": 62.09999999962747,
+          "sum": 20116.5
+        },
+        "longtask_ms": {
+          "count": 0,
+          "min": null,
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "max": null,
+          "sum": 0
+        },
+        "mesh_draw_submissions": 1110
+      },
+      "sculpt_metrics_before": {
+        "applied_dabs": 0,
+        "coalesced_dabs": 0,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 0,
+        "pending_dabs": 0,
+        "processed_dabs": 0,
+        "released_strokes": 0
+      },
+      "sculpt_metrics_after": {
+        "applied_dabs": 753,
+        "coalesced_dabs": 406,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 18,
+        "pending_dabs": 0,
+        "processed_dabs": 1322,
+        "released_strokes": 1
+      },
+      "import_mesh_exact": true,
+      "changed_original_vertices": 16169,
+      "history": {
+        "undo_exact_imported_mesh": true,
+        "redo_exact_mesh": true
+      },
+      "gpu_matches_saved_before_save": true,
+      "two_stable_saved_meshes": true,
+      "snapshots": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/long-strokes/final-0.1.6-release-a29374fb-4091-4a7d-913d-ae6cb23f4e51/trial1-Draw-imported.obrush",
+          "sha256": "89eac79e5d56b24560621385068e1a16c87ae4bf2a4f4b9ed23b0226bda47960",
+          "bytes": 8000012,
+          "vertices": 61580,
+          "triangles": 123156
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/long-strokes/final-0.1.6-release-a29374fb-4091-4a7d-913d-ae6cb23f4e51/trial1-Draw-stable1.obrush",
+          "sha256": "aff1979f94443ba0e452198a069c1b06e82a53f7bcf6bd063cb85a739e73861e",
+          "bytes": 10122980,
+          "vertices": 77865,
+          "triangles": 155726
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/long-strokes/final-0.1.6-release-a29374fb-4091-4a7d-913d-ae6cb23f4e51/trial1-Draw-stable2.obrush",
+          "sha256": "aff1979f94443ba0e452198a069c1b06e82a53f7bcf6bd063cb85a739e73861e",
+          "bytes": 10122980,
+          "vertices": 77865,
+          "triangles": 155726
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/long-strokes/final-0.1.6-release-a29374fb-4091-4a7d-913d-ae6cb23f4e51/trial1-Draw-undo.obrush",
+          "sha256": "89eac79e5d56b24560621385068e1a16c87ae4bf2a4f4b9ed23b0226bda47960",
+          "bytes": 8000012,
+          "vertices": 61580,
+          "triangles": 123156
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/long-strokes/final-0.1.6-release-a29374fb-4091-4a7d-913d-ae6cb23f4e51/trial1-Draw-redo.obrush",
+          "sha256": "aff1979f94443ba0e452198a069c1b06e82a53f7bcf6bd063cb85a739e73861e",
+          "bytes": 10122980,
+          "vertices": 77865,
+          "triangles": 155726
+        }
+      ],
+      "context": {
+        "contexts": [
+          {
+            "kind": "webgl2",
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "max_samples": 4
+          }
+        ],
+        "allocations": [
+          {
+            "samples": 4,
+            "actual_samples": 4,
+            "format": 32856,
+            "width": 1153,
+            "height": 912
+          },
+          {
+            "samples": 4,
+            "actual_samples": 4,
+            "format": 33190,
+            "width": 1153,
+            "height": 912
+          }
+        ],
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+        "viewports": {
+          "0,0,300,150": 1,
+          "0,0,1600,1000": 60,
+          "212,31,1153,912": 60,
+          "0,0,1153,912": 20
+        }
+      },
+      "final_errors": {
+        "gl": [],
+        "js": [],
+        "notice": ""
+      }
+    },
+    {
+      "brush": "Crease",
+      "metrics": {
+        "scheduled_duration_ms": 20080,
+        "sent_pointer_events": 503,
+        "handled_dom_pointer_events": 499,
+        "last_visible_mesh_upload_after_release_ms": 18,
+        "observed_quiet_after_release_ms": 1272.0999999996275,
+        "callback_ms": {
+          "count": 1255,
+          "min": 0,
+          "p50": 15.799999998882413,
+          "p95": 19.399999998509884,
+          "p99": 25.09999999962747,
+          "max": 26.59999999962747,
+          "sum": 16795.69999999553
+        },
+        "raf_gap_ms": {
+          "count": 1255,
+          "min": 16.5,
+          "p50": 16.699999999999818,
+          "p95": 16.799999999999272,
+          "p99": 33.30000000000109,
+          "max": 33.400000000001455,
+          "sum": 21365.800000000134
+        },
+        "dom_queue_ms": {
+          "count": 499,
+          "min": 0.599999999627471,
+          "p50": 11.5,
+          "p95": 16.59999999962747,
+          "p99": 18.199999999254942,
+          "max": 20.09999999962747,
+          "sum": 5082.499999921769
+        },
+        "mesh_draw_gap_ms": {
+          "count": 1150,
+          "min": 2.600000001490116,
+          "p50": 17.09999999962747,
+          "p95": 27.5,
+          "p99": 42.69999999925494,
+          "max": 60.59999999962747,
+          "sum": 20115.599999999627
+        },
+        "longtask_ms": {
+          "count": 0,
+          "min": null,
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "max": null,
+          "sum": 0
+        },
+        "mesh_draw_submissions": 1151
+      },
+      "sculpt_metrics_before": {
+        "applied_dabs": 0,
+        "coalesced_dabs": 0,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 0,
+        "pending_dabs": 0,
+        "processed_dabs": 0,
+        "released_strokes": 0
+      },
+      "sculpt_metrics_after": {
+        "applied_dabs": 800,
+        "coalesced_dabs": 277,
+        "maximum_input_age_ms": 50,
+        "maximum_pending_dabs": 32,
+        "oldest_pending_age_ms": 0,
+        "peak_pending_dabs": 11,
+        "pending_dabs": 0,
+        "processed_dabs": 1451,
+        "released_strokes": 1
+      },
+      "import_mesh_exact": true,
+      "changed_original_vertices": 20263,
+      "history": {
+        "undo_exact_imported_mesh": true,
+        "redo_exact_mesh": true
+      },
+      "gpu_matches_saved_before_save": true,
+      "two_stable_saved_meshes": true,
+      "snapshots": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/long-strokes/final-0.1.6-release-a29374fb-4091-4a7d-913d-ae6cb23f4e51/trial2-Crease-imported.obrush",
+          "sha256": "89eac79e5d56b24560621385068e1a16c87ae4bf2a4f4b9ed23b0226bda47960",
+          "bytes": 8000012,
+          "vertices": 61580,
+          "triangles": 123156
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/long-strokes/final-0.1.6-release-a29374fb-4091-4a7d-913d-ae6cb23f4e51/trial2-Crease-stable1.obrush",
+          "sha256": "dd0ff29ca4fbb537a321ca1e39979903f1f6cedf6e1b9534ccd19b07b671aae9",
+          "bytes": 9223663,
+          "vertices": 70964,
+          "triangles": 141924
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/long-strokes/final-0.1.6-release-a29374fb-4091-4a7d-913d-ae6cb23f4e51/trial2-Crease-stable2.obrush",
+          "sha256": "dd0ff29ca4fbb537a321ca1e39979903f1f6cedf6e1b9534ccd19b07b671aae9",
+          "bytes": 9223663,
+          "vertices": 70964,
+          "triangles": 141924
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/long-strokes/final-0.1.6-release-a29374fb-4091-4a7d-913d-ae6cb23f4e51/trial2-Crease-undo.obrush",
+          "sha256": "89eac79e5d56b24560621385068e1a16c87ae4bf2a4f4b9ed23b0226bda47960",
+          "bytes": 8000012,
+          "vertices": 61580,
+          "triangles": 123156
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/long-strokes/final-0.1.6-release-a29374fb-4091-4a7d-913d-ae6cb23f4e51/trial2-Crease-redo.obrush",
+          "sha256": "dd0ff29ca4fbb537a321ca1e39979903f1f6cedf6e1b9534ccd19b07b671aae9",
+          "bytes": 9223663,
+          "vertices": 70964,
+          "triangles": 141924
+        }
+      ],
+      "context": {
+        "contexts": [
+          {
+            "kind": "webgl2",
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "max_samples": 4
+          }
+        ],
+        "allocations": [
+          {
+            "samples": 4,
+            "actual_samples": 4,
+            "format": 32856,
+            "width": 1153,
+            "height": 912
+          },
+          {
+            "samples": 4,
+            "actual_samples": 4,
+            "format": 33190,
+            "width": 1153,
+            "height": 912
+          }
+        ],
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+        "viewports": {
+          "0,0,300,150": 1,
+          "0,0,1600,1000": 63,
+          "212,31,1153,912": 63,
+          "0,0,1153,912": 21
+        }
+      },
+      "final_errors": {
+        "gl": [],
+        "js": [],
+        "notice": ""
+      }
+    }
+  ],
+  "errors": [],
+  "console_errors": [],
+  "exceptions": [],
+  "cleanup": {
+    "owned_chrome_exit_code": 0,
+    "owned_chrome_signal": null,
+    "owned_server_closed": true
+  },
+  "limits": [
+    "Headless Chrome synthetic CDP events, not physical human input-to-photon latency or nativeGUI.",
+    "rAF measures headless browser scheduling cadence; WebGL API times measure CPU submission/possible stalls, not independent GPU timer queries.",
+    "Two trials with exact schedule; phase metrics include post-input drain but exclude save/undo/redo serialization and screenshots.",
+    "Dedicated instrumentation adds overhead; baseline and final must use the same harness and configuration.",
+    "Settings remain default radius0.18 strength0.35 X symmetry enabled; alpha absent, mouse nominal pressure1 and adaptive_detail=true.",
+    "Final release uses Meta4/Shift8 history chords instead of the0.1.5 fixed inspector coordinates; the sustained input schedule remains identical.",
+    "This is a regression check, not an improvement estimate or paired same-day benchmark against0.1.5.",
+    "Retaining masks/colors and preventing further extreme local folds does not repair existing damaged triangles or prove global self-intersection absence."
+  ]
+}

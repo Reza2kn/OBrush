@@ -1,0 +1,739 @@
+{
+  "schema_version": 1,
+  "version": "0.1.10",
+  "recorded_at_utc": "2026-10-13T05:06:38.076418+00:00",
+  "status": "Eight browser workflows and42behavior gates pass; exact visible buffers and inspector clipping checked on corrected final bytes",
+  "git": "Unborn main; source/build/helper hashes identify execution",
+  "raw_result": {
+    "path": ".artifacts/subtool-browser/layout-final-9ba4f511-ea1e-4741-b933-fd47a2a24a80/result.json",
+    "bytes": 1385993,
+    "sha256": "82aa1e6abddbf40867d47c7b60f95b36a38390213fa1032e940f6cc651cb03cd"
+  },
+  "bound_summary": {
+    "path": ".artifacts/subtool-browser/layout-final-9ba4f511-ea1e-4741-b933-fd47a2a24a80/summary.json",
+    "bytes": 23117,
+    "sha256": "440e088ff32bd3a45c9c21e0ceb79bcd51b02e46ad9c9bd0dbfbc973c329cd03"
+  },
+  "summary": {
+    "status": "passed eight SubTool browser workflows",
+    "raw_result": {
+      "path": ".artifacts/subtool-browser/layout-final-9ba4f511-ea1e-4741-b933-fd47a2a24a80/result.json",
+      "sha256": "82aa1e6abddbf40867d47c7b60f95b36a38390213fa1032e940f6cc651cb03cd",
+      "bytes": 1385993
+    },
+    "harness": {
+      "path": ".artifacts/subtool-browser/layout-final-9ba4f511-ea1e-4741-b933-fd47a2a24a80/harness.mjs",
+      "sha256": "344ea511a6b742fc1cd36000d12a5c8d35a80418f7d07fec5f8c9107f335588f",
+      "bytes": 65353
+    },
+    "frozen_release": {
+      "web": ".artifacts/subtool-release-0.1.10-layout-final/web",
+      "source_manifest": {
+        "path": ".artifacts/subtool-release-0.1.10-layout-final/source-manifest.json",
+        "sha256": "c04409a5eb05032f896d1d9547b17c6f8b68fd3bfbf40442f9b3e2111d059a6d",
+        "bytes": 11944
+      },
+      "build_record": {
+        "path": ".artifacts/subtool-release-0.1.10-layout-final/build-record.json",
+        "sha256": "32b4965ef7faafd86abcea8b85aafd487dec997b990753809c85a4a270d78c50",
+        "bytes": 4836
+      },
+      "frozen_helper": {
+        "path": ".artifacts/subtool-release-0.1.10-layout-final/source/scripts/check-subtools.mjs",
+        "sha256": "344ea511a6b742fc1cd36000d12a5c8d35a80418f7d07fec5f8c9107f335588f",
+        "bytes": 65353
+      },
+      "wasm": {
+        "sha256": "0dbc84227b922654c8f608ca0dc4941581922ae4f69982c95a7b6aa0acf1f136",
+        "served_sha256": "0dbc84227b922654c8f608ca0dc4941581922ae4f69982c95a7b6aa0acf1f136",
+        "bytes": 4073387
+      }
+    },
+    "preregistered_contract": {
+      "draw_radius": 0.18,
+      "draw_strength": 0.35,
+      "symmetry_x": true,
+      "draw_min_original_vertex_displacement": 0.002,
+      "visible_scene_control_horizontal_clip_tolerance": 0.01,
+      "recorded_layer_min_displacement": 0.001,
+      "rich_copy_base_draw_min_displacement": 0.001,
+      "gpu": "Exact packed f32 visible vertex-buffer and solid u32 index-buffer multiset; actual u_active flag and active-last draw order",
+      "inactive_uploads": "Stable observed inactive VBO/IBO identities, exact digests and upload counts; renderer per-ID uploads unchanged during active Draw",
+      "history": "Exact canonical captured full-scene Save bytes",
+      "layer_composition": "Ordered visible f64 offsets with stored f32 intensities; skip zero contributions and compare final f32 bits",
+      "target_correspondence": "Stored target vertex bits and ordered faces bound to creation level; active hierarchy mesh is top-level with null retained active slot",
+      "release_probe_incremental_delays_ms": [
+        0,
+        200,
+        800
+      ],
+      "release_probe_timestamp": "Probe start before asynchronous GPU readback/metrics; not finalization completion or input-to-photon latency",
+      "long_session_performance": "Excluded; short named gestures only"
+    },
+    "cases": [
+      {
+        "name": "add-append-rename-reorder-duplicate-delete",
+        "fixture": {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/subtool-browser/layout-final-9ba4f511-ea1e-4741-b933-fd47a2a24a80/independent-left-sphere.obj",
+          "sha256": "cbd509753bc06355af8bc0b37a7e2afdea78b81997e82e5639a73f5c4e1b2f7e",
+          "bytes": 35553
+        },
+        "histories": {
+          "cubeHistory": {
+            "undo_exact": true,
+            "redo_exact": true
+          },
+          "sphereHistory": {
+            "undo_exact": true,
+            "redo_exact": true
+          },
+          "appendHistory": {
+            "undo_exact": true,
+            "redo_exact": true
+          },
+          "renameHistory": {
+            "undo_exact": true,
+            "redo_exact": true
+          },
+          "upHistory": {
+            "undo_exact": true,
+            "redo_exact": true
+          },
+          "duplicateHistory": {
+            "undo_exact": true,
+            "redo_exact": true
+          },
+          "deleteHistory": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        },
+        "gates": {
+          "scene_is_v5": true,
+          "append_preserves_exact_coordinates": true,
+          "rename_exact": true,
+          "reorder_roundtrip_exact": true,
+          "duplicate_new_stable_id": true,
+          "duplicate_exact_state": true,
+          "delete_retains_source": true
+        }
+      },
+      {
+        "name": "visibility-solo-hidden-noop",
+        "history": {
+          "undo_exact": true,
+          "redo_exact": true
+        },
+        "gates": {
+          "hidden_has_no_active_draw": true,
+          "hidden_noop_exact_project": true,
+          "show_restores_exact_scene": true,
+          "solo_one_rendered_object": true,
+          "solo_keeps_visibility_flags": true,
+          "solo_off_exact": true,
+          "release_quiet": true
+        }
+      },
+      {
+        "name": "active-draw-inactive-gpu-isolation",
+        "fixture": {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/subtool-browser/layout-final-9ba4f511-ea1e-4741-b933-fd47a2a24a80/Independent separated scene.obrush",
+          "sha256": "afbacbff7dc99e4fed8c1c4a66adb1477027ab187baedbd0f9e33ea8856219f0",
+          "bytes": 103910
+        },
+        "difference": {
+          "original_vertices": 266,
+          "after_vertices": 1247,
+          "changed_vertices": 1,
+          "max_displacement": 0.007830041438791948
+        },
+        "history": {
+          "undo_exact": true,
+          "redo_exact": true
+        },
+        "uploads": {
+          "before": {
+            "id": 1,
+            "triangles": 528,
+            "uploads": 2,
+            "vertices": 266
+          },
+          "after": {
+            "id": 1,
+            "triangles": 528,
+            "uploads": 2,
+            "vertices": 266
+          }
+        },
+        "gates": {
+          "useful_active_draw": true,
+          "active_id_retained": true,
+          "inactive_state_exact": true,
+          "inactive_vertex_index_bytes_exact": true,
+          "inactive_buffer_uploads_unchanged": true,
+          "inactive_renderer_uploads_unchanged": true,
+          "release_quiet": true
+        }
+      },
+      {
+        "name": "separate-mask-color-layers-morph-levels",
+        "histories": {
+          "maskHistory": {
+            "undo_exact": true,
+            "redo_exact": true
+          },
+          "paintHistory": {
+            "undo_exact": true,
+            "redo_exact": true
+          },
+          "ownLayerHistory": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        },
+        "gates": {
+          "inactive_all_state_exact": true,
+          "mask_changes_active_only": true,
+          "color_changes_active_only": true,
+          "own_layer_records_usefully": true,
+          "own_target_bits_retained": true,
+          "own_target_origin_unavailable_on_high": true,
+          "left_has_no_foreign_extras": true,
+          "right_selection_preserves_exact_state": true,
+          "right_channels_retained": true
+        }
+      },
+      {
+        "name": "v5-fresh-open-invalid-inactive-redo",
+        "invalid_fixture": {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/subtool-browser/layout-final-9ba4f511-ea1e-4741-b933-fd47a2a24a80/invalid-inactive-index.obrush",
+          "sha256": "d58546b39c21fbccd069fd4737bb77a40ec647b6a85378f06286a5bb1dfd3e72",
+          "bytes": 933193
+        },
+        "notice": "Import failed: Triangle 0 refers to a missing vertex",
+        "gates": {
+          "fresh_canonical_bytes_exact": true,
+          "invalid_preserves_scene": true,
+          "invalid_preserves_redo": true
+        }
+      },
+      {
+        "name": "legacy-v2-v3-v4-open",
+        "fixtures": [
+          {
+            "version": "v2",
+            "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/baseline-2e0bdefc-5c0f-4e09-aedb-c97b8a21e24f/sphere-outbound-initial.obrush",
+            "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+            "exact_semantic_state": true,
+            "one_implicit_subtool": true
+          },
+          {
+            "version": "v3",
+            "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/persisted-two-layers.obrush",
+            "sha256": "e1ebf89237c20f0c1bb391853d312455e5f0d7dc5a506a8a72f26ea82e151c6b",
+            "exact_semantic_state": true,
+            "one_implicit_subtool": true
+          },
+          {
+            "version": "v4",
+            "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/fine-layer-swap-twice.obrush",
+            "sha256": "2254551a985175e960c791e8b262a057074d6fa5ab94f962c99fe6cfd4a29867",
+            "exact_semantic_state": true,
+            "one_implicit_subtool": true
+          }
+        ],
+        "gates": {
+          "all_legacy_semantic_states_exact": true,
+          "all_legacy_single_part": true
+        }
+      },
+      {
+        "name": "rich-duplicate-independence-history",
+        "histories": {
+          "richDuplicateHistory": {
+            "undo_exact": true,
+            "redo_exact": true
+          },
+          "richDeleteHistory": {
+            "undo_exact": true,
+            "redo_exact": true
+          }
+        },
+        "gates": {
+          "duplicate_copies_complete_state": true,
+          "source_preserved_after_copy_draw": true,
+          "source_extras_retained": true,
+          "delete_removes_only_copy": true
+        }
+      },
+      {
+        "name": "nearest-visible-overlap-picking",
+        "fixture": {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/subtool-browser/layout-final-9ba4f511-ea1e-4741-b933-fd47a2a24a80/Independent overlap scene.obrush",
+          "sha256": "5ffe4340ebb882d72f5539c223d217e7041ac8ed5df1a765a01428c52d3597d6",
+          "bytes": 104186
+        },
+        "contact": {
+          "point": [
+            0.3399147093296051,
+            0.2497682124376297,
+            1.0676745176315308
+          ],
+          "screen": [
+            780.5446515317119,
+            485.91973082383623
+          ],
+          "view_projection": [
+            2.0647244453430176,
+            -0.16866451501846313,
+            -0.3373646140098572,
+            -0.33735784888267517,
+            0,
+            2.7030887603759766,
+            -0.17903319001197815,
+            -0.17902959883213043,
+            -0.7536832690238953,
+            -0.46205848455429077,
+            -0.9242144823074341,
+            -0.9241959452629089,
+            0.0393865667283535,
+            0.024146605283021927,
+            3.6418004035949707,
+            3.648928642272949
+          ],
+          "view": [
+            0.9393727779388428,
+            -0.06138886138796806,
+            0.33735784888267517,
+            0,
+            0,
+            0.9838438034057617,
+            0.17902959883213043,
+            0,
+            -0.34289783239364624,
+            -0.16817553341388702,
+            0.9241959452629089,
+            0,
+            0.017919421195983887,
+            0.008788645267486572,
+            -3.648928642272949,
+            1
+          ],
+          "viewport": [
+            225,
+            31,
+            1140,
+            912
+          ]
+        },
+        "gates": {
+          "nearest_front_selected": true,
+          "masked_geometry_states_exact": true,
+          "active_solid_draw_last": true
+        }
+      }
+    ],
+    "explicit_case_gate_count": 42,
+    "all_explicit_case_gates_pass": true,
+    "additional_inspector_horizontal_gate": {
+      "tolerance": 0.01,
+      "checked_states": 100,
+      "visible_control_checks": 1390,
+      "failures": []
+    },
+    "saved_scene_snapshots": 71,
+    "visible_solid_vertex_index_buffer_checks": 175,
+    "all_visible_vertex_solid_index_buffers_exact": true,
+    "all_saved_object_contracts": 185,
+    "stored_target_object_snapshots": 29,
+    "layer_composition_object_snapshots": 20,
+    "all_layer_compositions_exact": true,
+    "page_count": 7,
+    "all_page_runtime_errors": {
+      "gl": [],
+      "js": []
+    },
+    "cdp_exceptions": [],
+    "console_errors": [],
+    "actual_4x_msaa_each_page": true,
+    "scroll_actions": [
+      {
+        "key": "scroll-for.morph.store",
+        "pointer": [
+          1425.328125,
+          750
+        ],
+        "before_rect": [
+          1383,
+          987,
+          1467.65625,
+          1013
+        ],
+        "delta_y": 350,
+        "at_epoch_ms": 1791867744679,
+        "after_rect": [
+          1383,
+          749,
+          1467.65625,
+          775
+        ]
+      },
+      {
+        "key": "scroll-for.scene.select.1",
+        "pointer": [
+          1451.78125,
+          750
+        ],
+        "before_rect": [
+          1409,
+          -174,
+          1494.5625,
+          -148
+        ],
+        "delta_y": -350,
+        "at_epoch_ms": 1791867752022,
+        "after_rect": [
+          1409,
+          64,
+          1494.5625,
+          90
+        ]
+      },
+      {
+        "key": "scroll-for.layers.stop",
+        "pointer": [
+          1432.4375,
+          750
+        ],
+        "before_rect": [
+          1383,
+          961,
+          1481.875,
+          987
+        ],
+        "delta_y": 350,
+        "at_epoch_ms": 1791867765604,
+        "after_rect": [
+          1383,
+          721,
+          1481.875,
+          747
+        ]
+      },
+      {
+        "key": "scroll-for.scene.delete",
+        "pointer": [
+          1489.34375,
+          750
+        ],
+        "before_rect": [
+          1461.5625,
+          -83,
+          1517.125,
+          -57
+        ],
+        "delta_y": -350,
+        "at_epoch_ms": 1791867769005,
+        "after_rect": [
+          1461.5625,
+          156,
+          1517.125,
+          182
+        ]
+      }
+    ],
+    "actual_scroll_wheel_events": [
+      {
+        "x": 1425,
+        "y": 750,
+        "delta_x": 0,
+        "delta_y": 350,
+        "trusted": true,
+        "at": 13545.5
+      },
+      {
+        "x": 1451,
+        "y": 750,
+        "delta_x": 0,
+        "delta_y": -350,
+        "trusted": true,
+        "at": 20893.60000000149
+      },
+      {
+        "x": 1432,
+        "y": 750,
+        "delta_x": 0,
+        "delta_y": 350,
+        "trusted": true,
+        "at": 3985.3000000044703
+      },
+      {
+        "x": 1489,
+        "y": 750,
+        "delta_x": 0,
+        "delta_y": -350,
+        "trusted": true,
+        "at": 7385.80000000447
+      }
+    ],
+    "strokes": [
+      {
+        "name": "hidden-active-noop",
+        "brush": "Draw",
+        "from": [
+          509.41129047794703,
+          488.2554291415154
+        ],
+        "to": [
+          519.411290477947,
+          496.2554291415154
+        ],
+        "steps": 10,
+        "quiet": true,
+        "first_probe_start_after_dom_release_ms": 4.700000002980232,
+        "probe_pending_dabs": [
+          0,
+          0,
+          0
+        ],
+        "frame_gap_p95_ms": 16.700000000004366,
+        "frame_gap_max_ms": 16.80000000000291,
+        "long_tasks": []
+      },
+      {
+        "name": "active-only-draw",
+        "brush": "Draw",
+        "from": [
+          1043.0303399547295,
+          514.8177377647031
+        ],
+        "to": [
+          1053.0303399547295,
+          522.8177377647031
+        ],
+        "steps": 14,
+        "quiet": true,
+        "first_probe_start_after_dom_release_ms": 3.399999998509884,
+        "probe_pending_dabs": [
+          0,
+          0,
+          0
+        ],
+        "frame_gap_p95_ms": 16.700000000000273,
+        "frame_gap_max_ms": 16.799999999999955,
+        "long_tasks": []
+      },
+      {
+        "name": "active-mask",
+        "brush": "Mask",
+        "from": [
+          1043.099537744164,
+          514.599290587837
+        ],
+        "to": [
+          1053.099537744164,
+          522.599290587837
+        ],
+        "steps": 12,
+        "quiet": true,
+        "first_probe_start_after_dom_release_ms": 3.0,
+        "probe_pending_dabs": [
+          0,
+          0,
+          0
+        ],
+        "frame_gap_p95_ms": 16.700000000000728,
+        "frame_gap_max_ms": 16.800000000000182,
+        "long_tasks": []
+      },
+      {
+        "name": "active-paint",
+        "brush": "Paint",
+        "from": [
+          1043.099537744164,
+          514.599290587837
+        ],
+        "to": [
+          1053.099537744164,
+          522.599290587837
+        ],
+        "steps": 12,
+        "quiet": true,
+        "first_probe_start_after_dom_release_ms": 3.399999998509884,
+        "probe_pending_dabs": [
+          0,
+          0,
+          0
+        ],
+        "frame_gap_p95_ms": 16.799999999999272,
+        "frame_gap_max_ms": 16.80000000000109,
+        "long_tasks": []
+      },
+      {
+        "name": "right-layer-draw",
+        "brush": "Draw",
+        "from": [
+          1043.099537744164,
+          514.599290587837
+        ],
+        "to": [
+          1053.099537744164,
+          522.599290587837
+        ],
+        "steps": 10,
+        "quiet": true,
+        "first_probe_start_after_dom_release_ms": 3.8000000044703484,
+        "probe_pending_dabs": [
+          0,
+          0,
+          0
+        ],
+        "frame_gap_p95_ms": 16.700000000000728,
+        "frame_gap_max_ms": 16.799999999999272,
+        "long_tasks": []
+      },
+      {
+        "name": "rich-copy-base-draw",
+        "brush": "Draw",
+        "from": [
+          817.3173443322758,
+          538.9687703955541
+        ],
+        "to": [
+          827.3173443322758,
+          546.9687703955541
+        ],
+        "steps": 10,
+        "quiet": true,
+        "first_probe_start_after_dom_release_ms": 3.9000000059604645,
+        "probe_pending_dabs": [
+          0,
+          0,
+          0
+        ],
+        "frame_gap_p95_ms": 16.800000000000182,
+        "frame_gap_max_ms": 16.800000000000182,
+        "long_tasks": []
+      }
+    ],
+    "fixtures": [
+      {
+        "case": "add-append-rename-reorder-duplicate-delete",
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/subtool-browser/layout-final-9ba4f511-ea1e-4741-b933-fd47a2a24a80/independent-left-sphere.obj",
+        "sha256": "cbd509753bc06355af8bc0b37a7e2afdea78b81997e82e5639a73f5c4e1b2f7e",
+        "bytes": 35553
+      },
+      {
+        "case": "active-draw-inactive-gpu-isolation",
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/subtool-browser/layout-final-9ba4f511-ea1e-4741-b933-fd47a2a24a80/Independent separated scene.obrush",
+        "sha256": "afbacbff7dc99e4fed8c1c4a66adb1477027ab187baedbd0f9e33ea8856219f0",
+        "bytes": 103910
+      },
+      {
+        "case": "v5-fresh-open-invalid-inactive-redo",
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/subtool-browser/layout-final-9ba4f511-ea1e-4741-b933-fd47a2a24a80/invalid-inactive-index.obrush",
+        "sha256": "d58546b39c21fbccd069fd4737bb77a40ec647b6a85378f06286a5bb1dfd3e72",
+        "bytes": 933193
+      },
+      {
+        "case": "legacy-v2-v3-v4-open",
+        "version": "v2",
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/baseline-2e0bdefc-5c0f-4e09-aedb-c97b8a21e24f/sphere-outbound-initial.obrush",
+        "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+        "exact_semantic_state": true,
+        "one_implicit_subtool": true
+      },
+      {
+        "case": "legacy-v2-v3-v4-open",
+        "version": "v3",
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/persisted-two-layers.obrush",
+        "sha256": "e1ebf89237c20f0c1bb391853d312455e5f0d7dc5a506a8a72f26ea82e151c6b",
+        "exact_semantic_state": true,
+        "one_implicit_subtool": true
+      },
+      {
+        "case": "legacy-v2-v3-v4-open",
+        "version": "v4",
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/morph-browser-0.1.9/scroll-final-b1a9c143-bbe7-4c30-a24a-bf6760eb186f/fine-layer-swap-twice.obrush",
+        "sha256": "2254551a985175e960c791e8b262a057074d6fa5ab94f962c99fe6cfd4a29867",
+        "exact_semantic_state": true,
+        "one_implicit_subtool": true
+      },
+      {
+        "case": "nearest-visible-overlap-picking",
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/subtool-browser/layout-final-9ba4f511-ea1e-4741-b933-fd47a2a24a80/Independent overlap scene.obrush",
+        "sha256": "5ffe4340ebb882d72f5539c223d217e7041ac8ed5df1a765a01428c52d3597d6",
+        "bytes": 104186
+      }
+    ],
+    "screenshots": [
+      {
+        "path": ".artifacts/subtool-browser/layout-final-9ba4f511-ea1e-4741-b933-fd47a2a24a80/initial-controls.png",
+        "sha256": "2f9d0668f03abfe05072c362eb0ad1c948c31cee669a5d10909869ed5e79cae3",
+        "bytes": 219033
+      },
+      {
+        "path": ".artifacts/subtool-browser/layout-final-9ba4f511-ea1e-4741-b933-fd47a2a24a80/subtools-final-controls.png",
+        "sha256": "46d444ae044e88bb053e5893d8ba69b774fb1b2af0b598a19b2c4af977afbd27",
+        "bytes": 235402
+      }
+    ],
+    "visual_observation": "Inspected both required PNGs: initial counters40,962/81,920 and final counters266/528 are fully visible; Move up/Move down render readable ASCII labels on a separate row; scene controls stay within the actual inspector clip. The overlap fixture is intentionally coarse/fully masked, and its PNG does not establish production sculpt appearance or reference parity.",
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "retained_intermediate_visual_failure": {
+      "raw_result": {
+        "path": ".artifacts/subtool-browser/verified-c26def90-69c0-494f-a387-0aa92edec44e/result.json",
+        "sha256": "57dc773208ff368fc5510fc932d76c5ef083963de689c75d09ee57e150319506",
+        "bytes": 1302220
+      },
+      "scoped_summary": {
+        "path": ".artifacts/subtool-browser/verified-c26def90-69c0-494f-a387-0aa92edec44e/summary.json",
+        "sha256": "f9c3a997a30de12fca212704830e0f363c7323a64959645723978a0e38b210fd",
+        "bytes": 19767
+      },
+      "screenshot": {
+        "path": ".artifacts/subtool-browser/verified-c26def90-69c0-494f-a387-0aa92edec44e/subtools-final-controls.png",
+        "sha256": "c4144f8ad04de86f84378b4178ff24fb4605f2cd0b7faff5f5b74b894dcede4b",
+        "bytes": 234938
+      },
+      "scope": "The intermediate42-gate runtime passed geometry/history but root visual QA found clipped inspector content and unsupported arrow glyphs. Corrected production separates action rows and labels; new actual-clip gate passes without weakening any prior threshold."
+    },
+    "timing_scope": "Quiet CPU slot, isolated headless Chrome with trusted synthetic mouse. Probe timestamps are starts before asynchronous complete visible vertex/solid-index readback and later pending-metric observation, not operation completion or physical input-to-photon latency. rAF/long-task observations cover only short named gesture-and-release intervals. Sustained long-session performance is excluded.",
+    "pending_browser_note_supersession": {
+      "build_record": ".artifacts/subtool-release-0.1.10-layout-final/build-record.json",
+      "scope": "These eight named browser workflows plus the inspector horizontal-clip gate supersede the immutable build record browser-pending note for this exact source/helper/WASM bundle only. Compiler record remains unchanged; native GUI, physical devices and reference parity are unverified."
+    },
+    "limitations": [
+      "One independently authored scene foundation; no SubTool folders, transforms, Live Boolean or reference parity is claimed.",
+      "Owned headless Chrome with trusted synthetic input; native GUI, physical devices and input-to-photon latency remain unverified.",
+      "Visible packed vertex and solid index buffers are compared as a complete multiset with actual active shader flag/order. Renderer IDs are not exposed as shader uniforms; identical inactive copies are distinguished by public state and per-ID upload counters.",
+      "Release probes cover short named gestures only; sustained long-session queue performance is excluded.",
+      "Public file input and captured download bytes are exercised; native file-picker/download filesystem persistence is outside this harness."
+    ],
+    "numerical_channel_checks": {
+      "mask_changed_vertices": 934,
+      "max_mask_after": 0.24459057,
+      "clear_mask_max": 0.0,
+      "paint_changed_vertices": 934,
+      "own_layer_draw": {
+        "changed_vertices": 900,
+        "max_displacement": 0.0011790291938710686
+      },
+      "rich_copy_base_draw": {
+        "changed_vertices": 14,
+        "max_displacement": 0.006804153625257184
+      }
+    }
+  },
+  "reference_execution": false,
+  "limitations": [
+    "No executed ZBrush2026.2.1SubTool comparison",
+    "Native GUI, physical devices, full host matrix, large scenes and sustained long sessions remain unverified",
+    "Readback validates packed vertices/solid indices and draw order; pixel-depth/wireframe reference equivalence remains separate",
+    "Public file input and captured download data do not establish native picker or download filesystem persistence"
+  ]
+}

@@ -1,0 +1,507 @@
+{
+  "scope": "Scoped normal OBrush browser consumer gates. Original failed whole-run statuses preserved; passing individual cases only establish named local foundations. No SculptGL/ZBrush parity, native GUI, physical inputs or paired performance claim.",
+  "reference_revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+  "current_candidate": ".artifacts/sculptgl-release-0.1.17-candidate2",
+  "current_manifest_sha256": "1482c860bdff5a528e1fa924f48909f318144cac4f6a103a4d4c7332efbcf477",
+  "current_build_record_sha256": "11d1ca57dd99fae1c84e124ef3e9c4fb57dc8b435a5032c9f74be67f9e382e16",
+  "workspace_tests": {
+    "total": 949,
+    "core": 833,
+    "app": 116,
+    "ignored": 1,
+    "lineage": "Full suite before2equivalent Clippy booleans and app-only C2layout. Allcore source/fixtures identical; final116app+allstrict/WASM/artifacts rerun."
+  },
+  "independent_gpu_reconstruction": {
+    "path": ".artifacts/sculptgl-render-stage/consumer-preparation/consolidated-runtime.json",
+    "sha256": "427174dac9d95c6feaf6b74cbc23ab6512bc8aaf0a8590d0fcd477ad42b46f15",
+    "download_hashes_reverified_by_root": 130,
+    "complete_40_byte_vertices_8_byte_materials_8_byte_uv_u32_indices": true
+  },
+  "runs": [
+    {
+      "result_path": ".artifacts/sculptgl-render-cohort-runtime/candidate1-main-49be08d0-dc5a-4b08-a1a7-60a6b9011817/result.json",
+      "result_sha256": "45f16fa2eba55489045a2559ea2cd35e010dcaa4c7c9e6e5d453c021bb9342f8",
+      "status": "failed local host run",
+      "failure": "Error: Missing actual rendered control: paint.pick\n    at assert (file:///Users/Ajab/AI/OBrush/scripts/check-sculptgl-render-cohort.mjs:22:34)\n    at control (file:///Users/Ajab/AI/OBrush/scripts/check-sculptgl-render-cohort.mjs:160:114)\n    at async action (file:///Users/Ajab/AI/OBrush/scripts/check-sculptgl-render-cohort.mjs:161:56)\n    at async pickerCases (file:///Users/Ajab/AI/OBrush/scripts/check-sculptgl-render-cohort.mjs:260:619)\n    at async file:///Users/Ajab/AI/OBrush/scripts/check-sculptgl-render-cohort.mjs:292:198",
+      "harness_sha256": "95f1e1e9ea7e8bdb83e984d02722addb752003a2329e04477f56194b9ca6c38b",
+      "binding": {
+        "candidate": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.17-candidate1",
+        "source_root": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.17-candidate1/source",
+        "status": "immutable candidate binding",
+        "manifest_sha256": "9940115763f2c67238a31bbca2330edbe2f2815d3282bc8abcf5c4ce032349ed",
+        "build_sha256": "febbc89299754029871b0391ca6c3877ebfc1eb0b7d4947a91c7e05f7edd4a1a",
+        "checked_source_files": 149
+      },
+      "downloads": 34,
+      "gpu_checks": 34,
+      "cases": [
+        {
+          "name": "frozen-host-startup",
+          "gates": {
+            "actual_startup": true,
+            "default_radius_strength": true,
+            "production_download_completed": true,
+            "visible_gpu_save_exact": true
+          },
+          "limits": []
+        },
+        {
+          "name": "fill-scalar-only",
+          "gates": {
+            "analytic_all_rows_exact": true,
+            "exact_report": true,
+            "geometry_normals_masks_surface_fixed": true,
+            "scalar_preserves_vertex_rgb_display": true,
+            "whole_fill_history_exact": true,
+            "alloff_noop_exact": true,
+            "alloff_prior_redo_exact": true,
+            "repeat_noop_exact": true,
+            "repeat_preserves_history": true,
+            "complete_gpu_exact": true,
+            "post_completion_quiet": true
+          },
+          "limits": [
+            "Positive Fill targets read from actual settings, binary endpoint masks and one active part. Soft-mask repeated Fill is intentionally outside the no-op contract."
+          ]
+        },
+        {
+          "name": "fill-rgb-only",
+          "gates": {
+            "analytic_all_rows_exact": true,
+            "exact_report": true,
+            "geometry_normals_masks_surface_fixed": true,
+            "scalar_preserves_vertex_rgb_display": true,
+            "whole_fill_history_exact": true,
+            "alloff_noop_exact": true,
+            "alloff_prior_redo_exact": true,
+            "repeat_noop_exact": true,
+            "repeat_preserves_history": true,
+            "complete_gpu_exact": true,
+            "post_completion_quiet": true
+          },
+          "limits": [
+            "Positive Fill targets read from actual settings, binary endpoint masks and one active part. Soft-mask repeated Fill is intentionally outside the no-op contract."
+          ]
+        },
+        {
+          "name": "fill-combined",
+          "gates": {
+            "analytic_all_rows_exact": true,
+            "exact_report": true,
+            "geometry_normals_masks_surface_fixed": true,
+            "scalar_preserves_vertex_rgb_display": true,
+            "whole_fill_history_exact": true,
+            "alloff_noop_exact": true,
+            "alloff_prior_redo_exact": true,
+            "repeat_noop_exact": true,
+            "repeat_preserves_history": true,
+            "complete_gpu_exact": true,
+            "post_completion_quiet": true
+          },
+          "limits": [
+            "Positive Fill targets read from actual settings, binary endpoint masks and one active part. Soft-mask repeated Fill is intentionally outside the no-op contract."
+          ]
+        }
+      ],
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      }
+    },
+    {
+      "result_path": ".artifacts/sculptgl-render-cohort-runtime/candidate1-tail-a09f1759-96f8-4b00-b5cc-48bcfacc2606/result.json",
+      "result_sha256": "ae41dffd3d1716fc7c4675db8c25dfad2cce3cd9df82395186d9d555eb342b6c",
+      "status": "failed local host run",
+      "failure": "Error: Control remains outside viewport: viewport.curvature\n    at control (file:///Users/Ajab/AI/OBrush/scripts/check-sculptgl-render-tail.mjs:161:636)\n    at async numeric (file:///Users/Ajab/AI/OBrush/scripts/check-sculptgl-render-tail.mjs:165:55)\n    at async renderCases (file:///Users/Ajab/AI/OBrush/scripts/check-sculptgl-render-tail.mjs:268:398)\n    at async file:///Users/Ajab/AI/OBrush/scripts/check-sculptgl-render-tail.mjs:293:198",
+      "harness_sha256": "c9c0d1a750ffc5e86cd5915ecbeff1e0c9fb6f73777ff460add8fa1687670d90",
+      "binding": {
+        "candidate": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.17-candidate1",
+        "source_root": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.17-candidate1/source",
+        "status": "immutable candidate binding",
+        "manifest_sha256": "9940115763f2c67238a31bbca2330edbe2f2815d3282bc8abcf5c4ce032349ed",
+        "build_sha256": "febbc89299754029871b0391ca6c3877ebfc1eb0b7d4947a91c7e05f7edd4a1a",
+        "checked_source_files": 149
+      },
+      "downloads": 65,
+      "gpu_checks": 65,
+      "cases": [
+        {
+          "name": "frozen-host-startup",
+          "gates": {
+            "actual_startup": true,
+            "default_radius_strength": true,
+            "production_download_completed": true,
+            "visible_gpu_save_exact": true
+          },
+          "limits": []
+        },
+        {
+          "name": "picker-independent-noisy-protected-sphere",
+          "gates": {
+            "normal_picker_one_contact": true,
+            "indexed_original_face_membership": true,
+            "idw_channels_within2e6": true,
+            "sampled_targets_within2e6": true,
+            "interpolation_declared": true,
+            "document_revision_preserved": true,
+            "dirty_preserved": true,
+            "whole_document_exact": true,
+            "visible_gpu_exact": true,
+            "no_sculpt_queue_or_dabs": true,
+            "prior_redo_exact": true,
+            "post_completion_quiet": true
+          },
+          "limits": [
+            "One picked contact per implicit triangle, original triangle seams and original quad. Targets sampled from current authoritative rows; not a complete drag/cancel/occlusion/reference pointer matrix."
+          ]
+        },
+        {
+          "name": "picker-independent-v6-triangle-equal-valued-seams",
+          "gates": {
+            "normal_picker_one_contact": true,
+            "indexed_original_face_membership": true,
+            "idw_channels_within2e6": true,
+            "sampled_targets_within2e6": true,
+            "interpolation_declared": true,
+            "document_revision_preserved": true,
+            "dirty_preserved": true,
+            "whole_document_exact": true,
+            "visible_gpu_exact": true,
+            "no_sculpt_queue_or_dabs": true,
+            "prior_redo_exact": true,
+            "post_completion_quiet": true
+          },
+          "limits": [
+            "One picked contact per implicit triangle, original triangle seams and original quad. Targets sampled from current authoritative rows; not a complete drag/cancel/occlusion/reference pointer matrix."
+          ]
+        },
+        {
+          "name": "picker-independent-v6-welded-grid-quads-uv",
+          "gates": {
+            "normal_picker_one_contact": true,
+            "indexed_original_face_membership": true,
+            "idw_channels_within2e6": true,
+            "sampled_targets_within2e6": true,
+            "interpolation_declared": true,
+            "document_revision_preserved": true,
+            "dirty_preserved": true,
+            "whole_document_exact": true,
+            "visible_gpu_exact": true,
+            "no_sculpt_queue_or_dabs": true,
+            "prior_redo_exact": true,
+            "post_completion_quiet": true
+          },
+          "limits": [
+            "One picked contact per implicit triangle, original triangle seams and original quad. Targets sampled from current authoritative rows; not a complete drag/cancel/occlusion/reference pointer matrix."
+          ]
+        },
+        {
+          "name": "delete-lower-static_smooth",
+          "gates": {
+            "requested_normal_delete": true,
+            "one_retained_active_level": true,
+            "active_shape_and_attributes_exact": true,
+            "whole_delete_history_exact": true,
+            "normal_reload_exact": true,
+            "subsequent_edit_useful": true,
+            "new_edit_undo_exact": true,
+            "new_edit_redo_exact": true,
+            "complete_gpu_exact": true
+          },
+          "limits": [
+            "Two retained levels, each static scheme and each delete direction. Reload verifies saved hierarchy then new edit history; saved files do not serialize the old Undo stack. Higher-level deletion from a three-level middle stack, Morph/layers and source reverse reconstruction are separate gates."
+          ]
+        },
+        {
+          "name": "delete-higher-static_smooth",
+          "gates": {
+            "requested_normal_delete": true,
+            "one_retained_active_level": true,
+            "active_shape_and_attributes_exact": true,
+            "whole_delete_history_exact": true,
+            "normal_reload_exact": true,
+            "subsequent_edit_useful": true,
+            "new_edit_undo_exact": true,
+            "new_edit_redo_exact": true,
+            "complete_gpu_exact": true
+          },
+          "limits": [
+            "Two retained levels, each static scheme and each delete direction. Reload verifies saved hierarchy then new edit history; saved files do not serialize the old Undo stack. Higher-level deletion from a three-level middle stack, Morph/layers and source reverse reconstruction are separate gates."
+          ]
+        },
+        {
+          "name": "delete-lower-static_linear",
+          "gates": {
+            "requested_normal_delete": true,
+            "one_retained_active_level": true,
+            "active_shape_and_attributes_exact": true,
+            "whole_delete_history_exact": true,
+            "normal_reload_exact": true,
+            "subsequent_edit_useful": true,
+            "new_edit_undo_exact": true,
+            "new_edit_redo_exact": true,
+            "complete_gpu_exact": true
+          },
+          "limits": [
+            "Two retained levels, each static scheme and each delete direction. Reload verifies saved hierarchy then new edit history; saved files do not serialize the old Undo stack. Higher-level deletion from a three-level middle stack, Morph/layers and source reverse reconstruction are separate gates."
+          ]
+        },
+        {
+          "name": "delete-higher-static_linear",
+          "gates": {
+            "requested_normal_delete": true,
+            "one_retained_active_level": true,
+            "active_shape_and_attributes_exact": true,
+            "whole_delete_history_exact": true,
+            "normal_reload_exact": true,
+            "subsequent_edit_useful": true,
+            "new_edit_undo_exact": true,
+            "new_edit_redo_exact": true,
+            "complete_gpu_exact": true
+          },
+          "limits": [
+            "Two retained levels, each static scheme and each delete direction. Reload verifies saved hierarchy then new edit history; saved files do not serialize the old Undo stack. Higher-level deletion from a three-level middle stack, Morph/layers and source reverse reconstruction are separate gates."
+          ]
+        },
+        {
+          "name": "uv-independent-v6-triangle-equal-valued-seams",
+          "gates": {
+            "mode_does_not_mutate_core": true,
+            "equal_valued_distinct_uv_ids_retained": true,
+            "complete_independent_corner_mapping_and_gpu": true,
+            "uv_draw_useful": true,
+            "original_surface_materials_static": true,
+            "whole_draw_history_exact": true,
+            "studio_cache_released": true,
+            "mode_return_preserves_core": true
+          },
+          "limits": [
+            "Exact render-only mapping/streams and one positive Draw on original surface. This foundation uses a checker or global texture, not reference UV preset/persistence/per-object style parity."
+          ]
+        },
+        {
+          "name": "uv-independent-v6-welded-grid-quads-uv",
+          "gates": {
+            "mode_does_not_mutate_core": true,
+            "equal_valued_distinct_uv_ids_retained": true,
+            "complete_independent_corner_mapping_and_gpu": true,
+            "uv_draw_useful": true,
+            "original_surface_materials_static": true,
+            "whole_draw_history_exact": true,
+            "studio_cache_released": true,
+            "mode_return_preserves_core": true
+          },
+          "limits": [
+            "Exact render-only mapping/streams and one positive Draw on original surface. This foundation uses a checker or global texture, not reference UV preset/persistence/per-object style parity."
+          ]
+        },
+        {
+          "name": "uv-visible-legacy-fallback",
+          "gates": {
+            "whole_two_part_scene_exact": true,
+            "mixed_render_uv_and_legacy": true,
+            "complete_gpu_exact": true
+          },
+          "limits": [
+            "Global UV selection on active UV object; visible inactive legacy cube falls back to normal stream. Style selection on a no-UV active object remains separately restricted."
+          ]
+        }
+      ],
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      }
+    },
+    {
+      "result_path": ".artifacts/sculptgl-render-cohort-runtime/candidate1-texture-only-11e0a187-fdc2-4c2b-8c42-fd014ba255de/result.json",
+      "result_sha256": "ef32a3efac8a4d5d0e52a3ebeb116491ac0b2b9c91c8d0b29a5c363eb853c94d",
+      "status": "failed local host run",
+      "failure": "Error: Failed declared host case: normal-texture-original-png-reset-and-rejection\n    at assert (file:///Users/Ajab/AI/OBrush/scripts/check-sculptgl-render-tail.mjs:22:34)\n    at finishCase (file:///Users/Ajab/AI/OBrush/scripts/check-sculptgl-render-tail.mjs:209:209)\n    at async textureCases (file:///Users/Ajab/AI/OBrush/scripts/check-sculptgl-render-tail.mjs:275:3)\n    at async file:///Users/Ajab/AI/OBrush/scripts/check-sculptgl-render-tail.mjs:293:198",
+      "harness_sha256": "c9c0d1a750ffc5e86cd5915ecbeff1e0c9fb6f73777ff460add8fa1687670d90",
+      "binding": {
+        "candidate": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.17-candidate1",
+        "source_root": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.17-candidate1/source",
+        "status": "immutable candidate binding",
+        "manifest_sha256": "9940115763f2c67238a31bbca2330edbe2f2815d3282bc8abcf5c4ce032349ed",
+        "build_sha256": "febbc89299754029871b0391ca6c3877ebfc1eb0b7d4947a91c7e05f7edd4a1a",
+        "checked_source_files": 149
+      },
+      "downloads": 12,
+      "gpu_checks": 12,
+      "cases": [
+        {
+          "name": "frozen-host-startup",
+          "gates": {
+            "actual_startup": true,
+            "default_radius_strength": true,
+            "production_download_completed": true,
+            "visible_gpu_save_exact": true
+          },
+          "limits": []
+        },
+        {
+          "name": "normal-texture-original-png-reset-and-rejection",
+          "gates": {
+            "hidden_rgb_and_bottom_up_bytes_exact": true,
+            "pot_npot_sampler_exact": true,
+            "bounded_texture_storage_exact": true,
+            "image_response_meaningful": true,
+            "imports_do_not_change_document": true,
+            "rejections_keep_doc_and_redo": true,
+            "rejections_keep_previous_pixels": false,
+            "reset_restores_checker_pixels_exact": false,
+            "reset_document_exact": true,
+            "complete_uv_gpu_exact": true
+          },
+          "limits": [
+            "Two actual normal chooser imports and two malformed/dimension rejections. No real delayed read/reset race, native file-dialog or persistent texture serialization claim."
+          ]
+        }
+      ],
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      }
+    },
+    {
+      "result_path": ".artifacts/sculptgl-render-cohort-runtime/candidate2-render-layout-2ebfe855-384b-4eea-b729-77195b76b081/result.json",
+      "result_sha256": "cc156c7e89bc5623c1641dbb79184cca17e4dc87ab1550c4af5e871d3de4246a",
+      "status": "passed scoped local host gates; reference parity unverified",
+      "failure": null,
+      "harness_sha256": "abb2576855dbff81f2ce8843ccdf06ab97efdcead31ccbfd1eff504c588a276b",
+      "binding": {
+        "candidate": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.17-candidate2",
+        "source_root": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.17-candidate2/source",
+        "status": "immutable candidate binding",
+        "manifest_sha256": "1482c860bdff5a528e1fa924f48909f318144cac4f6a103a4d4c7332efbcf477",
+        "build_sha256": "11d1ca57dd99fae1c84e124ef3e9c4fb57dc8b435a5032c9f74be67f9e382e16",
+        "checked_source_files": 151
+      },
+      "downloads": 9,
+      "gpu_checks": 9,
+      "cases": [
+        {
+          "name": "frozen-host-startup",
+          "gates": {
+            "actual_startup": true,
+            "default_radius_strength": true,
+            "production_download_completed": true,
+            "visible_gpu_save_exact": true
+          },
+          "limits": []
+        },
+        {
+          "name": "render-foundation-independent-noisy-protected-sphere",
+          "gates": {
+            "new_defaults": true,
+            "curvature_meaningful": true,
+            "flat_meaningful": true,
+            "opacity_meaningful": true,
+            "zero_opacity_meaningful": true,
+            "premultiplied_transparent_draw_state": true,
+            "back_then_front_shell": true,
+            "restore_pixels_exact": true,
+            "whole_project_preserved": true,
+            "camera_preserved": true,
+            "complete_gpu_exact": true
+          },
+          "limits": [
+            "Meaningful viewport response and explicit GL state on one closed noisy fixture with implicit/explicit materials. No matched radiometry, planar-curvature zero analytic visual, derivative back-facing normal proof, intersecting-shell quality or full compositor/reference claim."
+          ]
+        },
+        {
+          "name": "render-foundation-independent-v6-noisy-materials",
+          "gates": {
+            "new_defaults": true,
+            "curvature_meaningful": true,
+            "flat_meaningful": true,
+            "opacity_meaningful": true,
+            "zero_opacity_meaningful": true,
+            "premultiplied_transparent_draw_state": true,
+            "back_then_front_shell": true,
+            "restore_pixels_exact": true,
+            "whole_project_preserved": true,
+            "camera_preserved": true,
+            "complete_gpu_exact": true
+          },
+          "limits": [
+            "Meaningful viewport response and explicit GL state on one closed noisy fixture with implicit/explicit materials. No matched radiometry, planar-curvature zero analytic visual, derivative back-facing normal proof, intersecting-shell quality or full compositor/reference claim."
+          ]
+        }
+      ],
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      }
+    },
+    {
+      "result_path": ".artifacts/sculptgl-render-cohort-runtime/candidate2-texture-completion-43c31623-38d0-4290-9104-b5f7cdf03004/result.json",
+      "result_sha256": "4d634f7ca61967ed20e11254af4434d18239322d91eaa0d73c9bd9db34f55bd4",
+      "status": "passed scoped local host gates; reference parity unverified",
+      "failure": null,
+      "harness_sha256": "eb013bdcb4141ffad16a9bc5330ee8a0e0a96362520bb9e8c524cee15649879f",
+      "binding": {
+        "candidate": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.17-candidate2",
+        "source_root": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.17-candidate2/source",
+        "status": "immutable candidate binding",
+        "manifest_sha256": "1482c860bdff5a528e1fa924f48909f318144cac4f6a103a4d4c7332efbcf477",
+        "build_sha256": "11d1ca57dd99fae1c84e124ef3e9c4fb57dc8b435a5032c9f74be67f9e382e16",
+        "checked_source_files": 151
+      },
+      "downloads": 10,
+      "gpu_checks": 10,
+      "cases": [
+        {
+          "name": "frozen-host-startup",
+          "gates": {
+            "actual_startup": true,
+            "default_radius_strength": true,
+            "production_download_completed": true,
+            "visible_gpu_save_exact": true
+          },
+          "limits": []
+        },
+        {
+          "name": "completed-normal-notice-texture-preservation-and-reset",
+          "gates": {
+            "normal_rejections_reported": true,
+            "normal_notice_completion_observed": true,
+            "rejections_keep_doc_and_redo": true,
+            "rejections_keep_previous_pixels_exact_after_completion": true,
+            "reset_restores_exact_full_checker_crop": true,
+            "reset_document_exact": true,
+            "complete_uv_gpu_exact": true
+          },
+          "limits": [
+            "One valid NPOT import is preparation for the failed persistence gates. Previously passed byte/sampler/memory/meaningful-image cases are not repeated or newly claimed. Existing notice timeout is observed naturally; all immediate differences are retained, never masked or reclassified as passing."
+          ]
+        }
+      ],
+      "cleanup": {
+        "owned_chrome_exit_code": null,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      }
+    }
+  ],
+  "separate_late_cleanup_proof": {
+    "path": ".artifacts/sculptgl-render-cohort-runtime/candidate2-texture-completion-43c31623-38d0-4290-9104-b5f7cdf03004/post-closure.json",
+    "sha256": "f90afb1140626cbfb445e94c8b117898dc2c74dad300e1e024b34b851f0174d6",
+    "raw_proof": {
+      "scope": "Independent process liveness after Node session completion; original cleanup fields unchanged",
+      "owned_pid": 54551,
+      "owned_pid_absent": true,
+      "raw_cleanup": {
+        "owned_chrome_exit_code": null,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      },
+      "result_sha256": "4d634f7ca61967ed20e11254af4434d18239322d91eaa0d73c9bd9db34f55bd4"
+    },
+    "scope": "Raw Chrome exit/signal null fields remain untouched; separate proof after owned process closure."
+  }
+}

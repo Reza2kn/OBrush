@@ -1,0 +1,139 @@
+{
+  "status": "Delivered C26 private transaction-state binding performance change; full SculptGL parity unverified",
+  "version": "0.1.20",
+  "utc": "2026-10-15T05:33:24.394315+00:00",
+  "source_manifest_sha256": "1e2003acd8ab080e51f86956cc39f813b881f968e33f6b27ee67d8c4e01a5ba6",
+  "build_sha256": "2fd3f4f39e5047d2df20db1bd9bb9994e6aa199d5cb570e72a4338915a27fffc",
+  "checks_sha256": "866bda061ba0b05557c5065ec27b9c68b523e625bd5d432ded92da88cea1cb0a",
+  "tests": {
+    "total": 2135,
+    "core": 1471,
+    "app": 664,
+    "ignored": 1
+  },
+  "required_checks": [
+    "cargo fmt --all -- --check",
+    "cargo test --workspace --locked",
+    "cargo clippy --workspace --all-targets --locked -- -D warnings",
+    "cargo check --workspace --all-targets --target wasm32-unknown-unknown --locked",
+    "cargo clippy --workspace --all-targets --target wasm32-unknown-unknown --locked -- -D warnings"
+  ],
+  "artifacts": {
+    "web_script_pass": true,
+    "macos_script_pass": true,
+    "wasm": {
+      "path": "pkg/obrush_app_bg.wasm",
+      "bytes": 23035240,
+      "sha256": "1612df51b0760e00d7c9ac0682f2bde521a12299736f2cfb208aeb6e5514626d"
+    },
+    "macos_installed": false,
+    "macos_opened": false
+  },
+  "browser": {
+    "normal20_result": "b032be3b919b045f61f0de67d4b056d277c38fa7f9cfd13dbce68c6a6b9b0453",
+    "Lock3_result": "761fc1de38cac45a2916529c13067c6394721bc3739dd05caa71641d80743963",
+    "both_owned_chrome_exit0_signal_null_servers_closed": true,
+    "exceptions": [],
+    "console_errors": [],
+    "whole2_screenshot_review": "55266ee29ab575894e481ce133a751acdf57ca6cbbfe879076cc0ebb7de0e4f7",
+    "scope": "Unchanged original20normal/3Lock input, data, savedGPU, visible and history checks; small cube Lock scope, no dense or reference performance claim."
+  },
+  "native_headless_timing": {
+    "comparison_sha256": "9885d2424e70f8a9fcf12abeb00401f2b3bc540b88337675b31b6af5b7d725fe",
+    "vertices": 40962,
+    "triangles": 81920,
+    "repeats_per_mode": 3,
+    "dabs_per_repeat": 32,
+    "warm_dabs_per_mode": 93,
+    "modes": {
+      "AbsolutePreview": {
+        "baseline": {
+          "warm_n": 93,
+          "median_ms": 77.402,
+          "min_ms": 76.168,
+          "max_ms": 82.737,
+          "begin_ms": [
+            39.932,
+            38.413,
+            38.344
+          ],
+          "end_ms": [
+            38.116,
+            37.428,
+            37.137
+          ]
+        },
+        "candidate": {
+          "warm_n": 93,
+          "median_ms": 27.165,
+          "min_ms": 25.82,
+          "max_ms": 73.415,
+          "begin_ms": [
+            16.184,
+            15.209,
+            15.615
+          ],
+          "end_ms": [
+            9.103,
+            9.8,
+            9.373
+          ]
+        },
+        "median_ratio": 2.849328179642923
+      },
+      "ContinuousAccumulation": {
+        "baseline": {
+          "warm_n": 93,
+          "median_ms": 77.934,
+          "min_ms": 76.618,
+          "max_ms": 107.12,
+          "begin_ms": [
+            37.236,
+            38.556,
+            37.599
+          ],
+          "end_ms": [
+            42.047,
+            37.644,
+            37.285
+          ]
+        },
+        "candidate": {
+          "warm_n": 93,
+          "median_ms": 26.758,
+          "min_ms": 25.708,
+          "max_ms": 30.66,
+          "begin_ms": [
+            15.516,
+            15.077,
+            14.525
+          ],
+          "end_ms": [
+            9.589,
+            9.006,
+            9.239
+          ]
+        },
+        "median_ratio": 2.9125495179011884
+      }
+    },
+    "all12publicprojects_byte_exact": true,
+    "all6_whole_undo_redo_exact": true,
+    "limitations": [
+      "n=3 runs per mode; correlated 31 warm dabs/run",
+      "excludes picker/browser/GPU/physical input; no reference or performance parity claim",
+      "retains candidate 73.415ms outlier"
+    ]
+  },
+  "implementation": "Exact private typed encoding and streaming comparison replace repeated full-project JSON encoding; same human-readable Serialize projection and persistent channels/scene metadata ownership checks, existing budgets and rollback retained. Public formats and brush formulas unchanged.",
+  "main_transfer_sha256": "1464fac061101fe5a54b87ffa0f846a360d3d3d2108bbbd8c127c30d8a19a129",
+  "preview": {
+    "url": "http://127.0.0.1:8794/",
+    "http19_sha256": "1b5560f52727dd51fef466610dd748f1458e8de5df24eb4240592fe7c6fb75e1"
+  },
+  "remaining": [
+    "Default dense Source picker production integration and normal modal consumer checks",
+    "Source/reference brush, cursor, lifecycle, pressure, native and long-session performance checks",
+    "All317 pinned SculptGL IDs and5hosted appearance controls remain full goal; no parity percentage or completion claim"
+  ]
+}

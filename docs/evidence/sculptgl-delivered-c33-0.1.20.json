@@ -1,0 +1,115 @@
+{
+  "status": "Delivered locally compared foundation; fullSculptGL/ZBrush parity remainsunverified",
+  "version": "0.1.20",
+  "candidate": "C33",
+  "baseline": "Full pinned317 SculptGL IDs plus5appearancecontrols retained; ZBrush2026.2.1 remainslongterm target",
+  "changes": [
+    "Captured per-tool SourceGeometryOptions.prevent_folds defaults true; existing finite local-quality guard unchanged whenon. Ordinary publiccheckbox can explicitly select full finite Source candidate whenoff. Legacy kernels unchanged.",
+    "Boundedread-only currentwidget64hexID/focus association and keyboardeventfocusobservations; no focus setters.",
+    "Preventfolds option changes use normal release/finish before preferencecommit; newnative regression andliteralonevertextangent/wholehistory tests."
+  ],
+  "source": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate33/source/manifest.json",
+    "sha256": "03dfc3730e3d40a7cc9ebcd34d4c2c3bd5a5f8c66a78dc03c8c5e45acdf8fd75"
+  },
+  "build": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate33/build-record.json",
+    "sha256": "f6bd4e9cd83783eb7b265512ee7a06cd19a09481409710554f863b1b8470a247"
+  },
+  "checked_receipt": {
+    "path": ".artifacts/sculptgl-composite20-candidate33-response-stage/FINAL_CHECKED_RECEIPT.json",
+    "sha256": "8e0680df7a817ea0849934220371eb574b7085304ffe9cdd7c98c2539a6e85ea"
+  },
+  "checks": {
+    "workspace_tests": 2227,
+    "core_tests": 1553,
+    "app_tests": 674,
+    "ignored": 1,
+    "fmt_nativeClippy_workspace_WASMalltargets_WASMClippy": "AllfiveactualPASS",
+    "record": {
+      "path": ".artifacts/sculptgl-composite20-candidate33-response-stage/root-check01/RESULT.json",
+      "sha256": "eeeabb89175c5f4c3eef45f6a2243a5968fd4d6643c3fccc26808fd2e964e389"
+    }
+  },
+  "artifacts": {
+    "web": "Official scripts/build-web.sh PASS",
+    "macos": "Official scripts/package-macos.sh PASS/ad-hocsignatureverified; unopened/uninstalled",
+    "wasm": {
+      "path": "pkg/obrush_app_bg.wasm",
+      "bytes": 19175873,
+      "sha256": "7cb57d0b109fffcf233edc4697b1c56ef05d1c5326427fa2e23f26181c9e38cb"
+    }
+  },
+  "actual_regressions": {
+    "normal20_andLock3": {
+      "path": ".artifacts/sculptgl-composite20-candidate33-response-stage/root-browser02/CLOSED.json",
+      "sha256": "354081547bfbfe5487672d8ebd61876e9ebc2b02e9a31680714f26b656a1650d"
+    },
+    "default4_larger4": {
+      "path": ".artifacts/sculptgl-composite20-candidate33-response-stage/ROOT_DENSE_CLOSED.json",
+      "sha256": "7b04a125fdb25842e6f7c2321c64b523aa49876df263643d06620373d28f2b6c"
+    },
+    "default_raw": {
+      "path": ".artifacts/sculptgl-composite20-candidate33-response-stage/ROOT_DEFAULT_BYTES_AUDIT.json",
+      "sha256": "1c9e7cc606530b616a83ed7beebec3a284a8533892e50c58061f04e2d3cc456d"
+    },
+    "larger_raw": {
+      "path": ".artifacts/sculptgl-composite20-candidate33-response-stage/ROOT_LARGE_BYTES_AUDIT.json",
+      "sha256": "032b31d31d2274ea282bafa9b0bfcd2b6592608606dac3ebf81eb3c01a5155b1"
+    },
+    "limits": "Larger163842vertex327680triangle readonly sampling capacity; no densegeometrybrush/longsession/inputlatency claim"
+  },
+  "new_actual_reference": {
+    "SM00_constructor_options_camera_history": {
+      "path": ".artifacts/sculptgl-composite20-candidate33-response-stage/ROOT_DEFAULT_SMOOTH_AUDIT.json",
+      "sha256": "b0b2ff79c542e5b7ebe6f07be513b0822370b5e01ea4eed0140a1a8b0d9840a5"
+    },
+    "SM03_reference_tangent": {
+      "path": ".artifacts/sculptgl-composite20-candidate33-response-stage/ROOT_REFERENCE_SMOOTH_AUDIT.json",
+      "sha256": "f1647e1e01752cd9b399743ace8cf825dc07a9c657f91677e7ddf455f1cf13e0"
+    },
+    "protocol": {
+      "path": ".artifacts/sculptgl-source-smooth-c33-ui-response-v2-stage/protocol/manifest.json",
+      "sha256": "0e7438229b1d690748f9fe62c7b98008739aa4b983ee5f9ba5052fc4d5f477d2"
+    },
+    "helper": {
+      "path": ".artifacts/sculptgl-source-smooth-c33-ui-response-v2-stage/MANIFEST.json",
+      "sha256": "06de32edad4f66825485d1c202620a0c5451d515e094a97a8c8ef7c1469c5326"
+    },
+    "scope": "PinnedhostedSourcebundle79b24bf6, actualprivateChrome/CDP/DPR1,4vertex independent tetra, ordinarySource+Rootcontrols, orthographiccamera, radius128CSSpx, intensity.13, tangenttrue, alphaNone/factors0/mirroroff, Rootprevent_foldsfalse. All12positionwords match; independentfullwarmnormals/currentGPUchecks; wholeundo/redo;32fullRAF samples516.4/516.5ms withoutedit/revision/historytail. Not nativephysical or broaderbrush parity."
+  },
+  "known_failed_and_open": {
+    "SM15_actual_current_failure": {
+      "path": ".artifacts/sculptgl-source-smooth-c33-ui-response-v2-stage/root-runtime03/POST.json",
+      "sha256": "229b5434178fd4c87dc6a351f532cbe58c226606e0ba26e72e8a0f4553210529"
+    },
+    "SM15_scope": "24normalTab route didnotreachactualtangentwidget; recorder256framecap thenfailed. Sourcecustomcheckboxnotkeyboardfocusable. Nativecaptured-settingbarrierPASSdoesnotestablishbrowserheld-settingbarrier. Allraw/failedprefixes/closureerrors retained; no PASSclaim.",
+    "SM04": "Arbitrarycoalescedper-dabRootselected-normal schedule required/unexercised",
+    "other_scopes": "Other14Smoothcases/Flatten/lifecycle/activehover/localecoverage/advancedtopology/densegeometrybrushes/HiDPI/nativephysical/pressure/longsession/p50p95latency/full317+5/ZBrush parity remainopen",
+    "prior_failure_chain": [
+      "Originaldyadic12.5%referenceUIunreachable; separateintegerpercentcohortregistered",
+      "SidebarCSStransitionmissedcheckboxhit; actualhit-readinessrepair",
+      "OriginalSM03endpointselectedzerovertices; separatelyregisteredanalyticnearvertexcontact",
+      "C32actualsmalltangentGuardRejected; newexplicitreferenceoptionaddressesdifference",
+      "C33combinedquietpacket33796976bytesviolated32MiBcap; completepersampletransportkeepsoriginalcaps"
+    ]
+  },
+  "whole_image_review": {
+    "path": ".artifacts/sculptgl-composite20-candidate33-response-stage/ROOT_WHOLE_SCREENSHOT_REVIEW.json",
+    "sha256": "febdc556777961465b353cb0daf4e9d68ad44d6d5bea5b1e1a83e894d6612356"
+  },
+  "main_transfer": {
+    "path": ".artifacts/sculptgl-main-c33-promotion-stage/PROMOTED.json",
+    "sha256": "9083e8ea8ef73e1499ad6704e4448de1e48d1f4460478cd73cbd1f32b92a1bae"
+  },
+  "preview": {
+    "url": "http://127.0.0.1:8798/",
+    "owned_server_session": 77155,
+    "all19actualHTTPassets": {
+      "path": ".artifacts/sculptgl-main-c33-promotion-stage/PREVIEW_HTTP.json",
+      "sha256": "739dfd63196f0031dd3349686007a5701ee136798378646503f1c9ef6f039195"
+    },
+    "oldpreviews_and_userambient_tab_preserved": true
+  },
+  "goal": "Development continuing in current turn; savedgoalAPIreportsblocked, user-only /goal resume needed forautomaticcontinuation. Objective unfinished; no parity/completion claim."
+}

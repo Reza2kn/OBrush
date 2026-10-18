@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "version": "0.1.9",
+  "recorded_at_utc": "2026-10-13T03:33:46.307347+00:00",
+  "scope": "Shared-core single geometry-only Morph Target contracts; independently written fixtures, no reference-equivalence or host latency claim",
+  "raw_receipts": {
+    "owner": {
+      "path": ".artifacts/morph-core/receipt.json",
+      "bytes": 4907,
+      "sha256": "278aaf04adf3d42447890ffae1a2b98550c547711015c808370c3833ee6c100d"
+    },
+    "independent": {
+      "path": ".artifacts/morph-contract-audit/final-receipt.json",
+      "bytes": 7571,
+      "sha256": "d3008b62be1224d892c0974622487360f3c7131eea59470244600930370354e9"
+    }
+  },
+  "source_files": [
+    {
+      "path": "crates/obrush-core/src/morph.rs",
+      "sha256": "73e5ca5e7773b3f28da82111d6497e5fefe5a570c391878b6019a709781ffc88"
+    },
+    {
+      "path": "crates/obrush-core/src/document.rs",
+      "sha256": "cfb31b633571e8de25ef10ee7c8917081c0fd0adbd414dadb403343bd52aedd8"
+    },
+    {
+      "path": "crates/obrush-core/src/brush.rs",
+      "sha256": "1502094318ba59c7aecd43a029c4a2623ef287a19f3f8ba50ec8226756562979"
+    },
+    {
+      "path": "crates/obrush-core/src/lib.rs",
+      "sha256": "b72020160f623da879bb7b6e9f9582f5fc72b2989b8e3c8e9705e7e9275aa2c7"
+    },
+    {
+      "path": "crates/obrush-core/src/topology.rs",
+      "sha256": "58644e234745acdb2af4178b5725435dd7e4e9aab07a67155e7c9c4f8ed852dd"
+    },
+    {
+      "path": "crates/obrush-core/tests/morph.rs",
+      "sha256": "5ef7716e15f3f527de5748ff895376e08ec0d5a0d299bfd3e6c0ecccbdcb4b16"
+    },
+    {
+      "path": "Cargo.toml",
+      "sha256": "7ee03d3cb3c72ba2f2a112ccb33ab223efa246ab65719a682fa42e7cd16b4641"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "bcd13f200d36928ca1600c10874e4789a3f3605f427b66f73b611226ab51aef0"
+    }
+  ],
+  "independent_interim_run": {
+    "receipt": ".artifacts/morph-contract-audit/run-1.json",
+    "log": ".artifacts/morph-contract-audit/run-1.log",
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "obrush-core",
+      "--test",
+      "morph_contract"
+    ],
+    "contracts_passed": 21,
+    "contracts_failed": 0,
+    "exit_code": 0,
+    "start": "2026-10-13T03:22:46.696671+00:00",
+    "end": "2026-10-13T03:22:48.086286+00:00",
+    "sources_unchanged_during_run": true,
+    "source_hashes": {
+      "Cargo.toml": "7ee03d3cb3c72ba2f2a112ccb33ab223efa246ab65719a682fa42e7cd16b4641",
+      "Cargo.lock": "bcd13f200d36928ca1600c10874e4789a3f3605f427b66f73b611226ab51aef0",
+      "crates/obrush-core/src/document.rs": "2441d6ab8435e801cdfc34621857d65d1a29aaaa711fba7b6633daccadd9620b",
+      "crates/obrush-core/src/morph.rs": "10447ec31cd683c3e2f1a66360bbf5c14d3ae525151f612cc91ffd87faad7364",
+      "crates/obrush-core/src/brush.rs": "1502094318ba59c7aecd43a029c4a2623ef287a19f3f8ba50ec8226756562979",
+      "crates/obrush-core/src/lib.rs": "b72020160f623da879bb7b6e9f9582f5fc72b2989b8e3c8e9705e7e9275aa2c7",
+      "crates/obrush-core/src/multires.rs": "04c1ace2b6e5e92119893d5acfad060ce22f2b21d9d8fcf6f558d565cfe1097f",
+      "crates/obrush-core/src/layers.rs": "92d9d1061bef52b9969fb32b9dc9493c153cc74a586ac74b0936ed4ab5d6e1a8",
+      "crates/obrush-core/tests/morph_contract.rs": "76eeac4ed82122e35da9a4a947e6d26937ff063940d6f2ad94e1c0e692ddb8d8"
+    },
+    "log_sha256": "1b9678c349492c3a6f08e107138e66343733a7c16c04c0c46ee7e47c82634b69",
+    "scope": "Interim implementation before no-contact fast paths and root formatting; exact tested source hashes retained"
+  },
+  "final_source_hashes": {
+    "Cargo.toml": "7ee03d3cb3c72ba2f2a112ccb33ab223efa246ab65719a682fa42e7cd16b4641",
+    "Cargo.lock": "bcd13f200d36928ca1600c10874e4789a3f3605f427b66f73b611226ab51aef0",
+    "crates/obrush-core/src/document.rs": "cfb31b633571e8de25ef10ee7c8917081c0fd0adbd414dadb403343bd52aedd8",
+    "crates/obrush-core/src/morph.rs": "73e5ca5e7773b3f28da82111d6497e5fefe5a570c391878b6019a709781ffc88",
+    "crates/obrush-core/src/brush.rs": "1502094318ba59c7aecd43a029c4a2623ef287a19f3f8ba50ec8226756562979",
+    "crates/obrush-core/src/lib.rs": "b72020160f623da879bb7b6e9f9582f5fc72b2989b8e3c8e9705e7e9275aa2c7",
+    "crates/obrush-core/src/multires.rs": "04c1ace2b6e5e92119893d5acfad060ce22f2b21d9d8fcf6f558d565cfe1097f",
+    "crates/obrush-core/src/layers.rs": "92d9d1061bef52b9969fb32b9dc9493c153cc74a586ac74b0936ed4ab5d6e1a8",
+    "crates/obrush-core/tests/morph_contract.rs": "61321f8d8167e8dee2bf68cff0be43161d35a3103b3e02610aba4dc37113fcf2"
+  },
+  "final_workspace_execution": {
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "--workspace"
+    ],
+    "counts": {
+      "core": 188,
+      "app": 20,
+      "total": 208
+    },
+    "log": {
+      "path": ".artifacts/morph-build/validation-c71dbe61-2740-4eeb-9e4e-265c6fa6788b/tests.log",
+      "bytes": 20842,
+      "sha256": "4a1ac221a78f9483f5e815c5975d5148443f0e6aa71245c830e83237b26e3beb"
+    },
+    "scope": "All21 independent Morph contracts execute on final formatted bytes; the earlier standalone run used the separately retained interim hashes."
+  },
+  "owned_checks": [
+    {
+      "path": ".artifacts/morph-core/focused-1.log",
+      "sha256": "721b020a7fd5ff0bc4871588b4a8f6908836396968c9b02bfd2251551567c144",
+      "result": "pass"
+    },
+    {
+      "path": ".artifacts/morph-core/focused-2.log",
+      "sha256": "6db20ba2e8d61690ba12cbe6e3351d20df0df0a2c354f5dfefa15567fe09649b",
+      "result": "pass"
+    },
+    {
+      "path": ".artifacts/morph-core/memory-1.log",
+      "sha256": "cfb863862d8003432007c89c50940515161b14fbf34c83c1faf4a1d15fb729dd",
+      "result": "pass"
+    }
+  ],
+  "owned_counts": {
+    "morph_integration": 5,
+    "document_memory_output": 5
+  },
+  "review_conclusion": "No blocking defect found in final source review",
+  "reviewed_invariants": [
+    "One exact f32 geometry target, COW immutable positions and ordered triangle correspondence; signed zero exact comparisons",
+    "Store/delete/global restore/swap snapshot complete target+layers+mesh+hierarchy state and use pending-stroke barriers",
+    "Global restore ignores masks while keeping mask/RGB arrays; local Morph follows mask/pressure/alpha/facing and max mirrored influence with no refinement",
+    "Target survives navigation/new persistent levels; actions require creationlevel and exact ordered topology; import binds inactive target to retained creationlevel mesh",
+    "Explicit object/topology replacement invalidates target, even identical mesh; accepted ordinary adaptive topology invalidates with exact Undo; no-collapse and failed operations preserve it",
+    "Morphed public strokes reject malformed/degenerate geometry; morph-only and layered end_stroke output checks reject unsaveable oversized v4 state atomically",
+    "Parser reserves per-array counts at most1M target positions and2M triangle rows; array capacity upper bound is36MiB (36,000,000 bytes of rows, about34.33MiB, plus small metadata), below64MiB target cap; actual process/malloc peak not measured",
+    "Target capacities enter whole-state128MiB/64-entry history accounting; generous encoded-size bound avoids ordinary formatting, actual writer authoritative near128MiB",
+    "Version4 requires nonnull target and may retain layers/hierarchy; lower versions reject nonnull target; v3 remains layered and v2 unlayered; old v1 remains readable"
+  ],
+  "numeric_results": {
+    "target_and_surface_endpoint_equality": "Exact f32 bits including signed zero, ordered triangles, mask/RGB channels; exact canonicalJSON for tested IO/history/swap twice",
+    "planar_pressure_oracle": {
+      "fixture": "21x21 planar grid,0.05 spacing,+Z orientation; targetz0/currentz0.025; center(0,0,0.025),radius0.3,strength0.5,pressure0.25/1",
+      "error_gate_world_units": 2e-07,
+      "observed_maximum": null,
+      "reason": "Tests assert gate but do not emit observed maximum; do not report maximum as zero"
+    },
+    "coarse_restore_detail_retention": {
+      "fixture": "Sphere1 plus one Loop level; finevertex17 detail[0.021,-0.017,0.033]; coarse translation[0.08,-0.04,0.06] followed byrestore",
+      "error_gate_world_units": 3e-06,
+      "observed_maximum": null,
+      "reason": "Tests assert gate but do not emit observed maximum"
+    },
+    "malformed_metadata": "13 version/scheme/pointcount/coordinate/topology/creationlevel/unknown corruptions plus duplicate scheme rejected",
+    "oversized_target": "1,000,001 point rows rejected by bounded decoder before ordinary shape binding"
+  },
+  "schema": {
+    "project_version": 4,
+    "field": "morph_target",
+    "scheme": "positions_f32_v1",
+    "fields": [
+      "creation_level",
+      "positions",
+      "triangles"
+    ],
+    "versions_without_target": {
+      "layers": 3,
+      "plain": 2,
+      "readable_legacy": 1
+    }
+  },
+  "limits": {
+    "targets": 1,
+    "positions": 1000000,
+    "triangles": 2000000,
+    "target_retained_storage_bytes": 67108864,
+    "project_input_output_bytes": 134217728,
+    "history_bytes": 134217728,
+    "history_entries": 64
+  },
+  "semantics": [
+    "Exact f32 target bits, including signed zero; ordered point/triangle correspondence",
+    "Geometry only; existing masks/colors remain document channels",
+    "Store replaces target at current level; full restore ignores masks; local brush honors masks/pressure/alpha/facing and max mirror footprint",
+    "Target survives retained level navigation/addition but is available only at creation level",
+    "Explicit replacement/refinement/remesh/nonzero decimation invalidates target atomically with Undo; zero-collapse reductions retain metadata",
+    "Layer recording/base reconciliation captures the visible Morph edit with exact accepted f32 geometry",
+    "Morph brush never refines; generic Mesh Morph is a safe no-op",
+    "No-contact and exact-target dabs avoid mesh snapshots; release uses conservative writer count bounds before near-limit Counter formatting"
+  ],
+  "remaining_scope": [
+    "One geometry-only target perdocument; no multiobject/SubTool support established",
+    "A target may exist on another retained level but is only operable on its creationlevel",
+    "Topology must retain ordered correspondence; ordinary adaptive refinement intentionally invalidates target",
+    "Full restore/swap validates endpoints; no continuous deformation path or global self-intersection repair guarantee",
+    "Local guarded Morph response including inversion is independently implemented; no ZBrush response/normal-map restoration/UV workflows verified",
+    "Masks and colors are document channels rather than target data",
+    "COW and allocation/history caps do not establish overall memory peak or latency performance",
+    "Native GUI, browser/runtime, physical devices and comparative reference fixture behavior outside this CPU suite"
+  ],
+  "owner_limitations": [
+    "Full restore/swap validate healthy endpoints, not the intermediate path or global self-intersections",
+    "Local Morph reuses smooth-tool guards: quality >=min(old,0.1), adjacent fold cosine >=min(old,0.5), bounded shared step; existing damage/global repair unresolved",
+    "A missing or different-level target gives a clear error; inactive target does not project/resample to other levels",
+    "Inverted Morph brush moves away from stored geometry with guard; no reference brush equivalence claimed",
+    "Useful Morph dabs still perform bounded whole-state validation and candidate work; browser responsiveness is recorded separately",
+    "No MorphUV, HistoryRecall, paint/mask targets, multiple-target blending or full S07/reference parity claim"
+  ],
+  "primary_reference_urls": [
+    "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/sculpting/morph-targets/morph-targets.html",
+    "https://help.maxon.net/zbr/en-us/Content/html/reference-guide/tool/polymesh/morph-target/morph-target.html"
+  ],
+  "failed_checks_preserved": "No failed independent run in this milestone; preregistered gates were not relaxed. Earlier layer failures remain separately retained.",
+  "cleanup": "All owned diagnostic/cargo processes exited; no browser/nativeGUI created"
+}

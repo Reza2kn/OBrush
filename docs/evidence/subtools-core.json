@@ -1,0 +1,234 @@
+{
+  "schema_version": 1,
+  "version": "0.1.10",
+  "recorded_at_utc": "2026-10-13T04:51:11.788253+00:00",
+  "status": "Scoped shared-core SubTools contracts pass; reference comparison and host runtime are separate",
+  "git": "Unborn main; source hashes bind checks",
+  "reference": {
+    "version": "ZBrush desktop2026.2.1",
+    "execution": false,
+    "primary_scope": [
+      "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/modeling-basics/subtools/subtools.html",
+      "https://help.maxon.net/zbr/en-us/Content/html/reference-guide/tool/polymesh/subtool/subtool.html"
+    ]
+  },
+  "independent_audit": {
+    "created_utc": "2026-10-13T04:50:07.741652+00:00",
+    "scope": "Independent OBrush SubTool foundation shared-core contract tests and bounded read-only audit. No ZBrush equivalence, desktop/WASM runtime, browser rendering, host input, or performance claims.",
+    "fixture_provenance": "Independently created Rust fixtures in the hashed contract source; no supplied user mesh or commercial fixture/source used. Large unused-point meshes isolate decoder/count guards from triangulation algorithms.",
+    "command": "cargo test --locked -p obrush-core --test subtool_contract -- --test-threads=1",
+    "final_test_count": 22,
+    "final_result": "passed",
+    "production_changes_by_auditor": false,
+    "source_binding": {
+      "before": {
+        "crates/obrush-core/tests/subtool_contract.rs": "255ef5d8cd69fab05ed1f7052444923b05090b84dc2caaf40ebe3ebbf47ad8e2",
+        "crates/obrush-core/src/document.rs": "30bbe1f2505484b7f6115f6329604a6537e843fc3a8a1a4fcf0296550034beae",
+        "crates/obrush-core/src/subtools.rs": "e5697432bfb40a6c4fe35e4557cd8bd5fadfac604dcd7ca584c4817e8122ab6c",
+        "crates/obrush-core/src/decode_limits.rs": "e05f23682bd599779af266cee33307fc6fbd5e4259c6288bf79979f03136e311",
+        "crates/obrush-core/src/mesh.rs": "7e9027e1aff2c2a1d3744e7d1c27df4c0aed27f9ef104b70ef83454d9fa791ae",
+        "crates/obrush-core/src/multires.rs": "757bc669a7140b7998d7d870ef10df3174c27f4fcbcdf74e86b663917bf0fdf4",
+        "crates/obrush-core/src/layers.rs": "a6d56f1466945f27532d3d251d1c502ef0bfdf4bb463816c0619b5548f3dede7",
+        "crates/obrush-core/src/morph.rs": "933ee89ebe6fb8c2c4fbccd7c71914867bbd9ded8292c9f0f29c91c35bea6d4c",
+        "crates/obrush-core/src/topology.rs": "58644e234745acdb2af4178b5725435dd7e4e9aab07a67155e7c9c4f8ed852dd",
+        "crates/obrush-core/src/lib.rs": "6dd8ae371961b7199b3e71357be7cafa23a44745dfe25e00603c5c343402a23b",
+        "Cargo.toml": "954e1208076e89896b9e1bf3c672e4ae784219d02adf7770cc3b50a4c8f149b4",
+        "Cargo.lock": "5f5dc54a1a5b39b75e008a62f0a62131ea13cca9410f448eea6d85fdbf40a319"
+      },
+      "after": {
+        "crates/obrush-core/tests/subtool_contract.rs": "255ef5d8cd69fab05ed1f7052444923b05090b84dc2caaf40ebe3ebbf47ad8e2",
+        "crates/obrush-core/src/document.rs": "30bbe1f2505484b7f6115f6329604a6537e843fc3a8a1a4fcf0296550034beae",
+        "crates/obrush-core/src/subtools.rs": "e5697432bfb40a6c4fe35e4557cd8bd5fadfac604dcd7ca584c4817e8122ab6c",
+        "crates/obrush-core/src/decode_limits.rs": "e05f23682bd599779af266cee33307fc6fbd5e4259c6288bf79979f03136e311",
+        "crates/obrush-core/src/mesh.rs": "7e9027e1aff2c2a1d3744e7d1c27df4c0aed27f9ef104b70ef83454d9fa791ae",
+        "crates/obrush-core/src/multires.rs": "757bc669a7140b7998d7d870ef10df3174c27f4fcbcdf74e86b663917bf0fdf4",
+        "crates/obrush-core/src/layers.rs": "a6d56f1466945f27532d3d251d1c502ef0bfdf4bb463816c0619b5548f3dede7",
+        "crates/obrush-core/src/morph.rs": "933ee89ebe6fb8c2c4fbccd7c71914867bbd9ded8292c9f0f29c91c35bea6d4c",
+        "crates/obrush-core/src/topology.rs": "58644e234745acdb2af4178b5725435dd7e4e9aab07a67155e7c9c4f8ed852dd",
+        "crates/obrush-core/src/lib.rs": "6dd8ae371961b7199b3e71357be7cafa23a44745dfe25e00603c5c343402a23b",
+        "Cargo.toml": "954e1208076e89896b9e1bf3c672e4ae784219d02adf7770cc3b50a4c8f149b4",
+        "Cargo.lock": "5f5dc54a1a5b39b75e008a62f0a62131ea13cca9410f448eea6d85fdbf40a319"
+      },
+      "changed_during_final_run": {},
+      "frozen_copies": ".artifacts/subtool-contract-audit/final-source"
+    },
+    "runs": [
+      {
+        "label": "run-1",
+        "path": ".artifacts/subtool-contract-audit/run-1.log",
+        "sha256": "634e51082fcd59270c008152e4bb59f0705a05e87ea8cb61fc1d023d06b9fa0a",
+        "passed": 19,
+        "failed": 0,
+        "reported_debug_suite_seconds": 28.62,
+        "exit_code": 0,
+        "source_receipt": ".artifacts/subtool-contract-audit/run-1-source.json",
+        "source_receipt_sha256": "4fa3fe2825f13e45e1967759750beff40b96296512bbb5050c79d8fe06b93ff9"
+      },
+      {
+        "label": "run-2",
+        "path": ".artifacts/subtool-contract-audit/run-2.log",
+        "sha256": "6c5687dfa7f56855d7c0445eb61cd75fe3ecfb62abc29eed27c6afa775489fe1",
+        "passed": 22,
+        "failed": 0,
+        "reported_debug_suite_seconds": 36.04,
+        "exit_code": 0,
+        "source_receipt": ".artifacts/subtool-contract-audit/run-2-source.json",
+        "source_receipt_sha256": "b066533aa68b9604e638bbdffc4989fa75877dbb06f023fb4ac81bb3bffcc9c4"
+      }
+    ],
+    "test_names": [
+      "implicit_scene_readers_and_true_noops_do_not_promote_or_consume_history",
+      "switching_preserves_complete_per_object_state_without_navigation_undo",
+      "edit_undo_restores_its_object_and_redo_restores_the_pre_undo_selection",
+      "exact_duplicate_copies_rich_inactive_state_but_later_edits_are_independent",
+      "scene_metadata_actions_preserve_ids_geometry_and_project_title",
+      "deletion_retains_one_object_and_allocator_does_not_reuse_deleted_ids",
+      "visibility_solo_nearest_picking_and_active_overlap_ties_are_explicit",
+      "inactive_render_arcs_are_stable_and_held_snapshots_survive_edits",
+      "failed_and_noop_scene_actions_preserve_exact_state_and_available_redo",
+      "invalid_pending_stroke_aborts_every_dependent_scene_action_and_keeps_redo",
+      "max_objects_names_and_allocator_exhaustion_are_atomic",
+      "v5_import_rejects_hostile_scene_membership_identity_and_names_in_both_field_orders",
+      "malformed_inactive_geometry_hierarchy_layers_and_targets_are_never_ignored",
+      "legacy_versions_remain_readable_and_rich_scene_roundtrip_is_canonical",
+      "whole_scene_import_is_one_undo_and_does_not_import_foreign_history",
+      "worker_reduction_changes_only_active_object_and_noop_preserves_whole_scene",
+      "aggregate_geometry_any_field_order_and_decoder_cleanup_are_bounded",
+      "scene_decoder_threads_do_not_share_allocation_ledgers",
+      "scene_wide_layer_vector_limit_is_checked_before_committing_another_object_layer",
+      "raw_topology_growth_exceeding_scene_budget_rolls_back_target_attributes_and_redo",
+      "mixed_active_inactive_layer_arrays_share_decode_budget_in_both_field_orders",
+      "duplicate_switch_and_roundtrip_preserve_signed_zero_bits_in_mesh_and_target"
+    ],
+    "quantitative_contracts": {
+      "point_boundary": {
+        "two_objects_points_each": 500000,
+        "aggregate_points": 1000000,
+        "result": "accepted in mesh-first and scene-first order"
+      },
+      "point_overflow": {
+        "two_objects_points_each": 550000,
+        "aggregate_points": 1100000,
+        "result": "rejected by aggregate decoder limit in both orders; standalone Mesh import after each failure succeeds"
+      },
+      "raw_topology_release": {
+        "individually_legal_active_points": 1000000,
+        "inactive_points": 42,
+        "result": "aggregate rejection restores exact scene, Morph target, attrs and existing redo"
+      },
+      "layer_boundary": {
+        "inactive_base_vectors": 500000,
+        "inactive_delta_vectors": 500000,
+        "additional_active_base_plus_delta_vectors": 24,
+        "result": "programmatic layer addition rejected atomically; mixed active/inactive arrays reject during decode in both field orders including reversed nested mesh/layer fields"
+      },
+      "object_limit": {
+        "maximum_accepted_objects": 32,
+        "rejected_add_or_duplicate_objects": 33
+      },
+      "name_limit": {
+        "valid_UTF8_bytes": 256,
+        "rejected_UTF8_bytes": 258,
+        "rejected_ASCII_bytes": 257,
+        "controls_and_empty_rejected": true
+      },
+      "malformed_scene_cases": {
+        "variants": 20,
+        "field_orders": 2,
+        "rejections": 40
+      },
+      "malformed_inactive_payload_cases": {
+        "variants": 10,
+        "field_orders": 2,
+        "rejections": 20
+      },
+      "invalid_pending_scene_actions": 8,
+      "thread_isolation": {
+        "simultaneous_decoder_threads": 2,
+        "valid_scene_points_each": 1000000
+      },
+      "numerical_gates": {
+        "positions_normals_masks_colors_in_duplicate_snapshot_and_signed_zero_fixture": "exact f32 component bits",
+        "complete_object_metadata_and_history_roundtrips": "exact canonical JSON / structural JSON where object identity is intentionally excluded",
+        "ray_distance_scale_invariance_absolute_tolerance": 1e-06,
+        "observed_numeric_maximum": null,
+        "maximum_note": "No runtime numeric maximum emitted; successful tolerance assertion is not a claim of zero measured error."
+      }
+    },
+    "audit_findings": [
+      "No blocking correctness issue found in the reviewed shared-core implementation.",
+      "Active object occupies top-level geometry; exactly its scene payload is null. Inactive objects retain Arc-backed complete state. Active ray-hit ties win exact overlaps.",
+      "Scene-wide count/capacity charges cover positions/normals/masks/colors/triangles, retained levels, layer arrays and Morph arrays before vector reserve. RAII scope restoration on nesting/panic is source-reviewed; direct private tests are owner-scoped, not part of these22 public contracts.",
+      "Meaningful scene operations persist v5 identity/allocator even after deleting back to one object; read-only and true no-op implicit actions retain v2/v3/v4 as appropriate.",
+      "Selection is navigation without its own undo entry; edit Undo restores the originating object. Redo restores the whole pre-Undo state, including selection changes made after the edit.",
+      "Topology workers preserve inactive objects; zero-collapse reduction preserves the entire scene. Useful active reduction clears only that object target/hierarchy and whole-document acceptance remains undoable.",
+      "Scene byte budgets concern retained/decoded array storage, not total peak process memory. Encoded source strings and temporary validation/recomposition buffers are additional allocations."
+    ],
+    "limitations": [
+      "These tests do not establish reference SubTool/folder/boolean/merge/split behavior or practical multi-object capacity/latency.",
+      "Hidden selected objects remain hidden; Solo follows active ID and never overrides explicit visibility. Host disables sculpting hidden objects; this differs from some reference selection/visibility behavior.",
+      "No browser/native app interaction performed. Runtime rendering, active-only host sculpting and consumer file flow require the parent-owned checks.",
+      "Any-order public tests explicitly cover geometry and mixed layer arrays; every malformed size/category combination is not exhaustively enumerated. Morph/normal/color/residual charging is additionally source-reviewed.",
+      "Both runs passed; no failed executable check was discarded. run-1 metadata initially described20 contracts by a counting typo; its immutable log actually contains19. Three justified coverage additions produce the final22.",
+      "Suite durations are debug test durations while other project validation could be active, not isolated operation benchmarks."
+    ],
+    "reference_context": {
+      "primary_url": "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/modeling-basics/subtools/subtools.html",
+      "derived_scope": "Separate polygon objects, one active edited object, visibility/Solo, Append/Insert and richer folders/bulk operations are described; reference workflow equivalence was not tested."
+    },
+    "cleanup": {
+      "owned_focused_sessions": [
+        20040,
+        82485
+      ],
+      "both_final_exit_codes": 0,
+      "remaining_owned_processes": false,
+      "browser_native_GUI_processes_started": false
+    },
+    "baseline_receipt": ".artifacts/subtool-contract-audit/baseline.json"
+  },
+  "independent_receipt": {
+    "path": ".artifacts/subtool-contract-audit/final-receipt.json",
+    "bytes": 11442,
+    "sha256": "b7a7732c4e2b9def1b73a28d8dfee2434c640ba0719737d596be9b2d49dbf440"
+  },
+  "owner_receipt": {
+    "path": ".artifacts/subtools-core/receipt.json",
+    "bytes": 7242,
+    "sha256": "b3fdec3b621edf485ab55d9dba2a3d8bcc93f8ef60a7a0191db398280317b984"
+  },
+  "read_only_host_renderer_review": {
+    "path": ".artifacts/subtool-renderer/integration-review.json",
+    "bytes": 2756,
+    "sha256": "71fb8306340f175f474abe60b2ec461eed28c9298e8c879ead3d9cd67df3b6d9"
+  },
+  "retained_failures": [
+    {
+      "path": ".artifacts/subtools-core/check-initial.log",
+      "bytes": 1166,
+      "sha256": "e87b4d72ffb19502ae49dfd084f1ffc169d5096a29b819a4af2a80d51dcf6b13"
+    },
+    {
+      "path": ".artifacts/subtool-renderer/focused-renderer.log",
+      "bytes": 1553,
+      "sha256": "03fb2b19a3a477e080dfbe8db5864664e830f3085d86b0b2b9df4e5a435f10d6"
+    },
+    {
+      "path": ".artifacts/subtool-build/failed-renderer-oracle.json",
+      "bytes": 392,
+      "sha256": "d04619a9da53e251bb39c6e0e4686292f1d73e2e85b44846b682b657f89c2fce"
+    }
+  ],
+  "owner_checks": {
+    "subtool_integration_tests": 6,
+    "decode_scope_tests": 3,
+    "strict_core_all_targets_clippy": "pass"
+  },
+  "limitations": [
+    "No executed reference SubTool fixture",
+    "Independent numeric tolerance assertions emitted no measured maxima",
+    "Logical storage budgets do not establish peak RSS or real-time capacity",
+    "Folders/merge/split/transforms/booleans remain unfinished",
+    "Bounded host/renderer source review predates the final inspector row layout and read-only clip diagnostic; final build/runtime receipts bind those later bytes."
+  ]
+}

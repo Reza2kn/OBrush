@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "candidate": "Delivered C57 /0.1.20 unchanged",
+  "status": "Completed isolated browserCPUprofile diagnostic; no performancequalification",
+  "actual": {
+    "path": ".artifacts/sculptgl-million-cpu-c57-stage/actual/SP-LONG00-1m-8s-root-84bd40db-7d69-47ac-84d6-36522a226d3a/result.json",
+    "bytes": 4114785,
+    "sha256": "eb6ea6097cbb59a5de4c646e96ff522bbb959b902981e1c4e976744650790e8e"
+  },
+  "profile": {
+    "path": ".artifacts/sculptgl-million-cpu-c57-stage/actual/SP-LONG00-1m-8s-root-84bd40db-7d69-47ac-84d6-36522a226d3a/sustained-cpu.cpuprofile",
+    "bytes": 226708,
+    "sha256": "90edcd39d22369772be19aa1b196858ce04b7958c7a95e5dc32e7ca77293bf43"
+  },
+  "preregistration": {
+    "path": ".artifacts/sculptgl-million-cpu-c57-stage/PREREGISTRATION.json",
+    "bytes": 1056,
+    "sha256": "60d9274f9732e86515f33fb118c99e4a794198b47f074c7af8b7255ba21e5c40"
+  },
+  "helper": {
+    "path": ".artifacts/sculptgl-million-cpu-c57-stage/HELPER_MANIFEST01.json",
+    "bytes": 7378,
+    "sha256": "c59760f4c2899fe146be150583f91eb77701e4ac8cdb55496fc20ff1b6ced6ca"
+  },
+  "terminal": {
+    "path": ".artifacts/sculptgl-million-cpu-c57-stage/TERMINAL01.json",
+    "bytes": 418,
+    "sha256": "fae1f173e9f8f9e3ebdb58c4a2cc25c83648c1df46670c584711e6d827a2c406"
+  },
+  "wholedata_audit": {
+    "path": ".artifacts/sculptgl-million-cpu-c57-stage/DIAGNOSTIC_WHOLEDATA_AUDIT01.json",
+    "bytes": 13052,
+    "sha256": "5d0f0f300de076be60d94fb9251a8667e6eb5660f818a06ed3f86f7298bb31e3"
+  },
+  "whole_images": {
+    "path": ".artifacts/sculptgl-million-cpu-c57-stage/WHOLE_PNG_REVIEW01.json",
+    "bytes": 1024,
+    "sha256": "6ed13a673e58c1043b6e5884aeb9e90d4c196380a5ddd0c1e3f38190e35f011c"
+  },
+  "symbol_build": {
+    "declaration": {
+      "path": ".artifacts/sculptgl-million-cpu-c57-stage/SYMBOL_BUILD_PREREGISTRATION.json",
+      "bytes": 545,
+      "sha256": "de19d091e4d98c3dfb5d57e46c314b0053ddb4a5a3211660e8bd63256233d012"
+    },
+    "identity_failure": {
+      "path": ".artifacts/sculptgl-million-cpu-c57-stage/SYMBOL_SECTION_IDENTITY01.json",
+      "bytes": 4234,
+      "sha256": "4edc9943138b3cc7dbda4892fdaac661de3e4ea09f7f5e28d9618e2ca4f52166"
+    },
+    "inferred_attribution": {
+      "path": ".artifacts/sculptgl-million-cpu-c57-stage/SYMBOL_ATTRIBUTION01.json",
+      "bytes": 13433,
+      "sha256": "4915ddf2277943d679e403cc1458365f07f94efad88da46ed4d4ba87cddb3924"
+    },
+    "caller_groups": {
+      "path": ".artifacts/sculptgl-million-cpu-c57-stage/MESH_VALIDATION_CALLER_DIAGNOSTIC01.json",
+      "bytes": 8603,
+      "sha256": "af876c332140174a6a863ca802ed72c495ca181f76a3aa68bf91e1ead6cb4520"
+    },
+    "scope": "All513sourcefiles literalC57, strip=none diagnosticbuild. Noncustomlinkedsections differ, so directindexmapping rejected. Unique normalizedoperator/signature/locals matches onlysupport inferrednames; notlinkedmoduleequivalence."
+  },
+  "findings": [
+    "ActualC57profile framepath sampletime predominantlyRust/WASM; bufferData358.168ms of11240.2ms diagnosticprofile, notGPUcompletion or originalperformancepercentage.",
+    "Inferred Mesh::validate index1045 has2990.848ms inclusive, splitamong scene pick925.224ms, contactpreparation830.781ms and controlledDocumententry836.909ms, plus setup/end sites. SurfaceTopology/material validators are includedchildren; do notdoublecountthem.",
+    "Actual old1045body matchesdiagnostic Mesh::validate signature/locals/all723normalizedops exceptone shiftedI32constant17694248\u219217694252. Separate Mesh/topology/attribute invariants in current source substantiate repeatfullscans, but no directsymbolidentityclaim.",
+    "Scene picking and contactpreparation also scantriangles; normalstatematching/treecopy/releasebalancing anduploads remaincosts. Removingone duplicatevalidation alone willnotestablish1Mperformance."
+  ],
+  "scope": "Samecomplete1Mfixture/product/settings/pose,8seconds/3200requests forCPUdiagnosis only; never replacesoriginal60/120tests. OwnedChrome0/serverclosed, fullfivefiles/data/historyaudited; fullparity remainsopen."
+}

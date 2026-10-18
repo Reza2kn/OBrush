@@ -1,0 +1,223 @@
+{
+  "schema_version": 1,
+  "candidate": "C60 engineering prototype only; delivered app remains C58",
+  "status": "Completed scoped sharedRust nativeMetal/browserWebGPU residency/compute/draw/checkpoint/cancel audit; full SculptGL objective active and unachieved",
+  "utc": "2026-10-16T21:25:18.534234+00:00",
+  "fixture": {
+    "vertices": 999002,
+    "triangles": 1998000,
+    "sha256": "dfb5316f62e392e633f03cb662dcb12215ed165a71a9ae72a3fd639528731afe"
+  },
+  "point_parameters": {
+    "center": [
+      0,
+      0,
+      1
+    ],
+    "radius": 0.5,
+    "intensity": 0.25,
+    "raw_U": 1,
+    "passes": 32,
+    "normals": "Fresh static Source raw field captured once, held fixed"
+  },
+  "actual_browser_GPU_API_proof": {
+    "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-webgpu-resident-render-stage/browser02/actual-gpu-api-trace.json",
+    "sha256": "9726be8d1a00e67b7edea2401554e1aa85e62fd66c7c6dc138937437838ad49c",
+    "events": 365,
+    "same_canonical_buffer_in_candidate_commit_draw": 2,
+    "dispatches_before_draw": 64,
+    "triangles_drawn": 1998000,
+    "no_position_readback_or_CPU_position_upload_between_compute_and_completed_draw": true,
+    "only_uniform_and_failure_word_uploads": true,
+    "complete_GPU_checkpoint_and_cancel_copies_verified": true,
+    "compiled_shader_strings_exactly_bound": true
+  },
+  "whole_native_browser_inputs_reference_cancel_equal": {
+    "input-positions.bin": true,
+    "input-normal-u.bin": true,
+    "input-colors.bin": true,
+    "input-triangles.bin": true,
+    "reference-positions.bin": true,
+    "cancel-positions.bin": true
+  },
+  "numerical_comparisons": {
+    "browserGPU_vs_shared_f64_reference": {
+      "different_words": 21509,
+      "different_vertices": 17121,
+      "maximum_absolute_coordinate_error": 2.384185791015625e-07,
+      "RMS_coordinate_error": 4.742990071152209e-09
+    },
+    "nativeGPU_vs_shared_f64_reference": {
+      "different_words": 21509,
+      "different_vertices": 17121,
+      "maximum_absolute_coordinate_error": 2.384185791015625e-07,
+      "RMS_coordinate_error": 4.742990071152209e-09
+    },
+    "nativeGPU_vs_browserGPU": {
+      "different_words": 0,
+      "different_vertices": 0,
+      "maximum_absolute_coordinate_error": 0.0,
+      "RMS_coordinate_error": 0.0
+    }
+  },
+  "native_browser_whole_image_comparisons": {
+    "before": {
+      "different_pixels": 0,
+      "maximum_RGBA_error": 0
+    },
+    "after": {
+      "different_pixels": 0,
+      "maximum_RGBA_error": 0
+    },
+    "cancel": {
+      "different_pixels": 0,
+      "maximum_RGBA_error": 0
+    },
+    "recreated": {
+      "different_pixels": 0,
+      "maximum_RGBA_error": 0
+    }
+  },
+  "before_after_changed_pixels_each_backend": 18169,
+  "GPU_checkpoint_position_bytes": 15984032,
+  "fixed_GPU_bytes": 105993364,
+  "GPU_budget_scope": "Per viewport256MiB admission including one full position readback; no aggregate application/process qualification",
+  "invalid_candidate": {
+    "vertices": 768,
+    "workgroups": 3,
+    "passes": 3,
+    "all_position_words_unchanged_on_both_backends": true
+  },
+  "destroy_recreate": "Explicit device destruction rejects draw; fresh device reproduces complete before image; no physical device-loss fault injection",
+  "checks": {
+    "runtime_tests": 2350,
+    "compile_fail_doctests": 2,
+    "ignored": 1,
+    "workspace_required_native_WASM_checks": "All5 PASS",
+    "GPU_crate_native_WASM_all_target_Clippy_and_fmt": "PASS",
+    "official_default_app_web_macos_builds": "PASS, native signature verified",
+    "official_default_app_browser_smoke": "PASS40962V/81920T startup/upload/render only"
+  },
+  "evidence": [
+    {
+      "path": ".artifacts/sculptgl-webgpu-resident-render-stage/PREREGISTRATION.json",
+      "bytes": 2027,
+      "sha256": "f39a03754a957021f136fa1917ea143ed4febd3cbe9ba2da94229c6b76d161ef"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-resident-render-stage/SOURCE_PRECHECK01.json",
+      "bytes": 93098,
+      "sha256": "050fe9ba01fb8736ef49b4ba9af547f2783f55e11603bd9555993e313b8f9859"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-resident-render-stage/PROTOTYPE_BUILD_BINDING02.json",
+      "bytes": 2531,
+      "sha256": "d4047c69081aa30bdcdda832d91dee6f41176bad97e6beb18667a34bab7d64bd"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-resident-render-stage/FINAL_CHECKED_RECEIPT.json",
+      "bytes": 8259,
+      "sha256": "ec9b3df05d23f0257b7c72c76d0a05e27444bc3077a1cad9c9c0535273e24db1"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-resident-render-stage/SOURCE_CHECKS01.json",
+      "bytes": 2064,
+      "sha256": "dd012e6560e84348db86e391cbdc01c12bf2128224d0b818e3765f7605972b2a"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-resident-render-stage/OFFICIAL_BUILDS01.json",
+      "bytes": 1155,
+      "sha256": "659a0b8700b6d0b1d07243da9096395cd2253361d4a4c7d29315f384095dea2f"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-resident-render-stage/WHOLE_AUDIT01.json",
+      "bytes": 5675,
+      "sha256": "9b9a1bdf30f7825f8526cf5e6878f80262afa025cf611748f536843c9b6130d1"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-resident-render-stage/AUDIT_RESIDENCY.py",
+      "bytes": 11014,
+      "sha256": "e2d9b4f512385976622f8317781429797f13ccb9cf78ac08cb5109e6fe74d142"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-resident-render-stage/VISUAL_REVIEW01.json",
+      "bytes": 956,
+      "sha256": "b199bd6cdc437454cc516d35d5a6d69a2d1afe92c4f7c83d2f1036006403f969"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-resident-render-stage/native02/result.json",
+      "bytes": 4006,
+      "sha256": "47dfca92db6e8977149103de856569d8d0ea07414c2f9e7515f9a65f684255d6"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-resident-render-stage/browser02/result.json",
+      "bytes": 40488,
+      "sha256": "e1be9cef1552a3e3e349ce310980c4159ac5eb90125411232d4d5670b053e9c2"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-resident-render-stage/browser02/actual-gpu-api-trace.json",
+      "bytes": 58508,
+      "sha256": "9726be8d1a00e67b7edea2401554e1aa85e62fd66c7c6dc138937437838ad49c"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-resident-render-stage/browser02/whole-browser.png",
+      "bytes": 94264,
+      "sha256": "f42912c545954eb624a9ff9d96516bb474ae19432c14602fc1a6d1e8552813a0"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-resident-render-stage/default-app-smoke01/result.json",
+      "bytes": 7911,
+      "sha256": "3499611ab1db3a69141810fb3b2b3aca77a8309d9c0a115c4a741156b00f52dc"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-resident-render-stage/default-app-smoke01/whole-app.png",
+      "bytes": 239371,
+      "sha256": "f58eddc059d7fec4400a9d976a45ca67c2ed99e6bbb3c17ce37907b6eff75f83"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-resident-render-stage/native-app-signature01.log",
+      "bytes": 209,
+      "sha256": "808e423ab4167d6219807765aabcb0e864b95716541291523c11329fe2f0033b"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-resident-render-stage/DOWNLOAD_ADAPTER_REPAIR01.json",
+      "bytes": 1327,
+      "sha256": "9cd2bb64d71e702cdc950c38d0d509cd48e2e4d131a27a56cf93e9fc43a48d21"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-resident-render-stage/browser01/result.json",
+      "bytes": 38013,
+      "sha256": "f0651ce2d9d37f6cf282dc7fe5dde5faf92eaa603f663b90cbaad41b701da8b1"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-resident-render-stage/WHOLE_FILE_IDENTITY01.json",
+      "bytes": 3484,
+      "sha256": "31e97015e3b6c14aa621ae62a7d8426f0fccf037d1a412166871955bf50892f8"
+    }
+  ],
+  "failed_checks_preserved": [
+    "Offline dependency check lacked metal0.32; locked OSS dependency fetch/build succeeded",
+    "Native diagnostic cast_slice type inference repair",
+    "WASM all-target native CLI cfg repair",
+    "First browser GPU phases completed but11th artifact download produced no event; separate paced artifact-transfer run retained all11complete outputs"
+  ],
+  "delivered_main": "C58 unchanged; no GPU frontend/release/preview promotion",
+  "original_inventory": "317 stable SculptGL IDs plus5hosted controls/gates unchanged; no family promoted",
+  "limits": [
+    "Prototype only; fixed fresh normals and diffuse offscreen viewport",
+    "No Source contact/selection/order/normal-refresh/alpha/mirror/guard/history/scene/UV/material/control parity",
+    "CPU-to-GPU renderer migration and real frontend/document ownership remain unimplemented",
+    "No original60/120s interaction or performance/memory gate closed; no full family/parity claim",
+    "No physical device-loss fault injection; explicit destroy/recreate only",
+    "No physical pen/default-all-tools/nativeGUI/full-interchange qualification",
+    "No original60/120s performance matrix closure; no production speedup inferred",
+    "Core source additions and GPU crate remain isolated staged prototype; full renderer/front-end and document/history ownership still required"
+  ],
+  "next": [
+    "Present shared GPU buffers through a real viewport surface and port full renderer/control behavior",
+    "Implement and compare retained selected normal updates/current-surface picking and all brush/control operations with CPU fallback",
+    "Add explicit document claim/synchronization/undo/export/device-loss rules before GPU edits can replace canonical document state",
+    "Run original complete consumer/history/interchange/performance matrix before delivery or any parity claim"
+  ],
+  "all11_complete_native_browser_output_files_byte_equal": true
+}

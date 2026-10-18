@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-12T18:19:26.701669+00:00",
+  "reference_version": "ZBrush2026.2.1",
+  "original_executable_sha256": "a56a4bcd0a842cdcdf103f9e5b4e13b277e7806b91396ad54a9fb7e7d14e460a",
+  "selected_target": {
+    "kind": "exact ARM64 slice extracted with lipo -thin arm64",
+    "bytes": 280366480,
+    "sha256": "41853b72206c2c939984e5d3077a92ef3ba5e7190b90b1ab0734f3c7d1343e20",
+    "matches_REA_artifact_inventory": true
+  },
+  "tool": {
+    "rea_version": "6.4.0",
+    "rea_source_commit": "ec2d251c0ad8382e0665546be5ec8f5f1c175962",
+    "provider": "ghidra",
+    "ghidra_version": "12.1.4",
+    "jdk_version": "21.0.12.1+1"
+  },
+  "command": "node .tools/rea/scripts/rea.mjs search <selected-arm64-slice> ClayBuildup --kind strings --provider ghidra --json",
+  "resource_controls": {
+    "REA_GHIDRA_STARTUP_TIMEOUT_MS": "120000",
+    "GHIDRA_HEADLESS_MAXMEM": "2G"
+  },
+  "result": {
+    "exit_code": 1,
+    "wall_seconds": 123.81,
+    "status": "provider_timeout",
+    "error": {
+      "error": "Analysis failed",
+      "code": "provider_timeout",
+      "category": "timeout",
+      "message": "Analysis took too long. Try a smaller request, then run `rea doctor` if it continues.",
+      "retryable": true,
+      "remediation": {
+        "action": "Analysis took too long. Try a smaller request, then run `rea doctor` if it continues."
+      },
+      "details": {
+        "operation": "search_strings",
+        "timeout_ms": 120000
+      }
+    },
+    "returned_engine_findings": false
+  },
+  "cleanup_observation": {
+    "remaining_workspace_jdk_java_processes": 0,
+    "method": "Read-only ps PID/PPID/executable inventory; selected exact workspace JDK java executable, without logging arguments/environment.",
+    "scope": "Only the workspace JDK executable is checked; no general cleanup claim."
+  },
+  "full_local_output_sha256": "33d841ef8bae4c2e7610bb081ed786fb2605eb0cca1ca480aa96bda324277e13",
+  "limitations": [
+    "Initial import and auto-analysis did not complete within the selected startup deadline.",
+    "No brush algorithm, native call relationship, reference behavior or parity was established by this query.",
+    "No whole-binary retry or timeout increase was attempted."
+  ]
+}

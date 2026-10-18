@@ -1,0 +1,90 @@
+{
+  "status": "Delivered specific ordinary Smooth refusal fix; no broaderparity claim",
+  "candidate": "C36",
+  "version": "0.1.20",
+  "baseline": "317stableSculptGLIDs+5appearancecontrols andZBrush2026.2.1 objective retained",
+  "change": "Actual live inverted Smooth now returns existing UnsupportedSmoothNegative before opening a transaction. Its user message explains the unsupported option and how to recover. Prior generic UnsupportedDomain failure preserved; geometry kernels, app input/session routing, renderer and UI labels are byte-identical to C35.",
+  "source": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate36/source/manifest.json",
+    "sha256": "52b2158741221bc884dcf9826b3c85c7929de0c60eb88ea9a5ad16410aa306a7"
+  },
+  "build": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate36/build-record.json",
+    "sha256": "65ffac65b5efd4b805bba2657f873205be71e22a5c340e5b1391462a49be6abc"
+  },
+  "receipt": {
+    "path": ".artifacts/sculptgl-composite20-candidate36-smooth-invert-stage/FINAL_CHECKED_RECEIPT.json",
+    "sha256": "6f7e64d34e76cddac442cb2561df295ea93c14ae286a61d4636511731daa811f"
+  },
+  "change_scope": {
+    "path": ".artifacts/sculptgl-composite20-candidate36-smooth-invert-stage/CHANGE_SCOPE.json",
+    "sha256": "503a4d3a479f2b2147b50c333e45653d4cfb6772480d8956c9c4b9df9c20f35e"
+  },
+  "checks": {
+    "record": {
+      "path": ".artifacts/sculptgl-composite20-candidate36-smooth-invert-stage/root-check01/RESULT.json",
+      "sha256": "e4ff63514af28e617b5057e7c7bc7f2a2addd5d19764c56a07c617069d6333ae"
+    },
+    "all_five": "PASS fmt/native strict/workspace/WASMalltargets/WASMstrict",
+    "total": 2234,
+    "core": 1553,
+    "app": 681,
+    "ignored": 1,
+    "new_named_regression": "PASS live_inverted_smooth_refusal_is_specific_atomic_and_preserves_real_redo; earlier0-testfilter explicitlynot counted"
+  },
+  "artifacts": {
+    "wasm": {
+      "path": "pkg/obrush_app_bg.wasm",
+      "bytes": 23190041,
+      "sha256": "f918ea447755228268becd641df25421a80c477ab3dbf4a988068005e3b31750"
+    },
+    "web": "officialscriptPASS",
+    "macos": "officialscriptPASS signed, unopened and uninstalled"
+  },
+  "actual_browser": {
+    "SM14": {
+      "path": ".artifacts/sculptgl-composite20-candidate36-smooth-invert-stage/ROOT_SM14_REFERENCE_AUDIT.json",
+      "sha256": "023f3421201c20fbbcbf5ac99f5547fbb3deb0a35274d3c1687b6f4059aa5066"
+    },
+    "helper": {
+      "path": ".artifacts/sculptgl-source-smooth-c36-invert-stage/MANIFEST.json",
+      "sha256": "a2cec7f4418d4be641003872de4931669dd8514275a35930b270d7d13bfbabab"
+    },
+    "protocol": {
+      "path": ".artifacts/sculptgl-source-smooth-c36-invert-stage/protocol/manifest.json",
+      "sha256": "6e2af413ea97fc0034858773b489c30549e1d238ce7e8cebe8fa8a95780a9661"
+    },
+    "scope": "Ordinary RootLockcontrol refusal andgenuineAltSmoothattempt, exactreleasediagnostic beforeSave, allwholeGPU/files/priorRedo/release/31quietframes over500ms, allraw/downloadsrehash. No Source equivalentNegative/LockSmoothUI claim. HistoricalC35normal23/SM04/11/12 preserved and not rerun/claimedcurrent."
+  },
+  "preserved_failures": {
+    "original_SM14_framecap": "061f64b83170fbe8bd14f3958de097d9f33f1f90811bcd0395a097060dba866e",
+    "C35_generic_and_saved_message": "119a7a0e719088ea256fd361a66f3d649ab49290d0af82bdc45ab9867eace498",
+    "helper_scope_identity_beforebrowser": {
+      "path": ".artifacts/sculptgl-source-smooth-c36-invert-stage/root-check01/RESULT.json",
+      "sha256": "00ab1bed54346c11cc48e3f86f22819db22dd4e0bcc764b12cf630b313a7f1e8"
+    },
+    "helper_repair": {
+      "path": ".artifacts/sculptgl-source-smooth-c36-invert-stage/BINDING_REPAIR.json",
+      "sha256": "2e51e4268e80fbc831481e28233b358af938693a35af3977690559cf119ea20b"
+    },
+    "wrong_filter0_not_counted": {
+      "path": ".artifacts/sculptgl-composite20-candidate36-smooth-invert-stage/FILTER_ZERO_PRESERVED.json",
+      "sha256": "d28361a1b09ef80fbf60d8d0702812dddff4a1fc01d514d1c8112b6dae534c3b"
+    }
+  },
+  "main_transfer": {
+    "path": ".artifacts/sculptgl-main-c36-promotion-stage/PROMOTED.json",
+    "sha256": "4cc0139fb5759fd26858f53ce49fe73740f9db34fe27a3527c1dece328aff208"
+  },
+  "preview": {
+    "url": "http://127.0.0.1:8801/",
+    "HTTP19": {
+      "path": ".artifacts/sculptgl-main-c36-promotion-stage/PREVIEW_HTTP.json",
+      "sha256": "8b4cda69e5ff075471341400ad6d417225feeea5c9d40765fa9014bbb2469b5d"
+    },
+    "server_session": 59970,
+    "old_previews_user8792": "preserved"
+  },
+  "remaining": "OtherSmooth/currentbuildcoverage,SM15heldsettingfocus,Flatten/lifecycle/fullappearance/locale/nativephysical/HiDPI/pressure/densegeometry/longsession/inputlatency/all317+5 open. Flatten8 initialconsumercases preregistered but UNRUN. Nopercentage/fullparity/nativeGUI/readabilityclaim.",
+  "goal_runtime": "Savedgoal observedblocked; user-only /goal resume requested; authorized currentturn work continues."
+}

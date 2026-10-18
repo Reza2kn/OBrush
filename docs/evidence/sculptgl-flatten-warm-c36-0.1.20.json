@@ -1,0 +1,87 @@
+{
+  "status": "Compared actualwarmFlatten two-stroke fixture; fullFlatten/SculptGL parity unverified",
+  "version": "0.1.20",
+  "candidate": "C36 unchanged",
+  "case": "FW00",
+  "build": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate36/build-record.json",
+    "sha256": "65ffac65b5efd4b805bba2657f873205be71e22a5c340e5b1391462a49be6abc"
+  },
+  "source": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate36/source/manifest.json",
+    "sha256": "52b2158741221bc884dcf9826b3c85c7929de0c60eb88ea9a5ad16410aa306a7"
+  },
+  "helper": {
+    "path": ".artifacts/sculptgl-flatten-c36-warm-prearm-stage/MANIFEST.json",
+    "sha256": "10a15a23cf40670daf9acac8555d874fa8819dd192ec36f1f333c78d3c7e2a17"
+  },
+  "protocol": {
+    "path": ".artifacts/sculptgl-flatten-c36-warm-prearm-stage/protocol/manifest.json",
+    "sha256": "59a21f0ca0ff483cca09b5272ce7e90a4f36152f675741dbbb5baa85cbc1b4ec"
+  },
+  "actual_audit": {
+    "path": ".artifacts/sculptgl-flatten-c36-warm-prearm-stage/ROOT_WARM_AUDIT.json",
+    "sha256": "ffa3d0f6e024723c7e25a4dabdac62bcdb84a32418bbffac53b86120a9698f0e"
+  },
+  "whole_images": {
+    "path": ".artifacts/sculptgl-flatten-c36-warm-prearm-stage/ROOT_WARM_IMAGE_REVIEW.json",
+    "sha256": "efc2589de95559001b722098c3436a786592ff2c799b586a06161c5bf68bdb28"
+  },
+  "descriptive_normal_pair": {
+    "path": ".artifacts/sculptgl-flatten-c36-warm-prearm-stage/ROOT_DESCRIPTIVE_NORMAL_PAIR.json",
+    "sha256": "07023e07c8f3037ce354fa30a733da39a5ae7436a158dee16105e3c88d18b2fb"
+  },
+  "result": "4c66e02b64dded03f09df1a381740c6dd7c7527a51f87a2fd43afa999987b650",
+  "scope": "Same6vertexindependentopen2sheetfixture, normal500pxthen370px/.25/Negativefalse/Cullingfalse/alphaNone/mirroroff/factors0/guardfalse/DPR1/oncefloorintegerendpoint, exactlyoneactualSource/Rootdabperstroke. No reimport/reset/refit/tool/mode switch between strokes; onlynormalradiusUIedit.",
+  "proof": "Full owncandidate/normal/GPUwords exact; selected6then[2,5], usefulchanges3then1. Outsidevertices3/4retainthefirstnormals. Freshwhole-normalrecompute disagreesby6words,max.0012202225625514984 inbothapps; actualGPUusesindependentretainedfield. ExactwholeUndoSecond/UndoFirst/RedoFirst/RedoSecond andnormalproducer restoration/removal verified.",
+  "budgets": {
+    "same_original_single_capture_arm_per_page": true,
+    "Source_frames": 45,
+    "Root_frames": 107,
+    "Source_bytes": 2808112,
+    "Root_bytes": 4959055,
+    "limits_frames": 256,
+    "limits_GPU_bytes": 33554432,
+    "no_capraise_rearm_or_intervalsplit": true
+  },
+  "quiet": [
+    {
+      "side": "source",
+      "phase": "first500",
+      "samples": 32,
+      "milliseconds": 516.5999999940395
+    },
+    {
+      "side": "source",
+      "phase": "second370",
+      "samples": 32,
+      "milliseconds": 516.6999999880791
+    },
+    {
+      "side": "root",
+      "phase": "first500",
+      "samples": 31,
+      "milliseconds": 501.59999999403954
+    },
+    {
+      "side": "root",
+      "phase": "second370",
+      "samples": 31,
+      "milliseconds": 500.09999999403954
+    }
+  ],
+  "evidence": {
+    "raw_records": 397,
+    "downloads": 26,
+    "allraw_download_eventbytes_rehashed": true
+  },
+  "paired_positions": "BothRootphases maxabsolute1.862645149230957e-9 withinoriginal1e-6; fullworddifferences retained. SourceGL1forwardeduploads vsRootGL2actualGPUreadback distinct.",
+  "preserved_failures": {
+    "Source_collapsed_numeric": "8296041cff5556a96c5a634f9f03fa3e172802ee3f21b4f91c9840b853c30425",
+    "Root_singlewindow_framecap": "7502eebfea0b1fe8fc26a5c3927970815a4899437c2ea5ddc4205254c3bfc0f2",
+    "failure_prefix_gap": "OldRootobservefailurepreventedfullprefixretrieval; retainedquiet/status/error/PIDdata butfulloldRootprefix unavailable, notclaimed. Newcatch independentlyretainsfullprefixevenifobservefails.",
+    "fix": "SourceactualDOMhit/focusreadinessbeforetyping; RootFramebuttonnavigated/readiedbeforearm, actualFramepress/allbrush/settings/historycallbacks remainarmed, allpressadmissiongates unchanged."
+  },
+  "remaining": "WarmhandovertoPaint,alpha/mirror/continuous/heldsettings/lifecycle/exactcorner/fullN01-N08, nativeGUI/physicalpressure/HiDPI/largergeometry/longsession/latency/full317+5 andZBrush2026.2.1 remainopen. No appearance/pixel/fullparity orpercentageclaim.",
+  "preview": "http://127.0.0.1:8801/"
+}

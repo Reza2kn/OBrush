@@ -1,0 +1,1528 @@
+{
+  "status": "passed seven sculpt-layer browser workflows",
+  "raw_result": {
+    "path": ".artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/result.json",
+    "sha256": "0d697408069b61bda1d0fbb781e8dcd369ec527fd6fe475cdcb5ba9b15fbed8a"
+  },
+  "harness": {
+    "path": ".artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/harness.mjs",
+    "sha256": "a38ae1e4cf9f6effe56b1b1ca8416e42eb2b214ff586fd134402c8aaeea01d5d"
+  },
+  "wasm": {
+    "sha256": "da6ab1eb12cd3702d57f88ce8feae2f3123c1fed8722f207c91f169ee53220a3",
+    "served_sha256": "da6ab1eb12cd3702d57f88ce8feae2f3123c1fed8722f207c91f169ee53220a3",
+    "bytes": 3901214
+  },
+  "cases": [
+    {
+      "name": "draw-intensity-visibility",
+      "draw_difference": {
+        "changed_vertices": 850,
+        "max_displacement": 0.02551279856227842,
+        "rms_displacement": 0.00150523612867463
+      },
+      "half_response": {
+        "max_component_error": 7.000000001866624e-08,
+        "tolerance": 3e-07,
+        "pass": true
+      },
+      "history": {
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      "gates": {
+        "zero_returns_base": true,
+        "half_is_scaled": true,
+        "nonbinary_weight_is_stored_f32": true,
+        "full_returns_exact_mesh": true,
+        "hidden_returns_zero_mesh": true,
+        "shown_returns_full_mesh": true,
+        "nonunit_record_unavailable": true
+      }
+    },
+    {
+      "name": "draw-move-layer-independence",
+      "move_difference": {
+        "changed_vertices": 626,
+        "max_displacement": 0.022776244626112097,
+        "rms_displacement": 0.0007774626717921226
+      },
+      "history": {
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      "gates": {
+        "first_deltas_unchanged": true,
+        "hiding_move_retains_draw": true,
+        "hiding_all_returns_base": true,
+        "restoring_draw_exact": true,
+        "restoring_both_exact": true,
+        "move_only_nonempty": true
+      }
+    },
+    {
+      "name": "stop-record-base-edit",
+      "difference": {
+        "changed_vertices": 680,
+        "max_displacement": 0.013806181842164094,
+        "rms_displacement": 0.0007420025426382388
+      },
+      "gates": {
+        "deltas_unchanged": true,
+        "base_positions_changed": true,
+        "zero_is_edited_base": true,
+        "full_restored_exact": true,
+        "recording_remains_off": true
+      }
+    },
+    {
+      "name": "delete-bake-history",
+      "delete_history": {
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      "bake_history": {
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      "gates": {
+        "delete_preserves_remaining_delta": true,
+        "bake_retains_visible_mesh": true,
+        "baked_nonlayer_is_v2": true,
+        "bake_undo_restores_exact_project": true
+      }
+    },
+    {
+      "name": "fresh-open-invalid-preserves-history",
+      "invalid_fixture": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/invalid-layer-vector-count.obrush",
+        "sha256": "31f07ddff3746af90d2dd25964847502f10293d9e30729473a324b90f52ba4bc",
+        "corruption": "First layer displacement vector count reduced by one"
+      },
+      "notice": "Import failed: Layer delta length or finite displacement limits are invalid",
+      "gates": {
+        "fresh_roundtrip_exact": true,
+        "invalid_preserves_project": true,
+        "invalid_preserves_redo": true
+      }
+    },
+    {
+      "name": "historical-v2-import",
+      "fixture": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/baseline-2e0bdefc-5c0f-4e09-aedb-c97b8a21e24f/sphere-outbound-initial.obrush",
+        "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+        "bytes": 5317105,
+        "provenance": "Immutable independently generated OBrush0.1.6 browser baseline"
+      },
+      "gates": {
+        "exact_old_project": true,
+        "no_layers": true,
+        "recording_off": true
+      }
+    },
+    {
+      "name": "layers-subdivision-lock-bake-navigation",
+      "fixture": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/independent-small-v2.obrush",
+        "sha256": "7fa432b5fc9941f095c32c8175606361fb664e345054dcacc8adc39e991e7f82",
+        "algorithm": "Latitude12/longitude24 closed sphere, outward winding, first pole X=-0.0; actual UI Loop Add produces fine hierarchy"
+      },
+      "signed_zero": {
+        "import_preserves_position": true,
+        "create_preserves_position": true,
+        "v3_base_preserves_position": true
+      },
+      "layer_difference": {
+        "changed_vertices": 14,
+        "max_displacement": 0.007931227155251542,
+        "rms_displacement": 0.0004856587498088327
+      },
+      "bake_history": {
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      "gates": {
+        "signed_zero_preserved": true,
+        "useful_fine_layer": true,
+        "locked_controls_preserve_project": true,
+        "bake_preserves_active_mesh": true,
+        "navigation_preserves_baked_high": true,
+        "lower_is_smaller": true,
+        "stack_retained": true
+      }
+    }
+  ],
+  "snapshot_count": 52,
+  "layer_composition_snapshot_count": 42,
+  "all_gpu_snapshots_exact": true,
+  "all_compositions_exact": true,
+  "page_count": 4,
+  "runtime_errors": {
+    "gl": [],
+    "js": []
+  },
+  "actual_4x_msaa_each_page": true,
+  "strokes": [
+    {
+      "name": "record-draw",
+      "steps": 14,
+      "quiet": true,
+      "first_probe_start_after_dom_release_ms": 9.5,
+      "pending_dabs": [
+        0,
+        0,
+        0
+      ],
+      "frame_gap_p95_ms": 16.800000000000182,
+      "frame_gap_max_ms": 16.800000000000182,
+      "long_tasks": []
+    },
+    {
+      "name": "record-move",
+      "steps": 12,
+      "quiet": true,
+      "first_probe_start_after_dom_release_ms": 8.199999999254942,
+      "pending_dabs": [
+        0,
+        0,
+        0
+      ],
+      "frame_gap_p95_ms": 16.700000000000728,
+      "frame_gap_max_ms": 16.799999999999272,
+      "long_tasks": []
+    },
+    {
+      "name": "base-draw-recording-off",
+      "steps": 10,
+      "quiet": true,
+      "first_probe_start_after_dom_release_ms": 8.899999998509884,
+      "pending_dabs": [
+        0,
+        0,
+        0
+      ],
+      "frame_gap_p95_ms": 16.799999999995634,
+      "frame_gap_max_ms": 16.80000000000291,
+      "long_tasks": []
+    },
+    {
+      "name": "redo-target-base-edit",
+      "steps": 8,
+      "quiet": true,
+      "first_probe_start_after_dom_release_ms": 9.699999999254942,
+      "pending_dabs": [
+        0,
+        0,
+        0
+      ],
+      "frame_gap_p95_ms": 16.799999999999727,
+      "frame_gap_max_ms": 16.800000000000182,
+      "long_tasks": []
+    },
+    {
+      "name": "subdivision-layer-draw",
+      "steps": 10,
+      "quiet": true,
+      "first_probe_start_after_dom_release_ms": 4.400000002235174,
+      "pending_dabs": [
+        0,
+        0,
+        0
+      ],
+      "frame_gap_p95_ms": 16.700000000000728,
+      "frame_gap_max_ms": 16.800000000000182,
+      "long_tasks": []
+    }
+  ],
+  "cleanup": {
+    "owned_chrome_exit_code": 0,
+    "owned_chrome_signal": null,
+    "owned_server_closed": true
+  },
+  "limitations": [
+    "Geometry-only dense world-space offsets; masks/colors remain base channels, and no reference layer equivalence is claimed.",
+    "Owned headless Chrome and trusted synthetic mouse events; native GUI, physical devices and input-to-photon latency remain unverified.",
+    "Exact stored f64 composition is verified independently; inferred half interpolation allows3e-7 component error from f32 rounding.",
+    "Fresh public file input and captured download bytes are exercised; physical file-picker/download persistence is outside this harness.",
+    "Layer identity is its ordered stack index. Navigation/topology stay locked while layers exist; existing subdivision levels are retained after Bake.",
+    "Packed GPU vertex buffers cover positions, normals, mask and RGB at 40 bytes/vertex; no independent GPU index-buffer readback. Saved triangle correspondence/history are checked separately.",
+    "Short brush/idle intervals on the default sphere and an independently created coarse subdivision fixture do not establish long-session or large-layer performance; end-stroke capture/composition, normals and upload remain proportional to state size.",
+    "Fresh public input and captured download bytes do not establish physical file-picker interaction or disk download persistence."
+  ],
+  "timing_scope": "Probe timestamps are start times after trusted DOM pointerup, before GPU readback completes; rAF callback gaps describe scheduling, not rendered frame time, physical input-to-photon latency or native latency. Incremental waits 0/200/800ms are measured through the helper, not absolute release deadlines.",
+  "frozen_release": {
+    "web": ".artifacts/layers-release-0.1.8-layout-helper-final/web",
+    "source_manifest": {
+      "path": ".artifacts/layers-release-0.1.8-layout-helper-final/source-manifest.json",
+      "sha256": "a269d36b297797602febfa5743e2f9b5cb1a619bc312e8ca15a938b713e10e12"
+    },
+    "build_record": {
+      "path": ".artifacts/layers-release-0.1.8-layout-helper-final/build-record.json",
+      "sha256": "126d7b6466a39a5ef95d31c2d1205b391f36c1ebd66e660d5d33c8af2081e088"
+    },
+    "frozen_helper": {
+      "path": ".artifacts/layers-release-0.1.8-layout-helper-final/source/scripts/check-layers.mjs",
+      "sha256": "a38ae1e4cf9f6effe56b1b1ca8416e42eb2b214ff586fd134402c8aaeea01d5d"
+    }
+  },
+  "fixtures": [
+    {
+      "case": "historical-v2-import",
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/baseline-2e0bdefc-5c0f-4e09-aedb-c97b8a21e24f/sphere-outbound-initial.obrush",
+      "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "bytes": 5317105,
+      "provenance": "Immutable independently generated OBrush0.1.6 browser baseline"
+    },
+    {
+      "case": "layers-subdivision-lock-bake-navigation",
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/independent-small-v2.obrush",
+      "sha256": "7fa432b5fc9941f095c32c8175606361fb664e345054dcacc8adc39e991e7f82",
+      "algorithm": "Latitude12/longitude24 closed sphere, outward winding, first pole X=-0.0; actual UI Loop Add produces fine hierarchy"
+    },
+    {
+      "case": "fresh-open-invalid-preserves-history",
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/invalid-layer-vector-count.obrush",
+      "sha256": "31f07ddff3746af90d2dd25964847502f10293d9e30729473a324b90f52ba4bc",
+      "corruption": "First layer displacement vector count reduced by one"
+    }
+  ],
+  "global_cdp_errors": {
+    "exceptions": [],
+    "console_errors": []
+  },
+  "preserved_prior_failures": [
+    {
+      "result": ".artifacts/layer-browser-0.1.8/final-534ff0e8-f422-40e5-8ecd-27991e075049/result.json",
+      "sha256": "476faa467ce6ac707cb50597d6d4fd5626146bc07d01885ced964be91d051760",
+      "scope": "Actual UI scrollbar covered the full-intensity slider endpoint; production layout corrected by reserving gutters."
+    },
+    {
+      "result": ".artifacts/layer-browser-0.1.8/layout-final-f9af0928-804b-4696-b3fb-5acc17d5ba55/result.json",
+      "sha256": "b2b6dc5c968aff568ba0d2db550d475c359f766367abf003feedaaf2b2567353",
+      "scope": "Harness nonbinary click coordinate entered as a fraction; eframe integer client_x binding caused 36% instead of 37%; helper now rounds to nearest pixel."
+    }
+  ],
+  "inspected_pngs": [
+    {
+      "path": ".artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/draw-zero.png",
+      "sha256": "82e8fbe612b2e0114939a92a85765b3aca1b947507e6f8877b727d27c1484538"
+    },
+    {
+      "path": ".artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/draw-half.png",
+      "sha256": "008695210dbe5337318a82e532d1ea68c8af120ff4247b7a5031b73d34b0d25a"
+    },
+    {
+      "path": ".artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/draw-full.png",
+      "sha256": "3f1b1f07fb1066062fa6654eeacbfd64b77ab94b1568aaa1f9e3a26f25957cce"
+    },
+    {
+      "path": ".artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/layers-final-controls.png",
+      "sha256": "d1a536d7aec988e879c6e1bab7eddfca3ad9e70b7fc16927da7ab41da0e6682c"
+    }
+  ],
+  "visual_observation": "The zero/half/full screenshots show a smooth shallow symmetric Draw ridge increasing with intensity. Reserved scrollbar gutters expose slider endpoints and values. The independently authored subdivision fixture is intentionally coarse and tests hierarchy preservation rather than production sculpt fidelity.",
+  "schema_version": 1,
+  "version": "0.1.8",
+  "recorded_at_utc": "2026-10-13T02:33:32.943475+00:00",
+  "raw_summary": {
+    "path": ".artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/summary.json",
+    "bytes": 11620,
+    "sha256": "54048b5c6a48d880e2d17a0f8e7b51abb160d3a1d09db301a74011cef4cacc63"
+  },
+  "preregistered_contract": {
+    "draw_radius": 0.18,
+    "draw_strength": 0.35,
+    "symmetry_x": true,
+    "half_intensity_max_component_error": 3e-07,
+    "nonbinary_intensity": 0.37,
+    "stored_f64_composition": "For each component, start at stored f64 base; add visible Math.fround(intensity)*offset contributions only when nonzero, in entry order; Math.fround result and compare exact f32 bits including signed zero",
+    "history": "Exact project fields and packed mesh bits",
+    "gpu": "Exact packed f32 vertex-buffer digest",
+    "release_probe_incremental_delays_ms": [
+      0,
+      200,
+      800
+    ]
+  },
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/155.0.8059.39",
+    "revision": "@3ff7ac5a9224be9156d7f8703a06e22890aafd34",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+    "jsVersion": "15.5.35.20"
+  },
+  "historical_import_equality_scope": "Historical v2 fixture editable project fields and packed f32 mesh match after import; canonical serialized bytes from the older encoder are not asserted equal.",
+  "environment": {
+    "host": "Apple M2, macOS 26.5.1 arm64",
+    "browser": "Chrome/155.0.8059.39",
+    "context": "WebGL2; actual 4x offscreen multisampling on each of four pages",
+    "viewport_css": [
+      1600,
+      1000
+    ],
+    "device_scale_factor": 1,
+    "input": "Trusted CDP synthetic mouse events in isolated owned headless Chrome; public UI controls/file input; captured download bytes"
+  },
+  "snapshot_identities": [
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/initial-base.obrush",
+      "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "bytes": 5317105,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 108
+      },
+      "composition": {
+        "present": false
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/empty-draw-layer.obrush",
+      "sha256": "1b33777495f033004e8b585a0c82c5a75bec9ff3b3cad0534036111244635206",
+      "bytes": 9960322,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 2321.199999999255
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/draw-full-recording.obrush",
+      "sha256": "16dbeca1f534ef1ee8e9742b7ef93466e4207b1f22eaaca31f0696dce01bef23",
+      "bytes": 10006024,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 4511.5
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/recorded-draw-undo.obrush",
+      "sha256": "1b33777495f033004e8b585a0c82c5a75bec9ff3b3cad0534036111244635206",
+      "bytes": 9960322,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 6604.5
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/recorded-draw-redo.obrush",
+      "sha256": "16dbeca1f534ef1ee8e9742b7ef93466e4207b1f22eaaca31f0696dce01bef23",
+      "bytes": 10006024,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 7771.10000000149
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/draw-zero.obrush",
+      "sha256": "f7ce81e5a1d4df63ca0815ed0b463cb1d110a64f4b3aefc1dc87845cb7e428a8",
+      "bytes": 10005657,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 9288.89999999851
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/draw-half.obrush",
+      "sha256": "db15ca75ebd52b28b2c898810c232e1a61e1eca373eb23f892b227b0c6f0e850",
+      "bytes": 10005907,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "a6a52d1bd7f56953ce5e09ad6d5fe0c3814e6e2f20357cc288e2ebff63ca8ef3",
+        "last_upload_at": 10901.300000000745
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/half-record-attempt.obrush",
+      "sha256": "db15ca75ebd52b28b2c898810c232e1a61e1eca373eb23f892b227b0c6f0e850",
+      "bytes": 10005907,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "a6a52d1bd7f56953ce5e09ad6d5fe0c3814e6e2f20357cc288e2ebff63ca8ef3",
+        "last_upload_at": 10901.300000000745
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/draw-nonbinary-37-percent.obrush",
+      "sha256": "50687e378caaad5dbd4f29f23558c9043be3dc389cc51a90a10229ee19d39f57",
+      "bytes": 10005860,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "932226618c66595af1d406b9e192d639b110aaf2cdd1ea9c4923b5387f8e9624",
+        "last_upload_at": 13706.199999999255
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/draw-full-again.obrush",
+      "sha256": "8864236acd71f8c3cb06d9651bc116ebcbae94b02cd2746361132f2c3e5f23bd",
+      "bytes": 10006027,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 15256.60000000149
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/draw-hidden.obrush",
+      "sha256": "18563796a3f693b7d910e2e68bb585082a4e2cdfebe9cca72305763dcd55f7c1",
+      "bytes": 10005658,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 16628
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/draw-shown.obrush",
+      "sha256": "8864236acd71f8c3cb06d9651bc116ebcbae94b02cd2746361132f2c3e5f23bd",
+      "bytes": 10006027,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 17760.300000000745
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/empty-move-layer.obrush",
+      "sha256": "7474a0650bbf1fc5d01437caad39843e8e20e96cfdc93d06aa3637e61ccd654a",
+      "bytes": 10579567,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 20078.300000000745
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/two-layers-recording.obrush",
+      "sha256": "e89bc657d1350113ec48d17ac7316ce577f614784098d2f31de0373d847625da",
+      "bytes": 10614827,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "f62e90cc81df6595aa4483b4b5395ad6e64ec23d3ee442fb7d5c0b4360eb1345",
+        "last_upload_at": 22108.199999999255
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/recorded-move-undo.obrush",
+      "sha256": "7474a0650bbf1fc5d01437caad39843e8e20e96cfdc93d06aa3637e61ccd654a",
+      "bytes": 10579567,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 24121.10000000149
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/recorded-move-redo.obrush",
+      "sha256": "e89bc657d1350113ec48d17ac7316ce577f614784098d2f31de0373d847625da",
+      "bytes": 10614827,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "f62e90cc81df6595aa4483b4b5395ad6e64ec23d3ee442fb7d5c0b4360eb1345",
+        "last_upload_at": 25304.199999999255
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/only-draw.obrush",
+      "sha256": "e7cc9dc5926f2180ca036fdbe9f4ca65f251388237a9be57827b0e0150483f6c",
+      "bytes": 10614433,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 26590
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/both-shown.obrush",
+      "sha256": "0cf9ef5d480fb6a166677f2be358f6fbe05ce541a29a1765b306815b651487ca",
+      "bytes": 10614830,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "f62e90cc81df6595aa4483b4b5395ad6e64ec23d3ee442fb7d5c0b4360eb1345",
+        "last_upload_at": 27744.60000000149
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/only-move.obrush",
+      "sha256": "c1982635a51e96272f21fb22ffc370b58af8959f24f5ebcd23e79762821ca455",
+      "bytes": 10614461,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "3a257ece230f9fac7cba1e2a95a20d5852574e22c69295f67d8b7c8c2bd7810d",
+        "last_upload_at": 28961.199999999255
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/neither-layer.obrush",
+      "sha256": "3570d161e75a2d2064056cea739611f79d51007d9ff8ce944e750312b10f8246",
+      "bytes": 10614064,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 30125.5
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/draw-restored.obrush",
+      "sha256": "e7cc9dc5926f2180ca036fdbe9f4ca65f251388237a9be57827b0e0150483f6c",
+      "bytes": 10614433,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "989ee38090d3b371e3d6e13acd0db4ac97e44321fe0993bb986d0a61e0b1baf6",
+        "last_upload_at": 31275.39999999851
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/two-layers-shown.obrush",
+      "sha256": "0cf9ef5d480fb6a166677f2be358f6fbe05ce541a29a1765b306815b651487ca",
+      "bytes": 10614830,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "f62e90cc81df6595aa4483b4b5395ad6e64ec23d3ee442fb7d5c0b4360eb1345",
+        "last_upload_at": 32442.89999999851
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/before-base-edit.obrush",
+      "sha256": "0cf9ef5d480fb6a166677f2be358f6fbe05ce541a29a1765b306815b651487ca",
+      "bytes": 10614830,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "f62e90cc81df6595aa4483b4b5395ad6e64ec23d3ee442fb7d5c0b4360eb1345",
+        "last_upload_at": 34280.5
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/base-edited.obrush",
+      "sha256": "e1ebf89237c20f0c1bb391853d312455e5f0d7dc5a506a8a72f26ea82e151c6b",
+      "bytes": 10615170,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "514f293c03eef71de912a4f2782ffd9bb0d3505c90fb97ae267a7cd2ad2000fc",
+        "last_upload_at": 36227.60000000149
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/edited-base-only.obrush",
+      "sha256": "6107f71cde3e05ff3626dbbe72c31533197d6656b961c7ee6133b2df31eb9bb6",
+      "bytes": 10614500,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "1561868f852e4d384c191b92ea39f39ca55434fefa7b9cb46fd6ec761b20493f",
+        "last_upload_at": 39225.10000000149
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/base-edit-layers-restored.obrush",
+      "sha256": "e1ebf89237c20f0c1bb391853d312455e5f0d7dc5a506a8a72f26ea82e151c6b",
+      "bytes": 10615170,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "514f293c03eef71de912a4f2782ffd9bb0d3505c90fb97ae267a7cd2ad2000fc",
+        "last_upload_at": 41409.300000000745
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/before-delete.obrush",
+      "sha256": "e1ebf89237c20f0c1bb391853d312455e5f0d7dc5a506a8a72f26ea82e151c6b",
+      "bytes": 10615170,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "514f293c03eef71de912a4f2782ffd9bb0d3505c90fb97ae267a7cd2ad2000fc",
+        "last_upload_at": 41409.300000000745
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/deleted-move-layer.obrush",
+      "sha256": "064ef2d4a5bfd5b937941c0a754c163427e15a285b3bd65d9a13a325ffcff662",
+      "bytes": 10006477,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "95d99430cc869cb046486cbd2372e53c0d1828ad500c4b1d8eddef38f77bd346",
+        "last_upload_at": 43994
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/delete-layer-undo.obrush",
+      "sha256": "e1ebf89237c20f0c1bb391853d312455e5f0d7dc5a506a8a72f26ea82e151c6b",
+      "bytes": 10615170,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "514f293c03eef71de912a4f2782ffd9bb0d3505c90fb97ae267a7cd2ad2000fc",
+        "last_upload_at": 45201.5
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/delete-layer-redo.obrush",
+      "sha256": "064ef2d4a5bfd5b937941c0a754c163427e15a285b3bd65d9a13a325ffcff662",
+      "bytes": 10006477,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "95d99430cc869cb046486cbd2372e53c0d1828ad500c4b1d8eddef38f77bd346",
+        "last_upload_at": 46386.39999999851
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/before-bake.obrush",
+      "sha256": "e1ebf89237c20f0c1bb391853d312455e5f0d7dc5a506a8a72f26ea82e151c6b",
+      "bytes": 10615170,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "514f293c03eef71de912a4f2782ffd9bb0d3505c90fb97ae267a7cd2ad2000fc",
+        "last_upload_at": 47569.699999999255
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/baked.obrush",
+      "sha256": "8e5d49a0533c1102b619509c3afcc2b97fb67c79f85e0b148978719b6b15166b",
+      "bytes": 5317919,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "514f293c03eef71de912a4f2782ffd9bb0d3505c90fb97ae267a7cd2ad2000fc",
+        "last_upload_at": 48968.800000000745
+      },
+      "composition": {
+        "present": false
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/bake-layers-undo.obrush",
+      "sha256": "e1ebf89237c20f0c1bb391853d312455e5f0d7dc5a506a8a72f26ea82e151c6b",
+      "bytes": 10615170,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "514f293c03eef71de912a4f2782ffd9bb0d3505c90fb97ae267a7cd2ad2000fc",
+        "last_upload_at": 50019.89999999851
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/bake-layers-redo.obrush",
+      "sha256": "8e5d49a0533c1102b619509c3afcc2b97fb67c79f85e0b148978719b6b15166b",
+      "bytes": 5317919,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "514f293c03eef71de912a4f2782ffd9bb0d3505c90fb97ae267a7cd2ad2000fc",
+        "last_upload_at": 51202.89999999851
+      },
+      "composition": {
+        "present": false
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/persisted-two-layers.obrush",
+      "sha256": "e1ebf89237c20f0c1bb391853d312455e5f0d7dc5a506a8a72f26ea82e151c6b",
+      "bytes": 10615170,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "514f293c03eef71de912a4f2782ffd9bb0d3505c90fb97ae267a7cd2ad2000fc",
+        "last_upload_at": 52167.60000000149
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/fresh-loaded-layers.obrush",
+      "sha256": "e1ebf89237c20f0c1bb391853d312455e5f0d7dc5a506a8a72f26ea82e151c6b",
+      "bytes": 10615170,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "514f293c03eef71de912a4f2782ffd9bb0d3505c90fb97ae267a7cd2ad2000fc",
+        "last_upload_at": 537
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/redo-target.obrush",
+      "sha256": "4b8ad674f0a28257f6f75db1d08c458cc95722ae83773ce966669c25ab2dd9ff",
+      "bytes": 10615194,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "7ec16504458d0d2b8e1364684fce59b347b9bf5ce0cbb7aec9ff11cceadaf0a7",
+        "last_upload_at": 2189.199999999255
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/before-invalid-with-redo.obrush",
+      "sha256": "e1ebf89237c20f0c1bb391853d312455e5f0d7dc5a506a8a72f26ea82e151c6b",
+      "bytes": 10615170,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "514f293c03eef71de912a4f2782ffd9bb0d3505c90fb97ae267a7cd2ad2000fc",
+        "last_upload_at": 4298.5
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/after-invalid-with-redo.obrush",
+      "sha256": "e1ebf89237c20f0c1bb391853d312455e5f0d7dc5a506a8a72f26ea82e151c6b",
+      "bytes": 10615170,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "514f293c03eef71de912a4f2782ffd9bb0d3505c90fb97ae267a7cd2ad2000fc",
+        "last_upload_at": 4298.5
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/redo-after-invalid.obrush",
+      "sha256": "4b8ad674f0a28257f6f75db1d08c458cc95722ae83773ce966669c25ab2dd9ff",
+      "bytes": 10615194,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "7ec16504458d0d2b8e1364684fce59b347b9bf5ce0cbb7aec9ff11cceadaf0a7",
+        "last_upload_at": 6781.79999999702
+      },
+      "composition": {
+        "present": true,
+        "vertices": 40962,
+        "layers": 2,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/old-v2-loaded.obrush",
+      "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "bytes": 5317105,
+      "vertices": 40962,
+      "triangles": 81920,
+      "gpu": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 493.3999999985099
+      },
+      "composition": {
+        "present": false
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/small-signed-zero-import.obrush",
+      "sha256": "4fa5b38e5feb26df7f9612424ef223a7738655dcaae01413b76f5419f412f2fa",
+      "bytes": 30307,
+      "vertices": 266,
+      "triangles": 528,
+      "gpu": {
+        "bytes": 10640,
+        "sha256": "54b7e3b817794ed6f16923bb3ba73af6961a0d49464885f857014a27d78759e2",
+        "last_upload_at": 432.8999999985099
+      },
+      "composition": {
+        "present": false
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/small-signed-zero-empty-layer.obrush",
+      "sha256": "7c7b62038911d0dfdc33faf603a0a3c1999293cb9989ea3887dbce680437b911",
+      "bytes": 54678,
+      "vertices": 266,
+      "triangles": 528,
+      "gpu": {
+        "bytes": 10640,
+        "sha256": "54b7e3b817794ed6f16923bb3ba73af6961a0d49464885f857014a27d78759e2",
+        "last_upload_at": 1230
+      },
+      "composition": {
+        "present": true,
+        "vertices": 266,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/small-high-base.obrush",
+      "sha256": "4fcbe05fd2e9c85fe2ec6c9725c38c392e1186b3ade2155f947e8ffe25f879fe",
+      "bytes": 160939,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "1c6609661afd5cf3f90c85de69b62eee981c291a2a9ea3afd441d2d713f5ad3b",
+        "last_upload_at": 2394.7999999970198
+      },
+      "composition": {
+        "present": false
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/small-high-layer.obrush",
+      "sha256": "abe336c6ed4cdd2b9a30bc06733ea86953b09ab49962b86d71c923fc775a0d68",
+      "bytes": 269876,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "1da5488418265778522832922ad7186610a088c329b45c2537a0334ee0342058",
+        "last_upload_at": 4148.699999999255
+      },
+      "composition": {
+        "present": true,
+        "vertices": 1058,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/before-locked-controls.obrush",
+      "sha256": "a7cb139ece44f958477688e6ff2ab170e6633083bb87330dbab2ae6d3392e9e8",
+      "bytes": 269879,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "1da5488418265778522832922ad7186610a088c329b45c2537a0334ee0342058",
+        "last_upload_at": 5796.5
+      },
+      "composition": {
+        "present": true,
+        "vertices": 1058,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/after-locked-controls.obrush",
+      "sha256": "a7cb139ece44f958477688e6ff2ab170e6633083bb87330dbab2ae6d3392e9e8",
+      "bytes": 269879,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "1da5488418265778522832922ad7186610a088c329b45c2537a0334ee0342058",
+        "last_upload_at": 5796.5
+      },
+      "composition": {
+        "present": true,
+        "vertices": 1058,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/small-high-baked.obrush",
+      "sha256": "b7f1305873208df9c41e2a2237518383b1564787c062bbb8a71ecb23db67fccd",
+      "bytes": 160946,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "1da5488418265778522832922ad7186610a088c329b45c2537a0334ee0342058",
+        "last_upload_at": 7729.099999997765
+      },
+      "composition": {
+        "present": false
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/subdivision-layer-bake-undo.obrush",
+      "sha256": "a7cb139ece44f958477688e6ff2ab170e6633083bb87330dbab2ae6d3392e9e8",
+      "bytes": 269879,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "1da5488418265778522832922ad7186610a088c329b45c2537a0334ee0342058",
+        "last_upload_at": 8445.699999999255
+      },
+      "composition": {
+        "present": true,
+        "vertices": 1058,
+        "layers": 1,
+        "position_components_differing": 0,
+        "max_component_error": 0
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/subdivision-layer-bake-redo.obrush",
+      "sha256": "b7f1305873208df9c41e2a2237518383b1564787c062bbb8a71ecb23db67fccd",
+      "bytes": 160946,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "1da5488418265778522832922ad7186610a088c329b45c2537a0334ee0342058",
+        "last_upload_at": 9146.699999999255
+      },
+      "composition": {
+        "present": false
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/small-lower-after-bake.obrush",
+      "sha256": "62abcdae89ec21f8f167b240976b14986860e80195a7a1ab6a5d086c77456d07",
+      "bytes": 160946,
+      "vertices": 266,
+      "triangles": 528,
+      "gpu": {
+        "bytes": 10640,
+        "sha256": "54b7e3b817794ed6f16923bb3ba73af6961a0d49464885f857014a27d78759e2",
+        "last_upload_at": 9912.5
+      },
+      "composition": {
+        "present": false
+      }
+    },
+    {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/layer-browser-0.1.8/verified-6480c153-0de7-43b2-8b27-dd21b0414dd2/small-higher-after-bake.obrush",
+      "sha256": "b7f1305873208df9c41e2a2237518383b1564787c062bbb8a71ecb23db67fccd",
+      "bytes": 160946,
+      "vertices": 1058,
+      "triangles": 2112,
+      "gpu": {
+        "bytes": 42320,
+        "sha256": "1da5488418265778522832922ad7186610a088c329b45c2537a0334ee0342058",
+        "last_upload_at": 10729.79999999702
+      },
+      "composition": {
+        "present": false
+      }
+    }
+  ],
+  "stroke_parameters": [
+    {
+      "name": "record-draw",
+      "brush": "Draw",
+      "settings": {
+        "adaptive_detail": false,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "recording_layer": 0,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "from": [
+        705,
+        473
+      ],
+      "to": [
+        745,
+        503
+      ],
+      "steps": 14,
+      "spacing_ms": 35,
+      "viewport": {
+        "raw": [
+          225,
+          31,
+          1140,
+          912
+        ],
+        "cx": 795,
+        "cy": 513
+      }
+    },
+    {
+      "name": "record-move",
+      "brush": "Move",
+      "settings": {
+        "adaptive_detail": false,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "recording_layer": 1,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "from": [
+        890,
+        578
+      ],
+      "to": [
+        915,
+        588
+      ],
+      "steps": 12,
+      "spacing_ms": 35,
+      "viewport": {
+        "raw": [
+          225,
+          31,
+          1140,
+          912
+        ],
+        "cx": 795,
+        "cy": 513
+      }
+    },
+    {
+      "name": "base-draw-recording-off",
+      "brush": "Draw",
+      "settings": {
+        "adaptive_detail": false,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "recording_layer": null,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "from": [
+        795,
+        633
+      ],
+      "to": [
+        805,
+        648
+      ],
+      "steps": 10,
+      "spacing_ms": 35,
+      "viewport": {
+        "raw": [
+          225,
+          31,
+          1140,
+          912
+        ],
+        "cx": 795,
+        "cy": 513
+      }
+    },
+    {
+      "name": "redo-target-base-edit",
+      "brush": "Draw",
+      "settings": {
+        "adaptive_detail": false,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "recording_layer": null,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "from": [
+        795,
+        403
+      ],
+      "to": [
+        810,
+        413
+      ],
+      "steps": 8,
+      "spacing_ms": 35,
+      "viewport": {
+        "raw": [
+          225,
+          31,
+          1140,
+          912
+        ],
+        "cx": 795,
+        "cy": 513
+      }
+    },
+    {
+      "name": "subdivision-layer-draw",
+      "brush": "Draw",
+      "settings": {
+        "adaptive_detail": false,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.18000000715255737,
+        "recording_layer": 0,
+        "strength": 0.3499999940395355,
+        "subdivision_level": 1,
+        "subdivision_levels": 2,
+        "symmetry_x": true,
+        "triangles": 2112,
+        "vertices": 1058
+      },
+      "from": [
+        735,
+        493
+      ],
+      "to": [
+        760,
+        508
+      ],
+      "steps": 10,
+      "spacing_ms": 35,
+      "viewport": {
+        "raw": [
+          225,
+          31,
+          1140,
+          912
+        ],
+        "cx": 795,
+        "cy": 513
+      }
+    }
+  ]
+}

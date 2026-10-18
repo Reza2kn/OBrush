@@ -1,0 +1,5059 @@
+{
+  "schema": 1,
+  "scope": "Final 0.1.7 Move browser regression, fourteen independently authored input scenarios, shared frozen WASM. CLI-owned headless Chrome/server/profile; no desktop/native/user-browser/VoiceOver control",
+  "final_result": {
+    "path": ".artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/result.json",
+    "sha256": "d742f4c6bfbca2df05ddac47791ce0e248053a358415f48380da2c7e57e2f624",
+    "status": "completed Move baseline/candidate observation",
+    "case_count": 14,
+    "all_interaction_gates_pass": true,
+    "wasm": {
+      "sha256": "7632d4e47f03f69b6cd8428060e34071385db3aaf21291b9aaddce47831af4bb",
+      "served_sha256": "7632d4e47f03f69b6cd8428060e34071385db3aaf21291b9aaddce47831af4bb",
+      "bytes": 3744950
+    },
+    "browser": {
+      "protocolVersion": "1.3",
+      "product": "Chrome/155.0.8059.39",
+      "revision": "@3ff7ac5a9224be9156d7f8703a06e22890aafd34",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "jsVersion": "15.5.35.20"
+    },
+    "harness_sha256": "81df7bfe474739b3fee5c51350a4288cc9f5d745dc3129d4bab2844331ea387d",
+    "harness_snapshot": ".artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/harness.mjs",
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    }
+  },
+  "build_inputs": [
+    {
+      "path": ".artifacts/move-release-0.1.7-final/build-record.json",
+      "sha256": "2a5f112337c3a7ed37bbf9c6f62db04bb2aca48bdb2746cc301eabcaf02368cf"
+    },
+    {
+      "path": ".artifacts/move-release-0.1.7-final/source-manifest.json",
+      "sha256": "263a169cad9d666b372ebfac96b07d58f94f9a32e19ef99135402d03ff4607cd"
+    }
+  ],
+  "immutable_user_fixture": {
+    "path": "/Users/Ajab/AI/OBrush/.artifacts/user-long-stroke-0.1.4/user.obrush",
+    "sha256": "4adc8aa9333903ab0684c1f2e54a995dc6a4e7a3b85fc6e911df9d7deb0c4786",
+    "bytes": 8000012
+  },
+  "preregistered_contract": {
+    "radius": 0.037,
+    "strength": 0.79,
+    "symmetry_x": true,
+    "spacing_ms": 30,
+    "release_probe_incremental_delays_ms": [
+      0,
+      200,
+      800
+    ],
+    "outbound_min_useful_original_displacement": 0.001,
+    "geometry": "Measure quality and folds without asserting reference equivalence; baseline failures are retained",
+    "history": "Exact mesh fields and topology",
+    "gpu": "Exact rendered VBO versus saved mesh float32"
+  },
+  "pressure_radius_comparison": {
+    "zero_down_then_half_matches_positive_half_down_exactly": true,
+    "half_changed_original_vertices": 6,
+    "full_changed_original_vertices": 26,
+    "half_footprint_smaller": true
+  },
+  "baseline_pixel_parameter_comparisons": [
+    {
+      "name": "sphere-outbound",
+      "actual_radius_equal": true,
+      "actual_strength_equal": true,
+      "symmetry_equal": true,
+      "viewport_equal": true,
+      "pixel_path_equal": true,
+      "initial_mesh_equal": true,
+      "baseline_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.020000178787848374,
+        "quality_p01": 0.689070278373024,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059801476950143,
+        "max_edge": 0.17852043592600203,
+        "max_adjacent_fold_deg": 124.71137617604867,
+        "fold_edges_over_60": 66,
+        "fold_edges_over_90": 34,
+        "fold_edge_length_over_60": 1.6963197002710053,
+        "fold_edge_length_over_90": 0.928370015592193,
+        "signed_volume": 4.188107229435021,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 41962,
+        "triangles": 83920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.1121740032610306,
+        "quality_p01": 0.47677382178601896,
+        "quality_median": 0.7439986114593157,
+        "edge_p95": 0.020595385932691286,
+        "max_edge": 0.024222299563389928,
+        "max_adjacent_fold_deg": 68.81659595333042,
+        "fold_edges_over_60": 6,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0.059550648348256664,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188220269170555,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "baseline_delta": {
+        "changed_original_vertices": 98,
+        "max_original_displacement": 0.16211113176181888,
+        "rms_original_displacement": 0.0028548881962845067,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "final_delta": {
+        "changed_original_vertices": 26,
+        "max_original_displacement": 0.011291058835875403,
+        "rms_original_displacement": 0.00011617102972655109,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "eligible_geometry_comparison": true,
+      "limits": "Same pixels/settings and initial mesh; these are scoped geometry comparisons, not matched timing or ZBrush reference tests"
+    },
+    {
+      "name": "sphere-cross-return",
+      "actual_radius_equal": true,
+      "actual_strength_equal": true,
+      "symmetry_equal": true,
+      "viewport_equal": true,
+      "pixel_path_equal": true,
+      "initial_mesh_equal": true,
+      "baseline_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.021479843937234098,
+        "quality_p01": 0.6890702783730239,
+        "quality_median": 0.7457240933967558,
+        "edge_p95": 0.020598014961971427,
+        "max_edge": 0.1699802292680581,
+        "max_adjacent_fold_deg": 149.99746153653118,
+        "fold_edges_over_60": 58,
+        "fold_edges_over_90": 20,
+        "fold_edge_length_over_60": 2.0389386424318836,
+        "fold_edge_length_over_90": 0.5281158353476492,
+        "signed_volume": 4.18812710602267,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "baseline_delta": {
+        "changed_original_vertices": 96,
+        "max_original_displacement": 0.155811111149108,
+        "rms_original_displacement": 0.0026608089978200204,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "final_delta": {
+        "changed_original_vertices": 0,
+        "max_original_displacement": 0,
+        "rms_original_displacement": 0,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "eligible_geometry_comparison": true,
+      "limits": "Same pixels/settings and initial mesh; these are scoped geometry comparisons, not matched timing or ZBrush reference tests"
+    },
+    {
+      "name": "sphere-seam-cross",
+      "actual_radius_equal": true,
+      "actual_strength_equal": true,
+      "symmetry_equal": true,
+      "viewport_equal": true,
+      "pixel_path_equal": true,
+      "initial_mesh_equal": true,
+      "baseline_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.09667187850180738,
+        "quality_p01": 0.6891013414972484,
+        "quality_median": 0.7455830731186974,
+        "edge_p95": 0.020597954051295952,
+        "max_edge": 0.1402942846428273,
+        "max_adjacent_fold_deg": 129.5307465412192,
+        "fold_edges_over_60": 9,
+        "fold_edges_over_90": 1,
+        "fold_edge_length_over_60": 0.442961747778162,
+        "fold_edge_length_over_90": 0.02081882414363254,
+        "signed_volume": 4.188088550785514,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            0.9991857
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "baseline_delta": {
+        "changed_original_vertices": 24,
+        "max_original_displacement": 0.13975888679859766,
+        "rms_original_displacement": 0.0009327090788387835,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "final_delta": {
+        "changed_original_vertices": 0,
+        "max_original_displacement": 0,
+        "rms_original_displacement": 0,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "eligible_geometry_comparison": true,
+      "limits": "Same pixels/settings and initial mesh; these are scoped geometry comparisons, not matched timing or ZBrush reference tests"
+    },
+    {
+      "name": "sphere-partial-mask",
+      "actual_radius_equal": true,
+      "actual_strength_equal": true,
+      "symmetry_equal": true,
+      "viewport_equal": true,
+      "pixel_path_equal": true,
+      "initial_mesh_equal": false,
+      "baseline_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 41972,
+        "triangles": 83940,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.12806566052194934,
+        "quality_p01": 0.4498496690510878,
+        "quality_median": 0.7453649759435995,
+        "edge_p95": 0.020595385932691286,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 66.92794137467507,
+        "fold_edges_over_60": 4,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0.031005014122233943,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188221487805202,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "baseline_delta": {
+        "changed_original_vertices": 0,
+        "max_original_displacement": 0,
+        "rms_original_displacement": 0,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "final_delta": {
+        "changed_original_vertices": 14,
+        "max_original_displacement": 0.009552397357606105,
+        "rms_original_displacement": 8.845361604226587e-05,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "eligible_geometry_comparison": false,
+      "limits": "Partial mask corrected from Y>.17 (entire grab protected) to Y>.2305 (bisects grab); do not claim a matched geometry comparison"
+    },
+    {
+      "name": "sphere-full-mask",
+      "actual_radius_equal": true,
+      "actual_strength_equal": true,
+      "symmetry_equal": true,
+      "viewport_equal": true,
+      "pixel_path_equal": true,
+      "initial_mesh_equal": true,
+      "baseline_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "baseline_delta": {
+        "changed_original_vertices": 0,
+        "max_original_displacement": 0,
+        "rms_original_displacement": 0,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "final_delta": {
+        "changed_original_vertices": 0,
+        "max_original_displacement": 0,
+        "rms_original_displacement": 0,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "eligible_geometry_comparison": true,
+      "limits": "Same pixels/settings and initial mesh; these are scoped geometry comparisons, not matched timing or ZBrush reference tests"
+    },
+    {
+      "name": "user-crossing",
+      "actual_radius_equal": true,
+      "actual_strength_equal": true,
+      "symmetry_equal": true,
+      "viewport_equal": true,
+      "pixel_path_equal": true,
+      "initial_mesh_equal": true,
+      "baseline_quality": {
+        "vertices": 61580,
+        "triangles": 123156,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.01999977505561957,
+        "quality_p01": 0.19013833191783533,
+        "quality_median": 0.7274787150383876,
+        "edge_p95": 0.020620349620518598,
+        "max_edge": 0.05588338965379068,
+        "max_adjacent_fold_deg": 149.9999573779668,
+        "fold_edges_over_60": 254,
+        "fold_edges_over_90": 98,
+        "fold_edge_length_over_60": 3.245515592363479,
+        "fold_edge_length_over_90": 1.2546119112603136,
+        "signed_volume": 4.336190614986415,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            2.4449723
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 62476,
+        "triangles": 124948,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.01999977505561957,
+        "quality_p01": 0.19013833191783533,
+        "quality_median": 0.726902451929342,
+        "edge_p95": 0.020620316746935024,
+        "max_edge": 0.05588338965379068,
+        "max_adjacent_fold_deg": 149.9999573779668,
+        "fold_edges_over_60": 210,
+        "fold_edges_over_90": 78,
+        "fold_edge_length_over_60": 2.8193311335825144,
+        "fold_edge_length_over_90": 1.0192064801117275,
+        "signed_volume": 4.336151434617512,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            2.4449723
+          ]
+        ]
+      },
+      "baseline_delta": {
+        "changed_original_vertices": 204,
+        "max_original_displacement": 0.022984644411252045,
+        "rms_original_displacement": 0.0006508841866719057,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 30647,
+        "max_original_mirror_error": 0
+      },
+      "final_delta": {
+        "changed_original_vertices": 144,
+        "max_original_displacement": 0.01217381221928861,
+        "rms_original_displacement": 0.00017827888694525346,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 30647,
+        "max_original_mirror_error": 0
+      },
+      "eligible_geometry_comparison": true,
+      "limits": "Same pixels/settings and initial mesh; these are scoped geometry comparisons, not matched timing or ZBrush reference tests"
+    },
+    {
+      "name": "sphere-shift-transition",
+      "actual_radius_equal": true,
+      "actual_strength_equal": true,
+      "symmetry_equal": true,
+      "viewport_equal": true,
+      "pixel_path_equal": true,
+      "initial_mesh_equal": true,
+      "baseline_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.0323924134670674,
+        "quality_p01": 0.6890702970278445,
+        "quality_median": 0.7457240933967558,
+        "edge_p95": 0.020598014961971427,
+        "max_edge": 0.15393018116274435,
+        "max_adjacent_fold_deg": 149.99934621184656,
+        "fold_edges_over_60": 90,
+        "fold_edges_over_90": 70,
+        "fold_edge_length_over_60": 2.3995716480502916,
+        "fold_edge_length_over_90": 1.8525768602762909,
+        "signed_volume": 4.188089750996701,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 42920,
+        "triangles": 85836,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.10001195710526235,
+        "quality_p01": 0.3384180494869006,
+        "quality_median": 0.7439279190442962,
+        "edge_p95": 0.02059535968072663,
+        "max_edge": 0.025578750396538133,
+        "max_adjacent_fold_deg": 70.37056763139881,
+        "fold_edges_over_60": 6,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0.05585897660154071,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188216696495446,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "baseline_delta": {
+        "changed_original_vertices": 134,
+        "max_original_displacement": 0.13933252165105245,
+        "rms_original_displacement": 0.0023900709482416716,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 7.000000001866624e-08
+      },
+      "final_delta": {
+        "changed_original_vertices": 84,
+        "max_original_displacement": 0.011902123546901195,
+        "rms_original_displacement": 0.00016664855505566938,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 1.0000000005838672e-07
+      },
+      "eligible_geometry_comparison": true,
+      "limits": "Same pixels/settings and initial mesh; these are scoped geometry comparisons, not matched timing or ZBrush reference tests"
+    }
+  ],
+  "cases": [
+    {
+      "name": "sphere-outbound",
+      "settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Move",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.03700000047683716,
+        "strength": 0.7900000214576721,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "initial_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 41962,
+        "triangles": 83920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.1121740032610306,
+        "quality_p01": 0.47677382178601896,
+        "quality_median": 0.7439986114593157,
+        "edge_p95": 0.020595385932691286,
+        "max_edge": 0.024222299563389928,
+        "max_adjacent_fold_deg": 68.81659595333042,
+        "fold_edges_over_60": 6,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0.059550648348256664,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188220269170555,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "delta": {
+        "changed_original_vertices": 26,
+        "max_original_displacement": 0.011291058835875403,
+        "rms_original_displacement": 0.00011617102972655109,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "attributes": {
+        "original_masks_unchanged": true,
+        "original_colors_unchanged": true
+      },
+      "interaction_gates": {
+        "gpu_saved_exact": true,
+        "release_quiet": true,
+        "no_runtime_errors": true,
+        "finite": true,
+        "closed_manifold": true,
+        "mask_protection": true,
+        "partial_mask_nonempty": true,
+        "full_mask_exact_noop": true,
+        "history_exact": true,
+        "no_motion_click_preserves_history": true,
+        "modifier_phases_preserved": true,
+        "pressure_zero_to_positive_still_moves": true,
+        "move_does_not_paint_mask_or_color": true,
+        "outbound_has_useful_displacement": true
+      },
+      "gpu_matches_saved_mesh": true,
+      "gpu_before_save": {
+        "bytes": 1678480,
+        "sha256": "c5a6a9dcc2662662f8bba84608c67ec18b9388b0e208298beecddc310b11b99e",
+        "last_upload_at": 7165.20000000298
+      },
+      "release_quiet": true,
+      "initial_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-outbound-initial.png",
+        "sha256": "8334f8b9f59a986a008add34e452f24e9d704588fe6677ed7d32bb465eba623f",
+        "bytes": 207454
+      },
+      "final_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-outbound-final.png",
+        "sha256": "82447c6a100ce0740b9f97c7b519c856fa46863ea4dd57146bc0d7ca0cb05d66",
+        "bytes": 206536
+      },
+      "snapshots": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-outbound-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-outbound-final.obrush",
+          "sha256": "f8168652e6341f8b928311f0c71f06c978e973c010679dca21ee25074cd28a9a",
+          "bytes": 5447665,
+          "vertices": 41962,
+          "triangles": 83920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-outbound-undo-0.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-outbound-redo-0.obrush",
+          "sha256": "f8168652e6341f8b928311f0c71f06c978e973c010679dca21ee25074cd28a9a",
+          "bytes": 5447665,
+          "vertices": 41962,
+          "triangles": 83920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-outbound-no-motion-click.obrush",
+          "sha256": "f8168652e6341f8b928311f0c71f06c978e973c010679dca21ee25074cd28a9a",
+          "bytes": 5447665,
+          "vertices": 41962,
+          "triangles": 83920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-outbound-no-motion-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-outbound-no-motion-redo.obrush",
+          "sha256": "f8168652e6341f8b928311f0c71f06c978e973c010679dca21ee25074cd28a9a",
+          "bytes": 5447665,
+          "vertices": 41962,
+          "triangles": 83920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-outbound-redo-after-no-motion.obrush",
+          "sha256": "f8168652e6341f8b928311f0c71f06c978e973c010679dca21ee25074cd28a9a",
+          "bytes": 5447665,
+          "vertices": 41962,
+          "triangles": 83920
+        }
+      ],
+      "history": {
+        "undo_steps": 1,
+        "undo_chain": [
+          {
+            "step": 0,
+            "mesh_sha256": "a7740d032ce8d5ac02973d8aaa0042765547ec2580ce8d8324c14b0f7716a9e1",
+            "packed_sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5"
+          }
+        ],
+        "undo_exact_initial": true,
+        "redo_exact_final": true,
+        "modifier_phase_states_in_undo": []
+      },
+      "no_motion_click": {
+        "mesh_unchanged": true,
+        "undo_reaches_initial": true,
+        "redo_restores_final": true,
+        "preserves_existing_redo": true
+      },
+      "response": {
+        "raf_frames": 209,
+        "raf_gap_p95_ms": 16.700000000000728,
+        "max_raf_gap_ms": 16.800000000000182,
+        "longtasks_over50_ms": 0,
+        "max_longtask_ms": 0,
+        "release_to_first_quiet_gpu_probe_max_ms": 3.699999999254942,
+        "trusted_pointer_downs": 1,
+        "trusted_pointer_ups": 1,
+        "pending_dabs_at_probes": [
+          0
+        ]
+      }
+    },
+    {
+      "name": "sphere-cross-return",
+      "settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Move",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.03700000047683716,
+        "strength": 0.7900000214576721,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "initial_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "delta": {
+        "changed_original_vertices": 0,
+        "max_original_displacement": 0,
+        "rms_original_displacement": 0,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "attributes": {
+        "original_masks_unchanged": true,
+        "original_colors_unchanged": true
+      },
+      "interaction_gates": {
+        "gpu_saved_exact": true,
+        "release_quiet": true,
+        "no_runtime_errors": true,
+        "finite": true,
+        "closed_manifold": true,
+        "mask_protection": true,
+        "partial_mask_nonempty": true,
+        "full_mask_exact_noop": true,
+        "history_exact": true,
+        "no_motion_click_preserves_history": true,
+        "modifier_phases_preserved": true,
+        "pressure_zero_to_positive_still_moves": true,
+        "move_does_not_paint_mask_or_color": true
+      },
+      "gpu_matches_saved_mesh": true,
+      "gpu_before_save": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 7872.39999999851
+      },
+      "release_quiet": true,
+      "initial_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-cross-return-initial.png",
+        "sha256": "8334f8b9f59a986a008add34e452f24e9d704588fe6677ed7d32bb465eba623f",
+        "bytes": 207454
+      },
+      "final_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-cross-return-final.png",
+        "sha256": "58af91e98fe70d7eef913d3fe3d575a6dab5c6327b6e23711b3d7f862b5d1d19",
+        "bytes": 205602
+      },
+      "snapshots": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-cross-return-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-cross-return-final.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        }
+      ],
+      "full_mask_exact_noop": true,
+      "response": {
+        "raf_frames": 251,
+        "raf_gap_p95_ms": 16.700000000000728,
+        "max_raf_gap_ms": 16.80000000000109,
+        "longtasks_over50_ms": 0,
+        "max_longtask_ms": 0,
+        "release_to_first_quiet_gpu_probe_max_ms": 4.599999997764826,
+        "trusted_pointer_downs": 1,
+        "trusted_pointer_ups": 1,
+        "pending_dabs_at_probes": [
+          0
+        ]
+      }
+    },
+    {
+      "name": "sphere-seam-cross",
+      "settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Move",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.03700000047683716,
+        "strength": 0.7900000214576721,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "initial_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "delta": {
+        "changed_original_vertices": 0,
+        "max_original_displacement": 0,
+        "rms_original_displacement": 0,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "attributes": {
+        "original_masks_unchanged": true,
+        "original_colors_unchanged": true
+      },
+      "interaction_gates": {
+        "gpu_saved_exact": true,
+        "release_quiet": true,
+        "no_runtime_errors": true,
+        "finite": true,
+        "closed_manifold": true,
+        "mask_protection": true,
+        "partial_mask_nonempty": true,
+        "full_mask_exact_noop": true,
+        "history_exact": true,
+        "no_motion_click_preserves_history": true,
+        "modifier_phases_preserved": true,
+        "pressure_zero_to_positive_still_moves": true,
+        "move_does_not_paint_mask_or_color": true
+      },
+      "gpu_matches_saved_mesh": true,
+      "gpu_before_save": {
+        "bytes": 1638480,
+        "sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5",
+        "last_upload_at": 7222.900000002235
+      },
+      "release_quiet": true,
+      "initial_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-seam-cross-initial.png",
+        "sha256": "8334f8b9f59a986a008add34e452f24e9d704588fe6677ed7d32bb465eba623f",
+        "bytes": 207454
+      },
+      "final_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-seam-cross-final.png",
+        "sha256": "c36f3d0c3ac50cba0795df3037c0bad964efb0b38f2ad0f3b1092dbdb546bad4",
+        "bytes": 205681
+      },
+      "snapshots": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-seam-cross-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-seam-cross-final.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        }
+      ],
+      "full_mask_exact_noop": true,
+      "response": {
+        "raf_frames": 215,
+        "raf_gap_p95_ms": 16.700000000000728,
+        "max_raf_gap_ms": 16.800000000000182,
+        "longtasks_over50_ms": 0,
+        "max_longtask_ms": 0,
+        "release_to_first_quiet_gpu_probe_max_ms": 4.5,
+        "trusted_pointer_downs": 1,
+        "trusted_pointer_ups": 1,
+        "pending_dabs_at_probes": [
+          0
+        ]
+      }
+    },
+    {
+      "name": "sphere-partial-mask",
+      "settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Move",
+        "message": "Loaded sphere-partial-mask-authored-fixture.obrush. Previous mesh is available in Undo.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.03700000047683716,
+        "strength": 0.7900000214576721,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "initial_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 41972,
+        "triangles": 83940,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.12806566052194934,
+        "quality_p01": 0.4498496690510878,
+        "quality_median": 0.7453649759435995,
+        "edge_p95": 0.020595385932691286,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 66.92794137467507,
+        "fold_edges_over_60": 4,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0.031005014122233943,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188221487805202,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "delta": {
+        "changed_original_vertices": 14,
+        "max_original_displacement": 0.009552397357606105,
+        "rms_original_displacement": 8.845361604226587e-05,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "attributes": {
+        "original_masks_unchanged": true,
+        "original_colors_unchanged": true
+      },
+      "interaction_gates": {
+        "gpu_saved_exact": true,
+        "release_quiet": true,
+        "no_runtime_errors": true,
+        "finite": true,
+        "closed_manifold": true,
+        "mask_protection": true,
+        "partial_mask_nonempty": true,
+        "full_mask_exact_noop": true,
+        "history_exact": true,
+        "no_motion_click_preserves_history": true,
+        "modifier_phases_preserved": true,
+        "pressure_zero_to_positive_still_moves": true,
+        "move_does_not_paint_mask_or_color": true
+      },
+      "gpu_matches_saved_mesh": true,
+      "gpu_before_save": {
+        "bytes": 1678880,
+        "sha256": "30e6e8ab5b9159c624585ab9f2d7476d8fab08759607b000fc37bf45d6d650d7",
+        "last_upload_at": 8158.29999999702
+      },
+      "release_quiet": true,
+      "initial_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-partial-mask-initial.png",
+        "sha256": "2df7556dd98e48b5f18e9d78c1689140862fb00b08da20f430957d6c63ca48e7",
+        "bytes": 252179
+      },
+      "final_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-partial-mask-final.png",
+        "sha256": "64a91bd5296bf99a4fac7e1e2578a9c5eed9e862323a4ec9b49ddb0711f4a573",
+        "bytes": 250076
+      },
+      "snapshots": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-partial-mask-initial.obrush",
+          "sha256": "77be7c15194333fafa61b374588c87b5f35764db07647a718d22db1d00fa98a1",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-partial-mask-final.obrush",
+          "sha256": "30af7933604097dc0589e5fd620fa0069fd298580b6a1f6998e23d8aab383835",
+          "bytes": 5448401,
+          "vertices": 41972,
+          "triangles": 83940
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-partial-mask-undo-0.obrush",
+          "sha256": "77be7c15194333fafa61b374588c87b5f35764db07647a718d22db1d00fa98a1",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-partial-mask-redo-0.obrush",
+          "sha256": "30af7933604097dc0589e5fd620fa0069fd298580b6a1f6998e23d8aab383835",
+          "bytes": 5448401,
+          "vertices": 41972,
+          "triangles": 83940
+        }
+      ],
+      "fixture": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-partial-mask-authored-fixture.obrush",
+        "sha256": "52ceed85cdd4cbc20a95b1ae3a9b804d0b63e451b6d08925d319eafcfd86000d",
+        "rule": "World Y > 0.2305 => mask 1; otherwise 0; threshold bisects the independent projected fresh sphere grab",
+        "source": {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-partial-mask-unmasked-source.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        }
+      },
+      "history": {
+        "undo_steps": 1,
+        "undo_chain": [
+          {
+            "step": 0,
+            "mesh_sha256": "2ed53870dc46b6ddfffd71040abe361b5b4ebf47c3831e3aafd0e5278caeeaeb",
+            "packed_sha256": "7f9c03aad5bf340a2568d090fd2ea6e8b2dfe8cc8f241e3184e644d113e93efd"
+          }
+        ],
+        "undo_exact_initial": true,
+        "redo_exact_final": true,
+        "modifier_phase_states_in_undo": []
+      },
+      "response": {
+        "raf_frames": 212,
+        "raf_gap_p95_ms": 16.700000000000728,
+        "max_raf_gap_ms": 16.800000000000182,
+        "longtasks_over50_ms": 0,
+        "max_longtask_ms": 0,
+        "release_to_first_quiet_gpu_probe_max_ms": 2.7000000029802322,
+        "trusted_pointer_downs": 1,
+        "trusted_pointer_ups": 1,
+        "pending_dabs_at_probes": [
+          0
+        ]
+      }
+    },
+    {
+      "name": "sphere-full-mask",
+      "settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Move",
+        "message": "Loaded sphere-full-mask-authored-fixture.obrush. Previous mesh is available in Undo.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.03700000047683716,
+        "strength": 0.7900000214576721,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "initial_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "delta": {
+        "changed_original_vertices": 0,
+        "max_original_displacement": 0,
+        "rms_original_displacement": 0,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "attributes": {
+        "original_masks_unchanged": true,
+        "original_colors_unchanged": true
+      },
+      "interaction_gates": {
+        "gpu_saved_exact": true,
+        "release_quiet": true,
+        "no_runtime_errors": true,
+        "finite": true,
+        "closed_manifold": true,
+        "mask_protection": true,
+        "partial_mask_nonempty": true,
+        "full_mask_exact_noop": true,
+        "history_exact": true,
+        "no_motion_click_preserves_history": true,
+        "modifier_phases_preserved": true,
+        "pressure_zero_to_positive_still_moves": true,
+        "move_does_not_paint_mask_or_color": true
+      },
+      "gpu_matches_saved_mesh": true,
+      "gpu_before_save": {
+        "bytes": 1638480,
+        "sha256": "bdfdb2e3743872bf7b2c0037b2f656ecd46fb4fa6cb5ab5e7d2b6154bf3baf9a",
+        "last_upload_at": 1072.4000000022352
+      },
+      "release_quiet": true,
+      "initial_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-full-mask-initial.png",
+        "sha256": "aa8b6fca98296576d78a8e82b6933f71155f998b544484d3bb3dc484769edaa5",
+        "bytes": 226565
+      },
+      "final_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-full-mask-final.png",
+        "sha256": "b4f1baf57a9229b016be08e0bdc4bbbfb58a8e8880e7b8f4d185879da16ea060",
+        "bytes": 222649
+      },
+      "snapshots": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-full-mask-initial.obrush",
+          "sha256": "58e9625b3c59ae30d396e9314f6c278f0cda7627f6f3abe1388d72118a92b090",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-full-mask-final.obrush",
+          "sha256": "58e9625b3c59ae30d396e9314f6c278f0cda7627f6f3abe1388d72118a92b090",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        }
+      ],
+      "fixture": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-full-mask-authored-fixture.obrush",
+        "sha256": "3659966e65fa476028ee62f67997397e4c78ddd0b9ce99a3a9f38857a9515811",
+        "rule": "Every vertex mask=1",
+        "source": {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-full-mask-unmasked-source.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        }
+      },
+      "full_mask_exact_noop": true,
+      "response": {
+        "raf_frames": 170,
+        "raf_gap_p95_ms": 16.700000000000728,
+        "max_raf_gap_ms": 16.80000000000109,
+        "longtasks_over50_ms": 0,
+        "max_longtask_ms": 0,
+        "release_to_first_quiet_gpu_probe_max_ms": 4.699999999254942,
+        "trusted_pointer_downs": 1,
+        "trusted_pointer_ups": 1,
+        "pending_dabs_at_probes": [
+          0
+        ]
+      }
+    },
+    {
+      "name": "user-crossing",
+      "settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Move",
+        "message": "Loaded user.obrush. Previous mesh is available in Undo.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.03700000047683716,
+        "strength": 0.7900000214576721,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 123156,
+        "vertices": 61580
+      },
+      "initial_quality": {
+        "vertices": 61580,
+        "triangles": 123156,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.01999977505561957,
+        "quality_p01": 0.19082599511157178,
+        "quality_median": 0.7274788882192766,
+        "edge_p95": 0.020620349620518598,
+        "max_edge": 0.05588338965379068,
+        "max_adjacent_fold_deg": 149.9999573779668,
+        "fold_edges_over_60": 210,
+        "fold_edges_over_90": 78,
+        "fold_edge_length_over_60": 2.8193311335825144,
+        "fold_edge_length_over_90": 1.0192064801117275,
+        "signed_volume": 4.336145272925551,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            2.4449723
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 62476,
+        "triangles": 124948,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.01999977505561957,
+        "quality_p01": 0.19013833191783533,
+        "quality_median": 0.726902451929342,
+        "edge_p95": 0.020620316746935024,
+        "max_edge": 0.05588338965379068,
+        "max_adjacent_fold_deg": 149.9999573779668,
+        "fold_edges_over_60": 210,
+        "fold_edges_over_90": 78,
+        "fold_edge_length_over_60": 2.8193311335825144,
+        "fold_edge_length_over_90": 1.0192064801117275,
+        "signed_volume": 4.336151434617512,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            2.4449723
+          ]
+        ]
+      },
+      "delta": {
+        "changed_original_vertices": 144,
+        "max_original_displacement": 0.01217381221928861,
+        "rms_original_displacement": 0.00017827888694525346,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 30647,
+        "max_original_mirror_error": 0
+      },
+      "attributes": {
+        "original_masks_unchanged": true,
+        "original_colors_unchanged": true
+      },
+      "interaction_gates": {
+        "gpu_saved_exact": true,
+        "release_quiet": true,
+        "no_runtime_errors": true,
+        "finite": true,
+        "closed_manifold": true,
+        "mask_protection": true,
+        "partial_mask_nonempty": true,
+        "full_mask_exact_noop": true,
+        "history_exact": true,
+        "no_motion_click_preserves_history": true,
+        "modifier_phases_preserved": true,
+        "pressure_zero_to_positive_still_moves": true,
+        "move_does_not_paint_mask_or_color": true
+      },
+      "gpu_matches_saved_mesh": true,
+      "gpu_before_save": {
+        "bytes": 2499040,
+        "sha256": "8a8bbca0ad369490a55fac0336d55df70d15fed7dde0483fe48fc15f9b1f3c7a",
+        "last_upload_at": 8130
+      },
+      "release_quiet": true,
+      "initial_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/user-crossing-initial.png",
+        "sha256": "eff90f908aee23550ce15117dff3b3f4e4faa5b8d835cbed1eb0f8aa23021ba0",
+        "bytes": 194115
+      },
+      "final_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/user-crossing-final.png",
+        "sha256": "d5fc5904bfaad0f8d048000458b9ef9f1676b9069187a0fe7c341426e9e9d8e4",
+        "bytes": 191576
+      },
+      "snapshots": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/user-crossing-initial.obrush",
+          "sha256": "89eac79e5d56b24560621385068e1a16c87ae4bf2a4f4b9ed23b0226bda47960",
+          "bytes": 8000012,
+          "vertices": 61580,
+          "triangles": 123156
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/user-crossing-final.obrush",
+          "sha256": "65ec19684a2473dba015a3a04f87f7347e1512e93627397515d471ee20db1b20",
+          "bytes": 8115450,
+          "vertices": 62476,
+          "triangles": 124948
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/user-crossing-undo-0.obrush",
+          "sha256": "89eac79e5d56b24560621385068e1a16c87ae4bf2a4f4b9ed23b0226bda47960",
+          "bytes": 8000012,
+          "vertices": 61580,
+          "triangles": 123156
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/user-crossing-redo-0.obrush",
+          "sha256": "65ec19684a2473dba015a3a04f87f7347e1512e93627397515d471ee20db1b20",
+          "bytes": 8115450,
+          "vertices": 62476,
+          "triangles": 124948
+        }
+      ],
+      "history": {
+        "undo_steps": 1,
+        "undo_chain": [
+          {
+            "step": 0,
+            "mesh_sha256": "d7f3ef82da98e72658530663cbea39ad9dc576adf919db680835e38ce9361883",
+            "packed_sha256": "1498ae5fe5df051a143d5714e045e45bde8498f456d3371030c28b6f14a98bda"
+          }
+        ],
+        "undo_exact_initial": true,
+        "redo_exact_final": true,
+        "modifier_phase_states_in_undo": []
+      },
+      "response": {
+        "raf_frames": 217,
+        "raf_gap_p95_ms": 16.700000000000728,
+        "max_raf_gap_ms": 33.29999999999927,
+        "longtasks_over50_ms": 0,
+        "max_longtask_ms": 0,
+        "release_to_first_quiet_gpu_probe_max_ms": 4,
+        "trusted_pointer_downs": 1,
+        "trusted_pointer_ups": 1,
+        "pending_dabs_at_probes": [
+          0
+        ]
+      }
+    },
+    {
+      "name": "sphere-shift-transition",
+      "settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Move",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.03700000047683716,
+        "strength": 0.7900000214576721,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "initial_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 42920,
+        "triangles": 85836,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.10001195710526235,
+        "quality_p01": 0.3384180494869006,
+        "quality_median": 0.7439279190442962,
+        "edge_p95": 0.02059535968072663,
+        "max_edge": 0.025578750396538133,
+        "max_adjacent_fold_deg": 70.37056763139881,
+        "fold_edges_over_60": 6,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0.05585897660154071,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188216696495446,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "delta": {
+        "changed_original_vertices": 84,
+        "max_original_displacement": 0.011902123546901195,
+        "rms_original_displacement": 0.00016664855505566938,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 1.0000000005838672e-07
+      },
+      "attributes": {
+        "original_masks_unchanged": true,
+        "original_colors_unchanged": true
+      },
+      "interaction_gates": {
+        "gpu_saved_exact": true,
+        "release_quiet": true,
+        "no_runtime_errors": true,
+        "finite": true,
+        "closed_manifold": true,
+        "mask_protection": true,
+        "partial_mask_nonempty": true,
+        "full_mask_exact_noop": true,
+        "history_exact": true,
+        "no_motion_click_preserves_history": true,
+        "modifier_phases_preserved": true,
+        "pressure_zero_to_positive_still_moves": true,
+        "move_does_not_paint_mask_or_color": true
+      },
+      "gpu_matches_saved_mesh": true,
+      "gpu_before_save": {
+        "bytes": 1716800,
+        "sha256": "f4ae5cab9df4faa403ff4da8afa02a4e02294df6a74f69eb5a05f0ba0b87a5cb",
+        "last_upload_at": 7426.70000000298
+      },
+      "release_quiet": true,
+      "initial_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-shift-transition-initial.png",
+        "sha256": "8334f8b9f59a986a008add34e452f24e9d704588fe6677ed7d32bb465eba623f",
+        "bytes": 207454
+      },
+      "final_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-shift-transition-final.png",
+        "sha256": "a84b09dad10ff63799c5f21a17d702908742420b674c9489f6e3063629504cad",
+        "bytes": 206972
+      },
+      "snapshots": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-shift-transition-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-shift-transition-final.obrush",
+          "sha256": "5d4605873d752a729b08dca4e605599b95710ae845d736f3c81869b253e41c95",
+          "bytes": 5571780,
+          "vertices": 42920,
+          "triangles": 85836
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-shift-transition-undo-0.obrush",
+          "sha256": "4d30aebb39452bd4599e11dbc18c8d8a285f9ae244d86295e6b05a63fcd069f7",
+          "bytes": 5447728,
+          "vertices": 41962,
+          "triangles": 83920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-shift-transition-undo-1.obrush",
+          "sha256": "afdde1000111d32948ca5e87b7d2dc2daff7153d078aff98fdd128360b7d7800",
+          "bytes": 5447695,
+          "vertices": 41962,
+          "triangles": 83920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-shift-transition-undo-2.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-shift-transition-redo-0.obrush",
+          "sha256": "afdde1000111d32948ca5e87b7d2dc2daff7153d078aff98fdd128360b7d7800",
+          "bytes": 5447695,
+          "vertices": 41962,
+          "triangles": 83920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-shift-transition-redo-1.obrush",
+          "sha256": "4d30aebb39452bd4599e11dbc18c8d8a285f9ae244d86295e6b05a63fcd069f7",
+          "bytes": 5447728,
+          "vertices": 41962,
+          "triangles": 83920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-shift-transition-redo-2.obrush",
+          "sha256": "5d4605873d752a729b08dca4e605599b95710ae845d736f3c81869b253e41c95",
+          "bytes": 5571780,
+          "vertices": 42920,
+          "triangles": 85836
+        }
+      ],
+      "history": {
+        "undo_steps": 3,
+        "undo_chain": [
+          {
+            "step": 0,
+            "mesh_sha256": "b33f642b62dbaaef2454c6a44bff3f820a81b562ad357eae39f5ba0d9d2a2e55",
+            "packed_sha256": "d09634b85199e83dfaaebd54c26c25b4baf00c4df926163bb0defc0c0ae2b7d6"
+          },
+          {
+            "step": 1,
+            "mesh_sha256": "955212967fb8fefc3ce97104f1a0c636b317c68938342c64a82c265fc5975400",
+            "packed_sha256": "a8f371f81ecab27691b093c8743fed8e91983c67637494835f7d64741dda9d0c"
+          },
+          {
+            "step": 2,
+            "mesh_sha256": "a7740d032ce8d5ac02973d8aaa0042765547ec2580ce8d8324c14b0f7716a9e1",
+            "packed_sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5"
+          }
+        ],
+        "undo_exact_initial": true,
+        "redo_exact_final": true,
+        "modifier_phase_states_in_undo": [
+          {
+            "before_index": 20,
+            "found": true
+          },
+          {
+            "before_index": 40,
+            "found": true
+          }
+        ]
+      },
+      "response": {
+        "raf_frames": 227,
+        "raf_gap_p95_ms": 16.799999999999272,
+        "max_raf_gap_ms": 33.400000000000546,
+        "longtasks_over50_ms": 0,
+        "max_longtask_ms": 0,
+        "release_to_first_quiet_gpu_probe_max_ms": 3.899999998509884,
+        "trusted_pointer_downs": 1,
+        "trusted_pointer_ups": 1,
+        "pending_dabs_at_probes": [
+          0
+        ]
+      }
+    },
+    {
+      "name": "sphere-zero-pressure-start",
+      "settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Move",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.03700000047683716,
+        "strength": 0.7900000214576721,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "initial_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 41962,
+        "triangles": 83920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.12423102802647945,
+        "quality_p01": 0.477219998456588,
+        "quality_median": 0.7439986114593157,
+        "edge_p95": 0.020595385932691286,
+        "max_edge": 0.024553036480052654,
+        "max_adjacent_fold_deg": 69.43186039580426,
+        "fold_edges_over_60": 6,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0.05829588678942434,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188220060744181,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "delta": {
+        "changed_original_vertices": 26,
+        "max_original_displacement": 0.011465409890239425,
+        "rms_original_displacement": 0.00011796492621014962,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "attributes": {
+        "original_masks_unchanged": true,
+        "original_colors_unchanged": true
+      },
+      "interaction_gates": {
+        "gpu_saved_exact": true,
+        "release_quiet": true,
+        "no_runtime_errors": true,
+        "finite": true,
+        "closed_manifold": true,
+        "mask_protection": true,
+        "partial_mask_nonempty": true,
+        "full_mask_exact_noop": true,
+        "history_exact": true,
+        "no_motion_click_preserves_history": true,
+        "modifier_phases_preserved": true,
+        "pressure_zero_to_positive_still_moves": true,
+        "move_does_not_paint_mask_or_color": true
+      },
+      "gpu_matches_saved_mesh": true,
+      "gpu_before_save": {
+        "bytes": 1678480,
+        "sha256": "45affd9543bb858066cff03a8bcb8fe3ef68372e29add7a6dc43a85e016e53bd",
+        "last_upload_at": 6352.900000002235
+      },
+      "release_quiet": true,
+      "initial_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-zero-pressure-start-initial.png",
+        "sha256": "8334f8b9f59a986a008add34e452f24e9d704588fe6677ed7d32bb465eba623f",
+        "bytes": 207454
+      },
+      "final_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-zero-pressure-start-final.png",
+        "sha256": "7bfacca85bb70e268d4d60cf58336141828c7b888e1528b55b999aa2c2fea222",
+        "bytes": 206387
+      },
+      "snapshots": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-zero-pressure-start-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-zero-pressure-start-final.obrush",
+          "sha256": "31fdeb082f7009507ecea42451f9b858c8a4172d9a3734c40482d0a9b0f794da",
+          "bytes": 5447681,
+          "vertices": 41962,
+          "triangles": 83920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-zero-pressure-start-undo-0.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-zero-pressure-start-redo-0.obrush",
+          "sha256": "31fdeb082f7009507ecea42451f9b858c8a4172d9a3734c40482d0a9b0f794da",
+          "bytes": 5447681,
+          "vertices": 41962,
+          "triangles": 83920
+        }
+      ],
+      "history": {
+        "undo_steps": 1,
+        "undo_chain": [
+          {
+            "step": 0,
+            "mesh_sha256": "a7740d032ce8d5ac02973d8aaa0042765547ec2580ce8d8324c14b0f7716a9e1",
+            "packed_sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5"
+          }
+        ],
+        "undo_exact_initial": true,
+        "redo_exact_final": true,
+        "modifier_phase_states_in_undo": []
+      },
+      "response": {
+        "raf_frames": 160,
+        "raf_gap_p95_ms": 16.700000000000728,
+        "max_raf_gap_ms": 33.29999999999927,
+        "longtasks_over50_ms": 0,
+        "max_longtask_ms": 0,
+        "release_to_first_quiet_gpu_probe_max_ms": 3.2999999970197678,
+        "trusted_pointer_downs": 1,
+        "trusted_pointer_ups": 1,
+        "pending_dabs_at_probes": [
+          0
+        ]
+      }
+    },
+    {
+      "name": "sphere-ctrl-release",
+      "settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Move",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.03700000047683716,
+        "strength": 0.7900000214576721,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "initial_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 41962,
+        "triangles": 83920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.12401278511626104,
+        "quality_p01": 0.47574781236162966,
+        "quality_median": 0.7439986114593157,
+        "edge_p95": 0.020595385932691286,
+        "max_edge": 0.024846683485668687,
+        "max_adjacent_fold_deg": 69.89151455309299,
+        "fold_edges_over_60": 6,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0.05722708270865133,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188219877259204,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "delta": {
+        "changed_original_vertices": 26,
+        "max_original_displacement": 0.011639949212887475,
+        "rms_original_displacement": 0.00011976071839678708,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "attributes": {
+        "original_masks_unchanged": true,
+        "original_colors_unchanged": true
+      },
+      "interaction_gates": {
+        "gpu_saved_exact": true,
+        "release_quiet": true,
+        "no_runtime_errors": true,
+        "finite": true,
+        "closed_manifold": true,
+        "mask_protection": true,
+        "partial_mask_nonempty": true,
+        "full_mask_exact_noop": true,
+        "history_exact": true,
+        "no_motion_click_preserves_history": true,
+        "modifier_phases_preserved": true,
+        "pressure_zero_to_positive_still_moves": true,
+        "move_does_not_paint_mask_or_color": true
+      },
+      "gpu_matches_saved_mesh": true,
+      "gpu_before_save": {
+        "bytes": 1678480,
+        "sha256": "5b2b6b0ad54064d174383a19d9c5d72143fee1036828274a9b118315b467a2ec",
+        "last_upload_at": 6252.10000000149
+      },
+      "release_quiet": true,
+      "initial_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-ctrl-release-initial.png",
+        "sha256": "8334f8b9f59a986a008add34e452f24e9d704588fe6677ed7d32bb465eba623f",
+        "bytes": 207454
+      },
+      "final_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-ctrl-release-final.png",
+        "sha256": "5ecfce6cdf35538f1e25e67e079153d0bf90e6b3bcceb2ced414685c3427ba71",
+        "bytes": 206430
+      },
+      "snapshots": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-ctrl-release-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-ctrl-release-final.obrush",
+          "sha256": "579bcfdf3f23fbee33964942eff53f64f0b7e6b75cd5c6fde7c0a38b7596d800",
+          "bytes": 5447617,
+          "vertices": 41962,
+          "triangles": 83920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-ctrl-release-undo-0.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-ctrl-release-redo-0.obrush",
+          "sha256": "579bcfdf3f23fbee33964942eff53f64f0b7e6b75cd5c6fde7c0a38b7596d800",
+          "bytes": 5447617,
+          "vertices": 41962,
+          "triangles": 83920
+        }
+      ],
+      "history": {
+        "undo_steps": 1,
+        "undo_chain": [
+          {
+            "step": 0,
+            "mesh_sha256": "a7740d032ce8d5ac02973d8aaa0042765547ec2580ce8d8324c14b0f7716a9e1",
+            "packed_sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5"
+          }
+        ],
+        "undo_exact_initial": true,
+        "redo_exact_final": true,
+        "modifier_phase_states_in_undo": []
+      },
+      "response": {
+        "raf_frames": 156,
+        "raf_gap_p95_ms": 16.700000000000728,
+        "max_raf_gap_ms": 16.800000000000182,
+        "longtasks_over50_ms": 0,
+        "max_longtask_ms": 0,
+        "release_to_first_quiet_gpu_probe_max_ms": 8.100000001490116,
+        "trusted_pointer_downs": 1,
+        "trusted_pointer_ups": 1,
+        "pending_dabs_at_probes": [
+          0
+        ]
+      }
+    },
+    {
+      "name": "sphere-zero-half-radius",
+      "settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Move",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": true,
+        "pressure_strength": true,
+        "radius": 0.03700000047683716,
+        "strength": 0.7900000214576721,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "initial_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 41798,
+        "triangles": 83592,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.1251196160261988,
+        "quality_p01": 0.47917725693005975,
+        "quality_median": 0.7440002492307577,
+        "edge_p95": 0.020595397171814852,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 72.2613926192107,
+        "fold_edges_over_60": 4,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0.03217076771735281,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.1882231831306695,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "delta": {
+        "changed_original_vertices": 6,
+        "max_original_displacement": 0.0024557789721593557,
+        "rms_original_displacement": 2.058936632771577e-05,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "attributes": {
+        "original_masks_unchanged": true,
+        "original_colors_unchanged": true
+      },
+      "interaction_gates": {
+        "gpu_saved_exact": true,
+        "release_quiet": true,
+        "no_runtime_errors": true,
+        "finite": true,
+        "closed_manifold": true,
+        "mask_protection": true,
+        "partial_mask_nonempty": true,
+        "full_mask_exact_noop": true,
+        "history_exact": true,
+        "no_motion_click_preserves_history": true,
+        "modifier_phases_preserved": true,
+        "pressure_zero_to_positive_still_moves": true,
+        "move_does_not_paint_mask_or_color": true
+      },
+      "gpu_matches_saved_mesh": true,
+      "gpu_before_save": {
+        "bytes": 1671920,
+        "sha256": "4678cc7afcc9260f97d48eb7361146b8a2a706f1206179f9a19a8cfaf2a5ad18",
+        "last_upload_at": 6698.29999999702
+      },
+      "release_quiet": true,
+      "initial_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-zero-half-radius-initial.png",
+        "sha256": "06dd28b8cc39d563a16ab940389db2a4758518d739f86da9d246396e1136e19a",
+        "bytes": 207630
+      },
+      "final_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-zero-half-radius-final.png",
+        "sha256": "6bba850cac083c8d7e61785e3a6c20213f913d6a60a2849830ff45bbec839595",
+        "bytes": 206257
+      },
+      "snapshots": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-zero-half-radius-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-zero-half-radius-final.obrush",
+          "sha256": "83680af6562aafaf762237ebd16a2baa06b744634fe72f064335ee073da8cd00",
+          "bytes": 5426093,
+          "vertices": 41798,
+          "triangles": 83592
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-zero-half-radius-undo-0.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-zero-half-radius-redo-0.obrush",
+          "sha256": "83680af6562aafaf762237ebd16a2baa06b744634fe72f064335ee073da8cd00",
+          "bytes": 5426093,
+          "vertices": 41798,
+          "triangles": 83592
+        }
+      ],
+      "history": {
+        "undo_steps": 1,
+        "undo_chain": [
+          {
+            "step": 0,
+            "mesh_sha256": "a7740d032ce8d5ac02973d8aaa0042765547ec2580ce8d8324c14b0f7716a9e1",
+            "packed_sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5"
+          }
+        ],
+        "undo_exact_initial": true,
+        "redo_exact_final": true,
+        "modifier_phase_states_in_undo": []
+      },
+      "response": {
+        "raf_frames": 161,
+        "raf_gap_p95_ms": 16.700000000000728,
+        "max_raf_gap_ms": 16.800000000000182,
+        "longtasks_over50_ms": 0,
+        "max_longtask_ms": 0,
+        "release_to_first_quiet_gpu_probe_max_ms": 3.600000001490116,
+        "trusted_pointer_downs": 1,
+        "trusted_pointer_ups": 1,
+        "pending_dabs_at_probes": [
+          0
+        ]
+      }
+    },
+    {
+      "name": "sphere-contact-half-radius",
+      "settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Move",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": true,
+        "pressure_strength": true,
+        "radius": 0.03700000047683716,
+        "strength": 0.7900000214576721,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "initial_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 41798,
+        "triangles": 83592,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.1251196160261988,
+        "quality_p01": 0.47917725693005975,
+        "quality_median": 0.7440002492307577,
+        "edge_p95": 0.020595397171814852,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 72.2613926192107,
+        "fold_edges_over_60": 4,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0.03217076771735281,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.1882231831306695,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "delta": {
+        "changed_original_vertices": 6,
+        "max_original_displacement": 0.0024557789721593557,
+        "rms_original_displacement": 2.058936632771577e-05,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "attributes": {
+        "original_masks_unchanged": true,
+        "original_colors_unchanged": true
+      },
+      "interaction_gates": {
+        "gpu_saved_exact": true,
+        "release_quiet": true,
+        "no_runtime_errors": true,
+        "finite": true,
+        "closed_manifold": true,
+        "mask_protection": true,
+        "partial_mask_nonempty": true,
+        "full_mask_exact_noop": true,
+        "history_exact": true,
+        "no_motion_click_preserves_history": true,
+        "modifier_phases_preserved": true,
+        "pressure_zero_to_positive_still_moves": true,
+        "move_does_not_paint_mask_or_color": true
+      },
+      "gpu_matches_saved_mesh": true,
+      "gpu_before_save": {
+        "bytes": 1671920,
+        "sha256": "4678cc7afcc9260f97d48eb7361146b8a2a706f1206179f9a19a8cfaf2a5ad18",
+        "last_upload_at": 6491.39999999851
+      },
+      "release_quiet": true,
+      "initial_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-contact-half-radius-initial.png",
+        "sha256": "06dd28b8cc39d563a16ab940389db2a4758518d739f86da9d246396e1136e19a",
+        "bytes": 207630
+      },
+      "final_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-contact-half-radius-final.png",
+        "sha256": "6bba850cac083c8d7e61785e3a6c20213f913d6a60a2849830ff45bbec839595",
+        "bytes": 206257
+      },
+      "snapshots": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-contact-half-radius-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-contact-half-radius-final.obrush",
+          "sha256": "83680af6562aafaf762237ebd16a2baa06b744634fe72f064335ee073da8cd00",
+          "bytes": 5426093,
+          "vertices": 41798,
+          "triangles": 83592
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-contact-half-radius-undo-0.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-contact-half-radius-redo-0.obrush",
+          "sha256": "83680af6562aafaf762237ebd16a2baa06b744634fe72f064335ee073da8cd00",
+          "bytes": 5426093,
+          "vertices": 41798,
+          "triangles": 83592
+        }
+      ],
+      "history": {
+        "undo_steps": 1,
+        "undo_chain": [
+          {
+            "step": 0,
+            "mesh_sha256": "a7740d032ce8d5ac02973d8aaa0042765547ec2580ce8d8324c14b0f7716a9e1",
+            "packed_sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5"
+          }
+        ],
+        "undo_exact_initial": true,
+        "redo_exact_final": true,
+        "modifier_phase_states_in_undo": []
+      },
+      "response": {
+        "raf_frames": 163,
+        "raf_gap_p95_ms": 16.700000000000728,
+        "max_raf_gap_ms": 16.800000000000182,
+        "longtasks_over50_ms": 0,
+        "max_longtask_ms": 0,
+        "release_to_first_quiet_gpu_probe_max_ms": 3.0,
+        "trusted_pointer_downs": 1,
+        "trusted_pointer_ups": 1,
+        "pending_dabs_at_probes": [
+          0
+        ]
+      }
+    },
+    {
+      "name": "sphere-contact-full-radius",
+      "settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Move",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": true,
+        "pressure_strength": true,
+        "radius": 0.03700000047683716,
+        "strength": 0.7900000214576721,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "initial_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 41962,
+        "triangles": 83920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.12423102802647945,
+        "quality_p01": 0.477219998456588,
+        "quality_median": 0.7439986114593157,
+        "edge_p95": 0.020595385932691286,
+        "max_edge": 0.024553036480052654,
+        "max_adjacent_fold_deg": 69.43186039580426,
+        "fold_edges_over_60": 6,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0.05829588678942434,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188220060744181,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "delta": {
+        "changed_original_vertices": 26,
+        "max_original_displacement": 0.011465409890239425,
+        "rms_original_displacement": 0.00011796492621014962,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "attributes": {
+        "original_masks_unchanged": true,
+        "original_colors_unchanged": true
+      },
+      "interaction_gates": {
+        "gpu_saved_exact": true,
+        "release_quiet": true,
+        "no_runtime_errors": true,
+        "finite": true,
+        "closed_manifold": true,
+        "mask_protection": true,
+        "partial_mask_nonempty": true,
+        "full_mask_exact_noop": true,
+        "history_exact": true,
+        "no_motion_click_preserves_history": true,
+        "modifier_phases_preserved": true,
+        "pressure_zero_to_positive_still_moves": true,
+        "move_does_not_paint_mask_or_color": true
+      },
+      "gpu_matches_saved_mesh": true,
+      "gpu_before_save": {
+        "bytes": 1678480,
+        "sha256": "45affd9543bb858066cff03a8bcb8fe3ef68372e29add7a6dc43a85e016e53bd",
+        "last_upload_at": 6605.699999999255
+      },
+      "release_quiet": true,
+      "initial_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-contact-full-radius-initial.png",
+        "sha256": "06dd28b8cc39d563a16ab940389db2a4758518d739f86da9d246396e1136e19a",
+        "bytes": 207630
+      },
+      "final_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-contact-full-radius-final.png",
+        "sha256": "530c7f0e7493b4bc9f4814b6487845ba2ce11ce7fa584ce6660f2f0b6e67fd0e",
+        "bytes": 206530
+      },
+      "snapshots": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-contact-full-radius-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-contact-full-radius-final.obrush",
+          "sha256": "31fdeb082f7009507ecea42451f9b858c8a4172d9a3734c40482d0a9b0f794da",
+          "bytes": 5447681,
+          "vertices": 41962,
+          "triangles": 83920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-contact-full-radius-undo-0.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-contact-full-radius-redo-0.obrush",
+          "sha256": "31fdeb082f7009507ecea42451f9b858c8a4172d9a3734c40482d0a9b0f794da",
+          "bytes": 5447681,
+          "vertices": 41962,
+          "triangles": 83920
+        }
+      ],
+      "history": {
+        "undo_steps": 1,
+        "undo_chain": [
+          {
+            "step": 0,
+            "mesh_sha256": "a7740d032ce8d5ac02973d8aaa0042765547ec2580ce8d8324c14b0f7716a9e1",
+            "packed_sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5"
+          }
+        ],
+        "undo_exact_initial": true,
+        "redo_exact_final": true,
+        "modifier_phase_states_in_undo": []
+      },
+      "response": {
+        "raf_frames": 155,
+        "raf_gap_p95_ms": 16.700000000000728,
+        "max_raf_gap_ms": 16.800000000000182,
+        "longtasks_over50_ms": 0,
+        "max_longtask_ms": 0,
+        "release_to_first_quiet_gpu_probe_max_ms": 3.199999999254942,
+        "trusted_pointer_downs": 1,
+        "trusted_pointer_ups": 1,
+        "pending_dabs_at_probes": [
+          0
+        ]
+      }
+    },
+    {
+      "name": "sphere-eight-repeated-grabs",
+      "settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Move",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.03700000047683716,
+        "strength": 0.7900000214576721,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "initial_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 45802,
+        "triangles": 91600,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.09999988456057159,
+        "quality_p01": 0.25945506823389763,
+        "quality_median": 0.7399657330187849,
+        "edge_p95": 0.02058646975120061,
+        "max_edge": 0.03588217375188549,
+        "max_adjacent_fold_deg": 53.668641663757455,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.1882171080337685,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "delta": {
+        "changed_original_vertices": 74,
+        "max_original_displacement": 0.017569920721648095,
+        "rms_original_displacement": 0.0001888600361505377,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "attributes": {
+        "original_masks_unchanged": true,
+        "original_colors_unchanged": true
+      },
+      "interaction_gates": {
+        "gpu_saved_exact": true,
+        "release_quiet": true,
+        "no_runtime_errors": true,
+        "finite": true,
+        "closed_manifold": true,
+        "mask_protection": true,
+        "partial_mask_nonempty": true,
+        "full_mask_exact_noop": true,
+        "history_exact": true,
+        "no_motion_click_preserves_history": true,
+        "modifier_phases_preserved": true,
+        "pressure_zero_to_positive_still_moves": true,
+        "move_does_not_paint_mask_or_color": true,
+        "repeated_grabs_have_useful_displacement": true,
+        "repeated_grabs_no_fold_above_90_deg": true
+      },
+      "gpu_matches_saved_mesh": true,
+      "gpu_before_save": {
+        "bytes": 1832080,
+        "sha256": "db1e67e68ce9a7b35657e6181985ea747c982720ec633cc9b97c42c84aa4a414",
+        "last_upload_at": 17128
+      },
+      "release_quiet": true,
+      "initial_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-eight-repeated-grabs-initial.png",
+        "sha256": "8334f8b9f59a986a008add34e452f24e9d704588fe6677ed7d32bb465eba623f",
+        "bytes": 207454
+      },
+      "final_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-eight-repeated-grabs-final.png",
+        "sha256": "282058e689b20dcf96755ad9c18ae7eb8907d4748ea08606732d40efa2778c74",
+        "bytes": 207666
+      },
+      "snapshots": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-eight-repeated-grabs-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-eight-repeated-grabs-final.obrush",
+          "sha256": "56c035c1bc0b163da6e4edba64eb831b04994b22eec1d569031ce2ed8a2efc84",
+          "bytes": 5948147,
+          "vertices": 45802,
+          "triangles": 91600
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-eight-repeated-grabs-undo-0.obrush",
+          "sha256": "817b9666fdf4476761d8cd70cb80a012f09edd6877800e8f010a53895756e4f5",
+          "bytes": 5888127,
+          "vertices": 45344,
+          "triangles": 90684
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-eight-repeated-grabs-undo-1.obrush",
+          "sha256": "3b97b9bbf73dcc46d2916fed39c93ab8341b9fecb6c007a69e8e633bd700f97d",
+          "bytes": 5824225,
+          "vertices": 44852,
+          "triangles": 89700
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-eight-repeated-grabs-undo-2.obrush",
+          "sha256": "b586cb216c2d24b7f3d4bb4c31f1b0ec31cabd7579577d64f3122fde97e9d8e6",
+          "bytes": 5762125,
+          "vertices": 44376,
+          "triangles": 88748
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-eight-repeated-grabs-undo-3.obrush",
+          "sha256": "70a6ccbe8c4abc0344b1adb39067e787e5643982c186f4c522f016c6c4c17353",
+          "bytes": 5660687,
+          "vertices": 43596,
+          "triangles": 87188
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-eight-repeated-grabs-undo-4.obrush",
+          "sha256": "715dd7abaad587e17869c706f1b1f0df8caf3bc01c321d4d0c2ab3eac37d19eb",
+          "bytes": 5561611,
+          "vertices": 42834,
+          "triangles": 85664
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-eight-repeated-grabs-undo-5.obrush",
+          "sha256": "e28151b125f0ba7eb17df6a16504490ae97b1aac9a7138ea5f6ef328a6cd4ee5",
+          "bytes": 5447629,
+          "vertices": 41962,
+          "triangles": 83920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-eight-repeated-grabs-undo-6.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-eight-repeated-grabs-redo-0.obrush",
+          "sha256": "e28151b125f0ba7eb17df6a16504490ae97b1aac9a7138ea5f6ef328a6cd4ee5",
+          "bytes": 5447629,
+          "vertices": 41962,
+          "triangles": 83920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-eight-repeated-grabs-redo-1.obrush",
+          "sha256": "715dd7abaad587e17869c706f1b1f0df8caf3bc01c321d4d0c2ab3eac37d19eb",
+          "bytes": 5561611,
+          "vertices": 42834,
+          "triangles": 85664
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-eight-repeated-grabs-redo-2.obrush",
+          "sha256": "70a6ccbe8c4abc0344b1adb39067e787e5643982c186f4c522f016c6c4c17353",
+          "bytes": 5660687,
+          "vertices": 43596,
+          "triangles": 87188
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-eight-repeated-grabs-redo-3.obrush",
+          "sha256": "b586cb216c2d24b7f3d4bb4c31f1b0ec31cabd7579577d64f3122fde97e9d8e6",
+          "bytes": 5762125,
+          "vertices": 44376,
+          "triangles": 88748
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-eight-repeated-grabs-redo-4.obrush",
+          "sha256": "3b97b9bbf73dcc46d2916fed39c93ab8341b9fecb6c007a69e8e633bd700f97d",
+          "bytes": 5824225,
+          "vertices": 44852,
+          "triangles": 89700
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-eight-repeated-grabs-redo-5.obrush",
+          "sha256": "817b9666fdf4476761d8cd70cb80a012f09edd6877800e8f010a53895756e4f5",
+          "bytes": 5888127,
+          "vertices": 45344,
+          "triangles": 90684
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-eight-repeated-grabs-redo-6.obrush",
+          "sha256": "56c035c1bc0b163da6e4edba64eb831b04994b22eec1d569031ce2ed8a2efc84",
+          "bytes": 5948147,
+          "vertices": 45802,
+          "triangles": 91600
+        }
+      ],
+      "history": {
+        "undo_steps": 7,
+        "undo_chain": [
+          {
+            "step": 0,
+            "mesh_sha256": "e5177a29691268cddae5ebadbb8ebc9360934138d0be8125ff2133e826704536",
+            "packed_sha256": "5ad2b4206f91fbf9451837a2a205a090bdf9e2de713e1259f43d7293055bd2a5"
+          },
+          {
+            "step": 1,
+            "mesh_sha256": "1303a792735c4eda5afbdef25145f5f7d7140074b9f41ba3f138db77948b95fa",
+            "packed_sha256": "fa522a8c9f500cb0f031a720d3f193e577e99c634bf5e313fc9fec6c3b2f19e2"
+          },
+          {
+            "step": 2,
+            "mesh_sha256": "61df07455e3ba669f29edc8842b0f2e27127be7eae7c27095872378f29f39a34",
+            "packed_sha256": "becdfa3bff29afa750662ca23fb3011eff0dc5770fa8fb3db7dee2031b30e7b2"
+          },
+          {
+            "step": 3,
+            "mesh_sha256": "9562fd0f2271175be8de59d618657d1c044170692eac4d1dea4d09c488a7cc1d",
+            "packed_sha256": "a5b2a8d4785e4c5eedaf13dd64c6c52d9c49c22c6706e9dff9effa69b73a67a3"
+          },
+          {
+            "step": 4,
+            "mesh_sha256": "08272f79f6fd0cade513d512b239080cea98e87c03227e45bf4671734404eca8",
+            "packed_sha256": "1a4ca1897b96df04f373f879f5d9697869423dd34f091b149d48cbd27471c8ed"
+          },
+          {
+            "step": 5,
+            "mesh_sha256": "3b28b1d36ee000ecfe0f0483d7c1aff19f6a98f162c845df9cc6a4e1a37811d4",
+            "packed_sha256": "ac267a867cb953d143f0979774484e2986a9edd99dd6452d28f1e7f0056a448e"
+          },
+          {
+            "step": 6,
+            "mesh_sha256": "a7740d032ce8d5ac02973d8aaa0042765547ec2580ce8d8324c14b0f7716a9e1",
+            "packed_sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5"
+          }
+        ],
+        "undo_exact_initial": true,
+        "redo_exact_final": true,
+        "modifier_phase_states_in_undo": []
+      },
+      "response": {
+        "raf_frames": 804,
+        "raf_gap_p95_ms": 16.799999999999272,
+        "max_raf_gap_ms": 33.29999999999927,
+        "longtasks_over50_ms": 0,
+        "max_longtask_ms": 0,
+        "release_to_first_quiet_gpu_probe_max_ms": 4.0,
+        "trusted_pointer_downs": 8,
+        "trusted_pointer_ups": 8,
+        "pending_dabs_at_probes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "per_contact_gpu_changes": [
+        {
+          "contact": 1,
+          "gpu_changed_from_previous_contact": true,
+          "after_gpu_sha256": "ac267a867cb953d143f0979774484e2986a9edd99dd6452d28f1e7f0056a448e"
+        },
+        {
+          "contact": 2,
+          "gpu_changed_from_previous_contact": true,
+          "after_gpu_sha256": "1a4ca1897b96df04f373f879f5d9697869423dd34f091b149d48cbd27471c8ed"
+        },
+        {
+          "contact": 3,
+          "gpu_changed_from_previous_contact": true,
+          "after_gpu_sha256": "a5b2a8d4785e4c5eedaf13dd64c6c52d9c49c22c6706e9dff9effa69b73a67a3"
+        },
+        {
+          "contact": 4,
+          "gpu_changed_from_previous_contact": true,
+          "after_gpu_sha256": "becdfa3bff29afa750662ca23fb3011eff0dc5770fa8fb3db7dee2031b30e7b2"
+        },
+        {
+          "contact": 5,
+          "gpu_changed_from_previous_contact": false,
+          "after_gpu_sha256": "becdfa3bff29afa750662ca23fb3011eff0dc5770fa8fb3db7dee2031b30e7b2"
+        },
+        {
+          "contact": 6,
+          "gpu_changed_from_previous_contact": true,
+          "after_gpu_sha256": "fa522a8c9f500cb0f031a720d3f193e577e99c634bf5e313fc9fec6c3b2f19e2"
+        },
+        {
+          "contact": 7,
+          "gpu_changed_from_previous_contact": true,
+          "after_gpu_sha256": "5ad2b4206f91fbf9451837a2a205a090bdf9e2de713e1259f43d7293055bd2a5"
+        },
+        {
+          "contact": 8,
+          "gpu_changed_from_previous_contact": true,
+          "after_gpu_sha256": "db1e67e68ce9a7b35657e6181985ea747c982720ec633cc9b97c42c84aa4a414"
+        }
+      ]
+    },
+    {
+      "name": "sphere-exit-reentry-outside-release",
+      "settings": {
+        "adaptive_detail": true,
+        "alpha": null,
+        "alpha_height": null,
+        "alpha_rotation": 0,
+        "alpha_width": null,
+        "kind": "Move",
+        "message": "Ready to sculpt. Drag on the surface to begin.",
+        "pressure": 1,
+        "pressure_radius": false,
+        "pressure_strength": true,
+        "radius": 0.03700000047683716,
+        "strength": 0.7900000214576721,
+        "subdivision_level": 0,
+        "subdivision_levels": 1,
+        "symmetry_x": true,
+        "topology_busy": false,
+        "topology_job_id": null,
+        "triangles": 81920,
+        "vertices": 40962
+      },
+      "initial_quality": {
+        "vertices": 40962,
+        "triangles": 81920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.68822982516944,
+        "quality_p01": 0.6891021995374902,
+        "quality_median": 0.7457241934278356,
+        "edge_p95": 0.02059795196217576,
+        "max_edge": 0.02067306091406008,
+        "max_adjacent_fold_deg": 0.7208249421039524,
+        "fold_edges_over_60": 0,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188223748273827,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "final_quality": {
+        "vertices": 41962,
+        "triangles": 83920,
+        "nonfinite_positions": 0,
+        "degenerate_triangles": 0,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "min_cross_over_max_edge_squared": 0.10182361868825042,
+        "quality_p01": 0.47663041769834813,
+        "quality_median": 0.7439986114593157,
+        "edge_p95": 0.020595385932691286,
+        "max_edge": 0.023916631044051766,
+        "max_adjacent_fold_deg": 68.12342675413004,
+        "fold_edges_over_60": 6,
+        "fold_edges_over_90": 0,
+        "fold_edge_length_over_60": 0.06075093415708173,
+        "fold_edge_length_over_90": 0,
+        "signed_volume": 4.188220463773267,
+        "bounds": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "delta": {
+        "changed_original_vertices": 26,
+        "max_original_displacement": 0.01115203606918934,
+        "rms_original_displacement": 0.0001147406193207247,
+        "fully_masked_original_vertices_moved": 0,
+        "max_fully_masked_displacement": 0,
+        "eligible_exact_source_mirror_pairs": 20353,
+        "max_original_mirror_error": 0
+      },
+      "attributes": {
+        "original_masks_unchanged": true,
+        "original_colors_unchanged": true
+      },
+      "interaction_gates": {
+        "gpu_saved_exact": true,
+        "release_quiet": true,
+        "no_runtime_errors": true,
+        "finite": true,
+        "closed_manifold": true,
+        "mask_protection": true,
+        "partial_mask_nonempty": true,
+        "full_mask_exact_noop": true,
+        "history_exact": true,
+        "no_motion_click_preserves_history": true,
+        "modifier_phases_preserved": true,
+        "pressure_zero_to_positive_still_moves": true,
+        "move_does_not_paint_mask_or_color": true,
+        "outside_drops_travel": true,
+        "reentry_resumes_useful_inside_movement": true,
+        "outside_release_preserves_displayed_state": true,
+        "outside_release_one_history_step": true
+      },
+      "gpu_matches_saved_mesh": true,
+      "gpu_before_save": {
+        "bytes": 1678480,
+        "sha256": "59366b5f993380966853b8c22de45d5783314bdc5203e11fd08dd8ccef4776f3",
+        "last_upload_at": 5645.300000000745
+      },
+      "release_quiet": true,
+      "initial_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-exit-reentry-outside-release-initial.png",
+        "sha256": "8334f8b9f59a986a008add34e452f24e9d704588fe6677ed7d32bb465eba623f",
+        "bytes": 207454
+      },
+      "final_screenshot": {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-exit-reentry-outside-release-final.png",
+        "sha256": "e9df4581c717dba6279ae384a5d0f3262b4654080e7e8940f79b33dbb5898315",
+        "bytes": 205448
+      },
+      "snapshots": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-exit-reentry-outside-release-initial.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-exit-reentry-outside-release-final.obrush",
+          "sha256": "7e9779300f194442833a171fa00923507b5aeb0f4f1584e67789fe53908f833d",
+          "bytes": 5447649,
+          "vertices": 41962,
+          "triangles": 83920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-exit-reentry-outside-release-undo-0.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "bytes": 5317105,
+          "vertices": 40962,
+          "triangles": 81920
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/sphere-exit-reentry-outside-release-redo-0.obrush",
+          "sha256": "7e9779300f194442833a171fa00923507b5aeb0f4f1584e67789fe53908f833d",
+          "bytes": 5447649,
+          "vertices": 41962,
+          "triangles": 83920
+        }
+      ],
+      "history": {
+        "undo_steps": 1,
+        "undo_chain": [
+          {
+            "step": 0,
+            "mesh_sha256": "a7740d032ce8d5ac02973d8aaa0042765547ec2580ce8d8324c14b0f7716a9e1",
+            "packed_sha256": "d2c46da332c9afb0aefc179112843c284fb153f70ab10e3471e34c27166694d5"
+          }
+        ],
+        "undo_exact_initial": true,
+        "redo_exact_final": true,
+        "modifier_phase_states_in_undo": []
+      },
+      "response": {
+        "raf_frames": 132,
+        "raf_gap_p95_ms": 16.700000000000728,
+        "max_raf_gap_ms": 16.800000000000182,
+        "longtasks_over50_ms": 0,
+        "max_longtask_ms": 0,
+        "release_to_first_quiet_gpu_probe_max_ms": 3.400000002235174,
+        "trusted_pointer_downs": 1,
+        "trusted_pointer_ups": 1,
+        "pending_dabs_at_probes": [
+          0
+        ]
+      },
+      "boundary": {
+        "beforeOutside": {
+          "bytes": 1678480,
+          "sha256": "d9399d4bfe03cb1db78603a839b873d264dd1caeb7022373b69d815af6aba2a6",
+          "last_upload_at": 5040.099999997765
+        },
+        "outside": {
+          "bytes": 1678480,
+          "sha256": "d9399d4bfe03cb1db78603a839b873d264dd1caeb7022373b69d815af6aba2a6",
+          "last_upload_at": 5040.099999997765
+        },
+        "reentry": {
+          "bytes": 1678480,
+          "sha256": "d9399d4bfe03cb1db78603a839b873d264dd1caeb7022373b69d815af6aba2a6",
+          "last_upload_at": 5040.099999997765
+        },
+        "resumed": {
+          "bytes": 1678480,
+          "sha256": "59366b5f993380966853b8c22de45d5783314bdc5203e11fd08dd8ccef4776f3",
+          "last_upload_at": 5645.300000000745
+        },
+        "beforeOutsideRelease": {
+          "bytes": 1678480,
+          "sha256": "59366b5f993380966853b8c22de45d5783314bdc5203e11fd08dd8ccef4776f3",
+          "last_upload_at": 5645.300000000745
+        },
+        "outside_exact": true,
+        "reentry_first_point_exact": true,
+        "resumed_inside_movement_useful": true,
+        "outside_release_preserves_displayed_state": true
+      }
+    }
+  ],
+  "retained_observations": [
+    {
+      "path": ".artifacts/move-regression/baseline-2e0bdefc-5c0f-4e09-aedb-c97b8a21e24f/result.json",
+      "sha256": "5723f4c625566a6744b794faa603d2e865e539e732cf79ede72fcfb41c90cc04",
+      "kind": "Frozen0.1.6 baseline reproduced long-face/fold defects; initial authored mask accidentally protected the entire tiny grab, recorded as a no-op with predecessor Undo rather than discarded"
+    },
+    {
+      "path": ".artifacts/move-regression/candidate-1-fef965fb-b36e-4167-b9f6-023388bf5e90/result.json",
+      "sha256": "cbb47a6665a2012942feb7a9e705129601cca92fc0ed0b3924c1991a201c10b6",
+      "kind": "Rejected candidate1: generated-rest-face quality mismatch locked most nominal-radius Move motion near zero; parent requested stop after12 completed cases; expected Runtime.evaluate timeout follows deliberate owned Browser.close, see early-stop.json"
+    },
+    {
+      "path": ".artifacts/move-regression/metric-probe-correctness-d367a4a2-8ebb-478f-9162-8dc3adb65a64/result.json",
+      "sha256": "76dc9db106049679ea2eae0c7f47faf9b650d41702ef87a07870cd90b963378d",
+      "kind": "Focused corrected-metric probe passed outbound geometry/GPU/history; correctness-only because native work was concurrent"
+    },
+    {
+      "receipt": {
+        "path": ".artifacts/move-surface-final-v1/failed-2radius-tests.log",
+        "bytes": 1717,
+        "sha256": "f06cc56c00d732440df7d9f581c53e4de7dd07e3d50a430ff935829fa6cb81d9"
+      },
+      "kind": "Earlier native candidate failed the proposed >2-radius tiny-normal extension gate; not relabeled as a pass, not used for final-source geometry measurements."
+    }
+  ],
+  "limitations": [
+    "No ZBrush comparison, output equivalence or feature parity claim.",
+    "Synthetic trusted CDP pointer events in owned headless Chrome. Native GUI, physical mouse/pen/tablet pressure, and input-to-photon latency remain unverified.",
+    "Frame gaps and release-to-GPU-readback probes are scoped host scheduling observations; no GPU timer query or physical display latency.",
+    "Safety guards deliberately limit very long tiny-radius pulls. Final PNGs show small shallow local edits, not unrestricted stretching.",
+    "Existing folds in the unchanged supplied user model remain; no automatic damage repair or global self-intersection proof.",
+    "Fresh repeated eight-contact sequence has seven effective history states; one contact produced no change.",
+    "Mirror errors here measure eligible exact original-vertex source pairs; new-vertex correspondence and general posed symmetry are separate gates.",
+    "Final release probes wait incremental0/200/800ms; exact cumulative timestamps and raw pointer events are in the immutable raw receipt.",
+    "Raw probe.at is captured before gpuDigest begins. The 2.7\u20138.1 ms aggregate measures DOM pointer-up to probe-start, not GPU readback completion, upload latency or display latency.",
+    "requestAnimationFrame observations come from an independent instrumentation callback and include drag plus post-release idle. They do not measure sculpt-render FPS.",
+    "GPU/save equality covers packed float32 position, normal, mask and color vertex-buffer bytes. The GPU index buffer was not independently captured; saved topology and history were checked separately."
+  ],
+  "version": "0.1.7",
+  "browser_summary_receipt": {
+    "path": ".artifacts/move-regression/final-cf7e2194-4edc-49ba-afcb-5aaa1a597a9e/comparison.json",
+    "bytes": 130041,
+    "sha256": "a4b32619c6274949d06d0ce49d1de89d9ec423ba23ea292957b79531e962eaba"
+  },
+  "native_diagnostic": {
+    "receipt": {
+      "path": ".artifacts/move-cpu-diagnostic/comparison.json",
+      "bytes": 46610,
+      "sha256": "db07d7f978f1872fc28d99857d943c77050baecdc792f48f1bc9e1276086245e"
+    },
+    "scope": "CPU-only independent diagnostic of frozen OBrush Move sources. No browser, input latency, native GUI, ZBrush parity or global self-intersection/repair claim.",
+    "outcome": "Metric patch fixes the recorded-grab near-freeze. Four preregistered movement-range failures remain; this is not a full pass of the movement-range sweep.",
+    "contract": {
+      "grid_pixel_offsets": [
+        -24,
+        0,
+        24
+      ],
+      "radius": 0.037,
+      "strength": 0.79,
+      "symmetry_x": true,
+      "viewport_top_origin": [
+        212,
+        57,
+        1153,
+        912
+      ],
+      "press": [
+        703.5,
+        483
+      ],
+      "long_camera_delta": [
+        180,
+        -80
+      ],
+      "fresh_active_quality_min": 0.1,
+      "fresh_active_fold_max_degrees": 90.0001,
+      "minimum_useful_displacement": {
+        "camera": "0.25radius",
+        "long_normal": "1radius"
+      },
+      "scope": "Diagnostic thresholds fixed before running both frozen variants. No performance, browser or ZBrush parity claim."
+    },
+    "numerical_method": "Recorded top-origin pixels/camera reconstructed with production f32 formulas and frozen core raycast. Native f32/libm may differ in low bits from WASM; this is not a claim of bit-identical internal browser hit. All-vertex displacement compares against exactly exposed prepared rest positions; active faces have at least one nonzero target influence.",
+    "build_method": "Copied brush/refinement sources are unchanged. Only copied lib wrapper adds read-only accessors to private rest geometry and influence weights. Standalone package adapters pin original locked dependency versions. Final proposed run uses its own fresh target directory.",
+    "source": {
+      "before_brush_sha256": "f247ec648f5f0cb258881a2c95829fc7bc11b6d94f9f6c57302cb78d7e3233e1",
+      "before_refinement_sha256": "69051d0c169a148bfd3f5f47ea1f05d296af41bcb3f9dbb7707262b11474c4fe",
+      "after_brush_sha256": "f247ec648f5f0cb258881a2c95829fc7bc11b6d94f9f6c57302cb78d7e3233e1",
+      "after_refinement_sha256": "6c0d5e56e74bc71b363070f60e8468762c1a683bff347eb96255d37ed9721d87",
+      "after_lib_source_sha256": "3efd7aa7670911f10d842930e6bf7e593f23928ddbafc541eecd75327a68e036",
+      "harness_sha256": "fb6a1cdf2a1ff4572df07335211346720e03d2052ed8cd6c29cf1227c6cc54ab",
+      "diagnostic_hooks_sha256": "a998683b59c0816f5a4d336559adc7167d148325ea6514fd45ae6d37e72f1ae8",
+      "fixture_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "dependencies": {
+        "glam": "0.30.10",
+        "serde": "1.0.229",
+        "serde_json": "1.0.154"
+      }
+    },
+    "summary": {
+      "case_count": 28,
+      "before_failed_case_count": 13,
+      "after_failed_case_count": 4,
+      "prepared_active_quality_passes": 28,
+      "fresh_active_geometry_passes": 28,
+      "exact_event_equivalence_passes": 28,
+      "exact_return_passes": 28,
+      "useful_displacement_passes": 24
+    },
+    "failed_checks": {
+      "before": [
+        {
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": false,
+            "prepared_active_quality": false,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          },
+          "name": "x+24_y-24_proportional_camera"
+        },
+        {
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": false,
+            "prepared_active_quality": false,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          },
+          "name": "x+24_y-24_long_camera"
+        },
+        {
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": false,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.03700000047683716
+          },
+          "name": "x+24_y-24_long_normal"
+        },
+        {
+          "gates": {
+            "exact_one_vs_twelve_events": false,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": false,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.00925000011920929
+          },
+          "name": "x-24_y+0_proportional_camera"
+        },
+        {
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": false,
+            "prepared_active_quality": false,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.00925000011920929
+          },
+          "name": "x-24_y+0_long_camera"
+        },
+        {
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": false,
+            "prepared_active_quality": false,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.03700000047683716
+          },
+          "name": "x-24_y+0_long_normal"
+        },
+        {
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": false,
+            "prepared_active_quality": false,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.00925000011920929
+          },
+          "name": "x+0_y+0_proportional_camera"
+        },
+        {
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": false,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.00925000011920929
+          },
+          "name": "x+0_y+0_long_camera"
+        },
+        {
+          "gates": {
+            "exact_one_vs_twelve_events": false,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": false,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.03700000047683716
+          },
+          "name": "x+0_y+0_long_normal"
+        },
+        {
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.00925000011920929
+          },
+          "name": "x-24_y+24_proportional_camera"
+        },
+        {
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.00925000011920929
+          },
+          "name": "x-24_y+24_long_camera"
+        },
+        {
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.03700000047683716
+          },
+          "name": "x-24_y+24_long_normal"
+        },
+        {
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.03700000047683716
+          },
+          "name": "x+24_y+24_long_normal"
+        }
+      ],
+      "after": [
+        {
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.00925000011920929
+          },
+          "name": "x-24_y+24_proportional_camera"
+        },
+        {
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.00925000011920929
+          },
+          "name": "x-24_y+24_long_camera"
+        },
+        {
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.03700000047683716
+          },
+          "name": "x-24_y+24_long_normal"
+        },
+        {
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.03700000047683716
+          },
+          "name": "x+24_y+24_long_normal"
+        }
+      ]
+    },
+    "retained_setup_checks": [
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-cpu-diagnostic/candidate-1",
+        "description": "Preliminary helper used direct tangent rather than retaining the exact f32 FOV atan/tan expression. Retained; matched final comparison uses the corrected common helper."
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/move-cpu-diagnostic/proposed-metric/invalid-shared-target-receipt.json",
+        "description": "Invalid copied-package shared-target reuse was detected from logs; identical output did not test changed algorithm. Rebuilt into fresh variant target before conclusions."
+      }
+    ],
+    "case_comparison": [
+      {
+        "name": "x-24_y-24_proportional_camera",
+        "press_pixel": [
+          679.5,
+          459.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "proportional_camera",
+        "before": {
+          "prepared_active_quality": 0.22926686870467924,
+          "max_all_displacement": 0.01704960162331866,
+          "max_in_plane_pixels": 7.01565171468717,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.22926686870467924,
+          "final_active_quality": 0.11007647644576445,
+          "final_active_fold_degrees": 38.244584464719864,
+          "max_all_displacement": 0.01704960162331866,
+          "max_in_plane_pixels": 7.01565171468717,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        }
+      },
+      {
+        "name": "x-24_y-24_long_camera",
+        "press_pixel": [
+          679.5,
+          459.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "long_camera",
+        "before": {
+          "prepared_active_quality": 0.22926686870467924,
+          "max_all_displacement": 0.019886547345416186,
+          "max_in_plane_pixels": 8.18301174639412,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.22926686870467924,
+          "final_active_quality": 0.10000622581001593,
+          "final_active_fold_degrees": 65.40265294584589,
+          "max_all_displacement": 0.019886547345416186,
+          "max_in_plane_pixels": 8.18301174639412,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        }
+      },
+      {
+        "name": "x-24_y-24_long_normal",
+        "press_pixel": [
+          679.5,
+          459.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "long_normal",
+        "before": {
+          "prepared_active_quality": 0.22926686870467924,
+          "max_all_displacement": 0.041234120466143886,
+          "max_in_plane_pixels": 6.990532346060807,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.03700000047683716
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.22926686870467924,
+          "final_active_quality": 0.10000017446681299,
+          "final_active_fold_degrees": 63.93361690711846,
+          "max_all_displacement": 0.041234120466143886,
+          "max_in_plane_pixels": 6.990532346060807,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.03700000047683716
+          }
+        }
+      },
+      {
+        "name": "x+0_y-24_proportional_camera",
+        "press_pixel": [
+          703.5,
+          459.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "proportional_camera",
+        "before": {
+          "prepared_active_quality": 0.36668310165361306,
+          "max_all_displacement": 0.01669361941335452,
+          "max_in_plane_pixels": 6.902122022183237,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.36668310165361306,
+          "final_active_quality": 0.27503671238910393,
+          "final_active_fold_degrees": 10.683806240720125,
+          "max_all_displacement": 0.01669361941335452,
+          "max_in_plane_pixels": 6.902122022183237,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        }
+      },
+      {
+        "name": "x+0_y-24_long_camera",
+        "press_pixel": [
+          703.5,
+          459.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "long_camera",
+        "before": {
+          "prepared_active_quality": 0.36668310165361306,
+          "max_all_displacement": 0.02461544774505246,
+          "max_in_plane_pixels": 10.177470817616802,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.36668310165361306,
+          "final_active_quality": 0.10001549987801922,
+          "final_active_fold_degrees": 50.501287267707944,
+          "max_all_displacement": 0.02461544774505246,
+          "max_in_plane_pixels": 10.177470817616802,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        }
+      },
+      {
+        "name": "x+0_y-24_long_normal",
+        "press_pixel": [
+          703.5,
+          459.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "long_normal",
+        "before": {
+          "prepared_active_quality": 0.36668310165361306,
+          "max_all_displacement": 0.12719723876110575,
+          "max_in_plane_pixels": 24.503417372969977,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.03700000047683716
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.36668310165361306,
+          "final_active_quality": 0.10001952960995623,
+          "final_active_fold_degrees": 81.87249729462741,
+          "max_all_displacement": 0.12719723876110575,
+          "max_in_plane_pixels": 24.503417372969977,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.03700000047683716
+          }
+        }
+      },
+      {
+        "name": "x+24_y-24_proportional_camera",
+        "press_pixel": [
+          727.5,
+          459.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "proportional_camera",
+        "before": {
+          "prepared_active_quality": 0.09203750739593035,
+          "max_all_displacement": 0.016361333925720645,
+          "max_in_plane_pixels": 6.788661583482883,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": false,
+            "prepared_active_quality": false,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.1834875849994508,
+          "final_active_quality": 0.18391358357953508,
+          "final_active_fold_degrees": 7.471124221034741,
+          "max_all_displacement": 0.016361333925720645,
+          "max_in_plane_pixels": 6.788661583482883,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        }
+      },
+      {
+        "name": "x+24_y-24_long_camera",
+        "press_pixel": [
+          727.5,
+          459.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "long_camera",
+        "before": {
+          "prepared_active_quality": 0.09203750739593035,
+          "max_all_displacement": 0.02317431026619991,
+          "max_in_plane_pixels": 9.615508794170353,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": false,
+            "prepared_active_quality": false,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.1834875849994508,
+          "final_active_quality": 0.10012630239838873,
+          "final_active_fold_degrees": 49.38636462489098,
+          "max_all_displacement": 0.02317431026619991,
+          "max_in_plane_pixels": 9.615508794170353,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        }
+      },
+      {
+        "name": "x+24_y-24_long_normal",
+        "press_pixel": [
+          727.5,
+          459.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "long_normal",
+        "before": {
+          "prepared_active_quality": 0.09203750739593035,
+          "max_all_displacement": 0.0,
+          "max_in_plane_pixels": 0.0,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": false,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.03700000047683716
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.1834875849994508,
+          "final_active_quality": 0.10000547770170665,
+          "final_active_fold_degrees": 67.55650539253506,
+          "max_all_displacement": 0.18039115025045693,
+          "max_in_plane_pixels": 38.70483190402696,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.03700000047683716
+          }
+        }
+      },
+      {
+        "name": "x-24_y+0_proportional_camera",
+        "press_pixel": [
+          679.5,
+          483.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "proportional_camera",
+        "before": {
+          "prepared_active_quality": 0.0923799545145653,
+          "max_all_displacement": 0.0,
+          "max_in_plane_pixels": 0.0,
+          "gates": {
+            "exact_one_vs_twelve_events": false,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": false,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.18476053765075387,
+          "final_active_quality": 0.11881082444207568,
+          "final_active_fold_degrees": 71.03577051840931,
+          "max_all_displacement": 0.014819252107379874,
+          "max_in_plane_pixels": 6.110622436422366,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        }
+      },
+      {
+        "name": "x-24_y+0_long_camera",
+        "press_pixel": [
+          679.5,
+          483.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "long_camera",
+        "before": {
+          "prepared_active_quality": 0.0923799545145653,
+          "max_all_displacement": 0.00030218284197725134,
+          "max_in_plane_pixels": 0.12460313414470162,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": false,
+            "prepared_active_quality": false,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.18476053765075387,
+          "final_active_quality": 0.11888915093612472,
+          "final_active_fold_degrees": 71.51522241593385,
+          "max_all_displacement": 0.014664660811002959,
+          "max_in_plane_pixels": 6.04687773469432,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        }
+      },
+      {
+        "name": "x-24_y+0_long_normal",
+        "press_pixel": [
+          679.5,
+          483.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "long_normal",
+        "before": {
+          "prepared_active_quality": 0.0923799545145653,
+          "max_all_displacement": 0.0035182793250124137,
+          "max_in_plane_pixels": 0.5908073201868791,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": false,
+            "prepared_active_quality": false,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.03700000047683716
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.18476053765075387,
+          "final_active_quality": 0.11845157247241243,
+          "final_active_fold_degrees": 89.99980678848549,
+          "max_all_displacement": 0.04914895097131522,
+          "max_in_plane_pixels": 8.25336021872022,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.03700000047683716
+          }
+        }
+      },
+      {
+        "name": "x+0_y+0_proportional_camera",
+        "press_pixel": [
+          703.5,
+          483.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "proportional_camera",
+        "before": {
+          "prepared_active_quality": 0.0920891718982704,
+          "max_all_displacement": 6.824683023678059e-06,
+          "max_in_plane_pixels": 0.002827470903670778,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": false,
+            "prepared_active_quality": false,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.18398592858460316,
+          "final_active_quality": 0.10111478028771884,
+          "final_active_fold_degrees": 69.13355578697397,
+          "max_all_displacement": 0.016869149091934363,
+          "max_in_plane_pixels": 6.988923208206967,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        }
+      },
+      {
+        "name": "x+0_y+0_long_camera",
+        "press_pixel": [
+          703.5,
+          483.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "long_camera",
+        "before": {
+          "prepared_active_quality": 0.0920891718982704,
+          "max_all_displacement": 0.0,
+          "max_in_plane_pixels": 0.0,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": false,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.18398592858460316,
+          "final_active_quality": 0.11126850080019754,
+          "final_active_fold_degrees": 69.96629153640524,
+          "max_all_displacement": 0.01710141940896394,
+          "max_in_plane_pixels": 7.085153297766256,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        }
+      },
+      {
+        "name": "x+0_y+0_long_normal",
+        "press_pixel": [
+          703.5,
+          483.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "long_normal",
+        "before": {
+          "prepared_active_quality": 0.0920891718982704,
+          "max_all_displacement": 0.0,
+          "max_in_plane_pixels": 0.0,
+          "gates": {
+            "exact_one_vs_twelve_events": false,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": false,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.03700000047683716
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.18398592858460316,
+          "final_active_quality": 0.1000105213320871,
+          "final_active_fold_degrees": 79.69782223073386,
+          "max_all_displacement": 0.07245451105612127,
+          "max_in_plane_pixels": 13.86735553650488,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.03700000047683716
+          }
+        }
+      },
+      {
+        "name": "x+24_y+0_proportional_camera",
+        "press_pixel": [
+          727.5,
+          483.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "proportional_camera",
+        "before": {
+          "prepared_active_quality": 0.46327998313811164,
+          "max_all_displacement": 0.016982225371664234,
+          "max_in_plane_pixels": 7.060286048171944,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.46327998313811164,
+          "final_active_quality": 0.14069430301335833,
+          "final_active_fold_degrees": 14.091388964259153,
+          "max_all_displacement": 0.016982225371664234,
+          "max_in_plane_pixels": 7.060286048171944,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        }
+      },
+      {
+        "name": "x+24_y+0_long_camera",
+        "press_pixel": [
+          727.5,
+          483.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "long_camera",
+        "before": {
+          "prepared_active_quality": 0.46327998313811164,
+          "max_all_displacement": 0.020778122889902474,
+          "max_in_plane_pixels": 8.638413890229273,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.46327998313811164,
+          "final_active_quality": 0.10002864274215283,
+          "final_active_fold_degrees": 48.135188195466526,
+          "max_all_displacement": 0.020778122889902474,
+          "max_in_plane_pixels": 8.638413890229273,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        }
+      },
+      {
+        "name": "x+24_y+0_long_normal",
+        "press_pixel": [
+          727.5,
+          483.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "long_normal",
+        "before": {
+          "prepared_active_quality": 0.46327998313811164,
+          "max_all_displacement": 0.15505912796110444,
+          "max_in_plane_pixels": 33.11524888941986,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.03700000047683716
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.46327998313811164,
+          "final_active_quality": 0.1000103751560907,
+          "final_active_fold_degrees": 66.14827733952379,
+          "max_all_displacement": 0.15505912796110444,
+          "max_in_plane_pixels": 33.11524888941986,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.03700000047683716
+          }
+        }
+      },
+      {
+        "name": "x-24_y+24_proportional_camera",
+        "press_pixel": [
+          679.5,
+          507.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "proportional_camera",
+        "before": {
+          "prepared_active_quality": 0.11140999358030157,
+          "max_all_displacement": 0.002207024768480032,
+          "max_in_plane_pixels": 0.910860625039771,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.1538017831746596,
+          "final_active_quality": 0.10000242697426144,
+          "final_active_fold_degrees": 10.013322685786406,
+          "max_all_displacement": 0.008546470707076115,
+          "max_in_plane_pixels": 3.52721172929042,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        }
+      },
+      {
+        "name": "x-24_y+24_long_camera",
+        "press_pixel": [
+          679.5,
+          507.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "long_camera",
+        "before": {
+          "prepared_active_quality": 0.11140999358030157,
+          "max_all_displacement": 0.0021805485326670446,
+          "max_in_plane_pixels": 0.8999336269698146,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.1538017831746596,
+          "final_active_quality": 0.10000691709403162,
+          "final_active_fold_degrees": 10.763347547545576,
+          "max_all_displacement": 0.008606742679135018,
+          "max_in_plane_pixels": 3.5520865688490697,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        }
+      },
+      {
+        "name": "x-24_y+24_long_normal",
+        "press_pixel": [
+          679.5,
+          507.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "long_normal",
+        "before": {
+          "prepared_active_quality": 0.11140999358030157,
+          "max_all_displacement": 0.027064743929803046,
+          "max_in_plane_pixels": 4.560259730253379,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.03700000047683716
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.1538017831746596,
+          "final_active_quality": 0.10000290231360315,
+          "final_active_fold_degrees": 61.44323669710688,
+          "max_all_displacement": 0.027566339756965128,
+          "max_in_plane_pixels": 4.644776522283611,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.03700000047683716
+          }
+        }
+      },
+      {
+        "name": "x+0_y+24_proportional_camera",
+        "press_pixel": [
+          703.5,
+          507.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "proportional_camera",
+        "before": {
+          "prepared_active_quality": 0.11517197491117462,
+          "max_all_displacement": 0.01475129644903209,
+          "max_in_plane_pixels": 6.116786914863001,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.22275984766320922,
+          "final_active_quality": 0.1787192657868872,
+          "final_active_fold_degrees": 50.100958085009516,
+          "max_all_displacement": 0.01475129644903209,
+          "max_in_plane_pixels": 6.116786914863001,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        }
+      },
+      {
+        "name": "x+0_y+24_long_camera",
+        "press_pixel": [
+          703.5,
+          507.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "long_camera",
+        "before": {
+          "prepared_active_quality": 0.11517197491117462,
+          "max_all_displacement": 0.015205665244219112,
+          "max_in_plane_pixels": 6.305195937648259,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.22275984766320922,
+          "final_active_quality": 0.17740520354165165,
+          "final_active_fold_degrees": 61.84933467470275,
+          "max_all_displacement": 0.015205665244219112,
+          "max_in_plane_pixels": 6.305195937648259,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        }
+      },
+      {
+        "name": "x+0_y+24_long_normal",
+        "press_pixel": [
+          703.5,
+          507.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "long_normal",
+        "before": {
+          "prepared_active_quality": 0.11517197491117462,
+          "max_all_displacement": 0.06018151622897711,
+          "max_in_plane_pixels": 11.55046935132281,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.03700000047683716
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.22275984766320922,
+          "final_active_quality": 0.18564601707069842,
+          "final_active_fold_degrees": 89.99743436923848,
+          "max_all_displacement": 0.06018151622897711,
+          "max_in_plane_pixels": 11.55046935132281,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.03700000047683716
+          }
+        }
+      },
+      {
+        "name": "x+24_y+24_proportional_camera",
+        "press_pixel": [
+          727.5,
+          507.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "proportional_camera",
+        "before": {
+          "prepared_active_quality": 0.18110268447011474,
+          "max_all_displacement": 0.010100224232760998,
+          "max_in_plane_pixels": 4.202694728348664,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.18110268447011474,
+          "final_active_quality": 0.10001756140400216,
+          "final_active_fold_degrees": 7.073510089472193,
+          "max_all_displacement": 0.010100224232760998,
+          "max_in_plane_pixels": 4.202694728348664,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        }
+      },
+      {
+        "name": "x+24_y+24_long_camera",
+        "press_pixel": [
+          727.5,
+          507.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "long_camera",
+        "before": {
+          "prepared_active_quality": 0.18110268447011474,
+          "max_all_displacement": 0.009851216374131402,
+          "max_in_plane_pixels": 4.099082780710918,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.18110268447011474,
+          "final_active_quality": 0.10000419180653122,
+          "final_active_fold_degrees": 7.014915418527422,
+          "max_all_displacement": 0.009851216374131402,
+          "max_in_plane_pixels": 4.099082780710918,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.00925000011920929
+          }
+        }
+      },
+      {
+        "name": "x+24_y+24_long_normal",
+        "press_pixel": [
+          727.5,
+          507.0
+        ],
+        "radius": 0.03700000047683716,
+        "profile": "long_normal",
+        "before": {
+          "prepared_active_quality": 0.18110268447011474,
+          "max_all_displacement": 0.02784524295854017,
+          "max_in_plane_pixels": 5.962120702013944,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.03700000047683716
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.18110268447011474,
+          "final_active_quality": 0.10000830486561317,
+          "final_active_fold_degrees": 61.17455881141911,
+          "max_all_displacement": 0.02784524295854017,
+          "max_in_plane_pixels": 5.962120702013944,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": false,
+            "useful_threshold_world": 0.03700000047683716
+          }
+        }
+      },
+      {
+        "name": "broad_center_long_camera",
+        "press_pixel": [
+          703.5,
+          483.0
+        ],
+        "radius": 0.18000000715255737,
+        "profile": "long_camera",
+        "before": {
+          "prepared_active_quality": 0.6972847500423776,
+          "max_all_displacement": 0.08009440619448137,
+          "max_in_plane_pixels": 33.183277516959926,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.04500000178813934
+          }
+        },
+        "after": {
+          "prepared_active_quality": 0.6972847500423776,
+          "final_active_quality": 0.13795972805546824,
+          "final_active_fold_degrees": 39.3273816579152,
+          "max_all_displacement": 0.08009440619448137,
+          "max_in_plane_pixels": 33.183277516959926,
+          "gates": {
+            "exact_one_vs_twelve_events": true,
+            "exact_return_to_origin": true,
+            "fresh_active_geometry": true,
+            "prepared_active_quality": true,
+            "useful_displacement": true,
+            "useful_threshold_world": 0.04500000178813934
+          }
+        }
+      }
+    ]
+  },
+  "recorded_native_tests": {
+    "receipt": {
+      "path": ".artifacts/move-recorded-regression-v1/manifest.json",
+      "bytes": 2755,
+      "sha256": "2861398bb5b76eb9d703f7a4eb969a8c72a0784928f2e813b06674ddcc69dd91"
+    },
+    "record": {
+      "scope": "Exact recorded camera inputs recomputed with native f32 math; related runtime internal hit was not logged, reconstructed f64 hit/target used only as tolerance witnesses; no ZBrush comparison or universal long-pull range claim",
+      "command": "cargo test --locked -p obrush-core --test move_surface recorded -- --nocapture",
+      "source_files": [
+        {
+          "path": "crates/obrush-core/tests/move_surface.rs",
+          "sha256": "feb05ddde0d061ba5e02b5443a54aa8ec829b5dbef27ee75160cb07559590f6e"
+        },
+        {
+          "path": "crates/obrush-core/src/brush.rs",
+          "sha256": "f247ec648f5f0cb258881a2c95829fc7bc11b6d94f9f6c57302cb78d7e3233e1"
+        },
+        {
+          "path": "crates/obrush-core/src/refinement.rs",
+          "sha256": "6c0d5e56e74bc71b363070f60e8468762c1a683bff347eb96255d37ed9721d87"
+        },
+        {
+          "path": "crates/obrush-core/src/mesh.rs",
+          "sha256": "c044c5423dd224bf3962bf0ad8f3c9e6b840fe170971a3b17397a3969016d420"
+        },
+        {
+          "path": "crates/obrush-core/src/lib.rs",
+          "sha256": "3efd7aa7670911f10d842930e6bf7e593f23928ddbafc541eecd75327a68e036"
+        },
+        {
+          "path": "Cargo.lock",
+          "sha256": "fac31c195a143d78f919d6626c3765acfd096fdfcf5166814f40d19a556f8007"
+        }
+      ],
+      "baseline_failure_artifact": ".artifacts/move-regression/candidate-1-fef965fb-b36e-4167-b9f6-023388bf5e90",
+      "baseline_initial_project_sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+      "fixture": {
+        "sphere_level": 6,
+        "camera": {
+          "yaw": 0.35,
+          "pitch": 0.18,
+          "distance": 4,
+          "target": [
+            0,
+            0,
+            0
+          ],
+          "vertical_fov_degrees": 40
+        },
+        "viewport": [
+          212,
+          57,
+          1153,
+          912
+        ],
+        "press": [
+          703.5,
+          483
+        ],
+        "screen_delta": [
+          180,
+          -80
+        ],
+        "radius": 0.037,
+        "strength": 0.79,
+        "symmetry_x": true,
+        "nearby_presses": [
+          [
+            695.5,
+            483
+          ],
+          [
+            711.5,
+            483
+          ],
+          [
+            703.5,
+            475
+          ],
+          [
+            703.5,
+            491
+          ]
+        ]
+      },
+      "gates": {
+        "minimum_original_point_displacement": 0.001,
+        "minimum_global_cross_over_longest_edge_squared": 0.1,
+        "maximum_adjacent_fold_degrees": 90,
+        "exact_one_vs_12_samples": true,
+        "exact_return_origin": true,
+        "exact_undo_redo": true
+      },
+      "result": {
+        "passed_tests": 2,
+        "failed_tests": 0,
+        "recorded": {
+          "maximum_original_displacement": 0.01155694,
+          "minimum_quality": 0.11126850080019754,
+          "maximum_fold_degrees": 69.96629153640524
+        },
+        "limits": "Four stronger range thresholds remain separately failed in the independent28-case audit; these tests establish only the declared1mm utility floor."
+      }
+    },
+    "final_test_literal_proof": {
+      "path": ".artifacts/move-build/test-literal-proof.json",
+      "bytes": 191,
+      "sha256": "0eee501ceb2dc0fdaeb1046ee2ec6c8f6fabd63cb905c0ef03e39422369277e6"
+    },
+    "final_source_note": "The frozen recorded-test receipt preceded a Clippy-only literal precision correction. Before and after literals have identical f32 bits; all twelve final Move tests pass within the final 156-test workspace run pinned by move-quality-build.json."
+  }
+}

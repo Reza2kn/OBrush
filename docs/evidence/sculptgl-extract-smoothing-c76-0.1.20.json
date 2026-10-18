@@ -1,0 +1,14 @@
+{
+  "feature": "optional closed-source extraction border smoothing",
+  "status": "paired closed-cube signed shell points within 9.22e-8 world units; broad extraction and SculptGL parity remain open",
+  "reference_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+  "parameters": {"threshold": 0.5, "thickness_world": [0, -0.125, 0.125], "selection": "whole incident faces", "surface_offset": true},
+  "source_sha256": {"extract_rs": "9d5ce810a1cea768f48e08382ca5af7639b371bc5d4daf0d5abef48afc170754", "mask_extract_test_rs": "c54b1f4fd56b0cc3bef3ea88e17f875cfa7ac20f2776bdb75f8bd58f25ffd8d0", "app_rs": "c7ca1e212b5341f5e4ab5ce5c541117e94df16ad8813e555b77d8dea8854ae2b", "browser_harness_mjs": "63b01d771997bd5c82c41441923e16404fb08f9baf4fba01229b6084ffa20d72"},
+  "paired_comparison": {"path": ".artifacts/sculptgl-reference-runtime/extract-c74-paired-52a94733-2e98-4317-b919-47c1da3075f3/paired-comparison-c76.json", "sha256": "d02e94907a56ed6d521c2872d4dcf7edefa508618e99361eac37c0ad30af342f", "cube_zero_max_nearest": 0, "cube_inward_max_nearest": 4.7706993203109864e-8, "cube_outward_max_nearest": 9.215859231988326e-8, "open_sheet_nonzero_reference_collapsed_triangles": 4, "obrush_open_sheet_nonzero_collapsed_triangles": 0},
+  "checks": {"format": "passed", "workspace_tests": "2356 passed, one ignored", "native_workspace_strict_clippy": "passed", "wasm_core_strict_clippy": "passed", "official_web_build": "passed", "official_macos_package_signature": "passed"},
+  "web_wasm_sha256": "69f0ab1d69ad26267505c872753a5611281b16af48bce305b2829f73474267dc",
+  "native_executable_sha256": "bb5f308e1660eaa7c5cfffbbf72757de6ea4465c42a63513078974435afeb7e6",
+  "browser_failed_harness": {"path": ".artifacts/mask-filter-browser/extraction-smooth-c76-9e723417-fcc7-41f1-80bf-24204cb79972/result.json", "sha256": "a241b2b60b0506b08262c4f8dd4c8154d9d2328cafe0c6065c42ff3a25f8ffe7", "reason": "positive-thickness volume has reference negative winding; initial new harness required positive"},
+  "browser_corrected": {"path": ".artifacts/mask-filter-browser/extraction-smooth-c76-fixed-8e2ca4f9-b92c-4e7f-834d-35697eea8426/result.json", "sha256": "483eec75a57be6c046f5cf7fc87c89d33ac22c2019230cc186e1c5b871d19fec", "status": "passed mask filter browser workflows", "cases": 13, "javascript_errors": 0, "exceptions": 0},
+  "limitations": ["Open-source sheet retains nonreference checked shell", "Complex masks, mixed quads, transformed and curved surfaces unverified", "No global self-intersection proof", "No physical stylus/native GUI test", "No million-vertex responsiveness claim", "WebGPU production integration still open"]
+}

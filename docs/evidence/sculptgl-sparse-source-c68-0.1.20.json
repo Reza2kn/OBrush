@@ -1,0 +1,320 @@
+{
+  "version": "0.1.20",
+  "change": "C68 sparse Source candidate rows replace one whole-position proposed clone; brush math/guard/history unchanged",
+  "code": [
+    {
+      "path": "crates/obrush-core/src/source_geometry.rs",
+      "bytes": 126551,
+      "sha256": "a33f3acf67cd5b1ac49719a242d044d972d33d4a154c04066061c0d27200f68d"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".artifacts/sculptgl-sparse-c68-stage/web-final/pkg/obrush_app_bg.wasm",
+      "bytes": 23225615,
+      "sha256": "206265dfe08b1bf671e8c52f60fba62b5fcbee7b959d8b3dcfe232cf44ee834a"
+    },
+    {
+      "path": ".artifacts/sculptgl-sparse-c68-stage/OBrush-C68.app/Contents/MacOS/OBrush",
+      "bytes": 26396448,
+      "sha256": "5e6cbe220c44e24cb1d0d5930f9ec47a8eee121578fab70f354d2a5dc61171ff"
+    }
+  ],
+  "checks": {
+    "cargo_fmt_check": "passed",
+    "workspace_groups": 77,
+    "workspace_passed": 2350,
+    "workspace_failed": 0,
+    "workspace_ignored": 1,
+    "native_strict_clippy": "passed",
+    "wasm_core_strict_clippy": "passed",
+    "official_web_build": "passed",
+    "official_macos_package": "passed"
+  },
+  "paired_exact": {
+    "million_vertex_five_dab_project": [
+      {
+        "path": ".artifacts/sculptgl-sparse-c68-stage/BASELINE_PROJECT.obrush",
+        "bytes": 367655252,
+        "sha256": "ce8847c9a9716f80a79b707ee10175067dc8bdd404590082f87015084d94ceb7"
+      },
+      {
+        "path": ".artifacts/sculptgl-sparse-c68-stage/CANDIDATE_PROJECT.obrush",
+        "bytes": 367655252,
+        "sha256": "ce8847c9a9716f80a79b707ee10175067dc8bdd404590082f87015084d94ceb7"
+      }
+    ],
+    "changed_vertices": 20470,
+    "eleven_tool_guard_cases": [
+      {
+        "case": 0,
+        "baseline": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/baseline-modes/case-00.obrush",
+          "bytes": 74889,
+          "sha256": "df9624bbf8edbac6856c7ca841e094687a2af93e1d67b4f868d594b0e242cb0e"
+        },
+        "candidate": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/candidate-modes/case-00.obrush",
+          "bytes": 74889,
+          "sha256": "df9624bbf8edbac6856c7ca841e094687a2af93e1d67b4f868d594b0e242cb0e"
+        }
+      },
+      {
+        "case": 1,
+        "baseline": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/baseline-modes/case-01.obrush",
+          "bytes": 74901,
+          "sha256": "8f7ef57d4eaa2f0321d78a5caa6ed07a2d48069a2dcecd49995a7865a0d2f8e6"
+        },
+        "candidate": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/candidate-modes/case-01.obrush",
+          "bytes": 74901,
+          "sha256": "8f7ef57d4eaa2f0321d78a5caa6ed07a2d48069a2dcecd49995a7865a0d2f8e6"
+        }
+      },
+      {
+        "case": 2,
+        "baseline": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/baseline-modes/case-02.obrush",
+          "bytes": 74879,
+          "sha256": "023ce3417f418737438d87e7e9db4f2ce9f79ccab2a5c99aebe92c800906b681"
+        },
+        "candidate": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/candidate-modes/case-02.obrush",
+          "bytes": 74879,
+          "sha256": "023ce3417f418737438d87e7e9db4f2ce9f79ccab2a5c99aebe92c800906b681"
+        }
+      },
+      {
+        "case": 3,
+        "baseline": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/baseline-modes/case-03.obrush",
+          "bytes": 74888,
+          "sha256": "ce185cd1a5a127b716693c1e980b5b2d1be6bd1f7adb2478e19348d2311cb089"
+        },
+        "candidate": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/candidate-modes/case-03.obrush",
+          "bytes": 74888,
+          "sha256": "ce185cd1a5a127b716693c1e980b5b2d1be6bd1f7adb2478e19348d2311cb089"
+        }
+      },
+      {
+        "case": 4,
+        "baseline": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/baseline-modes/case-04.obrush",
+          "bytes": 74885,
+          "sha256": "319104f188ce00bbb1f96d10d67424e7df72e517af36ced4f114a2182b421026"
+        },
+        "candidate": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/candidate-modes/case-04.obrush",
+          "bytes": 74885,
+          "sha256": "319104f188ce00bbb1f96d10d67424e7df72e517af36ced4f114a2182b421026"
+        }
+      },
+      {
+        "case": 5,
+        "baseline": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/baseline-modes/case-05.obrush",
+          "bytes": 74889,
+          "sha256": "3e9023307ce0dd8e17c428af8abf7c40a912e5e52e58a8208e5dbc9e8543ebe8"
+        },
+        "candidate": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/candidate-modes/case-05.obrush",
+          "bytes": 74889,
+          "sha256": "3e9023307ce0dd8e17c428af8abf7c40a912e5e52e58a8208e5dbc9e8543ebe8"
+        }
+      },
+      {
+        "case": 6,
+        "baseline": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/baseline-modes/case-06.obrush",
+          "bytes": 74876,
+          "sha256": "f70eca1ebb566a9853aa85ddc1a688cd7b169a2d74269a5037f4ac624776a003"
+        },
+        "candidate": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/candidate-modes/case-06.obrush",
+          "bytes": 74876,
+          "sha256": "f70eca1ebb566a9853aa85ddc1a688cd7b169a2d74269a5037f4ac624776a003"
+        }
+      },
+      {
+        "case": 7,
+        "baseline": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/baseline-modes/case-07.obrush",
+          "bytes": 74901,
+          "sha256": "f0f7e38d581d3a527c73f6da46a79ce4f14bcb424d8ea826320f5b9da75768f8"
+        },
+        "candidate": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/candidate-modes/case-07.obrush",
+          "bytes": 74901,
+          "sha256": "f0f7e38d581d3a527c73f6da46a79ce4f14bcb424d8ea826320f5b9da75768f8"
+        }
+      },
+      {
+        "case": 8,
+        "baseline": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/baseline-modes/case-08.obrush",
+          "bytes": 74828,
+          "sha256": "ba822ef85e0c62c6e8d1d7fe0059809726eab97f33c1dffe84e180ff2b0311fe"
+        },
+        "candidate": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/candidate-modes/case-08.obrush",
+          "bytes": 74828,
+          "sha256": "ba822ef85e0c62c6e8d1d7fe0059809726eab97f33c1dffe84e180ff2b0311fe"
+        }
+      },
+      {
+        "case": 9,
+        "baseline": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/baseline-modes/case-09.obrush",
+          "bytes": 74889,
+          "sha256": "df9624bbf8edbac6856c7ca841e094687a2af93e1d67b4f868d594b0e242cb0e"
+        },
+        "candidate": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/candidate-modes/case-09.obrush",
+          "bytes": 74889,
+          "sha256": "df9624bbf8edbac6856c7ca841e094687a2af93e1d67b4f868d594b0e242cb0e"
+        }
+      },
+      {
+        "case": 10,
+        "baseline": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/baseline-modes/case-10.obrush",
+          "bytes": 74885,
+          "sha256": "319104f188ce00bbb1f96d10d67424e7df72e517af36ced4f114a2182b421026"
+        },
+        "candidate": {
+          "path": ".artifacts/sculptgl-sparse-c68-stage/candidate-modes/case-10.obrush",
+          "bytes": 74885,
+          "sha256": "319104f188ce00bbb1f96d10d67424e7df72e517af36ced4f114a2182b421026"
+        }
+      }
+    ],
+    "limits": "Deterministic native outputs on independently authored fixtures; not reference brush parity or actual browser timing equality."
+  },
+  "browser": {
+    "result": {
+      "path": ".artifacts/sculptgl-host-runtime/c68-sparse-source-42f22cdd-7ec5-4973-99cc-07112a042de8/result.json",
+      "bytes": 10366414,
+      "sha256": "e718ecfb1505933615412898a2c0e59da5d4c6ff34ec3742636392c016309358"
+    },
+    "cases": 15,
+    "downloads": 58,
+    "gpu_checks": 58,
+    "status": "passed scoped local host gates; reference parity unverified",
+    "scope_limit": "Scoped normal host brush/undo checks, not complete Source parity."
+  },
+  "sustained_1m_60s": {
+    "protocol_sha256": "234870ed03a240931a22f421968917efaeed8becc1df834c998bbe3e9c101a33",
+    "driver": {
+      "path": ".artifacts/sculptgl-sparse-c68-stage/bench/workspace/large-perf-sustained.mjs",
+      "bytes": 13176,
+      "sha256": "72410b56525c59c6ed0215042ef327e655e3dd182c827c636c15cd160760bc85"
+    },
+    "runtime": {
+      "path": ".artifacts/sculptgl-sparse-c68-stage/bench/actual/SP-LONG00-1m-60s-root-788938a5-65db-49f2-9e96-bf14e0fa2534/result.json",
+      "bytes": 13711461,
+      "sha256": "ecec3e79df33e3649a051f76b90ff66bb7415b9761169c7bd2a9f9a13f319e7b"
+    },
+    "independent_audit": {
+      "path": ".artifacts/sculptgl-sparse-c68-stage/1M_60_AUDIT.json",
+      "bytes": 50118,
+      "sha256": "61b7ebb254c036a08a7ef510f01a9f900b7ef49703dd35b6e8869128ee89b9a2"
+    },
+    "status": "FAIL one or more named local data/scalar gates",
+    "failed_checks": [
+      "independentRAF_P95_le33_34ms",
+      "independentRAF_max_le250ms",
+      "appRAF_summed_CPU_P95_le16_667ms",
+      "Root_queue_zero_by100ms"
+    ],
+    "frame_cpu_p95_ms": 108.80000001192093,
+    "independent_raf_p95_ms": 109.30000001192093,
+    "independent_raf_max_ms": 434.89999997615814,
+    "delivered_pointer_moves": 668,
+    "changed_original_vertices": 40409,
+    "whole_project_history": true,
+    "memory_samples": 65,
+    "scope_limit": "Single run; C67 had different delivered/coalesced contacts. No controlled speedup or regression ratio."
+  },
+  "logs": [
+    {
+      "path": ".artifacts/sculptgl-sparse-c68-stage/BASELINE_PROFILE.log",
+      "bytes": 1285,
+      "sha256": "27dd18d72ec4058b15c7e58793322456af2974b6b4ec4d47dd470084fe30b55f"
+    },
+    {
+      "path": ".artifacts/sculptgl-sparse-c68-stage/CANDIDATE_PROFILE.log",
+      "bytes": 1226,
+      "sha256": "e537d7518129483de9f22ab87e327bec09e825adfbe0f79627632b9d118ccde1"
+    },
+    {
+      "path": ".artifacts/sculptgl-sparse-c68-stage/BASELINE_MODES.log",
+      "bytes": 1044,
+      "sha256": "52be784dd7fe7e0930a7e27506349f8160851adcda3219a4a01530ad7ca66c68"
+    },
+    {
+      "path": ".artifacts/sculptgl-sparse-c68-stage/CANDIDATE_MODES.log",
+      "bytes": 1047,
+      "sha256": "f31281396a48deb92ccb548a9d6d1eb59d37d445cfa05cc64e090ab72dcaf1a8"
+    },
+    {
+      "path": ".artifacts/sculptgl-sparse-c68-stage/WORKSPACE_TESTS.log",
+      "bytes": 227295,
+      "sha256": "9f72bd83d7f713145a46f6db33df39ee79453cf57ec0faaac2a1a021017b4272"
+    },
+    {
+      "path": ".artifacts/sculptgl-sparse-c68-stage/NATIVE_CLIPPY.log",
+      "bytes": 222,
+      "sha256": "d6c202d07907d23eb8d1bb8acc1397706568ced7b8773488493ceb2c54e8fb4d"
+    },
+    {
+      "path": ".artifacts/sculptgl-sparse-c68-stage/WASM_CLIPPY.log",
+      "bytes": 148,
+      "sha256": "91e3270c2f8bb256b2ef92029de0be9621812ae1844033ff42cd6b1fe8cb99cd"
+    },
+    {
+      "path": ".artifacts/sculptgl-sparse-c68-stage/WEB_BUILD.log",
+      "bytes": 279,
+      "sha256": "0c80a1a64ee20ee25e0e9f5aa5a880a58893ac50348d09aadb13590cc82cc4e6"
+    },
+    {
+      "path": ".artifacts/sculptgl-sparse-c68-stage/MACOS_PACKAGE.log",
+      "bytes": 407,
+      "sha256": "db6fb35f381a86118005dd7b8e1853e2203a44bba453c4727508ea4894126bd1"
+    },
+    {
+      "path": ".artifacts/sculptgl-sparse-c68-stage/BROWSER_HOST_BRUSHES.log",
+      "bytes": 3468,
+      "sha256": "267b5ea1aa72e139dfeed59a647358a6045591d800627cdbe5a2319e1217547a"
+    },
+    {
+      "path": ".artifacts/sculptgl-sparse-c68-stage/1M_60_RUNTIME.log",
+      "bytes": 414,
+      "sha256": "fef260007a3081632f99d8aaa8fdb2caf822b293e1a48e72921b0603384af03d"
+    },
+    {
+      "path": ".artifacts/sculptgl-sparse-c68-stage/1M_60_AUDIT.log",
+      "bytes": 438,
+      "sha256": "cfc0efa7d72ffe3d5de8326b68edd420ac420f133f1103a51272866134c076fd"
+    },
+    {
+      "path": ".artifacts/sculptgl-sparse-c68-stage/PRELIMINARY_FAILURES.json",
+      "bytes": 622,
+      "sha256": "23fe8732d98c623488a33773381c71701bc426d8611104fc1c8ec757d3a201a8"
+    }
+  ],
+  "open_gates": [
+    "Million-vertex 60-second responsiveness still fails four gates; 120-second C68 unrun.",
+    "Full native/browser Source brush semantics, reference comparison, physical input and SculptGL 317+5 workflows remain incomplete.",
+    "WebGPU point program still isolated from product deformation/document/history."
+  ],
+  "local_preview": {
+    "url": "http://127.0.0.1:8792/",
+    "server": "scripts/serve-web.py --port 8792",
+    "index_sha256": "2c50c5a2b7c30317c22f929683722beee408ef0ad766e57578b048a6a897af49",
+    "wasm_sha256": "206265dfe08b1bf671e8c52f60fba62b5fcbee7b959d8b3dcfe232cf44ee834a",
+    "served_bytes_equal_local": true,
+    "scope_limit": "HTTP route and bytes checked; owned-browser acceptance is recorded separately."
+  }
+}

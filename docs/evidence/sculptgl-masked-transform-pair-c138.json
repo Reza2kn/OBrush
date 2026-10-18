@@ -1,0 +1,356 @@
+{
+  "scope": "C138 paired pinned SculptGL Transform.end masked translation and affine results versus normal OBrush browser import and numeric controls; no family parity promotion",
+  "reference": {
+    "name": "SculptGL",
+    "commit": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "original_bundle": {
+      "path": ".tools/sculptgl-reference/host-mirror/sculptgl.js",
+      "sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+      "bytes": 471154
+    },
+    "mirror_manifest": {
+      "path": ".tools/sculptgl-reference/host-mirror/mirror-manifest.json",
+      "sha256": "7fa92424973f8450963821c2fc8680381fac23196e66865f273294deb50c4697",
+      "bytes": 12536
+    },
+    "source_transform": {
+      "path": ".tools/sculptgl-reference/upstream/src/editing/tools/Transform.js",
+      "sha256": "a7f0e55114cb2de2040b7f29cbb99af891aef02c56324bf02bf1b070516b8a70",
+      "bytes": 3035
+    },
+    "harness": {
+      "path": "scripts/check-sculptgl-reference.mjs",
+      "sha256": "c9f0aebc69f42e52c0d51bccb491becd009094da9d1067a2054bc92883a27ef8",
+      "bytes": 73877
+    },
+    "runtime_result": {
+      "path": ".artifacts/sculptgl-reference-runtime/transform-affine-c138-f74aea71-bb70-4e1b-8ba2-505df7a419ec/result.json",
+      "sha256": "2c609266ff86bb3f097f6addeafd9ac44962b4ab935244a4dad60fdf254d8b09",
+      "bytes": 111250
+    },
+    "status": "completed pinned Transform.end masked translation and affine runtime fixtures",
+    "cases": [
+      {
+        "name": "pinned-transform-end-mask-weighted-translation",
+        "kernel": {
+          "tool_index": 12,
+          "incoming_edit_matrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0.125,
+            0,
+            0,
+            1
+          ],
+          "selected_ids": [
+            96
+          ],
+          "final_edit_matrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ]
+        },
+        "statistics": {
+          "max_error": 5.21540641784668e-08,
+          "protected_exact": 1,
+          "partial": 6
+        },
+        "gates": {
+          "selected_one": true,
+          "tool_actual": true,
+          "edit_matrix_cleared": true,
+          "formula": true,
+          "protected_exact": true,
+          "partial": true,
+          "undo_exact": true,
+          "redo_exact": true
+        },
+        "before": {
+          "path": ".artifacts/sculptgl-reference-runtime/transform-affine-c138-f74aea71-bb70-4e1b-8ba2-505df7a419ec/masked-transform-before.json",
+          "sha256": "4a85a659baf9f929fa174c082ad74f8b39453816557eac3789a268de59d2f9f8",
+          "bytes": 4056
+        },
+        "after": {
+          "path": ".artifacts/sculptgl-reference-runtime/transform-affine-c138-f74aea71-bb70-4e1b-8ba2-505df7a419ec/masked-transform-after.json",
+          "sha256": "9763d887aa4fcaba3de78d8b4a1ca12c1aa1e7511f118db99d6223259b98a746",
+          "bytes": 4363
+        },
+        "undo": {
+          "path": ".artifacts/sculptgl-reference-runtime/transform-affine-c138-f74aea71-bb70-4e1b-8ba2-505df7a419ec/masked-transform-undo.json",
+          "sha256": "b9f4ddce88b50f43a0c1e32b41b882c58a59824561adf78641a310be1ccbadc2",
+          "bytes": 4056
+        },
+        "redo": {
+          "path": ".artifacts/sculptgl-reference-runtime/transform-affine-c138-f74aea71-bb70-4e1b-8ba2-505df7a419ec/masked-transform-redo.json",
+          "sha256": "9763d887aa4fcaba3de78d8b4a1ca12c1aa1e7511f118db99d6223259b98a746",
+          "bytes": 4363
+        }
+      },
+      {
+        "name": "pinned-transform-end-mask-weighted-affine",
+        "kernel": {
+          "tool_index": 12,
+          "incoming_edit_matrix": [
+            1.0445709228515625,
+            0.09138811379671097,
+            0.05495275557041168,
+            0,
+            -0.09750297665596008,
+            1.0376240015029907,
+            0.12778744101524353,
+            0,
+            -0.04318289831280708,
+            -0.13222962617874146,
+            1.0407451391220093,
+            0,
+            0.019999999552965164,
+            -0.014999999664723873,
+            0.009999999776482582,
+            1
+          ],
+          "final_edit_matrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ]
+        },
+        "statistics": {
+          "max_error": 5.960464477539063e-08,
+          "protected_exact": 1,
+          "partial": 6
+        },
+        "gates": {
+          "tool_actual": true,
+          "edit_matrix_cleared": true,
+          "formula": true,
+          "protected_exact": true,
+          "partial": true,
+          "undo_exact": true,
+          "redo_exact": true
+        },
+        "before": {
+          "path": ".artifacts/sculptgl-reference-runtime/transform-affine-c138-f74aea71-bb70-4e1b-8ba2-505df7a419ec/masked-affine-before.json",
+          "sha256": "2791613074f83c6101ed62f3ee31d967a9f9bee5d2d5e934c7479a2b73784888",
+          "bytes": 4058
+        },
+        "after": {
+          "path": ".artifacts/sculptgl-reference-runtime/transform-affine-c138-f74aea71-bb70-4e1b-8ba2-505df7a419ec/masked-affine-after.json",
+          "sha256": "15ccb5399e2c4f6a0c8d25a0b754ec5c5838dd30358ff7f0d6bc7c60cc11c961",
+          "bytes": 4767
+        },
+        "undo": {
+          "path": ".artifacts/sculptgl-reference-runtime/transform-affine-c138-f74aea71-bb70-4e1b-8ba2-505df7a419ec/masked-affine-undo.json",
+          "sha256": "f9ca4e26340ff8c78518224baf0e5c43f75cef79d27ae2d3a8a7913858225406",
+          "bytes": 4058
+        },
+        "redo": {
+          "path": ".artifacts/sculptgl-reference-runtime/transform-affine-c138-f74aea71-bb70-4e1b-8ba2-505df7a419ec/masked-affine-redo.json",
+          "sha256": "15ccb5399e2c4f6a0c8d25a0b754ec5c5838dd30358ff7f0d6bc7c60cc11c961",
+          "bytes": 4767
+        }
+      }
+    ],
+    "console_errors": 0,
+    "exceptions": 0
+  },
+  "fixture": {
+    "path": ".artifacts/sculptgl-reference-runtime/transform-affine-c138-f74aea71-bb70-4e1b-8ba2-505df7a419ec/independent-filter-cube.obj",
+    "sha256": "c9038e8adcbe5649273871feba73699753fa9abee0984575e14f41c9d610dde7",
+    "bytes": 252
+  },
+  "obrush": {
+    "wasm_sha256": "00bf0e27b5cb64c658764c6117577e7193dcbc701e9331cdbce2f5e04602423e",
+    "served_wasm_sha256": "00bf0e27b5cb64c658764c6117577e7193dcbc701e9331cdbce2f5e04602423e",
+    "harness": {
+      "path": "scripts/check-transforms.mjs",
+      "sha256": "0600d8c18f637ca47f20af5e1188fb0c7a51ebb985a7d43f2f9f1921c95cb196",
+      "bytes": 94834
+    },
+    "paired_result": {
+      "path": ".artifacts/transform-browser/paired-affine-c138-150a7625-57ca-4e4a-88a2-18c6719a2efe/result.json",
+      "sha256": "9ee4605d81cb16805789cfc633a2d2987363f0475f79fed712c6cb8fba9eecb8",
+      "bytes": 1631264
+    },
+    "status": "passed pinned SculptGL masked-transform paired browser fixtures",
+    "cases": [
+      {
+        "name": "paired-pinned-masked-translation",
+        "parameters": {
+          "translation": [
+            0.125,
+            0,
+            0
+          ],
+          "pivot_kind": "origin"
+        },
+        "comparison": {
+          "before_position_max": 0,
+          "after_position_max": 4.7149658177758624e-08,
+          "unprotected_weight_max": 2.0984268211954316e-08,
+          "protected_exact": 1,
+          "partial": 6,
+          "reference_to_obrush_vertex": [
+            0,
+            7,
+            3,
+            4,
+            5,
+            1,
+            2,
+            6
+          ]
+        },
+        "history": {
+          "undo_exact": true,
+          "redo_exact": true
+        },
+        "gates": {
+          "same_vertex_count": true,
+          "source_weights": true,
+          "source_input_positions": true,
+          "source_output_positions": true,
+          "protected_and_partial": true,
+          "history_exact": true
+        }
+      },
+      {
+        "name": "paired-pinned-masked-affine",
+        "parameters": {
+          "translation": [
+            0.02,
+            -0.015,
+            0.01
+          ],
+          "rotation_degrees": [
+            7,
+            -3,
+            5
+          ],
+          "scale": 1.05,
+          "pivot_kind": "origin"
+        },
+        "comparison": {
+          "before_position_max": 0,
+          "after_position_max": 1.658187867015215e-07,
+          "unprotected_weight_max": 2.0984268211954316e-08,
+          "protected_exact": 1,
+          "partial": 6,
+          "reference_to_obrush_vertex": [
+            0,
+            7,
+            3,
+            4,
+            5,
+            1,
+            2,
+            6
+          ]
+        },
+        "history": {
+          "undo_exact": true,
+          "redo_exact": true
+        },
+        "gates": {
+          "same_vertex_count": true,
+          "source_weights": true,
+          "source_input_positions": true,
+          "source_output_positions": true,
+          "protected_and_partial": true,
+          "history_exact": true
+        }
+      }
+    ],
+    "full_regression_result": {
+      "path": ".artifacts/transform-browser/full-regression-c138-a408836e-dac8-4260-aa9c-db249f7a3673/result.json",
+      "sha256": "18713ee4a4610771da252b732993b4e41430ffb4e958866c18f6fa5eadc3e034",
+      "bytes": 26563325
+    },
+    "full_regression_status": "passed twelve transform browser workflows",
+    "full_regression_cases": 12,
+    "full_regression_all_case_gates": true,
+    "js_errors": 0,
+    "gl_errors": 0,
+    "actual_4x_msaa": true
+  },
+  "failed_checks": [
+    {
+      "kind": "minified_constructor_name",
+      "failure": "Error: {\"exceptionId\":1,\"text\":\"Uncaught\",\"lineNumber\":0,\"columnNumber\":185,\"scriptId\":\"40\",\"stackTrace\":{\"callFrames\":[{\"functionName\":\"\",\"scriptId\":\"40\",\"url\":\"\",\"lineNumber\":0,\"columnNumber\":191},{\"functionName\":\"\",\"scriptId\":\"40\",\"url\":\"\",\"lineNumber\":0,\"columnNumber\":498}]},\"exception\":{\"type\":\"object\",\"subtype\":\"error\",\"className\":\"Error\",\"description\":\"Error: Current source tool is not Transform\\n    at <anonymous>:1:192\\n    at <anonymous>:1:499\",\"objectId\":\"5466050968354600702.2.2\"}}",
+      "result": {
+        "path": ".artifacts/sculptgl-reference-runtime/transform-mask-c138-1c3c1c12-7594-411d-b6ed-d19081ee025b/result.json",
+        "sha256": "a21146d999e6f5e5d3c488e028d747f7d776e289c421886ae28168d86d8d7ef9",
+        "bytes": 75253
+      }
+    },
+    {
+      "kind": "standalone_v6_harness_scene_assumption",
+      "failure": "Error: v5 has no scene",
+      "result": {
+        "path": ".artifacts/transform-browser/paired-mask-c138-3969c8f0-d26c-47ce-9692-51fd96d32032/result.json",
+        "sha256": "1565e2ed4964f6e9fad81ac8ca1faa465ca6e7b42558e77a4f702a1e4e0f2347",
+        "bytes": 291423
+      }
+    },
+    {
+      "kind": "unmapped_importer_vertex_order",
+      "failure": "Error: Transform case failed: paired-pinned-masked-translation",
+      "result": {
+        "path": ".artifacts/transform-browser/paired-mask-retry-c138-0760286d-37b6-411b-8e61-ab398fba4a01/result.json",
+        "sha256": "96bbe64e44f0e1432d074b06850081da26d6a9242765d2707556bcc49bc06fb9",
+        "bytes": 2020385
+      }
+    }
+  ],
+  "limits": [
+    "Reference edit matrices were diagnostically installed; no physical reference gizmo drag",
+    "One selected eight-vertex cube, translation and one XYZ rotation plus positive uniform scale",
+    "Importer vertices matched by unique original coordinates; topology/order/channel equivalence beyond this mapping not claimed",
+    "Native GUI, selected-group/posed-source reference runs, retained detail, nonuniform scale and sustained latency remain open"
+  ],
+  "prior_source_validation": {
+    "scope": "Unchanged C137 Rust core/browser build",
+    "report": "docs/SCULPTGL_MASKED_AFFINE_C137.md",
+    "evidence": {
+      "path": "docs/evidence/sculptgl-masked-affine-c137.json",
+      "sha256": "594e70040b03bf92de66be889de6e8b105d849b0de38436a345e13a91751de5b",
+      "bytes": 7715
+    }
+  }
+}

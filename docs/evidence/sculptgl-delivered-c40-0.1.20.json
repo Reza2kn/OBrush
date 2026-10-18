@@ -1,0 +1,306 @@
+{
+  "status": "Scoped delivered C40 read-only mirrored Paint cursor contacts; complete SculptGL/ZBrush parity not established",
+  "date_utc": "2026-10-15T18:28:11.370849+00:00",
+  "version": "0.1.20",
+  "parent": "C39",
+  "candidate_source_manifest_sha256": "e36a78e625873729d6301f7b79e5088a2bf5f6f56fcd58305ccbe1766eece607",
+  "release_source_manifest_sha256": "750ff90cecb95d409e11686e7863321671ff40863865c4ff17907e06c3812f13",
+  "build_sha256": "6791d5c64083b8a12d6078e81511b63b1f49d2f4e9b81b83a96d15e25508af9b",
+  "checked_receipt_sha256": "dafd9f2089f98ad6b287c776bdf1345a0691493ed3de0fc3387d8b643669ea88",
+  "wasm": {
+    "path": "pkg/obrush_app_bg.wasm",
+    "bytes": 23233234,
+    "sha256": "d1e71ed49b4fe78e8254866ea1324f63196a3ede9118cfc3043c20cc6685c96f"
+  },
+  "required_checks": {
+    "sha256": "659ad4ebdd5505bb81b56a5b7e80afe55bb5115ab593f2b838aed87161391334",
+    "five_checks_exit0": true,
+    "workspace_passed": 2254,
+    "core": 1557,
+    "app": 697,
+    "ignored": 1,
+    "scope": "cargo fmt, workspace tests, native strict Clippy, WASM all targets check and strict Clippy"
+  },
+  "official_builds": [
+    {
+      "key": "web",
+      "argv": [
+        "bash",
+        "scripts/build-web.sh"
+      ],
+      "exit_code": 0,
+      "seconds": 26.53050950000761,
+      "log": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.20-candidate40/web.log",
+      "log_sha256": "fdb36159135b4f7c3b27d45394264af7ce6fea029c9e517eb4cb4f46ed73030e",
+      "owned_process_closed": true
+    },
+    {
+      "key": "macos",
+      "argv": [
+        "bash",
+        "scripts/package-macos.sh"
+      ],
+      "exit_code": 0,
+      "seconds": 31.66586195799755,
+      "log": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.20-candidate40/macos.log",
+      "log_sha256": "2d01753bc0526d68e4df5e53b9e37dd7ce2fd0a2ff83f74180dbc13513bbfcdb",
+      "owned_process_closed": true
+    }
+  ],
+  "implementation": [
+    "Incrementally record exact local bounds during already budgeted sealed snapshot admission; preserve original single-query semantics and allocation limits",
+    "Two-query admission chooses compact index when both surface queries cannot fit original shared 8192face/triangle and4096node picking budget",
+    "Actual primary and mirrored local rays independently intersect sealed geometry; each hit has its own depth and projected point. No reflected-screen or reflected-first-hit substitute",
+    "Actual fixed-topology Paint captures immutable prepared geometry for cursor use across attribute-only revisions; current outside-stroke snapshot still requires actual publication identity",
+    "Hover preparation does not change document, alpha frames or history. Failed tracked mirror Paint clears stale contact diagnostics and rolls back whole history/frames",
+    "Ordinary Paint uses existing orange 2D circle and clipped projected dots; original Source oriented ring and shader/style remain open"
+  ],
+  "new_tests": [
+    "Independent literal triangles at different depths, actual hit tags and projection",
+    "Primary and mirror misses, stale clearing, symmetry off",
+    "Nonuniform reflected shear and distant affine coordinates",
+    "8192-triangle grid requires indexed preparation for two rays under unchanged shared caps",
+    "Invalid/nonfinite inputs refuse without fake contact fallback",
+    "Actual useful Paint retains same captured geometry across attributes, failure invalidates capture, whole Undo restores",
+    "Warm useful mirrored Paint failure restores whole document, alpha tracks and prior redo; contact diagnostics empty",
+    "Sealed bounds are incremental, exact and pad flat axes with independently calculated Source root rule"
+  ],
+  "browser_cursor": {
+    "result_sha256": "28b7710c7e7516d36114f1dca95ffd6078f9a120cfe32a976948762b60bda56e",
+    "audit_sha256": "f674de4b96ad53ece856d7dfd9830a447fd14a75b63361a25c3c977b215f03e0",
+    "fixture_sha256": "2599a5f4f148022cec30bb082406dc8b15b04321ba1b3b85f25a97af2e669286",
+    "actual_plan_sha256": "48358a2d1a74cc77f29997c2ad30858a38b2999342f48b88f1bf7d21238771b9",
+    "parameters": {
+      "case": "HU00",
+      "scope": "Normal public OBJ import and explicit U-mask conversion, Source Paint symmetryzeroOffset, independent two triangles at z0/.5, actual local mirrored contacts with no hover document/alpha/history effects and useful captured geometry Paint. No broad Source shader/appearance/GPU/native/physical/performance claim.",
+      "radius": 310,
+      "intensity": 0.25,
+      "hardness": 0.75,
+      "pressure_factors": 0,
+      "symmetry": true,
+      "relative_offset": 0,
+      "continuous": false,
+      "lock": false,
+      "input": "Fixed projected world[-.5,-.1,0], once-floored localpixels and48px horizontal endpoint; no search/outcome-dependent alternative",
+      "history": "Actual addcube/savefuture/undo beforehover; hover thenactualRedo/save identicalfuture/Undo original. Then useful Paint completeUndoRedo/quiet whole files. No unexposed historyfield assertions.",
+      "publication": "Actual mirrored localz.5 versus primary0; triangle identities0/1; shared original8192face/triangle4096node budgets; queryprepared beforestroke mustremaincaptured during useful attribute changes.",
+      "closure": "Registered root-only owned adapter expects exactlyone actualserver; old strictpaired helperunchanged",
+      "image": "Whole PNGs before/during/miss; independent orange-pixel checks at actual projecteddot positions planned; no cropped substitute or Source pixelmatch claim.",
+      "build_sha256": "6791d5c64083b8a12d6078e81511b63b1f49d2f4e9b81b83a96d15e25508af9b",
+      "source_manifest_sha256": "750ff90cecb95d409e11686e7863321671ff40863865c4ff17907e06c3812f13",
+      "wasm_sha256": "d1e71ed49b4fe78e8254866ea1324f63196a3ede9118cfc3043c20cc6685c96f",
+      "fixture_correction": {
+        "observed_failure": "HU00 all hover/no-doc/alpha/realpriorredo and captured geometry gates passed, but useful Paint gate timed out: radius300 selected0vertices while both current markers remained correct.",
+        "numerical_reason": "Actual radiusSquared0.5149955221694341 (radius~0.7176) versus nearest vertex distance0.7265404514 on sparse6vertex fixture. Radius310 keeps48px movement above spacing46.5 and places that vertex strictly inside, so the intended attribute-change lifetime is exercised.",
+        "retained": "Original run, complete120state observations, private active report, exact source/plan and whole screenshots retained; no product source, input point/endpoint, tolerance or cap change."
+      }
+    },
+    "contact_records": [
+      {
+        "clip": [
+          225,
+          57,
+          1249,
+          825
+        ],
+        "dots_submitted": 2,
+        "frame": {
+          "face_tests": 4,
+          "mirrored": {
+            "local": [
+              0.5023423194028378,
+              -0.09807635401784663,
+              0.5000000000002274
+            ],
+            "original_face": null,
+            "screen": [
+              947,
+              482,
+              0.9370750713278538
+            ],
+            "triangle": 1,
+            "world": [
+              0.5023423194028378,
+              -0.09807635401784663,
+              0.5000000000002274
+            ]
+          },
+          "plane": {
+            "normal": [
+              1,
+              0,
+              0
+            ],
+            "origin": [
+              0,
+              0,
+              0.25
+            ]
+          },
+          "primary": {
+            "local": [
+              -0.5023423194028378,
+              -0.09807635401784663,
+              0
+            ],
+            "original_face": null,
+            "screen": [
+              527,
+              482,
+              0.9373248998890631
+            ],
+            "triangle": 0,
+            "world": [
+              -0.5023423194028378,
+              -0.09807635401784663,
+              0
+            ]
+          },
+          "triangle_tests": 4
+        },
+        "input_screen": [
+          527,
+          482
+        ],
+        "radius": 310,
+        "revision": 5,
+        "scope": "Actual sealed active-surface picks; shared8192face/triangle4096node budget; projected markers only, Source oriented ring/shader/appearance remains unverified",
+        "status": "Completed read-only cursor contacts"
+      },
+      {
+        "clip": [
+          225,
+          57,
+          1249,
+          825
+        ],
+        "dots_submitted": 2,
+        "frame": {
+          "face_tests": 4,
+          "mirrored": {
+            "local": [
+              0.38752121782504634,
+              -0.09807635401784663,
+              0.5000000000002274
+            ],
+            "original_face": null,
+            "screen": [
+              899,
+              482,
+              0.9370750713278538
+            ],
+            "triangle": 1,
+            "world": [
+              0.38752121782504634,
+              -0.09807635401784663,
+              0.5000000000002274
+            ]
+          },
+          "plane": {
+            "normal": [
+              1,
+              0,
+              0
+            ],
+            "origin": [
+              0,
+              0,
+              0.25
+            ]
+          },
+          "primary": {
+            "local": [
+              -0.38752121782504634,
+              -0.09807635401784663,
+              0
+            ],
+            "original_face": null,
+            "screen": [
+              575,
+              482,
+              0.9373248998890631
+            ],
+            "triangle": 0,
+            "world": [
+              -0.38752121782504634,
+              -0.09807635401784663,
+              0
+            ]
+          },
+          "triangle_tests": 4
+        },
+        "input_screen": [
+          575,
+          482
+        ],
+        "radius": 310,
+        "revision": 8,
+        "scope": "Actual sealed active-surface picks; shared8192face/triangle4096node budget; projected markers only, Source oriented ring/shader/appearance remains unverified",
+        "status": "Completed read-only cursor contacts"
+      }
+    ],
+    "changed_vertices_during_Paint": 2,
+    "hover_document_revision_and_alpha_tracks_unchanged": true,
+    "real_prior_redo_preserved": true,
+    "whole_undo_redo_and32quiet_frames": true,
+    "miss_and_outside_cleared": true,
+    "raw_files": 136,
+    "whole_public_downloads": 10,
+    "actual_GUID_files_rehashed": 10,
+    "whole_pngs_reviewed": 3,
+    "pixel_observation": "During Paint, each projected dot has28 pixels different from same-camera same-saved-document background-miss image in its9x9 neighborhood. Exact RGB values retained. This is an OBrush marker visibility observation, not reference image parity.",
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_servers_closed": 1
+    },
+    "owned_PID_absence_verified": true
+  },
+  "paired_PM01_regression": {
+    "result_sha256": "b10389de49e30bc747c7b4735f0908ee625a287fb4030d1573622e3bf4d74e94",
+    "audit_sha256": "ee604f2ed0d809a4485c3c2403a0d50dca42660223bb2af956f41c6bc7eb61eb",
+    "whole_png_review_sha256": "fdbb85ec22aa2519a1d92595ce29d2ceea4f00ef35aec9cf191502a930a657e8",
+    "reference_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "parameters": "Unchanged parent PM01: independent6v2sheet SGL/gray4x4MeanRGB alpha;500px radius;.25intensity;.75hardness;.12relativeoffset;symmetryon;culling/Lock/continuousoff;pressurefactors0;DPR1;1024x768viewport;fixed[412,483] contact/+96px horizontal endpoint",
+    "changed_vertices_each": 4,
+    "all_own_RGB_RM_words_independently_exact": true,
+    "all32_alpha_frame_words_independently_exact_including_signedzero": true,
+    "paired_RGB_RM_word_differences": 0,
+    "paired_maximum": 0,
+    "original_envelope": 1e-06,
+    "whole_history_quiet_exact_each": true,
+    "raw_files": 136,
+    "whole_public_files": 10,
+    "whole_PNGs_reviewed": 2,
+    "cleanup": "Actual browser exit0,2servers closed,ownedPID absent",
+    "limits": "PM01 rerun only; prior C39 PM00 is historical, not a C40 execution. No full shader/image/render/reference cursor claim."
+  },
+  "promotion": {
+    "sha256": "6ac0b7a257ab55526450b91bb9fe1f2cb6f11a523775e8aef1f7a18708b997e4",
+    "exact_product_files": 377,
+    "replaced_backed_up": 6,
+    "new_source_files": 1,
+    "git_index_readme_agents_docs_unchanged_at_promotion": true
+  },
+  "preview": {
+    "url": "http://127.0.0.1:8805/",
+    "all19_HTTP_assets_sha256": "19e46d49eee179ee6b75878920a93dbbf96b94b44d62b59a1192a99b74df140b",
+    "server_session": 45309,
+    "previous8804_preserved": true
+  },
+  "preserved_failures": [
+    "Initial compile attempted serde derive without direct dependency; replaced explicit diagnostics Value, dependency graph unchanged",
+    "Initial cursor fixtures used private constructor then absent original-face table; preserved failed source/tests, independently authored SurfaceTopology fixture corrected",
+    "Initial HU00 radius300 passed hover/history/capture but sparse fixture selected no rows; actual failure and full raw evidence retained. Radius310-only derivative gives useful Paint without changing input contact, endpoint, caps or tolerance",
+    "Exploratory R>=235 orange threshold found0 due antialiasing; no numeric image threshold had been declared. Exact RGB patches and actual same-document marker/background differences retained instead"
+  ],
+  "limitations": [
+    "No full SculptGL317IDs+5family gates or ZBrush parity promotion",
+    "Source oriented cursor ring, shader/red styling, precise camera equality and GPU/image parity remain open",
+    "Snapshot unavailable before sealed admission or on shared budget exhaustion is explicit; brief post-stroke readiness gap possible",
+    "One independent identity-pose cursor browser fixture, plus PM01 static cold alpha/mirror regression; arbitrary poses/miss/pressure/high-density input cohorts remain unverified",
+    "Native application packaged/signed but unopened/uninstalled; physical pen/tablet behavior unverified",
+    "Synthetic pen pressure .25/.75 result remains historical C38 browser evidence; software support present, full native/device/driver pressure parity open",
+    "No fresh end-to-end latency/performance, HiDPI, dynamic/Lock cursor, warm browser alpha handoff or per-object/shared-tool mirror lifetime claim"
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "scope": "Selected contour over two transparent objects; diagnostic only",
+  "reference_revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+  "fixture": {
+    "path": ".artifacts/sculptgl-render-comparison-contract/source-ready/fixtures/transparent-overlap.sgl",
+    "sha256": "7e84bc57eae25e30f8b95af37d580cd2d9ffc48c6d96b26db0d73b28ecdbbab6",
+    "objects": 2,
+    "opacity_each": 0.5,
+    "selected_object_index": 1
+  },
+  "obrush_wasm_sha256": "b646dba6cd369658f45610e53c8c4db27a53fc31478fdca457bfea931a19bfb2",
+  "source_result": ".artifacts/contour-multipart-c125/source-1792281441884/result.json",
+  "obrush_result": ".artifacts/contour-multipart-c125/root-1792281450532/startup.json",
+  "source_matched_canvas": {
+    "result": ".artifacts/contour-multipart-c125/source-matched-1792281761166/result.json",
+    "canvas_pixels": [1140, 826],
+    "changed_pixels": 3821,
+    "contour_bbox_width_height": [474, 474],
+    "changed_pixels_per_bbox_perimeter": 2.015295358649789,
+    "off_on_png_sha256": ["c0bbd288bbfe997b379b806424f5175fc0f4acca15b47099b5b51a0a6ab39cd2", "171d8d8b81983be15d66d51a6988e8b43ef385a8b0a3cc22e6fc4ef95ee68d0d"]
+  },
+  "source_off_on_png_sha256": ["d578a7bd07c44fdac9f2c21db73dd7a93fcfb6f6510a90d5760e863f3c879512", "a187cc0df86632d8073492316986cc9ad760f0926f06710fbfcc2aa1f8f10a93"],
+  "obrush_off_on_png_sha256": ["55d9e94e2edace7fe770fe45f89c6521f6bef1de6915ccada0ace99b8c5a997f", "b2c34bdda13db0a2c413d097a9adb3a63606914cf5465ff932447688b5c458cd"],
+  "response": {
+    "method": "Per-host screenshot RGB off/on subtraction inside own viewport; changed pixels divided by selected-contour bounding-box rectangle perimeter",
+    "source_changed_pixels": 3993,
+    "source_bbox_width_height": [495, 496],
+    "source_pixels_per_perimeter": 2.0146316851664983,
+    "obrush_changed_pixels": 3867,
+    "obrush_bbox_width_height": [352, 391],
+    "obrush_pixels_per_perimeter": 2.6022880215343203,
+    "source_horizontal_edge_width_pixels_at_y430": 2,
+    "obrush_horizontal_edge_width_pixels_at_y430": 3,
+    "unselected_rear_edge_outside_changed_bbox": true
+  },
+  "obrush_saved_project_sha256_off_on_off": "bf3128aab946e333c4b55da3378b5f631e6691186775ca60e00e7647b5df3895",
+  "obrush_saved_project_bytes": 3709,
+  "dpr2_emulation": {
+    "status": "failed to reach right-panel checkbox; harness forced process DPR=1, so CDP override is not a product verdict",
+    "window_dpr": 2,
+    "css_viewport": [1600, 913],
+    "screenshot_pixels": [3200, 1826],
+    "canvas_backing_pixels": [1600, 913],
+    "retained_result": ".artifacts/contour-multipart-c125/root-dpr2-metrics-1792281558767/startup.json"
+  },
+  "dpr2_process": {
+    "source_result": ".artifacts/contour-multipart-c125/source-real-dpr2-1792281706062/result.json",
+    "obrush_result": ".artifacts/contour-multipart-c125/root-real-dpr2-corrected-1792281692913/startup.json",
+    "source_status": "PASS source off/on",
+    "obrush_status": "PASS imported two-part contour off/on/off and exact project preservation",
+    "obrush_css_viewport": [1600, 913],
+    "obrush_canvas_backing_pixels": [3200, 1826],
+    "source_canvas_backing_pixels": [1290, 873],
+    "screenshot_pixels_each": [3200, 1826],
+    "source_changed_pixels_per_bbox_perimeter": 5.9992447129909365,
+    "obrush_changed_pixels_per_bbox_perimeter": 2.502708192281652,
+    "source_off_on_png_sha256": ["bfc1a1cbcb7d66c5773802ba67ffd1b95e14b483c26e9b2be82630251e", "d850924060580150719921a22bf9ae629af8e1a76ecb53fb5460a7be6301e882"],
+    "obrush_off_on_png_sha256": ["ba52732fcde7747c85212504223e2d7cf99b946bf6d94adb247d3e9adccec056", "2241e1008f8f367177e33eb565c1745040ac36e18e5467c6bbd5c6a97e7fe714"],
+    "retained_failed_fixed_click_result": ".artifacts/contour-multipart-c125/root-real-dpr2-1792281670275/startup.json"
+  },
+  "limitations": ["different camera framing/material/AA even after matched DPR=1 canvas", "different DPR=2 canvas backing resolutions", "opaque occlusion not tested", "physical high-DPI display not tested", "full SculptGL parity open"]
+}

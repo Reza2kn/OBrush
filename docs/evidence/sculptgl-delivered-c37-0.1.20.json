@@ -1,0 +1,181 @@
+{
+  "status": "Delivered scoped help visibility fix; full SculptGL parity unverified",
+  "utc": "2026-10-15T12:23:13.803206+00:00",
+  "preview": "http://127.0.0.1:8802/",
+  "server_session": 24906,
+  "build_sha256": "7633c98eb349dfe164b2598dba944cfb46cff461c5f7bf6a4dfa1c54f6eabeed",
+  "source_manifest_sha256": "cb764dc924da9fa50e151aaa2a737a7400939f6b2f0a2438f6a09327bf2fd84a",
+  "source_checks_sha256": "e24cc9d2ca5989e4c6a10402509eaf945fedfc2b2e804b455a0e760794355a3c",
+  "required_checks": 5,
+  "workspace_tests": 2234,
+  "core_tests": 1553,
+  "app_tests": 681,
+  "ignored": 1,
+  "wasm": {
+    "path": "pkg/obrush_app_bg.wasm",
+    "bytes": 23190015,
+    "sha256": "fb70596dc10c1e9f5820af1ad3f1316b45c076c01b9b191a455112912dfe2ec6"
+  },
+  "all19_HTTP_sha256": "4bbcab367d3a725aaac6d297177d3af3478d97727938e44899a5ed38c5b5ac9a",
+  "promotion_sha256": "3bb9ea33d3d5742e0cdb9f4fbbcd6b4e3d43aaab38a43232bc423cdae6fb55d0",
+  "change": "Paint-specific restriction paragraph is rendered only for Paint in SculptGL mode. No geometry/math/input/renderer/IO/history code changes.",
+  "browser": {
+    "status": "PASS scoped C37 normal UI route, complete project/revision and whole-PNG review; one-server actual closure independently audited",
+    "actual_body_result_sha256": "f597d362d08ca3b0472f7ae7ebf1943bfc3ef0782765dcca0df5af0ac49da8c6",
+    "actual_harness_exit": 1,
+    "inherited_checker_failure_preserved": {
+      "label": "actual owned PID/closure admission",
+      "error": "Error: Owned closure evidence: Both actualowned servers closed\n    at need (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-c36-mirror-stage/source-ready/workspace/owned-closure-admission.mjs:3:33)\n    at ownedClosureAdmission (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-c36-mirror-stage/source-ready/workspace/owned-closure-admission.mjs:3:213)\n    at SmoothOwnedCdp.close (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-flatten-c36-mirror-stage/source-ready/workspace/smooth-owned.mjs:22:96)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-composite20-candidate37-geometry-help-stage/ROOT_BROWSER_HELP.mjs:19:13"
+    },
+    "why_separate_audit": "Root-only preregistered job served one product, not a paired reference job; original two-server closure checker unsuitable. No original paired case gate is changed or claimed. No browser replay.",
+    "one_server_actual_closure": {
+      "owned_pid": 62668,
+      "spawned_child_pid": 62668,
+      "at": "2026-10-15T12:20:05.592Z",
+      "exit_code": 0,
+      "signal": null,
+      "exit_events": [
+        {
+          "pid": 62668,
+          "code": 0,
+          "signal": null,
+          "at": "2026-10-15T12:20:05.592Z",
+          "phase": "Actual owned ChildProcess exit callback"
+        }
+      ],
+      "expected_servers": 1,
+      "actual_servers_closed": 1,
+      "query": {
+        "pid": 62668,
+        "outcome": "absent",
+        "error_code": "ESRCH",
+        "message": "Error: kill ESRCH"
+      }
+    },
+    "raw_records": 38,
+    "raw_bytes": 1757877,
+    "complete_downloads": 2,
+    "whole_project_identical": true,
+    "document_and_snapshot_revisions_unchanged": true,
+    "direct_history_state_observed": false,
+    "history_limitation": "Brush metrics do not expose a history field. Initial script compared two undefined values; that assertion is vacuous and is not counted. Whole public project and actual revision equality are the bounded UI regression gate.",
+    "screenshots": [
+      {
+        "side": "root",
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-composite20-candidate37-geometry-help-stage/browser-help-3e07d619-ff77-48ad-ac20-4c75932a6b0b/root-geometry help-shot1.png",
+        "bytes": 148853,
+        "sha256": "832589d98b5c24f27a24fe98686cccfa14427d7f9d872c03dde57356a5d21c03",
+        "original_label": "geometry help",
+        "owned_serial": 1,
+        "complete_identity": {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-composite20-candidate37-geometry-help-stage/browser-help-3e07d619-ff77-48ad-ac20-4c75932a6b0b/root-geometry help-shot1.png",
+          "kind": "complete-PNG",
+          "bytes": 148853,
+          "sha256": "832589d98b5c24f27a24fe98686cccfa14427d7f9d872c03dde57356a5d21c03",
+          "before": {
+            "dev": "16777231",
+            "ino": "87367360",
+            "bytes": 148853,
+            "mtime_ms": 1792066800752.1775
+          },
+          "deduplicated": false,
+          "after": {
+            "dev": "16777231",
+            "ino": "87367360",
+            "bytes": 148853,
+            "mtime_ms": 1792066800752.1775
+          }
+        },
+        "scope": "Complete ordinary browser surface; exact bytes retained, no crop/pixel substitute"
+      },
+      {
+        "side": "root",
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-composite20-candidate37-geometry-help-stage/browser-help-3e07d619-ff77-48ad-ac20-4c75932a6b0b/root-Paint help retained-shot2.png",
+        "bytes": 140334,
+        "sha256": "8d599ff3c2842c851ee74f0dfbd63f3ac250bff9f685464eff1618c6f2df5bdf",
+        "original_label": "Paint help retained",
+        "owned_serial": 2,
+        "complete_identity": {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-composite20-candidate37-geometry-help-stage/browser-help-3e07d619-ff77-48ad-ac20-4c75932a6b0b/root-Paint help retained-shot2.png",
+          "kind": "complete-PNG",
+          "bytes": 140334,
+          "sha256": "8d599ff3c2842c851ee74f0dfbd63f3ac250bff9f685464eff1618c6f2df5bdf",
+          "before": {
+            "dev": "16777231",
+            "ino": "87367405",
+            "bytes": 140334,
+            "mtime_ms": 1792066803200.6782
+          },
+          "deduplicated": false,
+          "after": {
+            "dev": "16777231",
+            "ino": "87367405",
+            "bytes": 140334,
+            "mtime_ms": 1792066803200.6782
+          }
+        },
+        "scope": "Complete ordinary browser surface; exact bytes retained, no crop/pixel substitute"
+      },
+      {
+        "side": "root",
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-composite20-candidate37-geometry-help-stage/browser-help-3e07d619-ff77-48ad-ac20-4c75932a6b0b/root-geometry help return-shot3.png",
+        "bytes": 148853,
+        "sha256": "832589d98b5c24f27a24fe98686cccfa14427d7f9d872c03dde57356a5d21c03",
+        "original_label": "geometry help return",
+        "owned_serial": 3,
+        "complete_identity": {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-composite20-candidate37-geometry-help-stage/browser-help-3e07d619-ff77-48ad-ac20-4c75932a6b0b/root-geometry help return-shot3.png",
+          "kind": "complete-PNG",
+          "bytes": 148853,
+          "sha256": "832589d98b5c24f27a24fe98686cccfa14427d7f9d872c03dde57356a5d21c03",
+          "before": {
+            "dev": "16777231",
+            "ino": "87367418",
+            "bytes": 148853,
+            "mtime_ms": 1792066805384.501
+          },
+          "deduplicated": true,
+          "canonical_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-composite20-candidate37-geometry-help-stage/browser-help-3e07d619-ff77-48ad-ac20-4c75932a6b0b/root-geometry help-shot1.png",
+          "after": {
+            "dev": "16777231",
+            "ino": "87367360",
+            "bytes": 148853,
+            "mtime_ms": 1792066800752.1775
+          },
+          "temporary_link_identity": {
+            "dev": "16777231",
+            "ino": "87367360",
+            "bytes": 148853,
+            "mtime_ms": 1792066800752.1775
+          },
+          "policy": "Atomic same-directory hardlink replacement of exact verified finalized owned duplicate; all actualGUID/named/PNG bytes/path remain"
+        },
+        "scope": "Complete ordinary browser surface; exact bytes retained, no crop/pixel substitute"
+      }
+    ],
+    "visual_review": {
+      "method": "view_image all3 whole uncropped PNGs",
+      "geometry_first": "Continuous ordinary Source followed immediately by Mask section; no Paint-specific restriction paragraph.",
+      "Paint": "Original Paint restriction paragraph visible below Continuous Source Paint.",
+      "geometry_return": "Same correct geometry transition after returning from Paint.",
+      "pixel_reference_parity_claimed": false
+    },
+    "build_sha256": "7633c98eb349dfe164b2598dba944cfb46cff461c5f7bf6a4dfa1c54f6eabeed",
+    "source_manifest_sha256": "cb764dc924da9fa50e151aaa2a737a7400939f6b2f0a2438f6a09327bf2fd84a",
+    "wasm_sha256": "fb70596dc10c1e9f5820af1ad3f1316b45c076c01b9b191a455112912dfe2ec6",
+    "scope": "One conditional help paragraph. No new feature/brush/GPU/reference/physical/performance/full parity claim."
+  },
+  "browser_audit_sha256": "b8bfbe5fcabfbb68863b4183cff36773d293607cf2122f5139c6d9826e2bb5fc",
+  "retained_failures": [
+    "Initial default sphere requires explicit mask conversion; original button correctly disabled.",
+    "Inherited paired closure checker required2servers for a root-only1server job; rawfailedchecker preserved, actual1server/PID/exitclosure separately validated without replay.",
+    "Initial JS history equality compared undefined; not counted. Only wholepublicfile and actualdocument/snapshotrevision equality are claimed for this copy route."
+  ],
+  "native_package": {
+    "scripts_passed": true,
+    "signature_verified": true,
+    "opened": false,
+    "installed": false
+  },
+  "remaining": "Full317+5 reference/appearance/lifecycle/nativephysical/pressure/longsession/performance gates and ZBrush target remain open."
+}

@@ -1,0 +1,665 @@
+{
+  "schema_version": 1,
+  "candidate": "C61 internal selected-normal GPU point program, not delivered backend",
+  "status": "Completed scoped current nativeMetal/browserWebGPU retained cache/whole-data/numerical/API checks; full objective active/unachieved",
+  "utc": "2026-10-16T21:56:32.870102+00:00",
+  "fixture": {
+    "vertices": 999002,
+    "original_faces": 1998000,
+    "triangles": 1998000,
+    "sha256": "dfb5316f62e392e633f03cb662dcb12215ed165a71a9ae72a3fd639528731afe"
+  },
+  "parameters": {
+    "center": [
+      0,
+      0,
+      1
+    ],
+    "radius": 0.5,
+    "intensity": 0.25,
+    "raw_U": 1,
+    "passes": 32,
+    "normal_policy": "Retained selected vertex means, incident original faces, descending static original-face rings"
+  },
+  "scalar_contract": "Exact existing private Rust updater comparison for partial/empty/duplicate selections and mixed tri/quads; complete independent current f64 replay for full1M and4smaller cases",
+  "GPU_f32_vs_f64": {
+    "positions": {
+      "different_words": 96433,
+      "different_rows": 38354,
+      "maximum_absolute_error": 8.471310138702393e-06,
+      "RMS_error": 1.3667943865679816e-07
+    },
+    "normal_u": {
+      "different_words": 122564,
+      "different_rows": 41090,
+      "maximum_absolute_error": 1.0369694791734219e-07,
+      "RMS_error": 1.2102758980585213e-09
+    },
+    "faces": {
+      "different_words": 240837,
+      "different_rows": 82034,
+      "maximum_absolute_error": 1.5015393728390336e-07,
+      "RMS_error": 2.0348910684370557e-09
+    },
+    "visited_different_vertices": 0,
+    "selected_field_direction": {
+      "defined_rows": 999002,
+      "maximum_degrees": 0.003741311422097671,
+      "P95_degrees": 1.2074182697257333e-06,
+      "zero_length_disposition_mismatches": 0
+    }
+  },
+  "actual_GPU_retained_cache_policy": {
+    "unvisited_vertex_rows": 957897,
+    "untouched_original_face_rows": 1914944,
+    "all_those_cache_words_unchanged": true,
+    "all_raw_U_words_unchanged": true
+  },
+  "retained_reference_rows_differing_from_fresh_whole_mean": 808,
+  "complete_native_browser_equal_files": [
+    {
+      "name": "after-current-selection.bin",
+      "native_sha256": "cfcdbb0cacfa2b05ec97b115ea8d602267c07d25fa82a8e89faf10041819e16c",
+      "browser_sha256": "cfcdbb0cacfa2b05ec97b115ea8d602267c07d25fa82a8e89faf10041819e16c",
+      "equal": true
+    },
+    {
+      "name": "after-face-cache.bin",
+      "native_sha256": "45a3e06082fcff859e97d4b4db4973ae722d0e3ec06d8cfda06cc661afce043b",
+      "browser_sha256": "45a3e06082fcff859e97d4b4db4973ae722d0e3ec06d8cfda06cc661afce043b",
+      "equal": true
+    },
+    {
+      "name": "after-normal-u.bin",
+      "native_sha256": "ef23faeb2735382f3caa0147c9ae07e4f1b4ebc4dbb8026e08f2dc11c5d225b3",
+      "browser_sha256": "ef23faeb2735382f3caa0147c9ae07e4f1b4ebc4dbb8026e08f2dc11c5d225b3",
+      "equal": true
+    },
+    {
+      "name": "after-positions.bin",
+      "native_sha256": "5260dc97dcdb6d3a962aebe7bb9b42f9707dd2fe290b84a312b2a6bc58ce6501",
+      "browser_sha256": "5260dc97dcdb6d3a962aebe7bb9b42f9707dd2fe290b84a312b2a6bc58ce6501",
+      "equal": true
+    },
+    {
+      "name": "after-visited.bin",
+      "native_sha256": "cfcdbb0cacfa2b05ec97b115ea8d602267c07d25fa82a8e89faf10041819e16c",
+      "browser_sha256": "cfcdbb0cacfa2b05ec97b115ea8d602267c07d25fa82a8e89faf10041819e16c",
+      "equal": true
+    },
+    {
+      "name": "after.png",
+      "native_sha256": "66ed13435dce51270958c59e586d4f960f78ce1cbfd3542b731e5a505aaaa761",
+      "browser_sha256": "66ed13435dce51270958c59e586d4f960f78ce1cbfd3542b731e5a505aaaa761",
+      "equal": true
+    },
+    {
+      "name": "before.png",
+      "native_sha256": "746edac710903c6246edaa40717e8bfba02540ec5ac5caca1067a1990df04756",
+      "browser_sha256": "746edac710903c6246edaa40717e8bfba02540ec5ac5caca1067a1990df04756",
+      "equal": true
+    },
+    {
+      "name": "cancel-face-cache.bin",
+      "native_sha256": "9d8dfdda3eabf2cf191537ed586bcb9da98adaa87e3e93bf9f5a59ddf6d487b8",
+      "browser_sha256": "9d8dfdda3eabf2cf191537ed586bcb9da98adaa87e3e93bf9f5a59ddf6d487b8",
+      "equal": true
+    },
+    {
+      "name": "cancel-normal-u.bin",
+      "native_sha256": "f37b2b6165e1924e1263559af7e5311417026024d0dfc90767de83a7aa70086c",
+      "browser_sha256": "f37b2b6165e1924e1263559af7e5311417026024d0dfc90767de83a7aa70086c",
+      "equal": true
+    },
+    {
+      "name": "cancel-positions.bin",
+      "native_sha256": "5329ecd436ff5a8224c491a6dbc3221ac56bdea6c31dc7c9c0db55cfc99fdedf",
+      "browser_sha256": "5329ecd436ff5a8224c491a6dbc3221ac56bdea6c31dc7c9c0db55cfc99fdedf",
+      "equal": true
+    },
+    {
+      "name": "cancel-visited.bin",
+      "native_sha256": "ec8346e1571f7a769bc46f5ea7ff0887ee7d92fa9202eb808a76f53292652e88",
+      "browser_sha256": "ec8346e1571f7a769bc46f5ea7ff0887ee7d92fa9202eb808a76f53292652e88",
+      "equal": true
+    },
+    {
+      "name": "cancel.png",
+      "native_sha256": "746edac710903c6246edaa40717e8bfba02540ec5ac5caca1067a1990df04756",
+      "browser_sha256": "746edac710903c6246edaa40717e8bfba02540ec5ac5caca1067a1990df04756",
+      "equal": true
+    },
+    {
+      "name": "input-colors.bin",
+      "native_sha256": "a949dccbb192d0672ec154e7ae42b74f824d4b36f08ed03fb884e5a4cce69a33",
+      "browser_sha256": "a949dccbb192d0672ec154e7ae42b74f824d4b36f08ed03fb884e5a4cce69a33",
+      "equal": true
+    },
+    {
+      "name": "input-face-cache.bin",
+      "native_sha256": "9d8dfdda3eabf2cf191537ed586bcb9da98adaa87e3e93bf9f5a59ddf6d487b8",
+      "browser_sha256": "9d8dfdda3eabf2cf191537ed586bcb9da98adaa87e3e93bf9f5a59ddf6d487b8",
+      "equal": true
+    },
+    {
+      "name": "input-face-headers.bin",
+      "native_sha256": "6ebb128edabdffed490b7b09a5694196a2f42afc9a24c672ad697f0cb8146f34",
+      "browser_sha256": "6ebb128edabdffed490b7b09a5694196a2f42afc9a24c672ad697f0cb8146f34",
+      "equal": true
+    },
+    {
+      "name": "input-normal-u.bin",
+      "native_sha256": "f37b2b6165e1924e1263559af7e5311417026024d0dfc90767de83a7aa70086c",
+      "browser_sha256": "f37b2b6165e1924e1263559af7e5311417026024d0dfc90767de83a7aa70086c",
+      "equal": true
+    },
+    {
+      "name": "input-positions.bin",
+      "native_sha256": "5329ecd436ff5a8224c491a6dbc3221ac56bdea6c31dc7c9c0db55cfc99fdedf",
+      "browser_sha256": "5329ecd436ff5a8224c491a6dbc3221ac56bdea6c31dc7c9c0db55cfc99fdedf",
+      "equal": true
+    },
+    {
+      "name": "input-ring-offsets.bin",
+      "native_sha256": "107b77bc1971983518c7b9582932efa49fe33e5597247098c2bf0d61ccbceec6",
+      "browser_sha256": "107b77bc1971983518c7b9582932efa49fe33e5597247098c2bf0d61ccbceec6",
+      "equal": true
+    },
+    {
+      "name": "input-rings.bin",
+      "native_sha256": "dfd2a468dba8b37e542da88f38872559d0f5072cdaafcb4a186172f7302db94d",
+      "browser_sha256": "dfd2a468dba8b37e542da88f38872559d0f5072cdaafcb4a186172f7302db94d",
+      "equal": true
+    },
+    {
+      "name": "input-triangles.bin",
+      "native_sha256": "6868117c2518b75383f8544575ca96263bbfeae515f6aa1bca10380b7532fa70",
+      "browser_sha256": "6868117c2518b75383f8544575ca96263bbfeae515f6aa1bca10380b7532fa70",
+      "equal": true
+    },
+    {
+      "name": "reference-face-cache.bin",
+      "native_sha256": "17191e395c0465ef784a731a4a382f85450e7805b3c76d99679787d264023f62",
+      "browser_sha256": "17191e395c0465ef784a731a4a382f85450e7805b3c76d99679787d264023f62",
+      "equal": true
+    },
+    {
+      "name": "reference-normal-u.bin",
+      "native_sha256": "7b8641448df0fb79325e6dd5c708cc93658c2054645ebee99ef1d366fe47415d",
+      "browser_sha256": "7b8641448df0fb79325e6dd5c708cc93658c2054645ebee99ef1d366fe47415d",
+      "equal": true
+    },
+    {
+      "name": "reference-positions.bin",
+      "native_sha256": "e7b686941d2f5d30f20a54ad994f42c7282461aaad08aa3ee3480fb9000e41fb",
+      "browser_sha256": "e7b686941d2f5d30f20a54ad994f42c7282461aaad08aa3ee3480fb9000e41fb",
+      "equal": true
+    },
+    {
+      "name": "reference-visited.bin",
+      "native_sha256": "cfcdbb0cacfa2b05ec97b115ea8d602267c07d25fa82a8e89faf10041819e16c",
+      "browser_sha256": "cfcdbb0cacfa2b05ec97b115ea8d602267c07d25fa82a8e89faf10041819e16c",
+      "equal": true
+    }
+  ],
+  "small_actual_GPU_cases": [
+    {
+      "side": "native",
+      "name": "fractional_mask",
+      "vertices": 162,
+      "quads": 0,
+      "independent_f64_replay_all_words_equal": true,
+      "policy": {
+        "unvisited_vertex_rows": 155,
+        "untouched_original_face_rows": 296,
+        "all_those_cache_words_unchanged": true,
+        "all_raw_U_words_unchanged": true
+      },
+      "errors": {
+        "positions": {
+          "different_words": 2,
+          "different_rows": 2,
+          "maximum_absolute_error": 1.8189894035458565e-11,
+          "RMS_error": 7.696116988542203e-13
+        },
+        "normal_u": {
+          "different_words": 7,
+          "different_rows": 7,
+          "maximum_absolute_error": 7.450580596923828e-09,
+          "RMS_error": 4.1768795182502575e-10
+        },
+        "faces": {
+          "different_words": 16,
+          "different_rows": 16,
+          "maximum_absolute_error": 7.450580596923828e-09,
+          "RMS_error": 3.748260016566531e-10
+        }
+      }
+    },
+    {
+      "side": "native",
+      "name": "negative",
+      "vertices": 162,
+      "quads": 0,
+      "independent_f64_replay_all_words_equal": true,
+      "policy": {
+        "unvisited_vertex_rows": 155,
+        "untouched_original_face_rows": 296,
+        "all_those_cache_words_unchanged": true,
+        "all_raw_U_words_unchanged": true
+      },
+      "errors": {
+        "positions": {
+          "different_words": 2,
+          "different_rows": 2,
+          "maximum_absolute_error": 7.275957614183426e-12,
+          "RMS_error": 3.812076082065617e-13
+        },
+        "normal_u": {
+          "different_words": 7,
+          "different_rows": 5,
+          "maximum_absolute_error": 7.450580596923828e-09,
+          "RMS_error": 5.944665771529951e-10
+        },
+        "faces": {
+          "different_words": 24,
+          "different_rows": 18,
+          "maximum_absolute_error": 7.450580596923828e-09,
+          "RMS_error": 5.423005064414868e-10
+        }
+      }
+    },
+    {
+      "side": "native",
+      "name": "mixed_quad_triangle",
+      "vertices": 8,
+      "quads": 1,
+      "independent_f64_replay_all_words_equal": true,
+      "policy": {
+        "unvisited_vertex_rows": 4,
+        "untouched_original_face_rows": 1,
+        "all_those_cache_words_unchanged": true,
+        "all_raw_U_words_unchanged": true
+      },
+      "errors": {
+        "positions": {
+          "different_words": 0,
+          "different_rows": 0,
+          "maximum_absolute_error": 0.0,
+          "RMS_error": 0.0
+        },
+        "normal_u": {
+          "different_words": 8,
+          "different_rows": 4,
+          "maximum_absolute_error": 2.9802322387695312e-08,
+          "RMS_error": 1.13300281209838e-08
+        },
+        "faces": {
+          "different_words": 3,
+          "different_rows": 2,
+          "maximum_absolute_error": 2.9802322387695312e-08,
+          "RMS_error": 1.2166747166629524e-08
+        }
+      }
+    },
+    {
+      "side": "native",
+      "name": "all_protected",
+      "vertices": 162,
+      "quads": 0,
+      "independent_f64_replay_all_words_equal": true,
+      "policy": {
+        "unvisited_vertex_rows": 155,
+        "untouched_original_face_rows": 296,
+        "all_those_cache_words_unchanged": true,
+        "all_raw_U_words_unchanged": true
+      },
+      "errors": {
+        "positions": {
+          "different_words": 0,
+          "different_rows": 0,
+          "maximum_absolute_error": 0.0,
+          "RMS_error": 0.0
+        },
+        "normal_u": {
+          "different_words": 8,
+          "different_rows": 7,
+          "maximum_absolute_error": 7.450580596923828e-09,
+          "RMS_error": 5.876708775564608e-10
+        },
+        "faces": {
+          "different_words": 8,
+          "different_rows": 8,
+          "maximum_absolute_error": 7.450580596923828e-09,
+          "RMS_error": 3.413037799970125e-10
+        }
+      }
+    },
+    {
+      "side": "browser",
+      "name": "fractional_mask",
+      "vertices": 162,
+      "quads": 0,
+      "independent_f64_replay_all_words_equal": true,
+      "policy": {
+        "unvisited_vertex_rows": 155,
+        "untouched_original_face_rows": 296,
+        "all_those_cache_words_unchanged": true,
+        "all_raw_U_words_unchanged": true
+      },
+      "errors": {
+        "positions": {
+          "different_words": 2,
+          "different_rows": 2,
+          "maximum_absolute_error": 1.8189894035458565e-11,
+          "RMS_error": 7.696116988542203e-13
+        },
+        "normal_u": {
+          "different_words": 7,
+          "different_rows": 7,
+          "maximum_absolute_error": 7.450580596923828e-09,
+          "RMS_error": 4.1768795182502575e-10
+        },
+        "faces": {
+          "different_words": 16,
+          "different_rows": 16,
+          "maximum_absolute_error": 7.450580596923828e-09,
+          "RMS_error": 3.748260016566531e-10
+        }
+      }
+    },
+    {
+      "side": "browser",
+      "name": "negative",
+      "vertices": 162,
+      "quads": 0,
+      "independent_f64_replay_all_words_equal": true,
+      "policy": {
+        "unvisited_vertex_rows": 155,
+        "untouched_original_face_rows": 296,
+        "all_those_cache_words_unchanged": true,
+        "all_raw_U_words_unchanged": true
+      },
+      "errors": {
+        "positions": {
+          "different_words": 2,
+          "different_rows": 2,
+          "maximum_absolute_error": 7.275957614183426e-12,
+          "RMS_error": 3.812076082065617e-13
+        },
+        "normal_u": {
+          "different_words": 7,
+          "different_rows": 5,
+          "maximum_absolute_error": 7.450580596923828e-09,
+          "RMS_error": 5.944665771529951e-10
+        },
+        "faces": {
+          "different_words": 24,
+          "different_rows": 18,
+          "maximum_absolute_error": 7.450580596923828e-09,
+          "RMS_error": 5.423005064414868e-10
+        }
+      }
+    },
+    {
+      "side": "browser",
+      "name": "mixed_quad_triangle",
+      "vertices": 8,
+      "quads": 1,
+      "independent_f64_replay_all_words_equal": true,
+      "policy": {
+        "unvisited_vertex_rows": 4,
+        "untouched_original_face_rows": 1,
+        "all_those_cache_words_unchanged": true,
+        "all_raw_U_words_unchanged": true
+      },
+      "errors": {
+        "positions": {
+          "different_words": 0,
+          "different_rows": 0,
+          "maximum_absolute_error": 0.0,
+          "RMS_error": 0.0
+        },
+        "normal_u": {
+          "different_words": 8,
+          "different_rows": 4,
+          "maximum_absolute_error": 2.9802322387695312e-08,
+          "RMS_error": 1.13300281209838e-08
+        },
+        "faces": {
+          "different_words": 3,
+          "different_rows": 2,
+          "maximum_absolute_error": 2.9802322387695312e-08,
+          "RMS_error": 1.2166747166629524e-08
+        }
+      }
+    },
+    {
+      "side": "browser",
+      "name": "all_protected",
+      "vertices": 162,
+      "quads": 0,
+      "independent_f64_replay_all_words_equal": true,
+      "policy": {
+        "unvisited_vertex_rows": 155,
+        "untouched_original_face_rows": 296,
+        "all_those_cache_words_unchanged": true,
+        "all_raw_U_words_unchanged": true
+      },
+      "errors": {
+        "positions": {
+          "different_words": 0,
+          "different_rows": 0,
+          "maximum_absolute_error": 0.0,
+          "RMS_error": 0.0
+        },
+        "normal_u": {
+          "different_words": 8,
+          "different_rows": 7,
+          "maximum_absolute_error": 7.450580596923828e-09,
+          "RMS_error": 5.876708775564608e-10
+        },
+        "faces": {
+          "different_words": 8,
+          "different_rows": 8,
+          "maximum_absolute_error": 7.450580596923828e-09,
+          "RMS_error": 3.413037799970125e-10
+        }
+      }
+    }
+  ],
+  "invalid_candidate_768_vertices_all_retained_words_unchanged": true,
+  "images": {
+    "native": {
+      "dimensions": [
+        512,
+        512
+      ],
+      "before_after_changed_pixels": 18787,
+      "cancel_all_pixels_equal": true
+    },
+    "browser": {
+      "dimensions": [
+        512,
+        512
+      ],
+      "before_after_changed_pixels": 18787,
+      "cancel_all_pixels_equal": true
+    }
+  },
+  "actual_GPU_API": {
+    "events": 1612,
+    "canonical_position_buffer": 2,
+    "retained_normal_u_buffer": 3,
+    "dispatches_before_draw": 192,
+    "all_shader_strings_and6stage_order_each32passes_verified": true,
+    "same_position_and_updated_normal_buffers_used_by_vertex_draw": true,
+    "no_intermediate_CPU_retained_geometry_cache_transfer": true,
+    "only_uniform_and_failure_word_uploads": true,
+    "all4_retained_checkpoint_and_restore_copies_verified": true
+  },
+  "quality_observation": {
+    "triangles": 1998000,
+    "nonfinite_values": 0,
+    "zero_area_triangles": 0,
+    "reversed_relative_to_original": 0,
+    "minimum_area_squared": 3.845442928811393e-15
+  },
+  "resources": {
+    "fixed_GPU_bytes": 241857432,
+    "peak_one_largest_readback_bytes": 265833432,
+    "GPU_cap_bytes": 268435456,
+    "CPU_snapshot_cap_bytes": 134217728,
+    "max_allowed_snapshot_upper_bytes": 132000004,
+    "scope": "Explicit application buffer/texture accounting per viewport, not actualVRAM/RSS/process/aggregate scene qualification"
+  },
+  "checks": {
+    "runtime_tests": 2352,
+    "compile_fail_doctests": 2,
+    "ignored": 1,
+    "required_workspace_native_WASM_checks": "All5 PASS",
+    "GPU_crate_native_WASM_all_target_Clippy_fmt": "PASS",
+    "official_default_app_web_macos_scripts": "PASS",
+    "native_default_app_ad_hoc_signature": "PASS",
+    "default_browser_smoke": "PASS40962V/81920T startup/upload/render only"
+  },
+  "evidence": [
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/PREREGISTRATION.json",
+      "bytes": 2278,
+      "sha256": "4b4037b671bec2a4fbda1cfab3d9e307baf5655533bc8125307b07aa3b4eeb49"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/SOURCE_PRECHECK02.json",
+      "bytes": 94780,
+      "sha256": "68a8229e7ee97887c77edf023382f2f0193f9885a3f263afd3c44798b1debaaa"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/PROTOTYPE_BUILD_BINDING01.json",
+      "bytes": 1397,
+      "sha256": "e05372b32c274214b3dce1850a8ad93f391afcaa3271b9ac67752ac0ea7b011a"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/BROWSER_BINDING01.json",
+      "bytes": 1168,
+      "sha256": "1a1e3c9e6a90c5b31d1ed70e24e3c7f33b1f670190d8e68117dc4efcbc18443c"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/RELEASE_IDENTITY02.json",
+      "bytes": 841,
+      "sha256": "095a792ab614b53eb3af58917a577f4a118f283026546e9c0f05375a4a8fd3df"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/FINAL_CHECKED_RECEIPT.json",
+      "bytes": 11461,
+      "sha256": "f5b8f6410a2ca3ba83395f36a3775010d172da4dc9183dcbf1b523160e95078c"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/SOURCE_CHECKS02.json",
+      "bytes": 2060,
+      "sha256": "68650b93732aadb6a4f8902a9b19bc8a0acd3020af38f1b749a485f04559c0d6"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/OFFICIAL_BUILDS02.json",
+      "bytes": 1110,
+      "sha256": "5096e5cfa5daaf2f763a8b26db8f7331de971bf15dea1269a19aeffd499ecb6d"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/WHOLE_AUDIT02.json",
+      "bytes": 17257,
+      "sha256": "2dc00be129ed9945186b9744f4dedb86d884fc25776e4503a1533a42ce7c1a63"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/AUDIT_SELECTED_NORMALS02.py",
+      "bytes": 20527,
+      "sha256": "5f4a1c70d7418b923e4d3122a7932536cad2d80faa9acdebba1f5e54dcb1d76a"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/VISUAL_REVIEW01.json",
+      "bytes": 1159,
+      "sha256": "2dd5a283203d9a002e5e27d1b59ac6c1563612d3e5607581d97c8980bc83f094"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/MEMORY_DESIGN01.json",
+      "bytes": 1266,
+      "sha256": "b03815f254d2cfa7d1099ea3cea4480c31e0fb133860b0d47558e9d8c38c3543"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/native01/result.json",
+      "bytes": 412524,
+      "sha256": "161eaea16474979e9f6a75dda843a64bdcab15cee7c098cca7ec0f673c3799d6"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/browser01/result.json",
+      "bytes": 1121414,
+      "sha256": "1ea4ed64801b46e224254a133c89450c5eae99480bd87a4ff8b6d9f978432518"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/browser01/actual-gpu-api-trace.json",
+      "bytes": 293613,
+      "sha256": "eb7d60e8b7cf06f5c00fed3fe6a32509a99c38b5873dc39f4b2953f648905898"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/browser01/whole-browser.png",
+      "bytes": 99360,
+      "sha256": "dc5472caf867c5e61e5f47dce6d163e4d0b59daa1b4feb61acf55ccfc9b65565"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/default-app-smoke01/result.json",
+      "bytes": 7921,
+      "sha256": "ef9a5e5609ba3fd55f0ae02e9dd0df20f4b2e50bf32652c22f8a86629be9c708"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/native-app-signature01.log",
+      "bytes": 219,
+      "sha256": "b8b12cab8b5d5e589b60993ea49f6ae02d6482b6fd656789fde76f8dcc73f631"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/CLIPPY_REPAIR01.json",
+      "bytes": 426,
+      "sha256": "635ffaefde9bc97d14dac3a1bfb57212c1711f5fd20ed03a98d67cff5ff5ee9b"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/SOURCE_CHECKS01.json",
+      "bytes": 1191,
+      "sha256": "dd6fece2e96307074b19fe0b3feca06ed75a50ebd3ad535756e2c2eec0d1ae4f"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/core-tests01.log",
+      "bytes": 1684,
+      "sha256": "457a8775bdafc8c526d2264945dc8be7fe18f7680309fb1d048e9325a9fa8a16"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/core-tests02.log",
+      "bytes": 2314,
+      "sha256": "2e3c55d0c5e4409bb759a471a0fb9539e1b513f2539d623ed85dc7d443c47c66"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-selected-normals-c61-stage/gpu-native-build02.log",
+      "bytes": 573,
+      "sha256": "9151feea11df77c200fc21a0786caa7652a7ddc7ec9e821953646ee3a732ed95"
+    }
+  ],
+  "failed_checks_preserved": [
+    "Independent mixed-face fixture initially used legacy OBJ triangulation; replaced fixture with explicit canonical mixed geometry/metadata, kept expected contract",
+    "Diagnostic JSON macro expression repaired",
+    "Test-only constant assertion moved to const block for strict Clippy; release binaries verified literal tested versions"
+  ],
+  "delivered_main": "C58 unchanged; no GPU frontend/picking/document-history/ordinary brush backend promotion",
+  "original_inventory": "317stable IDs+5hosted controls/gates unchanged, no family signoff",
+  "limits": [
+    "Point radial selection is not full Source first-touch proxy/ordered contact/culling/alpha/mirror/guard/history/frontend behavior",
+    "No original60/120s timing/performance gate closed; no production speedup claim",
+    "GPU f32 arithmetic differs from f64; matching cache sets/order does not establish numerical parity",
+    "No global intersection, pen, all-device or injected device-loss qualification",
+    "Explicit memory bytes are application resource accounting, not driver/RSS/process/aggregate-scene qualification",
+    "Default app smoke is startup/render only; native GUI unopened/uninstalled",
+    "No complete ordinary Source brush/proxy/contact/culling/alpha/mirror/guards/history/frontend integration or original performance gate promotion"
+  ],
+  "next": [
+    "Use shared GPU buffers in actual viewport surface presentation and full renderer behavior",
+    "Resolve f32/f64 numerical policy and implement current-surface picking/full brush/control semantics with CPU fallback",
+    "Add explicit canonical document, claim, synchronization, undo/export and device-loss contracts",
+    "Retest full normal20/CW03/HP01/reference/interchange and original complete60/120s interaction/performance matrix before delivery"
+  ]
+}

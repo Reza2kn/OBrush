@@ -1,0 +1,222 @@
+{
+  "version": "0.1.11",
+  "recorded_at_utc": "2026-10-13T17:47:03.843722+00:00",
+  "status": "Final corrected source/build checks and eight scoped browser workflows pass; ZBrush parity/nativeGUI remain unverified",
+  "git": "Unborn main",
+  "test_totals": {
+    "core": 247,
+    "app": 35,
+    "total": 282
+  },
+  "checks": [
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791913185.308209,
+      "end_epoch": 1791913185.553529,
+      "log": {
+        "path": ".artifacts/transform-build/validation-83bf579e-de0c-4395-9d7c-9d2a5564efe6/fmt.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "tests",
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--workspace"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791913185.5539598,
+      "end_epoch": 1791913330.313262,
+      "log": {
+        "path": ".artifacts/transform-build/validation-83bf579e-de0c-4395-9d7c-9d2a5564efe6/tests.log",
+        "bytes": 27866,
+        "sha256": "2f0e1f1dc94b9bccb26e6c07f188bac5f0b5869c1c0ef00d24d8ca1d53926b2c"
+      }
+    },
+    {
+      "name": "clippy-native",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--workspace",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791913330.313643,
+      "end_epoch": 1791913333.158963,
+      "log": {
+        "path": ".artifacts/transform-build/validation-83bf579e-de0c-4395-9d7c-9d2a5564efe6/clippy-native.log",
+        "bytes": 222,
+        "sha256": "68ecd14ca045c59e306c8e5a6f2a88709853552fa68bd25aaade4e07f65a2465"
+      }
+    },
+    {
+      "name": "clippy-wasm",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "-p",
+        "obrush-app",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791913333.159287,
+      "end_epoch": 1791913334.5998762,
+      "log": {
+        "path": ".artifacts/transform-build/validation-83bf579e-de0c-4395-9d7c-9d2a5564efe6/clippy-wasm.log",
+        "bytes": 222,
+        "sha256": "8f6337b9038f077725c5875bff7aecc915d091733b91888d652eca55fe47f3e9"
+      }
+    },
+    {
+      "name": "core-wasm",
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "-p",
+        "obrush-core",
+        "--target",
+        "wasm32-unknown-unknown"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791913334.600245,
+      "end_epoch": 1791913334.752248,
+      "log": {
+        "path": ".artifacts/transform-build/validation-83bf579e-de0c-4395-9d7c-9d2a5564efe6/core-wasm.log",
+        "bytes": 72,
+        "sha256": "a41051563a4cb5fc1b1bcdd9aa0ba28ca80f7736d629d90cc138218756e8e3a9"
+      }
+    },
+    {
+      "name": "web-build",
+      "command": [
+        "bash",
+        "scripts/build-web.sh"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791913334.752667,
+      "end_epoch": 1791913340.5886872,
+      "log": {
+        "path": ".artifacts/transform-build/validation-83bf579e-de0c-4395-9d7c-9d2a5564efe6/web-build.log",
+        "bytes": 278,
+        "sha256": "4bb0decf1331acc511312f7677f01a2c13ec71be14b24b695fa53019be461af5"
+      }
+    },
+    {
+      "name": "native-package",
+      "command": [
+        "bash",
+        "scripts/package-macos.sh"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791913340.589204,
+      "end_epoch": 1791913347.82579,
+      "log": {
+        "path": ".artifacts/transform-build/validation-83bf579e-de0c-4395-9d7c-9d2a5564efe6/native-package.log",
+        "bytes": 406,
+        "sha256": "74def69d65033e40b3bb3031419c98f8323f3beabadae08eb05d96ed3ae2ccb2"
+      }
+    }
+  ],
+  "source_manifest": {
+    "path": ".artifacts/transform-release-0.1.11-final/source-manifest.json",
+    "bytes": 12809,
+    "sha256": "c9789e17a89b50a2be346fad7e9f2f57f634fd017dce1fcca04c899a70bfc493"
+  },
+  "artifacts": {
+    "wasm": {
+      "path": ".artifacts/transform-release-0.1.11-final/web/pkg/obrush_app_bg.wasm",
+      "bytes": 4152477,
+      "sha256": "9b4d6c1c826dda9a18e13ade0876222fa4f915c95342295a41953e2157d0ab1d"
+    },
+    "native": {
+      "path": ".artifacts/transform-release-0.1.11-final/OBrush.app/Contents/MacOS/OBrush",
+      "bytes": 7093056,
+      "sha256": "de34a0b4dcf11a8e632338a429dd1980c7c52833dc688fc1b35ea95fcc84f271"
+    }
+  },
+  "tools": {
+    "wasm_bindgen": "0.2.129"
+  },
+  "limitations": [
+    "No reference transform fixture executed",
+    "Native GUI and physical devices not exercised",
+    "Nonuniform/masked/multi-object transforms, persistent pivots, deformers and Stager remain gaps",
+    "Capacity caps are not real-time or peak-memory guarantees"
+  ],
+  "schema_version": 1,
+  "frozen_build_record": {
+    "path": ".artifacts/transform-release-0.1.11-final/build-record.json",
+    "bytes": 4876,
+    "sha256": "4864c81a75839219b2e420b3e5993b1b3de44c1d627601bc9430819802fff3b7"
+  },
+  "runtime_receipt": {
+    "path": "docs/evidence/transforms-browser.json",
+    "bytes": 40335,
+    "sha256": "351d077a8894b2480ee4b648b5c8e9695cbfab60aee7b8d5ed717b92c32de50e"
+  },
+  "core_receipt": {
+    "path": "docs/evidence/transforms-core.json",
+    "bytes": 27847,
+    "sha256": "9a0c7c3a31319401b0dca721f0741208e904c875af1c1219312de2761737294b"
+  },
+  "retained_pre_correction_build": {
+    "path": ".artifacts/transform-build/validation-5021f7a9-afab-4769-bad1-2c83d6a812d0/pre-correction-record.json",
+    "bytes": 4025,
+    "sha256": "bd24cf70185175a3d627da91169d73b3385be689cbff24505dff4e1925a2a7f8"
+  },
+  "intermediate_correctness_runtime": {
+    "raw": {
+      "path": ".artifacts/transform-browser/candidate-boundary-0a536958-7b6f-4d2c-ac4e-24e544d36a2e/result.json",
+      "bytes": 3748433,
+      "sha256": "30e116caf2cbe81a9899cb45cb2c4a6783019263099cae2bcf2f612085e27639"
+    },
+    "summary": {
+      "path": ".artifacts/transform-browser/candidate-boundary-0a536958-7b6f-4d2c-ac4e-24e544d36a2e/summary.json",
+      "bytes": 35498,
+      "sha256": "901b6c927491dd0585f2c82e02380a5a719c8bd758475e56a39c66622c0161a2"
+    },
+    "note": "All43gates passed before the later coarse-level rounded-away transform correction; final runtime and final expanded tests are separately bound."
+  },
+  "consumer_deployment_verification": {
+    "receipt": {
+      "path": ".artifacts/transform-build/deployment-verification-373.json",
+      "bytes": 51901,
+      "sha256": "cc2fc4f1674a9c9a399d040386778a4fec304d75736a0ab33cb7db53d8cc604d"
+    },
+    "passed_checks": 373,
+    "checks_include": [
+      "Current and frozen source/receipt hashes",
+      "Exact current/frozen web files and bytes served at localhost8787",
+      "Current/frozen macOS version0.1.11 and ad-hoc signatures",
+      "Both original supplied user files unchanged"
+    ],
+    "scope": "Read-only HTTP asset identity plus frozen isolated browser execution; no user browser reload or native GUI launch"
+  },
+  "document_links": {
+    "path": ".artifacts/transform-build/document-links.json",
+    "bytes": 87,
+    "sha256": "9111dbe4526fb12c553d1065b6f527b80db14c61b94d5ecd9d62bb0baac9c09c"
+  }
+}

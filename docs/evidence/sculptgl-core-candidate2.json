@@ -1,0 +1,72 @@
+{
+  "status": "Scoped foundations and completed checks; full SculptGL and ZBrush parity remains open",
+  "source_manifest": {
+    "path": ".artifacts/sculptgl-release-0.1.16-candidate2/source-manifest.json",
+    "bytes": 19790,
+    "sha256": "6dfb7a028430577a3a7b0d62e513a50178e1c36c98530e208b132285fbb62f8e"
+  },
+  "build_record": {
+    "path": ".artifacts/sculptgl-release-0.1.16-candidate2/build-record.json",
+    "bytes": 8057,
+    "sha256": "34b14d67ddfc854d1c4a7040f27534d84d8d87e2748c48518b1654b3072bee90"
+  },
+  "test_data_companion": {
+    "path": ".artifacts/sculptgl-release-0.1.16-candidate2-test-data/manifest.json",
+    "bytes": 2398,
+    "sha256": "f060339115fc9a187bf7937ee3fc8b13386e02f67d712344594238fac9bb0d8f"
+  },
+  "workspace": {
+    "core_passed": 703,
+    "app_passed": 82,
+    "total_passed": 785,
+    "ignored_baseline_generator": 1
+  },
+  "browser_receipts": [
+    {
+      "path": "docs/evidence/sculptgl-obj-return-candidate2.json",
+      "bytes": 225525,
+      "sha256": "f500f583b490bed3aa3f8a57137ade279a8a00130b9c5f02bdbe3b632632044c"
+    },
+    {
+      "path": "docs/evidence/sculptgl-paint-static-candidate2.json",
+      "bytes": 1513647,
+      "sha256": "b358da9aff4a76f60d8d5e64f93d2b3f51c2c091c4a7cda8cc6f5f62eb81f4cb"
+    },
+    {
+      "path": "docs/evidence/sculptgl-cancel-completion-candidate2.json",
+      "bytes": 365056,
+      "sha256": "9e391471ec0eca45f3d757e73fb0d264c65293a9e602ba5bfefdeae8372f7d0a"
+    }
+  ],
+  "isolated_provenance": [
+    {
+      "path": ".artifacts/sculptgl-paint-stage/final-receipt.json",
+      "bytes": 6471,
+      "sha256": "aaeee9ade397ea1da40514167bb18f266fe5d17a0a46a2187000f8cb8dfd742b"
+    },
+    {
+      "path": ".artifacts/sculptgl-static-subdivision-stage/receipt.json",
+      "bytes": 6776,
+      "sha256": "918f93f8b823e73209857384e6b62a9e3b258702ed57b740fe56c3347964d805"
+    }
+  ],
+  "promotions": [
+    {
+      "path": ".artifacts/sculptgl-paint-promotion/receipt.json",
+      "bytes": 2231,
+      "sha256": "cf18292dd1ba3028297d20eaf9c855b80b56046a39b967eb4a3731bd0ce01156"
+    },
+    {
+      "path": ".artifacts/sculptgl-static-promotion/receipt.json",
+      "bytes": 1322,
+      "sha256": "2a42556a0c28e58bfddc7547debbdf251b91098b2bbe23c86814c1b35606702c"
+    }
+  ],
+  "limitations": [
+    "Immediate Escape GPU equality fails in two retained records; separate acknowledged cancellation passes, no timing equivalence claim",
+    "Source brush response, complete renderer/topology/scene/UI workflows and full native/browser matrix remain unverified",
+    "One-mesh OBJ consumer combines object declarations and reports group/MTL/UV limitations",
+    "Static fine-detail transport is world-offset, not source tangent-frame synthesis",
+    "Native GUI, physical tablet/touch and paired reference quality/performance not established"
+  ]
+}

@@ -1,0 +1,206 @@
+{
+  "scope": "C137 opt-in selected-group mask-weighted numeric rotation and uniform scale; no SculptGL or ZBrush parity promotion",
+  "reference": {
+    "name": "SculptGL",
+    "commit": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "source_file": ".tools/sculptgl-reference/upstream/src/editing/tools/Transform.js",
+    "source_formula": "old*(1-unprotected)+transformed*unprotected",
+    "runtime_compared": false
+  },
+  "workspace": {
+    "git_head": null,
+    "note": "Working tree has no resolved HEAD; source file hashes bind this local run",
+    "code": {
+      "crates/obrush-core/src/document.rs": {
+        "path": "crates/obrush-core/src/document.rs",
+        "sha256": "d984dd9fa1502c08d37bbef18d8dbfcfb9ea604fbf1b25ba7010256223ba46c8",
+        "bytes": 194234
+      },
+      "crates/obrush-core/src/transform.rs": {
+        "path": "crates/obrush-core/src/transform.rs",
+        "sha256": "89519c8f24e9b0d0f34bfdbccc2e69be106313aacc232fa9fd8434d71eeac003",
+        "bytes": 5858
+      },
+      "crates/obrush-core/tests/document_scene_v7.rs": {
+        "path": "crates/obrush-core/tests/document_scene_v7.rs",
+        "sha256": "d8e4dbe2a2aa129473f453bb3bf4b81fa5853d0d4335d27dc6207cd96d1bd6cc",
+        "bytes": 40736
+      },
+      "crates/obrush-app/src/app.rs": {
+        "path": "crates/obrush-app/src/app.rs",
+        "sha256": "70966e191761ea1923978561c65968edb6636a7dc71c4cadd4eab87fe0eabe4a",
+        "bytes": 508840
+      },
+      "scripts/check-transforms.mjs": {
+        "path": "scripts/check-transforms.mjs",
+        "sha256": "ff8b0dcdab748a9804c9dd20b103850c77335a2d5bab3fd2793bc14330868a8b",
+        "bytes": 90374
+      }
+    }
+  },
+  "fixture": {
+    "generated_scene": {
+      "path": ".artifacts/transform-browser/mask-affine-final-c137-9b6dc729-de77-463f-99d1-0fdb1c49baa1/Independent transform pair.obrush",
+      "sha256": "c82945508abd2597458c79c5f47f7811729c9f7fe49f4cb275d5bfeabc794eb2",
+      "bytes": 106500
+    },
+    "independent_posed_sgl": {
+      "path": "crates/obrush-core/tests/fixtures/independent-affine-two-mesh.sgl",
+      "sha256": "99e107226fd5bdfeb687a4d92a61eebcec1abb2e910184e35aa58808ace105fd",
+      "bytes": 540
+    }
+  },
+  "browser": {
+    "status": "passed twelve transform browser workflows",
+    "chrome": "Chrome/155.0.8059.80",
+    "wasm_sha256": "00bf0e27b5cb64c658764c6117577e7193dcbc701e9331cdbce2f5e04602423e",
+    "served_wasm_sha256": "00bf0e27b5cb64c658764c6117577e7193dcbc701e9331cdbce2f5e04602423e",
+    "cases": 12,
+    "all_case_gates": true,
+    "focused_case": {
+      "name": "selected-group-mask-weighted-numeric-rotation-scale",
+      "parameters": {
+        "drag_handle": null,
+        "dragging": false,
+        "mode": false,
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "pivot_kind": "origin",
+        "preview_subtool_ids": [],
+        "preview_translation": [
+          0,
+          0,
+          0
+        ],
+        "respect_masks": true,
+        "rotation_degrees": [
+          7,
+          -3,
+          5
+        ],
+        "scale": 1.0499999523162842,
+        "translation": [
+          0.019999999552965164,
+          -0.014999999664723873,
+          0.009999999776482582
+        ]
+      },
+      "statistics": {
+        "max_error": 2.292733611852782e-07,
+        "fully_protected": 76,
+        "partial": 380,
+        "changed": 456
+      },
+      "history": {
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      "gates": {
+        "visible_option_enabled": true,
+        "partial_and_protected": true,
+        "weighted_response": true,
+        "changed_vertices": true,
+        "history_exact": true
+      }
+    },
+    "raw_result": {
+      "path": ".artifacts/transform-browser/mask-affine-final-c137-9b6dc729-de77-463f-99d1-0fdb1c49baa1/result.json",
+      "sha256": "28cee84867ca9649246a2b963b94256594f6b44cc6b58907fd5bb8b56771d8eb",
+      "bytes": 25909320
+    },
+    "snapshots": {
+      "masked-affine-before.obrush": {
+        "path": ".artifacts/transform-browser/mask-affine-final-c137-9b6dc729-de77-463f-99d1-0fdb1c49baa1/masked-affine-before.obrush",
+        "sha256": "ef72ebc49b29720f3883db0cd10fca18da9564d142230b3eb4922cf898ab7c2a",
+        "bytes": 60881
+      },
+      "masked-affine-after.obrush": {
+        "path": ".artifacts/transform-browser/mask-affine-final-c137-9b6dc729-de77-463f-99d1-0fdb1c49baa1/masked-affine-after.obrush",
+        "sha256": "1d006e75b8b08b52c0e9754f6472fa883683efc79aaf38dffbd1fa055a5856bf",
+        "bytes": 62425
+      },
+      "masked-affine-undo.obrush": {
+        "path": ".artifacts/transform-browser/mask-affine-final-c137-9b6dc729-de77-463f-99d1-0fdb1c49baa1/masked-affine-undo.obrush",
+        "sha256": "ef72ebc49b29720f3883db0cd10fca18da9564d142230b3eb4922cf898ab7c2a",
+        "bytes": 60881
+      },
+      "masked-affine-redo.obrush": {
+        "path": ".artifacts/transform-browser/mask-affine-final-c137-9b6dc729-de77-463f-99d1-0fdb1c49baa1/masked-affine-redo.obrush",
+        "sha256": "1d006e75b8b08b52c0e9754f6472fa883683efc79aaf38dffbd1fa055a5856bf",
+        "bytes": 62425
+      }
+    },
+    "js_errors": 0,
+    "gl_errors": 0,
+    "actual_4x_msaa": true
+  },
+  "checks": {
+    "fmt": "pass",
+    "workspace_all_targets": {
+      "passed": 2465,
+      "failed": 0,
+      "ignored": 1,
+      "summaries": 100
+    },
+    "strict_native_clippy": "pass",
+    "strict_wasm_clippy": "pass",
+    "official_web_build": "pass",
+    "official_macos_package": "pass",
+    "codesign_deep_strict": "pass",
+    "native_executable": {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/OBrush",
+      "sha256": "385de0344147d98a13904583786e952a4ee90f9c578b2590b37d43181f911f03",
+      "bytes": 26985840
+    },
+    "logs": {
+      "build_web": {
+        "path": ".artifacts/scene-mask-affine-c137-build-web.log",
+        "sha256": "68de22ec3a1c37fe82cee510c45dcea31f50837aac622e2417b8338e4510e47c",
+        "bytes": 419
+      },
+      "workspace_tests": {
+        "path": ".artifacts/scene-mask-affine-c137-tests.log",
+        "sha256": "a335a0d28da5ff8150a301a3e7c1819dd590e6a05f5fb266284c23f433c3cf7a",
+        "bytes": 242427
+      },
+      "clippy_native": {
+        "path": ".artifacts/scene-mask-affine-c137-clippy-native.log",
+        "sha256": "926440934b728d8132e6e7a40d034c87a14077cff92551fec60b9c9a2c6d531f",
+        "bytes": 539
+      },
+      "clippy_wasm": {
+        "path": ".artifacts/scene-mask-affine-c137-clippy-wasm.log",
+        "sha256": "9c6f6ee3e51d603aa93f84571b5ca3070c3aeada4acfcbd8da42b0bdb0c8bf58",
+        "bytes": 296
+      },
+      "macos_package": {
+        "path": ".artifacts/scene-mask-affine-c137-package-macos.log",
+        "sha256": "4c0b198ddcb10af7e1037b791c258a87ec9817f1e9c7de5532eae73e10a7e665",
+        "bytes": 407
+      }
+    }
+  },
+  "failed_checks": [
+    {
+      "kind": "inverted_final_harness_console_condition",
+      "failure": "Error: Transform runtime errors or missing MSAA",
+      "geometry_case_gates_passed": true,
+      "result": {
+        "path": ".artifacts/transform-browser/mask-affine-c137-cfb8a26f-0578-426c-b15e-d9845006b967/result.json",
+        "sha256": "f79dffdd496d21e79d7b16089b0beca75281cd8154a400ead4d10d08ef60eed3",
+        "bytes": 27449379
+      }
+    }
+  ],
+  "limitations": [
+    "No matched pinned SculptGL runtime transform comparison",
+    "Retained levels/layers/Morph Targets rejected for mask-weighted transform",
+    "No nonuniform scale or rotation/scale gizmo handles",
+    "All-protected interaction-center behavior not matched",
+    "No native GUI or sustained drag latency",
+    "Non-translation weighted edits reject collapsed faces but do not prove absence of self-intersections or all orientation reversals"
+  ]
+}

@@ -1,0 +1,219 @@
+{
+  "version": "0.1.13",
+  "recorded_at_utc": "2026-10-13T19:14:41.404723+00:00",
+  "status": "All required source/build checks and scoped frozen browser workflows pass; native GUI and reference equivalence remain unverified",
+  "git": "Unborn main",
+  "test_totals": {
+    "core": 320,
+    "app": 41,
+    "total": 361
+  },
+  "checks": [
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791917642.393305,
+      "end_epoch": 1791917642.6542249,
+      "log": {
+        "path": ".artifacts/mask-filter-build/validation-159cea44-1e82-4d4b-bf37-2778fe7aedfd/fmt.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "tests",
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--workspace"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791917642.6546402,
+      "end_epoch": 1791917792.4403,
+      "log": {
+        "path": ".artifacts/mask-filter-build/validation-159cea44-1e82-4d4b-bf37-2778fe7aedfd/tests.log",
+        "bytes": 34788,
+        "sha256": "5d3267dab0a60f70980269aa82f4e37f64941686f588b34c9c25f4775d7ff47e"
+      }
+    },
+    {
+      "name": "clippy-native",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--workspace",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791917792.440654,
+      "end_epoch": 1791917795.510261,
+      "log": {
+        "path": ".artifacts/mask-filter-build/validation-159cea44-1e82-4d4b-bf37-2778fe7aedfd/clippy-native.log",
+        "bytes": 148,
+        "sha256": "73b372ee64a36a2b59d29942ac32c6a156eb4e1050749dc5e37fa7ce0ff7c863"
+      }
+    },
+    {
+      "name": "clippy-wasm",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "-p",
+        "obrush-app",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791917795.510915,
+      "end_epoch": 1791917799.3032541,
+      "log": {
+        "path": ".artifacts/mask-filter-build/validation-159cea44-1e82-4d4b-bf37-2778fe7aedfd/clippy-wasm.log",
+        "bytes": 222,
+        "sha256": "9ac7fb1ee08c4188ab4236f9242f7804b6bd2b8a9203d114bafe962ec6c1de06"
+      }
+    },
+    {
+      "name": "core-wasm",
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "-p",
+        "obrush-core",
+        "--target",
+        "wasm32-unknown-unknown"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791917799.303587,
+      "end_epoch": 1791917800.418477,
+      "log": {
+        "path": ".artifacts/mask-filter-build/validation-159cea44-1e82-4d4b-bf37-2778fe7aedfd/core-wasm.log",
+        "bytes": 148,
+        "sha256": "ed01652ff3cc28c39527616a4798e6fee276f6bbd94760f5530c82accb5fc6db"
+      }
+    },
+    {
+      "name": "web-build",
+      "command": [
+        "bash",
+        "scripts/build-web.sh"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791917800.4188302,
+      "end_epoch": 1791917806.795378,
+      "log": {
+        "path": ".artifacts/mask-filter-build/validation-159cea44-1e82-4d4b-bf37-2778fe7aedfd/web-build.log",
+        "bytes": 278,
+        "sha256": "5770587f65bcb2507254bb2aee3e3c988950518683805d57389653ecf9bee094"
+      }
+    },
+    {
+      "name": "native-package",
+      "command": [
+        "bash",
+        "scripts/package-macos.sh"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791917806.795708,
+      "end_epoch": 1791917814.392234,
+      "log": {
+        "path": ".artifacts/mask-filter-build/validation-159cea44-1e82-4d4b-bf37-2778fe7aedfd/native-package.log",
+        "bytes": 406,
+        "sha256": "57ca663332ae64e6f9da47c364cba01c906c9d76d87d923fb4e41ca9fb12e119"
+      }
+    }
+  ],
+  "source_manifest": {
+    "path": ".artifacts/mask-filter-release-0.1.13-final/source-manifest.json",
+    "bytes": 14198,
+    "sha256": "e3ad2662e28cadad1d62ed0665319cc269193b15209551cfb659235b454e074c"
+  },
+  "artifacts": {
+    "wasm": {
+      "path": ".artifacts/mask-filter-release-0.1.13-final/web/pkg/obrush_app_bg.wasm",
+      "bytes": 4243871,
+      "sha256": "e70edc673cd92f70266f2ad5e9d7b84df7f8ce4bbb691ca994417daa2486c51f"
+    },
+    "native": {
+      "path": ".artifacts/mask-filter-release-0.1.13-final/OBrush.app/Contents/MacOS/OBrush",
+      "bytes": 7151712,
+      "sha256": "c0f1dd501a34f031b3ee3b8f81ae0b53591926edc9f8bad467adcc664366e0bf"
+    }
+  },
+  "tools": {
+    "wasm_bindgen": "0.2.129"
+  },
+  "limitations": [
+    "No reference mask filter fixture executed",
+    "Native GUI and physical devices not exercised",
+    "Screen selections, feature/color/group/UV masks, visibility and reference-matched filtering remain gaps",
+    "Capacity caps are not real-time or peak-memory guarantees"
+  ],
+  "build_record": {
+    "path": ".artifacts/mask-filter-release-0.1.13-final/build-record.json",
+    "bytes": 4908,
+    "sha256": "6eb8298dd3390d1b928fc3c961390bb07037aee0b86a46ad834b4734dff288e2"
+  },
+  "final_browser": {
+    "path": ".artifacts/mask-filter-browser/final-52d26ab4-a4cc-42cd-9afa-10f427b6bd00/summary.json",
+    "bytes": 687873,
+    "sha256": "f53a615bbfd9b626df3c4f350c412c544e7f5a734134aa01a5922fefbd4ab0a0"
+  },
+  "browser_receipt": {
+    "path": "docs/evidence/mask-filter-browser.json",
+    "bytes": 739355,
+    "sha256": "dbc248f41be95d8f28081c82c8d98207f236123607cd7ebdd0804e3675964656"
+  },
+  "core_receipt": {
+    "path": "docs/evidence/mask-filter-core.json",
+    "bytes": 50017,
+    "sha256": "dadf5b9774db4485597d6213b0ebb6c7beb3cc8e2154d77bd63ca63cc5242dec"
+  },
+  "host_receipt": {
+    "path": ".artifacts/mask-filter-host/receipt.json",
+    "bytes": 4476,
+    "sha256": "ac9260b7234fb4f907de6cb345a9c83a4abaf551499948b93466e14dfc8f00a1"
+  },
+  "reference": {
+    "version": "ZBrush desktop 2026.2.1",
+    "execution": false,
+    "historical_binary_identity_record": {
+      "path": "docs/evidence/zbrush-native-inspection.json",
+      "bytes": 11282,
+      "sha256": "02de46853a20df3fd70d39fb986574fd555f15fb6b1eeefb2948d9309706f692"
+    },
+    "identity_scope": "Prior executable/build identity only; no new reference process or fixture executed for this release",
+    "primary_scope": "https://help.maxon.net/zbr/en-us/Content/html/reference-guide/tool/polymesh/masking/masking.html",
+    "scope_checked_date": "2026-10-13",
+    "limitation": "Independent max/min graph policies do not establish the reference's described soft Grow/Shrink behavior; no matched filtering fixture executed"
+  },
+  "browser_scenarios": 8,
+  "browser_gate_count": 45,
+  "deployment_verification": {
+    "path": ".artifacts/mask-filter-build/deployment-verification-645.json",
+    "bytes": 95293,
+    "sha256": "d9d0dc3f8f8c7b51512f7c8fb35aba589e88ceb46ca22b49162e8f066f806171"
+  },
+  "documentation_links": {
+    "path": ".artifacts/mask-filter-build/doc-links.json",
+    "bytes": 18444,
+    "sha256": "a854ebb30a3093dd9db9a470109fca01f1018007092dc8cfe186b43dde8e485e"
+  },
+  "deployment_scope": "Current/frozen source and signed macOS bundle match; HTTP127.0.0.1:8787 serves the frozen web assets; original user files retain their hashes. User tab untouched; save before refreshing."
+}

@@ -1,0 +1,88 @@
+{
+  "origin": "independent author fields/scalars; no OBrush/reference consumer output",
+  "source_scene": {
+    "version": 3,
+    "byte_order": "little_endian",
+    "display": {
+      "show_grid": true,
+      "show_symmetry_line": true,
+      "show_contour": false
+    },
+    "camera": {
+      "projection": 0,
+      "mode": 1,
+      "fov_degrees": 1.0,
+      "use_pivot": true
+    },
+    "meshes": [
+      {
+        "render": {
+          "shader": 0,
+          "matcap": 3,
+          "show_wireframe": false,
+          "flat_shading": false,
+          "opacity": 1.0
+        },
+        "center": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "matrix": [
+          1.401298464324817e-45,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.401298464324817e-45,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.401298464324817e-45,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": 1.0,
+        "positions": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "colors": null,
+        "materials": null,
+        "faces": [
+          [
+            0,
+            1,
+            2,
+            4294967295
+          ]
+        ],
+        "uv": null
+      }
+    ]
+  },
+  "expectation": {
+    "raw_matrix_is_nonsingular_in_f64": true,
+    "inverse_diagonal_f64": 7.1362384635298e+44,
+    "f32_inverse_is_not_finite": true,
+    "editable_conversion_must_use_validated_inverse_or_reject_atomically": true,
+    "raw_domain_remains_retained_and_encodable": true
+  }
+}

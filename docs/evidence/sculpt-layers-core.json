@@ -1,0 +1,250 @@
+{
+  "schema_version": 1,
+  "version": "0.1.8",
+  "recorded_at_utc": "2026-10-13T02:33:32.943475+00:00",
+  "scope": "Shared Rust fixed-topology geometry layers; native CPU contract tests, not ZBrush comparison or host performance evidence",
+  "raw_receipts": {
+    "independent": {
+      "path": ".artifacts/layer-contract-audit/final-receipt.json",
+      "bytes": 8114,
+      "sha256": "65b685b24f88526400f79b5e7d661183ad467824d93bc6e5d925a5fa10bb02e3"
+    },
+    "core_owner": {
+      "path": ".artifacts/layers-core-final/receipt.json",
+      "bytes": 3506,
+      "sha256": "b79a46f8d7b0ac470ba2e1c1722c761421118d4474633f3d8f8ecad8dc554a96"
+    }
+  },
+  "source_files": [
+    {
+      "path": "crates/obrush-core/src/layers.rs",
+      "sha256": "92d9d1061bef52b9969fb32b9dc9493c153cc74a586ac74b0936ed4ab5d6e1a8"
+    },
+    {
+      "path": "crates/obrush-core/src/document.rs",
+      "sha256": "537c1c61b2ff9a5a9282b9a294bbf95447cc4006bb1bb4d25342fdecb56ff9d7"
+    },
+    {
+      "path": "crates/obrush-core/src/lib.rs",
+      "sha256": "c48aa90b363c637b8e4a0eee1b2eecbe8e4484b2dec605bc8e79c7bb14b1b8cf"
+    },
+    {
+      "path": "crates/obrush-core/tests/layers.rs",
+      "sha256": "10905a929d1e19664e01e9c07d3aef9b02109fc0e45645dd1076ed6d1ab5c8eb"
+    },
+    {
+      "path": "crates/obrush-core/tests/layer_contract.rs",
+      "sha256": "2ab0c78474933a3fdef0bc8372e5d0b8ff619740d4088ccb2ea30984514a956c"
+    },
+    {
+      "path": "Cargo.toml",
+      "sha256": "28ce109fcb4630c4e17827869e320d0932bc46972e900ec54ac8682eed9939d0"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "8b0f76077da7b18e3db64b5154b86d02ef1f2fe974ec7e9324ac27077f6d53b6"
+    }
+  ],
+  "independent_final_run": {
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "obrush-core",
+      "--test",
+      "layer_contract"
+    ],
+    "contracts_passed": 18,
+    "contracts_failed": 0,
+    "exit_code": 0,
+    "start": "2026-10-13T02:01:49.273631+00:00",
+    "end": "2026-10-13T02:01:51.296276+00:00",
+    "source_hashes": {
+      "Cargo.toml": "28ce109fcb4630c4e17827869e320d0932bc46972e900ec54ac8682eed9939d0",
+      "Cargo.lock": "8b0f76077da7b18e3db64b5154b86d02ef1f2fe974ec7e9324ac27077f6d53b6",
+      "crates/obrush-core/Cargo.toml": "05bde7e131c4bc2f53709cfc3d5fcc12f2363105fba5f65ee18fa8c34e8039ce",
+      "crates/obrush-core/src/lib.rs": "c48aa90b363c637b8e4a0eee1b2eecbe8e4484b2dec605bc8e79c7bb14b1b8cf",
+      "crates/obrush-core/src/document.rs": "537c1c61b2ff9a5a9282b9a294bbf95447cc4006bb1bb4d25342fdecb56ff9d7",
+      "crates/obrush-core/src/layers.rs": "92d9d1061bef52b9969fb32b9dc9493c153cc74a586ac74b0936ed4ab5d6e1a8",
+      "crates/obrush-core/src/multires.rs": "04c1ace2b6e5e92119893d5acfad060ce22f2b21d9d8fcf6f558d565cfe1097f",
+      "crates/obrush-core/tests/layer_contract.rs": "2ab0c78474933a3fdef0bc8372e5d0b8ff619740d4088ccb2ea30984514a956c"
+    },
+    "sources_unchanged_during_run": true,
+    "log": ".artifacts/layer-contract-audit/run-final-18.log",
+    "log_sha256": "ca1ab67bb1ccda64481cd113c0493ef6b4d16bbf57e46a0d05fc2b6df4265c95"
+  },
+  "owned_checks": [
+    {
+      "path": ".artifacts/layer-contract-audit/owned-edge-rerun.log",
+      "sha256": "19cfbc44a222acf70166070738198fd812d2e664e7f04ce6c6af3c241f2cf950",
+      "result": "pass"
+    },
+    {
+      "path": ".artifacts/layer-contract-audit/owned-signed-zero.log",
+      "sha256": "dc35b7432cc41e0bb411ac9dc827139c03480ba978492435b04838ca293c7c20",
+      "result": "pass"
+    },
+    {
+      "path": ".artifacts/layer-contract-audit/owned-bounds.log",
+      "sha256": "06f9eeab45e243b7f427fda36fd54bb347acf7fde70e8464808105828cd7f9c3",
+      "result": "pass"
+    }
+  ],
+  "owned_counts": {
+    "independent_layer_contracts": 18,
+    "owned_signed_zero": 3,
+    "document_memory_bounds": 4
+  },
+  "gates": {
+    "surface_endpoints": "Exact f32 position/mask/color bits and triangle correspondence through 64 repeated visibility and fractional-intensity cycles",
+    "save_import_history": "Exact canonical serialized editable state; history is not serialized or imported",
+    "additive_two_layer_oracle": "Independent f64 sum of measured accepted f32 displacements; checked error <2e-7 world units (no observed maximum emitted)",
+    "multires_bake_oracle": "Coarse translation retains fine residual, masks/colors and triangle correspondence; checked error <3e-6 world units (no observed maximum emitted)",
+    "invalid_strokes": "Full rollback for topology violation and malformed public positions/masks/normals; one exposed error and available redo retained",
+    "imports": "v1/v2 with layer metadata rejected; v3 visible composition and triangle binding exact; 13 metadata corruptions plus duplicate scheme rejected",
+    "decode_budget": "1,000,001 combined base/delta vectors rejected while decoding in either field order",
+    "allocation_limits": {
+      "declared_and_source_reviewed": "Max16 layers; 1M aggregate base/delta vectors; 64MiB retained capacity accounting; 256-byte UTF8 names; 128MiB project/history caps",
+      "independent_boundary_tests": "16th layer accepted/17th rejected; aggregate first-layer rejection at500,001 base vertices; combined1,000,001 decode vectors rejected in either field order; names257 ASCII bytes or258 UTF8 bytes rejected",
+      "not_independently_peak_measured": "64MiB allocation cap and128MiB project/history cap; core owner added bounded-writer/capacity checks; browser/memory peak evidence is outside this CPU suite"
+    }
+  },
+  "limits": {
+    "layers": 16,
+    "aggregate_base_and_delta_f64_vectors": 1000000,
+    "retained_layer_storage_bytes": 67108864,
+    "history_bytes": 134217728,
+    "history_entries": 64,
+    "project_input_output_bytes": 134217728,
+    "layer_name_utf8_bytes": 256,
+    "intensity": [
+      0,
+      1
+    ]
+  },
+  "numeric_scheme": {
+    "name": "world_offsets_f64_v1",
+    "ordered_composition": "base + visible layer contribution in entry order; omit zero component contributions to preserve base signed zero; cast final components to f32",
+    "exact_composition_comparison": "f32 bits",
+    "exact_metadata_roundtrip": "serde_json float_roundtrip feature for f64 base/deltas"
+  },
+  "retained_original_failures": {
+    "run": ".artifacts/layer-contract-audit/run-1.json",
+    "log": ".artifacts/layer-contract-audit/run-1.log",
+    "log_sha256": "804f3597abe42e4abf5b972f7c3ba1bc27f1fd53d3a8ea1f2bc0378e79fbc845",
+    "passed": 13,
+    "failed": 4,
+    "failures": [
+      {
+        "test": "two_layers_blend_additively_against_independent_f64_position_oracle",
+        "differing_json_scalar_count": 1,
+        "all_differences_in_layers_metadata": true,
+        "max_abs_f64_difference": 6.938893903907228e-18,
+        "max_f64_ulp_difference": 1,
+        "first_differences": [
+          {
+            "path": "/layers/entries/1/deltas/0/2",
+            "decoded": 0.04100000020116568,
+            "original": 0.041000000201165676
+          }
+        ]
+      },
+      {
+        "test": "layered_import_replacement_restores_complete_state_with_one_undo",
+        "differing_json_scalar_count": 25,
+        "all_differences_in_layers_metadata": true,
+        "max_abs_f64_difference": 2.7755575615628914e-17,
+        "max_f64_ulp_difference": 1,
+        "first_differences": [
+          {
+            "path": "/layers/base_positions/51/0",
+            "decoded": -0.1429706513881683,
+            "original": -0.14297065138816833
+          },
+          {
+            "path": "/layers/base_positions/56/0",
+            "decoded": 0.1429706513881683,
+            "original": 0.14297065138816833
+          },
+          {
+            "path": "/layers/base_positions/58/0",
+            "decoded": -0.1429706513881683,
+            "original": -0.14297065138816833
+          }
+        ]
+      },
+      {
+        "test": "layers_on_coarse_level_save_and_bake_preserving_fine_residuals",
+        "differing_json_scalar_count": 47,
+        "all_differences_in_layers_metadata": true,
+        "max_abs_f64_difference": 2.7755575615628914e-17,
+        "max_f64_ulp_difference": 1,
+        "first_differences": [
+          {
+            "path": "/layers/entries/0/deltas/0/0",
+            "decoded": 0.13999998569488523,
+            "original": 0.13999998569488525
+          },
+          {
+            "path": "/layers/entries/0/deltas/0/2",
+            "decoded": 0.10999999940395357,
+            "original": 0.10999999940395355
+          },
+          {
+            "path": "/layers/entries/0/deltas/1/0",
+            "decoded": 0.13999998569488523,
+            "original": 0.13999998569488525
+          }
+        ]
+      },
+      {
+        "test": "exact_unit_endpoints_survive_repeated_visibility_and_fractional_weights",
+        "differing_json_scalar_count": 1,
+        "all_differences_in_layers_metadata": true,
+        "max_abs_f64_difference": 1.734723475976807e-18,
+        "max_f64_ulp_difference": 1,
+        "first_differences": [
+          {
+            "path": "/layers/entries/0/deltas/5/1",
+            "decoded": -0.013000011444091795,
+            "original": -0.013000011444091797
+          }
+        ]
+      }
+    ],
+    "resolution": "Workspace serde_json float_roundtrip enabled; exact canonical base/delta persistence checked after reload. No thresholds relaxed.",
+    "aggregate_observation": {
+      "different_metadata_scalars": 74,
+      "all_f64_ulp_differences": 1,
+      "max_abs_f64_difference": 2.7755575615628914e-17
+    }
+  },
+  "resolved_findings": [
+    "No-op fast path bypasses full JSON encoding while still validating malformed layered normals",
+    "Generous finite-scalar encoded-size upper bound avoids ordinary project Counter formatting; actual bounded writer remains authoritative near 128MiB",
+    "finish_layer_stroke rejects dependent bake/removal continuation after pending-stroke rollback",
+    "COW Arc snapshots and cached has_geometry avoid full delta copies/scans for ordinary summary/history comparisons",
+    "Bit equality and zero-component offset skips preserve signed base zeros and exact layer state"
+  ],
+  "limitations": [
+    "Masks and colors are unlayered ordinary mesh channels",
+    "Intensity supports only 0..1, excluding reference negative inversion and exaggeration above 1",
+    "A stack is bound to current fixed topology; retained subdivision hierarchy cannot navigate or add levels until bake",
+    "Additive offsets use world coordinates; no normal-frame transport or full reference layer evaluation verified",
+    "No reorder, duplicate, split, merge-down, MDD/timeline/pose layer workflows",
+    "Finite zero-area compositions reject; this is not a global self-intersection repair guarantee",
+    "Focused CPU tests do not establish browser UI, native runtime, memory peak or latency performance",
+    "Geometry layers only; masks and RGB remain document channels",
+    "Topology changes and subdivision navigation are blocked while layers exist; existing hierarchy is retained and bake reconciles it",
+    "Collapsed or nonfinite composed geometry is rejected; no self-intersection, manifold repair or ZBrush layer parity claim",
+    "Ill-conditioned layer/base cancellation unable to represent accepted f32 geometry exactly is rejected and the whole stroke is rolled back",
+    "End-stroke validation/reconciliation remains CPU work proportional to current state; ordinary releases avoid full JSON formatting using conservative count bounds; browser release timing still required"
+  ],
+  "primary_reference_urls": [
+    "https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/sculpting/3d-layers/3d-layers.html",
+    "https://help.maxon.net/zbr/en-us/Content/html/reference-guide/tool/polymesh/layers/layers.html"
+  ],
+  "fixture_provenance": "Independently written closed coarse/refined mesh and malformed-state fixtures in tests/layer_contract.rs, tests/layers.rs and document.rs; no proprietary source or commercial binary included",
+  "cleanup": "All owned cargo/diagnostic processes exited; no browser or native GUI process created"
+}

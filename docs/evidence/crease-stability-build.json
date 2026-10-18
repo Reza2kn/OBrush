@@ -1,0 +1,354 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-12T19:38:19.705351+00:00",
+  "version": "0.1.2",
+  "core_and_app_version": "0.1.2",
+  "feature_ids": [
+    "F06",
+    "F07",
+    "F10",
+    "F13",
+    "H02"
+  ],
+  "status": "Local deformation fixtures and build checks passed; ZBrush parity and final interactive runtime unverified",
+  "platform": {
+    "system": "Darwin",
+    "machine": "arm64",
+    "macos_version": "26.5.1",
+    "cpu": "Apple M2",
+    "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+    "wasm_bindgen_cli": "wasm-bindgen 0.2.129"
+  },
+  "reference_identity": {
+    "name": "ZBrush",
+    "version": "2026.2.1",
+    "previously_recorded_sha256": "a56a4bcd0a842cdcdf103f9e5b4e13b277e7806b91396ad54a9fb7e7d14e460a",
+    "record": "docs/evidence/zbrush-native-inspection.json",
+    "scope": "Historical reference identity only; no reference sculpt or appearance run in this update"
+  },
+  "source": {
+    "git_commit": null,
+    "state": "Local uncommitted source; no resolved HEAD; checked implementation identified by file hashes",
+    "scope": "Rust sources/manifests/tests/fixtures, scripts, static host, instructions and CI. Excludes documentation/evidence/ignored outputs.",
+    "files": [
+      {
+        "path": ".github/workflows/ci.yml",
+        "sha256": "18a21786db96c1b0920517261105517287dcac547f488db4250140fbf50f9926",
+        "size_bytes": 874
+      },
+      {
+        "path": "AGENTS.md",
+        "sha256": "b9aebf717528d1887a30f15d23ca492cac78e86542f0f7f77e72ee21545cebd4",
+        "size_bytes": 1312
+      },
+      {
+        "path": "Cargo.lock",
+        "sha256": "73f74c35f87ee164c95baaea698b32b1c7dab803a16585b0955b6dc43bf5de8e",
+        "size_bytes": 92181
+      },
+      {
+        "path": "Cargo.toml",
+        "sha256": "c204e242d8c9bb14affae7a4b2281cb5a08b9e186042607bb1bb6c80188eddaa",
+        "size_bytes": 639
+      },
+      {
+        "path": "crates/obrush-app/Cargo.toml",
+        "sha256": "e5fcff6d8b1d3bee9115edcf0c4d0c6d27c01ecd1ace0890a3475ebaf8221f75",
+        "size_bytes": 754
+      },
+      {
+        "path": "crates/obrush-app/src/app.rs",
+        "sha256": "f72daf64ea0a5c26abbebad60064cc89cf9656cb4e5da847e1a547ffafa01a88",
+        "size_bytes": 48991
+      },
+      {
+        "path": "crates/obrush-app/src/lib.rs",
+        "sha256": "22fd526801566c556f653a3291411ad51eea5ddf5ff0db270ec2232515a2b2ed",
+        "size_bytes": 1558
+      },
+      {
+        "path": "crates/obrush-app/src/main.rs",
+        "sha256": "59f837631d853d5d431139fa10dfd2c07667f8dbf2b8a3cc7ff771d3068b7819",
+        "size_bytes": 676
+      },
+      {
+        "path": "crates/obrush-app/src/renderer.rs",
+        "sha256": "3ccf212965fcffe457ad672c0430caf2abfe40f3128bae0547e783977d46e205",
+        "size_bytes": 44613
+      },
+      {
+        "path": "crates/obrush-app/src/stroke.rs",
+        "sha256": "0a0298b462f22399e18b1a54502f73f805f8c4ad3b9ecbaa105c3f46178f2407",
+        "size_bytes": 4880
+      },
+      {
+        "path": "crates/obrush-core/Cargo.toml",
+        "sha256": "05bde7e131c4bc2f53709cfc3d5fcc12f2363105fba5f65ee18fa8c34e8039ce",
+        "size_bytes": 250
+      },
+      {
+        "path": "crates/obrush-core/README.md",
+        "sha256": "9f7f7fd2c6e4f51810866bb10f2bd657fdd6ddf094cfbf1bc7744fdcd4924d51",
+        "size_bytes": 4300
+      },
+      {
+        "path": "crates/obrush-core/examples/core_timing.rs",
+        "sha256": "df4dee7deaced269cc87d8f18786ab96b0e9d7407d1b6b8456fb62d1484b3f17",
+        "size_bytes": 3524
+      },
+      {
+        "path": "crates/obrush-core/examples/crease_stability_probe.rs",
+        "sha256": "a945f9d77ba4053aadee5b90a45adb2bd95ac53678dbc3e102b86bd2e75068d6",
+        "size_bytes": 11044
+      },
+      {
+        "path": "crates/obrush-core/examples/inspect_obj.rs",
+        "sha256": "555070d52b662cbf5eb6a7fde8e97b7b6995aaefb61c341901b681f63342c90d",
+        "size_bytes": 1548
+      },
+      {
+        "path": "crates/obrush-core/examples/smooth_subdivision_probe.rs",
+        "sha256": "8e70150d11e660962767363f9af07a47a4001bfe15029f8eda345c42c11ecb03",
+        "size_bytes": 2487
+      },
+      {
+        "path": "crates/obrush-core/src/brush.rs",
+        "sha256": "f25d1ddaf9c81646db2354e45822a8882cd00cd217108737135fb17ef2bab630",
+        "size_bytes": 17554
+      },
+      {
+        "path": "crates/obrush-core/src/document.rs",
+        "sha256": "65e7aef9818482ba06529d75916cd76f5a8e71787905ec16e99fe4d1c658d879",
+        "size_bytes": 8597
+      },
+      {
+        "path": "crates/obrush-core/src/lib.rs",
+        "sha256": "69767dbe31aaca9a37c33845a8ae4c04f11c5ad3f6b844f13ce9d689459d8ac4",
+        "size_bytes": 455
+      },
+      {
+        "path": "crates/obrush-core/src/mesh.rs",
+        "sha256": "c1f7b01d44822ae422c69c7662863a258aa9852c206dec06364c1df73ff410ba",
+        "size_bytes": 42468
+      },
+      {
+        "path": "crates/obrush-core/src/tests.rs",
+        "sha256": "4debef74124f958cabb9993eb39832153e46cbc4f6aa7da904d6eaf24a3a01b9",
+        "size_bytes": 26255
+      },
+      {
+        "path": "crates/obrush-core/tests/brush_stability.rs",
+        "sha256": "8699428962c8fb4939985160c2f6ad69b3b62028cde1def81924561cd992f4eb",
+        "size_bytes": 21636
+      },
+      {
+        "path": "crates/obrush-core/tests/fixtures/zbrush_mrgb.obj",
+        "sha256": "9f75bcbc98ddfcb570d9087c5f6b3f6acb02fa6fe5b73e610abd670e0edc5c84",
+        "size_bytes": 303
+      },
+      {
+        "path": "crates/obrush-core/tests/mrgb_import.rs",
+        "sha256": "4794fe0c95fdfe6f48e619b8db018400ae2313cd02e76368d41a2ed85ef25c2c",
+        "size_bytes": 2631
+      },
+      {
+        "path": "crates/obrush-core/tests/sculpt_workflow.rs",
+        "sha256": "676ad74bdbb44998fcffd44f11fe92aff3792551722dfceaa8d04fa3ecd47ab5",
+        "size_bytes": 6339
+      },
+      {
+        "path": "scripts/build-web.sh",
+        "sha256": "72a2dc23d8d7d17d87258a2bf5c03d6eda1e8e0f883301ff8e49cf3697229cf6",
+        "size_bytes": 756
+      },
+      {
+        "path": "scripts/compare-obj.py",
+        "sha256": "a249c861d98415f664bd53583a45443c4fb96a5d94f4ff96b98263f5e8ab112e",
+        "size_bytes": 2371
+      },
+      {
+        "path": "scripts/package-macos.sh",
+        "sha256": "610c279c3218ac3a9f00020ba6fa91730853040d1eb6a4bcfc362c7b443eefc2",
+        "size_bytes": 1336
+      },
+      {
+        "path": "scripts/serve-web.py",
+        "sha256": "ca9125f60f4f99537b04d97eafc05d90b580eeb4c885976540397a2d44676d1e",
+        "size_bytes": 758
+      },
+      {
+        "path": "web/index.html",
+        "sha256": "861ca383b725316161e4c7cda5913874e4d10fd50e4b9bbc288bdbfc176d50e7",
+        "size_bytes": 3253
+      }
+    ],
+    "canonical_files_sha256": "78670fad66b8735c48d660f484b979bfdb1ab8a7677286a93c5542bc2000e825"
+  },
+  "artifacts": [
+    {
+      "path": "target/release/obrush",
+      "sha256": "231426b86d0a2a07b157a92315df80f961878e323f1b3de8a870e1c4a487c24b",
+      "size_bytes": 6018880
+    },
+    {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/OBrush",
+      "sha256": "607cc6168cf9528cf8973f88ebc44ec408d29fdb0c6153d969dc4a1462a0ebc6",
+      "size_bytes": 6002000
+    },
+    {
+      "path": ".artifacts/OBrush.app/Contents/Info.plist",
+      "sha256": "6d2dd8dead789910b24c6e2593a6e15710d29e01ea7199f1de3e3513a6521894",
+      "size_bytes": 607
+    },
+    {
+      "path": "web/dist/pkg/obrush_app_bg.wasm",
+      "sha256": "4e04942fc5b8ae458876764d25e973e891fdb0f105611011c53c9baa32062b47",
+      "size_bytes": 2969989
+    },
+    {
+      "path": "web/dist/pkg/obrush_app.js",
+      "sha256": "e9aba2a3e1a0862a3c47dc69f9dba89e4ccf0edbf5b96f71b33f4e53766e11e5",
+      "size_bytes": 88904
+    },
+    {
+      "path": "web/dist/index.html",
+      "sha256": "861ca383b725316161e4c7cda5913874e4d10fd50e4b9bbc288bdbfc176d50e7",
+      "size_bytes": 3253
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "73f74c35f87ee164c95baaea698b32b1c7dab803a16585b0955b6dc43bf5de8e",
+      "size_bytes": 92181
+    }
+  ],
+  "checks": [
+    {
+      "command": "cargo fmt --all -- --check",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "cargo test --locked --workspace",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "cargo clippy --locked --workspace --all-targets -- -D warnings",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "cargo clippy --locked -p obrush-app --target wasm32-unknown-unknown -- -D warnings",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "cargo check --locked -p obrush-core --target wasm32-unknown-unknown",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "scripts/build-web.sh",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "scripts/package-macos.sh",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "/usr/bin/codesign --verify --deep --strict .artifacts/OBrush.app",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "cargo run --locked -p obrush-core --release --example crease_stability_probe",
+      "exit_code": 0,
+      "result": "passed"
+    }
+  ],
+  "tests": {
+    "passed": 60,
+    "failed": 0,
+    "app": 8,
+    "core_unit": 32,
+    "brush_stability": 13,
+    "mrgb_import": 5,
+    "core_workflow": 2
+  },
+  "comparison": {
+    "path": "docs/evidence/crease-stability-comparison.json",
+    "sha256": "292e8f295a8f92790cd25576bc20ead4786aafcd5364dfe75e05abb527f2c408",
+    "size_bytes": 76237
+  },
+  "user_report": {
+    "path": ".artifacts/crease-user-report.png",
+    "sha256": "2fc10e273d840fee4585cfb4b4ff098f368eb6a8a13967b68340a650d2ad93d2",
+    "source": "User-provided OBrush screenshot; visual report only, no saved mesh/input trace",
+    "reported_crease_radius": 0.18,
+    "reported_crease_strength": 0.35,
+    "selected_tool_at_capture": "Move"
+  },
+  "delivered_behavior": {
+    "crease_pinch_coefficient": 0.08,
+    "previous_crease_pinch_coefficient": 0.2,
+    "crease_normal_blend": {
+      "vertex": 0.75,
+      "dab": 0.25
+    },
+    "front_face_fade": "Geometry dabs use smoothstep across vertex-normal dot dab-normal from 0 to 0.35; Paint/Mask retain their previous selection",
+    "deformation_guard": {
+      "minimum_projected_face_area_ratio": 0.05,
+      "minimum_quality": "cross-product length / longest-edge squared >= min(previous quality,0.02)",
+      "new_maximum_adjacent_face_angle_degrees": 150,
+      "existing_sharper_angles": "may improve or remain at previous bound",
+      "backtracking_max_halvings": 12,
+      "shared_step": "preserves zero masked displacement and mirrored pairs",
+      "ambiguous_topology": "geometry dabs touching 3+ faces per edge rejected; Paint/Mask and unrelated components remain available"
+    },
+    "move_anchor": "Triangle/barycentric material point follows actual committed vertices and normals, including falloff, masks, reduced steps and symmetry seam",
+    "render_snapshot": "excludes derived topology cache"
+  },
+  "static_http_delivery": {
+    "url": "http://127.0.0.1:8787/",
+    "checks": [
+      {
+        "path": "/",
+        "status": 200,
+        "content_type": "text/html",
+        "sha256": "861ca383b725316161e4c7cda5913874e4d10fd50e4b9bbc288bdbfc176d50e7",
+        "matches_local_bytes": true
+      },
+      {
+        "path": "/pkg/obrush_app.js",
+        "status": 200,
+        "content_type": "text/javascript",
+        "sha256": "e9aba2a3e1a0862a3c47dc69f9dba89e4ccf0edbf5b96f71b33f4e53766e11e5",
+        "matches_local_bytes": true
+      },
+      {
+        "path": "/pkg/obrush_app_bg.wasm",
+        "status": 200,
+        "content_type": "application/wasm",
+        "sha256": "4e04942fc5b8ae458876764d25e973e891fdb0f105611011c53c9baa32062b47",
+        "matches_local_bytes": true
+      }
+    ],
+    "scope": "Static HTTP delivery only, no JavaScript/GPU/input execution"
+  },
+  "limitations": [
+    "Independent synthetic traces reproduce the engine failure; the exact user mesh and stroke history were unavailable.",
+    "No final native/browser interactive sculpt/appearance/resize comparison for these hashes; verification stayed in code/build/HTTP checks.",
+    "Local orientation, quality and adjacent-fold checks are not global self-intersection detection, thickness preservation or automatic repair of previously damaged meshes.",
+    "Strong/repeated edits may be reduced or rejected; rejection preserves surface/history.",
+    "Topology cache warm-up and full mesh scans add CPU/memory work; no application FPS, device latency or high-density capacity claimed.",
+    "ZBrush brush response/appearance and complete feature parity remain unverified.",
+    "Historical 0.1.0 and 0.1.1 evidence remains unchanged and does not identify this build."
+  ]
+}

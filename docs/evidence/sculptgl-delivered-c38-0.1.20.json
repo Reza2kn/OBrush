@@ -1,0 +1,98 @@
+{
+  "status": "Delivered scoped C38 foundation; no full SculptGL or ZBrush parity claim",
+  "version": "0.1.20",
+  "utc": "2026-10-15T17:10:38.639624+00:00",
+  "change": "Ordinary SculptGL-mode Paint now exposes the existing bounded alpha library/import/conversion controls and captures an immutable bitmap. Press/dab frames share transient geometry alpha tracks through an exclusive Paint lease; frame publication and kernel application are protected together. Failure/abandonment restores prior frames, normal completion releases ownership, and the existing alphaNone/Lock APIs remain distinct.",
+  "source_manifest_sha256": "bc30a9d934e135e263c235db9eebc428838ef4c6057422b6903d986761af545e",
+  "build_sha256": "a23c52a66792bb92180c02562361e474efacf927af0fd4d9561d5d3dda62203d",
+  "checked_receipt_sha256": "8dd283575bc14548f23263c01ea8b6383afc96137c4dd74e578f6d738a41619b",
+  "required_checks_sha256": "d84aff7413a7bde4428e24e8949a39554370e6d8c644751f1dd22ebe15aae328",
+  "tests": {
+    "total": 2238,
+    "core": 1553,
+    "app": 685,
+    "ignored": 1
+  },
+  "web_build": {
+    "key": "web",
+    "argv": [
+      "bash",
+      "scripts/build-web.sh"
+    ],
+    "exit_code": 0,
+    "seconds": 28.70866529099294,
+    "log": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.20-candidate38/web.log",
+    "log_sha256": "e88ba653bd018010008a65f0280d4a9626588335907c63658e9c3fecc069ff43",
+    "owned_process_closed": true
+  },
+  "macos_build": {
+    "key": "macos",
+    "argv": [
+      "bash",
+      "scripts/package-macos.sh"
+    ],
+    "exit_code": 0,
+    "seconds": 33.5217347080179,
+    "log": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.20-candidate38/macos.log",
+    "log_sha256": "0a766548eb0a2dca99b714a1721aae641dc43012d65ee6fa078ec272065c1b23",
+    "owned_process_closed": true
+  },
+  "wasm": {
+    "path": "pkg/obrush_app_bg.wasm",
+    "bytes": 23299111,
+    "sha256": "4a5a329c307a871094a59299df48452ee450925ad36379eb613762124e8641e4"
+  },
+  "native_app": {
+    "installed": false,
+    "opened": false,
+    "ad_hoc_signature_verified": true
+  },
+  "browser": {
+    "result_sha256": "401b83a634791f92a65bc4ac0b076f4f908b8921f2ddf9c9ef623dc8a288e80d",
+    "independent_audit_sha256": "84c14f53eb147bb393d337d222a9ebba0a20569f8a71e66d5849b8dab0d8de07",
+    "raw_files_rehashed": 164,
+    "complete_public_downloads_rehashed": 17,
+    "normal_cases": [
+      "Mouse imported asymmetric4x4 meanRGB alpha",
+      "Synthetic pen pressure0.25 with intensityfactor1",
+      "Synthetic pen pressure0.75 with intensityfactor1"
+    ],
+    "each_case": [
+      "Actual selected immutable bitmap/dimensions/FNVchecksum/raw16framewords",
+      "Useful RGB/material writes; all geometry/masks exact",
+      "Complete saved Undo/Redo/reset bytes exact",
+      "32RAF after release with complete saved output unchanged"
+    ],
+    "pressure_response": {
+      "low": 0.15697792999999996,
+      "high": 0.47093376000000003,
+      "ratio": 2.9999998088903337,
+      "physical_device": false
+    },
+    "physical_pen": false,
+    "actual_owned_chrome_exit": 0,
+    "actual_owned_server_count_closed": 1,
+    "owned_pid_absence_verified": true,
+    "whole_png_review": "All3 whole browser images visually inspected. Normal alpha controls visible in mouse image; low/high pressure numeric controls visible in pen images. Large brush circle crosses viewport bounds. Sparse two-sheet fixture is a numerical fixture; screenshot likeness is not an appearance or physical pen gate."
+  },
+  "promotion_sha256": "95f9a0d86bd04863c21c90cc89bb4f6abaa390dafbe437906ab9d02f8b6e5630",
+  "preview": {
+    "url": "http://127.0.0.1:8803/",
+    "all19assets_http_sha256": "269a53f3342d6e291990822e3274cacd78e6b1a2ad24b2fd23853d64a95f1c10"
+  },
+  "preserved_failures": [
+    "root-check01 strict Clippy type_complexity; exact failed file restored against recorded manifest",
+    "First browser attempt inherited Smooth frontFrame GPU-arm1024x768 requirement; stopped before brush; actualexit1/Chrome0 retained; corrected no-arm Lifecycle frontFrame derivative"
+  ],
+  "limitations": [
+    "Synthetic pen pointer events only; actual tablet/native pressure unverified",
+    "No fresh matched SculptGL Paint-alpha cohort",
+    "32 RAF quiet frames with whole saved output exact; the logged quiet_elapsed includes later history operations and is not a brush latency measurement",
+    "No GPU buffer readback/image parity claim",
+    "Alpha Lock/mirror/manual rotation/Legacy cross-tool frame persistence remain gaps",
+    "The existing pure Rust alpha kernel is reused; this is new host/UI integration, not a new full reference comparison",
+    "Current Build test total is not an inventory completion percentage",
+    "Native/WASM compilation does not establish native pen-driver delivery or physical stylus latency; no physical device was used"
+  ],
+  "reference_baseline": "Pinned local SculptGL reference remains unchanged; C36/C37 comparison cohorts retain their actual earlier build hashes"
+}

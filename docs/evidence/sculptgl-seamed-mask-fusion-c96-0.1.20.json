@@ -1,0 +1,138 @@
+{
+  "name": "C96 seamed masked mixed-UV selected Marching Cubes",
+  "version": "0.1.20",
+  "fixture_left": {
+    "path": "crates/obrush-core/tests/fixtures/independent-fusion-left-seamed-mask.obj",
+    "sha256": "146d24ba020e9ddbff2fc0e5d401a52b2bafc0c355d4f89312737fe4583d061b"
+  },
+  "fixture_right": {
+    "path": "crates/obrush-core/tests/fixtures/independent-fusion-right.obj",
+    "sha256": "9600c7b964ac0b35ebafda32d889f96bda59799ecc0e65092b5fa598ba924dbf"
+  },
+  "pinned_reference_bundle": {
+    "path": ".tools/sculptgl-reference/host-mirror/sculptgl.js",
+    "sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600"
+  },
+  "reference_run": {
+    "path": ".artifacts/sculptgl-reference-runtime/seamed-mixed-uv-c96-4da326d7-956a-49a4-a440-41328b535467/result.json",
+    "sha256": "8c026d9d3707f79c009d5f1025d17625f40f0597d76d94b4db2383fa28037c33"
+  },
+  "browser_run": {
+    "path": ".artifacts/mask-filter-browser/seamed-mixed-uv-c96-b3662a35-1c5b-4221-a967-57662fc47729/result.json",
+    "sha256": "8bbf228b0e231dc2bcbf585bcf902eee03a3c241ab51292b5f3a3c8ecf8fcb02"
+  },
+  "browser_wasm": {
+    "path": "web/dist/pkg/obrush_app_bg.wasm",
+    "sha256": "b6b05475e6e4df4323ef62896e9f22243b712d25c510d8f173e31693924e9722"
+  },
+  "comparison": {
+    "path": ".artifacts/seamed-mixed-uv-c96-comparison.json",
+    "sha256": "fa4cfed55ce5d36a41c29d6bbdb15cde19f1da251258cf0be9ddb9a5aa4e68e5"
+  },
+  "test_log": {
+    "path": ".artifacts/c96-cargo-test.log",
+    "sha256": "dbb848e64218de47e35580599887ca72a9e33a1f1475cf4f4898d4f10d8ebcd3"
+  },
+  "parameters": {
+    "selected_order": "right then left",
+    "resolution": 16,
+    "marching_cubes": true,
+    "relax_topology": [
+      false,
+      true
+    ],
+    "allow_uv_loss": true,
+    "left_uv_coordinates": 9,
+    "left_uv_faces": 12,
+    "left_unmasked_bytes": [
+      0,
+      64,
+      128,
+      192,
+      255,
+      32,
+      96,
+      160
+    ]
+  },
+  "metrics": {
+    "vertices_each": 1056,
+    "triangles_each": 2108,
+    "matched_oriented_triangles": 2108,
+    "max_world_position_relax_off": 1.450679320281757e-07,
+    "max_world_position_relax_on": 3.2459885279663655e-07,
+    "rms_world_position_relax_on": 1.159474463709226e-07,
+    "attribute_differences": [
+      {
+        "relaxed": false,
+        "rgb": {
+          "values_compared": 3168,
+          "maximum_abs_difference": 2.7055358842176247e-08,
+          "rms_abs_difference": 4.478224143438802e-09
+        },
+        "roughness_metallic": {
+          "values_compared": 2112,
+          "maximum_abs_difference": 2.384185793236071e-08,
+          "rms_abs_difference": 1.737759083115635e-08
+        },
+        "unmasked_weight": {
+          "values_compared": 1056,
+          "maximum_abs_difference": 9.163627623376414e-08,
+          "rms_abs_difference": 1.8831320802976644e-08
+        }
+      },
+      {
+        "relaxed": true,
+        "rgb": {
+          "values_compared": 3168,
+          "maximum_abs_difference": 2.7055358842176247e-08,
+          "rms_abs_difference": 4.478224143438802e-09
+        },
+        "roughness_metallic": {
+          "values_compared": 2112,
+          "maximum_abs_difference": 2.384185793236071e-08,
+          "rms_abs_difference": 1.737759083115635e-08
+        },
+        "unmasked_weight": {
+          "values_compared": 1056,
+          "maximum_abs_difference": 9.163627623376414e-08,
+          "rms_abs_difference": 1.8831320802976644e-08
+        }
+      }
+    ]
+  },
+  "checks": {
+    "shared_core_seamed_all_three_modes": "passed",
+    "workspace_tests": "2390 passed, 0 failed, 1 ignored",
+    "cargo_fmt_check": "passed",
+    "strict_native_clippy": "passed",
+    "strict_wasm_clippy": "passed",
+    "wasm_target_check": "passed",
+    "isolated_browser": "passed two Relax cases, rejection, consent, GPU/save, undo/redo",
+    "pinned_reference": "passed two Relax cases",
+    "harness_syntax": "passed"
+  },
+  "limitations": [
+    "One UV seam and one nonuniform mask pattern on two boxes",
+    "Reference comparison covers Marching Cubes only",
+    "No affine selected parts, arbitrary geometry, sustained performance or production WebGPU integration"
+  ],
+  "sources": [
+    {
+      "path": "scripts/check-mc-browser.mjs",
+      "sha256": "0a7e510ec56900c52802ae7640770d32a454acaf2999ff0d1721343e0bbe1a26"
+    },
+    {
+      "path": "scripts/check-sculptgl-mc.mjs",
+      "sha256": "ba30b7119e8795819f68adb1cc9ae4206d1d6c19f8fa0bb38a121459325d88a5"
+    },
+    {
+      "path": "scripts/compare-mc-remesh.py",
+      "sha256": "6b69edf2905ddc791a1622783a7ede2ff12de0c5b36eec2e8d4e1fb7540fd050"
+    },
+    {
+      "path": "crates/obrush-core/tests/remesh.rs",
+      "sha256": "3e5015a8d2ce800ad291c5b5d5f66a67e94998a25ea636862b574a63f9c60605"
+    }
+  ]
+}

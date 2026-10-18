@@ -1,0 +1,260 @@
+{
+  "case": "C132 selected-group Isolate and Show all",
+  "reference_commit": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+  "fixture": {
+    "path": ".artifacts/scene-multiselect-c130/independent-three-closed-boxes.sgl",
+    "bytes": 1560,
+    "sha256": "939110d73dec934f0af70fb5c364eeb18f3ce18608449fe76804896c50c9c0ae"
+  },
+  "reference": {
+    "result_path": ".artifacts/scene-isolate-c132/source-1792284513642/result.json",
+    "status": "PASS source selected-group isolate and show-all history",
+    "before": {
+      "selected_indices": [
+        2,
+        1
+      ],
+      "visibility": [
+        true,
+        true,
+        true
+      ],
+      "part_count": 3
+    },
+    "isolate": {
+      "selected_indices": [
+        2,
+        1
+      ],
+      "visibility": [
+        false,
+        true,
+        true
+      ],
+      "part_count": 3
+    },
+    "undo_isolate": {
+      "selected_indices": [
+        2,
+        1
+      ],
+      "visibility": [
+        true,
+        true,
+        true
+      ],
+      "part_count": 3
+    },
+    "redo_isolate": {
+      "selected_indices": [
+        2,
+        1
+      ],
+      "visibility": [
+        false,
+        true,
+        true
+      ],
+      "part_count": 3
+    },
+    "show_all": {
+      "selected_indices": [
+        2,
+        1
+      ],
+      "visibility": [
+        true,
+        true,
+        true
+      ],
+      "part_count": 3
+    },
+    "undo_show_all": {
+      "selected_indices": [
+        2,
+        1
+      ],
+      "visibility": [
+        false,
+        true,
+        true
+      ],
+      "part_count": 3
+    },
+    "console_errors": [],
+    "exceptions": []
+  },
+  "obrush_browser": {
+    "result_path": ".artifacts/scene-isolate-c132/root-1792285037655/result.json",
+    "status": "PASS OBrush selected-group isolate/show-all and history",
+    "before": {
+      "selected_ids": [
+        3,
+        2
+      ],
+      "visibility": [
+        true,
+        true,
+        true
+      ],
+      "project_sha256": "1159d48c65b426d5f407bf4085567d1b00dc8c65da38442e958e4b3e3206f0bd",
+      "project_bytes": 7778,
+      "viewport_png_sha256": "0119d585060344fb152e94ea977a7802201e3cad5f5194299f0ef7935c28339b"
+    },
+    "isolate": {
+      "selected_ids": [
+        3,
+        2
+      ],
+      "visibility": [
+        false,
+        true,
+        true
+      ],
+      "project_sha256": "ca3f1b420f5addb03d83cf19f995a4ca77f72592c611fd711444e7fdf2b5d083",
+      "project_bytes": 7779,
+      "viewport_png_sha256": "cb005d8f5968b7f36674353eb21fd1f7a038fd8a5dbf5463bc08b1f416127bc9"
+    },
+    "undo_isolate": {
+      "selected_ids": [
+        3,
+        2
+      ],
+      "visibility": [
+        true,
+        true,
+        true
+      ],
+      "project_sha256": "1159d48c65b426d5f407bf4085567d1b00dc8c65da38442e958e4b3e3206f0bd",
+      "project_bytes": 7778,
+      "viewport_png_sha256": "0119d585060344fb152e94ea977a7802201e3cad5f5194299f0ef7935c28339b"
+    },
+    "redo_isolate": {
+      "selected_ids": [
+        3,
+        2
+      ],
+      "visibility": [
+        false,
+        true,
+        true
+      ],
+      "project_sha256": "ca3f1b420f5addb03d83cf19f995a4ca77f72592c611fd711444e7fdf2b5d083",
+      "project_bytes": 7779,
+      "viewport_png_sha256": "cb005d8f5968b7f36674353eb21fd1f7a038fd8a5dbf5463bc08b1f416127bc9"
+    },
+    "show_all": {
+      "selected_ids": [
+        3,
+        2
+      ],
+      "visibility": [
+        true,
+        true,
+        true
+      ],
+      "project_sha256": "1159d48c65b426d5f407bf4085567d1b00dc8c65da38442e958e4b3e3206f0bd",
+      "project_bytes": 7778,
+      "viewport_png_sha256": "0119d585060344fb152e94ea977a7802201e3cad5f5194299f0ef7935c28339b"
+    },
+    "undo_show_all": {
+      "selected_ids": [
+        3,
+        2
+      ],
+      "visibility": [
+        false,
+        true,
+        true
+      ],
+      "project_sha256": "ca3f1b420f5addb03d83cf19f995a4ca77f72592c611fd711444e7fdf2b5d083",
+      "project_bytes": 7779,
+      "viewport_png_sha256": "cb005d8f5968b7f36674353eb21fd1f7a038fd8a5dbf5463bc08b1f416127bc9"
+    },
+    "redo_show_all": {
+      "selected_ids": [
+        3,
+        2
+      ],
+      "visibility": [
+        true,
+        true,
+        true
+      ],
+      "project_sha256": "1159d48c65b426d5f407bf4085567d1b00dc8c65da38442e958e4b3e3206f0bd",
+      "project_bytes": 7778,
+      "viewport_png_sha256": "0119d585060344fb152e94ea977a7802201e3cad5f5194299f0ef7935c28339b"
+    },
+    "wasm_sha256": "5bf3c99972b31a86da258f95d9777aa7b2eb15af6e209bda81b618f917b2bfe7",
+    "viewport_crop_css_pixels": [
+      340,
+      90,
+      990,
+      700
+    ],
+    "console_errors": [],
+    "exceptions": [],
+    "cleanup_errors": []
+  },
+  "limitations": [
+    "One independent three-box fixture",
+    "Source GUI handler invoked after physical Shift selection; checkbox not physically clicked",
+    "Hidden-part picking, broad scenes, native GUI and performance not established",
+    "Only selected normal keyboard workflow checked; focused-field and complete shortcut matrix open"
+  ],
+  "obrush_keyboard": {
+    "result_path": ".artifacts/scene-isolate-c132/keyboard-1792285037655/result.json",
+    "status": "PASS OBrush source-profile I Ctrl+D Delete selected scope",
+    "profile": "SculptGL basic",
+    "after_i_visibility": [
+      false,
+      true,
+      true
+    ],
+    "after_second_i_visibility": [
+      true,
+      true,
+      true
+    ],
+    "after_ctrl_d_parts": 5,
+    "after_undo_duplicate_parts": 3,
+    "after_delete_parts": 1,
+    "after_undo_delete_sha256": "1159d48c65b426d5f407bf4085567d1b00dc8c65da38442e958e4b3e3206f0bd",
+    "console_errors": [],
+    "exceptions": [],
+    "retained_first_failure": ".artifacts/scene-isolate-c132/keyboard-1792284783363/result.json",
+    "first_failure_reason": "Resident diagnostic rejected capture on open redo branch; corrected using normal Save project button"
+  },
+  "checks": {
+    "fmt": {
+      "status": "pass",
+      "retained_first_failure": ".artifacts/scene-isolate-c132/fmt-first-failure.log"
+    },
+    "workspace_all_targets": {
+      "status": "pass",
+      "summaries": 100,
+      "passed": 2458,
+      "failed": 0,
+      "ignored": 1,
+      "log": ".artifacts/scene-isolate-c132/workspace-tests.log"
+    },
+    "strict_native_clippy": {
+      "status": "pass",
+      "log": ".artifacts/scene-isolate-c132/clippy-native-final.log"
+    },
+    "strict_wasm_clippy": {
+      "status": "pass",
+      "log": ".artifacts/scene-isolate-c132/clippy-wasm-final.log"
+    },
+    "official_web_build": {
+      "status": "pass",
+      "log": ".artifacts/scene-isolate-c132/build-web-verified.log"
+    },
+    "official_macos_package": {
+      "status": "pass",
+      "log": ".artifacts/scene-isolate-c132/package-macos.log",
+      "codesign_verify_deep_strict": "pass",
+      "executable_sha256": "7cce31e9e9867ec6340486bea294cb22a8328cbf254c822d733390d07eeae5f4"
+    }
+  }
+}

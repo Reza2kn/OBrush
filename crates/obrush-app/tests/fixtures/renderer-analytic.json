@@ -1,0 +1,159 @@
+{
+  "authoring": "Independent rational planar/convex/concave differential fields; PNG manually encoded as RGBA8/CRC/zlib; no production renderer used.",
+  "curvature_tolerance": 1e-06,
+  "curvature": [
+    {
+      "name": "convex-perspective",
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "dx": [
+        0.01,
+        0,
+        0
+      ],
+      "dy": [
+        0,
+        0.01,
+        0
+      ],
+      "strength": 1,
+      "depth": 180.0,
+      "expected_factor_rational": "13/9",
+      "expected_factor": 1.4444444444444444
+    },
+    {
+      "name": "concave-perspective",
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "dx": [
+        -0.01,
+        0,
+        0
+      ],
+      "dy": [
+        0,
+        -0.01,
+        0
+      ],
+      "strength": 1,
+      "depth": 180.0,
+      "expected_factor_rational": "61/75",
+      "expected_factor": 0.8133333333333334
+    },
+    {
+      "name": "convex-orthographic",
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "dx": [
+        0.01,
+        0,
+        0
+      ],
+      "dy": [
+        0,
+        0.01,
+        0
+      ],
+      "strength": 1,
+      "depth": 100.0,
+      "expected_factor_rational": "9/5",
+      "expected_factor": 1.8
+    },
+    {
+      "name": "planar",
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "dx": [
+        0.0,
+        0,
+        0
+      ],
+      "dy": [
+        0,
+        0.0,
+        0
+      ],
+      "strength": 1,
+      "depth": 180.0,
+      "expected_factor_rational": "1",
+      "expected_factor": 1.0
+    }
+  ],
+  "texture": {
+    "file": "independent-hidden-rgb2x2.png",
+    "sha256": "e56e5113b5c5fc9462eb916701bdb7893c8ddbe6a14c012cfa50d37761e395a7",
+    "width": 2,
+    "height": 2,
+    "rgba_top_down": [
+      255,
+      0,
+      0,
+      0,
+      0,
+      255,
+      0,
+      128,
+      0,
+      0,
+      255,
+      255,
+      255,
+      255,
+      255,
+      64
+    ],
+    "rgba_bottom_up": [
+      0,
+      0,
+      255,
+      255,
+      255,
+      255,
+      255,
+      64,
+      255,
+      0,
+      0,
+      0,
+      0,
+      255,
+      0,
+      128
+    ],
+    "hidden_rgb_policy": "RGB is retained for alpha0; UV shader alpha is ignored; global explicit opacity owns compositing."
+  },
+  "shader_transfer": {
+    "srgb_half_expected": 0.21404114048223255,
+    "srgb_join_expected": 0.0031308049535603713
+  },
+  "premultiplied_blend": {
+    "source_rgb": [
+      0.8,
+      0.4,
+      0.2
+    ],
+    "opacity": 0.25,
+    "background_rgb": [
+      0.2,
+      0.3,
+      0.5
+    ],
+    "expected_rgb": [
+      0.35,
+      0.325,
+      0.425
+    ]
+  }
+}

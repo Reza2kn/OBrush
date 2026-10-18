@@ -1,0 +1,9 @@
+# C177: topology and scene history
+
+This extends the paired [C175](SCULPTGL_HISTORY_LIMIT_C175.md) and [C176](SCULPTGL_MIXED_HISTORY_C176.md) history checks to static subdivision. The pinned hosted SculptGL bundle is SHA-256 `79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600`; OBrush's browser WASM build is SHA-256 `f0d1f48e8685cd410aca97e0aa75d7f240260d844dfd7e625c45553e01cadf07`.
+
+At a three-step history limit, each ordinary browser UI cleared its scene, added a cube, subdivided that cube with its visible static subdivision command, and added a sphere. The pinned cube changed from 98,306 vertices/98,304 quad faces to 393,218 vertices/393,216 quads. OBrush's own cube changed from 24,578 vertices/49,152 triangles to 98,306 vertices/196,608 triangles. The starting primitives differ, so these counts demonstrate real topology growth in each application rather than a matched geometric output.
+
+In both apps, the first Undo removed the sphere and retained the finer cube; the second restored the coarse cube; the third left an empty scene. Three Redos restored byte-identical exports within each app. The pinned browser receipt is `.artifacts/history-limit/source-f3e17143-2173-4b69-a414-6a47404c80cf/result.json`; the OBrush receipt is `.artifacts/history-limit/c18195b3-2719-406a-bd5e-a382b5687840/result.json`. Both completed without browser exceptions or cleanup errors. Earlier source attempts clicked the Subdivide button before its menu settled and remained no-ops; their failed receipts are preserved under `.artifacts/history-limit/`.
+
+This checks history transaction order across topology and scene membership. It does not establish same-input subdivision mathematics, reference multiresolution state parity, memory-pressure behavior, native GUI interaction or long-session responsiveness. Those remain separate gates.

@@ -1,0 +1,1848 @@
+{
+  "schema_version": 1,
+  "release": "0.1.5",
+  "scope": "Independent OBrush geometry regressions and user-supplied surface diagnosis. No ZBrush behavioral parity, material match, global self-intersection, or image-quality guarantee.",
+  "source_hashes": {
+    "crates/obrush-core/src/brush.rs": "22c47de749152d2f8591da4592164e413bdd5ab1ccb318b22df6b68f594c9e5c",
+    "crates/obrush-core/src/refinement.rs": "26eec51be37a104e439fea9d7075e5557a60a662e156146a8566f40a84a42935",
+    "crates/obrush-core/src/mesh.rs": "4db1884082d155c81c5acbcf154046370cdca2fa7d087f293c71f12802320f98",
+    "crates/obrush-core/src/lib.rs": "8ccbd35d907490d6ebc8b5c4dd1f699ab1e6ae5ced427ca3158d94558d6037db",
+    "crates/obrush-core/src/document.rs": "65e7aef9818482ba06529d75916cd76f5a8e71787905ec16e99fe4d1c658d879",
+    "crates/obrush-core/tests/brush_stability.rs": "0e29dcbe1efefa96af57e0c8a1679e4f6483850611a8bbbc88fdd5bab065f8f4",
+    "crates/obrush-core/tests/crease_detail.rs": "3745006623aa534f33f9877961c1378f82b392b196e3e7854046f8ba542ceb73",
+    "crates/obrush-core/tests/patch_refinement.rs": "90e0beb74aaa1d4b7b6aebffcc9d6de0692e38c7ad882379048a1a822f9993db",
+    "crates/obrush-core/examples/crease_stability_probe.rs": "f90b8334b2ade954dfa3ac9c545866c5b40bb34c6af2e5d415f475599099b461",
+    "Cargo.lock": "f4137786aa1413b6a48c493ac5a5ee07732f00c135cc5a4cb027507b3cd585c7"
+  },
+  "formatting_only_source_mapping": {
+    "probed_pre_cargo_fmt": {
+      "crates/obrush-core/src/brush.rs": "c4fc3a098f93d4b99a3a4cbaa536dd293e35f54c0253217780748f1133120424",
+      "crates/obrush-core/src/refinement.rs": "1467faa406b366f2fa595e7483319567794a557062f455f6a2c3c55fc02dbe84"
+    },
+    "final_cargo_fmt": {
+      "crates/obrush-core/src/brush.rs": "22c47de749152d2f8591da4592164e413bdd5ab1ccb318b22df6b68f594c9e5c",
+      "crates/obrush-core/src/refinement.rs": "26eec51be37a104e439fea9d7075e5557a60a662e156146a8566f40a84a42935"
+    },
+    "note": "Differences are Rust edition formatting/import ordering and expanded conditional layout; runtime equations and selection behavior unchanged."
+  },
+  "baseline": {
+    "source_manifest_path": ".artifacts/crease-long-stroke-0.1.4-baseline/source-manifest.json",
+    "source_manifest_sha256": "4d4058f2a28d165961ba417c4abebca1519246dd2be79c2e7f8f430f1e830d7d",
+    "source_hashes": {
+      "src/brush.rs": "4ee45652f8cdf276f9a7d2226e40b784b3655c077e4272588b29336a9bd86b62",
+      "src/document.rs": "65e7aef9818482ba06529d75916cd76f5a8e71787905ec16e99fe4d1c658d879",
+      "src/lib.rs": "8ccbd35d907490d6ebc8b5c4dd1f699ab1e6ae5ced427ca3158d94558d6037db",
+      "src/mesh.rs": "2d8edc194758ee4fa9cc7db03c6f7c19c14b9a99c1547ed3f2e0cfc879df048d",
+      "src/refinement.rs": "22a2353c01e4c95243839104b34902d2a653f5307a8ed7d31d40c0b74be8d8d4",
+      "src/tests.rs": "c835a43ae938ab1a03c1d994a49ca69f2d94eb460203892c7ef70bb82951bd42"
+    },
+    "note": "Frozen before new Crease geometry changes. Contains0.1.4 geometry equations plus preliminary incidence-cache work; CPU times are not shipping-browser0.1.4 performance measurements."
+  },
+  "fixture_hashes": {
+    "sphere4": {
+      "generator": "independently written Mesh::sphere(4)",
+      "obj_sha256": "9e996d851eae92777fe8a43711149ed17319d3878d48c379c2e9e741809830f8",
+      "private_generated_obj_path": ".artifacts/crease-detail-experiments/generated-sphere4.obj",
+      "initial_vertices": 2562,
+      "initial_triangles": 5120
+    },
+    "sphere5": {
+      "generator": "independently written Mesh::sphere(5)",
+      "obj_sha256": "e93a7e19289bb7533d70c71ac7866dc00140002fe0b292bd31dbe7dfab7fb25a",
+      "private_generated_obj_path": ".artifacts/crease-detail-experiments/generated-sphere5.obj",
+      "initial_vertices": 10242,
+      "initial_triangles": 20480
+    },
+    "sphere6": {
+      "generator": "independently written Mesh::sphere(6)",
+      "obj_sha256": "babc304a29e929809372f8e898b273fefae8a8fb64db2ed7cab0a881ebab456c",
+      "private_generated_obj_path": ".artifacts/crease-detail-experiments/generated-sphere6.obj",
+      "initial_vertices": 40962,
+      "initial_triangles": 81920
+    }
+  },
+  "user_fixture": {
+    "project_path": ".artifacts/user-long-stroke-0.1.4/user.obrush",
+    "project_sha256": "4adc8aa9333903ab0684c1f2e54a995dc6a4e7a3b85fc6e911df9d7deb0c4786",
+    "obj_path": ".artifacts/user-long-stroke-0.1.4/user.obj",
+    "obj_sha256": "282d72002460d692c1444abd9480a11f16958ce660ca86d1352875778cced40e",
+    "worst_region_manifest_sha256": "bd69480aab902a61afb54055be525d5cd7aadf3c53da54646326e938630c7c34",
+    "untouched": true,
+    "metrics_after_validated_f32_import": {
+      "bounds": [
+        [
+          -1.0,
+          -1.0,
+          -1.0
+        ],
+        [
+          1.0,
+          1.0,
+          2.444972276687622
+        ]
+      ],
+      "faces_standard_below_015": 64,
+      "folds_over_60": 210,
+      "folds_over_90": 78,
+      "max_fold_degrees": 149.9999813835879,
+      "min_quality_longest": 0.020000001042248715,
+      "min_quality_standard": 0.04055303360347116,
+      "severe_fold_length": 1.0192062901801278,
+      "severe_fold_severity": 47.700800542104425,
+      "sharp_fold_length": 2.8193303052415333,
+      "signed_volume": 4.33614527280467,
+      "triangles": 123156,
+      "vertices": 61580
+    }
+  },
+  "metric_definitions": {
+    "longest_edge_quality": "length((b-a) cross(c-a))/max(edge_length_squared). Equilateral=sqrt(3)/2. This is the deformation guard metric.",
+    "standard_quality": "2sqrt(3)*length((b-a) cross(c-a))/sum(edge_length_squared). Equilateral=1. This is the independent sliver metric and child preflight metric.",
+    "adjacent_fold_degrees": "acos(dot(unit geometric face normals)) in degrees on each shared edge.180deg is a back-to-back hinge.",
+    "severe_fold_length": "Sum world-space edge lengths where angle>90.00001deg. Unlike raw edge count, this does not multiply when a pre-existing hinge is linearly subdivided.",
+    "severe_fold_severity": "Sum edge_length*(angle_degrees-90) where angle>90.00001deg. A roughness diagnostic, not a curvature/self-intersection proof.",
+    "near_zero_faces_14_case_probe": "Final actual child cross squared<=1e-24; old historical probe used relative area threshold instead. Do not compare this counter numerically without this distinction.",
+    "original_reference_ratios": "Original-parent triangles/edges and old vertex IDs. New vertices are not assigned fictional rest coordinates. Per-dab reversals use pre-dab parent triangles."
+  },
+  "final_runtime_limits": {
+    "surface_detail_tools": [
+      "Draw",
+      "Clay",
+      "Inflate",
+      "Flatten",
+      "Crease"
+    ],
+    "no_topology_tools": [
+      "Move",
+      "Smooth",
+      "Mask",
+      "Paint"
+    ],
+    "target_edge_length": "0.12*brush radius",
+    "max_added_vertices_per_accepted_dab": 1024,
+    "rounds": 2,
+    "added_vertices_per_round": 512,
+    "symmetry_group_policy": "Exact reflected-coordinate groups admitted/pruned together; protected-edge midpoints can split when adjacent to an editable face. No welding or approximate imported-symmetry inference.",
+    "child_preflight": "Every planned child standard quality>=min(parent standard quality,0.15)*(1-1e-5). At most8 pruning passes, then skip remainder and report detail_limited. This threshold alone does not describe the entire deformed mesh.",
+    "deformation_guards": {
+      "crease": "qLongest>=min(previous qLongest,0.1), new adjacent angle<=max(previous angle,90deg)",
+      "move": "qLongest>=min(previous qLongest,0.02), new adjacent angle<=max(previous angle,150deg)",
+      "other_surface_tools": "qLongest>=min(previous qLongest,0.1), new adjacent angle<=max(previous angle,60deg)",
+      "local_orientation": "new_cross dot old_cross>=0.05*old_cross_squared",
+      "step_backtracking": "Shared alpha1,1/2,...1/4096, then reject whole deformation.",
+      "roundoff": "32*f64 epsilon relative tolerance for old-quality/fold normalization feasibility.",
+      "bad_topology": "Reject touched collapsed or non-manifold topology; selected refinement malformed/duplicate/inconsistent winding or unrepresentable midpoint rejected atomically."
+    },
+    "allocation_ceiling_vertices": 1000000,
+    "allocation_ceiling_triangles": 2000000
+  },
+  "paired_cpu_cases": {
+    "record_path": ".artifacts/crease-detail-experiments/final-production-four-regions-output.jsonl",
+    "record_sha256": "262833d20097ac98f30e96f26a3900080b1cb76932febc46469d6ad0e382ad24",
+    "path": "sphere6; alternating x=-0.4..0.4 step0.02,y0.09; rays from z3 toward-Z; live re-pick every dab. Stationary case x0.23,y0.09.",
+    "settings": {
+      "radius": 0.18,
+      "strength": 0.35,
+      "symmetry_x": true,
+      "invert": false
+    },
+    "records": [
+      {
+        "case": "fresh_crease16",
+        "changed_vertices_sum": 219469,
+        "crease_passes": 16,
+        "dabs_per_pass": 41,
+        "draw_passes": 0,
+        "elapsed_ms": 1108.6706669999999,
+        "implementation": "baseline",
+        "max_inward_displacement": 0.5202676057815552,
+        "metrics": {
+          "bounds": [
+            [
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            [
+              1.0,
+              1.0,
+              0.9967455863952637
+            ]
+          ],
+          "faces_standard_below_015": 14,
+          "folds_over_60": 101,
+          "folds_over_90": 19,
+          "max_fold_degrees": 149.99999018203295,
+          "min_quality_longest": 0.02000000355212938,
+          "min_quality_standard": 0.04600823604002942,
+          "severe_fold_length": 0.9236408925242752,
+          "severe_fold_severity": 28.269929314101457,
+          "sharp_fold_length": 7.458293110886034,
+          "signed_volume": 4.131351923693353,
+          "triangles": 81920,
+          "vertices": 40962
+        },
+        "radius": 0.18,
+        "refined_vertices_sum": 0,
+        "strength": 0.35,
+        "symmetry_x": true
+      },
+      {
+        "case": "draw4_crease8",
+        "changed_vertices_sum": 278319,
+        "crease_passes": 8,
+        "dabs_per_pass": 41,
+        "draw_passes": 4,
+        "elapsed_ms": 1757.029375,
+        "implementation": "baseline",
+        "max_inward_displacement": 0.0,
+        "metrics": {
+          "bounds": [
+            [
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            [
+              1.0,
+              1.0,
+              1.2403652667999268
+            ]
+          ],
+          "faces_standard_below_015": 36,
+          "folds_over_60": 12,
+          "folds_over_90": 4,
+          "max_fold_degrees": 110.56348856876726,
+          "min_quality_longest": 0.020000010238230673,
+          "min_quality_standard": 0.03638469861372291,
+          "severe_fold_length": 0.04836946921392671,
+          "severe_fold_severity": 0.8786200435875958,
+          "sharp_fold_length": 0.19621756331196216,
+          "signed_volume": 4.21439737592165,
+          "triangles": 88672,
+          "vertices": 44338
+        },
+        "radius": 0.18,
+        "refined_vertices_sum": 3376,
+        "strength": 0.35,
+        "symmetry_x": true
+      },
+      {
+        "case": "stationary256",
+        "changed_vertices_sum": 60634,
+        "crease_passes": 256,
+        "dabs_per_pass": 1,
+        "draw_passes": 0,
+        "elapsed_ms": 418.70162500000004,
+        "implementation": "baseline",
+        "max_inward_displacement": 0.26178377866744995,
+        "metrics": {
+          "bounds": [
+            [
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            [
+              1.0,
+              1.0,
+              1.0
+            ]
+          ],
+          "faces_standard_below_015": 14,
+          "folds_over_60": 186,
+          "folds_over_90": 54,
+          "max_fold_degrees": 149.99827486003147,
+          "min_quality_longest": 0.020172003312749674,
+          "min_quality_standard": 0.04622289999077538,
+          "severe_fold_length": 5.054896214772682,
+          "severe_fold_severity": 77.65165125402282,
+          "sharp_fold_length": 13.4708486454812,
+          "signed_volume": 4.1737679865232336,
+          "triangles": 81920,
+          "vertices": 40962
+        },
+        "radius": 0.18,
+        "refined_vertices_sum": 0,
+        "strength": 0.35,
+        "symmetry_x": true
+      },
+      {
+        "case": "user_continuation",
+        "changed_vertices_sum": 0,
+        "dabs": 32,
+        "elapsed_ms": 82.43120800000001,
+        "implementation": "baseline",
+        "max_old_vertex_displacement": 0.0,
+        "metrics": {
+          "bounds": [
+            [
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            [
+              1.0,
+              1.0,
+              2.444972276687622
+            ]
+          ],
+          "faces_standard_below_015": 64,
+          "folds_over_60": 210,
+          "folds_over_90": 78,
+          "max_fold_degrees": 149.9999813835879,
+          "min_quality_longest": 0.020000001042248715,
+          "min_quality_standard": 0.04055303360347116,
+          "severe_fold_length": 1.0192062901801278,
+          "severe_fold_severity": 47.700800542104425,
+          "sharp_fold_length": 2.8193303052415333,
+          "signed_volume": 4.33614527280467,
+          "triangles": 123156,
+          "vertices": 61580
+        },
+        "radius": 0.18,
+        "ray_direction": [
+          0.4652443826198578,
+          -0.6029388308525085,
+          -0.6480836272239685
+        ],
+        "ray_origin": [
+          -0.22413156926631927,
+          0.3941008150577545,
+          1.5166974067687988
+        ],
+        "refined_vertices_sum": 0,
+        "region": 0,
+        "strength": 0.35,
+        "symmetry_x": true
+      },
+      {
+        "case": "user_continuation",
+        "changed_vertices_sum": 0,
+        "dabs": 32,
+        "elapsed_ms": 80.88175,
+        "implementation": "baseline",
+        "max_old_vertex_displacement": 0.0,
+        "metrics": {
+          "bounds": [
+            [
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            [
+              1.0,
+              1.0,
+              2.444972276687622
+            ]
+          ],
+          "faces_standard_below_015": 64,
+          "folds_over_60": 210,
+          "folds_over_90": 78,
+          "max_fold_degrees": 149.9999813835879,
+          "min_quality_longest": 0.020000001042248715,
+          "min_quality_standard": 0.04055303360347116,
+          "severe_fold_length": 1.0192062901801278,
+          "severe_fold_severity": 47.700800542104425,
+          "sharp_fold_length": 2.8193303052415333,
+          "signed_volume": 4.33614527280467,
+          "triangles": 123156,
+          "vertices": 61580
+        },
+        "radius": 0.18,
+        "ray_direction": [
+          0.24327309429645538,
+          -0.13260690867900848,
+          -0.9608504772186279
+        ],
+        "ray_origin": [
+          -0.09403727203607559,
+          0.4737412631511688,
+          1.4025652408599854
+        ],
+        "refined_vertices_sum": 0,
+        "region": 1,
+        "strength": 0.35,
+        "symmetry_x": true
+      },
+      {
+        "case": "user_continuation",
+        "changed_vertices_sum": 0,
+        "dabs": 32,
+        "elapsed_ms": 83.923292,
+        "implementation": "baseline",
+        "max_old_vertex_displacement": 0.0,
+        "metrics": {
+          "bounds": [
+            [
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            [
+              1.0,
+              1.0,
+              2.444972276687622
+            ]
+          ],
+          "faces_standard_below_015": 64,
+          "folds_over_60": 210,
+          "folds_over_90": 78,
+          "max_fold_degrees": 149.9999813835879,
+          "min_quality_longest": 0.020000001042248715,
+          "min_quality_standard": 0.04055303360347116,
+          "severe_fold_length": 1.0192062901801278,
+          "severe_fold_severity": 47.700800542104425,
+          "sharp_fold_length": 2.8193303052415333,
+          "signed_volume": 4.33614527280467,
+          "triangles": 123156,
+          "vertices": 61580
+        },
+        "radius": 0.18,
+        "ray_direction": [
+          -0.9814462065696716,
+          -0.11008191108703613,
+          -0.15698832273483276
+        ],
+        "ray_origin": [
+          0.19033125042915344,
+          0.2979622185230255,
+          1.667819857597351
+        ],
+        "refined_vertices_sum": 0,
+        "region": 2,
+        "strength": 0.35,
+        "symmetry_x": true
+      },
+      {
+        "case": "user_continuation",
+        "changed_vertices_sum": 0,
+        "dabs": 32,
+        "elapsed_ms": 115.859792,
+        "implementation": "baseline",
+        "max_old_vertex_displacement": 0.0,
+        "metrics": {
+          "bounds": [
+            [
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            [
+              1.0,
+              1.0,
+              2.444972276687622
+            ]
+          ],
+          "faces_standard_below_015": 64,
+          "folds_over_60": 210,
+          "folds_over_90": 78,
+          "max_fold_degrees": 149.9999813835879,
+          "min_quality_longest": 0.020000001042248715,
+          "min_quality_standard": 0.04055303360347116,
+          "severe_fold_length": 1.0192062901801278,
+          "severe_fold_severity": 47.700800542104425,
+          "sharp_fold_length": 2.8193303052415333,
+          "signed_volume": 4.33614527280467,
+          "triangles": 123156,
+          "vertices": 61580
+        },
+        "radius": 0.18,
+        "ray_direction": [
+          0.9814462065696716,
+          -0.11008191108703613,
+          -0.15698832273483276
+        ],
+        "ray_origin": [
+          -0.19033125042915344,
+          0.2979622185230255,
+          1.667819857597351
+        ],
+        "refined_vertices_sum": 0,
+        "region": 3,
+        "strength": 0.35,
+        "symmetry_x": true
+      },
+      {
+        "case": "fresh_crease16",
+        "changed_vertices_sum": 354954,
+        "crease_passes": 16,
+        "dabs_per_pass": 41,
+        "draw_passes": 0,
+        "elapsed_ms": 2672.235625,
+        "implementation": "candidate",
+        "max_inward_displacement": 0.17509397864341736,
+        "metrics": {
+          "bounds": [
+            [
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            [
+              1.0,
+              1.0,
+              0.9967191219329834
+            ]
+          ],
+          "faces_standard_below_015": 0,
+          "folds_over_60": 2,
+          "folds_over_90": 0,
+          "max_fold_degrees": 62.37097398999719,
+          "min_quality_longest": 0.09627992049407075,
+          "min_quality_standard": 0.2083471002216857,
+          "severe_fold_length": 0.0,
+          "severe_fold_severity": 0.0,
+          "sharp_fold_length": 0.009299791255022513,
+          "signed_volume": 4.169901933172206,
+          "triangles": 88278,
+          "vertices": 44141
+        },
+        "radius": 0.18,
+        "refined_vertices_sum": 3179,
+        "strength": 0.35,
+        "symmetry_x": true
+      },
+      {
+        "case": "draw4_crease8",
+        "changed_vertices_sum": 476811,
+        "crease_passes": 8,
+        "dabs_per_pass": 41,
+        "draw_passes": 4,
+        "elapsed_ms": 2584.4025,
+        "implementation": "candidate",
+        "max_inward_displacement": 0.0,
+        "metrics": {
+          "bounds": [
+            [
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            [
+              1.0,
+              1.0,
+              1.195693850517273
+            ]
+          ],
+          "faces_standard_below_015": 0,
+          "folds_over_60": 0,
+          "folds_over_90": 0,
+          "max_fold_degrees": 50.772430964779005,
+          "min_quality_longest": 0.10000039883699291,
+          "min_quality_standard": 0.19792342079772787,
+          "severe_fold_length": 0.0,
+          "severe_fold_severity": 0.0,
+          "sharp_fold_length": 0.0,
+          "signed_volume": 4.2073687571025395,
+          "triangles": 89048,
+          "vertices": 44526
+        },
+        "radius": 0.18,
+        "refined_vertices_sum": 3564,
+        "strength": 0.35,
+        "symmetry_x": true
+      },
+      {
+        "case": "stationary256",
+        "changed_vertices_sum": 75314,
+        "crease_passes": 256,
+        "dabs_per_pass": 1,
+        "draw_passes": 0,
+        "elapsed_ms": 979.835541,
+        "implementation": "candidate",
+        "max_inward_displacement": 0.128644198179245,
+        "metrics": {
+          "bounds": [
+            [
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            [
+              1.0,
+              1.0,
+              1.0
+            ]
+          ],
+          "faces_standard_below_015": 0,
+          "folds_over_60": 0,
+          "folds_over_90": 0,
+          "max_fold_degrees": 17.83462181136097,
+          "min_quality_longest": 0.09421162835468765,
+          "min_quality_standard": 0.2143141526802004,
+          "severe_fold_length": 0.0,
+          "severe_fold_severity": 0.0,
+          "sharp_fold_length": 0.0,
+          "signed_volume": 4.182258771508928,
+          "triangles": 85024,
+          "vertices": 42514
+        },
+        "radius": 0.18,
+        "refined_vertices_sum": 1552,
+        "strength": 0.35,
+        "symmetry_x": true
+      },
+      {
+        "case": "user_continuation",
+        "changed_vertices_sum": 0,
+        "dabs": 32,
+        "elapsed_ms": 97.49079200000001,
+        "implementation": "candidate",
+        "max_old_vertex_displacement": 0.0,
+        "metrics": {
+          "bounds": [
+            [
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            [
+              1.0,
+              1.0,
+              2.444972276687622
+            ]
+          ],
+          "faces_standard_below_015": 64,
+          "folds_over_60": 210,
+          "folds_over_90": 78,
+          "max_fold_degrees": 149.9999813835879,
+          "min_quality_longest": 0.020000001042248715,
+          "min_quality_standard": 0.04055303360347116,
+          "severe_fold_length": 1.0192062901801278,
+          "severe_fold_severity": 47.700800542104425,
+          "sharp_fold_length": 2.8193303052415333,
+          "signed_volume": 4.33614527280467,
+          "triangles": 123156,
+          "vertices": 61580
+        },
+        "radius": 0.18,
+        "ray_direction": [
+          0.4652443826198578,
+          -0.6029388308525085,
+          -0.6480836272239685
+        ],
+        "ray_origin": [
+          -0.22413156926631927,
+          0.3941008150577545,
+          1.5166974067687988
+        ],
+        "refined_vertices_sum": 0,
+        "region": 0,
+        "strength": 0.35,
+        "symmetry_x": true
+      },
+      {
+        "case": "user_continuation",
+        "changed_vertices_sum": 0,
+        "dabs": 32,
+        "elapsed_ms": 109.499125,
+        "implementation": "candidate",
+        "max_old_vertex_displacement": 0.0,
+        "metrics": {
+          "bounds": [
+            [
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            [
+              1.0,
+              1.0,
+              2.444972276687622
+            ]
+          ],
+          "faces_standard_below_015": 64,
+          "folds_over_60": 210,
+          "folds_over_90": 78,
+          "max_fold_degrees": 149.9999813835879,
+          "min_quality_longest": 0.020000001042248715,
+          "min_quality_standard": 0.04055303360347116,
+          "severe_fold_length": 1.0192062901801278,
+          "severe_fold_severity": 47.700800542104425,
+          "sharp_fold_length": 2.8193303052415333,
+          "signed_volume": 4.33614527280467,
+          "triangles": 123156,
+          "vertices": 61580
+        },
+        "radius": 0.18,
+        "ray_direction": [
+          0.24327309429645538,
+          -0.13260690867900848,
+          -0.9608504772186279
+        ],
+        "ray_origin": [
+          -0.09403727203607559,
+          0.4737412631511688,
+          1.4025652408599854
+        ],
+        "refined_vertices_sum": 0,
+        "region": 1,
+        "strength": 0.35,
+        "symmetry_x": true
+      },
+      {
+        "case": "user_continuation",
+        "changed_vertices_sum": 0,
+        "dabs": 32,
+        "elapsed_ms": 99.198875,
+        "implementation": "candidate",
+        "max_old_vertex_displacement": 0.0,
+        "metrics": {
+          "bounds": [
+            [
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            [
+              1.0,
+              1.0,
+              2.444972276687622
+            ]
+          ],
+          "faces_standard_below_015": 64,
+          "folds_over_60": 210,
+          "folds_over_90": 78,
+          "max_fold_degrees": 149.9999813835879,
+          "min_quality_longest": 0.020000001042248715,
+          "min_quality_standard": 0.04055303360347116,
+          "severe_fold_length": 1.0192062901801278,
+          "severe_fold_severity": 47.700800542104425,
+          "sharp_fold_length": 2.8193303052415333,
+          "signed_volume": 4.33614527280467,
+          "triangles": 123156,
+          "vertices": 61580
+        },
+        "radius": 0.18,
+        "ray_direction": [
+          -0.9814462065696716,
+          -0.11008191108703613,
+          -0.15698832273483276
+        ],
+        "ray_origin": [
+          0.19033125042915344,
+          0.2979622185230255,
+          1.667819857597351
+        ],
+        "refined_vertices_sum": 0,
+        "region": 2,
+        "strength": 0.35,
+        "symmetry_x": true
+      },
+      {
+        "case": "user_continuation",
+        "changed_vertices_sum": 0,
+        "dabs": 32,
+        "elapsed_ms": 99.032916,
+        "implementation": "candidate",
+        "max_old_vertex_displacement": 0.0,
+        "metrics": {
+          "bounds": [
+            [
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            [
+              1.0,
+              1.0,
+              2.444972276687622
+            ]
+          ],
+          "faces_standard_below_015": 64,
+          "folds_over_60": 210,
+          "folds_over_90": 78,
+          "max_fold_degrees": 149.9999813835879,
+          "min_quality_longest": 0.020000001042248715,
+          "min_quality_standard": 0.04055303360347116,
+          "severe_fold_length": 1.0192062901801278,
+          "severe_fold_severity": 47.700800542104425,
+          "sharp_fold_length": 2.8193303052415333,
+          "signed_volume": 4.33614527280467,
+          "triangles": 123156,
+          "vertices": 61580
+        },
+        "radius": 0.18,
+        "ray_direction": [
+          0.9814462065696716,
+          -0.11008191108703613,
+          -0.15698832273483276
+        ],
+        "ray_origin": [
+          -0.19033125042915344,
+          0.2979622185230255,
+          1.667819857597351
+        ],
+        "refined_vertices_sum": 0,
+        "region": 3,
+        "strength": 0.35,
+        "symmetry_x": true
+      },
+      {
+        "case": "smooth_repair_preview",
+        "changed_vertices_sum": 4099,
+        "colors_unchanged": true,
+        "dabs_per_region_per_sweep": 8,
+        "implementation": "candidate",
+        "masks_unchanged": true,
+        "max_displacement": 0.0002087946777464822,
+        "metrics": {
+          "bounds": [
+            [
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            [
+              1.0,
+              1.0,
+              2.444972276687622
+            ]
+          ],
+          "faces_standard_below_015": 64,
+          "folds_over_60": 210,
+          "folds_over_90": 78,
+          "max_fold_degrees": 149.99994920069938,
+          "min_quality_longest": 0.020000001042248715,
+          "min_quality_standard": 0.04055303360347116,
+          "severe_fold_length": 1.0187536382568874,
+          "severe_fold_severity": 47.53219546168098,
+          "sharp_fold_length": 2.8188776533182933,
+          "signed_volume": 4.33614572289413,
+          "triangles": 123156,
+          "vertices": 61580
+        },
+        "radius": 0.18,
+        "rms_displacement": 2.3170092355544455e-06,
+        "strength": 0.35,
+        "sweeps": 8,
+        "symmetry_x": true
+      }
+    ],
+    "timing_note": "Release CPU wall times include geometry+picking and exclude browser/native render+input queue; not a frame-time claim."
+  },
+  "independent_long_regression": {
+    "test_file": "crates/obrush-core/tests/crease_detail.rs",
+    "sphere5": {
+      "crease16x41": {
+        "measured_inward_groove": 0.16795167,
+        "new_vertices": 4445,
+        "final_standard_quality_min": 0.20589314066958922,
+        "max_adjacent_fold_degrees": 66.7515799084858
+      },
+      "draw4x41_then_crease8x41": {
+        "measured_inward_groove_from_pre_crease_surface": 0.14276923,
+        "new_vertices": 3343,
+        "final_standard_quality_min": 0.19985343410171796,
+        "max_adjacent_fold_degrees": 37.58197813870313
+      }
+    },
+    "gates": "After every pass: closed consistently wound topology, standard quality>0.15 and adjacent angle<=90.001deg; useful final groove>0.04; unchanged original attributes and distant vertices; max1024 refinement vertices/dab.",
+    "other_regressions": "Clay/Inflate/Flatten adaptive detail undo/redo; authored sharp hinge Smooth improves without moving protected vertices; masked shared-edge transition remains planar/conforming; unsafe skinny transition is explicitly limited; old face orientation checked before topology changes."
+  },
+  "fourteen_case_probe": {
+    "record_path": ".artifacts/crease-detail-experiments/final-14-cases-output.jsonl",
+    "record_sha256": "02cf433f890b9dbcf245efa58cd2e9e84d9026242144ab48125efdbcb0c49418",
+    "records": [
+      {
+        "after_move_metrics": null,
+        "brush": "crease",
+        "case": "default_repeated_line",
+        "changed_vertices_total": 31067,
+        "continuous_turnaround": false,
+        "cpu_crease_elapsed_ms": 280.353625,
+        "crease_dabs": 41,
+        "dabs_per_pass": 41,
+        "final_metrics": {
+          "adjacent_normal_angle_over_160_edges": 0,
+          "low_quality_faces": 0,
+          "max_vertex_displacement": 0.042621407932285575,
+          "maximum_inward_displacement": 0.04240994177964603,
+          "maximum_radial_change": 0.0,
+          "min_area_ratio": 0.5336882353541399,
+          "min_edge_ratio": 0.5736628130461825,
+          "min_triangle_quality": 0.568463984366967,
+          "minimum_radial_change": -0.04240983203446658,
+          "near_zero_area_faces": 0,
+          "nonfinite_vertices": 0,
+          "reference_normal_reversed_faces": 0
+        },
+        "first_per_dab_flip": null,
+        "invert": false,
+        "minimum_per_dab_area_ratio": 0.9349915948898847,
+        "missed_rays": 0,
+        "move": null,
+        "notes": "Final area/edge ratios use initial sphere triangle/edge. Per-dab flips compare to positions immediately before that dab. Quality=4sqrt(3)*area/sum(edge_length_squared), equilateral=1. Reversed reference normals and extreme adjacent angles diagnose deformation, not general self-intersection. CPU time includes per-dab diagnostic scans, excludes rendering/UI/final metric scan.",
+        "passes": 1,
+        "path": "alternating direction 41-dab lines x=-0.4..0.4 step0.02,y0.09,z3 toward-Z; re-pick every dab",
+        "per_dab_flip_events": 0,
+        "radius": 0.18000000715255737,
+        "reference_basis": "original-parent displacement/ratios; pre-dab-parent reversals; final-child quality/folds",
+        "sphere_level": 6,
+        "strength": 0.3499999940395355,
+        "symmetry_x": true,
+        "triangles": 83640,
+        "valid_structure": true,
+        "vertices": 41822
+      },
+      {
+        "after_move_metrics": null,
+        "brush": "crease",
+        "case": "default_repeated_line",
+        "changed_vertices_total": 78485,
+        "continuous_turnaround": false,
+        "cpu_crease_elapsed_ms": 566.585958,
+        "crease_dabs": 82,
+        "dabs_per_pass": 41,
+        "final_metrics": {
+          "adjacent_normal_angle_over_160_edges": 0,
+          "low_quality_faces": 0,
+          "max_vertex_displacement": 0.08401056658355262,
+          "maximum_inward_displacement": 0.08388888789834573,
+          "maximum_radial_change": 0.0,
+          "min_area_ratio": 0.3187192911585912,
+          "min_edge_ratio": 0.35905695998064824,
+          "min_triangle_quality": 0.4650700694738613,
+          "minimum_radial_change": -0.08388765905274365,
+          "near_zero_area_faces": 0,
+          "nonfinite_vertices": 0,
+          "reference_normal_reversed_faces": 0
+        },
+        "first_per_dab_flip": null,
+        "invert": false,
+        "minimum_per_dab_area_ratio": 0.9327571404178128,
+        "missed_rays": 0,
+        "move": null,
+        "notes": "Final area/edge ratios use initial sphere triangle/edge. Per-dab flips compare to positions immediately before that dab. Quality=4sqrt(3)*area/sum(edge_length_squared), equilateral=1. Reversed reference normals and extreme adjacent angles diagnose deformation, not general self-intersection. CPU time includes per-dab diagnostic scans, excludes rendering/UI/final metric scan.",
+        "passes": 2,
+        "path": "alternating direction 41-dab lines x=-0.4..0.4 step0.02,y0.09,z3 toward-Z; re-pick every dab",
+        "per_dab_flip_events": 0,
+        "radius": 0.18000000715255737,
+        "reference_basis": "original-parent displacement/ratios; pre-dab-parent reversals; final-child quality/folds",
+        "sphere_level": 6,
+        "strength": 0.3499999940395355,
+        "symmetry_x": true,
+        "triangles": 84708,
+        "valid_structure": true,
+        "vertices": 42356
+      },
+      {
+        "after_move_metrics": null,
+        "brush": "crease",
+        "case": "default_repeated_line",
+        "changed_vertices_total": 200544,
+        "continuous_turnaround": false,
+        "cpu_crease_elapsed_ms": 1208.99225,
+        "crease_dabs": 164,
+        "dabs_per_pass": 41,
+        "final_metrics": {
+          "adjacent_normal_angle_over_160_edges": 0,
+          "low_quality_faces": 0,
+          "max_vertex_displacement": 0.16443955507081678,
+          "maximum_inward_displacement": 0.16308126132916897,
+          "maximum_radial_change": 0.0,
+          "min_area_ratio": 0.14014761700273162,
+          "min_edge_ratio": 0.15781471331773064,
+          "min_triangle_quality": 0.23226129643946344,
+          "minimum_radial_change": -0.16305601565723282,
+          "near_zero_area_faces": 0,
+          "nonfinite_vertices": 0,
+          "reference_normal_reversed_faces": 0
+        },
+        "first_per_dab_flip": null,
+        "invert": false,
+        "minimum_per_dab_area_ratio": 0.9210368177691809,
+        "missed_rays": 0,
+        "move": null,
+        "notes": "Final area/edge ratios use initial sphere triangle/edge. Per-dab flips compare to positions immediately before that dab. Quality=4sqrt(3)*area/sum(edge_length_squared), equilateral=1. Reversed reference normals and extreme adjacent angles diagnose deformation, not general self-intersection. CPU time includes per-dab diagnostic scans, excludes rendering/UI/final metric scan.",
+        "passes": 4,
+        "path": "alternating direction 41-dab lines x=-0.4..0.4 step0.02,y0.09,z3 toward-Z; re-pick every dab",
+        "per_dab_flip_events": 0,
+        "radius": 0.18000000715255737,
+        "reference_basis": "original-parent displacement/ratios; pre-dab-parent reversals; final-child quality/folds",
+        "sphere_level": 6,
+        "strength": 0.3499999940395355,
+        "symmetry_x": true,
+        "triangles": 87278,
+        "valid_structure": true,
+        "vertices": 43641
+      },
+      {
+        "after_move_metrics": null,
+        "brush": "crease",
+        "case": "default_repeated_line",
+        "changed_vertices_total": 349124,
+        "continuous_turnaround": false,
+        "cpu_crease_elapsed_ms": 2951.3172499999996,
+        "crease_dabs": 656,
+        "dabs_per_pass": 41,
+        "final_metrics": {
+          "adjacent_normal_angle_over_160_edges": 0,
+          "low_quality_faces": 0,
+          "max_vertex_displacement": 0.17600756614870394,
+          "maximum_inward_displacement": 0.17509316826290972,
+          "maximum_radial_change": 0.0,
+          "min_area_ratio": 0.12154759472181509,
+          "min_edge_ratio": 0.14340448828598906,
+          "min_triangle_quality": 0.20834864794307265,
+          "minimum_radial_change": -0.17503779292440824,
+          "near_zero_area_faces": 0,
+          "nonfinite_vertices": 0,
+          "reference_normal_reversed_faces": 0
+        },
+        "first_per_dab_flip": null,
+        "invert": false,
+        "minimum_per_dab_area_ratio": 0.9210368177691809,
+        "missed_rays": 0,
+        "move": null,
+        "notes": "Final area/edge ratios use initial sphere triangle/edge. Per-dab flips compare to positions immediately before that dab. Quality=4sqrt(3)*area/sum(edge_length_squared), equilateral=1. Reversed reference normals and extreme adjacent angles diagnose deformation, not general self-intersection. CPU time includes per-dab diagnostic scans, excludes rendering/UI/final metric scan.",
+        "passes": 16,
+        "path": "alternating direction 41-dab lines x=-0.4..0.4 step0.02,y0.09,z3 toward-Z; re-pick every dab",
+        "per_dab_flip_events": 0,
+        "radius": 0.18000000715255737,
+        "reference_basis": "original-parent displacement/ratios; pre-dab-parent reversals; final-child quality/folds",
+        "sphere_level": 6,
+        "strength": 0.3499999940395355,
+        "symmetry_x": true,
+        "triangles": 88278,
+        "valid_structure": true,
+        "vertices": 44141
+      },
+      {
+        "after_move_metrics": null,
+        "brush": "crease",
+        "case": "default_symmetry_off",
+        "changed_vertices_total": 88826,
+        "continuous_turnaround": false,
+        "cpu_crease_elapsed_ms": 1021.9486659999999,
+        "crease_dabs": 164,
+        "dabs_per_pass": 41,
+        "final_metrics": {
+          "adjacent_normal_angle_over_160_edges": 0,
+          "low_quality_faces": 0,
+          "max_vertex_displacement": 0.08758357922037857,
+          "maximum_inward_displacement": 0.08694263532829974,
+          "maximum_radial_change": 0.0,
+          "min_area_ratio": 0.2842607087447325,
+          "min_edge_ratio": 0.35312668105494566,
+          "min_triangle_quality": 0.4402397183548629,
+          "minimum_radial_change": -0.08692991409103323,
+          "near_zero_area_faces": 0,
+          "nonfinite_vertices": 0,
+          "reference_normal_reversed_faces": 0
+        },
+        "first_per_dab_flip": null,
+        "invert": false,
+        "minimum_per_dab_area_ratio": 0.9170818623297999,
+        "missed_rays": 0,
+        "move": null,
+        "notes": "Final area/edge ratios use initial sphere triangle/edge. Per-dab flips compare to positions immediately before that dab. Quality=4sqrt(3)*area/sum(edge_length_squared), equilateral=1. Reversed reference normals and extreme adjacent angles diagnose deformation, not general self-intersection. CPU time includes per-dab diagnostic scans, excludes rendering/UI/final metric scan.",
+        "passes": 4,
+        "path": "alternating direction 41-dab lines x=-0.4..0.4 step0.02,y0.09,z3 toward-Z; re-pick every dab",
+        "per_dab_flip_events": 0,
+        "radius": 0.18000000715255737,
+        "reference_basis": "original-parent displacement/ratios; pre-dab-parent reversals; final-child quality/folds",
+        "sphere_level": 6,
+        "strength": 0.3499999940395355,
+        "symmetry_x": false,
+        "triangles": 84806,
+        "valid_structure": true,
+        "vertices": 42405
+      },
+      {
+        "after_move_metrics": null,
+        "brush": "crease",
+        "case": "default_continuous_turnaround",
+        "changed_vertices_total": 196076,
+        "continuous_turnaround": true,
+        "cpu_crease_elapsed_ms": 1185.461375,
+        "crease_dabs": 161,
+        "dabs_per_pass": 41,
+        "final_metrics": {
+          "adjacent_normal_angle_over_160_edges": 0,
+          "low_quality_faces": 0,
+          "max_vertex_displacement": 0.16431335502607008,
+          "maximum_inward_displacement": 0.16287705360516197,
+          "maximum_radial_change": 0.0,
+          "min_area_ratio": 0.14081452363943003,
+          "min_edge_ratio": 0.15858298946922564,
+          "min_triangle_quality": 0.2308318751527569,
+          "minimum_radial_change": -0.16285650826351328,
+          "near_zero_area_faces": 0,
+          "nonfinite_vertices": 0,
+          "reference_normal_reversed_faces": 0
+        },
+        "first_per_dab_flip": null,
+        "invert": false,
+        "minimum_per_dab_area_ratio": 0.9210433929926198,
+        "missed_rays": 0,
+        "move": null,
+        "notes": "Final area/edge ratios use initial sphere triangle/edge. Per-dab flips compare to positions immediately before that dab. Quality=4sqrt(3)*area/sum(edge_length_squared), equilateral=1. Reversed reference normals and extreme adjacent angles diagnose deformation, not general self-intersection. CPU time includes per-dab diagnostic scans, excludes rendering/UI/final metric scan.",
+        "passes": 4,
+        "path": "alternating direction 41-dab lines x=-0.4..0.4 step0.02,y0.09,z3 toward-Z; re-pick every dab",
+        "per_dab_flip_events": 0,
+        "radius": 0.18000000715255737,
+        "reference_basis": "original-parent displacement/ratios; pre-dab-parent reversals; final-child quality/folds",
+        "sphere_level": 6,
+        "strength": 0.3499999940395355,
+        "symmetry_x": true,
+        "triangles": 87178,
+        "valid_structure": true,
+        "vertices": 43591
+      },
+      {
+        "after_move_metrics": null,
+        "brush": "crease",
+        "case": "density_repeated_line",
+        "changed_vertices_total": 587571,
+        "continuous_turnaround": false,
+        "cpu_crease_elapsed_ms": 1612.623083,
+        "crease_dabs": 656,
+        "dabs_per_pass": 41,
+        "final_metrics": {
+          "adjacent_normal_angle_over_160_edges": 0,
+          "low_quality_faces": 0,
+          "max_vertex_displacement": 0.1690033599378766,
+          "maximum_inward_displacement": 0.16796678174402002,
+          "maximum_radial_change": 0.0,
+          "min_area_ratio": 0.09169743655304895,
+          "min_edge_ratio": 0.1753052292627154,
+          "min_triangle_quality": 0.20589285080702496,
+          "minimum_radial_change": -0.16792103566015337,
+          "near_zero_area_faces": 0,
+          "nonfinite_vertices": 0,
+          "reference_normal_reversed_faces": 0
+        },
+        "first_per_dab_flip": null,
+        "invert": false,
+        "minimum_per_dab_area_ratio": 0.8630560556362574,
+        "missed_rays": 0,
+        "move": null,
+        "notes": "Final area/edge ratios use initial sphere triangle/edge. Per-dab flips compare to positions immediately before that dab. Quality=4sqrt(3)*area/sum(edge_length_squared), equilateral=1. Reversed reference normals and extreme adjacent angles diagnose deformation, not general self-intersection. CPU time includes per-dab diagnostic scans, excludes rendering/UI/final metric scan.",
+        "passes": 16,
+        "path": "alternating direction 41-dab lines x=-0.4..0.4 step0.02,y0.09,z3 toward-Z; re-pick every dab",
+        "per_dab_flip_events": 0,
+        "radius": 0.18000000715255737,
+        "reference_basis": "original-parent displacement/ratios; pre-dab-parent reversals; final-child quality/folds",
+        "sphere_level": 5,
+        "strength": 0.3499999940395355,
+        "symmetry_x": true,
+        "triangles": 29370,
+        "valid_structure": true,
+        "vertices": 14687
+      },
+      {
+        "after_move_metrics": null,
+        "brush": "crease",
+        "case": "density_repeated_line",
+        "changed_vertices_total": 955652,
+        "continuous_turnaround": false,
+        "cpu_crease_elapsed_ms": 10597.764834,
+        "crease_dabs": 656,
+        "dabs_per_pass": 41,
+        "final_metrics": {
+          "adjacent_normal_angle_over_160_edges": 0,
+          "low_quality_faces": 0,
+          "max_vertex_displacement": 0.20484525027398376,
+          "maximum_inward_displacement": 0.20228254482538116,
+          "maximum_radial_change": 0.0,
+          "min_area_ratio": 0.06667409961278811,
+          "min_edge_ratio": 0.07448648402487867,
+          "min_triangle_quality": 0.17241466633727134,
+          "minimum_radial_change": -0.20216000803099343,
+          "near_zero_area_faces": 0,
+          "nonfinite_vertices": 0,
+          "reference_normal_reversed_faces": 0
+        },
+        "first_per_dab_flip": null,
+        "invert": false,
+        "minimum_per_dab_area_ratio": 0.9155147822676077,
+        "missed_rays": 0,
+        "move": null,
+        "notes": "Final area/edge ratios use initial sphere triangle/edge. Per-dab flips compare to positions immediately before that dab. Quality=4sqrt(3)*area/sum(edge_length_squared), equilateral=1. Reversed reference normals and extreme adjacent angles diagnose deformation, not general self-intersection. CPU time includes per-dab diagnostic scans, excludes rendering/UI/final metric scan.",
+        "passes": 16,
+        "path": "alternating direction 41-dab lines x=-0.4..0.4 step0.02,y0.09,z3 toward-Z; re-pick every dab",
+        "per_dab_flip_events": 0,
+        "radius": 0.18000000715255737,
+        "reference_basis": "original-parent displacement/ratios; pre-dab-parent reversals; final-child quality/folds",
+        "sphere_level": 7,
+        "strength": 0.3499999940395355,
+        "symmetry_x": true,
+        "triangles": 332752,
+        "valid_structure": true,
+        "vertices": 166378
+      },
+      {
+        "after_move_metrics": null,
+        "brush": "crease",
+        "case": "repeated_same_point",
+        "changed_vertices_total": 75314,
+        "continuous_turnaround": false,
+        "cpu_crease_elapsed_ms": 456.42925,
+        "crease_dabs": 64,
+        "dabs_per_pass": 1,
+        "final_metrics": {
+          "adjacent_normal_angle_over_160_edges": 0,
+          "low_quality_faces": 0,
+          "max_vertex_displacement": 0.13282387336387416,
+          "maximum_inward_displacement": 0.1286442009180694,
+          "maximum_radial_change": 0.0,
+          "min_area_ratio": 0.056241023288384276,
+          "min_edge_ratio": 0.23135358024756447,
+          "min_triangle_quality": 0.2143141526802004,
+          "minimum_radial_change": -0.12855128477893452,
+          "near_zero_area_faces": 0,
+          "nonfinite_vertices": 0,
+          "reference_normal_reversed_faces": 0
+        },
+        "first_per_dab_flip": null,
+        "invert": false,
+        "minimum_per_dab_area_ratio": 0.9451388022319762,
+        "missed_rays": 0,
+        "move": null,
+        "notes": "Final area/edge ratios use initial sphere triangle/edge. Per-dab flips compare to positions immediately before that dab. Quality=4sqrt(3)*area/sum(edge_length_squared), equilateral=1. Reversed reference normals and extreme adjacent angles diagnose deformation, not general self-intersection. CPU time includes per-dab diagnostic scans, excludes rendering/UI/final metric scan.",
+        "passes": 64,
+        "path": "each dab ray (0.23,0.09,3) toward -Z, re-pick current mesh",
+        "per_dab_flip_events": 0,
+        "radius": 0.18000000715255737,
+        "reference_basis": "original-parent displacement/ratios; pre-dab-parent reversals; final-child quality/folds",
+        "sphere_level": 6,
+        "strength": 0.3499999940395355,
+        "symmetry_x": true,
+        "triangles": 85024,
+        "valid_structure": true,
+        "vertices": 42514
+      },
+      {
+        "after_move_metrics": null,
+        "brush": "crease",
+        "case": "repeated_same_point",
+        "changed_vertices_total": 75314,
+        "continuous_turnaround": false,
+        "cpu_crease_elapsed_ms": 1078.8400410000002,
+        "crease_dabs": 256,
+        "dabs_per_pass": 1,
+        "final_metrics": {
+          "adjacent_normal_angle_over_160_edges": 0,
+          "low_quality_faces": 0,
+          "max_vertex_displacement": 0.13282387336387416,
+          "maximum_inward_displacement": 0.1286442009180694,
+          "maximum_radial_change": 0.0,
+          "min_area_ratio": 0.056241023288384276,
+          "min_edge_ratio": 0.23135358024756447,
+          "min_triangle_quality": 0.2143141526802004,
+          "minimum_radial_change": -0.12855128477893452,
+          "near_zero_area_faces": 0,
+          "nonfinite_vertices": 0,
+          "reference_normal_reversed_faces": 0
+        },
+        "first_per_dab_flip": null,
+        "invert": false,
+        "minimum_per_dab_area_ratio": 0.9451388022319762,
+        "missed_rays": 0,
+        "move": null,
+        "notes": "Final area/edge ratios use initial sphere triangle/edge. Per-dab flips compare to positions immediately before that dab. Quality=4sqrt(3)*area/sum(edge_length_squared), equilateral=1. Reversed reference normals and extreme adjacent angles diagnose deformation, not general self-intersection. CPU time includes per-dab diagnostic scans, excludes rendering/UI/final metric scan.",
+        "passes": 256,
+        "path": "each dab ray (0.23,0.09,3) toward -Z, re-pick current mesh",
+        "per_dab_flip_events": 0,
+        "radius": 0.18000000715255737,
+        "reference_basis": "original-parent displacement/ratios; pre-dab-parent reversals; final-child quality/folds",
+        "sphere_level": 6,
+        "strength": 0.3499999940395355,
+        "symmetry_x": true,
+        "triangles": 85024,
+        "valid_structure": true,
+        "vertices": 42514
+      },
+      {
+        "after_move_metrics": null,
+        "brush": "crease",
+        "case": "strong_repeated_line",
+        "changed_vertices_total": 194242,
+        "continuous_turnaround": false,
+        "cpu_crease_elapsed_ms": 2496.905417,
+        "crease_dabs": 656,
+        "dabs_per_pass": 41,
+        "final_metrics": {
+          "adjacent_normal_angle_over_160_edges": 0,
+          "low_quality_faces": 0,
+          "max_vertex_displacement": 0.17616402274532353,
+          "maximum_inward_displacement": 0.1732318131955978,
+          "maximum_radial_change": 0.0,
+          "min_area_ratio": 0.09730103001915015,
+          "min_edge_ratio": 0.1452557547097045,
+          "min_triangle_quality": 0.20470684803576972,
+          "minimum_radial_change": -0.17310197605412225,
+          "near_zero_area_faces": 0,
+          "nonfinite_vertices": 0,
+          "reference_normal_reversed_faces": 0
+        },
+        "first_per_dab_flip": null,
+        "invert": false,
+        "minimum_per_dab_area_ratio": 0.798474042566229,
+        "missed_rays": 0,
+        "move": null,
+        "notes": "Final area/edge ratios use initial sphere triangle/edge. Per-dab flips compare to positions immediately before that dab. Quality=4sqrt(3)*area/sum(edge_length_squared), equilateral=1. Reversed reference normals and extreme adjacent angles diagnose deformation, not general self-intersection. CPU time includes per-dab diagnostic scans, excludes rendering/UI/final metric scan.",
+        "passes": 16,
+        "path": "alternating direction 41-dab lines x=-0.4..0.4 step0.02,y0.09,z3 toward-Z; re-pick every dab",
+        "per_dab_flip_events": 0,
+        "radius": 0.18000000715255737,
+        "reference_basis": "original-parent displacement/ratios; pre-dab-parent reversals; final-child quality/folds",
+        "sphere_level": 6,
+        "strength": 1.0,
+        "symmetry_x": true,
+        "triangles": 88660,
+        "valid_structure": true,
+        "vertices": 44332
+      },
+      {
+        "after_move_metrics": null,
+        "brush": "crease",
+        "case": "inverted_repeated_line",
+        "changed_vertices_total": 771163,
+        "continuous_turnaround": false,
+        "cpu_crease_elapsed_ms": 4983.913208999999,
+        "crease_dabs": 656,
+        "dabs_per_pass": 41,
+        "final_metrics": {
+          "adjacent_normal_angle_over_160_edges": 0,
+          "low_quality_faces": 0,
+          "max_vertex_displacement": 0.3411986841330749,
+          "maximum_inward_displacement": 0.0,
+          "maximum_radial_change": 0.3230083499197629,
+          "min_area_ratio": 0.5663130947338193,
+          "min_edge_ratio": 0.5601921670728461,
+          "min_triangle_quality": 0.22481616157008652,
+          "minimum_radial_change": 0.0,
+          "near_zero_area_faces": 0,
+          "nonfinite_vertices": 0,
+          "reference_normal_reversed_faces": 22
+        },
+        "first_per_dab_flip": null,
+        "invert": true,
+        "minimum_per_dab_area_ratio": 0.8400822458605486,
+        "missed_rays": 0,
+        "move": null,
+        "notes": "Final area/edge ratios use initial sphere triangle/edge. Per-dab flips compare to positions immediately before that dab. Quality=4sqrt(3)*area/sum(edge_length_squared), equilateral=1. Reversed reference normals and extreme adjacent angles diagnose deformation, not general self-intersection. CPU time includes per-dab diagnostic scans, excludes rendering/UI/final metric scan.",
+        "passes": 16,
+        "path": "alternating direction 41-dab lines x=-0.4..0.4 step0.02,y0.09,z3 toward-Z; re-pick every dab",
+        "per_dab_flip_events": 0,
+        "radius": 0.18000000715255737,
+        "reference_basis": "original-parent displacement/ratios; pre-dab-parent reversals; final-child quality/folds",
+        "sphere_level": 6,
+        "strength": 0.3499999940395355,
+        "symmetry_x": true,
+        "triangles": 100194,
+        "valid_structure": true,
+        "vertices": 50099
+      },
+      {
+        "after_move_metrics": {
+          "adjacent_normal_angle_over_160_edges": 0,
+          "low_quality_faces": 0,
+          "max_vertex_displacement": 0.10451927781105042,
+          "maximum_inward_displacement": 0.02552014438573384,
+          "maximum_radial_change": 0.0,
+          "min_area_ratio": 0.14989811537812803,
+          "min_edge_ratio": 0.3982336577983316,
+          "min_triangle_quality": 0.2990894857779027,
+          "minimum_radial_change": -0.02112266571031962,
+          "near_zero_area_faces": 0,
+          "nonfinite_vertices": 0,
+          "reference_normal_reversed_faces": 0
+        },
+        "brush": "crease",
+        "case": "move_then_crease",
+        "changed_vertices_total": 229856,
+        "continuous_turnaround": false,
+        "cpu_crease_elapsed_ms": 1155.212625,
+        "crease_dabs": 164,
+        "dabs_per_pass": 41,
+        "final_metrics": {
+          "adjacent_normal_angle_over_160_edges": 0,
+          "low_quality_faces": 0,
+          "max_vertex_displacement": 0.17778465758983997,
+          "maximum_inward_displacement": 0.15274835401591524,
+          "maximum_radial_change": 0.0,
+          "min_area_ratio": 0.0915071923987826,
+          "min_edge_ratio": 0.17563738421445488,
+          "min_triangle_quality": 0.21239058737642608,
+          "minimum_radial_change": -0.1501638976480184,
+          "near_zero_area_faces": 0,
+          "nonfinite_vertices": 0,
+          "reference_normal_reversed_faces": 0
+        },
+        "first_per_dab_flip": null,
+        "invert": false,
+        "minimum_per_dab_area_ratio": 0.8852322872901115,
+        "missed_rays": 0,
+        "move": {
+          "dabs": 1,
+          "delta": [
+            0.6000000238418579,
+            0.0,
+            0.0
+          ],
+          "invert": false,
+          "radius": 0.18000000715255737,
+          "ray": [
+            -0.23,
+            0.09,
+            3.0
+          ],
+          "strength": 0.3499999940395355,
+          "symmetry_x": true
+        },
+        "notes": "Final area/edge ratios use initial sphere triangle/edge. Per-dab flips compare to positions immediately before that dab. Quality=4sqrt(3)*area/sum(edge_length_squared), equilateral=1. Reversed reference normals and extreme adjacent angles diagnose deformation, not general self-intersection. CPU time includes per-dab diagnostic scans, excludes rendering/UI/final metric scan.",
+        "passes": 4,
+        "path": "alternating direction 41-dab lines x=-0.4..0.4 step0.02,y0.09,z3 toward-Z; re-pick every dab",
+        "per_dab_flip_events": 0,
+        "radius": 0.18000000715255737,
+        "reference_basis": "original-parent displacement/ratios; pre-dab-parent reversals; final-child quality/folds",
+        "sphere_level": 6,
+        "strength": 0.3499999940395355,
+        "symmetry_x": true,
+        "triangles": 87124,
+        "valid_structure": true,
+        "vertices": 43564
+      },
+      {
+        "after_move_metrics": {
+          "adjacent_normal_angle_over_160_edges": 0,
+          "low_quality_faces": 0,
+          "max_vertex_displacement": 0.11017299399699285,
+          "maximum_inward_displacement": 0.022906789978038883,
+          "maximum_radial_change": 0.0,
+          "min_area_ratio": 0.09950990841935274,
+          "min_edge_ratio": 0.12547997145890344,
+          "min_triangle_quality": 0.19244150571277382,
+          "minimum_radial_change": -0.0181261679606729,
+          "near_zero_area_faces": 0,
+          "nonfinite_vertices": 0,
+          "reference_normal_reversed_faces": 0
+        },
+        "brush": "crease",
+        "case": "move_then_crease",
+        "changed_vertices_total": 241942,
+        "continuous_turnaround": false,
+        "cpu_crease_elapsed_ms": 1214.4983750000001,
+        "crease_dabs": 164,
+        "dabs_per_pass": 41,
+        "final_metrics": {
+          "adjacent_normal_angle_over_160_edges": 0,
+          "low_quality_faces": 0,
+          "max_vertex_displacement": 0.1793931856995489,
+          "maximum_inward_displacement": 0.16018217520063244,
+          "maximum_radial_change": 0.0,
+          "min_area_ratio": 0.08015683851686328,
+          "min_edge_ratio": 0.19028321798933936,
+          "min_triangle_quality": 0.21038506068367754,
+          "minimum_radial_change": -0.15873640898649988,
+          "near_zero_area_faces": 0,
+          "nonfinite_vertices": 0,
+          "reference_normal_reversed_faces": 0
+        },
+        "first_per_dab_flip": null,
+        "invert": false,
+        "minimum_per_dab_area_ratio": 0.8938373379513439,
+        "missed_rays": 0,
+        "move": {
+          "dabs": 1,
+          "delta": [
+            1.2000000476837158,
+            0.4000000059604645,
+            0.0
+          ],
+          "invert": false,
+          "radius": 0.18000000715255737,
+          "ray": [
+            -0.23,
+            0.09,
+            3.0
+          ],
+          "strength": 0.3499999940395355,
+          "symmetry_x": true
+        },
+        "notes": "Final area/edge ratios use initial sphere triangle/edge. Per-dab flips compare to positions immediately before that dab. Quality=4sqrt(3)*area/sum(edge_length_squared), equilateral=1. Reversed reference normals and extreme adjacent angles diagnose deformation, not general self-intersection. CPU time includes per-dab diagnostic scans, excludes rendering/UI/final metric scan.",
+        "passes": 4,
+        "path": "alternating direction 41-dab lines x=-0.4..0.4 step0.02,y0.09,z3 toward-Z; re-pick every dab",
+        "per_dab_flip_events": 0,
+        "radius": 0.18000000715255737,
+        "reference_basis": "original-parent displacement/ratios; pre-dab-parent reversals; final-child quality/folds",
+        "sphere_level": 6,
+        "strength": 0.3499999940395355,
+        "symmetry_x": true,
+        "triangles": 87712,
+        "valid_structure": true,
+        "vertices": 43858
+      }
+    ],
+    "cases": 14,
+    "all_valid": true,
+    "per_dab_flip_events_sum": 0,
+    "final_standard_quality_min_across_cases": 0.17241466633727134,
+    "limitations": "One inverted accumulated stroke turns22 original parent normals past90deg while all per-dab reversals stay0. This diagnostic is retained; neither winding nor adjacency bounds prove no global self-intersections."
+  },
+  "imported_damage_limit": "All four selected worst folded user regions rejected32 default Crease dabs each, leaving vertices, topology, existing64 low-standard-quality faces and78>90deg hinges unchanged. This is protective refusal, not successful editing or repair. Global healthy-region continuation and browser traces are separate evidence.",
+  "failed_repairs": [
+    {
+      "label": "Initial bounded Smooth, failed useful-repair gate",
+      "parameters": {
+        "radius": 0.18,
+        "strength": 0.35,
+        "symmetry_x": true,
+        "sweeps": 8,
+        "dabs_per_region_per_sweep": 8,
+        "regions": 4
+      },
+      "record_path": ".artifacts/crease-detail-experiments/candidate1-with-smooth-repair-output.jsonl",
+      "record_sha256": "d203813f90d51671104b2266834c1df6144f894c44be4d3b39b8a4f2564c3013",
+      "measured": {
+        "case": "smooth_repair_preview",
+        "changed_vertices_sum": 3640,
+        "colors_unchanged": true,
+        "dabs_per_region_per_sweep": 8,
+        "implementation": "candidate",
+        "masks_unchanged": true,
+        "max_displacement": 0.0002078545221593231,
+        "metrics": {
+          "bounds": [
+            [
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            [
+              1.0,
+              1.0,
+              2.444972276687622
+            ]
+          ],
+          "faces_standard_below_015": 64,
+          "folds_over_60": 210,
+          "folds_over_90": 78,
+          "max_fold_degrees": 149.99994920069938,
+          "min_quality_longest": 0.020000001042248715,
+          "min_quality_standard": 0.04055303360347116,
+          "severe_fold_length": 1.0187556369905144,
+          "severe_fold_severity": 47.53304988575783,
+          "sharp_fold_length": 2.81887965205192,
+          "signed_volume": 4.3361457210250185,
+          "triangles": 123156,
+          "vertices": 61580
+        },
+        "radius": 0.18,
+        "rms_displacement": 2.306658001446283e-06,
+        "strength": 0.35,
+        "sweeps": 8,
+        "symmetry_x": true
+      },
+      "accepted_as_useful_repair": false
+    },
+    {
+      "label": "32-epsilon guard feasibility tolerance, still failed useful-repair gate",
+      "parameters": {
+        "radius": 0.18,
+        "strength": 0.35,
+        "symmetry_x": true,
+        "sweeps": 8,
+        "dabs_per_region_per_sweep": 8,
+        "regions": 4
+      },
+      "record_path": ".artifacts/crease-detail-experiments/candidate2-smooth-repair-output.jsonl",
+      "record_sha256": "9529087c99fd1bc02c9aba6cce89f99a6d6b4c17d0f1e95b56f086e46d4ae244",
+      "measured": {
+        "case": "smooth_repair_preview",
+        "changed_vertices_sum": 4099,
+        "colors_unchanged": true,
+        "dabs_per_region_per_sweep": 8,
+        "implementation": "candidate",
+        "masks_unchanged": true,
+        "max_displacement": 0.0002087946777464822,
+        "metrics": {
+          "bounds": [
+            [
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            [
+              1.0,
+              1.0,
+              2.444972276687622
+            ]
+          ],
+          "faces_standard_below_015": 64,
+          "folds_over_60": 210,
+          "folds_over_90": 78,
+          "max_fold_degrees": 149.99994920069938,
+          "min_quality_longest": 0.020000001042248715,
+          "min_quality_standard": 0.04055303360347116,
+          "severe_fold_length": 1.0187536382568874,
+          "severe_fold_severity": 47.53219546168098,
+          "sharp_fold_length": 2.8188776533182933,
+          "signed_volume": 4.33614572289413,
+          "triangles": 123156,
+          "vertices": 61580
+        },
+        "radius": 0.18,
+        "rms_displacement": 2.3170092355544455e-06,
+        "strength": 0.35,
+        "sweeps": 8,
+        "symmetry_x": true
+      },
+      "accepted_as_useful_repair": false
+    },
+    {
+      "label": "Explicit local linear detail then smaller Smooth, failed useful-repair gate",
+      "parameters": {
+        "linear_refinement_radius": 0.08,
+        "linear_refinement_calls_per_region": 2,
+        "smooth_radius": 0.08,
+        "strength": 0.35,
+        "symmetry_x": true,
+        "sweeps": 8,
+        "dabs_per_region_per_sweep": 8,
+        "regions": 4
+      },
+      "record_path": ".artifacts/crease-detail-experiments/candidate3b-detail-smooth-repair-output.jsonl",
+      "record_sha256": "07d234a65531987d18d01519c96ef9e5afbc4a662a7240d53991c0870f082789",
+      "measured": {
+        "case": "smooth_repair_preview",
+        "changed_vertices_sum": 18130,
+        "colors_unchanged": true,
+        "dabs_per_region_per_sweep": 8,
+        "implementation": "candidate",
+        "masks_unchanged": true,
+        "max_displacement": 3.1832143577048555e-05,
+        "metrics": {
+          "bounds": [
+            [
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            [
+              1.0,
+              1.0,
+              2.444972276687622
+            ]
+          ],
+          "faces_standard_below_015": 90,
+          "folds_over_60": 276,
+          "folds_over_90": 124,
+          "max_fold_degrees": 150.00022179030523,
+          "min_quality_longest": 0.020000001042248715,
+          "min_quality_standard": 0.04055303360347116,
+          "severe_fold_length": 1.0191730987353294,
+          "severe_fold_severity": 47.653526100255235,
+          "sharp_fold_length": 2.819297113797772,
+          "signed_volume": 4.33614527941266,
+          "triangles": 129952,
+          "vertices": 64978
+        },
+        "radius": 0.18,
+        "rms_displacement": 4.7379124411326506e-07,
+        "strength": 0.35,
+        "sweeps": 8,
+        "symmetry_x": true
+      },
+      "accepted_as_useful_repair": false,
+      "measurement_note": "The raw radius field erroneously says0.18; actual smaller-radius branch uses0.08 as recorded above. Added vertices are compared with their positions immediately after shape-preserving refinement for max/RMS displacement. Original mask/RGB prefixes were preserved; topology added3,398 vertices. Larger raw edge counts mostly reflect splitting existing sharp hinges: severity/length changed negligibly."
+    }
+  ],
+  "failed_checks_preserved": [
+    {
+      "stage": "Pre auto-detail integration expectations",
+      "record": ".artifacts/long-stroke-mesh-final/workspace-tests.log",
+      "failure": "Three fixed-topology test equalities failed when Crease intentionally added vertices. Corrected to check original-parent orientation, actual-child area/quality, original attribute prefixes and protected positions."
+    },
+    {
+      "stage": "Before child-quality preflight",
+      "failure": "Masked Crease sphere4 generated child qLongest0.014608067 and0.013865040; quality regression failed. Protected boundary incidence and complete mirrored-group pruning fixed this."
+    },
+    {
+      "stage": "Longest-edge child floor0.05",
+      "failure": "Fresh sphere5 first moving pass had standard child quality0.12610958949082457<0.15. Replaced child preflight metric with standard quality, then reran all authored healthy/mixed/masked checks."
+    }
+  ],
+  "verification": {
+    "final_core_tests_passed_total": 83,
+    "core_test_suites": {
+      "lib": 41,
+      "brush_stability": 13,
+      "crease_detail": 3,
+      "draw_surface": 4,
+      "patch_refinement": 15,
+      "mrgb_import": 5,
+      "sculpt_workflow": 2
+    },
+    "native_strict_clippy": "cargo clippy -p obrush-core --all-targets -- -D warnings passed",
+    "wasm_strict_clippy": "cargo clippy -p obrush-core --target wasm32-unknown-unknown -- -D warnings passed",
+    "format": "Final cargo fmt --all performed by root; runtime formatting mapping above.",
+    "whole_workspace_and_browser": "Parent reports final97 workspace tests/native+WASM strict Clippy/web+native builds passed. Browser agent completed both measured cases with queue/history and post-mouseup GPU tail checks; interactive metrics are separately recorded by the host/browser receipt, not inferred from geometry tests."
+  },
+  "limitations": [
+    "The original imported damage is not automatically repaired or silently remeshed. Failed preview copies remain ignored and are not released as repaired artifacts.",
+    "Bounded local linear refinement preserves geometry and adds degrees of freedom; it is not persistent multiresolution or a global remesher.",
+    "Exact symmetry preservation is conditional on matching coordinates and masks; an approximately symmetric imported sculpt is not welded.",
+    "Local orientation/fold/shape guards do not detect every global self-intersection, tunneling or disconnected near-surface collision.",
+    "Normal curvature diagnostics and visible appearance remain distinct; GPU/browser matched-render evidence is separate.",
+    "No target-product parity claim is supported by these independently authored fixtures."
+  ],
+  "optional_loop_smoothed_preview": {
+    "operation": "Existing pure-core Document::subdivide_smooth once, original user project loaded into a separate document; no production-source change.",
+    "label": "Optional smoothed preview; not a complete geometric repair.",
+    "measured": {
+      "case": "single_loop_smooth_subdivision_preview",
+      "max_original_mask_difference": 0.0,
+      "max_original_rgb_difference": 3.5762786865234375e-07,
+      "max_original_vertex_displacement": 0.010950918309390545,
+      "original_color_prefix_bit_equal": false,
+      "original_mask_prefix_bit_equal": true,
+      "original_metrics": {
+        "bounds": [
+          [
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          [
+            1.0,
+            1.0,
+            2.444972276687622
+          ]
+        ],
+        "faces_standard_below_015": 64,
+        "folds_over_60": 210,
+        "folds_over_90": 78,
+        "max_fold_degrees": 149.9999813835879,
+        "min_quality_longest": 0.020000001042248715,
+        "min_quality_standard": 0.04055303360347116,
+        "severe_fold_length": 1.0192062901801278,
+        "severe_fold_severity": 47.700800542104425,
+        "sharp_fold_length": 2.8193303052415333,
+        "signed_volume": 4.33614527280467,
+        "triangles": 123156,
+        "vertices": 61580
+      },
+      "preview_metrics": {
+        "bounds": [
+          [
+            -0.999933123588562,
+            -0.999933123588562,
+            -0.999933123588562
+          ],
+          [
+            0.999933123588562,
+            0.999933123588562,
+            2.4446792602539062
+          ]
+        ],
+        "faces_standard_below_015": 12,
+        "folds_over_60": 14,
+        "folds_over_90": 2,
+        "max_fold_degrees": 92.46658878098096,
+        "min_quality_longest": 0.013201954672850923,
+        "min_quality_standard": 0.028501341347622677,
+        "severe_fold_length": 0.00987919794433139,
+        "severe_fold_severity": 0.024360992805309525,
+        "sharp_fold_length": 0.08214860375110361,
+        "signed_volume": 4.335648844448181,
+        "triangles": 492624,
+        "vertices": 246314
+      },
+      "rms_original_vertex_displacement": 0.00047018147620361486,
+      "subdivide_elapsed_ms": 87.34475
+    },
+    "relative_signed_volume_change": -0.00011448609888664585,
+    "maximum_bounds_coordinate_change": 0.0002930164337158203,
+    "severe_fold_length_reduction_fraction": 0.9903069692176003,
+    "severe_fold_severity_reduction_fraction": 0.9994892959336436,
+    "max_original_displacement_screening_limit": 0.03,
+    "rms_original_displacement_screening_limit": 0.002,
+    "relative_volume_change_screening_limit": 0.01,
+    "max_bounds_coordinate_change_screening_limit": 0.015,
+    "shape_screening_passed": true,
+    "complete_repair_quality_gate_passed": false,
+    "quality_failure": "Min standard quality decreases0.040553->0.028501;12 sub0.15 faces and2>90deg hinges remain. Conforming Loop refinement smooths the surface but does not remesh skinny triangles.",
+    "original_untouched": true,
+    "masks_note": "Input masks uniformly zero; original prefix remains bit equal. Loop ordinarily interpolates masks/colors.",
+    "rgb_note": "Input RGB is constant; interpolation introduces at most3.576e-7 original-prefix floating-point difference, not bit-identical color preservation.",
+    "runtime_note": "One native subdivision87.3ms; geometry grows4x in face count to492,624. No interactive/browser latency guarantee for this larger copy.",
+    "private_artifacts": {
+      "loop-preview-output.jsonl": {
+        "path": ".artifacts/crease-detail-experiments/loop-preview-output.jsonl",
+        "sha256": "fb3b378e57a19acc65cbc96b4d3ea1969bbaad00a3b615507daa8ba46115cc86",
+        "bytes": 1354
+      },
+      "candidate-user-loop-preview.obrush": {
+        "path": ".artifacts/crease-detail-experiments/candidate-user-loop-preview.obrush",
+        "sha256": "676727a359640d07f11af4d840494503e7cb88a533c6997e8f1332458d7322fb",
+        "bytes": 33967386
+      },
+      "candidate-user-loop-preview.obj": {
+        "path": ".artifacts/crease-detail-experiments/candidate-user-loop-preview.obj",
+        "sha256": "3a1ef479d649129d8760998fda8a4122e5c61e72b52a8cbac62c745f70cd0f82",
+        "bytes": 43897247
+      },
+      "src/bin/loop_preview.rs": {
+        "path": ".artifacts/crease-detail-experiments/src/bin/loop_preview.rs",
+        "sha256": "8f12fd4ec5de3d84d440cc62883e58fb4680c053244974b86c5d7a6e1afde87a",
+        "bytes": 3914
+      }
+    },
+    "serialization_validation": {
+      "command": "cargo run --release --bin validate_loop_preview",
+      "record_path": ".artifacts/crease-detail-experiments/loop-preview-validation.json",
+      "record_sha256": "4ad795e45ba952caa8dd8c74caafed69218ca468df1f68ad2c72f8ebda0bfafb",
+      "script_sha256": "d92b5d1625c732bde884dd6933fe08f01de0aa680b86c0cb3a0d8b77d255baa8",
+      "result": {
+        "finite_valid_attributes": true,
+        "name": "User sculpt \u2014 optional Loop subdivision preview",
+        "serialized_surface_bit_equal_to_shared_core_operation": true,
+        "triangles": 492624,
+        "validated_serialized_project": true,
+        "vertices": 246314
+      },
+      "scope": "Saved JSON parsed with Document::from_json, mesh validated, descriptive project name checked, and all loaded surface fields bit-compared to the existing pure-core one-Loop operation on the untouched original. No display/GPU used. Validation ran only after measured native/browser cases completed."
+    }
+  },
+  "sustained_user_continuation_cross_reference": {
+    "receipt": "docs/evidence/long-stroke-core.json",
+    "receipt_sha256": "be95a99d61019174499aac87dac47c52920d606358cf5bc5fa690a4d1f302734",
+    "parameters": {
+      "radius": 0.18,
+      "strength": 0.35,
+      "symmetry_x": true,
+      "invert": false,
+      "dabs_per_brush": 1200,
+      "nominal_input_duration_seconds": 20,
+      "nominal_sample_rate_hz": 60,
+      "path": "Front-facing -Z rays from z4; x=.28cos(TAU*i/180),y=.1+.27sin(TAU*i/180); each dab re-picks the current surface. This independent trajectory is not the original user gesture.",
+      "exact_world_ray_arrays_preserved_in_raw_results": true
+    },
+    "final_production_sources_match": true,
+    "crease_summary": {
+      "initial_over_90_edges": 78,
+      "old_final_over_90_edges": 138,
+      "new_final_over_90_edges": 78,
+      "initial_over_60_edges": 210,
+      "old_final_over_60_edges": 250,
+      "new_final_over_60_edges": 206,
+      "old_edited_patch_normal_laplacian_p95": 0.11426327741630656,
+      "new_edited_patch_normal_laplacian_p95": 0.07130538643603104,
+      "new_original_vertex_normal_displacement": {
+        "changed_vertices": 4809,
+        "maximum_world": 0.01078722038375099,
+        "minimum_world": -0.1342703180792974,
+        "p05_world": -0.10772287263276611,
+        "p95_world": 4.668766048576521e-05
+      },
+      "new_final_vertices": 65486,
+      "new_final_triangles": 130968
+    },
+    "interpretation": "A separate independently generated sustained circular trajectory edits healthy portions of the supplied model while keeping severe fold count78 rather than old138, with a measurable inward normal displacement. The4 worst-region refusal cases in this receipt are a different targeted trajectory and must not be generalized to all imported editing. Baseline damage and global self-intersection limits remain."
+  }
+}

@@ -1,0 +1,541 @@
+{
+  "schema_version": 1,
+  "version": "0.1.8",
+  "recorded_at_utc": "2026-10-13T02:33:32.943475+00:00",
+  "status": "Required source checks, browser/native builds and seven scoped layer browser workflows pass; full reference parity and native GUI interaction remain unverified",
+  "git": "Unborn main; source hashes identify this build",
+  "environment": {
+    "os": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+    "wasm_bindgen_cli": "wasm-bindgen 0.2.129"
+  },
+  "test_totals": {
+    "core": 161,
+    "app": 18,
+    "total": 179
+  },
+  "checks": [
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791857803.6636522,
+      "end_epoch": 1791857803.888802,
+      "log": {
+        "path": ".artifacts/layers-build/validation-1a243cdb-5b0a-457e-8fd3-bb33855f8ad9/fmt.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "tests",
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--workspace"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791857803.88916,
+      "end_epoch": 1791857915.48814,
+      "log": {
+        "path": ".artifacts/layers-build/validation-1a243cdb-5b0a-457e-8fd3-bb33855f8ad9/tests.log",
+        "bytes": 18022,
+        "sha256": "deb06d24cc79ca0b0bd51180d004a7299d6e5dff6d3aadba549dfba53835eeeb"
+      }
+    },
+    {
+      "name": "clippy-native",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--workspace",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791857915.488518,
+      "end_epoch": 1791857916.280212,
+      "log": {
+        "path": ".artifacts/layers-build/validation-1a243cdb-5b0a-457e-8fd3-bb33855f8ad9/clippy-native.log",
+        "bytes": 145,
+        "sha256": "2e9676dc56463e9762baf01c973beb755465befd7d1a725c589094febe3690e3"
+      }
+    },
+    {
+      "name": "clippy-wasm",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "-p",
+        "obrush-app",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791857916.280524,
+      "end_epoch": 1791857917.0044491,
+      "log": {
+        "path": ".artifacts/layers-build/validation-1a243cdb-5b0a-457e-8fd3-bb33855f8ad9/clippy-wasm.log",
+        "bytes": 145,
+        "sha256": "d4f3a0048168cd0122d8cc187c538dbfe4a6016b1d1d98eed5ffd4ff18dbd137"
+      }
+    },
+    {
+      "name": "core-wasm",
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "-p",
+        "obrush-core",
+        "--target",
+        "wasm32-unknown-unknown"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791857917.00476,
+      "end_epoch": 1791857917.154009,
+      "log": {
+        "path": ".artifacts/layers-build/validation-1a243cdb-5b0a-457e-8fd3-bb33855f8ad9/core-wasm.log",
+        "bytes": 72,
+        "sha256": "22e0df986057b9ba5be07526ac5fb348862a3dedef42108383cc3e088acbb889"
+      }
+    },
+    {
+      "name": "web-build",
+      "command": [
+        "bash",
+        "scripts/build-web.sh"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791857917.154312,
+      "end_epoch": 1791857919.299374,
+      "log": {
+        "path": ".artifacts/layers-build/validation-1a243cdb-5b0a-457e-8fd3-bb33855f8ad9/web-build.log",
+        "bytes": 201,
+        "sha256": "eae6ae5c47cdf527114ee10262a31510ce0275dfd8ab502dc29eb9e59483a065"
+      }
+    },
+    {
+      "name": "native-package",
+      "command": [
+        "bash",
+        "scripts/package-macos.sh"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791857919.29977,
+      "end_epoch": 1791857922.2754502,
+      "log": {
+        "path": ".artifacts/layers-build/validation-1a243cdb-5b0a-457e-8fd3-bb33855f8ad9/native-package.log",
+        "bytes": 329,
+        "sha256": "1c6d3b87b8d02c2d294fa961f513a8243e4012cab514cdabdb17c6c8ebf3cf29"
+      }
+    }
+  ],
+  "frozen_build_record": {
+    "path": ".artifacts/layers-release-0.1.8-layout-helper-final/build-record.json",
+    "bytes": 7313,
+    "sha256": "126d7b6466a39a5ef95d31c2d1205b391f36c1ebd66e660d5d33c8af2081e088"
+  },
+  "source_manifest": {
+    "path": ".artifacts/layers-release-0.1.8-layout-helper-final/source-manifest.json",
+    "bytes": 10738,
+    "sha256": "a269d36b297797602febfa5743e2f9b5cb1a619bc312e8ca15a938b713e10e12"
+  },
+  "source_files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "bytes": 874,
+      "sha256": "18a21786db96c1b0920517261105517287dcac547f488db4250140fbf50f9926"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 1312,
+      "sha256": "b9aebf717528d1887a30f15d23ca492cac78e86542f0f7f77e72ee21545cebd4"
+    },
+    {
+      "path": "Cargo.lock",
+      "bytes": 92204,
+      "sha256": "8b0f76077da7b18e3db64b5154b86d02ef1f2fe974ec7e9324ac27077f6d53b6"
+    },
+    {
+      "path": "Cargo.toml",
+      "bytes": 683,
+      "sha256": "28ce109fcb4630c4e17827869e320d0932bc46972e900ec54ac8682eed9939d0"
+    },
+    {
+      "path": "crates/obrush-app/Cargo.toml",
+      "bytes": 853,
+      "sha256": "2657ec47882e0ea05630a373214f88fff7b2be142304d09550febca7d99d5088"
+    },
+    {
+      "path": "crates/obrush-app/src/app.rs",
+      "bytes": 90556,
+      "sha256": "3db1340cd2b73660ceb1c160f804f6f58e839a3247b03435c16c4db8469fff5a"
+    },
+    {
+      "path": "crates/obrush-app/src/dab_queue.rs",
+      "bytes": 14679,
+      "sha256": "38c71e0fcc000c28473035d7170a1c57b9e2b682f37252df032f24098c078d04"
+    },
+    {
+      "path": "crates/obrush-app/src/lib.rs",
+      "bytes": 3216,
+      "sha256": "3185d0a8971ab8cfb22a7825dda5dd43feafabd9dab4f35c005468b69cb28815"
+    },
+    {
+      "path": "crates/obrush-app/src/main.rs",
+      "bytes": 676,
+      "sha256": "59f837631d853d5d431139fa10dfd2c07667f8dbf2b8a3cc7ff771d3068b7819"
+    },
+    {
+      "path": "crates/obrush-app/src/move_drag.rs",
+      "bytes": 2455,
+      "sha256": "62b34e4e74086b403a03ce67d319854fa99a2680cd5637e0a7e6a39d270bc3dd"
+    },
+    {
+      "path": "crates/obrush-app/src/pressure.rs",
+      "bytes": 1872,
+      "sha256": "9ca20656608c0b32800d7438ae75276878d6ddb43de238221b526f4cc5c2dafa"
+    },
+    {
+      "path": "crates/obrush-app/src/renderer.rs",
+      "bytes": 44613,
+      "sha256": "3ccf212965fcffe457ad672c0430caf2abfe40f3128bae0547e783977d46e205"
+    },
+    {
+      "path": "crates/obrush-app/src/stroke.rs",
+      "bytes": 4880,
+      "sha256": "0a0298b462f22399e18b1a54502f73f805f8c4ad3b9ecbaa105c3f46178f2407"
+    },
+    {
+      "path": "crates/obrush-core/Cargo.toml",
+      "bytes": 250,
+      "sha256": "05bde7e131c4bc2f53709cfc3d5fcc12f2363105fba5f65ee18fa8c34e8039ce"
+    },
+    {
+      "path": "crates/obrush-core/README.md",
+      "bytes": 7492,
+      "sha256": "9c8e5b99111697bcbcf3e3316c426a0e8ed1e1790760c8603ffc8f30d06fb43a"
+    },
+    {
+      "path": "crates/obrush-core/examples/core_performance_probe.rs",
+      "bytes": 5426,
+      "sha256": "ecbbaf2697a627aade994847b8481da753417eb8279ff90201f1dd6f0f9a76a2"
+    },
+    {
+      "path": "crates/obrush-core/examples/core_timing.rs",
+      "bytes": 3524,
+      "sha256": "df4dee7deaced269cc87d8f18786ab96b0e9d7407d1b6b8456fb62d1484b3f17"
+    },
+    {
+      "path": "crates/obrush-core/examples/crease_stability_probe.rs",
+      "bytes": 11682,
+      "sha256": "f90b8334b2ade954dfa3ac9c545866c5b40bb34c6af2e5d415f475599099b461"
+    },
+    {
+      "path": "crates/obrush-core/examples/decimation_probe.rs",
+      "bytes": 10173,
+      "sha256": "3ad53ee4c8120f094ade5558b8ee5193ba2dfc854c607855add9d40c42cb54a8"
+    },
+    {
+      "path": "crates/obrush-core/examples/draw_overlap_probe.rs",
+      "bytes": 15078,
+      "sha256": "a2c2e388c3273dfef9096098878aaa55899841df17a8dd6b3890fc9e0a11fd26"
+    },
+    {
+      "path": "crates/obrush-core/examples/inspect_obj.rs",
+      "bytes": 1548,
+      "sha256": "555070d52b662cbf5eb6a7fde8e97b7b6995aaefb61c341901b681f63342c90d"
+    },
+    {
+      "path": "crates/obrush-core/examples/long_stroke_probe.rs",
+      "bytes": 4733,
+      "sha256": "ef94ce9c6c9fc47702bfbcd9da7f79e34664a71cac57f3b5a343748b60a1e136"
+    },
+    {
+      "path": "crates/obrush-core/examples/move_surface_probe.rs",
+      "bytes": 5003,
+      "sha256": "50ee95c527b2645b9d77973b5844b32be8948816c7a445054f57c2f69e4883d7"
+    },
+    {
+      "path": "crates/obrush-core/examples/remesh_probe.rs",
+      "bytes": 5440,
+      "sha256": "18b1fb1a4c11e112015525d9afb55c814a28e8fcf3e43e094a126dbca3289b19"
+    },
+    {
+      "path": "crates/obrush-core/examples/smooth_subdivision_probe.rs",
+      "bytes": 2520,
+      "sha256": "e32ea2146cbaed387614909998814868054eccacf1966cbedeb8fa58f3a707aa"
+    },
+    {
+      "path": "crates/obrush-core/src/alpha.rs",
+      "bytes": 6380,
+      "sha256": "bad9797511f1a98befd43ae4f8f29408fa594b30ee8bdbe0b639bb885d39c597"
+    },
+    {
+      "path": "crates/obrush-core/src/brush.rs",
+      "bytes": 44820,
+      "sha256": "f247ec648f5f0cb258881a2c95829fc7bc11b6d94f9f6c57302cb78d7e3233e1"
+    },
+    {
+      "path": "crates/obrush-core/src/decimate.rs",
+      "bytes": 25685,
+      "sha256": "93a8ddc7b245f7a77f667c659726cad8f8d4710b59b3316c8776b853d218f763"
+    },
+    {
+      "path": "crates/obrush-core/src/document.rs",
+      "bytes": 29672,
+      "sha256": "537c1c61b2ff9a5a9282b9a294bbf95447cc4006bb1bb4d25342fdecb56ff9d7"
+    },
+    {
+      "path": "crates/obrush-core/src/layers.rs",
+      "bytes": 32260,
+      "sha256": "92d9d1061bef52b9969fb32b9dc9493c153cc74a586ac74b0936ed4ab5d6e1a8"
+    },
+    {
+      "path": "crates/obrush-core/src/lib.rs",
+      "bytes": 1057,
+      "sha256": "c48aa90b363c637b8e4a0eee1b2eecbe8e4484b2dec605bc8e79c7bb14b1b8cf"
+    },
+    {
+      "path": "crates/obrush-core/src/mesh.rs",
+      "bytes": 58776,
+      "sha256": "c044c5423dd224bf3962bf0ad8f3c9e6b840fe170971a3b17397a3969016d420"
+    },
+    {
+      "path": "crates/obrush-core/src/multires.rs",
+      "bytes": 12162,
+      "sha256": "04c1ace2b6e5e92119893d5acfad060ce22f2b21d9d8fcf6f558d565cfe1097f"
+    },
+    {
+      "path": "crates/obrush-core/src/refinement.rs",
+      "bytes": 31744,
+      "sha256": "6c0d5e56e74bc71b363070f60e8468762c1a683bff347eb96255d37ed9721d87"
+    },
+    {
+      "path": "crates/obrush-core/src/remesh.rs",
+      "bytes": 33706,
+      "sha256": "410889f5371caa435bfc960b3312d661de1c13aefcc3a02e9ed0be80ffda8d36"
+    },
+    {
+      "path": "crates/obrush-core/src/tests.rs",
+      "bytes": 27671,
+      "sha256": "44f5f1a910a899a6a03c96a1431a4cf83cf8c3592cebc74a07b18b4a1f4c4bc5"
+    },
+    {
+      "path": "crates/obrush-core/src/topology.rs",
+      "bytes": 2461,
+      "sha256": "ffccafec8341010843fceeb9b8930ccae31f96e945ba78112de22db3c0ac6ac2"
+    },
+    {
+      "path": "crates/obrush-core/tests/brush_inputs.rs",
+      "bytes": 14814,
+      "sha256": "f69b24e32ea04122dfd53fa56d1be47eb006db58456f569a68c16e9462f22a32"
+    },
+    {
+      "path": "crates/obrush-core/tests/brush_stability.rs",
+      "bytes": 22358,
+      "sha256": "0e29dcbe1efefa96af57e0c8a1679e4f6483850611a8bbbc88fdd5bab065f8f4"
+    },
+    {
+      "path": "crates/obrush-core/tests/crease_detail.rs",
+      "bytes": 7249,
+      "sha256": "3745006623aa534f33f9877961c1378f82b392b196e3e7854046f8ba542ceb73"
+    },
+    {
+      "path": "crates/obrush-core/tests/decimate.rs",
+      "bytes": 12265,
+      "sha256": "d7b8f539fb6a8fd42175a563caf6e664a91bf1f28ccb74dce184b85699eda2a1"
+    },
+    {
+      "path": "crates/obrush-core/tests/draw_surface.rs",
+      "bytes": 5789,
+      "sha256": "c9fa089743ebd82b734745be1e5afb06bc5d82c4abc0cf5b9f3b0408166cc5ff"
+    },
+    {
+      "path": "crates/obrush-core/tests/fixtures/zbrush_mrgb.obj",
+      "bytes": 303,
+      "sha256": "9f75bcbc98ddfcb570d9087c5f6b3f6acb02fa6fe5b73e610abd670e0edc5c84"
+    },
+    {
+      "path": "crates/obrush-core/tests/layer_contract.rs",
+      "bytes": 23679,
+      "sha256": "2ab0c78474933a3fdef0bc8372e5d0b8ff619740d4088ccb2ea30984514a956c"
+    },
+    {
+      "path": "crates/obrush-core/tests/layers.rs",
+      "bytes": 3147,
+      "sha256": "10905a929d1e19664e01e9c07d3aef9b02109fc0e45645dd1076ed6d1ab5c8eb"
+    },
+    {
+      "path": "crates/obrush-core/tests/move_surface.rs",
+      "bytes": 21551,
+      "sha256": "e4d796bee50fefc154e4a443abb0b7e2f53c7b52423320ce3b3492467259b3b5"
+    },
+    {
+      "path": "crates/obrush-core/tests/mrgb_import.rs",
+      "bytes": 2631,
+      "sha256": "4794fe0c95fdfe6f48e619b8db018400ae2313cd02e76368d41a2ed85ef25c2c"
+    },
+    {
+      "path": "crates/obrush-core/tests/multires.rs",
+      "bytes": 11034,
+      "sha256": "1fa1aab0414dae2fc3c9768236399e5220f9cc1ac6f5015bf74df77a4160d803"
+    },
+    {
+      "path": "crates/obrush-core/tests/patch_refinement.rs",
+      "bytes": 16645,
+      "sha256": "90e0beb74aaa1d4b7b6aebffcc9d6de0692e38c7ad882379048a1a822f9993db"
+    },
+    {
+      "path": "crates/obrush-core/tests/remesh.rs",
+      "bytes": 8786,
+      "sha256": "4076ca7c8282014c1389f9881b0f5235c1c982eae7b6e5a6f03ad8ff25e17779"
+    },
+    {
+      "path": "crates/obrush-core/tests/sculpt_workflow.rs",
+      "bytes": 6368,
+      "sha256": "1d2298a44f2aea8f038e37c5a00bc21a4713f2b3a37d600981c41ef640415929"
+    },
+    {
+      "path": "crates/obrush-core/tests/topology_workflow.rs",
+      "bytes": 2643,
+      "sha256": "3bf2577510dd2d6848e09daee061bd1da50c8444491b22284862c9984e088fbf"
+    },
+    {
+      "path": "scripts/build-web.sh",
+      "bytes": 810,
+      "sha256": "68eafa60a841cbde3ee2104521d466c7ec7c8c09a3c017cbb6a1be4338305b99"
+    },
+    {
+      "path": "scripts/check-brush-inputs.mjs",
+      "bytes": 29961,
+      "sha256": "7c70f032bc75a72c5d1aa53ceba5c0757ee9accbaee8642194424970940975e6"
+    },
+    {
+      "path": "scripts/check-layers.mjs",
+      "bytes": 43449,
+      "sha256": "a38ae1e4cf9f6effe56b1b1ca8416e42eb2b214ff586fd134402c8aaeea01d5d"
+    },
+    {
+      "path": "scripts/check-move.mjs",
+      "bytes": 38944,
+      "sha256": "81df7bfe474739b3fee5c51350a4288cc9f5d745dc3129d4bab2844331ea387d"
+    },
+    {
+      "path": "scripts/check-multires.mjs",
+      "bytes": 31163,
+      "sha256": "f4ba9eb60279ebfc6dfedc660336b1e0a02167757701c8fb861b02c2be81e210"
+    },
+    {
+      "path": "scripts/check-topology.mjs",
+      "bytes": 31420,
+      "sha256": "c36916d08845e764d185c70b9f73e776f5a05bb1824a319acca6cf8645959b9f"
+    },
+    {
+      "path": "scripts/compare-obj.py",
+      "bytes": 2371,
+      "sha256": "a249c861d98415f664bd53583a45443c4fb96a5d94f4ff96b98263f5e8ab112e"
+    },
+    {
+      "path": "scripts/package-macos.sh",
+      "bytes": 1336,
+      "sha256": "e918ec5d31337b654ec6e8a346a5bf907d4a0225a62d79e6a512721c7642e408"
+    },
+    {
+      "path": "scripts/serve-web.py",
+      "bytes": 758,
+      "sha256": "ca9125f60f4f99537b04d97eafc05d90b580eeb4c885976540397a2d44676d1e"
+    },
+    {
+      "path": "web/index.html",
+      "bytes": 6509,
+      "sha256": "f94e458b842644f3cf003f915d26464987c8639392c848cfb333508974eb4956"
+    },
+    {
+      "path": "web/topology-worker.js",
+      "bytes": 448,
+      "sha256": "3318e34033bd56bee4c8cd7a0cbe140f2ab40731a788d1dc909ebd23da90a9c2"
+    }
+  ],
+  "artifacts": {
+    "wasm": {
+      "path": ".artifacts/layers-release-0.1.8-layout-helper-final/web/pkg/obrush_app_bg.wasm",
+      "bytes": 3901214,
+      "sha256": "da6ab1eb12cd3702d57f88ce8feae2f3123c1fed8722f207c91f169ee53220a3"
+    },
+    "native": {
+      "path": ".artifacts/layers-release-0.1.8-layout-helper-final/OBrush.app/Contents/MacOS/OBrush",
+      "bytes": 6832752,
+      "sha256": "2f604ebf043d304bf07f44a400927ead3db1e7f6dc590140f1c55e4c7b3ab0f7"
+    }
+  },
+  "compiled_source_check_origin": {
+    "path": ".artifacts/layers-release-0.1.8-layout-final/build-record.json",
+    "bytes": 6355,
+    "sha256": "a1f1a88d8ebd4b261e31c2e4d1170d5b0be5e945fe36f3946084ffdcce6ae52c"
+  },
+  "harness_only_correction": {
+    "helper": {
+      "path": "scripts/check-layers.mjs",
+      "bytes": 43449,
+      "sha256": "a38ae1e4cf9f6effe56b1b1ca8416e42eb2b214ff586fd134402c8aaeea01d5d"
+    },
+    "syntax_check": "node --check passes",
+    "retained_setup_failure": {
+      "path": ".artifacts/layer-browser-0.1.8/layout-final-f9af0928-804b-4696-b3fb-5acc17d5ba55/result.json",
+      "bytes": 206682,
+      "sha256": "b2b6dc5c968aff568ba0d2db550d475c359f766367abf003feedaaf2b2567353"
+    },
+    "scope": "Round intended observed slider coordinate to nearest integer pixel before eframe MouseEvent client_x conversion. This fixes a harness37%-target quantization error; no production or threshold change."
+  },
+  "core_evidence": {
+    "path": "docs/evidence/sculpt-layers-core.json",
+    "bytes": 12012,
+    "sha256": "847b39eebea5a8e6031fd2988ce8704eee097443dfdf0db4fd8b6872eb4c9933"
+  },
+  "browser_evidence": {
+    "path": "docs/evidence/sculpt-layers-browser.json",
+    "bytes": 52872,
+    "sha256": "d88956405cd79188e2d05afb8dee5bde3afb7f302612310de9fc3d9f5a048d74"
+  },
+  "retained_previous_release": {
+    "path": ".artifacts/move-release-0.1.7-final/build-record.json",
+    "bytes": 5139,
+    "sha256": "2a5f112337c3a7ed37bbf9c6f62db04bb2aca48bdb2746cc301eabcaf02368cf"
+  },
+  "retained_failed_browser_attempts": [
+    {
+      "result": ".artifacts/layer-browser-0.1.8/final-534ff0e8-f422-40e5-8ecd-27991e075049/result.json",
+      "sha256": "476faa467ce6ac707cb50597d6d4fd5626146bc07d01885ced964be91d051760",
+      "scope": "Actual UI scrollbar covered the full-intensity slider endpoint; production layout corrected by reserving gutters."
+    },
+    {
+      "result": ".artifacts/layer-browser-0.1.8/layout-final-f9af0928-804b-4696-b3fb-5acc17d5ba55/result.json",
+      "sha256": "b2b6dc5c968aff568ba0d2db550d475c359f766367abf003feedaaf2b2567353",
+      "scope": "Harness nonbinary click coordinate entered as a fraction; eframe integer client_x binding caused 36% instead of 37%; helper now rounds to nearest pixel."
+    }
+  ],
+  "raw_record_note": "Frozen build records were captured before the final browser run and retain their original pending statements. This later receipt binds the final runtime without rewriting the immutable records. Only the JS harness coordinate rounding changed after compiled-source checks; compiled Rust/build inputs and artifacts are unchanged.",
+  "limitations": [
+    "Geometry-only layers with fixed ordered correspondence and intensity 0..1; layered paint/masks, broader stack and subdivision workflows remain gaps.",
+    "Native ad-hoc-signed application is packaged/verified; native GUI, physical device input, Windows/other browsers, large-layer and long-session latency are unverified.",
+    "The seven headless browser workflows do not rerun all historical Move/topology/brush reference gates; their receipts remain scoped to the earlier artifact hashes.",
+    "No ZBrush layer fixture comparison or family-parity promotion."
+  ]
+}

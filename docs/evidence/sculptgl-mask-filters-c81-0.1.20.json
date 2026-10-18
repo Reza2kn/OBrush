@@ -1,0 +1,118 @@
+{
+  "feature": "Pinned SculptGL mask Blur/Sharpen on an independent open quad grid",
+  "status": "Paired nine-vertex reference comparison and shared-core/browser checks pass; full SculptGL parity remains open",
+  "reference_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+  "source": [
+    {
+      "path": "crates/obrush-core/tests/fixtures/independent-filter-quad-grid.obj",
+      "sha256": "0312496e90cac3f184c0210fddbe96310256d6744a9ecba59c2f9b829f97ae83",
+      "bytes": 203
+    },
+    {
+      "path": "crates/obrush-core/tests/mask_filter_sculptgl.rs",
+      "sha256": "353684fd2f91637b606cc7fb19b5228e9a0a886372b01617885524777416c6d2",
+      "bytes": 4718
+    },
+    {
+      "path": "scripts/check-sculptgl-reference.mjs",
+      "sha256": "5b30b14517868fc8934c07a7650fdefc115542b770b3c26231103bfe3567290b",
+      "bytes": 51192
+    },
+    {
+      "path": "scripts/check-mask-filters.mjs",
+      "sha256": "5f58a1ffb311d1141adddac774281287c7b95d7552b164e24e096d9c96aa4064",
+      "bytes": 106357
+    },
+    {
+      "path": "docs/SCULPTGL_MASK_FILTERS_C81.md",
+      "sha256": "d739f535a80b1c0d9838765a94453f41f46579c1abcb522488375324cb4e7fee",
+      "bytes": 1920
+    },
+    {
+      "path": "docs/FEATURE_PARITY.md",
+      "sha256": "0e99613b36a3620a3791b196631b4a57b0b03269c82d763403927010a03d4ba6",
+      "bytes": 66269
+    }
+  ],
+  "reference_runtime": {
+    "path": ".artifacts/sculptgl-reference-runtime/mask-filters-c81-quad-c97d3602-4d8f-4482-bdb4-22e267dc9388/result.json",
+    "sha256": "f7cdc824111a4ff799b8a7632117dd24b5ee0187e3a14af2fada6d3b7a04dabd",
+    "bytes": 200974,
+    "status": "passed reference-only mask filter workflows",
+    "cases": 5,
+    "snapshots": 8,
+    "exceptions": 0,
+    "console_errors": 0,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "browser_product": "Chrome/155.0.8059.80"
+  },
+  "obrush_core_output": {
+    "path": ".artifacts/sculptgl-mask-filters-c81-quad-own.json",
+    "sha256": "3d73863f23abfeb1771cada3e4441063ab549eb577c65b296dc4d0260065f4fb",
+    "bytes": 1743
+  },
+  "paired_comparison": {
+    "path": ".artifacts/sculptgl-mask-filters-c81-quad-comparison.json",
+    "sha256": "c118ca006112a619fd42d19adfb66e30edc81d10cf9a32d3069c64cc61d3190e",
+    "bytes": 4231,
+    "matched_vertices": 9,
+    "blur_max_unprotected_weight_error": 2.9802322387695312e-08,
+    "sharpen_max_unprotected_weight_error": 0.0,
+    "mapping": "exact XY source positions; U=1-P"
+  },
+  "targeted_browser": {
+    "path": ".artifacts/mask-filter-browser/sculptgl-filters-c81-quad-a58ef28c-96db-4ebb-963c-de4fd1fed7cc/result.json",
+    "sha256": "4f4987b2709c7355e71b2b953bcee39b831ebf3b8c33ddef504c4ed6eb63b585",
+    "bytes": 3130504,
+    "status": "passed mask filter browser workflows",
+    "cases": 1,
+    "snapshots": 16,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    }
+  },
+  "full_browser": {
+    "path": ".artifacts/mask-filter-browser/sculptgl-filters-c81-full-1812e31c-5c23-4847-b795-47c6d3a51c1a/result.json",
+    "sha256": "45e318ce4a022775d2d8147c952b514492a238a0eeae0cbdc6a9b81f0991c853",
+    "bytes": 42885584,
+    "status": "passed mask filter browser workflows",
+    "cases": 17,
+    "saved_snapshots": 187,
+    "web_wasm_sha256": "776ec4fb6b90d1dbdf6f4f0e3672783362ed2986517b933f32300d0ec80e0d89",
+    "exceptions": 0,
+    "console_errors": 0,
+    "gl_errors": 0,
+    "js_errors": 0,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    }
+  },
+  "workspace_test_log": {
+    "path": ".artifacts/sculptgl-mask-filters-c81-workspace-tests.log",
+    "sha256": "eaa86f7b88356a3be0f66f5d54cd92064b86b7a7649191ba90dc1cfa54d37552",
+    "bytes": 229687,
+    "passed": 2366,
+    "ignored": 1,
+    "test_binaries": 82
+  },
+  "checks": {
+    "cargo_fmt_check": "passed",
+    "native_workspace_strict_clippy": "passed",
+    "wasm_workspace_strict_clippy": "passed",
+    "javascript_syntax": "passed",
+    "official_build": "C80 product source and WASM artifact unchanged"
+  },
+  "limitations": [
+    "One open quad grid and one previously paired triangulated cube; no arbitrary/nonmanifold/dynamic topology reference coverage",
+    "No repeated large-mesh reference action, physical pen/native GUI or sustained performance comparison",
+    "SculptGL and ZBrush full parity remain open"
+  ]
+}

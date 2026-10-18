@@ -1,0 +1,1172 @@
+{
+  "scope": "Independent second Python struct.pack reconstruction of all 189 actual saved/GPU pairs from the completed 7d Continuous run; no reference/native/performance claim",
+  "status": "passed independent local reconstruction; original raw failures unchanged",
+  "receipt": {
+    "path": ".artifacts/sculptgl-continuous-consumer-preparation/independent-input-ack-runtime.json",
+    "sha256": "8e359e7d0c21e5e104d6a19d79e2160c1661049faa2ffc5762a91e7c42360790"
+  },
+  "script_sha256": "62585407cfa9c4692ad900859cd0f88a26a28058bbba783a79e01bd2dce4f2d0",
+  "preregistration_sha256": "27127c8a888ec4a8960cade5989a89199e28b6f352aa3d512cf405265983a89f",
+  "decoder_parent_sha256": "66c3a7ae9698f0dc4503f84070c3a7e7aa48c484646a53ec2e3ed06400821b47",
+  "totals": {
+    "saved_GPU_pairs": 189,
+    "recorded_case_gates": 16,
+    "actual_downloads": 214
+  },
+  "GPU_runs": [
+    {
+      "result_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/result.json",
+      "result_sha256": "de62d442b094363c7d25e3e99b5b1e577eba762752a4b020ab14b008fc57b12d",
+      "raw_status": "passed scoped local host gates; reference parity unverified",
+      "checks": [
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/default-host-baseline.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-draw-false-preimport-default.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-draw-false-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-draw-false-after.obrush",
+          "sha256": "995c392f01eb6265f2aac4b8d405f4afa2899426122b9021a99ef38d024a358f",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-draw-false-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-draw-false-redo.obrush",
+          "sha256": "995c392f01eb6265f2aac4b8d405f4afa2899426122b9021a99ef38d024a358f",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-draw-false-one-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-draw-false-second-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-draw-false-redo-import.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-draw-false-redo-stroke.obrush",
+          "sha256": "995c392f01eb6265f2aac4b8d405f4afa2899426122b9021a99ef38d024a358f",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-draw-true-preimport-default.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-draw-true-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-draw-true-after.obrush",
+          "sha256": "ef978c8d14d8dd3f5d903d85092f2c91e8df665ac7127c01cf55cd08ba1bea02",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-draw-true-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-draw-true-redo.obrush",
+          "sha256": "ef978c8d14d8dd3f5d903d85092f2c91e8df665ac7127c01cf55cd08ba1bea02",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-draw-true-one-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-draw-true-second-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-draw-true-redo-import.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-draw-true-redo-stroke.obrush",
+          "sha256": "ef978c8d14d8dd3f5d903d85092f2c91e8df665ac7127c01cf55cd08ba1bea02",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-clay-false-preimport-default.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-clay-false-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-clay-false-after.obrush",
+          "sha256": "01d790f02596422fc9744e41a99304f0d5ecaae3485e23ff04a582105ef25b1b",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-clay-false-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-clay-false-redo.obrush",
+          "sha256": "01d790f02596422fc9744e41a99304f0d5ecaae3485e23ff04a582105ef25b1b",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-clay-false-one-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-clay-false-second-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-clay-false-redo-import.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-clay-false-redo-stroke.obrush",
+          "sha256": "01d790f02596422fc9744e41a99304f0d5ecaae3485e23ff04a582105ef25b1b",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-clay-true-preimport-default.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-clay-true-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-clay-true-after.obrush",
+          "sha256": "a7bc27d47577d003fac2b57485fac9831d79d4117ac34b0de073184a9bf4cd88",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-clay-true-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-clay-true-redo.obrush",
+          "sha256": "a7bc27d47577d003fac2b57485fac9831d79d4117ac34b0de073184a9bf4cd88",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-clay-true-one-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-clay-true-second-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-clay-true-redo-import.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-clay-true-redo-stroke.obrush",
+          "sha256": "a7bc27d47577d003fac2b57485fac9831d79d4117ac34b0de073184a9bf4cd88",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-inflate-false-preimport-default.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-inflate-false-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-inflate-false-after.obrush",
+          "sha256": "5a33b1f1381c34f6930af838414dd54d0bbb6a3489bb9c7604a3d6c5cde07ff9",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-inflate-false-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-inflate-false-redo.obrush",
+          "sha256": "5a33b1f1381c34f6930af838414dd54d0bbb6a3489bb9c7604a3d6c5cde07ff9",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-inflate-false-one-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-inflate-false-second-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-inflate-false-redo-import.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-inflate-false-redo-stroke.obrush",
+          "sha256": "5a33b1f1381c34f6930af838414dd54d0bbb6a3489bb9c7604a3d6c5cde07ff9",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-inflate-true-preimport-default.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-inflate-true-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-inflate-true-after.obrush",
+          "sha256": "5180dc9f051e484a43a005ce8280ce7f4fa60bdb88be9e3e858eada48bc0b9e4",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-inflate-true-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-inflate-true-redo.obrush",
+          "sha256": "5180dc9f051e484a43a005ce8280ce7f4fa60bdb88be9e3e858eada48bc0b9e4",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-inflate-true-one-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-inflate-true-second-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-inflate-true-redo-import.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-inflate-true-redo-stroke.obrush",
+          "sha256": "5180dc9f051e484a43a005ce8280ce7f4fa60bdb88be9e3e858eada48bc0b9e4",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-smooth-false-preimport-default.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-smooth-false-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-smooth-false-after.obrush",
+          "sha256": "edd76630eddef050f85d954737b91bf1238b9f2d28fe704871377a79b70c3bc3",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-smooth-false-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-smooth-false-redo.obrush",
+          "sha256": "edd76630eddef050f85d954737b91bf1238b9f2d28fe704871377a79b70c3bc3",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-smooth-false-one-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-smooth-false-second-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-smooth-false-redo-import.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-smooth-false-redo-stroke.obrush",
+          "sha256": "edd76630eddef050f85d954737b91bf1238b9f2d28fe704871377a79b70c3bc3",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-smooth-true-preimport-default.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-smooth-true-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-smooth-true-after.obrush",
+          "sha256": "030632b6fc46bb7d7f156d4c986af04990ec2265a239bc8db2ae42605a8df69d",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-smooth-true-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-smooth-true-redo.obrush",
+          "sha256": "030632b6fc46bb7d7f156d4c986af04990ec2265a239bc8db2ae42605a8df69d",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-smooth-true-one-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-smooth-true-second-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-smooth-true-redo-import.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-smooth-true-redo-stroke.obrush",
+          "sha256": "030632b6fc46bb7d7f156d4c986af04990ec2265a239bc8db2ae42605a8df69d",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-flatten-false-preimport-default.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-flatten-false-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-flatten-false-after.obrush",
+          "sha256": "a9fbaa4613ec8a9cb19fc4cf5def772bb97fc49c32d2c07afc9aae748136695e",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-flatten-false-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-flatten-false-redo.obrush",
+          "sha256": "a9fbaa4613ec8a9cb19fc4cf5def772bb97fc49c32d2c07afc9aae748136695e",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-flatten-false-one-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-flatten-false-second-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-flatten-false-redo-import.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-flatten-false-redo-stroke.obrush",
+          "sha256": "a9fbaa4613ec8a9cb19fc4cf5def772bb97fc49c32d2c07afc9aae748136695e",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-flatten-true-preimport-default.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-flatten-true-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-flatten-true-after.obrush",
+          "sha256": "6735e01b6118cdb8436b2d48030d352c33d261f026684d1f1d48a3ba5b7c1fea",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-flatten-true-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-flatten-true-redo.obrush",
+          "sha256": "6735e01b6118cdb8436b2d48030d352c33d261f026684d1f1d48a3ba5b7c1fea",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-flatten-true-one-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-flatten-true-second-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-flatten-true-redo-import.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-flatten-true-redo-stroke.obrush",
+          "sha256": "6735e01b6118cdb8436b2d48030d352c33d261f026684d1f1d48a3ba5b7c1fea",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-crease-false-preimport-default.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-crease-false-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-crease-false-after.obrush",
+          "sha256": "a0e33606ad7450a69c828d75ed6e7c95ad8c9db69a1f83fb5b11491dcfc82f8c",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-crease-false-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-crease-false-redo.obrush",
+          "sha256": "a0e33606ad7450a69c828d75ed6e7c95ad8c9db69a1f83fb5b11491dcfc82f8c",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-crease-false-one-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-crease-false-second-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-crease-false-redo-import.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-crease-false-redo-stroke.obrush",
+          "sha256": "a0e33606ad7450a69c828d75ed6e7c95ad8c9db69a1f83fb5b11491dcfc82f8c",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-crease-true-preimport-default.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-crease-true-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-crease-true-after.obrush",
+          "sha256": "b063aebb1c3346336950530bcf2262a4b48a60ae44164fa5bf6cd8bc9ec3a8e9",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-crease-true-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-crease-true-redo.obrush",
+          "sha256": "b063aebb1c3346336950530bcf2262a4b48a60ae44164fa5bf6cd8bc9ec3a8e9",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-crease-true-one-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-crease-true-second-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-crease-true-redo-import.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-crease-true-redo-stroke.obrush",
+          "sha256": "b063aebb1c3346336950530bcf2262a4b48a60ae44164fa5bf6cd8bc9ec3a8e9",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-pinch-false-preimport-default.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-pinch-false-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-pinch-false-after.obrush",
+          "sha256": "18624f2eb09054c211a41cc5f7b74b81a2f66e20f48017268884a2a84e155cf3",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-pinch-false-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-pinch-false-redo.obrush",
+          "sha256": "18624f2eb09054c211a41cc5f7b74b81a2f66e20f48017268884a2a84e155cf3",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-pinch-false-one-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-pinch-false-second-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-pinch-false-redo-import.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-pinch-false-redo-stroke.obrush",
+          "sha256": "18624f2eb09054c211a41cc5f7b74b81a2f66e20f48017268884a2a84e155cf3",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-pinch-true-preimport-default.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-pinch-true-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-pinch-true-after.obrush",
+          "sha256": "28fd302feb73144ad064741463c15acbd9ed032d46bdb1ccdcee3e1213d6aeb4",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-pinch-true-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-pinch-true-redo.obrush",
+          "sha256": "28fd302feb73144ad064741463c15acbd9ed032d46bdb1ccdcee3e1213d6aeb4",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-pinch-true-one-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-pinch-true-second-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-pinch-true-redo-import.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-pinch-true-redo-stroke.obrush",
+          "sha256": "28fd302feb73144ad064741463c15acbd9ed032d46bdb1ccdcee3e1213d6aeb4",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-mask-false-preimport-default.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-mask-false-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-mask-false-after.obrush",
+          "sha256": "85db766fe9306f9ef565f4732afde282d08997b2886472ee2bbe83a8e2495826",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-mask-false-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-mask-false-redo.obrush",
+          "sha256": "85db766fe9306f9ef565f4732afde282d08997b2886472ee2bbe83a8e2495826",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-mask-false-one-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-mask-false-second-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-mask-false-redo-import.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-mask-false-redo-stroke.obrush",
+          "sha256": "85db766fe9306f9ef565f4732afde282d08997b2886472ee2bbe83a8e2495826",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-mask-true-preimport-default.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-mask-true-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-mask-true-after.obrush",
+          "sha256": "e52da91bdc6aa16de3d4a86df4b91ffe55470cd1b63811127aa815b5cb386752",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-mask-true-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-mask-true-redo.obrush",
+          "sha256": "e52da91bdc6aa16de3d4a86df4b91ffe55470cd1b63811127aa815b5cb386752",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-mask-true-one-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-mask-true-second-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-mask-true-redo-import.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-mask-true-redo-stroke.obrush",
+          "sha256": "e52da91bdc6aa16de3d4a86df4b91ffe55470cd1b63811127aa815b5cb386752",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-paint-false-preimport-default.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-paint-false-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-paint-false-after.obrush",
+          "sha256": "af15e8c079cb742793135122a8065e05dabbde5be40b159f20377368dad47862",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-paint-false-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-paint-false-redo.obrush",
+          "sha256": "af15e8c079cb742793135122a8065e05dabbde5be40b159f20377368dad47862",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-paint-false-one-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-paint-false-second-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-paint-false-redo-import.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-paint-false-redo-stroke.obrush",
+          "sha256": "af15e8c079cb742793135122a8065e05dabbde5be40b159f20377368dad47862",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-paint-true-preimport-default.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-paint-true-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-paint-true-after.obrush",
+          "sha256": "2d09b16832611b69260411d5219bbedb9f2673863e15ff8ffcefd8dde7d9b734",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-paint-true-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-paint-true-redo.obrush",
+          "sha256": "2d09b16832611b69260411d5219bbedb9f2673863e15ff8ffcefd8dde7d9b734",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-paint-true-one-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-paint-true-second-undo.obrush",
+          "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-paint-true-redo-import.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-paint-true-redo-stroke.obrush",
+          "sha256": "2d09b16832611b69260411d5219bbedb9f2673863e15ff8ffcefd8dde7d9b734",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-controls-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-controls-after.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-leave-return-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-leave-return-after.obrush",
+          "sha256": "dac6434a06714d6e7caa57b7611d22aa7254cb50998ecbde2b9c437cea9ecb61",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-leave-return-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-leave-return-redo.obrush",
+          "sha256": "dac6434a06714d6e7caa57b7611d22aa7254cb50998ecbde2b9c437cea9ecb61",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-navigation-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-navigation-after.obrush",
+          "sha256": "d24cdb37087f5a726bf706e55d44de55e6752e3d2c7c454af177a566e2d5750c",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-navigation-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-navigation-redo.obrush",
+          "sha256": "d24cdb37087f5a726bf706e55d44de55e6752e3d2c7c454af177a566e2d5750c",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-radius-command-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-radius-command-after.obrush",
+          "sha256": "cd24c0da684f73e3f2036e1f5c2f7f6f567e471936accb8abbfc5ce90e99b147",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-radius-command-undo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-radius-command-redo.obrush",
+          "sha256": "cd24c0da684f73e3f2036e1f5c2f7f6f567e471936accb8abbfc5ce90e99b147",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-noop-zero-strength-original.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-noop-zero-strength-edited.obrush",
+          "sha256": "222e9d787741b15fd8a19a24f206518fc18189ddccc2562b32c8c008508cb073",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-noop-zero-strength-with-redo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-noop-zero-strength-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-noop-zero-strength-after.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-noop-zero-strength-redo.obrush",
+          "sha256": "222e9d787741b15fd8a19a24f206518fc18189ddccc2562b32c8c008508cb073",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-noop-all-paint-targets-off-original.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-noop-all-paint-targets-off-edited.obrush",
+          "sha256": "222e9d787741b15fd8a19a24f206518fc18189ddccc2562b32c8c008508cb073",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-noop-all-paint-targets-off-with-redo.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-noop-all-paint-targets-off-before.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-noop-all-paint-targets-off-after.obrush",
+          "sha256": "0506c6972e3411c754580f336519c39868f1e6eb163f3fbeedf840a152036e34",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        },
+        {
+          "path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-continuous-runtime/candidate3-0.1.19-Continuous-input-ack-1f73359d-ac0a-4c91-a858-8f64df89b675/continuous-noop-all-paint-targets-off-redo.obrush",
+          "sha256": "222e9d787741b15fd8a19a24f206518fc18189ddccc2562b32c8c008508cb073",
+          "draws": 1,
+          "independent_struct_pack_GPU_exact": true
+        }
+      ],
+      "cleanup": {
+        "owned_chrome_exit_code": 0,
+        "owned_chrome_signal": null,
+        "owned_server_closed": true
+      }
+    }
+  ],
+  "exec_exit_code": 0,
+  "all_owned_jobs_closed": true,
+  "limits": [
+    "These are189 frame/project observations, including repeated documents and history states, not189 distinct sculpt fixtures.",
+    "Original189 browser/runtime comparisons passed; this second implementation reconstructs full40+8/UV/index tuples independently.",
+    "Earlier304-pair/26PNG reconstruction stays a separate unchanged receipt; no input appended to or rerun within it.",
+    "All original failed statuses remain failed; no reference mathematics/native/device/latency parity inferred."
+  ]
+}

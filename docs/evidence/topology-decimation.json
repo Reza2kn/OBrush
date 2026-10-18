@@ -1,0 +1,256 @@
+{
+  "feature": "Conservative QEM decimation foundation",
+  "obrush_version": "0.1.6",
+  "date": "2026-10-12",
+  "status": "Locally verified pure-core implementation; browser workflow pending separate evidence; ZBrush and SculptGL comparisons unverified",
+  "algorithm": {
+    "reference": "Garland and Heckbert, Surface Simplification Using Quadric Error Metrics (1997)",
+    "url": "https://www.cs.cmu.edu/~garland/Papers/quadrics.pdf",
+    "provenance": "Independently written Rust plane quadrics and incremental edge collapses; no reference application source copied",
+    "differences": "Only existing edges collapse; manifold links are preserved, with no aggregation or reference behavior claim"
+  },
+  "source_files": [
+    {
+      "path": "crates/obrush-core/src/decimate.rs",
+      "bytes": 25685,
+      "sha256": "93a8ddc7b245f7a77f667c659726cad8f8d4710b59b3316c8776b853d218f763"
+    },
+    {
+      "path": "crates/obrush-core/tests/decimate.rs",
+      "bytes": 12265,
+      "sha256": "d7b8f539fb6a8fd42175a563caf6e664a91bf1f28ccb74dce184b85699eda2a1"
+    },
+    {
+      "path": "crates/obrush-core/examples/decimation_probe.rs",
+      "bytes": 10173,
+      "sha256": "3ad53ee4c8120f094ade5558b8ee5193ba2dfc854c607855add9d40c42cb54a8"
+    }
+  ],
+  "native_platform": {
+    "cpu": "Apple M2",
+    "os": "macOS 26.5.1 ARM64",
+    "toolchain": "Rust 1.96.0",
+    "profile": "release, workspace opt-level 2",
+    "repeat_count": 1,
+    "timing_scope": "Single release-mode native CPU runs, operation includes validation, topology setup and recomputed normals; fixture creation and metrics excluded. Not browser latency."
+  },
+  "fixtures_and_results": [
+    {
+      "elapsed_ms": 23.371875,
+      "fixture": "icosphere-10k",
+      "metrics": {
+        "boundary_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "minimum_cross_over_longest_edge_squared": 0.24583278012440274,
+        "nonmanifold_edges": 0,
+        "relative_volume_change": -0.00024754728375919743,
+        "sampled_input_to_output_distance": {
+          "max": 0.00044409826303377394,
+          "rms": 0.00023700409718154517,
+          "samples": 1024
+        },
+        "sampled_output_to_input_distance": {
+          "max": 0.00046239518350802106,
+          "rms": 0.00027992334435569506,
+          "samples": 1024
+        },
+        "sampling_limitation": "1024 deterministic face-centroid/vertex samples each way, not exact Hausdorff or global intersection proof",
+        "signed_volume_input": 4.186525142975762,
+        "signed_volume_output": 4.185488780048229
+      },
+      "report": {
+        "boundary_vertices": 0,
+        "candidate_pops": 34092,
+        "collapses": 5120,
+        "input_triangles": 20480,
+        "input_vertices": 10242,
+        "max_quadric_error": 0.0003484319617921373,
+        "max_vertex_displacement_bound": 0.030350286867790198,
+        "output_triangles": 10240,
+        "output_vertices": 5122,
+        "protected_vertices": 0,
+        "reached_target": true,
+        "target_triangles": 10240,
+        "termination": "Target reached"
+      },
+      "settings": {
+        "feature_angle_degrees": 45.0,
+        "max_candidate_pops": 2000000,
+        "max_error": 0.05000000074505806,
+        "preserve_sharp_features": true,
+        "target_ratio": 0.5
+      }
+    },
+    {
+      "elapsed_ms": 187.68079200000003,
+      "fixture": "user-61580",
+      "metrics": {
+        "boundary_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "minimum_cross_over_longest_edge_squared": 0.02000011344907189,
+        "nonmanifold_edges": 0,
+        "relative_volume_change": -5.7706502004206683e-05,
+        "sampled_input_to_output_distance": {
+          "max": 0.00023078972953409198,
+          "rms": 5.832197715663388e-05,
+          "samples": 1024
+        },
+        "sampled_output_to_input_distance": {
+          "max": 0.00035469099435543697,
+          "rms": 6.71000494777729e-05,
+          "samples": 1024
+        },
+        "sampling_limitation": "1024 deterministic face-centroid/vertex samples each way, not exact Hausdorff or global intersection proof",
+        "signed_volume_input": 4.33614527280467,
+        "signed_volume_output": 4.335895049028794
+      },
+      "report": {
+        "boundary_vertices": 0,
+        "candidate_pops": 197159,
+        "collapses": 30789,
+        "input_triangles": 123156,
+        "input_vertices": 61580,
+        "max_quadric_error": 0.00030993445370447817,
+        "max_vertex_displacement_bound": 0.04960064101553578,
+        "output_triangles": 61578,
+        "output_vertices": 30791,
+        "protected_vertices": 344,
+        "reached_target": true,
+        "target_triangles": 61578,
+        "termination": "Target reached"
+      },
+      "settings": {
+        "feature_angle_degrees": 45.0,
+        "max_candidate_pops": 2000000,
+        "max_error": 0.05000000074505806,
+        "preserve_sharp_features": true,
+        "target_ratio": 0.5
+      }
+    },
+    {
+      "elapsed_ms": 239.487875,
+      "fixture": "uv-sphere-99802",
+      "metrics": {
+        "boundary_edges": 0,
+        "inconsistent_winding_edges": 0,
+        "minimum_cross_over_longest_edge_squared": 0.18424402529236503,
+        "nonmanifold_edges": 0,
+        "relative_volume_change": -1.0338522464348188e-05,
+        "sampled_input_to_output_distance": {
+          "max": 2.4755547751140384e-05,
+          "rms": 8.110880669004293e-06,
+          "samples": 1024
+        },
+        "sampled_output_to_input_distance": {
+          "max": 2.3657081855557435e-05,
+          "rms": 8.750093223045971e-06,
+          "samples": 1024
+        },
+        "sampling_limitation": "1024 deterministic face-centroid/vertex samples each way, not exact Hausdorff or global intersection proof",
+        "signed_volume_input": 4.188059870546308,
+        "signed_volume_output": 4.188016572195254
+      },
+      "report": {
+        "boundary_vertices": 0,
+        "candidate_pops": 183521,
+        "collapses": 49900,
+        "input_triangles": 199600,
+        "input_vertices": 99802,
+        "max_quadric_error": 1.6959158388932095e-05,
+        "max_vertex_displacement_bound": 0.0112416097009943,
+        "output_triangles": 99800,
+        "output_vertices": 49902,
+        "protected_vertices": 0,
+        "reached_target": true,
+        "target_triangles": 99800,
+        "termination": "Target reached"
+      },
+      "settings": {
+        "feature_angle_degrees": 45.0,
+        "max_candidate_pops": 2000000,
+        "max_error": 0.05000000074505806,
+        "preserve_sharp_features": true,
+        "target_ratio": 0.5
+      }
+    }
+  ],
+  "assertion_tests": {
+    "command": "cargo test --locked -p obrush-core --test decimate",
+    "count": 11,
+    "passed": true,
+    "coverage": [
+      "Deterministic sphere 50% face reduction, closed consistent winding, Euler characteristic 2, and less than 1% radial and volume change",
+      "Original vertices have a nearest output representative within the reported conservative cluster bound",
+      "Open sheet preserves exact boundary coordinates and positive face orientation",
+      "Sharp box preserves original edge and corner coordinates and signed volume",
+      "Nonzero masks pin position, mask weight and RGB exactly",
+      "An impossible zero-error target and a one-candidate work limit disclose partial or unchanged results",
+      "Invalid settings, nonfinite and degenerate faces, duplicate faces, inconsistent winding, nonmanifold edges and bow-tie vertices are rejected",
+      "Tetrahedron collapses producing duplicate faces are rejected",
+      "Cancellation during collapse or compaction preserves the source exactly",
+      "A ratio of one leaves every mesh field identical",
+      "The 250,000-vertex operation allocation limit is enforced before topology work"
+    ]
+  },
+  "validation": {
+    "strict_native_core_clippy": "cargo clippy --locked -p obrush-core --all-targets -- -D warnings passed",
+    "pure_core_wasm": "cargo check --locked -p obrush-core --target wasm32-unknown-unknown passed"
+  },
+  "limits": {
+    "vertices": 250000,
+    "triangles": 500000,
+    "incident_faces_per_vertex": 256,
+    "candidate_pops_default": 2000000,
+    "candidate_pops_max": 10000000
+  },
+  "policy": {
+    "masks": "Any vertex with a nonzero mask is pinned; partial masks also prevent movement",
+    "borders": "All original boundary vertices are pinned",
+    "sharp_features": "The default 45-degree dihedral threshold pins original edge endpoints; there is no exact post-collapse dihedral guarantee",
+    "colors": "For an unprotected collapse representative, RGB is interpolated with a clamped segment projection weight",
+    "normals": "Recomputed after an actual geometry change",
+    "target": "Triangle fraction uses ceiling rounding. Interior collapses remove two triangles, so a result may undershoot the target by one face. Safety and work limits can stop above the target.",
+    "max_error": "World-space conservative cluster representative displacement bound; not a Hausdorff distance",
+    "cancellation": "Between bounded phases and at most 256 candidate pops; setup and heap rebuilds remain atomic"
+  },
+  "memory": {
+    "whole_three_fixture_probe_max_resident_bytes": 247414784,
+    "scope": "includes all loaded fixtures, OBJ/JSON writing and independent metrics/BVH construction; not isolated operation peak"
+  },
+  "preserved_failed_checks": [
+    {
+      "artifact": ".artifacts/decimation-baseline/first-tests.log",
+      "reason": "A 0.05 world-unit error bound on the coarse sphere reached 52% of original faces instead of the requested 50%. The conservative partial result was correctly reported."
+    },
+    {
+      "artifact": ".artifacts/decimation-baseline/second-tests.log",
+      "reason": "A 0.06 bound also stopped at 52%. The final test explicitly uses 0.1 and still independently checks less than 1% shape and volume change."
+    },
+    {
+      "artifact": ".artifacts/decimation-baseline/probe.log",
+      "reason": "Probe compilation required a closure to call Vec3::as_dvec3."
+    },
+    {
+      "artifact": ".artifacts/decimation-baseline/probe-final.log",
+      "reason": "The first 100k UV fixture had 400 faces at each pole, exceeding the explicit 256-face vertex admission limit. It was rejected and replaced with a 200-longitude, 500-latitude fixture."
+    }
+  ],
+  "artifacts": {
+    "raw_results": ".artifacts/decimation-final-v4/results.json",
+    "manifest": ".artifacts/decimation-final-v4/manifest.json",
+    "timing_memory_log": ".artifacts/decimation-baseline/probe-final-v4.log",
+    "focused_tests_log": ".artifacts/decimation-baseline/final-tests.log",
+    "mesh_input_output_files": ".artifacts/decimation-final-v4/"
+  },
+  "limitations": [
+    "Geometry, nonzero mask values and RGB are pinned at original protected vertices; normals are recomputed after a collapse.",
+    "The conservative representative displacement bound is not a global surface Hausdorff-distance guarantee.",
+    "Surface error uses 1,024 deterministic samples in each direction; this is not an exhaustive maximum.",
+    "Global intersection prevention and repair of existing folds are not established.",
+    "Protection, error and work limits can make the requested target unattainable; partial output and the reason are explicitly reported.",
+    "Setup and heap rebuilding are bounded atomic phases. Cancellation occurs between phases and at most every 256 candidate pops.",
+    "Native CPU operation timings do not establish browser interaction latency or SculptGL/ZBrush performance parity.",
+    "Matched SculptGL/ZBrush decimation benchmarks and shape comparisons were not run.",
+    "The supplied user model already contains bad folds. Decimation preserves local features and is not a repair operation."
+  ]
+}

@@ -1,0 +1,794 @@
+{
+  "schema_version": 1,
+  "checked_at_utc": "2026-10-15T21:27:59.779810+00:00",
+  "status": "Compared scoped HP01 on unchanged C42: Paint Undo/Redo preserves CURRENT normal field after a later sculpt Undo; full SculptGL/ZBrush parity remains incomplete",
+  "version": "0.1.20",
+  "candidate": "C42 unchanged",
+  "product": {
+    "manifest": {
+      "path": ".artifacts/sculptgl-release-0.1.20-candidate42/source/manifest.json",
+      "bytes": 92146,
+      "sha256": "0576486ff902865e881b07db877cfd5c7c495489c1284f7b42d7be21bd26c498"
+    },
+    "build": {
+      "path": ".artifacts/sculptgl-release-0.1.20-candidate42/build-record.json",
+      "bytes": 10063,
+      "sha256": "8cd0686dd68b821aab2897ba9bd0c6be1c840314d0339e331764606aef0c1824"
+    },
+    "WASM": {
+      "path": "pkg/obrush_app_bg.wasm",
+      "bytes": 23248427,
+      "sha256": "15ec6fb4cf9a1b0f8075a0fc15cf066e2dcf7b5ce268a4aa692beb973b0c0407"
+    },
+    "main_product_files_verified": 383,
+    "preview": "http://127.0.0.1:8807/",
+    "preview_exec_session": 17225,
+    "new_product_edits": false
+  },
+  "reference": {
+    "hosted_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "upstream_revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "hosted_upstream_equivalence": "unestablished; actual hosted callbacks observed"
+  },
+  "case": {
+    "id": "HP01",
+    "fixture": "Independent6vertices/two original triangle sheets, rawU1, identity pose, same live document throughout",
+    "sequence": [
+      "Crease A500/.25, mirrored Negative, culling/pressure factors/guard off",
+      "Crease B370/.75, same parameters; outside normal rows retained",
+      "Paint P500/.25, hardness.75, None alpha, mirror0, RGB/roughness/metallic all enabled, zero pressure/culling",
+      "Crease C500/.75, P attributes retained; C intensity .75 retained from B and explicitly verified",
+      "UndoC \u2192 entire P file, fresh all6 B normals",
+      "UndoPaint \u2192 entire B file, SAME current refreshed B normal field",
+      "RedoPaint \u2192 entire P file, SAME current refreshed B normal field",
+      "RedoC \u2192 entire C file, refreshed C normals"
+    ],
+    "contact": "Same fixed original upper-sheet seed[-.25,.25,.5], once-floor native viewport-local projection and96px horizontal endpoint, no contact search",
+    "capture_caps": "Original one recording per page,256 frames/32MiB; fullraw512MiB/item32MiB/owned192MiB caps unchanged",
+    "no_resets": "No refit/reimport/reset/rearm between A/B/P/C or history steps"
+  },
+  "bindings": {
+    "helper_manifest": {
+      "path": ".artifacts/sculptgl-crease-paint-history-retained-c42-stage/MANIFEST.json",
+      "bytes": 32010,
+      "sha256": "080709e063b131a256faa15d9184ededffdbc27f682e6bd94e0c5d943fd0d7a9"
+    },
+    "protocol_manifest": {
+      "path": ".artifacts/sculptgl-crease-paint-history-retained-c42-stage/protocol/manifest.json",
+      "bytes": 432,
+      "sha256": "74114e61598498106d28544cae1fac8abfb6245144a3701bfed400567970b63d"
+    },
+    "preregistration": {
+      "path": ".artifacts/sculptgl-crease-paint-history-retained-c42-stage/protocol/PREREGISTRATION.json",
+      "bytes": 2502,
+      "sha256": "8f9d11a9be97d6da9d93bf3651eca662032be8925f152efdbd26054186f45761"
+    },
+    "helper_checks": {
+      "path": ".artifacts/sculptgl-crease-paint-history-retained-c42-stage/root-check01/RESULT.json",
+      "bytes": 56021,
+      "sha256": "9fdb3c46d0603cddbc7379edf0e7bf4ec6243fdfb92d12a8216dc32e7d983be7"
+    },
+    "exact_C42_recipe": {
+      "path": ".artifacts/sculptgl-crease-paint-history-retained-c42-stage/CURRENT_C42_PRODUCT_RECIPE.json",
+      "bytes": 94251,
+      "sha256": "8f278ebfdf13f2748485d5c36885ac1c303ca2bd837a5094e5a2703b0876b742"
+    },
+    "actual_result": {
+      "path": ".artifacts/sculptgl-crease-runtime/candidate42-history-HP01-17919954-8a05-4dfd-8c5d-debf6ea3aa55/result.json",
+      "bytes": 60613849,
+      "sha256": "a525c37f8a697128ae0ecf9b7f5da646a924901c2922b8de2021cf78b56aa5cb"
+    },
+    "artifact_audit": {
+      "path": ".artifacts/sculptgl-crease-paint-history-retained-c42-stage/ROOT_PAINT_HISTORY_AUDIT.json",
+      "bytes": 36841,
+      "sha256": "31182934e364ed63c432a51ffc80a4554822fdcdfdb7f41d8fef66adc14ac435"
+    },
+    "independent_Python_math": {
+      "path": ".artifacts/sculptgl-crease-paint-history-retained-c42-stage/ROOT_INDEPENDENT_PAINT_HISTORY_MATH.json",
+      "bytes": 19836,
+      "sha256": "3e9e60f9b9232f50bb5bc6ef744fdd88928e4ec55abaea948a5ecb2f2ce90c65"
+    },
+    "whole_PNG_review": {
+      "path": ".artifacts/sculptgl-crease-paint-history-retained-c42-stage/ROOT_WHOLE_PNG_REVIEW.json",
+      "bytes": 4897,
+      "sha256": "047f4c910d1af06a99274632b3aeed45f5bed49c4d7cef2d3a48258f23b278c5"
+    }
+  },
+  "actual_checks": {
+    "helper_source_checks": 106,
+    "raw_records": 704,
+    "raw_bytes": 298462214,
+    "gzip_bytes": 26710146,
+    "whole_public_downloads": 38,
+    "GPU_snapshots": 24,
+    "independent_Crease_passes": 12,
+    "independent_Paint_passes": 4,
+    "quiet": [
+      {
+        "side": "source",
+        "phase": "A",
+        "samples": 32,
+        "milliseconds": 516.6000000238419
+      },
+      {
+        "side": "source",
+        "phase": "B",
+        "samples": 32,
+        "milliseconds": 505.7000000178814
+      },
+      {
+        "side": "source",
+        "phase": "P",
+        "samples": 32,
+        "milliseconds": 502.09999999403954
+      },
+      {
+        "side": "source",
+        "phase": "C",
+        "samples": 31,
+        "milliseconds": 500.2999999821186
+      },
+      {
+        "side": "root",
+        "phase": "A",
+        "samples": 31,
+        "milliseconds": 500.0
+      },
+      {
+        "side": "root",
+        "phase": "B",
+        "samples": 31,
+        "milliseconds": 500.7999999821186
+      },
+      {
+        "side": "root",
+        "phase": "P",
+        "samples": 31,
+        "milliseconds": 500.0
+      },
+      {
+        "side": "root",
+        "phase": "C",
+        "samples": 31,
+        "milliseconds": 500.09999999403954
+      }
+    ],
+    "prefixes": [
+      {
+        "side": "source",
+        "frames": 83,
+        "bytes": 5435820
+      },
+      {
+        "side": "root",
+        "frames": 240,
+        "bytes": 11125632
+      }
+    ],
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_servers_closed": 2
+    },
+    "owned_PID_absent": true
+  },
+  "numerical": {
+    "own_math_and_GPU": "Every position/normal/RGB/RM/mask word exact against independent JS and separate Python, including sequential Paint blends and all four history operations",
+    "own_history_files": "Complete public files exact on both hosts",
+    "Paint_RGB": {
+      "label": "Paired HP00 colors",
+      "rows": 6,
+      "words": 18,
+      "word_difference_count": 7,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "RMS": 2.8097899007262688e-08,
+      "differences": [
+        {
+          "row": 0,
+          "column": 0,
+          "expected_word": 1048644902,
+          "actual_word": 1048644900,
+          "expected": 0.252053439617157,
+          "actual": 0.2520533800125122,
+          "absolute_difference": 5.960464477539063e-08
+        },
+        {
+          "row": 0,
+          "column": 1,
+          "expected_word": 1052076741,
+          "actual_word": 1052076740,
+          "expected": 0.3543302118778229,
+          "actual": 0.3543301820755005,
+          "absolute_difference": 2.9802322387695312e-08
+        },
+        {
+          "row": 1,
+          "column": 0,
+          "expected_word": 1050318030,
+          "actual_word": 1050318028,
+          "expected": 0.30191653966903687,
+          "actual": 0.3019164800643921,
+          "absolute_difference": 5.960464477539063e-08
+        },
+        {
+          "row": 1,
+          "column": 1,
+          "expected_word": 1052076741,
+          "actual_word": 1052076740,
+          "expected": 0.3543302118778229,
+          "actual": 0.3543301820755005,
+          "absolute_difference": 2.9802322387695312e-08
+        },
+        {
+          "row": 3,
+          "column": 1,
+          "expected_word": 1051050374,
+          "actual_word": 1051050372,
+          "expected": 0.3237420916557312,
+          "actual": 0.3237420320510864,
+          "absolute_difference": 5.960464477539063e-08
+        },
+        {
+          "row": 4,
+          "column": 0,
+          "expected_word": 1053969919,
+          "actual_word": 1053969918,
+          "expected": 0.4107513129711151,
+          "actual": 0.4107512831687927,
+          "absolute_difference": 2.9802322387695312e-08
+        },
+        {
+          "row": 5,
+          "column": 1,
+          "expected_word": 1052934792,
+          "actual_word": 1052934791,
+          "expected": 0.3799021244049072,
+          "actual": 0.37990209460258484,
+          "absolute_difference": 2.9802322387695312e-08
+        }
+      ],
+      "exact_words": false,
+      "expected_sha256": "850f81eae11cd58ad069d1060a834cdcf36ed16f52628b0c877d36a67e9d81f6",
+      "actual_sha256": "f36a71db9574f7f62f131529f3ef69c58962ec0260e1e809b8e406071a33e121"
+    },
+    "Paint_RM": {
+      "label": "Paired HP00 materials",
+      "rows": 6,
+      "words": 12,
+      "word_difference_count": 3,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "RMS": 2.9802322387695312e-08,
+      "differences": [
+        {
+          "row": 0,
+          "column": 1,
+          "expected_word": 1058491094,
+          "actual_word": 1058491093,
+          "expected": 0.5909856557846069,
+          "actual": 0.5909855961799622,
+          "absolute_difference": 5.960464477539063e-08
+        },
+        {
+          "row": 1,
+          "column": 1,
+          "expected_word": 1058491094,
+          "actual_word": 1058491093,
+          "expected": 0.5909856557846069,
+          "actual": 0.5909855961799622,
+          "absolute_difference": 5.960464477539063e-08
+        },
+        {
+          "row": 4,
+          "column": 1,
+          "expected_word": 1058043550,
+          "actual_word": 1058043549,
+          "expected": 0.5643099546432495,
+          "actual": 0.5643098950386047,
+          "absolute_difference": 5.960464477539063e-08
+        }
+      ],
+      "exact_words": false,
+      "expected_sha256": "8a8477c1ce055a613990cb10e14cf6da96999a89cb4a3ef98ddc99a137e887f4",
+      "actual_sha256": "0d37e31483b131c964df1a533c1a76635ddd8f72d7fcaef393fe853553567b39"
+    },
+    "history_normals": [
+      {
+        "step": "UndoC",
+        "difference": {
+          "label": "Paired current-field Paint history UndoC",
+          "rows": 6,
+          "words": 18,
+          "word_difference_count": 12,
+          "max_absolute_difference": 1.1920928955078125e-07,
+          "RMS": 4.8673021912055873e-08,
+          "differences": [
+            {
+              "row": 0,
+              "column": 0,
+              "expected_word": 2859605760,
+              "actual_word": 0,
+              "expected": -2.1504673042294087e-13,
+              "actual": 0,
+              "absolute_difference": 2.1504673042294087e-13
+            },
+            {
+              "row": 0,
+              "column": 1,
+              "expected_word": 997252339,
+              "actual_word": 997252340,
+              "expected": 0.003675278974696994,
+              "actual": 0.0036752792075276375,
+              "absolute_difference": 2.3283064365386963e-10
+            },
+            {
+              "row": 0,
+              "column": 2,
+              "expected_word": 1073150195,
+              "actual_word": 1073150196,
+              "expected": 1.9294723272323608,
+              "actual": 1.9294724464416504,
+              "absolute_difference": 1.1920928955078125e-07
+            },
+            {
+              "row": 1,
+              "column": 0,
+              "expected_word": 2859605760,
+              "actual_word": 0,
+              "expected": -2.1504673042294087e-13,
+              "actual": 0,
+              "absolute_difference": 2.1504673042294087e-13
+            },
+            {
+              "row": 1,
+              "column": 1,
+              "expected_word": 997252339,
+              "actual_word": 997252340,
+              "expected": 0.003675278974696994,
+              "actual": 0.0036752792075276375,
+              "absolute_difference": 2.3283064365386963e-10
+            },
+            {
+              "row": 1,
+              "column": 2,
+              "expected_word": 1073150195,
+              "actual_word": 1073150196,
+              "expected": 1.9294723272323608,
+              "actual": 1.9294724464416504,
+              "absolute_difference": 1.1920928955078125e-07
+            },
+            {
+              "row": 2,
+              "column": 0,
+              "expected_word": 2859605760,
+              "actual_word": 0,
+              "expected": -2.1504673042294087e-13,
+              "actual": 0,
+              "absolute_difference": 2.1504673042294087e-13
+            },
+            {
+              "row": 2,
+              "column": 1,
+              "expected_word": 997252339,
+              "actual_word": 997252340,
+              "expected": 0.003675278974696994,
+              "actual": 0.0036752792075276375,
+              "absolute_difference": 2.3283064365386963e-10
+            },
+            {
+              "row": 2,
+              "column": 2,
+              "expected_word": 1073150195,
+              "actual_word": 1073150196,
+              "expected": 1.9294723272323608,
+              "actual": 1.9294724464416504,
+              "absolute_difference": 1.1920928955078125e-07
+            },
+            {
+              "row": 3,
+              "column": 1,
+              "expected_word": 3156931558,
+              "actual_word": 3156931556,
+              "expected": -0.010434126481413841,
+              "actual": -0.010434124618768692,
+              "absolute_difference": 1.862645149230957e-09
+            },
+            {
+              "row": 4,
+              "column": 1,
+              "expected_word": 3156931558,
+              "actual_word": 3156931556,
+              "expected": -0.010434126481413841,
+              "actual": -0.010434124618768692,
+              "absolute_difference": 1.862645149230957e-09
+            },
+            {
+              "row": 5,
+              "column": 1,
+              "expected_word": 3156931558,
+              "actual_word": 3156931556,
+              "expected": -0.010434126481413841,
+              "actual": -0.010434124618768692,
+              "absolute_difference": 1.862645149230957e-09
+            }
+          ],
+          "exact_words": false,
+          "expected_sha256": "438cca482f69b82ece5bca72e597d142a04dd9828bb43c66136f7b869897844c",
+          "actual_sha256": "81f354e7bb15f6b323f315163621e58699d5e5569b0e8a24c78c71f0082e8df3"
+        }
+      },
+      {
+        "step": "UndoPaint",
+        "difference": {
+          "label": "Paired current-field Paint history UndoPaint",
+          "rows": 6,
+          "words": 18,
+          "word_difference_count": 12,
+          "max_absolute_difference": 1.1920928955078125e-07,
+          "RMS": 4.8673021912055873e-08,
+          "differences": [
+            {
+              "row": 0,
+              "column": 0,
+              "expected_word": 2859605760,
+              "actual_word": 0,
+              "expected": -2.1504673042294087e-13,
+              "actual": 0,
+              "absolute_difference": 2.1504673042294087e-13
+            },
+            {
+              "row": 0,
+              "column": 1,
+              "expected_word": 997252339,
+              "actual_word": 997252340,
+              "expected": 0.003675278974696994,
+              "actual": 0.0036752792075276375,
+              "absolute_difference": 2.3283064365386963e-10
+            },
+            {
+              "row": 0,
+              "column": 2,
+              "expected_word": 1073150195,
+              "actual_word": 1073150196,
+              "expected": 1.9294723272323608,
+              "actual": 1.9294724464416504,
+              "absolute_difference": 1.1920928955078125e-07
+            },
+            {
+              "row": 1,
+              "column": 0,
+              "expected_word": 2859605760,
+              "actual_word": 0,
+              "expected": -2.1504673042294087e-13,
+              "actual": 0,
+              "absolute_difference": 2.1504673042294087e-13
+            },
+            {
+              "row": 1,
+              "column": 1,
+              "expected_word": 997252339,
+              "actual_word": 997252340,
+              "expected": 0.003675278974696994,
+              "actual": 0.0036752792075276375,
+              "absolute_difference": 2.3283064365386963e-10
+            },
+            {
+              "row": 1,
+              "column": 2,
+              "expected_word": 1073150195,
+              "actual_word": 1073150196,
+              "expected": 1.9294723272323608,
+              "actual": 1.9294724464416504,
+              "absolute_difference": 1.1920928955078125e-07
+            },
+            {
+              "row": 2,
+              "column": 0,
+              "expected_word": 2859605760,
+              "actual_word": 0,
+              "expected": -2.1504673042294087e-13,
+              "actual": 0,
+              "absolute_difference": 2.1504673042294087e-13
+            },
+            {
+              "row": 2,
+              "column": 1,
+              "expected_word": 997252339,
+              "actual_word": 997252340,
+              "expected": 0.003675278974696994,
+              "actual": 0.0036752792075276375,
+              "absolute_difference": 2.3283064365386963e-10
+            },
+            {
+              "row": 2,
+              "column": 2,
+              "expected_word": 1073150195,
+              "actual_word": 1073150196,
+              "expected": 1.9294723272323608,
+              "actual": 1.9294724464416504,
+              "absolute_difference": 1.1920928955078125e-07
+            },
+            {
+              "row": 3,
+              "column": 1,
+              "expected_word": 3156931558,
+              "actual_word": 3156931556,
+              "expected": -0.010434126481413841,
+              "actual": -0.010434124618768692,
+              "absolute_difference": 1.862645149230957e-09
+            },
+            {
+              "row": 4,
+              "column": 1,
+              "expected_word": 3156931558,
+              "actual_word": 3156931556,
+              "expected": -0.010434126481413841,
+              "actual": -0.010434124618768692,
+              "absolute_difference": 1.862645149230957e-09
+            },
+            {
+              "row": 5,
+              "column": 1,
+              "expected_word": 3156931558,
+              "actual_word": 3156931556,
+              "expected": -0.010434126481413841,
+              "actual": -0.010434124618768692,
+              "absolute_difference": 1.862645149230957e-09
+            }
+          ],
+          "exact_words": false,
+          "expected_sha256": "438cca482f69b82ece5bca72e597d142a04dd9828bb43c66136f7b869897844c",
+          "actual_sha256": "81f354e7bb15f6b323f315163621e58699d5e5569b0e8a24c78c71f0082e8df3"
+        }
+      },
+      {
+        "step": "RedoPaint",
+        "difference": {
+          "label": "Paired current-field Paint history RedoPaint",
+          "rows": 6,
+          "words": 18,
+          "word_difference_count": 12,
+          "max_absolute_difference": 1.1920928955078125e-07,
+          "RMS": 4.8673021912055873e-08,
+          "differences": [
+            {
+              "row": 0,
+              "column": 0,
+              "expected_word": 2859605760,
+              "actual_word": 0,
+              "expected": -2.1504673042294087e-13,
+              "actual": 0,
+              "absolute_difference": 2.1504673042294087e-13
+            },
+            {
+              "row": 0,
+              "column": 1,
+              "expected_word": 997252339,
+              "actual_word": 997252340,
+              "expected": 0.003675278974696994,
+              "actual": 0.0036752792075276375,
+              "absolute_difference": 2.3283064365386963e-10
+            },
+            {
+              "row": 0,
+              "column": 2,
+              "expected_word": 1073150195,
+              "actual_word": 1073150196,
+              "expected": 1.9294723272323608,
+              "actual": 1.9294724464416504,
+              "absolute_difference": 1.1920928955078125e-07
+            },
+            {
+              "row": 1,
+              "column": 0,
+              "expected_word": 2859605760,
+              "actual_word": 0,
+              "expected": -2.1504673042294087e-13,
+              "actual": 0,
+              "absolute_difference": 2.1504673042294087e-13
+            },
+            {
+              "row": 1,
+              "column": 1,
+              "expected_word": 997252339,
+              "actual_word": 997252340,
+              "expected": 0.003675278974696994,
+              "actual": 0.0036752792075276375,
+              "absolute_difference": 2.3283064365386963e-10
+            },
+            {
+              "row": 1,
+              "column": 2,
+              "expected_word": 1073150195,
+              "actual_word": 1073150196,
+              "expected": 1.9294723272323608,
+              "actual": 1.9294724464416504,
+              "absolute_difference": 1.1920928955078125e-07
+            },
+            {
+              "row": 2,
+              "column": 0,
+              "expected_word": 2859605760,
+              "actual_word": 0,
+              "expected": -2.1504673042294087e-13,
+              "actual": 0,
+              "absolute_difference": 2.1504673042294087e-13
+            },
+            {
+              "row": 2,
+              "column": 1,
+              "expected_word": 997252339,
+              "actual_word": 997252340,
+              "expected": 0.003675278974696994,
+              "actual": 0.0036752792075276375,
+              "absolute_difference": 2.3283064365386963e-10
+            },
+            {
+              "row": 2,
+              "column": 2,
+              "expected_word": 1073150195,
+              "actual_word": 1073150196,
+              "expected": 1.9294723272323608,
+              "actual": 1.9294724464416504,
+              "absolute_difference": 1.1920928955078125e-07
+            },
+            {
+              "row": 3,
+              "column": 1,
+              "expected_word": 3156931558,
+              "actual_word": 3156931556,
+              "expected": -0.010434126481413841,
+              "actual": -0.010434124618768692,
+              "absolute_difference": 1.862645149230957e-09
+            },
+            {
+              "row": 4,
+              "column": 1,
+              "expected_word": 3156931558,
+              "actual_word": 3156931556,
+              "expected": -0.010434126481413841,
+              "actual": -0.010434124618768692,
+              "absolute_difference": 1.862645149230957e-09
+            },
+            {
+              "row": 5,
+              "column": 1,
+              "expected_word": 3156931558,
+              "actual_word": 3156931556,
+              "expected": -0.010434126481413841,
+              "actual": -0.010434124618768692,
+              "absolute_difference": 1.862645149230957e-09
+            }
+          ],
+          "exact_words": false,
+          "expected_sha256": "438cca482f69b82ece5bca72e597d142a04dd9828bb43c66136f7b869897844c",
+          "actual_sha256": "81f354e7bb15f6b323f315163621e58699d5e5569b0e8a24c78c71f0082e8df3"
+        }
+      },
+      {
+        "step": "RedoC",
+        "difference": {
+          "label": "Paired current-field Paint history RedoC",
+          "rows": 6,
+          "words": 18,
+          "word_difference_count": 9,
+          "max_absolute_difference": 1.1920928955078125e-07,
+          "RMS": 6.775871174381521e-08,
+          "differences": [
+            {
+              "row": 0,
+              "column": 1,
+              "expected_word": 1016805627,
+              "actual_word": 1016805565,
+              "expected": 0.018948068842291832,
+              "actual": 0.01894795335829258,
+              "absolute_difference": 1.1548399925231934e-07
+            },
+            {
+              "row": 0,
+              "column": 2,
+              "expected_word": 1072113132,
+              "actual_word": 1072113133,
+              "expected": 1.805844783782959,
+              "actual": 1.8058449029922485,
+              "absolute_difference": 1.1920928955078125e-07
+            },
+            {
+              "row": 1,
+              "column": 1,
+              "expected_word": 1016805627,
+              "actual_word": 1016805565,
+              "expected": 0.018948068842291832,
+              "actual": 0.01894795335829258,
+              "absolute_difference": 1.1548399925231934e-07
+            },
+            {
+              "row": 1,
+              "column": 2,
+              "expected_word": 1072113132,
+              "actual_word": 1072113133,
+              "expected": 1.805844783782959,
+              "actual": 1.8058449029922485,
+              "absolute_difference": 1.1920928955078125e-07
+            },
+            {
+              "row": 2,
+              "column": 1,
+              "expected_word": 1016805627,
+              "actual_word": 1016805565,
+              "expected": 0.018948068842291832,
+              "actual": 0.01894795335829258,
+              "absolute_difference": 1.1548399925231934e-07
+            },
+            {
+              "row": 2,
+              "column": 2,
+              "expected_word": 1072113132,
+              "actual_word": 1072113133,
+              "expected": 1.805844783782959,
+              "actual": 1.8058449029922485,
+              "absolute_difference": 1.1920928955078125e-07
+            },
+            {
+              "row": 3,
+              "column": 0,
+              "expected_word": 796140669,
+              "actual_word": 0,
+              "expected": 2.2204633964850728e-10,
+              "actual": 0,
+              "absolute_difference": 2.2204633964850728e-10
+            },
+            {
+              "row": 4,
+              "column": 0,
+              "expected_word": 796140669,
+              "actual_word": 0,
+              "expected": 2.2204633964850728e-10,
+              "actual": 0,
+              "absolute_difference": 2.2204633964850728e-10
+            },
+            {
+              "row": 5,
+              "column": 0,
+              "expected_word": 796140669,
+              "actual_word": 0,
+              "expected": 2.2204633964850728e-10,
+              "actual": 0,
+              "absolute_difference": 2.2204633964850728e-10
+            }
+          ],
+          "exact_words": false,
+          "expected_sha256": "a2b0a693163de2e9e6b05bd3dd34ddbec178bf81839452fbeda84594a381fb3e",
+          "actual_sha256": "5b567067ceb10d33be3f56d817cd63c4a5a885303b67df962bc022bd1a8898cc"
+        }
+      }
+    ],
+    "original_paired_maximum_and_RMS_tolerance": 1e-06,
+    "retained_current_producer": "Root normal producer report/generation unchanged across UndoPaint/RedoPaint after UndoC; actual raw normal fields checked on both hosts and differ from original B warm field"
+  },
+  "preserved_failure": {
+    "status": "HP00 remains FAILED, never retroactively passed",
+    "audit": {
+      "path": ".artifacts/sculptgl-crease-paint-history-c42-stage/ROOT_FAILED_HP00_AUDIT.json",
+      "bytes": 2474,
+      "sha256": "dae6a119a8272d4c54d2d77d46d414c7ab659d4c1a2904b7d10bcd46750dcf4f"
+    },
+    "original_result": {
+      "path": ".artifacts/sculptgl-crease-runtime/candidate42-history-HP00-61ccd7ea-430d-4386-8c77-0781c50476eb/result.json",
+      "bytes": 61236557,
+      "sha256": "ad6d6de2fc70cc57b9c25dc625d71281de27b3395342f63998dacb2124505cd6"
+    },
+    "new_route_preregistration": {
+      "path": ".artifacts/sculptgl-crease-paint-history-retained-c42-stage/PRESERVED_FAILURE.json",
+      "bytes": 2977,
+      "sha256": "e85093570a0499c905195660b7eb4189470a53dbf614282cddb7f316f1a529dd"
+    }
+  },
+  "limits": [
+    "Full317 stable IDs+5 hosted appearance controls and ZBrush2026.2.1 remain open; no complete row/family/percentage promotion.",
+    "One6vertex/two-sheet mirrored static None-alpha/DPR1 Crease/Paint sequence; no alpha, pressure-device, dynamic, hierarchy, arbitrary pose, dense or multi-part reference completion.",
+    "Actual user/browser/native/physical input-to-photon latency and sustained60s/120s responsiveness remain unmeasured; eight500ms quiet windows are not a performance comparison.",
+    "Historical HP00 remains failed because its final Root RedoC GPU capture exceeded the original256-frame cap. HP01 removes only redundant C .75 editor interaction and retains explicit model/captured intensity gates; all brush inputs, history/file/GPU/quiet gates, caps and tolerances remain unchanged.",
+    "C42 product/build bytes are unchanged; full Rust checks and both official builds retain their original C42 bindings rather than being rerun for test-only tools.",
+    "Root WebGL2 actual GPU readback differs from Source WebGL1 complete forwarded-upload observation. Whole PNG review records presentation differences without pixel parity."
+  ]
+}

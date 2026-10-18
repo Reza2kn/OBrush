@@ -1,0 +1,324 @@
+{
+  "scope": "C139 independent world-X/Y/Z numeric scale in shared core and browser; controlled pinned SculptGL Transform.end comparison, not scale-handle or family parity",
+  "reference": {
+    "name": "SculptGL",
+    "commit": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "original_bundle": {
+      "path": ".tools/sculptgl-reference/host-mirror/sculptgl.js",
+      "sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+      "bytes": 471154
+    },
+    "source_transform": {
+      "path": ".tools/sculptgl-reference/upstream/src/editing/tools/Transform.js",
+      "sha256": "a7f0e55114cb2de2040b7f29cbb99af891aef02c56324bf02bf1b070516b8a70",
+      "bytes": 3035
+    },
+    "source_gizmo": {
+      "path": ".tools/sculptgl-reference/upstream/src/editing/Gizmo.js",
+      "sha256": "e56a6e70f0eb2d53dd30240aa8a93c16258a3605b0a885aab743b6cb07df3c6c",
+      "bytes": 22593
+    },
+    "harness": {
+      "path": "scripts/check-sculptgl-reference.mjs",
+      "sha256": "a2aa0d05670f370fdec4a4a02ac89f55d246795a379422f07d14e8c4ec58a541",
+      "bytes": 76154
+    },
+    "runtime_result": {
+      "path": ".artifacts/sculptgl-reference-runtime/transform-axis-c139-b9404c38-2626-4abe-87c4-89a186ac6008/result.json",
+      "sha256": "9d60e5fa1259d56e01109b94972d32f1acd8f0009c22da4e575c8f163fc6f7f1",
+      "bytes": 146034
+    },
+    "status": "completed pinned Transform.end masked translation, affine and axis-scale runtime fixtures",
+    "axis_case": {
+      "kernel": {
+        "tool_index": 12,
+        "incoming_edit_matrix": [
+          1.2000000476837158,
+          0,
+          0,
+          0,
+          0,
+          0.800000011920929,
+          0,
+          0,
+          0,
+          0,
+          1.0499999523162842,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "final_edit_matrix": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      "statistics": {
+        "max_error": 5.49297709540042e-08,
+        "protected_exact": 1,
+        "partial": 6
+      },
+      "gates": {
+        "tool_actual": true,
+        "edit_matrix_cleared": true,
+        "formula": true,
+        "protected_exact": true,
+        "partial": true,
+        "undo_exact": true,
+        "redo_exact": true,
+        "three_distinct_factors": true
+      },
+      "before": {
+        "path": ".artifacts/sculptgl-reference-runtime/transform-axis-c139-b9404c38-2626-4abe-87c4-89a186ac6008/masked-axis-before.json",
+        "sha256": "a64649b7313506d18521a3e061a269ddd8aaaad72a514690cf1ae21ae145ca85",
+        "bytes": 4061
+      },
+      "after": {
+        "path": ".artifacts/sculptgl-reference-runtime/transform-axis-c139-b9404c38-2626-4abe-87c4-89a186ac6008/masked-axis-after.json",
+        "sha256": "1f38f6ca9812e76a7d73db486deb2c943ad75df327ce902baef63b535921e27b",
+        "bytes": 4715
+      },
+      "undo": {
+        "path": ".artifacts/sculptgl-reference-runtime/transform-axis-c139-b9404c38-2626-4abe-87c4-89a186ac6008/masked-axis-undo.json",
+        "sha256": "df675c08a068ad0db1d1558ae8fa2f6763a6723cccc0e99835a17f3117172b74",
+        "bytes": 4061
+      },
+      "redo": {
+        "path": ".artifacts/sculptgl-reference-runtime/transform-axis-c139-b9404c38-2626-4abe-87c4-89a186ac6008/masked-axis-redo.json",
+        "sha256": "1f38f6ca9812e76a7d73db486deb2c943ad75df327ce902baef63b535921e27b",
+        "bytes": 4715
+      }
+    },
+    "console_errors": 0,
+    "exceptions": 0
+  },
+  "fixture": {
+    "path": ".artifacts/sculptgl-reference-runtime/transform-axis-c139-b9404c38-2626-4abe-87c4-89a186ac6008/independent-filter-cube.obj",
+    "sha256": "c9038e8adcbe5649273871feba73699753fa9abee0984575e14f41c9d610dde7",
+    "bytes": 252
+  },
+  "workspace": {
+    "git_head": null,
+    "note": "No resolved HEAD in the local working tree; source file hashes bind this run",
+    "code": {
+      "crates/obrush-core/src/document.rs": {
+        "path": "crates/obrush-core/src/document.rs",
+        "sha256": "07dd0b6e4cff65ef266d2a19eec05c065f7f6de0ff77207d7e211e96cd4e3543",
+        "bytes": 195122
+      },
+      "crates/obrush-core/src/transform.rs": {
+        "path": "crates/obrush-core/src/transform.rs",
+        "sha256": "aae78cdaa9fd03236c0aaa996639ff678fef937161cc60f7201c1336dfe7536c",
+        "bytes": 6635
+      },
+      "crates/obrush-core/tests/document_scene_v7.rs": {
+        "path": "crates/obrush-core/tests/document_scene_v7.rs",
+        "sha256": "cc817d4e1a31346e7265f3dd6f211f2792aae1afa48f339b442da74559179193",
+        "bytes": 43590
+      },
+      "crates/obrush-app/src/app.rs": {
+        "path": "crates/obrush-app/src/app.rs",
+        "sha256": "3ab2ebbe8bfd0d15533bd6749313b08b52ea871c1415011299ac4c67dc67cec5",
+        "bytes": 511060
+      },
+      "scripts/check-transforms.mjs": {
+        "path": "scripts/check-transforms.mjs",
+        "sha256": "ba4c156c5ccbc5bdcf6637ba795175398d8f4d9f9959a070d9a87d8eaef1bdb2",
+        "bytes": 97260
+      }
+    }
+  },
+  "browser": {
+    "wasm_sha256": "ea59ab156eefa5cf4c20a306cc059ae69e6d72b1f215ae4b55b7c01604dd7514",
+    "served_wasm_sha256": "ea59ab156eefa5cf4c20a306cc059ae69e6d72b1f215ae4b55b7c01604dd7514",
+    "normal_result": {
+      "path": ".artifacts/transform-browser/axis-scale-final-c139-d098eaed-ea70-4562-a76e-7602f6af25b9/result.json",
+      "sha256": "1ad5d1d5076b90ca0546300171078bc7eb9b4a51dcd50c12d74273e771335c42",
+      "bytes": 26901970
+    },
+    "normal_status": "passed thirteen transform browser workflows",
+    "normal_case_count": 13,
+    "normal_all_case_gates": true,
+    "axis_case": {
+      "parameters": {
+        "axis_scale": [
+          1.2000000476837158,
+          0.800000011920929,
+          1.0499999523162842
+        ],
+        "drag_handle": null,
+        "dragging": false,
+        "mode": false,
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "pivot_kind": "origin",
+        "preview_subtool_ids": [],
+        "preview_translation": [
+          0,
+          0,
+          0
+        ],
+        "respect_masks": true,
+        "rotation_degrees": [
+          0,
+          0,
+          0
+        ],
+        "scale": 1,
+        "translation": [
+          0,
+          0,
+          0
+        ]
+      },
+      "statistics": {
+        "max_error": 2.4614555860225096e-07,
+        "fully_protected": 76,
+        "partial": 380,
+        "changed": 456
+      },
+      "history": {
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      "gates": {
+        "visible_option_enabled": true,
+        "partial_and_protected": true,
+        "weighted_response": true,
+        "changed_vertices": true,
+        "history_exact": true
+      }
+    },
+    "paired_result": {
+      "path": ".artifacts/transform-browser/paired-axis-final-c139-62aba219-6b95-429a-9644-027161d4910c/result.json",
+      "sha256": "3077898d1a243e7d310b84333c5e8f784b50acebc97c5d1b091cee12115e505a",
+      "bytes": 2463976
+    },
+    "paired_status": "passed pinned SculptGL masked-transform paired browser fixtures",
+    "paired_all_case_gates": true,
+    "paired_axis_case": {
+      "parameters": {
+        "axis_scale": [
+          1.2,
+          0.8,
+          1.05
+        ],
+        "pivot_kind": "origin"
+      },
+      "comparison": {
+        "before_position_max": 0,
+        "after_position_max": 5.287933357855934e-08,
+        "unprotected_weight_max": 2.0984268211954316e-08,
+        "protected_exact": 1,
+        "partial": 6,
+        "reference_to_obrush_vertex": [
+          0,
+          7,
+          3,
+          4,
+          5,
+          1,
+          2,
+          6
+        ]
+      },
+      "history": {
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      "gates": {
+        "same_vertex_count": true,
+        "source_weights": true,
+        "source_input_positions": true,
+        "source_output_positions": true,
+        "protected_and_partial": true,
+        "history_exact": true
+      }
+    },
+    "js_errors": 0,
+    "gl_errors": 0,
+    "actual_4x_msaa": true
+  },
+  "checks": {
+    "fmt": "pass",
+    "workspace_all_targets": {
+      "summaries": 100,
+      "passed": 2466,
+      "failed": 0,
+      "ignored": 1
+    },
+    "strict_native_clippy": "pass",
+    "strict_wasm_clippy": "pass",
+    "official_web_build": "pass",
+    "official_macos_package": "pass",
+    "codesign_deep_strict": "pass",
+    "native_executable": {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/OBrush",
+      "sha256": "b07e2924cd2d9a1b32e7b9b132a2eb0e226b48509a2a4e67c22e85b4adad8b29",
+      "bytes": 26987328
+    },
+    "logs": {
+      "workspace_tests": {
+        "path": ".artifacts/scene-axis-scale-c139-tests-final.log",
+        "sha256": "52951246f84ab931971f65b25417e57fb888160d8dfb1c2fed0d1f08cf38de0f",
+        "bytes": 242508
+      },
+      "strict_native_clippy": {
+        "path": ".artifacts/scene-axis-scale-c139-clippy-native-final.log",
+        "sha256": "cd19c1a725c218c367846a07e5a3c4c7ca6c3fecec122cce311cb86795d82998",
+        "bytes": 539
+      },
+      "strict_wasm_clippy": {
+        "path": ".artifacts/scene-axis-scale-c139-clippy-wasm.log",
+        "sha256": "5818f73671cffaf20861f32447d5b63d44afbcbbbafa49564c442aca935ec5d4",
+        "bytes": 296
+      },
+      "official_web_build": {
+        "path": ".artifacts/scene-axis-scale-c139-build-web-final.log",
+        "sha256": "49dedb1bf4983e370e88cc96b60a69d5ee5903c06c1bec49e81daddc0f3a2c8f",
+        "bytes": 419
+      },
+      "official_macos_package": {
+        "path": ".artifacts/scene-axis-scale-c139-package-macos.log",
+        "sha256": "f34a3a1137fe041d059ec63c20e63ce2821e62db526f7207f3e7fffe06defac0",
+        "bytes": 407
+      }
+    }
+  },
+  "failed_checks": [
+    {
+      "kind": "initial_strict_native_clippy",
+      "failure": "Three needless borrows after Affine helper refactor; corrected without geometry logic change",
+      "log": {
+        "path": ".artifacts/scene-axis-scale-c139-clippy-native.log",
+        "sha256": "055a6e9e56dfeebd47cffbf1109b714992cbf315f88d2e296c87ad7ec11aa63a",
+        "bytes": 1775
+      }
+    }
+  ],
+  "limitations": [
+    "No physical source or OBrush axis-scale gizmo drag; reference edit matrix was injected diagnostically",
+    "One masked eight-vertex reference cube, plus a separate OBrush two-sphere numeric UI case",
+    "Source poses/groups, retained masked detail, large deformations, visual normal cohort and sustained latency unpaired",
+    "Native GUI interaction untested"
+  ]
+}

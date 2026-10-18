@@ -1,0 +1,7 @@
+{
+  "upstream_revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+  "path": "app/resources/uv.png",
+  "sha256": "2f70b35531d4e235032c3f46d31b37ab7b1d3c5ae1b4e14d7301fe173c8088f2",
+  "git_committed_bytes_equal_local_and_copied": true,
+  "license": "Bundled SculptGL MIT notice; provenance of this source asset is pinned, not an appearance parity claim"
+}

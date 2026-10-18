@@ -1,0 +1,64 @@
+{
+  "feature_id": "SGL-TOPO-REVERSE",
+  "scope": "one independently authored four-quad static source with no UV and integer coordinates; default Reverse settings",
+  "fixture_path": "crates/obrush-core/tests/fixtures/independent-reverse-quad.json",
+  "fixture_sha256": "66c44109fc58943c9542a873e66eaab2a9700182396a9f42be934d85860e0617",
+  "reference_kernel_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+  "reference_result_path": ".artifacts/sculptgl-reference-runtime/reverse-c108-recheck-7263d272-e48c-4481-bc04-3bf89f3d3e33/result.json",
+  "reference_result_sha256": "eebfc25ad954d0b27f8deaf3369e97535456d7b68088dbb736492253fb5bcca1",
+  "obrush_result_path": ".artifacts/sculptgl-paint-static-runtime/reverse-c108-recheck-974770bf-c60b-42c9-8063-fb8ae7c32a2d/result.json",
+  "obrush_result_sha256": "a582122b0e782b477fbd26a9aa908f16c42bd3745fd9a315ac77ff6559888179",
+  "obrush_wasm_sha256": "22f1678f4bacd0e22867f661690be718f4c1eb9946660c9136cc2cae44552940",
+  "comparison_method": "Sort physical positions; compare Euclidean distances; compare cyclically normalized oriented face coordinate multisets without allowing reversed winding",
+  "comparison": {
+    "coarse": {
+      "reference_snapshot_sha256": "8e489115d71512cf46795898c8e78d045e88b6e01ebf73add2110b10c36bafd1",
+      "obrush_project_sha256": "2c68b810b45a7abaa4e862645aef9352521591571a13e4a1107bcb7a7779d587",
+      "reference_vertex_count": 4,
+      "obrush_vertex_count": 4,
+      "reference_face_count": 1,
+      "obrush_face_count": 1,
+      "maximum_sorted_world_position_distance": 0.0,
+      "oriented_face_multiset_exact": true
+    },
+    "returned": {
+      "reference_snapshot_sha256": "0c45a9e634eb5e9fc0c85a03ffe8e1525d21987c1f55a531e3935f6e2c56f5b3",
+      "obrush_project_sha256": "9de6f44bc8af5f077fa283e1c067c56492a8f6f29695303ffeab92ab8681f2c9",
+      "reference_vertex_count": 9,
+      "obrush_vertex_count": 9,
+      "reference_face_count": 4,
+      "obrush_face_count": 4,
+      "maximum_sorted_world_position_distance": 0.0,
+      "oriented_face_multiset_exact": true
+    }
+  },
+  "reference_gates": {
+    "coarse_level_added": true,
+    "one_coarse_face": true,
+    "fine_returned": true
+  },
+  "obrush_browser_gates": {
+    "reverse-quad-normal-browser": {
+      "new_lower_level": true,
+      "coarse_face_reduction": true,
+      "original_fine_positions_physically_exact": true,
+      "higher_and_lower_exact": true,
+      "whole_reverse_history_exact": true,
+      "project_reload_exact": true,
+      "visible_gpu_save_exact": true
+    },
+    "reverse-nonproduct-rejection": {
+      "normal_command_rejected": true,
+      "project_unchanged": true,
+      "visible_gpu_save_exact": true
+    }
+  },
+  "retained_failures": [
+    "Initial browser rejection oracle read UI message after Save replaced it; original result retained in .artifacts/sculptgl-paint-static-runtime/reverse-c108-33823e1e-778f-4348-a26a-1096d86bcaf7/result.json.",
+    "Initial reference harness tried a nonexistent Higher button after successful Reverse; original result retained in .artifacts/sculptgl-reference-runtime/reverse-c108-e7debf49-da4a-4be4-84cf-0aa73ce7e155/result.json."
+  ],
+  "limits": [
+    "One paired geometry fixture; arbitrary products, UV aliases, attributes, repeated Reverse, browser performance and native GUI are not established.",
+    "Reference and host browser runs used separate owned isolated Chrome instances."
+  ]
+}

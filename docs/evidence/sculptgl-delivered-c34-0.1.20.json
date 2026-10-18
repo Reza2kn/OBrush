@@ -1,0 +1,104 @@
+{
+  "status": "Delivered local compared foundation; fullSculptGL/ZBrush parity unverified",
+  "version": "0.1.20",
+  "candidate": "C34",
+  "baseline": "Allpinned317SculptGLIDs+5appearancecontrols retained; longtermZBrush2026.2.1 unchanged",
+  "change": "Idle viewport now reads valid retained Document geometric normal states independently of selected brush. Temporary Source Smooth can restore Draw without replacing warm normals with fresh recomputation. ActiveGeometry/capturedSourcePaint/Legacy owners remain explicit; corekernels unchanged.",
+  "source": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate34/source/manifest.json",
+    "sha256": "914eff726c80f2796cad77e0c3eaf53387b359cc001c2bdfc852afa77b947988"
+  },
+  "build": {
+    "path": ".artifacts/sculptgl-release-0.1.20-candidate34/build-record.json",
+    "sha256": "1e048a221189cdd66ba535e66164af6a7874d93ee32af8d9a51c381cfc9b9eba"
+  },
+  "receipt": {
+    "path": ".artifacts/sculptgl-composite20-candidate34-idle-normals-stage/FINAL_CHECKED_RECEIPT.json",
+    "sha256": "bfe6e9c3ffdf3ded578eaa4df30b92191602f34504f7078b59741b3e1bc410f1"
+  },
+  "checks": {
+    "workspace_tests": 2229,
+    "core": 1553,
+    "app": 676,
+    "ignored": 1,
+    "all_five_required": "PASS fmt/native strict/workspace/WASMalltargets/WASMstrict",
+    "record": {
+      "path": ".artifacts/sculptgl-composite20-candidate34-idle-normals-stage/root-check01/RESULT.json",
+      "sha256": "3ac05fbc7d1d814fa2c0bec9ea02c80db8270714344eab72a71bf3f1075473d9"
+    }
+  },
+  "artifacts": {
+    "web": "OfficialscriptPASS",
+    "macos": "OfficialscriptPASS/ad-hocsignatureverified/unopened/uninstalled",
+    "wasm": {
+      "path": "pkg/obrush_app_bg.wasm",
+      "bytes": 23179906,
+      "sha256": "966b3a0a2e55059c12c7c3a80db2818122a3ce62e98545cee4289b0bb71f1ff0"
+    }
+  },
+  "regressions": {
+    "normal20Lock3": {
+      "path": ".artifacts/sculptgl-composite20-candidate34-idle-normals-stage/root-browser02/CLOSED.json",
+      "sha256": "251c92ee3bc84fe6f89cb7a4ce964900ad2e5235704de6dd16656e8b02eff841"
+    },
+    "default4_larger4": {
+      "path": ".artifacts/sculptgl-composite20-candidate34-idle-normals-stage/ROOT_DENSE_CLOSED.json",
+      "sha256": "27ba8ed86aa4f52a203a2d7a60c0f945d2f13ed103503e80a4fee2489a82cd82"
+    },
+    "default_raw": {
+      "path": ".artifacts/sculptgl-composite20-candidate34-idle-normals-stage/ROOT_DEFAULT_BYTES_AUDIT.json",
+      "sha256": "87bfdb55f1c8a3a014eb180857d89333232f3589515f46cb23702617d053b077"
+    },
+    "larger_raw": {
+      "path": ".artifacts/sculptgl-composite20-candidate34-idle-normals-stage/ROOT_LARGE_BYTES_AUDIT.json",
+      "sha256": "3a03cd88ce6f041701913e967bdc45522e6f43f5901d9543bdaa7e328a7f35b9"
+    },
+    "limits": "40962/163842vertex readonlysamplingcapacityonly, notdensegeometryorlatency"
+  },
+  "actual_reference": {
+    "SM05_temporaryShift": {
+      "path": ".artifacts/sculptgl-composite20-candidate34-idle-normals-stage/ROOT_SHIFT_REFERENCE_AUDIT.json",
+      "sha256": "7e6cdfabdec30fc2d1253a9249d9a793768cff9edaed48462c43f6b661c44dfa"
+    },
+    "SM03_standardtangent": {
+      "path": ".artifacts/sculptgl-composite20-candidate34-idle-normals-stage/ROOT_STANDARD_REFERENCE_AUDIT.json",
+      "sha256": "31b0724336ee815135ef80961d644e3c0ca3e270654e5d84b8b09ac366b39427"
+    },
+    "helper": {
+      "path": ".artifacts/sculptgl-source-smooth-c34-ui-response-stage/MANIFEST.json",
+      "sha256": "bcd0e4d86f3b8fcd50ba1aadcc4e9cbdbe58fc3fa7810d110678c91c82f4ea09"
+    },
+    "protocol": {
+      "path": ".artifacts/sculptgl-source-smooth-c34-ui-response-stage/protocol/manifest.json",
+      "sha256": "cfa0ef9b57561cdc09d0f478b2b21457be14945fdb2b378eeb2e08cf4cae5103"
+    },
+    "scope": "Fourvertexindependenttetra/DPR1/orthographic/radius128CSSpx/intensity.13/tangenttrue/factors0/alphaNone/mirroroff/Preventfoldsfalse. OneactualSourcecall; samepositions/warmnormal/GPU/fullproject/history/quiet verified forstandardandtemporaryShift routes. SourceGL1forwardeduploads distinctfromRootGL2actualGPUreadback."
+  },
+  "preserved_failure": {
+    "actualC33_SM05": "507c1588fff91467401e4be6daeb05268e31dfd4f35120cc31e0c25cbb99d2a1",
+    "independent_baseline": {
+      "path": ".artifacts/sculptgl-composite20-candidate34-idle-normals-stage/ROOT_SHIFT_NORMAL_BASELINE.json",
+      "sha256": "24858f19bdca6e50c027a1c7342892bae0a0bcf688680f4beec1bbd396462751"
+    },
+    "numerical_difference_before": "Positions0worddifferences; GPU3normalworddifferences,maxabsolute0.028888901695609093. Rootretainednormalstate1008bytesstillpresent; idletoolpreferencegatecausedwrongupload."
+  },
+  "images": {
+    "path": ".artifacts/sculptgl-composite20-candidate34-idle-normals-stage/ROOT_WHOLE_SCREENSHOT_REVIEW.json",
+    "sha256": "652aa1f045f295ab60f22cc3fa9144009fdb8700cb47af913924eaa301c20540"
+  },
+  "main_transfer": {
+    "path": ".artifacts/sculptgl-main-c34-promotion-stage/PROMOTED.json",
+    "sha256": "283b803d7b0df6a050078692f47de993afb8b9e446bff7f3b691efdf87d2f940"
+  },
+  "preview": {
+    "url": "http://127.0.0.1:8799/",
+    "server_session": 8493,
+    "HTTP19exact": {
+      "path": ".artifacts/sculptgl-main-c34-promotion-stage/PREVIEW_HTTP.json",
+      "sha256": "0411872a6a91301e8533651727099644575e9a26f99ebec22ce8526ee90a1dfb"
+    },
+    "oldpreviews_and_user_tab_preserved": true
+  },
+  "remaining": "OtherSmoothcases/currentbuildcoverage, coalescedRootper-dabselectednormalmath(SM04), held-settingfocusroute(SM15), Flatten/lifecycle/activehover/completeLocale/nativephysical/HiDPI/pressure/densegeometry/longsession/p50p95inputlatency/all317+5 remainopen. LegacySourcegeometrypanelcopyneedsaccuracyreview. Nofullfeatureparityorpercentageclaim.",
+  "goal_runtime": "Continuingauthorizedworkincurrentturn; savedgoalAPIreportedblocked anduser-only /goal resume requested; objectiveunfinished."
+}

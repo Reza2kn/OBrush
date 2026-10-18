@@ -1,0 +1,185 @@
+{
+  "origin": "independent rational/scalar and ordered-face fixtures; no Rust implementation or deployed output used",
+  "reference_basis": "pinned static policy observed separately",
+  "closed_quad_cube": {
+    "parent_vertices": 8,
+    "parent_quads": 6,
+    "true_edges": 12,
+    "child_vertices": 26,
+    "child_quads": 24,
+    "child_render_triangles": 48,
+    "corner_even_from_minus_ones": [
+      -0.5555555820465088,
+      -0.5555555820465088,
+      -0.5555555820465088
+    ],
+    "edge_midpoint_along_x_bottom_front": [
+      0.0,
+      -0.75,
+      -0.75
+    ],
+    "even_rgb_material_policy": "bitwise copy"
+  },
+  "mixed_quad_pyramid": {
+    "positions": [
+      [
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      [
+        1.0,
+        -1.0,
+        0.0
+      ],
+      [
+        1.0,
+        1.0,
+        0.0
+      ],
+      [
+        -1.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "faces": [
+      [
+        3,
+        2,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        4,
+        4294967295
+      ],
+      [
+        1,
+        2,
+        4,
+        4294967295
+      ],
+      [
+        2,
+        3,
+        4,
+        4294967295
+      ],
+      [
+        3,
+        0,
+        4,
+        4294967295
+      ]
+    ],
+    "true_edges": 8,
+    "child_vertices": 14,
+    "child_original_faces": 20,
+    "child_quads": 4,
+    "child_triangles": 16,
+    "child_render_triangles": 24,
+    "corner_even_0": [
+      -0.27272728085517883,
+      -0.27272728085517883,
+      0.1818181872367859
+    ],
+    "apex_even_4": [
+      0.0,
+      0.0,
+      0.625
+    ],
+    "mixed_edge_0_1": [
+      0.0,
+      -0.625,
+      0.125
+    ],
+    "triangle_edge_0_4": [
+      -0.375,
+      -0.375,
+      0.375
+    ],
+    "quad_center": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "base_children": [
+      [
+        3,
+        5,
+        9,
+        8
+      ],
+      [
+        5,
+        2,
+        6,
+        9
+      ],
+      [
+        9,
+        6,
+        1,
+        7
+      ],
+      [
+        8,
+        9,
+        7,
+        0
+      ]
+    ],
+    "first_side_children": [
+      [
+        7,
+        10,
+        11,
+        4294967295
+      ],
+      [
+        0,
+        7,
+        11,
+        4294967295
+      ],
+      [
+        7,
+        1,
+        10,
+        4294967295
+      ],
+      [
+        11,
+        10,
+        4,
+        4294967295
+      ]
+    ],
+    "all_faces_uv_separate_chart_counts": {
+      "old_coords": 16,
+      "new_edge_coords": 16,
+      "new_center_coords": 1,
+      "total_coords": 33
+    },
+    "base_uv_center": [
+      0.5,
+      0.5
+    ]
+  },
+  "single_quad_boundary": {
+    "even_vertices": "unchanged because source counts at most one neighbor in the only incident face",
+    "smooth_true_edges": "midpoints",
+    "linear_edges_even_vertices": "same unchanged boundary result",
+    "child_vertices": 9,
+    "child_original_quads": 4,
+    "child_render_triangles": 8
+  }
+}

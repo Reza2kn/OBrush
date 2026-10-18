@@ -1,0 +1,26 @@
+{
+  "status": "Scoped isolated C63 current-resident GPU picking validated; delivered C58 app and SculptGL parity gates remain open",
+  "stage": ".artifacts/sculptgl-webgpu-picking-c63-stage",
+  "audit": "WHOLE_PICK_AUDIT02.json",
+  "audit_sha256": "7bd7d4a1bc37d1b33a3412156309a623989311921138cd8b2a89bc6bdee8e8d8",
+  "fixture_sha256": "dfb5316f62e392e633f03cb662dcb12215ed165a71a9ae72a3fd639528731afe",
+  "fixture_vertices": 999002,
+  "fixture_triangles": 1998000,
+  "checks": [
+    "Two GPU compute passes select the nearest current triangle and deterministic lowest face ID at equal f32 distance; each browser pick reads only an 8-byte hit result",
+    "Six named native Metal and browser WebGPU pick face/distance/position records match exactly, including the deformed ridge after 32 GPU point passes and after a further dab centered on that ridge",
+    "Independent complete 1,998,000-triangle f64 ray search returns the same face IDs for six named rays; maximum hit-distance difference 2.104789362800119e-7",
+    "Native/browser final 999,002-vertex position buffers and 512x512 presented pixels match exactly after a dab at the current deformed hit",
+    "Actual browser GPU trace binds picker to the same canonical position and index buffers and records only four 8-byte copies/maps for the four named after-32 picks; full diagnostic position export starts after presentation",
+    "Background and out-of-bounds queries are rejected; owned logical GPUDevice loss reaches Rust callback and rejects further picks",
+    "Picked dab changes 927 vertices with no zero-area or reversed faces in this fixture; C62's 24 full native regression outputs remain byte-identical",
+    "GPU crate formatting, three unit tests and strict native/WASM all-target Clippy pass; native and WASM release binaries built with aligned wasm-bindgen 0.2.129"
+  ],
+  "requested_explicit_allocation_bytes_at_1080p": 267789296,
+  "allocation_cap_bytes": 268435456,
+  "limitations": [
+    "Standalone point-program and diagnostic orthographic camera; no shipped studio picker, full brush/contact/proxy, UI or history integration",
+    "Two full-triangle GPU passes per pick still need sustained consumer latency and device-memory qualification",
+    "The six f64 ray checks and local topology audit do not establish SculptGL or ZBrush brush parity"
+  ]
+}

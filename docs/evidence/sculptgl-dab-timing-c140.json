@@ -1,0 +1,37 @@
+{
+  "id": "C140",
+  "scope": "Read-only queued CPU dab/release timing on the normal browser studio; no WebGPU integration or performance parity claim",
+  "source": {
+    "path": "crates/obrush-app/src/dab_queue.rs",
+    "sha256": "6b9f42cd9c811f3a5dc0607cece3609c3feacba1a2c932cd50a59dd50335920a"
+  },
+  "browser_build": {
+    "command": "bash scripts/build-web.sh",
+    "path": "web/dist/pkg/obrush_app_bg.wasm",
+    "sha256": "54c6db05210d9f268c0071230c649a7d762b902d39500af02bcb8046c65c3cd3",
+    "served_sha256": "54c6db05210d9f268c0071230c649a7d762b902d39500af02bcb8046c65c3cd3"
+  },
+  "checks": {
+    "cargo_fmt_all": "passed",
+    "cargo_test_workspace_all_targets_locked": "passed",
+    "cargo_clippy_workspace_all_targets_locked_deny_warnings": "passed",
+    "cargo_clippy_workspace_all_targets_wasm32_unknown_unknown_locked_deny_warnings": "passed",
+    "official_web_build": "passed",
+    "official_macos_package_and_signature": "passed",
+    "normal_browser_pressure_alpha_harness": "failed after four useful timing cases: Alpha import request is stale"
+  },
+  "browser_result": ".artifacts/brush-inputs-0.1.6/cpu-timing-c140-e4c743b6-8ada-473d-a4fa-e6732bdc85fc/result.json",
+  "fresh_sphere_cases": [
+    {"name": "pen-zero", "pressure": 0, "processed_dabs": 1, "applied_dabs": 0, "changed_original_vertices": 0, "ordinary_last_ms": 1.3, "release_last_ms": 1.1, "gpu_matches_saved_mesh": true},
+    {"name": "pen-quarter", "pressure": 0.25, "processed_dabs": 1, "applied_dabs": 1, "changed_original_vertices": 632, "ordinary_last_ms": 13.1, "release_last_ms": 0.2, "gpu_matches_saved_mesh": true},
+    {"name": "pen-full", "pressure": 1, "processed_dabs": 1, "applied_dabs": 1, "changed_original_vertices": 632, "ordinary_last_ms": 8.1, "release_last_ms": 0, "gpu_matches_saved_mesh": true},
+    {"name": "mouse-default", "pressure": 1, "processed_dabs": 1, "applied_dabs": 1, "changed_original_vertices": 632, "ordinary_last_ms": 7.6, "release_last_ms": 0, "gpu_matches_saved_mesh": true}
+  ],
+  "limitations": [
+    "One stationary dab per case; no sustained-session distribution or controlled CPU/GPU speed comparison",
+    "Timer excludes input handling, renderer work, actual GPU completion and input-to-photon latency",
+    "Source geometry and million-vertex cohorts were not rerun",
+    "Browser harness failed at alpha import; original failure result preserved",
+    "No reference SculptGL or ZBrush comparison; no feature-family status promotion"
+  ]
+}

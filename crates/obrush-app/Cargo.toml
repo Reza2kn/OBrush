@@ -1,0 +1,32 @@
+[package]
+name = "obrush-app"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+default-run = "obrush"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "obrush"
+path = "src/main.rs"
+
+[dependencies]
+obrush-core = { path = "../obrush-core" }
+eframe.workspace = true
+egui_glow.workspace = true
+glam.workspace = true
+bytemuck.workspace = true
+serde_json.workspace = true
+web-time = "=1.1.0"
+image = { version = "=0.25.10", default-features = false, features = ["png", "jpeg"] }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+rfd = "0.15"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.4"
+web-sys = { version = "0.3", features = ["HtmlCanvasElement", "Window", "Document", "HtmlAnchorElement", "Url", "Blob", "BlobPropertyBag", "Element", "WebGl2RenderingContext", "WebGlContextAttributes"] }

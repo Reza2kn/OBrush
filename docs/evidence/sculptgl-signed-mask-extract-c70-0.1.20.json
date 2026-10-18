@@ -1,0 +1,173 @@
+{
+  "scope": "C70 signed mask extraction range and geometry, not SculptGL/ZBrush extraction parity",
+  "source": {
+    "core": {
+      "path": "crates/obrush-core/src/extract.rs",
+      "bytes": 23838,
+      "sha256": "abe0ab7714ecea21f719993c2fefca25e5f3d735a5732809b228b24adc5df279"
+    },
+    "host": {
+      "path": "crates/obrush-app/src/app.rs",
+      "bytes": 482362,
+      "sha256": "852a689ac77c3ed4348fb9eb46985006669e4f24c89cfc5c6262111e8a610eaa"
+    },
+    "browser_test": {
+      "path": "scripts/check-mask-filters.mjs",
+      "bytes": 83874,
+      "sha256": "28599c646d2bd6dffd4f3f1a0300e88e0a3d97046e2b5d373f940e2a3e7e7938"
+    },
+    "core_test": {
+      "path": "crates/obrush-core/tests/mask_extract.rs",
+      "bytes": 13575,
+      "sha256": "3ae26f8e1bd041d9fdf9ec37e5d0b212d5596325a0dbb5770bf00b80d4c47666"
+    },
+    "contract_test": {
+      "path": "crates/obrush-core/tests/mask_extract_contract.rs",
+      "bytes": 36763,
+      "sha256": "4ff1cd83888a8331224628e29b94704e575ec4a42d0362654f5e9f0d01b52ef7"
+    },
+    "ui_copy": {
+      "path": "crates/obrush-app/src/ui_text.rs",
+      "bytes": 100304,
+      "sha256": "fe9f5d24a64ac301e77ed0a203cd914317adc666f659d7ab05212b6a9dadbbb7"
+    }
+  },
+  "reference": {
+    "pin": "SculptGL upstream 8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "masking_source": {
+      "path": ".tools/sculptgl-reference/upstream/src/editing/tools/Masking.js",
+      "bytes": 10525,
+      "sha256": "601966e5fa08285e3b8b744db1e653df9f23138986f67821a4b29aff54f4ddd3"
+    },
+    "source_policy": "whole incident faces, signed offset, nonzero thickness border smoothed three passes; not yet paired runtime output"
+  },
+  "builds": {
+    "web_wasm": {
+      "path": ".artifacts/sculptgl-signed-extract-c70-stage/web-delivered/pkg/obrush_app_bg.wasm",
+      "bytes": 23229595,
+      "sha256": "cb2c96c9e967ba108eb538db27ac8704df03fe53a88d99e1f770f27e456d25a1"
+    },
+    "native_binary": {
+      "path": ".artifacts/sculptgl-signed-extract-c70-stage/OBrush-C70-delivered.app/Contents/MacOS/OBrush",
+      "bytes": 26397376,
+      "sha256": "262526141ba59d26e795ff37ac61863063a7974bb6b162ab57bc861d9ae71368"
+    },
+    "macos_signature": "package-macos.sh reported valid on disk and satisfies Designated Requirement"
+  },
+  "checks": {
+    "workspace_tests": {
+      "receipt": {
+        "path": ".artifacts/sculptgl-signed-extract-c70-stage/workspace-tests-final.log",
+        "bytes": 11373,
+        "sha256": "c6550076c2edc278e9912540522010758137ef5fdea583002a1450171d688d26"
+      },
+      "groups": 77,
+      "passed": 2352,
+      "ignored": 1
+    },
+    "format": "pass",
+    "native_strict_clippy": "pass",
+    "wasm_core_strict_clippy": "pass",
+    "build_web": "pass",
+    "package_macos": "pass"
+  },
+  "browser": {
+    "result": {
+      "path": ".artifacts/mask-filter-browser/c70-signed-extract-delivered-5d1587c5-218e-49f1-a9d0-f974f0583f8c/result.json",
+      "bytes": 26519561,
+      "sha256": "791fea59bf6354ed4b98bc2778fb09bd00205b3fc6724eeed016f8d7fd4a62ec"
+    },
+    "status": "passed mask filter browser workflows",
+    "cases": 9,
+    "snapshots": 107,
+    "visible_gpu_draw_pairs": 124,
+    "all_gpu_matches_saved": true,
+    "exceptions": 0,
+    "console_errors": 0,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "signed_fixture": {
+      "path": ".artifacts/mask-filter-browser/c70-signed-extract-delivered-5d1587c5-218e-49f1-a9d0-f974f0583f8c/Independent signed extraction sheet.obrush",
+      "bytes": 320,
+      "sha256": "9aa63b582504950138a02869964c6ae2cc8145a7c76968f097eed96149352f4c"
+    },
+    "signed_case": {
+      "path": ".artifacts/mask-filter-browser/c70-signed-extract-delivered-5d1587c5-218e-49f1-a9d0-f974f0583f8c/zero-and-inward-mask-extraction.json",
+      "bytes": 3238,
+      "sha256": "58aa27edd5cac71140427a7addfa7c3cefcf91fa2edf24c360bf80743b009a58"
+    },
+    "signed_output_files": [
+      {
+        "path": ".artifacts/mask-filter-browser/c70-signed-extract-delivered-5d1587c5-218e-49f1-a9d0-f974f0583f8c/zero-extract-before.obrush",
+        "bytes": 328,
+        "sha256": "06f4bdbf99d65c7541ec8452b6fe244872d4386f93c2db578deee061e3534b33"
+      },
+      {
+        "path": ".artifacts/mask-filter-browser/c70-signed-extract-delivered-5d1587c5-218e-49f1-a9d0-f974f0583f8c/zero-extract-after.obrush",
+        "bytes": 878,
+        "sha256": "cc4bccccc59d9e11eb85747c3296a8d5cab809ec647598a41f975e7d297dfeff"
+      },
+      {
+        "path": ".artifacts/mask-filter-browser/c70-signed-extract-delivered-5d1587c5-218e-49f1-a9d0-f974f0583f8c/zero-extract-undo.obrush",
+        "bytes": 328,
+        "sha256": "06f4bdbf99d65c7541ec8452b6fe244872d4386f93c2db578deee061e3534b33"
+      },
+      {
+        "path": ".artifacts/mask-filter-browser/c70-signed-extract-delivered-5d1587c5-218e-49f1-a9d0-f974f0583f8c/zero-extract-redo.obrush",
+        "bytes": 878,
+        "sha256": "cc4bccccc59d9e11eb85747c3296a8d5cab809ec647598a41f975e7d297dfeff"
+      },
+      {
+        "path": ".artifacts/mask-filter-browser/c70-signed-extract-delivered-5d1587c5-218e-49f1-a9d0-f974f0583f8c/inward-extract-before.obrush",
+        "bytes": 328,
+        "sha256": "06f4bdbf99d65c7541ec8452b6fe244872d4386f93c2db578deee061e3534b33"
+      },
+      {
+        "path": ".artifacts/mask-filter-browser/c70-signed-extract-delivered-5d1587c5-218e-49f1-a9d0-f974f0583f8c/inward-extract-after.obrush",
+        "bytes": 1438,
+        "sha256": "7e7e000ce0d186806b0708fce6c743814122521a5bf3e38870450553542bf461"
+      },
+      {
+        "path": ".artifacts/mask-filter-browser/c70-signed-extract-delivered-5d1587c5-218e-49f1-a9d0-f974f0583f8c/inward-extract-undo.obrush",
+        "bytes": 328,
+        "sha256": "06f4bdbf99d65c7541ec8452b6fe244872d4386f93c2db578deee061e3534b33"
+      },
+      {
+        "path": ".artifacts/mask-filter-browser/c70-signed-extract-delivered-5d1587c5-218e-49f1-a9d0-f974f0583f8c/inward-extract-redo.obrush",
+        "bytes": 1438,
+        "sha256": "7e7e000ce0d186806b0708fce6c743814122521a5bf3e38870450553542bf461"
+      }
+    ],
+    "signed_metrics": [
+      {
+        "label": "zero",
+        "thickness": 0,
+        "vertices": 5,
+        "triangles": 3,
+        "coordinate_error": 0,
+        "signed_volume": null,
+        "undo_exact": true,
+        "redo_exact": true
+      },
+      {
+        "label": "inward",
+        "thickness": -0.125,
+        "vertices": 10,
+        "triangles": 16,
+        "coordinate_error": 0,
+        "signed_volume": 0.0625,
+        "undo_exact": true,
+        "redo_exact": true
+      }
+    ]
+  },
+  "limitations": [
+    "Pinned source policy differs from clipping; no matched reference runtime output or visual tolerance",
+    "Native GUI and physical-device interaction unverified",
+    "Large signed thickness may fail local fold/precision guards",
+    "Full 317+5 SculptGL inventory and sustained performance gates remain open"
+  ]
+}

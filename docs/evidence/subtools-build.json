@@ -1,0 +1,226 @@
+{
+  "version": "0.1.10",
+  "recorded_at_utc": "2026-10-13T05:06:38.080072+00:00",
+  "status": "Final corrected source/build checks and eight scoped browser workflows pass; ZBrush parity/nativeGUI remain unverified",
+  "git": "Unborn main",
+  "test_totals": {
+    "core": 219,
+    "app": 28,
+    "total": 247
+  },
+  "checks": [
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791867489.723159,
+      "end_epoch": 1791867489.95536,
+      "log": {
+        "path": ".artifacts/subtool-build/validation-e7f3edfa-000a-40fc-943e-5a592a2f8a76/fmt.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "tests",
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--workspace"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791867489.95586,
+      "end_epoch": 1791867619.955967,
+      "log": {
+        "path": ".artifacts/subtool-build/validation-e7f3edfa-000a-40fc-943e-5a592a2f8a76/tests.log",
+        "bytes": 24431,
+        "sha256": "7f4a3714f96de2d4388b68ae638b4b05a43452b0172713a3141ab6566be3aa3c"
+      }
+    },
+    {
+      "name": "clippy-native",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--workspace",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791867619.9563699,
+      "end_epoch": 1791867620.9339142,
+      "log": {
+        "path": ".artifacts/subtool-build/validation-e7f3edfa-000a-40fc-943e-5a592a2f8a76/clippy-native.log",
+        "bytes": 146,
+        "sha256": "c8a33330c33d981a90485994e38582d891f647c4267413bbc87f9fbcacee4b45"
+      }
+    },
+    {
+      "name": "clippy-wasm",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "-p",
+        "obrush-app",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791867620.934241,
+      "end_epoch": 1791867621.8092642,
+      "log": {
+        "path": ".artifacts/subtool-build/validation-e7f3edfa-000a-40fc-943e-5a592a2f8a76/clippy-wasm.log",
+        "bytes": 146,
+        "sha256": "ab88fa5825b0212af3b39f85f58c50dd1566ce6a451479f947b52e483b382be2"
+      }
+    },
+    {
+      "name": "core-wasm",
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "-p",
+        "obrush-core",
+        "--target",
+        "wasm32-unknown-unknown"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791867621.809581,
+      "end_epoch": 1791867621.9552,
+      "log": {
+        "path": ".artifacts/subtool-build/validation-e7f3edfa-000a-40fc-943e-5a592a2f8a76/core-wasm.log",
+        "bytes": 72,
+        "sha256": "22e0df986057b9ba5be07526ac5fb348862a3dedef42108383cc3e088acbb889"
+      }
+    },
+    {
+      "name": "web-build",
+      "command": [
+        "bash",
+        "scripts/build-web.sh"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791867621.955502,
+      "end_epoch": 1791867624.4565709,
+      "log": {
+        "path": ".artifacts/subtool-build/validation-e7f3edfa-000a-40fc-943e-5a592a2f8a76/web-build.log",
+        "bytes": 202,
+        "sha256": "96a07f33cac9b26ca5221503ef4b8d9971f4cd5ebc5c6105f74d1481d2e64341"
+      }
+    },
+    {
+      "name": "native-package",
+      "command": [
+        "bash",
+        "scripts/package-macos.sh"
+      ],
+      "exit_code": 0,
+      "start_epoch": 1791867624.456934,
+      "end_epoch": 1791867627.824353,
+      "log": {
+        "path": ".artifacts/subtool-build/validation-e7f3edfa-000a-40fc-943e-5a592a2f8a76/native-package.log",
+        "bytes": 330,
+        "sha256": "19453f2adf8f6088e2569bc700f1c59751927fc1db863c14bb4168a025cf5693"
+      }
+    }
+  ],
+  "source_manifest": {
+    "path": ".artifacts/subtool-release-0.1.10-layout-final/source-manifest.json",
+    "bytes": 11944,
+    "sha256": "c04409a5eb05032f896d1d9547b17c6f8b68fd3bfbf40442f9b3e2111d059a6d"
+  },
+  "artifacts": {
+    "wasm": {
+      "path": ".artifacts/subtool-release-0.1.10-layout-final/web/pkg/obrush_app_bg.wasm",
+      "bytes": 4073387,
+      "sha256": "0dbc84227b922654c8f608ca0dc4941581922ae4f69982c95a7b6aa0acf1f136"
+    },
+    "native": {
+      "path": ".artifacts/subtool-release-0.1.10-layout-final/OBrush.app/Contents/MacOS/OBrush",
+      "bytes": 7055312,
+      "sha256": "b9d029ea99aaaa95626076d26ad0c420d558b7ab56f357a7ef6b89c4602dc8bd"
+    }
+  },
+  "tools": {
+    "wasm_bindgen": "0.2.129",
+    "rustc": "1.96.0 (ac68faa20 2026-05-25)",
+    "cargo": "1.96.0 (30a34c682 2026-05-25)",
+    "host_architecture": "arm64",
+    "native_gui_executed": false
+  },
+  "limitations": [
+    "No reference SubTool fixture executed",
+    "Native GUI and physical devices not exercised",
+    "Folders, merge/split, transforms and booleans remain gaps",
+    "Capacity caps are not real-time or peak-memory guarantees"
+  ],
+  "frozen_build_record": {
+    "path": ".artifacts/subtool-release-0.1.10-layout-final/build-record.json",
+    "sha256": "32b4965ef7faafd86abcea8b85aafd487dec997b990753809c85a4a270d78c50",
+    "bytes": 4836
+  },
+  "schema_version": 1,
+  "runtime_receipt": {
+    "path": "docs/evidence/subtools-browser.json",
+    "bytes": 25813,
+    "sha256": "501bc98b5766156bfd6d74032f9f50bc4706c90e5922873d8db9e03826e797b3"
+  },
+  "core_receipt": {
+    "path": "docs/evidence/subtools-core.json",
+    "bytes": 14173,
+    "sha256": "3a75b2885ddb4f52a8bfd49fac48d20e1c976dddc3dfe6c07653fb14328fb11c"
+  },
+  "retained_failures": [
+    {
+      "path": ".artifacts/subtools-core/check-initial.log",
+      "bytes": 1166,
+      "sha256": "e87b4d72ffb19502ae49dfd084f1ffc169d5096a29b819a4af2a80d51dcf6b13"
+    },
+    {
+      "path": ".artifacts/subtool-renderer/focused-renderer.log",
+      "bytes": 1553,
+      "sha256": "03fb2b19a3a477e080dfbe8db5864664e830f3085d86b0b2b9df4e5a435f10d6"
+    },
+    {
+      "path": ".artifacts/subtool-build/failed-renderer-oracle.json",
+      "bytes": 392,
+      "sha256": "d04619a9da53e251bb39c6e0e4686292f1d73e2e85b44846b682b657f89c2fce"
+    },
+    {
+      "path": ".artifacts/subtool-build/failed-freeze-path.json",
+      "bytes": 339,
+      "sha256": "504b2b76c06ec3d25fe714c8a0a17559e933ec487d79b40387492afaae22a369"
+    },
+    {
+      "path": ".artifacts/subtool-build/failed-inspector-layout.json",
+      "bytes": 1165,
+      "sha256": "40dcad04b7bacacddcb0a389e63ba3983fde16664ef162b19a5734cd49292a50"
+    },
+    {
+      "path": ".artifacts/subtool-build/interrupted-layout-validation.json",
+      "bytes": 395,
+      "sha256": "8607cd5f532f4232eb723bb5ef01e799d377c8e8c85456d4a18d52679a825514"
+    }
+  ],
+  "intermediate_correctness_runtime": {
+    "path": ".artifacts/subtool-browser/verified-c26def90-69c0-494f-a387-0aa92edec44e/result.json",
+    "bytes": 1302220,
+    "sha256": "57dc773208ff368fc5510fc932d76c5ef083963de689c75d09ee57e150319506"
+  },
+  "intermediate_visual_gate": "Failed inspector clipping despite42passing workflow gates; superseded by corrected layout/source checks and actual-clip runtime gate"
+}

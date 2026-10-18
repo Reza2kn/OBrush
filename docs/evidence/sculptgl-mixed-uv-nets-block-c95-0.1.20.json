@@ -1,0 +1,154 @@
+{
+  "name": "C95 mixed-UV selected Smooth Surface Nets and Block",
+  "version": "0.1.20",
+  "reference_bundle": {
+    "path": ".tools/sculptgl-reference/host-mirror/sculptgl.js",
+    "sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600"
+  },
+  "web_wasm": {
+    "path": "web/dist/pkg/obrush_app_bg.wasm",
+    "sha256": "b6b05475e6e4df4323ef62896e9f22243b712d25c510d8f173e31693924e9722"
+  },
+  "fixture_uv": {
+    "path": "crates/obrush-core/tests/fixtures/independent-fusion-left-uv.obj",
+    "sha256": "ee68f293a081e38c8575b62494f5a826d3b3bfc3bd3b099f7878be0e09778102"
+  },
+  "fixture_plain": {
+    "path": "crates/obrush-core/tests/fixtures/independent-fusion-right.obj",
+    "sha256": "9600c7b964ac0b35ebafda32d889f96bda59799ecc0e65092b5fa598ba924dbf"
+  },
+  "harnesses": [
+    {
+      "path": "scripts/check-mc-browser.mjs",
+      "sha256": "160741c753de3dc75ebc44fa3d5046c9a885c91e612a471ce6375b76fdda7b98"
+    },
+    {
+      "path": "scripts/check-sculptgl-mc.mjs",
+      "sha256": "5e10c6ed27a6564fd4ee155e178207a22b3b98fe5cba7cb0d02ebb4cde960922"
+    },
+    {
+      "path": "scripts/compare-selected-nets.py",
+      "sha256": "a182908f51132c156ffb13b165bc2a14b0e476484f17a8fd488a83ceaa1c991c"
+    }
+  ],
+  "modes": {
+    "nets": {
+      "reference": {
+        "path": ".artifacts/sculptgl-reference-runtime/nets-mixed-uv-c95-ccbe58c9-8768-4aeb-8eb9-204ebd691755/result.json",
+        "sha256": "e28ee7e3ce72448b2a39b2416b2606160b422010f919bdba9b92ffae33fddfff"
+      },
+      "browser": {
+        "path": ".artifacts/mask-filter-browser/nets-mixed-uv-c95-4070a36d-78d7-4b3c-9240-0b012beaaea5/result.json",
+        "sha256": "04613b79cdd2bcf10c6c7f900b2a31a6dd2bc9ef37dcf0e5b7b66b22eefd6f93"
+      },
+      "comparison": {
+        "path": ".artifacts/nets-mixed-uv-c95-comparison.json",
+        "sha256": "05c79183d275368ac7f2e204bd650208700a81c046ce45df01abc58e090a0520"
+      },
+      "parameters": {
+        "resolution": 16,
+        "selected_order": "right then left",
+        "block": false,
+        "explicit_uv_discard": true
+      },
+      "metrics": {
+        "vertices": 1058,
+        "reference_quads": 1056,
+        "obrush_quads": 1056,
+        "matched_oriented_quads": 1056,
+        "world_position_maximum": 1.461773076125217e-07,
+        "world_position_rms": 7.701678175151223e-08,
+        "rgb": {
+          "values": 3174,
+          "maximum": 2.7055358842176247e-08,
+          "rms": 4.524426786754661e-09
+        },
+        "roughness_metallic": {
+          "values": 2116,
+          "maximum": 2.384185793236071e-08,
+          "rms": 1.737759083115635e-08
+        },
+        "unmasked_weight": {
+          "values": 1058,
+          "maximum": 0.0,
+          "rms": 0.0
+        },
+        "gates": {
+          "one_to_one_vertex_map": true,
+          "all_oriented_quads": true,
+          "positions_within_2e_7": true,
+          "rgb_within_save_rounding": true,
+          "material_within_save_rounding": true,
+          "unmasked_exact": true
+        }
+      }
+    },
+    "block": {
+      "reference": {
+        "path": ".artifacts/sculptgl-reference-runtime/block-mixed-uv-c95-030b154b-776c-4cb4-b630-aa6372b8f1ef/result.json",
+        "sha256": "4de4cf65cf9f8022632c63f659ccb159def9e66ff6756b5ad863931d6be67626"
+      },
+      "browser": {
+        "path": ".artifacts/mask-filter-browser/block-mixed-uv-c95-serial-5f0b116f-76b5-4180-ba46-0e2f539d3bbb/result.json",
+        "sha256": "0c63373f36ee34472c3df7d5a6b6699ef895d1e51869954b951d99b18935ad42"
+      },
+      "comparison": {
+        "path": ".artifacts/block-mixed-uv-c95-comparison.json",
+        "sha256": "8886fc750f92eabb4a45357e18e7121235d11818d5241263da143d7409db9836"
+      },
+      "parameters": {
+        "resolution": 16,
+        "selected_order": "right then left",
+        "block": true,
+        "explicit_uv_discard": true
+      },
+      "metrics": {
+        "vertices": 1058,
+        "reference_quads": 1056,
+        "obrush_quads": 1056,
+        "matched_oriented_quads": 1056,
+        "world_position_maximum": 1.891323773108724e-07,
+        "world_position_rms": 8.882498795924513e-08,
+        "rgb": {
+          "values": 3174,
+          "maximum": 2.7055358842176247e-08,
+          "rms": 4.524426786754661e-09
+        },
+        "roughness_metallic": {
+          "values": 2116,
+          "maximum": 2.384185793236071e-08,
+          "rms": 1.737759083115635e-08
+        },
+        "unmasked_weight": {
+          "values": 1058,
+          "maximum": 0.0,
+          "rms": 0.0
+        },
+        "gates": {
+          "one_to_one_vertex_map": true,
+          "all_oriented_quads": true,
+          "positions_within_2e_7": true,
+          "rgb_within_save_rounding": true,
+          "material_within_save_rounding": true,
+          "unmasked_exact": true
+        }
+      }
+    }
+  },
+  "retained_failed_check": {
+    "mode": "block",
+    "stage": "concurrent browser startup before any workflow",
+    "error": "TypeError: fetch failed",
+    "receipt": {
+      "path": ".artifacts/mask-filter-browser/block-mixed-uv-c95-32d2aafd-2583-471e-af42-cb18f0f65430/result.json",
+      "sha256": "685b95d5b182deafa439a21e8556055b54ad4ab7c5cb453ffefd92c7b2904334"
+    },
+    "resolution": "isolated serial rerun passed; startup cause not diagnosed"
+  },
+  "limitations": [
+    "One two-box mixed-UV fixture without seams or varying masks",
+    "No selected affine part validation",
+    "No sustained responsiveness or GPU compute integration",
+    "No native GUI or physical input check in this run"
+  ]
+}

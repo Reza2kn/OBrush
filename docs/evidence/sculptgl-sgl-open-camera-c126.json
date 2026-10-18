@@ -1,0 +1,53 @@
+{
+  "scope": "Ordinary whole-scene SGL Open source camera and paired selected-contour diagnostics",
+  "reference_revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+  "fixture": {
+    "path": ".artifacts/sculptgl-render-comparison-contract/source-ready/fixtures/transparent-overlap.sgl",
+    "sha256": "7e84bc57eae25e30f8b95af37d580cd2d9ffc48c6d96b26db0d73b28ecdbbab6",
+    "objects": 2,
+    "selected_index": 1
+  },
+  "obrush_web_wasm_sha256": "5c78d1ce06ee2fcaf017d888c00c24299dcc634eb0779abcebb538134ec3918f",
+  "source_result": ".artifacts/camera-pair-c126/source-settled-1792282294913/result.json",
+  "obrush_result": ".artifacts/camera-pair-c126/root-v3-1792282212381/startup.json",
+  "viewport_pixels_each": [1140, 825],
+  "camera": {
+    "view_matrix_exact": true,
+    "source_zoom": 1.9343060506556353,
+    "obrush_zoom": 1.9370467666305018,
+    "relative_zoom_excess_percent": 0.14168988273275396,
+    "source_projection_xy": [0.8245315551757812, 1.1393526792526245],
+    "obrush_projection_xy": [0.8233649134635925, 1.1377406120300293],
+    "final_near_far_each": [875.4551857380934, 1125.4551629644852],
+    "source_retained_prefit_near": 873.9224414820292,
+    "source_prefit_trace": ".artifacts/camera-pair-c126/source-fit-trace2-1792282238566/result.json"
+  },
+  "contour": {
+    "source_changed_pixels": 3821,
+    "obrush_changed_pixels": 3813,
+    "source_bbox_width_height": [474, 474],
+    "obrush_bbox_width_height": [473, 473],
+    "source_changed_pixels_per_bbox_perimeter": 2.015295358649789,
+    "obrush_changed_pixels_per_bbox_perimeter": 2.0153276955602535,
+    "direct_mask_iou": 0.603781512605042,
+    "each_mask_within_one_pixel_of_other": 1.0,
+    "source_off_on_png_sha256": ["609e0b36ebe613dfd6062664c9311b394fd5668f65dda6777b14c1b3ab7812c4", "18bdd6d5169265382e8ee910b8ee71f0c90fae862ee996d28c2f26fb3f3bb409"],
+    "obrush_off_on_png_sha256": ["74691b2b5241bfbaa93a89d5aaa7af37c8e9f4d02190ce2050d6e6668c0792a9", "147c9838fa2d16539ad841ec0284e24fa4df81f067a23731e474c86dafe636a8"]
+  },
+  "obrush_saved_project_sha256_off_on_off": "bf3128aab946e333c4b55da3378b5f631e6691186775ca60e00e7647b5df3895",
+  "obrush_saved_project_bytes": 3709,
+  "browser_errors_each": 0,
+  "validation": {
+    "format": "pass",
+    "workspace_tests_passed": 2457,
+    "workspace_test_result_summaries": 80,
+    "workspace_tests_failed": 0,
+    "native_strict_clippy": "pass",
+    "wasm_strict_clippy": "pass",
+    "official_web_build": "pass",
+    "official_macos_package_signature": "valid",
+    "logs": ".artifacts/camera-pair-c126/"
+  },
+  "retained_intermediate_runs": [".artifacts/camera-pair-c126/root-1792281816585/startup.json", ".artifacts/camera-pair-c126/root-new-1792282085334/startup.json", ".artifacts/camera-pair-c126/root-v2-1792282145445/startup.json"],
+  "limitations": ["source pre-fit clip depends on previous scene", "material/color/sample-level equality unproven", "other imported scenes/camera modes untested", "full SculptGL parity open"]
+}

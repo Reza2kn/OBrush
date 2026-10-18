@@ -1,0 +1,103 @@
+{
+  "target_sha256": "a56a4bcd0a842cdcdf103f9e5b4e13b277e7806b91396ad54a9fb7e7d14e460a",
+  "rea_metadata_evidence_id": "ev_0c8b41fe99c4b08cc71b90b6f35a33984c1bbcaf3a861d37a5a05dd279345815",
+  "method": "Read exact __TEXT,__cstring section bytes using REA inspect_macho arm64 slice and section coordinates; bounded UTF-8 string matches, three hits per requested term.",
+  "section": {
+    "segment": "__TEXT",
+    "name": "__cstring",
+    "address": "0x10c75a270",
+    "size": 34675488,
+    "file_offset": 209035888,
+    "alignment": 8,
+    "flags": [
+      "2"
+    ]
+  },
+  "container_file_offset": 422248448,
+  "bytes_read": 34675488,
+  "section_sha256": "b1394e72081058de883064f0acf25e3edce686b95fead795b94efa6361aa78f9",
+  "search_terms": [
+    "ClayBuildup",
+    "BackfaceMask",
+    "LazyMouse",
+    "Tablet Pressure",
+    "Draw Size",
+    "Z Intensity",
+    "Focal Shift",
+    "Sculptris Pro",
+    "DynaMesh",
+    "ZRemesher",
+    "DamStandard",
+    "Smooth"
+  ],
+  "matches": {
+    "DynaMesh": [
+      {
+        "text": "#Note_DynameshSkippedMaskVisible",
+        "original_file_offset": 631677856,
+        "address": "0x10c7ba3a0"
+      },
+      {
+        "text": "#Note_DynameshSkippedMehsHidden",
+        "original_file_offset": 631677889,
+        "address": "0x10c7ba3c1"
+      },
+      {
+        "text": "DYNAMESHING CLOSING HOLES...",
+        "original_file_offset": 631677921,
+        "address": "0x10c7ba3e1"
+      }
+    ],
+    "ZRemesher": [
+      {
+        "text": "#MESHTPRIM_ZREMESHER",
+        "original_file_offset": 631851174,
+        "address": "0x10c7e48a6"
+      },
+      {
+        "text": "#Error_ThisFunctionRequiresZRemesher",
+        "original_file_offset": 631886597,
+        "address": "0x10c7ed305"
+      },
+      {
+        "text": "*ZRemesher",
+        "original_file_offset": 631943827,
+        "address": "0x10c7fb293"
+      }
+    ],
+    "Tablet Pressure": [
+      {
+        "text": "Tablet Pressure",
+        "original_file_offset": 632096866,
+        "address": "0x10c820862"
+      }
+    ],
+    "ClayBuildup": [
+      {
+        "text": "ClayBuildup",
+        "original_file_offset": 632201998,
+        "address": "0x10c83a30e"
+      }
+    ],
+    "DamStandard": [
+      {
+        "text": "CurveDamStandard",
+        "original_file_offset": 632202810,
+        "address": "0x10c83a63a"
+      },
+      {
+        "text": "DamStandard",
+        "original_file_offset": 632203146,
+        "address": "0x10c83a78a"
+      }
+    ]
+  },
+  "limitations": [
+    "UI/string labels establish byte presence, not live behavior, brush math, parameter mappings or call relationships.",
+    "Only the selected arm64 __cstring section was searched.",
+    "Strings above 240 bytes and invalid UTF-8 were excluded; three hits per term retained.",
+    "Sanitized publication omits source paths and diagnostic strings; absence from this selection is not absence from the executable."
+  ],
+  "retention_policy": "Short identifiers/UI labels only; omitted diagnostic source paths and long diagnostic strings.",
+  "full_local_output_sha256": "cf7b2753e1f0b8e6dd49645a3a6ecae739a0adfee5c06d3b88a5e43a5b53d542"
+}

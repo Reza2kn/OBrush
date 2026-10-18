@@ -1,0 +1,1294 @@
+{
+  "schema_version": 1,
+  "version": "0.1.12",
+  "recorded_at_utc": "2026-10-13T18:31:02.719709+00:00",
+  "status": "Eight scoped browser workflows and53behavior gates pass on frozen final bytes; exact visible buffers/save/history, topology, composition, masks and inspector clipping checked",
+  "git": "Unborn main; source/build/helper hashes identify execution",
+  "raw_result": {
+    "path": ".artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/result.json",
+    "bytes": 2409738,
+    "sha256": "4f3719e912a212f25b433613b24465e952420912f3a52f47bfb2f064019d7d6a"
+  },
+  "bound_summary": {
+    "path": ".artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/summary.json",
+    "bytes": 47997,
+    "sha256": "796417bfc80a7328fed229b462dc73ff1605d31f5818f6488c230befa4d722c7"
+  },
+  "summary": {
+    "status": "passed eight mask extraction browser workflows",
+    "raw_result": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/result.json",
+    "raw_sha256": "4f3719e912a212f25b433613b24465e952420912f3a52f47bfb2f064019d7d6a",
+    "method": "Isolated CLI headless Chrome/CDP; no desktop, CUA, accessibility, user-tab, or physical device control",
+    "browser": {
+      "protocolVersion": "1.3",
+      "product": "Chrome/155.0.8059.40",
+      "revision": "@cfaadc5a132d78e1828635aa8405a499f3e14864",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "jsVersion": "15.5.35.20"
+    },
+    "wasm": {
+      "sha256": "4ad061d53895d67621948e88acba2b12cb1e07338c63f2bec7270ed7b745fcb4",
+      "served_sha256": "4ad061d53895d67621948e88acba2b12cb1e07338c63f2bec7270ed7b745fcb4",
+      "bytes": 4208302
+    },
+    "helper_sha256": "cf87f8d2ccedd2b3bc9f73ac1ade1b87d6f6c6fc8472570657a5a640023fbfbb",
+    "original_helper": {
+      "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/helper-original.mjs",
+      "sha256": "a0a998fcd052b462f140b274533f20f765bc1a9cb84c5a7c26b2dd9e09275078"
+    },
+    "contract": {
+      "point_absolute_tolerance": 2e-06,
+      "color_absolute_tolerance": 1e-06,
+      "volume_absolute_tolerance": 2e-06,
+      "shell_count_law": "output V = 2*patch V; output T = 2*patch T + 2*boundary edges",
+      "inactive_cache": "Actual VBO/solid IBO keys, digests, byte counts and upload counters unchanged on existing inactive part",
+      "threshold": 0.5,
+      "thickness_world": 0.125,
+      "topology": "Closed consistently oriented two-manifold edges and connected vertex fans; positive signed volume on outward planar fixtures; exact source/metadata/history",
+      "normal_policy": "f64 corner-angle-weighted normals of selected rounded patch, no stored-normal dependence",
+      "gpu": "Exact packed visible f32 VBO and ordered solid u32 IBO multiset plus active-last draw",
+      "visible_control_clip_tolerance": 0.01,
+      "mask_preparation": "Exactly2 separately released identical default Mask contacts, radius.18 strength.35 Xsymmetry,60x15pixel trace,24moves/contact, threshold.5 unchanged",
+      "mask_stroke_quiet": "100ms settle after actual mouseup then incremental0/200/800 probes; no finalization or input-to-photon latency bound",
+      "timing_scope": "Short synthetic input only; large/source-cap and long-session latency unverified"
+    },
+    "cases": [
+      {
+        "name": "linear-mask-shell-geometry-history-reload",
+        "parameters": {
+          "threshold": 0.5,
+          "thickness": 0.125
+        },
+        "contract": {
+          "new_id": 2,
+          "source_ids": [
+            1
+          ],
+          "source_exact": true,
+          "new_plain_unmasked": true,
+          "topology": {
+            "vertices": 10,
+            "faces": 16,
+            "edges": 24,
+            "components": 1,
+            "euler": 2,
+            "signed_volume": 0.0625,
+            "min_double_area": 0.0625
+          },
+          "report": {
+            "boundary_edges": 5,
+            "boundary_loops": 1,
+            "document_revision": 3,
+            "input_triangles": 2,
+            "input_vertices": 4,
+            "new_subtool_id": 2,
+            "output_triangles": 16,
+            "output_vertices": 10,
+            "patch_components": 1,
+            "patch_triangles": 3,
+            "patch_vertices": 5,
+            "selected_source_triangles": 2,
+            "source_subtool_id": 1,
+            "thickness": 0.125,
+            "threshold": 0.5
+          }
+        },
+        "measure": {
+          "position_max": 0,
+          "color_max": 0,
+          "volume_error": 0,
+          "expected_volume": 0.0625,
+          "vertices": 10,
+          "faces": 16,
+          "edges": 24,
+          "components": 1,
+          "euler": 2,
+          "signed_volume": 0.0625,
+          "min_double_area": 0.0625
+        },
+        "history": {
+          "undo_exact": true,
+          "redo_exact": true
+        },
+        "gates": {
+          "source_exact": true,
+          "plain_unmasked": true,
+          "closed_oriented": true,
+          "analytic_volume": true,
+          "analytic_cut_color": true,
+          "shared_cut_counts": true,
+          "one_revision": true,
+          "exact_history": true,
+          "fresh_canonical_reload": true
+        }
+      },
+      {
+        "name": "actual-mask-brush-independent-part",
+        "contract": {
+          "new_id": 2,
+          "source_ids": [
+            1
+          ],
+          "source_exact": true,
+          "new_plain_unmasked": true,
+          "topology": {
+            "vertices": 452,
+            "faces": 896,
+            "edges": 1344,
+            "components": 2,
+            "euler": 4,
+            "signed_volume": 0.0008589857483422447,
+            "min_double_area": 1.7407342681160718e-06
+          },
+          "report": {
+            "boundary_edges": 108,
+            "boundary_loops": 2,
+            "document_revision": 16,
+            "input_triangles": 81920,
+            "input_vertices": 40962,
+            "new_subtool_id": 2,
+            "output_triangles": 896,
+            "output_vertices": 452,
+            "patch_components": 2,
+            "patch_triangles": 340,
+            "patch_vertices": 226,
+            "selected_source_triangles": 292,
+            "source_subtool_id": 1,
+            "thickness": 0.019999999552965164,
+            "threshold": 0.5
+          }
+        },
+        "history": {
+          "undo_exact": true,
+          "redo_exact": true
+        },
+        "strokes": [
+          {
+            "name": "actual-control-mask-first",
+            "quiet": true
+          },
+          {
+            "name": "actual-control-mask-second",
+            "quiet": true
+          }
+        ],
+        "mask_preparation": {
+          "contacts": 2,
+          "radius": 0.18,
+          "strength": 0.35,
+          "trace_px": [
+            60,
+            15
+          ],
+          "moves_per_contact": 24,
+          "first_max": 0.393386,
+          "first_positive": 916,
+          "second_max": 0.78677195,
+          "second_selected": 118,
+          "first_applied_dabs": 7,
+          "second_applied_dabs": 7,
+          "warm_positions_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66",
+          "geometry_original_sha256": "2e553cfab6dd6ce5e5951e5f38ce1142fc1220d86a28b6e1bb4c6fd567213b66"
+        },
+        "gates": {
+          "repeated_default_mask_selects_area": true,
+          "mask_only_geometry_preserved": true,
+          "source_mask_preserved": true,
+          "new_unmasked": true,
+          "closed_shell": true,
+          "exact_history": true,
+          "solo_exact_visible": true
+        }
+      },
+      {
+        "name": "rich-v4-source-level-layer-target-retention",
+        "contract": {
+          "new_id": 2,
+          "source_ids": [
+            1
+          ],
+          "source_exact": true,
+          "new_plain_unmasked": true,
+          "topology": {
+            "vertices": 532,
+            "faces": 1056,
+            "edges": 1584,
+            "components": 2,
+            "euler": 4,
+            "signed_volume": 0.24916617400426222,
+            "min_double_area": 0.017489775585391394
+          },
+          "report": {
+            "boundary_edges": 0,
+            "boundary_loops": 0,
+            "document_revision": 3,
+            "input_triangles": 528,
+            "input_vertices": 266,
+            "new_subtool_id": 2,
+            "output_triangles": 1056,
+            "output_vertices": 532,
+            "patch_components": 1,
+            "patch_triangles": 528,
+            "patch_vertices": 266,
+            "selected_source_triangles": 528,
+            "source_subtool_id": 1,
+            "thickness": 0.019999999552965164,
+            "threshold": 0.5
+          }
+        },
+        "history": {
+          "undo_exact": true,
+          "redo_exact": true
+        },
+        "gates": {
+          "v4_promoted_to_scene": true,
+          "all_metadata_exact": true,
+          "full_mask_no_boundary": true,
+          "nested_closed_skins": true,
+          "original_reselection_exact": true,
+          "canonical_v5_reload": true,
+          "one_history": true
+        }
+      },
+      {
+        "name": "inactive-source-preservation-and-part-transform",
+        "contract": {
+          "new_id": 3,
+          "source_ids": [
+            1,
+            2
+          ],
+          "source_exact": true,
+          "new_plain_unmasked": true,
+          "topology": {
+            "vertices": 532,
+            "faces": 1056,
+            "edges": 1584,
+            "components": 2,
+            "euler": 4,
+            "signed_volume": 0.24916617400426222,
+            "min_double_area": 0.017489775585391394
+          },
+          "report": {
+            "boundary_edges": 0,
+            "boundary_loops": 0,
+            "document_revision": 3,
+            "input_triangles": 528,
+            "input_vertices": 266,
+            "new_subtool_id": 3,
+            "output_triangles": 1056,
+            "output_vertices": 532,
+            "patch_components": 1,
+            "patch_triangles": 528,
+            "patch_vertices": 266,
+            "selected_source_triangles": 528,
+            "source_subtool_id": 2,
+            "thickness": 0.019999999552965164,
+            "threshold": 0.5
+          }
+        },
+        "inactive_buffer_cache": {
+          "before": {
+            "vao_key": 1,
+            "vertex_key": 3,
+            "index_key": 4,
+            "active": false,
+            "preview_translation": [
+              0,
+              0,
+              0
+            ],
+            "count": 6,
+            "type": 5125,
+            "offset": 0,
+            "vertex_bytes": 160,
+            "index_bytes": 24,
+            "vertex_uploads": 2,
+            "index_uploads": 2,
+            "last_upload_at": 443,
+            "vertex_sha256": "535aaebc3550e4f2557341bc85b45880faa579caccf2119bfc7e2afe73ba9ebe",
+            "index_sha256": "fe78c65211dd0b56a97024fb61111e686ef1fe054aa132ba58e2891ac496f1ee"
+          },
+          "after": {
+            "vao_key": 1,
+            "vertex_key": 3,
+            "index_key": 4,
+            "active": false,
+            "preview_translation": [
+              0,
+              0,
+              0
+            ],
+            "count": 6,
+            "type": 5125,
+            "offset": 0,
+            "vertex_bytes": 160,
+            "index_bytes": 24,
+            "vertex_uploads": 2,
+            "index_uploads": 2,
+            "last_upload_at": 443,
+            "vertex_sha256": "535aaebc3550e4f2557341bc85b45880faa579caccf2119bfc7e2afe73ba9ebe",
+            "index_sha256": "fe78c65211dd0b56a97024fb61111e686ef1fe054aa132ba58e2891ac496f1ee"
+          },
+          "fields": [
+            "vao_key",
+            "vertex_key",
+            "index_key",
+            "vertex_sha256",
+            "index_sha256",
+            "vertex_bytes",
+            "index_bytes",
+            "vertex_uploads",
+            "index_uploads",
+            "count",
+            "type",
+            "offset"
+          ]
+        },
+        "translation_max_error": 5.960464477539063e-08,
+        "gates": {
+          "actual_inactive_buffers_unchanged": true,
+          "inactive_upload_count_unchanged": true,
+          "all_source_states_exact": true,
+          "scene_history_exact": true,
+          "extracted_transform_only": true,
+          "numeric_translation": true,
+          "move_history_exact": true
+        }
+      },
+      {
+        "name": "empty-and-ambiguous-rejections-are-atomic",
+        "messages": [
+          "Extraction rejected; original kept: The mask contains no selected surface area",
+          "Extraction rejected; original kept: Extraction refuses branching/ambiguous boundary vertices"
+        ],
+        "gates": {
+          "empty_scene_unchanged": true,
+          "empty_revision_unchanged": true,
+          "failed_preserves_genuine_redo": true,
+          "ambiguous_scene_unchanged": true,
+          "ambiguous_revision_unchanged": true,
+          "ambiguous_error_explained": true,
+          "no_new_objects": true
+        }
+      },
+      {
+        "name": "holes-and-disconnected-patches-close-correctly",
+        "trials": [
+          {
+            "kind": "hole",
+            "contract": {
+              "new_id": 2,
+              "source_ids": [
+                1
+              ],
+              "source_exact": true,
+              "new_plain_unmasked": true,
+              "topology": {
+                "vertices": 60,
+                "faces": 120,
+                "edges": 180,
+                "components": 1,
+                "euler": 0,
+                "signed_volume": 0.11914062499999997,
+                "min_double_area": 0.015625
+              },
+              "report": {
+                "boundary_edges": 22,
+                "boundary_loops": 2,
+                "document_revision": 3,
+                "input_triangles": 32,
+                "input_vertices": 25,
+                "new_subtool_id": 2,
+                "output_triangles": 120,
+                "output_vertices": 60,
+                "patch_components": 1,
+                "patch_triangles": 38,
+                "patch_vertices": 30,
+                "selected_source_triangles": 32,
+                "source_subtool_id": 1,
+                "thickness": 0.125,
+                "threshold": 0.5
+              }
+            },
+            "measure": {
+              "position_max": 0,
+              "color_max": 0,
+              "volume_error": 2.7755575615628914e-17,
+              "expected_volume": 0.119140625,
+              "vertices": 60,
+              "faces": 120,
+              "edges": 180,
+              "components": 1,
+              "euler": 0,
+              "signed_volume": 0.11914062499999997,
+              "min_double_area": 0.015625
+            },
+            "history": {
+              "undo_exact": true,
+              "redo_exact": true
+            }
+          },
+          {
+            "kind": "disconnected",
+            "contract": {
+              "new_id": 2,
+              "source_ids": [
+                1
+              ],
+              "source_exact": true,
+              "new_plain_unmasked": true,
+              "topology": {
+                "vertices": 20,
+                "faces": 32,
+                "edges": 48,
+                "components": 2,
+                "euler": 4,
+                "signed_volume": 0.125,
+                "min_double_area": 0.0625
+              },
+              "report": {
+                "boundary_edges": 10,
+                "boundary_loops": 2,
+                "document_revision": 3,
+                "input_triangles": 4,
+                "input_vertices": 8,
+                "new_subtool_id": 2,
+                "output_triangles": 32,
+                "output_vertices": 20,
+                "patch_components": 2,
+                "patch_triangles": 6,
+                "patch_vertices": 10,
+                "selected_source_triangles": 4,
+                "source_subtool_id": 1,
+                "thickness": 0.125,
+                "threshold": 0.5
+              }
+            },
+            "measure": {
+              "volume_error": 0,
+              "expected_volume": 0.125
+            },
+            "history": {
+              "undo_exact": true,
+              "redo_exact": true
+            }
+          }
+        ],
+        "gates": {
+          "both_source_exact": true,
+          "two_hole_boundaries": true,
+          "annular_euler_zero": true,
+          "two_disconnected_components": true,
+          "all_analytic_volumes": true,
+          "both_histories_exact": true
+        }
+      },
+      {
+        "name": "hidden-and-full-scene-controls-preserve-document",
+        "gates": {
+          "hidden_create_disabled": true,
+          "hidden_canonical_unchanged": true,
+          "full_create_disabled": true,
+          "full_canonical_unchanged": true,
+          "full_scene_keeps32": true
+        }
+      },
+      {
+        "name": "new-part-sculpt-and-rejected-import-preserve-source",
+        "displacement": {
+          "original_vertices": 532,
+          "after_vertices": 1123,
+          "changed_vertices": 2,
+          "max_displacement": 0.003588570805404322
+        },
+        "history": {
+          "undo_exact": true,
+          "redo_exact": true
+        },
+        "stroke_quiet": true,
+        "rejected_notice": "Import failed: Normals, masks, and colors must match the vertex count",
+        "gates": {
+          "new_part_sculpts": true,
+          "original_source_exact": true,
+          "sculpt_one_history": true,
+          "rejected_import_atomic": true,
+          "quiet_after_release": true
+        }
+      }
+    ],
+    "case_count": 8,
+    "case_gate_count": 53,
+    "failed_case_gates": [],
+    "snapshot_contracts": {
+      "count": 52,
+      "exact_visible_vbo_solid_ibo_pairs": 145,
+      "object_contracts": 148,
+      "all_gpu_saved_scene_exact": true,
+      "f64_layer_compositions": 21,
+      "morph_target_contracts": 21
+    },
+    "extraction_reports_and_topology": [
+      {
+        "case": "linear-mask-shell-geometry-history-reload",
+        "new_id": 2,
+        "source_ids": [
+          1
+        ],
+        "source_exact": true,
+        "new_plain_unmasked": true,
+        "topology": {
+          "vertices": 10,
+          "faces": 16,
+          "edges": 24,
+          "components": 1,
+          "euler": 2,
+          "signed_volume": 0.0625,
+          "min_double_area": 0.0625
+        },
+        "report": {
+          "boundary_edges": 5,
+          "boundary_loops": 1,
+          "document_revision": 3,
+          "input_triangles": 2,
+          "input_vertices": 4,
+          "new_subtool_id": 2,
+          "output_triangles": 16,
+          "output_vertices": 10,
+          "patch_components": 1,
+          "patch_triangles": 3,
+          "patch_vertices": 5,
+          "selected_source_triangles": 2,
+          "source_subtool_id": 1,
+          "thickness": 0.125,
+          "threshold": 0.5
+        }
+      },
+      {
+        "case": "actual-mask-brush-independent-part",
+        "new_id": 2,
+        "source_ids": [
+          1
+        ],
+        "source_exact": true,
+        "new_plain_unmasked": true,
+        "topology": {
+          "vertices": 452,
+          "faces": 896,
+          "edges": 1344,
+          "components": 2,
+          "euler": 4,
+          "signed_volume": 0.0008589857483422447,
+          "min_double_area": 1.7407342681160718e-06
+        },
+        "report": {
+          "boundary_edges": 108,
+          "boundary_loops": 2,
+          "document_revision": 16,
+          "input_triangles": 81920,
+          "input_vertices": 40962,
+          "new_subtool_id": 2,
+          "output_triangles": 896,
+          "output_vertices": 452,
+          "patch_components": 2,
+          "patch_triangles": 340,
+          "patch_vertices": 226,
+          "selected_source_triangles": 292,
+          "source_subtool_id": 1,
+          "thickness": 0.019999999552965164,
+          "threshold": 0.5
+        }
+      },
+      {
+        "case": "rich-v4-source-level-layer-target-retention",
+        "new_id": 2,
+        "source_ids": [
+          1
+        ],
+        "source_exact": true,
+        "new_plain_unmasked": true,
+        "topology": {
+          "vertices": 532,
+          "faces": 1056,
+          "edges": 1584,
+          "components": 2,
+          "euler": 4,
+          "signed_volume": 0.24916617400426222,
+          "min_double_area": 0.017489775585391394
+        },
+        "report": {
+          "boundary_edges": 0,
+          "boundary_loops": 0,
+          "document_revision": 3,
+          "input_triangles": 528,
+          "input_vertices": 266,
+          "new_subtool_id": 2,
+          "output_triangles": 1056,
+          "output_vertices": 532,
+          "patch_components": 1,
+          "patch_triangles": 528,
+          "patch_vertices": 266,
+          "selected_source_triangles": 528,
+          "source_subtool_id": 1,
+          "thickness": 0.019999999552965164,
+          "threshold": 0.5
+        }
+      },
+      {
+        "case": "inactive-source-preservation-and-part-transform",
+        "new_id": 3,
+        "source_ids": [
+          1,
+          2
+        ],
+        "source_exact": true,
+        "new_plain_unmasked": true,
+        "topology": {
+          "vertices": 532,
+          "faces": 1056,
+          "edges": 1584,
+          "components": 2,
+          "euler": 4,
+          "signed_volume": 0.24916617400426222,
+          "min_double_area": 0.017489775585391394
+        },
+        "report": {
+          "boundary_edges": 0,
+          "boundary_loops": 0,
+          "document_revision": 3,
+          "input_triangles": 528,
+          "input_vertices": 266,
+          "new_subtool_id": 3,
+          "output_triangles": 1056,
+          "output_vertices": 532,
+          "patch_components": 1,
+          "patch_triangles": 528,
+          "patch_vertices": 266,
+          "selected_source_triangles": 528,
+          "source_subtool_id": 2,
+          "thickness": 0.019999999552965164,
+          "threshold": 0.5
+        }
+      },
+      {
+        "case": "holes-and-disconnected-patches-close-correctly",
+        "kind": "hole",
+        "measure": {
+          "position_max": 0,
+          "color_max": 0,
+          "volume_error": 2.7755575615628914e-17,
+          "expected_volume": 0.119140625,
+          "vertices": 60,
+          "faces": 120,
+          "edges": 180,
+          "components": 1,
+          "euler": 0,
+          "signed_volume": 0.11914062499999997,
+          "min_double_area": 0.015625
+        },
+        "new_id": 2,
+        "source_ids": [
+          1
+        ],
+        "source_exact": true,
+        "new_plain_unmasked": true,
+        "topology": {
+          "vertices": 60,
+          "faces": 120,
+          "edges": 180,
+          "components": 1,
+          "euler": 0,
+          "signed_volume": 0.11914062499999997,
+          "min_double_area": 0.015625
+        },
+        "report": {
+          "boundary_edges": 22,
+          "boundary_loops": 2,
+          "document_revision": 3,
+          "input_triangles": 32,
+          "input_vertices": 25,
+          "new_subtool_id": 2,
+          "output_triangles": 120,
+          "output_vertices": 60,
+          "patch_components": 1,
+          "patch_triangles": 38,
+          "patch_vertices": 30,
+          "selected_source_triangles": 32,
+          "source_subtool_id": 1,
+          "thickness": 0.125,
+          "threshold": 0.5
+        }
+      },
+      {
+        "case": "holes-and-disconnected-patches-close-correctly",
+        "kind": "disconnected",
+        "measure": {
+          "volume_error": 0,
+          "expected_volume": 0.125
+        },
+        "new_id": 2,
+        "source_ids": [
+          1
+        ],
+        "source_exact": true,
+        "new_plain_unmasked": true,
+        "topology": {
+          "vertices": 20,
+          "faces": 32,
+          "edges": 48,
+          "components": 2,
+          "euler": 4,
+          "signed_volume": 0.125,
+          "min_double_area": 0.0625
+        },
+        "report": {
+          "boundary_edges": 10,
+          "boundary_loops": 2,
+          "document_revision": 3,
+          "input_triangles": 4,
+          "input_vertices": 8,
+          "new_subtool_id": 2,
+          "output_triangles": 32,
+          "output_vertices": 20,
+          "patch_components": 2,
+          "patch_triangles": 6,
+          "patch_vertices": 10,
+          "selected_source_triangles": 4,
+          "source_subtool_id": 1,
+          "thickness": 0.125,
+          "threshold": 0.5
+        }
+      }
+    ],
+    "short_stroke_observations": [
+      {
+        "name": "actual-control-mask-first",
+        "brush": 8,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "symmetry_x": true,
+        "from": [
+          795,
+          513
+        ],
+        "to": [
+          855,
+          528
+        ],
+        "moves": 24,
+        "actual_trusted_events": 27,
+        "applied_dabs_cumulative": 7,
+        "mouseup_at": 2788.9000000059605,
+        "first_probe_start_after_mouseup_ms": 106.70000000298023,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 150,
+        "raf_p95_ms": 16.700000000000273,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": []
+      },
+      {
+        "name": "actual-control-mask-second",
+        "brush": 8,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "symmetry_x": true,
+        "from": [
+          795,
+          513
+        ],
+        "to": [
+          855,
+          528
+        ],
+        "moves": 24,
+        "actual_trusted_events": 27,
+        "applied_dabs_cumulative": 14,
+        "mouseup_at": 6322.5,
+        "first_probe_start_after_mouseup_ms": 107.0,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 149,
+        "raf_p95_ms": 16.800000000000182,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": []
+      },
+      {
+        "name": "rich-layer-stroke",
+        "brush": 1,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "symmetry_x": true,
+        "from": [
+          748.28108012749,
+          467.76605048594234
+        ],
+        "to": [
+          758.28108012749,
+          475.76605048594234
+        ],
+        "moves": 10,
+        "actual_trusted_events": 13,
+        "applied_dabs_cumulative": 2,
+        "mouseup_at": 4447.699999988079,
+        "first_probe_start_after_mouseup_ms": 106.90000000596046,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 107,
+        "raf_p95_ms": 16.700000000000728,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": []
+      },
+      {
+        "name": "new-part-draw",
+        "brush": 1,
+        "radius": 0.18000000715255737,
+        "strength": 0.3499999940395355,
+        "symmetry_x": true,
+        "from": [
+          748.2803760348878,
+          467.79563106143246
+        ],
+        "to": [
+          758.2803760348878,
+          475.79563106143246
+        ],
+        "moves": 10,
+        "actual_trusted_events": 13,
+        "applied_dabs_cumulative": 2,
+        "mouseup_at": 2049.5,
+        "first_probe_start_after_mouseup_ms": 104.09999999403954,
+        "quiet": true,
+        "pending_zero": true,
+        "probes": 3,
+        "raf_samples": 106,
+        "raf_p95_ms": 16.700000000000273,
+        "raf_max_ms": 16.800000000000182,
+        "longtasks": []
+      }
+    ],
+    "runtime": {
+      "pages": 14,
+      "gl_errors": [],
+      "js_errors": [],
+      "cdp_exceptions": [],
+      "console_errors": [],
+      "actual_4x_msaa_every_page": true,
+      "clip_bounds": {
+        "checked_states": 440,
+        "visible_control_checks": 2434,
+        "failures": []
+      }
+    },
+    "screenshots": [
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/initial-controls.png",
+        "sha256": "b0bb7d504b17ca7ded0955b7afc550c14f88499da9dafce79f7e5dd0eb3161fe",
+        "bytes": 220155
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/analytic-shell.png",
+        "sha256": "702ce32837739ce28c4d71ebd286dfe2339d4695eab1418604336e39b79cc7e0",
+        "bytes": 182032
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/painted-shell.png",
+        "sha256": "c0009707ce72e3dc9dbb7e49bdca58f4c9acaf316894062f0554a0a70f352435",
+        "bytes": 133454
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/full-scene-controls.png",
+        "sha256": "2884bb6dfbb658220498ffcdef43e46cd5295b0a838a965006d182533490d078",
+        "bytes": 124523
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/extract-final-controls.png",
+        "sha256": "d59820cec560139dc110c65bc4d774d8d0b141d138df45f8c7b594ae075b7a2a",
+        "bytes": 257484
+      }
+    ],
+    "visual_inspection": "Analytic source plus raised half-sheet shell visible, fields/report within inspector; painted-mask solo shows two closed selected symmetric patches and report452points/896faces; finalcoarse independent rich sphere/extract remains editable and both source/newpart listed. Threshold/thickness/Createpart fit. Full32scene Createpart disabled with explanatory note; names truncate within inspector. Coarse fixture appearance is not a visual/reference benchmark.",
+    "independent_fixture_and_snapshot_hashes": [
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/Extracted rich scene reload.obrush",
+        "sha256": "fd712721b6318f7ba784d6cb9fc9c3fadd9d492146f56c6961919dec3dafd26c",
+        "bytes": 314950
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/Extracted sheet reload.obrush",
+        "sha256": "1535df9852e7c6f9668914ba4a96b0a5ac375fc084db917fd3b7e801ca3bb4a1",
+        "bytes": 1267
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/Faint mask redo fixture.obrush",
+        "sha256": "7f2bab5409b023886398b8ec17d022fa964ad6d6823cbde3beec1c9689161151",
+        "bytes": 342
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/Independent disconnected mask.obrush",
+        "sha256": "54f0e3b8c46acd15026308d70192d9abdb5faa1e39294c651c97150de5637e84",
+        "bytes": 506
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/Independent full 32-object scene.obrush",
+        "sha256": "5147d5df82e4669dd8f4a7dd5cd1f849a2ec52bac62c8ec4d63682a7c7df3d08",
+        "bytes": 12170
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/Independent hole mask.obrush",
+        "sha256": "ed2a8cc83d21ec55e23c71885b848944093161c72af889209f45e9659bfbf9df",
+        "bytes": 1690
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/Independent linear mask sheet.obrush",
+        "sha256": "f382a14a55cad74f2845d34c66db6f42468a4d7555045924f67f4617426838d0",
+        "bytes": 314
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/Independent nonmanifold bowtie.obrush",
+        "sha256": "8ec9514ff42c02122c1df09cbf40661d341a435910a0ca47d4d1a90a7d42c9d5",
+        "bytes": 301
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/Independent rich inactive scene.obrush",
+        "sha256": "288b0d889bbe98263e12bdf4749e953d976451308a8c0b761f3e2314d6a948bb",
+        "bytes": 255802
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/Independent rich masked sphere.obrush",
+        "sha256": "1221b8e9a9d82176b3e0b82ae39d575f0822e813603a4168987222e8ce64678e",
+        "bytes": 50490
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/Malformed extraction-era import.obrush",
+        "sha256": "ecb9155314484222fb5ab59e128e4f31a4567a99cbf1ca60df094b9fa1751730",
+        "bytes": 380526
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/Rich full mask v4.obrush",
+        "sha256": "d09c8b79b84346dc3fbe0fa25b67864d3bc966311484cc6ee4d642b0a638d7f9",
+        "bytes": 255267
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/bowtie-after.obrush",
+        "sha256": "6a0d5ae1cb39f40126d1fa5d9176356c5ae2b6d7d91941a679247403d766b1e6",
+        "bytes": 371
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/bowtie-before.obrush",
+        "sha256": "6a0d5ae1cb39f40126d1fa5d9176356c5ae2b6d7d91941a679247403d766b1e6",
+        "bytes": 371
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/default-sphere-after-mask.obrush",
+        "sha256": "f047e34aea766b2ab74cec72be5b270d7b9ceb39d9d804fa2c07a6a827af3c3d",
+        "bytes": 5323911
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/default-sphere-before-mask.obrush",
+        "sha256": "2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb",
+        "bytes": 5317105
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/default-sphere-first-mask.obrush",
+        "sha256": "1896737e6234155079c58165692d8ecc9ab2538547d55d143a36f0f8e34268e5",
+        "bytes": 5324169
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/disconnected-after.obrush",
+        "sha256": "ed8e617e03c0d7da5d16bb4ca742971a6c972f61e678b364c7e6ac07c0027806",
+        "bytes": 2478
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/disconnected-before.obrush",
+        "sha256": "c5091e1a55c22509a347bd18856ea7b1a4ef033aff1a8fb6c56b5a4b7c5a3cb0",
+        "bytes": 522
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/disconnected-extraction-redo.obrush",
+        "sha256": "ed8e617e03c0d7da5d16bb4ca742971a6c972f61e678b364c7e6ac07c0027806",
+        "bytes": 2478
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/disconnected-extraction-undo.obrush",
+        "sha256": "c5091e1a55c22509a347bd18856ea7b1a4ef033aff1a8fb6c56b5a4b7c5a3cb0",
+        "bytes": 522
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/editable-extract-after.obrush",
+        "sha256": "0a0a9bd2a816afccca90749da296f95edc969d5faa30bae79c9880fa0305c7dd",
+        "bytes": 391248
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/editable-extract-before.obrush",
+        "sha256": "5055bc194df209fc4a1df3f56fd0b0a8b9616b9418f41bc1dc150fd196914925",
+        "bytes": 322246
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/empty-selection-after.obrush",
+        "sha256": "33d60db1c3ef9ce7e56bce6e40a94949341939673582b8bcf091d2a71ccf6c78",
+        "bytes": 316
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/empty-selection-before.obrush",
+        "sha256": "33d60db1c3ef9ce7e56bce6e40a94949341939673582b8bcf091d2a71ccf6c78",
+        "bytes": 316
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/empty-selection-redo.obrush",
+        "sha256": "690a88f2523e0a3cb49d11f2e1f965ccc937c1c6c6641c472f41b2369e962c90",
+        "bytes": 1409
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/extracted-part-move-redo.obrush",
+        "sha256": "7a8a538443b51281c0fdc87354d2e3e3eb6beed997e2a48988326ab0ec6319dc",
+        "bytes": 322018
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/extracted-part-move-undo.obrush",
+        "sha256": "6576eaf7e0ed87a7dda56d5377fd22ecc785feb3c931a4ef3da58fe72e08f6d7",
+        "bytes": 322569
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/extracted-part-moved.obrush",
+        "sha256": "7a8a538443b51281c0fdc87354d2e3e3eb6beed997e2a48988326ab0ec6319dc",
+        "bytes": 322018
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/faint-before.obrush",
+        "sha256": "33d60db1c3ef9ce7e56bce6e40a94949341939673582b8bcf091d2a71ccf6c78",
+        "bytes": 316
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/faint-success.obrush",
+        "sha256": "690a88f2523e0a3cb49d11f2e1f965ccc937c1c6c6641c472f41b2369e962c90",
+        "bytes": 1409
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/full-scene-after.obrush",
+        "sha256": "eb963155ea1c98eaef3e03df1d348c94cbea5ade91db308511c211af3d687894",
+        "bytes": 10602
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/full-scene-before.obrush",
+        "sha256": "eb963155ea1c98eaef3e03df1d348c94cbea5ade91db308511c211af3d687894",
+        "bytes": 10602
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/hidden-source-after.obrush",
+        "sha256": "45f2d720973b28c8b0402985e6e3ec51cbf0037a80c66bd3bcecd166d564c4bc",
+        "bytes": 485
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/hidden-source-before.obrush",
+        "sha256": "45f2d720973b28c8b0402985e6e3ec51cbf0037a80c66bd3bcecd166d564c4bc",
+        "bytes": 485
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/hole-after.obrush",
+        "sha256": "f70e005a523d55e2c01d61b57f77e207a1f3a2f0d5a9c36cc111811f05843634",
+        "bytes": 6937
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/hole-before.obrush",
+        "sha256": "2574f526a60825299d037b8fd488286142f023ff8601b619a30238870ec3f994",
+        "bytes": 1620
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/hole-extraction-redo.obrush",
+        "sha256": "f70e005a523d55e2c01d61b57f77e207a1f3a2f0d5a9c36cc111811f05843634",
+        "bytes": 6937
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/hole-extraction-undo.obrush",
+        "sha256": "2574f526a60825299d037b8fd488286142f023ff8601b619a30238870ec3f994",
+        "bytes": 1620
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/inactive-scene-after.obrush",
+        "sha256": "6576eaf7e0ed87a7dda56d5377fd22ecc785feb3c931a4ef3da58fe72e08f6d7",
+        "bytes": 322569
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/inactive-scene-before.obrush",
+        "sha256": "27b16adf86a0326cca86f7c0ddb53b5778dca9dea0fba57588e09f0c68d91088",
+        "bytes": 261919
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/inactive-scene-extract-redo.obrush",
+        "sha256": "6576eaf7e0ed87a7dda56d5377fd22ecc785feb3c931a4ef3da58fe72e08f6d7",
+        "bytes": 322569
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/inactive-scene-extract-undo.obrush",
+        "sha256": "27b16adf86a0326cca86f7c0ddb53b5778dca9dea0fba57588e09f0c68d91088",
+        "bytes": 261919
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/malformed-import-after.obrush",
+        "sha256": "0a0a9bd2a816afccca90749da296f95edc969d5faa30bae79c9880fa0305c7dd",
+        "bytes": 391248
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/malformed-import-before.obrush",
+        "sha256": "0a0a9bd2a816afccca90749da296f95edc969d5faa30bae79c9880fa0305c7dd",
+        "bytes": 391248
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/new-part-draw-redo.obrush",
+        "sha256": "0a0a9bd2a816afccca90749da296f95edc969d5faa30bae79c9880fa0305c7dd",
+        "bytes": 391248
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/new-part-draw-undo.obrush",
+        "sha256": "5055bc194df209fc4a1df3f56fd0b0a8b9616b9418f41bc1dc150fd196914925",
+        "bytes": 322246
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/painted-extract-solo.obrush",
+        "sha256": "067e9cf4031334dec487cda8fe2a41f89ba59f77eb47a1ce12da30279f3efcb7",
+        "bytes": 5377141
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/painted-mask-extracted.obrush",
+        "sha256": "ac6db330adfa7e8b40fbc8f00b79e1db566420a3b0a1bedfe95de7f9613771fc",
+        "bytes": 5377142
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/painted-mask-extraction-redo.obrush",
+        "sha256": "ac6db330adfa7e8b40fbc8f00b79e1db566420a3b0a1bedfe95de7f9613771fc",
+        "bytes": 5377142
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/painted-mask-extraction-undo.obrush",
+        "sha256": "f047e34aea766b2ab74cec72be5b270d7b9ceb39d9d804fa2c07a6a827af3c3d",
+        "bytes": 5323911
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/rich-first-layer-empty.obrush",
+        "sha256": "fdea643c2498da8bd405a729f261e203dd320fe94dc7e12e2d9765dc26d7a186",
+        "bytes": 257546
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/rich-source-reselected.obrush",
+        "sha256": "acc88ad0737b1bc359e2f6227f31c8a2c5612b5737d4ed2bd1e7d5a5619e314e",
+        "bytes": 322246
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/rich-v4-before-extract.obrush",
+        "sha256": "258e7f5066559219e002a6e9d9cb9643aa3b4d28a2f4e2befc1ace583679dbf9",
+        "bytes": 261433
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/rich-v4-extract-redo.obrush",
+        "sha256": "5055bc194df209fc4a1df3f56fd0b0a8b9616b9418f41bc1dc150fd196914925",
+        "bytes": 322246
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/rich-v4-extract-undo.obrush",
+        "sha256": "258e7f5066559219e002a6e9d9cb9643aa3b4d28a2f4e2befc1ace583679dbf9",
+        "bytes": 261433
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/rich-v4-extracted.obrush",
+        "sha256": "5055bc194df209fc4a1df3f56fd0b0a8b9616b9418f41bc1dc150fd196914925",
+        "bytes": 322246
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/rich-v4-unmasked.obrush",
+        "sha256": "2838a45b94f778e3d39e21223edf3a98ea53430dd9e29256866ba0cadb8b9d0c",
+        "bytes": 261433
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/rich-v5-reloaded.obrush",
+        "sha256": "5055bc194df209fc4a1df3f56fd0b0a8b9616b9418f41bc1dc150fd196914925",
+        "bytes": 322246
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/sheet-before.obrush",
+        "sha256": "7f87e0457c99e32018871e2ac9d4c7fc168d88886dd789a3f251238b57760645",
+        "bytes": 322
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/sheet-extracted.obrush",
+        "sha256": "66cd5627241b289436aa927bc402b4de2fd98bfe3804c7384e1fd804eb959df3",
+        "bytes": 1421
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/sheet-extraction-redo.obrush",
+        "sha256": "66cd5627241b289436aa927bc402b4de2fd98bfe3804c7384e1fd804eb959df3",
+        "bytes": 1421
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/sheet-extraction-undo.obrush",
+        "sha256": "7f87e0457c99e32018871e2ac9d4c7fc168d88886dd789a3f251238b57760645",
+        "bytes": 322
+      },
+      {
+        "path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/final-4c883baa-cdfb-4121-a215-634e1e8ad034/sheet-reloaded.obrush",
+        "sha256": "66cd5627241b289436aa927bc402b4de2fd98bfe3804c7384e1fd804eb959df3",
+        "bytes": 1421
+      }
+    ],
+    "preserved_first_setup_failure": {
+      "raw_path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/candidate-2eb6e6fb-1243-4fc8-ad4c-e0840fb6491e/result.json",
+      "raw_sha256": "ad5b0d1e56aa18c80c69032db7fa46530b99c87c40fa565e9f06d275f5ac5ef6",
+      "diagnosis_path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/candidate-2eb6e6fb-1243-4fc8-ad4c-e0840fb6491e/diagnosis.json",
+      "diagnosis_sha256": "c47e57d4de975592e24b47ced0fc690532a2105a3a7f19f52eb062cd1bd9d507",
+      "accepted_setup_correction": "Exactly TWO separately released identical default Mask contacts. First max.393386/916positive insufficient for fixed.5; second max.78677195/118selected reaches same gate. Threshold.5, thickness.02, all analytic/topology/history thresholds unchanged. Each trace24moves60x15px;7applieddabs/contact. Originalunderpaintedraw failure retained."
+    },
+    "limits": [
+      "Independent positive outward extraction foundation; no ZBrush extraction reference run",
+      "No preview/Accept, surface/edge smoothing, visibility extraction, inward/double/zero-thickness modes, Polygroups or MeshFromMask",
+      "Topological closure and local face guards do not establish global collision/self-intersection prevention",
+      "Source250Kpoint500Kface/aggregate/outputcaps are not peak-memory or latency guarantees",
+      "Owned synthetic headless input and buffers; nativeGUI/physical devices/input-to-photon and long-session performance unverified",
+      "All quiet probes begin only after100mssettle from actual mouseup; probe.at is before readback, not first-commit or input-to-photon latency",
+      "Input/runtime timing scoped to four short synthetic strokes; extraction atsource cap, large/long-session/native latency unverified",
+      "Masks/colors are base channels; extraction newpart is plain unmasked and carries no layers/levels/Morph metadata, while source retains them exactly"
+    ],
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "build_scope": "Final fresh runtime on immutable OBrush0.1.12 source/build/web bundle; all seven required checks completed before owned browser launched, no overlapping owned CPU tests/builds.",
+    "frozen_release": {
+      "version": "0.1.12",
+      "bundle_path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-release-0.1.12-final",
+      "source_manifest_path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-release-0.1.12-final/source-manifest.json",
+      "source_manifest_sha256": "cf85b0415b58491d3c97f8d2ef07a3c95ef29a1646d70f46dbb6bd26849f9f93",
+      "build_record_path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-release-0.1.12-final/build-record.json",
+      "build_record_sha256": "728687c825e75ec8551f7f81fcc717892f7a029f2baae660d3f257fe3a2d7434",
+      "frozen_helper_path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-release-0.1.12-final/source/scripts/check-extract.mjs",
+      "frozen_helper_sha256": "cf87f8d2ccedd2b3bc9f73ac1ade1b87d6f6c6fc8472570657a5a640023fbfbb",
+      "compiled_required_check_count": 7,
+      "all_required_checks_exit_zero": true,
+      "test_totals": {
+        "core": 285,
+        "app": 38,
+        "total": 323
+      },
+      "wasm_sha256": "4ad061d53895d67621948e88acba2b12cb1e07338c63f2bec7270ed7b745fcb4",
+      "served_wasm_sha256": "4ad061d53895d67621948e88acba2b12cb1e07338c63f2bec7270ed7b745fcb4",
+      "immutable_build_note_superseded": "The frozen build record states final frozen browser runtime pending. This eight-workflow/53-gate final receipt supplies completed fresh runtime verification without changing the immutable build record."
+    },
+    "candidate_preliminary": {
+      "raw_path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/candidate-two-mask-144ddf13-f31f-469b-8a11-cdf0ea2d4288/result.json",
+      "raw_sha256": "d8c4fba3637773e9f2fa0fc86e0eb9742e8addb81d356c589fb8873a65ad3aab",
+      "summary_path": "/Users/Ajab/AI/OBrush/.artifacts/mask-extract-browser/candidate-two-mask-144ddf13-f31f-469b-8a11-cdf0ea2d4288/summary.json",
+      "summary_sha256": "65362a4d58b8d74841218bd022530e4ee2f5c12a0ba4315096537eedaea02eaa",
+      "scope": "Passed candidate eight-workflow receipt superseded for final release by this fresh frozen runtime."
+    }
+  },
+  "reference_execution": false,
+  "limitations": [
+    "No matched ZBrush extraction fixture, native GUI or physical device check",
+    "Source caps and small synthetic traces do not establish universal real-time or peak-memory bounds",
+    "Quiet stroke probes begin after an explicit100mssettle; no input-to-display or release-to-first-commit claim",
+    "Local topology/orientation guards do not establish global self-intersection or collision prevention"
+  ]
+}

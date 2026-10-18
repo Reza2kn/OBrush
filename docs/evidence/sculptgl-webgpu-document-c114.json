@@ -1,0 +1,100 @@
+{
+  "checkpoint": "C114",
+  "date": "2026-10-17",
+  "scope": "Isolated versioned-project native Metal/browser WebGPU render and world-ray probe; normal studio remains WASM CPU geometry plus WebGL2",
+  "fixture": {
+    "project_path": "crates/obrush-gpu/tests/fixtures/reflected-shear-v7.obrush",
+    "project_sha256": "cd59216de8039d6d73026e92851923a317530ff6bd92f7b6b6ea5494cd22a2d5",
+    "bytes": 2446,
+    "independently_authored_source_sgl_path": "crates/obrush-gpu/tests/fixtures/reflected-shear-v3.sgl",
+    "independently_authored_source_sgl_sha256": "dbf724eacab383f647ec8f36655424d53cb14cf60e74d258ea10a169f8ee5c69",
+    "vertices": 5,
+    "triangles": 3,
+    "local_to_world": [1.5, 0.0, 0.0, 0.0, 0.375, -0.75, 0.0, 0.0, 0.25, 0.5, 2.0, 0.0, 262144.0, -131072.0, 4096.0, 1.0],
+    "linear_determinant": -2.25,
+    "mask_roundtrip_changed_words": 0
+  },
+  "source_sha256": {
+    "crates/obrush-core/src/resident_point_program.rs": "60cb1a922768c4c047d53344deaafa44bc627c2f58dc03d70ae5223fb44b0065",
+    "crates/obrush-gpu/src/lib.rs": "ae182a1a20cc0add1cfdba2b4de3fa68c8a5b7ae49f984e052a4932586c89bfe",
+    "crates/obrush-gpu/src/bin/document_probe.rs": "e8307eaab349968814c1bb707e6e31071e5ec99bc5d7d151a508bb04b93bb3c1",
+    "Cargo.lock": "86fc5c0d5577b2cae689b69b2e211ecfd56c972b8a3a553abef5ca5623916d6a"
+  },
+  "build_sha256": {
+    "gpu_wasm": "93f7ac24e006a09d916dd97862a63d90a0ac0286163569508835d09b6b47d978",
+    "gpu_wasm_bindgen": "61a31df086a2af9f9693da784e0bf2087e868a6121de83eb8967716f84de1b93",
+    "official_studio_wasm_bindgen": "124ed1d8133d0409d58870ae1d2bd4d3bee39462c563e429939ae0a1406465ef",
+    "wasm_bindgen_cli_version": "0.2.129"
+  },
+  "probe_parameters": {
+    "viewport": [512, 512],
+    "camera": "production SourceCameraFrame orthographic, identity rotation, world-bounds center, zero plane offset, 45-degree FOV parameter, zoom 13.65",
+    "world_bounds_minimum": [262142.125, -131072.75, 4096.0],
+    "world_bounds_maximum": [262147.0, -131071.25, 4096.0],
+    "sample_grid_x_y": [96, 160, 224, 288, 352, 416],
+    "world_ray_max_distance": 5000.0
+  },
+  "comparisons": {
+    "visible_samples": 7,
+    "native_gpu_cpu_face_agreement": "7/7",
+    "browser_gpu_native_gpu_local_hit_agreement": "7/7 exact face, f64 distance and f32 position values for both local-ray and world-ray interfaces",
+    "maximum_browser_world_position_component_difference_from_cpu": 4.889443516731262e-8,
+    "native_browser_canvas_rgba_channel_differences": 0,
+    "native_browser_offscreen_rgba_channel_differences": 0,
+    "project_json_unchanged_by_native_probe": true,
+    "malformed_project_rejected": true,
+    "invalid_camera_rejected": true,
+    "gpu_errors": [],
+    "browser_exceptions": [],
+    "browser_console_errors": [],
+    "blocked_external_requests": []
+  },
+  "browser_gpu_trace": {
+    "draw_index_counts": [9, 9],
+    "pick_map_bytes": [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8],
+    "position_readbacks": 0,
+    "later_explicit_offscreen_image_map_bytes": 1048576,
+    "owned_chrome_exit_code": 0,
+    "owned_server_closed": true
+  },
+  "local_artifacts": {
+    "native_result": ".artifacts/gpu-document-c114/native-2/native.json",
+    "native_result_sha256": "ba215afe845e04950f794c8ee18a742032a22c55ba77e4bd4d4c460f2ce3a5a7",
+    "browser_result": ".artifacts/gpu-document-c114/browser-3/result.json",
+    "browser_result_sha256": "69e8a830c7357066e03bcef90a345222b3d26cce93f4630886a0521cb1688df2",
+    "browser_trace_sha256": "2694d869f18f961a0f28de56df2eb30975283a532c3e222170d9a9d17066bb81",
+    "native_offscreen_png_sha256": "8a0215a43ec6405b11c4ee9c998ded59c41c04fe434207e559586ae26379696b",
+    "browser_offscreen_png_sha256": "8a0215a43ec6405b11c4ee9c998ded59c41c04fe434207e559586ae26379696b",
+    "browser_canvas_screenshot_sha256": "34795a523355cf1d44d720e1a31a1fb23bf9645de1014e38c8ddbe692bc3750c",
+    "browser_probe_script_sha256": "b816337880ffba9a179b21a20207f574eead9a56e12f25d48477b4e98649a452"
+  },
+  "normal_studio_regression": {
+    "scope": "scripts/check-sculptgl-host.mjs --groups=scene,formats against official scripts/build-web.sh output",
+    "cases": 10,
+    "actual_downloads": 71,
+    "visible_gpu_save_checks": 66,
+    "owned_chrome_exit_code": 0,
+    "owned_server_closed": true,
+    "result_sha256": "b62f4fcd933e5bc6335105e0e1a7fda0d78fd4d81d9aae53980bbb1e9d87bedb"
+  },
+  "checks": {
+    "cargo_fmt_all_check": "pass",
+    "cargo_test_workspace": "pass, 2447 tests across 77 result blocks",
+    "cargo_clippy_workspace_all_targets_deny_warnings": "pass",
+    "cargo_clippy_core_gpu_wasm_deny_warnings": "pass",
+    "gpu_wasm_release_and_wasm_bindgen": "pass",
+    "scripts_build_web": "pass",
+    "normal_studio_scene_formats_browser": "pass"
+  },
+  "preserved_failed_checks": [
+    "The first offscreen PNG comparison found 262144 differing pixels because the harness had only called present() on the canvas, not draw() on the separate offscreen target. Explicit draw() made all RGBA channels match.",
+    "A rerun into an existing owned Chrome profile failed with EEXIST; subsequent browser-2 and browser-3 runs used fresh isolated output directories."
+  ],
+  "limitations": [
+    "The normal studio still uses CPU/WASM geometry and WebGL2 rendering; this is an isolated diagnostic canvas.",
+    "One visible active subtool only; saved UV, material and render settings are not used in the GPU shader.",
+    "Lighting uses local normals and is not transformed for reflected/sheared poses.",
+    "No live Source brush, document/history GPU transaction, CPU fallback, device recovery or sustained million-vertex performance result.",
+    "No SculptGL or ZBrush reference-parity conclusion."
+  ]
+}

@@ -1,0 +1,298 @@
+{
+  "scope": "C65 isolated conservative current-bounds f64 camera-ray rebase for shared native Metal/browser WebGPU picker; C58 shipped app unchanged",
+  "status": "PASS scoped conservative-bounds f64 rebased GPU picker native/browser bridge; delivered app and SculptGL parity gates open",
+  "reference_baseline": "Pinned SculptGL 8e45dafc0f7906e5238dfffc1a2df742bd25f29d; no C65 reference-runtime comparison or parity promotion",
+  "fixture_sha256": "dfb5316f62e392e633f03cb662dcb12215ed165a71a9ae72a3fd639528731afe",
+  "geometry": {
+    "vertices": 999002,
+    "triangles": 1998000,
+    "point_passes": 32
+  },
+  "source_frozen_paths_exact": 526,
+  "C64_complete_native_regression_files_exact": 24,
+  "numerical": {
+    "native_browser_exact_hit_words": 4,
+    "independent_f64_full_triangle_rays": [
+      {
+        "camera": "perspective",
+        "pixel": [
+          256,
+          256
+        ],
+        "face": 961428,
+        "gpu_distance": 1.5771001302393572,
+        "f64_distance": 1.5771000994610567,
+        "distance_abs_error": 3.077830057485187e-08,
+        "position_max_abs_error": 2.0495181773938498e-08,
+        "reprojected_pixel_max_error": 3.2615309919492574e-07
+      },
+      {
+        "camera": "perspective",
+        "pixel": [
+          290,
+          240
+        ],
+        "face": 927381,
+        "gpu_distance": 1.7279191769264264,
+        "f64_distance": 1.727919130074376,
+        "distance_abs_error": 4.6852050461509975e-08,
+        "position_max_abs_error": 1.6819088566322193e-08,
+        "reprojected_pixel_max_error": 3.11656066287469e-06
+      },
+      {
+        "camera": "orthographic",
+        "pixel": [
+          256,
+          256
+        ],
+        "face": 961428,
+        "gpu_distance": 1996.0361135378569,
+        "f64_distance": 1996.0361135350474,
+        "distance_abs_error": 2.8094291337765753e-09,
+        "position_max_abs_error": 5.177093953534495e-08,
+        "reprojected_pixel_max_error": 3.361026301718084e-06
+      },
+      {
+        "camera": "orthographic",
+        "pixel": [
+          290,
+          240
+        ],
+        "face": 903348,
+        "gpu_distance": 1996.258906848571,
+        "f64_distance": 1996.2589070039232,
+        "distance_abs_error": 1.5535215425188653e-07,
+        "position_max_abs_error": 1.6122385204653256e-07,
+        "reprojected_pixel_max_error": 8.722179813958064e-07
+      },
+      {
+        "camera": "perspective-resized",
+        "pixel": [
+          480,
+          270
+        ],
+        "face": 961428,
+        "gpu_distance": 1.5770463536439103,
+        "f64_distance": 1.5770463408153088,
+        "distance_abs_error": 1.2828601514414117e-08,
+        "position_max_abs_error": 1.4261644698532194e-08,
+        "reprojected_pixel_max_error": 4.362458355444687e-06
+      }
+    ],
+    "previous_C64_max_distance_error": 0.0002400117357410636,
+    "C65_max_distance_error": 1.5535215425188653e-07,
+    "improvement_factor_on_named_samples": 1544.9527359106382,
+    "max_position_error": 1.6122385204653256e-07,
+    "max_reprojection_pixel_error": 4.362458355444687e-06,
+    "current_bounds_witness": {
+      "input_z_max": 1.0,
+      "after32_z_max": 1.3219239711761475,
+      "point_center_z": 1.0,
+      "point_radius": 0.5,
+      "bound_z_max_at_least": 1.5500105,
+      "orthographic_source_ray_rebase_offsets": [
+        1995.6160630062311,
+        1995.5644435359452
+      ]
+    }
+  },
+  "canvas": [
+    {
+      "camera": "perspective",
+      "native_png_sha256": "5b2d9d6cc8df7c56a9c4d28af53b944e626dea8d918eff59a83f4b565ba85b57",
+      "browser_png_sha256": "7364b0b4d2361aac2b2a34e02f350fc495fdcb2affd793d976f8d55b36ac4026",
+      "differing_rgba_channels": 2,
+      "max_channel_abs_difference": 1
+    },
+    {
+      "camera": "orthographic",
+      "native_png_sha256": "556fba60439cd51f5e09723cd9601d42e6eb3039974f42c982cf7bbe87cb1f74",
+      "browser_png_sha256": "3445506755d3ac807464d95779badfeda57352b841e84ba39edcdbdbd22f7bf8",
+      "differing_rgba_channels": 0,
+      "max_channel_abs_difference": 0
+    }
+  ],
+  "actual_browser_api": {
+    "trace_events": 775,
+    "draws": 4,
+    "pick_map_bytes": [
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8
+    ],
+    "pick_copy_bytes": [
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8
+    ],
+    "camera_uniform_writes_per_mode": [
+      96,
+      96
+    ],
+    "no_full_mesh_or_pixel_readback_before_pick": true,
+    "invalid_and_mismatch_preserve_previous_canvas_exact": true,
+    "resize_rejects_stale_camera_then_republishes": true,
+    "owned_closure": {
+      "observed_owned_process_absent": true,
+      "owned_pid": 95895,
+      "actual_exit_code": 0,
+      "actual_signal": null,
+      "actual_servers_closed": 1,
+      "exit_status": "Actual exit0 recorded",
+      "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+    }
+  },
+  "explicit_1080p_allocation": {
+    "resident": 241857584,
+    "canvas_requested2_images_depth_uniform": 24883296,
+    "scratch": 1048576,
+    "sum": 267789456,
+    "cap": 268435456,
+    "scope": "Requested resource accounting; not driver memory or RSS"
+  },
+  "checks": {
+    "gpu_crate_fmt": "PASS",
+    "gpu_crate_native_all_targets_tests": 17,
+    "gpu_crate_native_strict_clippy": "PASS",
+    "gpu_crate_wasm_strict_clippy": "PASS",
+    "gpu_crate_native_release_camera_and_diagnostic": "PASS",
+    "gpu_crate_wasm_release_and_bindgen": "PASS wasm-bindgen 0.2.129",
+    "owned_browser_canvas_pick_resize": "PASS",
+    "independent_full_triangle_numeric_and_pixel_audit": "PASS",
+    "root_product_workspace": "unchanged, not rebuilt in C65"
+  },
+  "artifacts": [
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/PREREGISTRATION.json",
+      "bytes": 1187,
+      "sha256": "df980c228b54b5862bfdcf98007b4a3d1eed6c3a97b85d5049b52dd56f15354e"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/WHOLE_REBASE_AUDIT01.json",
+      "bytes": 5497,
+      "sha256": "8bc6a4996ef085775740002afd6843aa25f450232e10939f24ba192125d1eb44"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/native-camera03/result.json",
+      "bytes": 12871,
+      "sha256": "4e0a8d172915630b9b93db308ce32813715300fe01308b215d55a12818a0c4c0"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/native-camera03/perspective.png",
+      "bytes": 207180,
+      "sha256": "5b2d9d6cc8df7c56a9c4d28af53b944e626dea8d918eff59a83f4b565ba85b57"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/native-camera03/orthographic.png",
+      "bytes": 177680,
+      "sha256": "556fba60439cd51f5e09723cd9601d42e6eb3039974f42c982cf7bbe87cb1f74"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/native-regression01/result.json",
+      "bytes": 413266,
+      "sha256": "d3d6a65bbdd26a7ed308688771a761b8361f3e99aa8b67bc46142b677a1fa9fd"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/browser-camera03/result.json",
+      "bytes": 148159,
+      "sha256": "1ff9035d986bf61fecaf00eea57a7cb144d864816757414c5814532aab1b2057"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/browser-camera03/gpu-api-trace.json",
+      "bytes": 115256,
+      "sha256": "27bcd7b0bbe908becf54d2a1a797587d4f4d065c71ab4a66c8b7a131b52357cf"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/browser-camera03/perspective.png",
+      "bytes": 109726,
+      "sha256": "7364b0b4d2361aac2b2a34e02f350fc495fdcb2affd793d976f8d55b36ac4026"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/browser-camera03/orthographic.png",
+      "bytes": 97932,
+      "sha256": "3445506755d3ac807464d95779badfeda57352b841e84ba39edcdbdbd22f7bf8"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/browser-camera03/resized-perspective.png",
+      "bytes": 124184,
+      "sha256": "90b507ae835930e15415c6dcd7163df5a9f9aa606f761419fe301d64066d9a94"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/browser-camera03/after-invalid-camera.png",
+      "bytes": 97932,
+      "sha256": "3445506755d3ac807464d95779badfeda57352b841e84ba39edcdbdbd22f7bf8"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/gpu/src/lib.rs",
+      "bytes": 46357,
+      "sha256": "d461da6fdcfab38a635b4531f9d946df8c7ea0e2b5177d4e46a17fac32576aa3"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/gpu/src/picker.rs",
+      "bytes": 14436,
+      "sha256": "f39981a8b6025a85cf855598fc9cbc273aeef5ed99526eb69ba66768f617ae4a"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/gpu/src/surface.rs",
+      "bytes": 13962,
+      "sha256": "b7912cb8fd0b8a1fda15d3f311621937bd2a8ee077ecd61dd144fb38e5a1dbd4"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/gpu/src/view.rs",
+      "bytes": 3003,
+      "sha256": "2cf8671d926fe6deffd48027704cb2f6799bb1e9b913766e93ba2ea805080c88"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/gpu/src/draw.wgsl",
+      "bytes": 1144,
+      "sha256": "ab2946aed670b7f6bc7471278c0e8d34ebbd4ccc00845a7a3c693b805e2e01c7"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/gpu/src/bin/camera_probe.rs",
+      "bytes": 6190,
+      "sha256": "1dc8751ebecec07dd782b092e5460cd0fd5a23bf0381c1a17995be3fff03ed03"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/RUN_BROWSER_CAMERA01.mjs",
+      "bytes": 8773,
+      "sha256": "9b2718fe0e00d52652a2aed555a85cedaa42942d18fcd0a1a9c3fb32a50fab41"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/AUDIT_REBASE01.py",
+      "bytes": 10963,
+      "sha256": "565e0b3615c34646b99aa878c7e1b43e4118632e578eeb0fc42c21bc2a4dcf44"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/browser-public/pkg/resident_bg.wasm",
+      "bytes": 1105146,
+      "sha256": "b1c82f4e756556b7ff9e6b6243965a8ad594d0a08b95232de531b7e0dc69a4d5"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/gpu/target/release/camera_probe",
+      "bytes": 6449744,
+      "sha256": "ec658ada27c698fc77f1d53c9d07d27808b392c6de36c9f7a5031cce7faf474c"
+    },
+    {
+      "path": ".artifacts/sculptgl-webgpu-rebased-pick-c65-stage/gpu/target/release/obrush-resident-wgpu-prototype",
+      "bytes": 6490416,
+      "sha256": "2bd59410fdb102672b3b06e84fd79c05af9349d1557b310b46f0df241405a891"
+    }
+  ],
+  "limitations": [
+    "Separate point-program prototype, not shipped OBrush studio camera/brush/undo",
+    "CPU f64 ray versus GPU f32 intersection on five named rays; not full reference parity",
+    "Conservative current bounds are certified only for the staged point program; future brushes need their own bounds contract",
+    "No normal consumer 60/120-second responsiveness or physical input test",
+    "No scene subtools, mask, alpha, symmetry, history, file-interchange or complete brush semantic integration",
+    "No ordinary Source brush/history/undo/scene transform or normal product performance qualification",
+    "The reported improvement is on named rays, not an accepted universal f32/f64 tolerance"
+  ]
+}

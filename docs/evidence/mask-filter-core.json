@@ -1,0 +1,1510 @@
+{
+  "schema_version": 1,
+  "version": "0.1.13",
+  "recorded_at_utc": "2026-10-13T19:14:41.404723+00:00",
+  "git": "Unborn main; exact source/build/helper hashes identify this execution",
+  "status": "Scoped independent core and host contracts pass; full workspace checks bind final production source",
+  "reference": {
+    "version": "ZBrush desktop 2026.2.1",
+    "execution": false,
+    "historical_binary_identity_record": {
+      "path": "docs/evidence/zbrush-native-inspection.json",
+      "bytes": 11282,
+      "sha256": "02de46853a20df3fd70d39fb986574fd555f15fb6b1eeefb2948d9309706f692"
+    },
+    "identity_scope": "Prior executable/build identity only; no new reference process or fixture executed for this release",
+    "primary_scope": "https://help.maxon.net/zbr/en-us/Content/html/reference-guide/tool/polymesh/masking/masking.html",
+    "scope_checked_date": "2026-10-13",
+    "limitation": "Independent max/min graph policies do not establish the reference's described soft Grow/Shrink behavior; no matched filtering fixture executed"
+  },
+  "owner_receipt": {
+    "path": ".artifacts/mask-filter-core/receipt.json",
+    "bytes": 12308,
+    "sha256": "5d715a95140a430c70b6b1f0d4f472534fb75ba81227c6fa938ea1c85e5924c4"
+  },
+  "independent_receipt": {
+    "path": ".artifacts/mask-filter-contract-audit/final-receipt.json",
+    "bytes": 32531,
+    "sha256": "7d35ca539ddd914a8cabd406968fc446fdca19a9f2a04179b32618f918960123"
+  },
+  "host_receipt": {
+    "path": ".artifacts/mask-filter-host/receipt.json",
+    "bytes": 4476,
+    "sha256": "ac9260b7234fb4f907de6cb345a9c83a4abaf551499948b93466e14dfc8f00a1"
+  },
+  "owner": {
+    "api": {
+      "document_method": "Document::filter_mask(&MaskFilterSettings)->Result<MaskFilterReport,String>",
+      "enum": "MaskFilterOperation::{Grow,Shrink,Blur,Sharpen}, Copy with name()/ALL; serde snake_case",
+      "mesh_method": "Mesh::filtered_masks(&MaskFilterSettings)->Result<(Vec<f32>,MaskFilterReport),String>",
+      "report_fields": [
+        "operation",
+        "iterations",
+        "strength",
+        "vertices",
+        "changed_vertices",
+        "max_abs_change"
+      ],
+      "settings": {
+        "iterations_default": 1,
+        "iterations_inclusive_range": [
+          1,
+          16
+        ],
+        "operation_default": "blur",
+        "strength_default": 1.0,
+        "strength_finite_inclusive_range": [
+          0,
+          1
+        ]
+      }
+    },
+    "baseline": {
+      "prior_capability": "Captured 0.1.12 core has clear/invert/painting masks but no shared grow/shrink/blur/sharpen API.",
+      "source_copies": [
+        {
+          "bytes": 70071,
+          "path": ".artifacts/mask-filter-core/baseline/document.rs",
+          "sha256": "838a6bce1b23b59c98ebf69630d8769557fd313704931684d94b59d1d1b5a23e"
+        },
+        {
+          "bytes": 35026,
+          "path": ".artifacts/mask-filter-core/baseline/layers.rs",
+          "sha256": "03f745e11208ba529d34c7b9ab8d974cf6cefeb1d80ebbeb14645e3b1a42f6fc"
+        },
+        {
+          "bytes": 1402,
+          "path": ".artifacts/mask-filter-core/baseline/lib.rs",
+          "sha256": "ecce98c15eb664b40c20ded844a4c6339d3dba9cd3b7660ac79cdde3b5c01335"
+        },
+        {
+          "bytes": 60899,
+          "path": ".artifacts/mask-filter-core/baseline/mesh.rs",
+          "sha256": "7e9027e1aff2c2a1d3744e7d1c27df4c0aed27f9ef104b70ef83454d9fa791ae"
+        },
+        {
+          "bytes": 13536,
+          "path": ".artifacts/mask-filter-core/baseline/multires.rs",
+          "sha256": "bb4282a9b558161be5297eed9c2b3dd6bc0e1849d898598caaebd52afae04a36"
+        }
+      ],
+      "source_manifest": {
+        "bytes": 1001,
+        "path": ".artifacts/mask-filter-core/baseline/source-hashes.json",
+        "sha256": "3adb8fecf1b1e788ad78c2cb4a958c60ab1ebf0000e7fe4705292a9efc019850"
+      }
+    },
+    "document": {
+      "barrier": "Finish valid pending stroke as a separate transaction; invalid pending stroke rolls back and blocks dependent filter. Hidden active object rejects.",
+      "io": "No schema changes; existing v2\u2013v5 layouts preserved.",
+      "no_op": "Zero/fixed/rounded result returns before candidate snapshot or hierarchy normalization, preserving complete source state/genuine redo.",
+      "unchanged": "Live positions/normals/RGB/triangles/adjacency, exact f64 layer/base/offset data, Morph target, active level, stored hierarchy baselines, IDs/visibility and inactive Arc state. Retained masks follow existing f32 navigation/reconciliation policy.",
+      "useful_edit": "Validate candidate masks with ephemeral existing retained-level transport, layer composition, target binding, output and scene guards before installing only the mask Vec and one complete history transaction."
+    },
+    "final_sources": [
+      {
+        "frozen_copy": {
+          "bytes": 7990,
+          "path": ".artifacts/mask-filter-core/final-source/mask_filter.rs",
+          "sha256": "98b908e846e935946e5e08d706aff0a670e7d8ea87b755a0157dc2ac62d54fcb"
+        },
+        "source": {
+          "bytes": 7990,
+          "path": "crates/obrush-core/src/mask_filter.rs",
+          "sha256": "98b908e846e935946e5e08d706aff0a670e7d8ea87b755a0157dc2ac62d54fcb"
+        }
+      },
+      {
+        "frozen_copy": {
+          "bytes": 71811,
+          "path": ".artifacts/mask-filter-core/final-source/document.rs",
+          "sha256": "a4266fb14008a50dcffa47aa6a903559676a489597a6091f1def19e444142f77"
+        },
+        "source": {
+          "bytes": 71811,
+          "path": "crates/obrush-core/src/document.rs",
+          "sha256": "a4266fb14008a50dcffa47aa6a903559676a489597a6091f1def19e444142f77"
+        }
+      },
+      {
+        "frozen_copy": {
+          "bytes": 1501,
+          "path": ".artifacts/mask-filter-core/final-source/lib.rs",
+          "sha256": "aa517a8d97ab916b3ea53d4a1ca05a28bfbbb860703ad547f9751463b7bf7630"
+        },
+        "source": {
+          "bytes": 1501,
+          "path": "crates/obrush-core/src/lib.rs",
+          "sha256": "aa517a8d97ab916b3ea53d4a1ca05a28bfbbb860703ad547f9751463b7bf7630"
+        }
+      },
+      {
+        "frozen_copy": {
+          "bytes": 10800,
+          "path": ".artifacts/mask-filter-core/final-source/mask_filters.rs",
+          "sha256": "b43f4439b77f260cd82e8b4f09bfd9cda02d00b8598d162bf9b1b182e19a7430"
+        },
+        "source": {
+          "bytes": 10800,
+          "path": "crates/obrush-core/tests/mask_filters.rs",
+          "sha256": "b43f4439b77f260cd82e8b4f09bfd9cda02d00b8598d162bf9b1b182e19a7430"
+        }
+      },
+      {
+        "frozen_copy": {
+          "bytes": 33144,
+          "path": ".artifacts/mask-filter-core/final-source/mask_filter_contract.rs",
+          "sha256": "7ba443a080650f71c0af4d387f066fae94de55ec61c2fd51f976e56d0c8e65a0"
+        },
+        "source": {
+          "bytes": 33144,
+          "path": "crates/obrush-core/tests/mask_filter_contract.rs",
+          "sha256": "7ba443a080650f71c0af4d387f066fae94de55ec61c2fd51f976e56d0c8e65a0"
+        }
+      }
+    ],
+    "independent_audit": {
+      "correction": {
+        "bytes": 1142,
+        "path": ".artifacts/mask-filter-contract-audit/helper-correction.json",
+        "sha256": "615bd4478fef3f51fe40382ac5c4995d4bc8d481fc29b3802fa876dd39156db7"
+      },
+      "failed": 0,
+      "focused_strict_clippy": {
+        "bytes": 148,
+        "path": ".artifacts/mask-filter-contract-audit/clippy-focused.log",
+        "sha256": "401499a25d3617d192da9f0e49995c3fd29b3323f71a4821c1b356ddf43016bf"
+      },
+      "gate": 1e-07,
+      "maximum_scalar_oracle_error": 0.0,
+      "note": "Zero is the computed scalar-oracle agreement for these fixtures, not a global behavioral/reference equivalence guarantee.",
+      "numeric_observations": 138,
+      "original_failure": "Provisional retained-level oracle assumed uniform0.8 remains bit-exact; preexisting f32 Loop/transport differs1.1920928955078125e-7. Corrected helper explicitly models existing staged f32 arithmetic; production and1e-7 gate unchanged.",
+      "passed": 28,
+      "receipt": {
+        "bytes": 32531,
+        "path": ".artifacts/mask-filter-contract-audit/final-receipt.json",
+        "sha256": "7d35ca539ddd914a8cabd406968fc446fdca19a9f2a04179b32618f918960123"
+      },
+      "retained_failed_log": {
+        "bytes": 23062,
+        "path": ".artifacts/mask-filter-contract-audit/run-1.log",
+        "sha256": "bc16af60ca6f17db1fe9c262e4821beca354e963fd5ae58f1a4baef9da71e3e7"
+      }
+    },
+    "limitations": [
+      "OBrush graph/contrast definitions are not claimed equivalent to ZBrush masking.",
+      "No native GUI/physical-device/browser execution, global latency, near-cap throughput or peak-memory measurement by this owner.",
+      "Lasso/rectangle/backface/feature/color/group/UV/draft masking, visibility selection and other masking families remain separate gaps.",
+      "Retained-level interpolation/transport continues existing staged f32 rounding; no alternative mask residual scheme introduced."
+    ],
+    "math": {
+      "blur": "target=uniform mean(old self and unique neighbors)",
+      "fixed_points": "Return exact old bits for strength0, Sharpen \u00b1zero/0.5/1, and rounded numeric equality. No unintended signed-zero normalization.",
+      "graph": "Unique undirected nonself indexed triangle edges; no spatial coordinate welding. Neighbor summation order ascending IDs, self included once.",
+      "graph_blend": "old + strength*(target-old), f64 arithmetic from previous-pass f32 values, round to f32 synchronously after each pass.",
+      "grow": "target=max(old self and unique neighbors)",
+      "isolated": "Grow/Shrink/Blur isolated points remain bit-identical; Sharpen is pointwise including isolated points.",
+      "report": "Count final f32 bit differences relative to original masks; max_abs_change uses f64 differences of final/input f32 values, not accumulated passes.",
+      "sharpen": "clamp(0.5 + (m-0.5)*(1+strength),0,1), f64 arithmetic then f32; no extra graph blend and no graph allocation.",
+      "shrink": "target=min(old self and unique neighbors)"
+    },
+    "owner_check": {
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "-p",
+        "obrush-core"
+      ],
+      "exit_code": 0,
+      "log": {
+        "bytes": 148,
+        "path": ".artifacts/mask-filter-core/check-first.log",
+        "sha256": "0b4e8e56adfc63d149a2bc6e3b82add8cbe3f3f20611c1140b1a5bf8b3bfb104"
+      }
+    },
+    "owner_processes_running": false,
+    "owner_tests": {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "-p",
+        "obrush-core",
+        "--test",
+        "mask_filters",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "failed": 0,
+      "gate": 1e-07,
+      "log": {
+        "bytes": 2067,
+        "path": ".artifacts/mask-filter-core/owner-first.log",
+        "sha256": "b23d9ef82697c9bc3a399def4d9f2d32cdef50f96d50d2d7611746bce7ee3842"
+      },
+      "maximum_analytic_nominal_value_error": 4.768371586472142e-08,
+      "metrics": [
+        {
+          "actual": [
+            0.550000011920929,
+            0.5,
+            0.8999999761581421,
+            1.0,
+            0.30000001192092896
+          ],
+          "case": "analytic-square",
+          "changed_vertices": 3,
+          "gate": 1e-07,
+          "iterations": 1,
+          "max_abs_change": 0.45000001043081284,
+          "max_absolute_error": 2.384185793236071e-08,
+          "operation": "grow",
+          "strength": 0.5
+        },
+        {
+          "actual": [
+            0.10000000149011612,
+            0.15000000596046448,
+            0.45000001788139343,
+            0.550000011920929,
+            0.30000001192092896
+          ],
+          "case": "analytic-square",
+          "changed_vertices": 3,
+          "gate": 1e-07,
+          "iterations": 1,
+          "max_abs_change": 0.44999998807907104,
+          "max_absolute_error": 1.7881393421514957e-08,
+          "operation": "shrink",
+          "strength": 0.5
+        },
+        {
+          "actual": [
+            0.3125,
+            0.28333333134651184,
+            0.6625000238418579,
+            0.8166666626930237,
+            0.30000001192092896
+          ],
+          "case": "analytic-square",
+          "changed_vertices": 4,
+          "gate": 1e-07,
+          "iterations": 1,
+          "max_abs_change": 0.21249999850988388,
+          "max_absolute_error": 2.384185793236071e-08,
+          "operation": "blur",
+          "strength": 0.5
+        },
+        {
+          "actual": [
+            0.0,
+            0.05000000447034836,
+            0.9500000476837158,
+            1.0,
+            0.20000001788139343
+          ],
+          "case": "analytic-square",
+          "changed_vertices": 4,
+          "gate": 1e-07,
+          "iterations": 1,
+          "max_abs_change": 0.15000003576278687,
+          "max_absolute_error": 4.768371586472142e-08,
+          "operation": "sharpen",
+          "strength": 0.5
+        }
+      ],
+      "numeric_scope": "Independent handwritten unit-mask analytical values with original f32 inputs; measured nonzero representation/rounding differences retained.",
+      "passed": 7
+    },
+    "recorded_at_utc": "2026-10-13T18:56:58.141726+00:00",
+    "required_release_checks": "Parent explicitly owns/runs final workspace/fmt/native+WASM strict checks/build/package/browser pipeline after source freeze. Owner did not start duplicate broad or scoped checks; this receipt does not assert that parent pipeline complete.",
+    "schema": "obrush-mask-filter-core-v1",
+    "scope": "Independently written shared Rust mask-only filters; focused native core acceptance, no reference parity claim.",
+    "validation": {
+      "allocation": "Fallible reservations for sorted canonical edge list, compact u32 CSR offsets/neighbors/cursors and two reusable f32 pass buffers. Source counts bound max6M emitted edges and12M directed neighbors.",
+      "memory_scope": "Hard count/reservation bounds, not a measured peak process-memory or near-cap throughput guarantee.",
+      "settings": "All settings validated before no-op handling. No new mesh validity exception.",
+      "source": "Existing Mesh::validate retained before scratch allocations: 1M vertices/2M triangles, bounded finite coordinates/normals/RGB/masks, matching arrays and valid distinct triangle IDs. Repeated-index/self-edge faces reject. Geometrically zero-area, duplicate-face, nonmanifold-edge and coincident-distinct-ID meshes may be valid graph inputs."
+    }
+  },
+  "independent_audit": {
+    "created_utc": "2026-10-13T18:55:31.406981+00:00",
+    "feature": "OBrush 0.1.13 mask filters",
+    "scope": "Independent executable OBrush core scalar-mask acceptance contracts and bounded source review, not reference comparison",
+    "status": "28 contracts pass and focused strict Clippy passes; production frozen by owner confirmation",
+    "reference_execution": false,
+    "platform": {
+      "os": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+      "architecture": "arm64",
+      "execution": "native Rust CPU tests only",
+      "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)"
+    },
+    "preregistered": {
+      "path": ".artifacts/mask-filter-contract-audit/preregistered.json",
+      "sha256": "19b81283dfc94bf9194a9358afadd52f0f26e30b49b95b3003e9991f676b339a",
+      "bytes": 2152
+    },
+    "source_files": [
+      {
+        "path": "AGENTS.md",
+        "sha256": "b9aebf717528d1887a30f15d23ca492cac78e86542f0f7f77e72ee21545cebd4",
+        "bytes": 1312
+      },
+      {
+        "path": "Cargo.toml",
+        "sha256": "4d86159ef6354bc8bdd3bc833dfb693782dd3d89eb1b637712e955cb8f1d2007",
+        "bytes": 684
+      },
+      {
+        "path": "Cargo.lock",
+        "sha256": "6faa4bf0f6a8d6a61a15f77a5cdc83bad3d20aaa1fd85dc29211418c02e790b5",
+        "bytes": 92206
+      },
+      {
+        "path": "crates/obrush-core/Cargo.toml",
+        "sha256": "05bde7e131c4bc2f53709cfc3d5fcc12f2363105fba5f65ee18fa8c34e8039ce",
+        "bytes": 250
+      },
+      {
+        "path": "crates/obrush-core/src/mask_filter.rs",
+        "sha256": "98b908e846e935946e5e08d706aff0a670e7d8ea87b755a0157dc2ac62d54fcb",
+        "bytes": 7990
+      },
+      {
+        "path": "crates/obrush-core/src/document.rs",
+        "sha256": "a4266fb14008a50dcffa47aa6a903559676a489597a6091f1def19e444142f77",
+        "bytes": 71811
+      },
+      {
+        "path": "crates/obrush-core/src/lib.rs",
+        "sha256": "aa517a8d97ab916b3ea53d4a1ca05a28bfbbb860703ad547f9751463b7bf7630",
+        "bytes": 1501
+      },
+      {
+        "path": "crates/obrush-core/src/mesh.rs",
+        "sha256": "7e9027e1aff2c2a1d3744e7d1c27df4c0aed27f9ef104b70ef83454d9fa791ae",
+        "bytes": 60899
+      },
+      {
+        "path": "crates/obrush-core/src/subtools.rs",
+        "sha256": "e5697432bfb40a6c4fe35e4557cd8bd5fadfac604dcd7ca584c4817e8122ab6c",
+        "bytes": 15459
+      },
+      {
+        "path": "crates/obrush-core/src/multires.rs",
+        "sha256": "bb4282a9b558161be5297eed9c2b3dd6bc0e1849d898598caaebd52afae04a36",
+        "bytes": 13536
+      },
+      {
+        "path": "crates/obrush-core/src/layers.rs",
+        "sha256": "03f745e11208ba529d34c7b9ab8d974cf6cefeb1d80ebbeb14645e3b1a42f6fc",
+        "bytes": 35026
+      },
+      {
+        "path": "crates/obrush-core/src/morph.rs",
+        "sha256": "408b99c714e318617fa814a152ca76c52265b5519968afe8d4d0783f81c2925a",
+        "bytes": 10108
+      },
+      {
+        "path": "crates/obrush-core/tests/mask_filter_contract.rs",
+        "sha256": "7ba443a080650f71c0af4d387f066fae94de55ec61c2fd51f976e56d0c8e65a0",
+        "bytes": 33144
+      }
+    ],
+    "fixtures": {
+      "origin": "Independently authored analytic indexed triangle, square, irregular chain, coincident-ID islands, geometric degeneracy, nonmanifold edge, duplicate face, isolated point and generated icosphere/source metadata fixtures embedded in hashed test source",
+      "license": "MIT repository test fixtures",
+      "source": {
+        "path": "crates/obrush-core/tests/mask_filter_contract.rs",
+        "sha256": "7ba443a080650f71c0af4d387f066fae94de55ec61c2fd51f976e56d0c8e65a0",
+        "bytes": 33144
+      },
+      "case_names": [
+        "defaults_and_report_serialization_match_declared_contract",
+        "analytic_triangle_grow_shrink_and_blur_include_self_once",
+        "fractional_strength_blends_graph_target_once",
+        "propagation_uses_previous_pass_not_in_place_vertex_order",
+        "blur_on_irregular_graph_uses_unique_degree_not_face_incidence",
+        "square_diagonal_changes_neighbors_but_duplicate_faces_do_not_change_weights",
+        "face_order_and_winding_are_irrelevant_to_mask_graph",
+        "coincident_distinct_vertex_ids_do_not_weld_disconnected_graphs",
+        "geometric_degeneracy_and_nonmanifold_edges_are_valid_mask_graphs",
+        "isolated_vertices_keep_graph_filters_and_receive_pointwise_sharpen",
+        "sharpen_is_pointwise_contrast_with_clamping_before_no_extra_blend",
+        "repeated_passes_match_separate_calls_and_independent_scalar_oracle",
+        "fixedpoints_signed_zero_and_zero_strength_preserve_every_mask_bit",
+        "rounded_away_blend_is_a_true_reported_noop",
+        "invalid_iterations_strength_and_nonfinite_settings_reject_atomically",
+        "invalid_source_masks_indices_channels_and_self_edges_are_not_mutated",
+        "empty_mesh_and_empty_triangle_input_reject_before_filter_work",
+        "malformed_count_caps_reject_without_adjacency_allocation",
+        "hidden_active_document_rejects_without_consuming_redo",
+        "plain_document_mask_filter_has_one_exact_undo_redo_and_keeps_project_version",
+        "rich_scene_filter_keeps_geometry_layers_target_inactive_arc_and_one_history_step",
+        "true_noops_after_coarse_sculpt_preserve_unreconciled_hierarchy_and_genuine_redo",
+        "constant_grow_shrink_blur_and_sharpen_fixedpoints_preserve_redo",
+        "coarse_mask_filter_propagates_existing_loop_masks_and_retains_fine_residual",
+        "pending_invalid_stroke_restores_scene_and_blocks_dependent_filter",
+        "pending_valid_mask_stroke_finishes_before_a_separate_filter_history_step",
+        "invalid_source_public_edit_without_open_stroke_rejects_and_keeps_redo",
+        "invalid_settings_are_rejected_even_when_strength_or_masks_would_be_noops"
+      ]
+    },
+    "gate": {
+      "max_absolute_mask_weight_error": 1e-07,
+      "geometry_normal_rgb_indices_layer_f64_morph_identity_visibility_scene_history_inactive_arc": "exact source bits/canonical metadata/history; existing retained-level masks transport through existing f32 Loop contract"
+    },
+    "observed": {
+      "passed_tests": 28,
+      "maximum_mask_error": 0.0,
+      "metric_rows": 138,
+      "duration_seconds": 0.27,
+      "numeric_note": "All measured fixtures agree exactly with the independent scalar oracle; this is not a global reference or precision guarantee"
+    },
+    "metrics": [
+      {
+        "case": "triangle-grow",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "triangle-shrink",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "triangle-blur",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "irregular-blur",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "coarse-loop-mask-transport",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "coincident-distinct-ids",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "defaults",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "ordered-faces",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "reordered-reversed-faces",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "ordered-faces",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "reordered-reversed-faces",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "ordered-faces",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "reordered-reversed-faces",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "ordered-faces",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "reordered-reversed-faces",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "signed-zero-fixedpoints",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "signed-zero-fixedpoints",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "signed-zero-fixedpoints",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "signed-zero-fixedpoints",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "sharpen-fixedpoints",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "zero-strength-fixedpoints",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "zero-strength-fixedpoints",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "zero-strength-fixedpoints",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "zero-strength-fixedpoints",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "triangle-half-strength",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "triangle-half-strength",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "triangle-half-strength",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "degenerate-nonmanifold-graph",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "degenerate-nonmanifold-graph",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "degenerate-nonmanifold-graph",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "degenerate-nonmanifold-graph",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "isolated-graph-point",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "isolated-graph-point",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "isolated-graph-point",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "isolated-sharpen",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "document-filter",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "document-filter",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "document-filter",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "document-filter",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "synchronous-grow-one",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "synchronous-grow-two",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "synchronous-shrink-one",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "synchronous-shrink-two",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "iteration-strength-grid",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "rich-layer-scene",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "sub-f32-strength",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "sub-f32-strength",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "sub-f32-strength",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "sub-f32-strength",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "pointwise-sharpen",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "pointwise-sharpen-two",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "square-baseline",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "square-duplicate-faces",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "square-baseline",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "square-duplicate-faces",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "square-baseline",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "square-duplicate-faces",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "square-baseline",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      },
+      {
+        "case": "square-duplicate-faces",
+        "gate": 1e-07,
+        "max_absolute_mask_error": 0.0
+      }
+    ],
+    "rejections": [
+      {
+        "case": "invalid-iterations",
+        "error": "Mask filter iterations must be in 1\u201316",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-iterations",
+        "error": "Mask filter iterations must be in 1\u201316",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-iterations",
+        "error": "Mask filter iterations must be in 1\u201316",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-iterations",
+        "error": "Mask filter iterations must be in 1\u201316",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-iterations",
+        "error": "Mask filter iterations must be in 1\u201316",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-iterations",
+        "error": "Mask filter iterations must be in 1\u201316",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-iterations",
+        "error": "Mask filter iterations must be in 1\u201316",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-iterations",
+        "error": "Mask filter iterations must be in 1\u201316",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-iterations",
+        "error": "Mask filter iterations must be in 1\u201316",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-iterations",
+        "error": "Mask filter iterations must be in 1\u201316",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-iterations",
+        "error": "Mask filter iterations must be in 1\u201316",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-iterations",
+        "error": "Mask filter iterations must be in 1\u201316",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-strength",
+        "error": "Mask filter strength must be finite in 0\u20131",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-noop-settings",
+        "error": "Mask filter iterations must be in 1\u201316",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-noop-settings",
+        "error": "Mask filter iterations must be in 1\u201316",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-noop-settings",
+        "error": "Mask filter iterations must be in 1\u201316",
+        "redo_preserved": true,
+        "scene_exact": true
+      },
+      {
+        "case": "invalid-noop-settings",
+        "error": "Mask filter iterations must be in 1\u201316",
+        "redo_preserved": true,
+        "scene_exact": true
+      }
+    ],
+    "runs": [
+      {
+        "name": "run-1",
+        "command": "cargo test -p obrush-core --test mask_filter_contract -- --nocapture --test-threads=1",
+        "exit_code": 101,
+        "passed_tests": 27,
+        "failed_tests": 1,
+        "duration_seconds": 0.14,
+        "log": {
+          "path": ".artifacts/mask-filter-contract-audit/run-1.log",
+          "sha256": "bc16af60ca6f17db1fe9c262e4821beca354e963fd5ae58f1a4baef9da71e3e7",
+          "bytes": 23062
+        },
+        "source_manifest": {
+          "path": ".artifacts/mask-filter-contract-audit/run-1-source.json",
+          "sha256": "1bfac20f7ca2c0a88167f5cf29c955959c35ddd8da4053ca59be4e93ec69b5e8",
+          "bytes": 3547
+        },
+        "failure": "Provisional expected retained-level values assumed bit-exact uniform0.8; existing f32 Loop interpolation/transport differed1.1920928955078125e-7. New mask scalar outputs matched exactly."
+      },
+      {
+        "name": "helper-correction",
+        "record": {
+          "path": ".artifacts/mask-filter-contract-audit/helper-correction.json",
+          "sha256": "615bd4478fef3f51fe40382ac5c4995d4bc8d481fc29b3802fa876dd39156db7",
+          "bytes": 1142
+        },
+        "production_changed": false,
+        "gate_changed": false,
+        "explanation": "Derived explicit analytic triangle boundary/midpoint stencils using the preexisting f32 arithmetic sequence and applied stored old_child + new_prediction - old_prediction transport. Same1e-7 gate and exact metadata/history checks. Side-effect-only match arm simplified without changing cases."
+      },
+      {
+        "name": "focused-strict-lint",
+        "command": "cargo clippy -p obrush-core --test mask_filter_contract -- -D warnings",
+        "exit_code": 0,
+        "log": {
+          "path": ".artifacts/mask-filter-contract-audit/clippy-focused.log",
+          "sha256": "401499a25d3617d192da9f0e49995c3fd29b3323f71a4821c1b356ddf43016bf",
+          "bytes": 148
+        }
+      },
+      {
+        "name": "run-2-final",
+        "command": "cargo test -p obrush-core --test mask_filter_contract -- --nocapture --test-threads=1",
+        "exit_code": 0,
+        "passed_tests": 28,
+        "failed_tests": 0,
+        "duration_seconds": 0.27,
+        "log": {
+          "path": ".artifacts/mask-filter-contract-audit/run-2.log",
+          "sha256": "3d520577c80c5506655220f50dc53ce68d3f93725ce42975c27fd419bedaedcc",
+          "bytes": 22541
+        },
+        "source_manifest": {
+          "path": ".artifacts/mask-filter-contract-audit/run-2-source.json",
+          "sha256": "82f275ec1138424774bd25757293256b2d9a551d25929f111f9ac01fcd94fe24",
+          "bytes": 865
+        }
+      }
+    ],
+    "source_review": [
+      {
+        "path": "crates/obrush-core/src/mask_filter.rs",
+        "lines": [
+          64,
+          90
+        ],
+        "finding": "Settings and complete Mesh validation occur before graph/value scratch allocation; general1M point/2M face limits reject early. Valid zero-strength bypasses adjacency after validation. Sharpen is pointwise and builds no graph."
+      },
+      {
+        "path": "crates/obrush-core/src/mask_filter.rs",
+        "lines": [
+          93,
+          149
+        ],
+        "finding": "Synchronous separate current/next f32 arrays; scalar f64 targets/blends; exact fixedpoint and rounded-equality bits reused, including signed zero. Output report compares final mask bits with input."
+      },
+      {
+        "path": "crates/obrush-core/src/mask_filter.rs",
+        "lines": [
+          173,
+          225
+        ],
+        "finding": "Canonical sorted deduplicated undirected indexed edges create bounded CSR neighbors. Counts are checked, neighbor totals fit fixed limits, and scratch reservations are fallible. No coordinate welding/manifold restriction added."
+      },
+      {
+        "path": "crates/obrush-core/src/document.rs",
+        "lines": [
+          1498,
+          1541
+        ],
+        "finding": "Finish/reject pending stroke and hidden-active guard precede filter. True no-op returns before hierarchy normalization. Useful mask-only candidate validates layers, Morph binding, output bytes and aggregate scene before installing only masks and one whole-scene undo snapshot."
+      }
+    ],
+    "capacity": {
+      "source_vertices": 1000000,
+      "source_triangles": 2000000,
+      "iterations": [
+        1,
+        16
+      ],
+      "strength": [
+        0,
+        1
+      ],
+      "runtime_limit_cases": "Malformed cap+1 public meshes reject; this is not valid near-cap throughput/capacity verification",
+      "review_only": "CSR and double mask buffers are count-bounded and fallibly reserved; aggregate/output limits source-reviewed; no peak memory or large-mesh latency measured"
+    },
+    "limitations": [
+      "No ZBrush mask-filter fixture or parity conclusion",
+      "Native GUI, physical devices, browser/WASM execution and user filesystem persistence not tested by this audit",
+      "Valid near-cap throughput/transient memory were source-reviewed only",
+      "Unit-mask fixture tolerance is not a global numerical or behavioral equivalence guarantee",
+      "Retained-level mask interpolation preserves existing f32 rounding behavior; the failed provisional oracle and correction remain available"
+    ]
+  },
+  "workspace_tests": {
+    "core": 320,
+    "app": 41,
+    "total": 361
+  },
+  "frozen_source_manifest": {
+    "path": ".artifacts/mask-filter-release-0.1.13-final/source-manifest.json",
+    "bytes": 14198,
+    "sha256": "e3ad2662e28cadad1d62ed0665319cc269193b15209551cfb659235b454e074c"
+  },
+  "limitations": [
+    "No reference kernel or response equivalence measured",
+    "Caps and synchronous pass bounds are not latency or peak-memory guarantees",
+    "Current mask only; retained masks follow existing subdivision reconciliation/navigation",
+    "Native GUI and physical devices unverified"
+  ]
+}

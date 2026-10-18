@@ -1,0 +1,9 @@
+# Independently created CC0 fixture: front +Z and back -Z are disjoint triangles.
+v 0 0 1
+v 2 0 1
+v 0 2 1
+v 0 0 0
+v 2 0 0
+v 0 2 0
+f 1 2 3
+f 4 6 5

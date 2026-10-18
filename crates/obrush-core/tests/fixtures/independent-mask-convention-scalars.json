@@ -1,0 +1,187 @@
+{
+  "origin": "independent IEEE754 single-precision projections, not implementation output",
+  "rows": [
+    {
+      "raw_unprotected_bits": 0,
+      "raw_unprotected": 0.0,
+      "lossy_derived_protection_bits": 1065353216,
+      "lossy_reconstructed_unprotected_bits": 0,
+      "raw_bitwise_roundtrip": true,
+      "absolute_error": 0.0,
+      "relative_error": null,
+      "single_channel_unprotected_influence_bits": 0
+    },
+    {
+      "raw_unprotected_bits": 1,
+      "raw_unprotected": 1.401298464324817e-45,
+      "lossy_derived_protection_bits": 1065353216,
+      "lossy_reconstructed_unprotected_bits": 0,
+      "raw_bitwise_roundtrip": false,
+      "absolute_error": 1.401298464324817e-45,
+      "relative_error": 1.0,
+      "single_channel_unprotected_influence_bits": 1
+    },
+    {
+      "raw_unprotected_bits": 8388607,
+      "raw_unprotected": 1.1754942106924411e-38,
+      "lossy_derived_protection_bits": 1065353216,
+      "lossy_reconstructed_unprotected_bits": 0,
+      "raw_bitwise_roundtrip": false,
+      "absolute_error": 1.1754942106924411e-38,
+      "relative_error": 1.0,
+      "single_channel_unprotected_influence_bits": 8388607
+    },
+    {
+      "raw_unprotected_bits": 8388608,
+      "raw_unprotected": 1.1754943508222875e-38,
+      "lossy_derived_protection_bits": 1065353216,
+      "lossy_reconstructed_unprotected_bits": 0,
+      "raw_bitwise_roundtrip": false,
+      "absolute_error": 1.1754943508222875e-38,
+      "relative_error": 1.0,
+      "single_channel_unprotected_influence_bits": 8388608
+    },
+    {
+      "raw_unprotected_bits": 855638016,
+      "raw_unprotected": 2.9802322387695312e-08,
+      "lossy_derived_protection_bits": 1065353216,
+      "lossy_reconstructed_unprotected_bits": 0,
+      "raw_bitwise_roundtrip": false,
+      "absolute_error": 2.9802322387695312e-08,
+      "relative_error": 1.0,
+      "single_channel_unprotected_influence_bits": 855638016
+    },
+    {
+      "raw_unprotected_bits": 855638017,
+      "raw_unprotected": 2.980232594040899e-08,
+      "lossy_derived_protection_bits": 1065353215,
+      "lossy_reconstructed_unprotected_bits": 864026624,
+      "raw_bitwise_roundtrip": false,
+      "absolute_error": 2.9802318834981634e-08,
+      "relative_error": 0.9999997615814493,
+      "single_channel_unprotected_influence_bits": 855638017
+    },
+    {
+      "raw_unprotected_bits": 864026624,
+      "raw_unprotected": 5.960464477539063e-08,
+      "lossy_derived_protection_bits": 1065353215,
+      "lossy_reconstructed_unprotected_bits": 864026624,
+      "raw_bitwise_roundtrip": true,
+      "absolute_error": 0.0,
+      "relative_error": 0.0,
+      "single_channel_unprotected_influence_bits": 864026624
+    },
+    {
+      "raw_unprotected_bits": 1051372203,
+      "raw_unprotected": 0.3333333432674408,
+      "lossy_derived_protection_bits": 1059760810,
+      "lossy_reconstructed_unprotected_bits": 1051372204,
+      "raw_bitwise_roundtrip": false,
+      "absolute_error": 2.9802322387695312e-08,
+      "relative_error": 8.940696449855076e-08,
+      "single_channel_unprotected_influence_bits": 1051372203
+    },
+    {
+      "raw_unprotected_bits": 1056964608,
+      "raw_unprotected": 0.5,
+      "lossy_derived_protection_bits": 1056964608,
+      "lossy_reconstructed_unprotected_bits": 1056964608,
+      "raw_bitwise_roundtrip": true,
+      "absolute_error": 0.0,
+      "relative_error": 0.0,
+      "single_channel_unprotected_influence_bits": 1056964608
+    },
+    {
+      "raw_unprotected_bits": 1065353215,
+      "raw_unprotected": 0.9999999403953552,
+      "lossy_derived_protection_bits": 864026624,
+      "lossy_reconstructed_unprotected_bits": 1065353215,
+      "raw_bitwise_roundtrip": true,
+      "absolute_error": 0.0,
+      "relative_error": 0.0,
+      "single_channel_unprotected_influence_bits": 1065353215
+    },
+    {
+      "raw_unprotected_bits": 1065353216,
+      "raw_unprotected": 1.0,
+      "lossy_derived_protection_bits": 0,
+      "lossy_reconstructed_unprotected_bits": 1065353216,
+      "raw_bitwise_roundtrip": true,
+      "absolute_error": 0.0,
+      "relative_error": 0.0,
+      "single_channel_unprotected_influence_bits": 1065353216
+    },
+    {
+      "raw_unprotected_bits": 2147483648,
+      "raw_unprotected": -0.0,
+      "lossy_derived_protection_bits": 1065353216,
+      "lossy_reconstructed_unprotected_bits": 0,
+      "raw_bitwise_roundtrip": false,
+      "absolute_error": 0.0,
+      "relative_error": null,
+      "single_channel_unprotected_influence_bits": 2147483648
+    }
+  ],
+  "tiny_equal_weight_area_frame": {
+    "points": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ]
+    ],
+    "normals": [
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "unprotected_bits": [
+      1,
+      1,
+      1
+    ],
+    "pinned_double_area_center": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.0
+    ],
+    "pinned_double_area_normal": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "derived_protection_bits": [
+      1065353216,
+      1065353216,
+      1065353216
+    ],
+    "lossy_reconstructed_weights_bits": [
+      0,
+      0,
+      0
+    ],
+    "epsilon_zero_thresholds_also_need_audit": true
+  }
+}

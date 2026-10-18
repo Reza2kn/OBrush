@@ -1,0 +1,591 @@
+{
+  "status": "Compared / gaps remain: repeated mirrored Crease math/proxy/warm normals verified on C41; Source-vs-OBrush normal history differs and remains required work",
+  "date_utc": "2026-10-15T20:18:05.918110+00:00",
+  "candidate": "C41",
+  "version": "0.1.20",
+  "stable_inventory_ids": [
+    "SGL-BRUSH-CREASE",
+    "SGL-BRUSH-CREASE-RADIUS",
+    "SGL-BRUSH-CREASE-INTENSITY",
+    "SGL-HISTORY-UNDO",
+    "SGL-HISTORY-REDO"
+  ],
+  "no_family_promotion": true,
+  "product": {
+    "build_sha256": "d49bbb5437a757f025c23e1683aae44601d2aa1a20718756a88cbaca09bd18c8",
+    "source_manifest_sha256": "24dd4d8a06c204a68cb68f7520b1d411e40d8b3a9e90f5a4386591751d2dc7fa",
+    "wasm_sha256": "94cd82596e5fc4d132ab05e4694343de1b7f586511da4a34051cba1808b61dde",
+    "source_checks": "Existing C41 five required checks/2271tests and both official builds remain bound to unchanged product bytes",
+    "preview": "http://127.0.0.1:8806/",
+    "current_product_files": 380,
+    "code_and_preview_unchanged": true
+  },
+  "reference": {
+    "upstream_revision": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+    "actual_hosted_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+    "hosted_upstream_equivalence": "not established",
+    "source_control_flow": "StateGeometry.undo restores captured vertex positions, refreshes incident faces and captured vertex normal rows from the current field; redo invokes the same operation",
+    "StateGeometry_source_sha256": "4bab4e7d3e5eaeab535917289e94397694ff16ca83f02b687516d8ae79826387"
+  },
+  "CW02": {
+    "result_sha256": "01ca2968e7a907fb1ba23c6ad4b43debc7326935041f508f1ab97888e64be874",
+    "helper_manifest_sha256": "4bb1134a6c70805a4c5320faca5457df3b82389b0983e671a168a7a803c6bd41",
+    "protocol_manifest_sha256": "7cee5429a4f45853caa8a829bd827e4e5b1829fee01b2e7019e450f18e6829a2",
+    "source_only_contracts": 102,
+    "artifact_history_audit_sha256": "9e2323b9b42f5565a71c3b4783cfb7ed62f45f4bbbc1628b55eafef1b71236e0",
+    "independent_Python_math_sha256": "ecf769c8398fdb847359f156261330cd12991b64e6594c248cb88e4b6354e22c",
+    "whole_PNG_review_sha256": "eb9bdae362e8bcb77df891bce26d345af15c43f151697e83f62e7d741f3e111b",
+    "input": {
+      "fixture": "Independent CC0 six-vertex/two-sheet SGL",
+      "fixture_sha256": "a006bc08371ba9aaa7ac5424e3af464660519d1e5385d28fb237b37f0c3b6fcc",
+      "phases": [
+        {
+          "id": "A",
+          "radius": 500,
+          "intensity": 0.25,
+          "selected_original_ids_each_pass": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "B",
+          "radius": 370,
+          "intensity": 0.75,
+          "selected_original_ids_each_pass": [
+            2,
+            5
+          ]
+        },
+        {
+          "id": "C",
+          "radius": 500,
+          "intensity": 0.75,
+          "selected_original_ids_each_pass": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        }
+      ],
+      "all_phases": {
+        "negative": true,
+        "X_mirror": true,
+        "offset": 0,
+        "alpha": "None",
+        "culling": false,
+        "Prevent_folds": false,
+        "radius_pressure_factor": 0,
+        "intensity_pressure_factor": 0,
+        "DPR": 1
+      },
+      "lifecycle": "No scene reimport, normal reset, camera reframe, tool switch or recording rearm between three real strokes; only public radius/intensity editors change",
+      "contact": "Same fixed original worldseed and96CSSpx horizontal endpoint; floor viewport-local once before input, no outcome search"
+    },
+    "actual_Source_callbacks": 6,
+    "actual_Root_atomic_dabs": 3,
+    "actual_Root_ordered_passes": 6,
+    "own_math": "All own candidate positions and selected-normal fields match independent JavaScript and separate Python exact f32 stores",
+    "proxy": "Source full proxy getter storage matches independent first-touch updates, including retained outside rows; new B/C output distinguishes wrongly reusing first-stroke proxy",
+    "warm_normals": "Middle stroke leaves10outside raw normal words different from a fresh whole field; final primary stroke wrong-fresh-field counterfactual changes3coordinate words on each host",
+    "mirror_direction": "Each actual mirror uses independently calculated pre-dab direction; A/C also distinguish wrong late direction in geometry. Middle B directions differ~5.73e-6 but f32 candidate words coincide, so raw direction is the discriminator",
+    "paired_positions": [
+      {
+        "phase": "A",
+        "label": "Actual paired Flatten final original positions",
+        "rows": 6,
+        "words": 18,
+        "word_difference_count": 11,
+        "max_absolute_difference": 5.960464477539063e-08,
+        "RMS": 1.986948675659414e-08,
+        "differences": [
+          {
+            "row": 0,
+            "column": 0,
+            "expected_word": 3212749693,
+            "actual_word": 3212749694,
+            "expected": -0.9948042035102844,
+            "actual": -0.9948042631149292,
+            "absolute_difference": 5.960464477539063e-08
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "expected_word": 984313230,
+            "actual_word": 984313228,
+            "expected": 0.0013078914489597082,
+            "actual": 0.0013078912161290646,
+            "absolute_difference": 2.3283064365386963e-10
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "expected_word": 1065266045,
+            "actual_word": 1065266046,
+            "expected": 0.9948042035102844,
+            "actual": 0.9948042631149292,
+            "absolute_difference": 5.960464477539063e-08
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "expected_word": 984313231,
+            "actual_word": 984313228,
+            "expected": 0.00130789156537503,
+            "actual": 0.0013078912161290646,
+            "absolute_difference": 3.4924596548080444e-10
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "expected_word": 2871965646,
+            "actual_word": 2878069240,
+            "expected": -6.207229825624938e-13,
+            "actual": -9.937042508290084e-13,
+            "absolute_difference": 3.7298126826651457e-13
+          },
+          {
+            "row": 3,
+            "column": 1,
+            "expected_word": 968500080,
+            "actual_word": 968500073,
+            "expected": 0.0003550308756530285,
+            "actual": 0.0003550306719262153,
+            "absolute_difference": 2.0372681319713593e-10
+          },
+          {
+            "row": 3,
+            "column": 2,
+            "expected_word": 976814347,
+            "actual_word": 976814339,
+            "expected": 0.0007057345355860889,
+            "actual": 0.0007057340699248016,
+            "absolute_difference": 4.656612873077393e-10
+          },
+          {
+            "row": 4,
+            "column": 1,
+            "expected_word": 968500080,
+            "actual_word": 968500073,
+            "expected": 0.0003550308756530285,
+            "actual": 0.0003550306719262153,
+            "absolute_difference": 2.0372681319713593e-10
+          },
+          {
+            "row": 4,
+            "column": 2,
+            "expected_word": 976814347,
+            "actual_word": 976814339,
+            "expected": 0.0007057345355860889,
+            "actual": 0.0007057340699248016,
+            "absolute_difference": 4.656612873077393e-10
+          },
+          {
+            "row": 5,
+            "column": 0,
+            "expected_word": 720519898,
+            "actual_word": 2855198158,
+            "expected": 4.3034223103435854e-13,
+            "actual": -1.553125846247977e-13,
+            "absolute_difference": 5.856548156591562e-13
+          },
+          {
+            "row": 5,
+            "column": 2,
+            "expected_word": 1001495963,
+            "actual_word": 1001495962,
+            "expected": 0.005420399364084005,
+            "actual": 0.005420398898422718,
+            "absolute_difference": 4.656612873077393e-10
+          }
+        ],
+        "exact_words": false,
+        "expected_sha256": "64b121e5e777e57231ef28051bd04aaf8060eedfdd936f6947aafa6097ad954b",
+        "actual_sha256": "a1b6b7fc275a4eb045941a89e8c6c9cb17fe7650814bbf494995f0c8548bdf66"
+      },
+      {
+        "phase": "B",
+        "label": "Actual paired Flatten final original positions",
+        "rows": 6,
+        "words": 18,
+        "word_difference_count": 11,
+        "max_absolute_difference": 5.960464477539063e-08,
+        "RMS": 1.9871911823455354e-08,
+        "differences": [
+          {
+            "row": 0,
+            "column": 0,
+            "expected_word": 3212749693,
+            "actual_word": 3212749694,
+            "expected": -0.9948042035102844,
+            "actual": -0.9948042631149292,
+            "absolute_difference": 5.960464477539063e-08
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "expected_word": 984313230,
+            "actual_word": 984313228,
+            "expected": 0.0013078914489597082,
+            "actual": 0.0013078912161290646,
+            "absolute_difference": 2.3283064365386963e-10
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "expected_word": 1065266045,
+            "actual_word": 1065266046,
+            "expected": 0.9948042035102844,
+            "actual": 0.9948042631149292,
+            "absolute_difference": 5.960464477539063e-08
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "expected_word": 984313231,
+            "actual_word": 984313228,
+            "expected": 0.00130789156537503,
+            "actual": 0.0013078912161290646,
+            "absolute_difference": 3.4924596548080444e-10
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "expected_word": 736670143,
+            "actual_word": 2895737937,
+            "expected": 1.6533925921088932e-12,
+            "actual": -4.3614352580878535e-12,
+            "absolute_difference": 6.014827850196747e-12
+          },
+          {
+            "row": 3,
+            "column": 1,
+            "expected_word": 968500080,
+            "actual_word": 968500073,
+            "expected": 0.0003550308756530285,
+            "actual": 0.0003550306719262153,
+            "absolute_difference": 2.0372681319713593e-10
+          },
+          {
+            "row": 3,
+            "column": 2,
+            "expected_word": 976814347,
+            "actual_word": 976814339,
+            "expected": 0.0007057345355860889,
+            "actual": 0.0007057340699248016,
+            "absolute_difference": 4.656612873077393e-10
+          },
+          {
+            "row": 4,
+            "column": 1,
+            "expected_word": 968500080,
+            "actual_word": 968500073,
+            "expected": 0.0003550308756530285,
+            "actual": 0.0003550306719262153,
+            "absolute_difference": 2.0372681319713593e-10
+          },
+          {
+            "row": 4,
+            "column": 2,
+            "expected_word": 976814347,
+            "actual_word": 976814339,
+            "expected": 0.0007057345355860889,
+            "actual": 0.0007057340699248016,
+            "absolute_difference": 4.656612873077393e-10
+          },
+          {
+            "row": 5,
+            "column": 0,
+            "expected_word": 724990753,
+            "actual_word": 2857849563,
+            "expected": 6.483026463756369e-13,
+            "actual": -1.912458228890343e-13,
+            "absolute_difference": 8.395484692646712e-13
+          },
+          {
+            "row": 5,
+            "column": 2,
+            "expected_word": 1002590667,
+            "actual_word": 1002590664,
+            "expected": 0.005930160637944937,
+            "actual": 0.005930159240961075,
+            "absolute_difference": 1.3969838619232178e-09
+          }
+        ],
+        "exact_words": false,
+        "expected_sha256": "bacf065089be66ab1e7565ac99438ba2c1b283f82715fffa9f2f9db06c98ded2",
+        "actual_sha256": "00b95079ca48bede7ee3d839252cda42041621fa6a6bcf27a8709f60c18cd320"
+      },
+      {
+        "phase": "C",
+        "label": "Actual paired Flatten final original positions",
+        "rows": 6,
+        "words": 18,
+        "word_difference_count": 12,
+        "max_absolute_difference": 5.960464477539063e-08,
+        "RMS": 2.4372403878240686e-08,
+        "differences": [
+          {
+            "row": 0,
+            "column": 0,
+            "expected_word": 3212478670,
+            "actual_word": 3212478671,
+            "expected": -0.9786499738693237,
+            "actual": -0.9786500334739685,
+            "absolute_difference": 5.960464477539063e-08
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "expected_word": 1001396660,
+            "actual_word": 1001396653,
+            "expected": 0.005374157801270485,
+            "actual": 0.005374154541641474,
+            "absolute_difference": 3.259629011154175e-09
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "expected_word": 1064995022,
+            "actual_word": 1064995023,
+            "expected": 0.9786499738693237,
+            "actual": 0.9786500334739685,
+            "absolute_difference": 5.960464477539063e-08
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "expected_word": 1001396660,
+            "actual_word": 1001396653,
+            "expected": 0.005374157801270485,
+            "actual": 0.005374154541641474,
+            "absolute_difference": 3.259629011154175e-09
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "expected_word": 759963633,
+            "actual_word": 2906565695,
+            "expected": 1.1603149864536366e-11,
+            "actual": -1.0838495899390121e-11,
+            "absolute_difference": 2.2441645763926488e-11
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "expected_word": 1056638990,
+            "actual_word": 1056638992,
+            "expected": 0.4902958273887634,
+            "actual": 0.4902958869934082,
+            "absolute_difference": 5.960464477539063e-08
+          },
+          {
+            "row": 3,
+            "column": 1,
+            "expected_word": 985552145,
+            "actual_word": 985552137,
+            "expected": 0.0014521201374009252,
+            "actual": 0.0014521192060783505,
+            "absolute_difference": 9.313225746154785e-10
+          },
+          {
+            "row": 3,
+            "column": 2,
+            "expected_word": 993855723,
+            "actual_word": 993855714,
+            "expected": 0.002884442685171962,
+            "actual": 0.002884440589696169,
+            "absolute_difference": 2.0954757928848267e-09
+          },
+          {
+            "row": 4,
+            "column": 1,
+            "expected_word": 985552144,
+            "actual_word": 985552137,
+            "expected": 0.0014521200209856033,
+            "actual": 0.0014521192060783505,
+            "absolute_difference": 8.149072527885437e-10
+          },
+          {
+            "row": 4,
+            "column": 2,
+            "expected_word": 993855722,
+            "actual_word": 993855714,
+            "expected": 0.002884442452341318,
+            "actual": 0.002884440589696169,
+            "absolute_difference": 1.862645149230957e-09
+          },
+          {
+            "row": 5,
+            "column": 0,
+            "expected_word": 2870703962,
+            "actual_word": 748123933,
+            "expected": -5.523269558729837e-13,
+            "actual": 4.304902354729245e-12,
+            "absolute_difference": 4.857229310602229e-12
+          },
+          {
+            "row": 5,
+            "column": 2,
+            "expected_word": 1018801879,
+            "actual_word": 1018801878,
+            "expected": 0.02266637794673443,
+            "actual": 0.02266637608408928,
+            "absolute_difference": 1.862645149230957e-09
+          }
+        ],
+        "exact_words": false,
+        "expected_sha256": "6454f866b39b0b36d10a3fbc351d7e7efd66f05a39ef255941dddea560a15639",
+        "actual_sha256": "0cffbfaf6c2181bf427512f3665463b6b1ff4e953f71062eaa00e00a58b9f33c"
+      }
+    ],
+    "predeclared_paired_max_and_RMS": 1e-06,
+    "whole_public_downloads": 36,
+    "raw_records": 547,
+    "independent_GPU_snapshots": 24,
+    "quiet": [
+      {
+        "side": "source",
+        "phase": "A",
+        "samples": 31,
+        "milliseconds": 500.19999998807907
+      },
+      {
+        "side": "source",
+        "phase": "B",
+        "samples": 32,
+        "milliseconds": 504.30000001192093
+      },
+      {
+        "side": "source",
+        "phase": "C",
+        "samples": 32,
+        "milliseconds": 507.7000000178814
+      },
+      {
+        "side": "root",
+        "phase": "A",
+        "samples": 32,
+        "milliseconds": 516.5999999940395
+      },
+      {
+        "side": "root",
+        "phase": "B",
+        "samples": 32,
+        "milliseconds": 515.2000000178814
+      },
+      {
+        "side": "root",
+        "phase": "C",
+        "samples": 31,
+        "milliseconds": 500.59999999403954
+      }
+    ],
+    "full_original_GPU_prefixes": [
+      {
+        "side": "source",
+        "frames": 66,
+        "bytes": 4290953
+      },
+      {
+        "side": "root",
+        "frames": 199,
+        "bytes": 9224071
+      }
+    ],
+    "complete_public_history": "All three Undo and three Redo whole saved files exact to corresponding prior geometry on both hosts",
+    "normal_history_gap": [
+      {
+        "side": "source",
+        "own_history_policy": [
+          "refresh captured selection from current field",
+          "refresh captured selection from current field",
+          "refresh captured selection from current field",
+          "refresh captured selection from current field",
+          "refresh captured selection from current field",
+          "refresh captured selection from current field"
+        ],
+        "differences_from_original_normal_snapshots": [
+          10,
+          10,
+          0,
+          0,
+          0,
+          0
+        ],
+        "max_difference": [
+          0.029865622520446777,
+          0.029865622520446777,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "side": "root",
+        "own_history_policy": [
+          "restore retained snapshot",
+          "restore retained snapshot",
+          "restore retained snapshot",
+          "restore retained snapshot",
+          "restore retained snapshot",
+          "restore retained snapshot"
+        ],
+        "differences_from_original_normal_snapshots": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "max_difference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "closed_owned_resources": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_servers_closed": 2
+    },
+    "required_gap": "Source UndoC/UndoB retain/rebuild10normal words differently from C41; maximum raw-normal difference.029865622520446777. Current Root restores saved normal Arcs. Geometry/history file equality does not establish normal-history equivalence."
+  },
+  "preserved_failures": {
+    "complete_failed_runs_audit_sha256": "a69bad038eae40baea528fc1e1b719e0f1a57ac3f7c829e151dfd5fc086eb45b",
+    "CW00_result_sha256": "7ec453090271751c9dd74375bc2edee65758c9f3d5f278191d8f62030e2f19c9",
+    "CW00": "Original extra middle-mirror f32-coordinate sensitivity gate failed even on Source; actual source result independently correct and raw directions differ. No retroactive pass.",
+    "CW01_result_sha256": "6773ab11c3c491ae9e9a901fdd969f7cc0160c961c66bcc68f358f6a4f9d1349",
+    "CW01": "Original saved-normal snapshot expectation failed on actual Source UndoC. Actual history gap established; original run stays failed.",
+    "source_only_design_failure": "Earlier .25-only prototype could not distinguish the final wrong-fresh-field candidate; failed authored prototype/test preserved before actual run.",
+    "CW02": "Separate characterization records the gap, not acceptance of equivalent history."
+  },
+  "next_C42": {
+    "status": "Regression stage only; two reference-history assertions fail against current production host behavior",
+    "regression_receipt_sha256": "6da3311d880dceaa099e8bd0c4526c227ca9368f2576a1b20e83dfa0d99769ab",
+    "regression_source_manifest_sha256": "ee00c635b9d92f4e5236ef61714a3572f7e605d4c8b28c8b00f5980568854406",
+    "test_source": "crates/obrush-app/src/source_history_host_tests.rs in isolated C42 source",
+    "required_fix": "Shared core typed bounded Source history effect with original captured vertex union, refresh from CURRENT field before undo/redo publication; preserve generic/Legacy and source Paint history semantics",
+    "acceptance": "Retain unchanged original failed artifacts; implement, full format/workspace/strict native+WASM, official builds, rerun exact paired history checks and actual post-undo brushing before promotion"
+  },
+  "limitations": [
+    "No full Crease/history/SculptGL317+5/ZBrush parity promotion",
+    "Actual post-undo new brush response still needs comparison; impact is inferred from the normal data used by brush kernels",
+    "No alpha/nonzerooffset/pose/pressure/culling/Lock/dynamic/hierarchy/new nativeGUI/physical/HiDPI/sustained performance claim",
+    "Source GL1 forwarded uploads are distinct from Root GL2 GPU readback",
+    "Sparse fixture and whole PNG review do not establish dense-sculpt surface or appearance equivalence"
+  ]
+}

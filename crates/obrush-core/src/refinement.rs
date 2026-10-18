@@ -1,0 +1,1062 @@
+//! Bounded, shape-preserving triangle refinement near an active brush.
+use crate::{Mesh, Vec3, MAX_TRIANGLES, MAX_VERTICES};
+use std::collections::{HashMap, HashSet};
+
+const MAX_EDGES_PER_ROUND: usize = 512;
+const MAX_ROUNDS: usize = 2;
+const TARGET_EDGE_RADIUS: f64 = 0.12;
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct PatchRefinement {
+    pub vertices_added: usize,
+    pub triangles_added: usize,
+    /// More qualifying edges remain, or a round's fixed work budget was reached.
+    pub limited: bool,
+}
+
+/// Ordered ancestry lets stroke-local fields follow shape-preserving splits.
+#[derive(Clone, Copy, Debug)]
+pub(crate) struct RefinementParents {
+    pub vertex: usize,
+    pub parents: [usize; 3],
+    pub weights: [f32; 3],
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+enum GroupKey {
+    Edge(u32, u32),
+    Symmetric([u32; 6]),
+}
+
+#[derive(Default)]
+struct EdgeGroup {
+    edges: Vec<(u32, u32)>,
+    overflow: bool,
+}
+
+struct SelectedEdges {
+    edges: Vec<(u32, u32)>,
+    limited: bool,
+}
+
+#[derive(Clone, Copy)]
+struct PatchQuery {
+    center: glam::DVec3,
+    mirrored_center: glam::DVec3,
+    radius_squared: f64,
+    target_squared: f64,
+    symmetry_x: bool,
+    symmetry_offset: f32,
+    move_quality: bool,
+}
+
+impl PatchQuery {
+    fn new(
+        center: Vec3,
+        radius: f32,
+        symmetry_x: bool,
+        symmetry_offset: f32,
+    ) -> Result<Self, String> {
+        if !center.is_finite()
+            || !radius.is_finite()
+            || radius <= 0.0
+            || !symmetry_offset.is_finite()
+            || symmetry_offset.abs() > 1_000_000.0
+        {
+            return Err(
+                "Patch refinement requires a finite center and positive finite radius".into(),
+            );
+        }
+        let center = center.as_dvec3();
+        let radius = f64::from(radius);
+        Ok(Self {
+            center,
+            mirrored_center: glam::DVec3::new(
+                2.0 * f64::from(symmetry_offset) - center.x,
+                center.y,
+                center.z,
+            ),
+            radius_squared: radius * radius,
+            target_squared: (radius * TARGET_EDGE_RADIUS).powi(2),
+            symmetry_x,
+            symmetry_offset,
+            move_quality: false,
+        })
+    }
+
+    /// A selected segment is inside every incident triangle's AABB. This
+    /// conservative broad phase therefore retains all faces needed to detect
+    /// duplicate/non-manifold incidences and produce conforming children.
+    fn contains_face(self, positions: &[Vec3], triangle: [u32; 3]) -> bool {
+        let [a, b, c] = triangle.map(|vertex| positions[vertex as usize].as_dvec3());
+        if a.distance_squared(b) <= self.target_squared
+            && b.distance_squared(c) <= self.target_squared
+            && c.distance_squared(a) <= self.target_squared
+        {
+            return false;
+        }
+        let minimum = a.min(b).min(c);
+        let maximum = a.max(b).max(c);
+        let near = |center: glam::DVec3| {
+            // The narrow-phase projection performs more floating arithmetic
+            // than clamping to an AABB. Retain tangent bounds conservatively
+            // when their results differ by a few f64 rounding units.
+            let scale = minimum
+                .abs()
+                .max_element()
+                .max(maximum.abs().max_element())
+                .max(center.abs().max_element())
+                .max(self.radius_squared.sqrt());
+            let slack = 64.0 * f64::EPSILON * scale;
+            center.distance_squared(center.clamp(minimum, maximum))
+                <= (self.radius_squared.sqrt() + slack).powi(2)
+        };
+        near(self.center) || (self.symmetry_x && near(self.mirrored_center))
+    }
+
+    fn contains_edge(self, mesh: &Mesh, a: u32, b: u32) -> bool {
+        let (a, b) = (a as usize, b as usize);
+        let a = mesh.positions[a].as_dvec3();
+        let b = mesh.positions[b].as_dvec3();
+        let direction = b - a;
+        let length_squared = direction.length_squared();
+        if length_squared <= self.target_squared {
+            return false;
+        }
+        let near = |center: glam::DVec3| {
+            let parameter = ((center - a).dot(direction) / length_squared).clamp(0.0, 1.0);
+            (a + direction * parameter).distance_squared(center) <= self.radius_squared
+        };
+        near(self.center) || (self.symmetry_x && near(self.mirrored_center))
+    }
+}
+
+impl Mesh {
+    /// Split long edges within a brush's world-space radius, in at most two
+    /// rounds of 512 added vertices each. Shared edges are split on both sides,
+    /// including at the patch boundary; existing positions remain unchanged.
+    /// Mask and RGB midpoint interpolation follows the unchanged linear surface.
+    /// Fully masked faces do not initiate additional sculpt resolution. A
+    /// protected edge on an editable face may still split: its fully protected
+    /// midpoint keeps the boundary conforming without generating thin wedges.
+    ///
+    /// Exact reflected edge groups are admitted together when X symmetry is on,
+    /// so the work budget cannot cut a symmetric group in half. This preserves
+    /// existing exact symmetry without assuming an imported mesh is symmetric.
+    /// A self-mirrored two-edge face uses an interior linear sample instead of
+    /// an asymmetric diagonal; symmetry mode reserves half the round budget for
+    /// those samples. Near symmetry is not welded or treated as exact symmetry.
+    /// Allocation-limit or selected-topology failures leave the mesh untouched.
+    /// This adds triangles, not a persistent subdivision hierarchy or remeshing.
+    pub fn refine_brush_patch(
+        &mut self,
+        center: Vec3,
+        radius: f32,
+        symmetry_x: bool,
+    ) -> Result<PatchRefinement, String> {
+        self.refine_brush_patch_impl(
+            center, radius, symmetry_x, 0.0, None, MAX_ROUNDS, None, false,
+        )
+        .map(|(report, _)| report)
+    }
+
+    /// Draw has already changed these vertices and deferred its normal update.
+    /// The public entry point retains its full normal-rebuild semantics; this
+    /// internal path combines Draw's dirty patch with the topology transition.
+    pub(crate) fn refine_brush_patch_with_dirty_normals(
+        &mut self,
+        center: Vec3,
+        radius: f32,
+        symmetry_x: bool,
+        dirty_vertices: &[usize],
+    ) -> Result<PatchRefinement, String> {
+        self.refine_brush_patch_impl(
+            center,
+            radius,
+            symmetry_x,
+            0.0,
+            Some(dirty_vertices),
+            MAX_ROUNDS,
+            None,
+            false,
+        )
+        .map(|(report, _)| report)
+    }
+
+    /// Move samples its fixed deformation field on the resting surface, before
+    /// dragging. Four bounded rounds resolve a small footprint without adding
+    /// topology during the gesture or invalidating captured influence weights.
+    pub(crate) fn refine_move_patch(
+        &mut self,
+        center: Vec3,
+        radius: f32,
+        symmetry_x: bool,
+    ) -> Result<PatchRefinement, String> {
+        // Move's transition to coarse triangles must lie outside its active
+        // deformation field. Otherwise a skinny refinement transition can
+        // clamp a smooth target before the adequately sampled center moves.
+        self.refine_brush_patch_impl(
+            center,
+            radius * 2.0,
+            symmetry_x,
+            0.0,
+            None,
+            4,
+            Some(radius),
+            false,
+        )
+        .map(|(report, _)| report)
+    }
+
+    pub(crate) fn refine_brush_patch_with_options(
+        &mut self,
+        center: Vec3,
+        radius: f32,
+        symmetry_x: bool,
+        symmetry_offset: f32,
+        dirty_vertices: &[usize],
+    ) -> Result<(PatchRefinement, Vec<RefinementParents>), String> {
+        self.refine_brush_patch_impl(
+            center,
+            radius,
+            symmetry_x,
+            symmetry_offset,
+            Some(dirty_vertices),
+            MAX_ROUNDS,
+            None,
+            true,
+        )
+    }
+
+    pub(crate) fn refine_move_patch_at_offset(
+        &mut self,
+        center: Vec3,
+        radius: f32,
+        symmetry_x: bool,
+        symmetry_offset: f32,
+    ) -> Result<PatchRefinement, String> {
+        self.refine_brush_patch_impl(
+            center,
+            radius * 2.0,
+            symmetry_x,
+            symmetry_offset,
+            None,
+            4,
+            Some(radius),
+            false,
+        )
+        .map(|(report, _)| report)
+    }
+
+    // This internal entry point combines a spatial query, the caller's dirty
+    // normal set, and separate bounded policies for live dabs and frozen Move
+    // gestures. Public callers expose only the options relevant to their job.
+    #[allow(clippy::too_many_arguments)]
+    fn refine_brush_patch_impl(
+        &mut self,
+        center: Vec3,
+        radius: f32,
+        symmetry_x: bool,
+        symmetry_offset: f32,
+        dirty_vertices: Option<&[usize]>,
+        max_rounds: usize,
+        target_radius: Option<f32>,
+        collect_parents: bool,
+    ) -> Result<(PatchRefinement, Vec<RefinementParents>), String> {
+        self.validate()?;
+        self.require_plain_topology("Adaptive refinement")?;
+        let mut query = PatchQuery::new(center, radius, symmetry_x, symmetry_offset)?;
+        if let Some(target_radius) = target_radius {
+            query.target_squared = (f64::from(target_radius) * TARGET_EDGE_RADIUS).powi(2);
+            query.move_quality = true;
+        }
+        let original_vertices = self.positions.len();
+        let original_triangles = self.triangles.len();
+        let mut candidate_faces: Vec<_> = self
+            .triangles
+            .iter()
+            .enumerate()
+            .filter_map(|(face, &triangle)| {
+                query
+                    .contains_face(&self.positions, triangle)
+                    .then_some(face)
+            })
+            .collect();
+        let mut selected = select_edges(self, &candidate_faces, query);
+        preserve_child_quality(self, &candidate_faces, query, &mut selected)?;
+        if selected.edges.is_empty() {
+            return Ok((
+                PatchRefinement {
+                    limited: selected.limited,
+                    ..PatchRefinement::default()
+                },
+                Vec::new(),
+            ));
+        }
+        // Every selected edge adds a vertex and at least one child face. Reject
+        // this inexpensive lower bound before cloning a full document snapshot;
+        // each round also preflights exact incidences and interior face samples.
+        if original_vertices + selected.edges.len() > MAX_VERTICES
+            || original_triangles + selected.edges.len() > MAX_TRIANGLES
+        {
+            return Err(
+                "Patch refinement exceeds the one-million vertex or two-million triangle limit"
+                    .into(),
+            );
+        }
+        let mut candidate = self.snapshot();
+        let mut dirty = dirty_vertices.unwrap_or_default().to_vec();
+        let mut limited = false;
+        let mut parents = Vec::new();
+        for round in 0..max_rounds {
+            if round != 0 {
+                selected = select_edges(&candidate, &candidate_faces, query);
+                preserve_child_quality(&candidate, &candidate_faces, query, &mut selected)?;
+            }
+            limited |= selected.limited;
+            if selected.edges.is_empty() {
+                break;
+            }
+            candidate_faces = refine_round(
+                &mut candidate,
+                &selected.edges,
+                &candidate_faces,
+                query,
+                &mut dirty,
+                collect_parents.then_some(&mut parents),
+            )?;
+        }
+        limited |= candidate_faces.iter().any(|&face| {
+            let triangle = candidate.triangles[face];
+            !triangle
+                .iter()
+                .all(|&vertex| candidate.fully_protected(vertex as usize))
+                && triangle_edges(triangle)
+                    .into_iter()
+                    .any(|(a, b)| query.contains_edge(&candidate, a, b))
+        });
+        let result = PatchRefinement {
+            vertices_added: candidate.positions.len() - original_vertices,
+            triangles_added: candidate.triangles.len() - original_triangles,
+            limited,
+        };
+        if result.vertices_added != 0 {
+            candidate.clear_cache();
+            if dirty_vertices.is_some() {
+                candidate
+                    .normals
+                    .resize(candidate.positions.len(), Vec3::ZERO);
+                candidate.recompute_normals_near_vertices(&dirty);
+            } else {
+                candidate.recompute_normals();
+            }
+            candidate.validate()?;
+            *self = candidate;
+        }
+        Ok((result, parents))
+    }
+}
+
+fn select_edges(mesh: &Mesh, faces: &[usize], query: PatchQuery) -> SelectedEdges {
+    let mut group_indices = HashMap::new();
+    let mut groups: Vec<EdgeGroup> = Vec::new();
+    // This set contains only retained candidate groups, never every mesh edge.
+    // Coincident disconnected geometry can create a large symmetric group, so
+    // groups are capped too, instead of growing with the full input topology.
+    let mut seen = HashSet::new();
+    let mut limited = false;
+    for &face in faces {
+        let triangle = mesh.triangles[face];
+        if triangle
+            .iter()
+            .all(|&vertex| mesh.fully_protected(vertex as usize))
+        {
+            continue;
+        }
+        for (a, b) in triangle_edges(triangle) {
+            let edge = (a.min(b), a.max(b));
+            if seen.contains(&edge) || !query.contains_edge(mesh, a, b) {
+                continue;
+            }
+            let key = if query.symmetry_x {
+                symmetric_key(
+                    mesh.positions[a as usize],
+                    mesh.positions[b as usize],
+                    query.symmetry_offset,
+                )
+            } else {
+                GroupKey::Edge(edge.0, edge.1)
+            };
+            let group = if let Some(&index) = group_indices.get(&key) {
+                index
+            } else {
+                if groups.len() == MAX_EDGES_PER_ROUND {
+                    limited = true;
+                    continue;
+                }
+                let index = groups.len();
+                groups.push(EdgeGroup::default());
+                group_indices.insert(key, index);
+                index
+            };
+            if groups[group].overflow {
+                continue;
+            }
+            if groups[group].edges.len() == MAX_EDGES_PER_ROUND {
+                groups[group].overflow = true;
+                limited = true;
+                continue;
+            }
+            seen.insert(edge);
+            groups[group].edges.push(edge);
+        }
+    }
+    // A self-mirrored two-edge split needs one interior face sample rather than
+    // choosing an asymmetric quad diagonal. Reserve space for those samples:
+    // each such face consumes two edge incidences, so their count is at most
+    // the admitted edge count on the selected manifold patch.
+    let edge_budget = if query.symmetry_x {
+        MAX_EDGES_PER_ROUND / 2
+    } else {
+        MAX_EDGES_PER_ROUND
+    };
+    let mut edges = Vec::with_capacity(edge_budget);
+    for group in groups {
+        if group.overflow || edges.len() + group.edges.len() > edge_budget {
+            limited = true;
+            continue;
+        }
+        edges.extend(group.edges);
+    }
+    SelectedEdges { edges, limited }
+}
+
+fn symmetric_key(a: Vec3, b: Vec3, offset: f32) -> GroupKey {
+    let bits = |p: Vec3| {
+        p.to_array()
+            .map(|value| if value == 0.0 { 0 } else { value.to_bits() })
+    };
+    let sorted = |a: Vec3, b: Vec3| {
+        let (a, b) = (bits(a), bits(b));
+        let (a, b) = if a <= b { (a, b) } else { (b, a) };
+        [a[0], a[1], a[2], b[0], b[1], b[2]]
+    };
+    let reflected = |p: Vec3| Vec3::new(2.0 * offset - p.x, p.y, p.z);
+    GroupKey::Symmetric(sorted(a, b).min(sorted(reflected(a), reflected(b))))
+}
+
+/// A conforming transition must not repeatedly bisect a wedge against a longer
+/// unsplit edge. Drop complete reflected groups that would manufacture skinny
+/// children. Removing a split can change another transition, so repeat locally
+/// with a fixed work bound; every unsuccessful pass removes at least one group.
+fn preserve_child_quality(
+    mesh: &Mesh,
+    faces: &[usize],
+    query: PatchQuery,
+    selected: &mut SelectedEdges,
+) -> Result<(), String> {
+    let mut incidences: HashMap<_, _> = selected
+        .edges
+        .iter()
+        .map(|&edge| (edge, (0_usize, false)))
+        .collect();
+    for &(a, b) in &selected.edges {
+        let (a, b) = (mesh.positions[a as usize], mesh.positions[b as usize]);
+        let midpoint = (a + b) * 0.5;
+        if midpoint == a || midpoint == b {
+            return Err(
+                "Patch refinement midpoint cannot be represented at this coordinate scale".into(),
+            );
+        }
+    }
+    let mut unique_faces = HashSet::new();
+    for &face in faces {
+        let triangle = mesh.triangles[face];
+        let mut touched = false;
+        for (a, b) in triangle_edges(triangle) {
+            if let Some((count, forward)) = incidences.get_mut(&(a.min(b), a.max(b))) {
+                if *count == 2 {
+                    return Err("Patch refinement refuses a selected non-manifold edge".into());
+                }
+                if *count == 1 && *forward == (a < b) {
+                    return Err("Patch refinement requires consistent selected-edge winding".into());
+                }
+                *count += 1;
+                *forward = a < b;
+                touched = true;
+            }
+        }
+        if touched {
+            let mut sorted = triangle;
+            sorted.sort_unstable();
+            if !unique_faces.insert(sorted) {
+                return Err("Patch refinement refuses duplicate selected faces".into());
+            }
+            if cross(&mesh.positions, triangle).length_squared() == 0.0 {
+                return Err("Patch refinement refuses a degenerate selected face".into());
+            }
+        }
+    }
+    for _ in 0..8 {
+        if selected.edges.is_empty() {
+            return Ok(());
+        }
+        let edges: HashSet<_> = selected.edges.iter().copied().collect();
+        let mut rejected = HashSet::new();
+        for &face in faces {
+            let triangle = mesh.triangles[face];
+            let slots = triangle_edges(triangle)
+                .map(|(a, b)| edges.contains(&(a.min(b), a.max(b))).then_some(()));
+            if slots.iter().all(Option::is_none) {
+                continue;
+            }
+            // Move's deformation guard uses cross/longest-edge-squared. Use
+            // that same metric for its newly generated faces, with headroom
+            // above the 0.1 deformation floor. Ordinary sculpt refinement
+            // retains its existing standard triangle-quality policy.
+            let triangle_quality: fn(&[Vec3], [u32; 3]) -> f64 = if query.move_quality {
+                quality
+            } else {
+                standard_quality
+            };
+            let parent_quality = triangle_quality(&mesh.positions, triangle);
+            // Malformed selected topology is rejected by the atomic round
+            // preflight, rather than hidden by skipping its selected edges.
+            if !parent_quality.is_finite() || parent_quality <= 0.0 {
+                continue;
+            }
+            let [a, b, c] = triangle.map(|vertex| mesh.positions[vertex as usize]);
+            let mut local = [
+                a,
+                b,
+                c,
+                (a + b) * 0.5,
+                (b + c) * 0.5,
+                (c + a) * 0.5,
+                Vec3::ZERO,
+            ];
+            let center = if query.symmetry_x
+                && slots.iter().flatten().count() == 2
+                && symmetric_corner(triangle, slots, &mesh.positions, query.symmetry_offset)
+                    .is_some()
+            {
+                let [a, b, c] =
+                    symmetric_corner(triangle, slots, &mesh.positions, query.symmetry_offset)
+                        .unwrap()
+                        .map(|vertex| mesh.positions[vertex as usize]);
+                local[6] = (a + c) * 0.375 + b * 0.25;
+                Some(6)
+            } else {
+                None
+            };
+            let children = split_face(
+                [0, 1, 2],
+                std::array::from_fn(|slot| slots[slot].map(|_| slot as u32 + 3)),
+                center,
+                &local,
+                query.symmetry_offset,
+            );
+            if children.iter().any(|&child| {
+                triangle_quality(&local, child) < parent_quality.min(0.15) * (1.0 - 1e-5)
+            }) {
+                for (a, b) in triangle_edges(triangle) {
+                    if edges.contains(&(a.min(b), a.max(b))) {
+                        rejected.insert(if query.symmetry_x {
+                            symmetric_key(
+                                mesh.positions[a as usize],
+                                mesh.positions[b as usize],
+                                query.symmetry_offset,
+                            )
+                        } else {
+                            GroupKey::Edge(a.min(b), a.max(b))
+                        });
+                    }
+                }
+            }
+        }
+        if rejected.is_empty() {
+            return Ok(());
+        }
+        selected.limited = true;
+        selected.edges.retain(|&(a, b)| {
+            let key = if query.symmetry_x {
+                symmetric_key(
+                    mesh.positions[a as usize],
+                    mesh.positions[b as usize],
+                    query.symmetry_offset,
+                )
+            } else {
+                GroupKey::Edge(a, b)
+            };
+            !rejected.contains(&key)
+        });
+    }
+    selected.edges.clear();
+    selected.limited = true;
+    Ok(())
+}
+
+fn triangle_edges([a, b, c]: [u32; 3]) -> [(u32, u32); 3] {
+    [(a, b), (b, c), (c, a)]
+}
+
+struct FaceSplit {
+    face: usize,
+    edges: [Option<usize>; 3],
+    center: Option<u32>,
+    needs_center: bool,
+}
+
+fn refine_round(
+    mesh: &mut Mesh,
+    selected: &[(u32, u32)],
+    candidate_faces: &[usize],
+    query: PatchQuery,
+    dirty: &mut Vec<usize>,
+    mut ancestry: Option<&mut Vec<RefinementParents>>,
+) -> Result<Vec<usize>, String> {
+    let edge_indices: HashMap<_, _> = selected
+        .iter()
+        .copied()
+        .enumerate()
+        .map(|(index, edge)| (edge, index))
+        .collect();
+    let mut incidences = vec![(0_usize, false); selected.len()];
+    let mut selected_faces = Vec::new();
+    let mut unique_faces = HashSet::new();
+    let mut central_count = 0;
+    let mut growth = 0;
+    for &face in candidate_faces {
+        let triangle = mesh.triangles[face];
+        let mut edge_slots = [None; 3];
+        for (slot, (a, b)) in triangle_edges(triangle).into_iter().enumerate() {
+            if let Some(&edge) = edge_indices.get(&(a.min(b), a.max(b))) {
+                let (count, forward) = &mut incidences[edge];
+                if *count == 2 {
+                    return Err("Patch refinement refuses a selected non-manifold edge".into());
+                }
+                if *count == 1 && *forward == (a < b) {
+                    return Err("Patch refinement requires consistent selected-edge winding".into());
+                }
+                *count += 1;
+                *forward = a < b;
+                edge_slots[slot] = Some(edge);
+            }
+        }
+        let split_count = edge_slots.iter().flatten().count();
+        if split_count == 0 {
+            continue;
+        }
+        let mut sorted = triangle;
+        sorted.sort_unstable();
+        if !unique_faces.insert(sorted) {
+            return Err("Patch refinement refuses duplicate selected faces".into());
+        }
+        if cross(&mesh.positions, triangle).length_squared() == 0.0 {
+            return Err("Patch refinement refuses a degenerate selected face".into());
+        }
+        let needs_center = query.symmetry_x
+            && split_count == 2
+            && symmetric_corner(triangle, edge_slots, &mesh.positions, query.symmetry_offset)
+                .is_some();
+        selected_faces.push(FaceSplit {
+            face,
+            edges: edge_slots,
+            center: None,
+            needs_center,
+        });
+        growth += split_count;
+        if needs_center {
+            central_count += 1;
+            growth += 2;
+        }
+    }
+    let vertex_count = mesh.positions.len() + selected.len() + central_count;
+    let triangle_count = mesh.triangles.len() + growth;
+    if vertex_count > MAX_VERTICES || triangle_count > MAX_TRIANGLES {
+        return Err(
+            "Patch refinement exceeds the one-million vertex or two-million triangle limit".into(),
+        );
+    }
+    let old_count = mesh.positions.len();
+    let added_count = selected.len() + central_count;
+    mesh.positions
+        .try_reserve_exact(added_count)
+        .map_err(|_| "Cannot allocate refinement positions")?;
+    mesh.masks
+        .try_reserve_exact(added_count)
+        .map_err(|_| "Cannot allocate refinement masks")?;
+    mesh.colors
+        .try_reserve_exact(added_count)
+        .map_err(|_| "Cannot allocate refinement colors")?;
+    if let Some(materials) = &mut mesh.materials {
+        materials
+            .try_reserve_exact(added_count)
+            .map_err(|_| "Cannot allocate refinement materials")?;
+    }
+    for &(a, b) in selected {
+        let (a, b) = (a as usize, b as usize);
+        let midpoint = (mesh.positions[a] + mesh.positions[b]) * 0.5;
+        if midpoint == mesh.positions[a] || midpoint == mesh.positions[b] {
+            return Err(
+                "Patch refinement midpoint cannot be represented at this coordinate scale".into(),
+            );
+        }
+        if let Some(parents) = ancestry.as_deref_mut() {
+            parents.push(RefinementParents {
+                vertex: mesh.positions.len(),
+                parents: [a, b, b],
+                weights: [0.5, 0.5, 0.0],
+            });
+        }
+        mesh.positions.push(midpoint);
+        mesh.masks.push((mesh.masks[a] + mesh.masks[b]) * 0.5);
+        mesh.colors.push(std::array::from_fn(|channel| {
+            (mesh.colors[a][channel] + mesh.colors[b][channel]) * 0.5
+        }));
+        if let Some(materials) = &mut mesh.materials {
+            materials.push(std::array::from_fn(|channel| {
+                (materials[a][channel] + materials[b][channel]) * 0.5
+            }));
+        }
+    }
+    for split in &mut selected_faces {
+        let triangle = mesh.triangles[split.face];
+        dirty.extend(triangle.map(|vertex| vertex as usize));
+        if !split.needs_center {
+            continue;
+        }
+        let [a, b, c] = symmetric_corner(
+            triangle,
+            split.edges,
+            &mesh.positions,
+            query.symmetry_offset,
+        )
+        .unwrap()
+        .map(|vertex| vertex as usize);
+        if let Some(parents) = ancestry.as_deref_mut() {
+            parents.push(RefinementParents {
+                vertex: mesh.positions.len(),
+                parents: [a, c, b],
+                weights: [0.375, 0.375, 0.25],
+            });
+        }
+        split.center = Some(mesh.positions.len() as u32);
+        mesh.positions
+            .push((mesh.positions[a] + mesh.positions[c]) * 0.375 + mesh.positions[b] * 0.25);
+        mesh.masks
+            .push((mesh.masks[a] + mesh.masks[c]) * 0.375 + mesh.masks[b] * 0.25);
+        mesh.colors.push(std::array::from_fn(|channel| {
+            (mesh.colors[a][channel] + mesh.colors[c][channel]) * 0.375
+                + mesh.colors[b][channel] * 0.25
+        }));
+        if let Some(materials) = &mut mesh.materials {
+            materials.push(std::array::from_fn(|channel| {
+                (materials[a][channel] + materials[c][channel]) * 0.375
+                    + materials[b][channel] * 0.25
+            }));
+        }
+    }
+    dirty.extend(old_count..vertex_count);
+    let mut triangles = Vec::new();
+    triangles
+        .try_reserve_exact(triangle_count)
+        .map_err(|_| "Cannot allocate refinement triangles")?;
+    let mut next_candidates = Vec::with_capacity(candidate_faces.len() + growth);
+    let mut old_cursor = 0;
+    let mut candidate_cursor = 0;
+    for split in selected_faces {
+        let output_cursor = triangles.len();
+        triangles.extend_from_slice(&mesh.triangles[old_cursor..split.face]);
+        while candidate_cursor < candidate_faces.len()
+            && candidate_faces[candidate_cursor] < split.face
+        {
+            next_candidates.push(output_cursor + candidate_faces[candidate_cursor] - old_cursor);
+            candidate_cursor += 1;
+        }
+        // The selected face is represented by its children below. Filtering
+        // child bounds is safe because unchanged faces cannot become newly near
+        // the brush during shape-preserving topology changes.
+        debug_assert_eq!(candidate_faces.get(candidate_cursor), Some(&split.face));
+        candidate_cursor += 1;
+        let triangle = mesh.triangles[split.face];
+        let slots = split
+            .edges
+            .map(|edge| edge.map(|edge| (old_count + edge) as u32));
+        let children = split_face(
+            triangle,
+            slots,
+            split.center,
+            &mesh.positions,
+            query.symmetry_offset,
+        );
+        let old_cross = cross(&mesh.positions, triangle);
+        for child in children {
+            if cross(&mesh.positions, child).dot(old_cross) <= 0.0 {
+                return Err(
+                    "Patch refinement would create a degenerate or reversed triangle".into(),
+                );
+            }
+            if query.contains_face(&mesh.positions, child) {
+                next_candidates.push(triangles.len());
+            }
+            triangles.push(child);
+        }
+        old_cursor = split.face + 1;
+    }
+    let output_cursor = triangles.len();
+    triangles.extend_from_slice(&mesh.triangles[old_cursor..]);
+    while candidate_cursor < candidate_faces.len() {
+        next_candidates.push(output_cursor + candidate_faces[candidate_cursor] - old_cursor);
+        candidate_cursor += 1;
+    }
+    mesh.triangles = triangles;
+    mesh.clear_cache();
+    Ok(next_candidates)
+}
+
+fn symmetric_corner<T>(
+    triangle: [u32; 3],
+    edges: [Option<T>; 3],
+    positions: &[Vec3],
+    offset: f32,
+) -> Option<[u32; 3]> {
+    let missing = edges.iter().position(Option::is_none)?;
+    let r = (missing + 1) % 3;
+    let corner = std::array::from_fn(|slot| triangle[(r + slot) % 3]);
+    let [a, b, c] = corner.map(|vertex| positions[vertex as usize]);
+    (b.x == offset && a.x != offset && a.x == 2.0 * offset - c.x && a.y == c.y && a.z == c.z)
+        .then_some(corner)
+}
+
+fn split_face(
+    triangle: [u32; 3],
+    edges: [Option<u32>; 3],
+    center: Option<u32>,
+    positions: &[Vec3],
+    offset: f32,
+) -> Vec<[u32; 3]> {
+    match edges.iter().flatten().count() {
+        1 => {
+            let r = edges.iter().position(Option::is_some).unwrap();
+            let [a, b, c] = std::array::from_fn(|slot| triangle[(r + slot) % 3]);
+            let midpoint = edges[r].unwrap();
+            vec![[a, midpoint, c], [midpoint, b, c]]
+        }
+        2 => {
+            let r = (0..3).find(|&r| edges[(r + 2) % 3].is_none()).unwrap();
+            let [a, b, c] = std::array::from_fn(|slot| triangle[(r + slot) % 3]);
+            let ab = edges[r].unwrap();
+            let bc = edges[(r + 1) % 3].unwrap();
+            if let Some(center) = center {
+                return vec![
+                    [b, bc, ab],
+                    [a, ab, center],
+                    [ab, bc, center],
+                    [bc, c, center],
+                    [c, a, center],
+                ];
+            }
+            let first = vec![[b, bc, ab], [a, ab, bc], [a, bc, c]];
+            let second = vec![[b, bc, ab], [a, ab, c], [ab, bc, c]];
+            let minimum_quality = |triangles: &[[u32; 3]]| {
+                triangles
+                    .iter()
+                    .map(|&triangle| quality(positions, triangle))
+                    .fold(f64::INFINITY, f64::min)
+            };
+            let first_quality = minimum_quality(&first);
+            let second_quality = minimum_quality(&second);
+            let mirror_key = |a: u32, b: u32| match symmetric_key(
+                positions[a as usize],
+                positions[b as usize],
+                offset,
+            ) {
+                GroupKey::Symmetric(key) => key,
+                GroupKey::Edge(_, _) => unreachable!(),
+            };
+            // Equivalent diagonals must make the same geometric choice in a
+            // reflected face, independent of the face's cyclic index order.
+            let first_preferred = if (first_quality - second_quality).abs() <= 1e-12 {
+                mirror_key(a, bc) <= mirror_key(ab, c)
+            } else {
+                first_quality > second_quality
+            };
+            if first_preferred {
+                first
+            } else {
+                second
+            }
+        }
+        3 => {
+            let [a, b, c] = triangle;
+            let [ab, bc, ca] = edges.map(Option::unwrap);
+            vec![[a, ab, ca], [b, bc, ab], [c, ca, bc], [ab, bc, ca]]
+        }
+        _ => vec![triangle],
+    }
+}
+
+fn cross(positions: &[Vec3], triangle: [u32; 3]) -> glam::DVec3 {
+    let [a, b, c] = triangle.map(|vertex| positions[vertex as usize].as_dvec3());
+    (b - a).cross(c - a)
+}
+
+fn quality(positions: &[Vec3], triangle: [u32; 3]) -> f64 {
+    let [a, b, c] = triangle.map(|vertex| positions[vertex as usize].as_dvec3());
+    (b - a).cross(c - a).length()
+        / a.distance_squared(b)
+            .max(b.distance_squared(c))
+            .max(c.distance_squared(a))
+}
+
+fn standard_quality(positions: &[Vec3], triangle: [u32; 3]) -> f64 {
+    let [a, b, c] = triangle.map(|vertex| positions[vertex as usize].as_dvec3());
+    2.0 * 3.0_f64.sqrt() * (b - a).cross(c - a).length()
+        / (a.distance_squared(b) + b.distance_squared(c) + c.distance_squared(a))
+}
+
+#[cfg(test)]
+mod normal_regressions {
+    use super::*;
+
+    fn assert_parent_contract(mesh: &Mesh, original: usize, parents: &[RefinementParents]) {
+        assert_eq!(parents.len(), mesh.positions.len() - original);
+        for (step, ancestry) in parents.iter().enumerate() {
+            assert_eq!(ancestry.vertex, original + step);
+            assert!(ancestry
+                .parents
+                .iter()
+                .all(|&parent| parent < ancestry.vertex));
+            assert!(ancestry
+                .weights
+                .iter()
+                .all(|&weight| weight >= 0.0 && weight.is_finite()));
+            assert_eq!(ancestry.weights.iter().sum::<f32>(), 1.0);
+            let expected: glam::DVec3 = ancestry
+                .parents
+                .iter()
+                .zip(ancestry.weights)
+                .map(|(&parent, weight)| mesh.positions[parent].as_dvec3() * f64::from(weight))
+                .sum();
+            assert!(expected.distance(mesh.positions[ancestry.vertex].as_dvec3()) < 1e-7);
+        }
+    }
+
+    #[test]
+    fn ancestry_is_complete_and_ordered_across_rounds_and_interior_samples() {
+        let mut mesh = Mesh::from_obj("v -1 0 0\nv 1 0 0\nv 0 1 0\nf 1 2 3\n").unwrap();
+        let (report, parents) = mesh
+            .refine_brush_patch_with_options(Vec3::Y, 0.7, true, 0.0, &[])
+            .unwrap();
+        assert!(report.vertices_added > 0);
+        assert_parent_contract(&mesh, 3, &parents);
+        assert!(parents
+            .iter()
+            .any(|parent| parent.weights == [0.375, 0.375, 0.25]));
+        assert!(parents
+            .iter()
+            .any(|parent| parent.parents.iter().any(|&index| index >= 3)));
+    }
+
+    #[test]
+    fn shifted_plane_retains_exact_reflection_area_and_ancestry() {
+        let mut mesh = Mesh::from_obj("v -0.75 0 0\nv 1.25 0 0\nv 0.25 1 0\nf 1 2 3\n").unwrap();
+        let (report, parents) = mesh
+            .refine_brush_patch_with_options(Vec3::new(0.25, 1.0, 0.0), 0.7, true, 0.25, &[])
+            .unwrap();
+        assert!(report.vertices_added > 0);
+        assert_parent_contract(&mesh, 3, &parents);
+        for p in &mesh.positions {
+            assert!(mesh.positions.contains(&Vec3::new(0.5 - p.x, p.y, p.z)));
+        }
+        let area: f64 = mesh
+            .triangles
+            .iter()
+            .map(|t| {
+                let [a, b, c] = t.map(|i| mesh.positions[i as usize].as_dvec3());
+                let cross = (b - a).cross(c - a);
+                assert!(cross.z > 0.0 && cross.x == 0.0 && cross.y == 0.0);
+                cross.z * 0.5
+            })
+            .sum();
+        assert!((area - 1.0).abs() < 1e-8);
+    }
+
+    #[test]
+    fn zero_offset_option_path_is_bit_exact_with_established_refinement() {
+        let mut established = Mesh::sphere(3);
+        let mut options = established.snapshot();
+        let expected = established.refine_brush_patch(Vec3::Z, 0.1, true).unwrap();
+        let (actual, parents) = options
+            .refine_brush_patch_with_options(Vec3::Z, 0.1, true, 0.0, &[])
+            .unwrap();
+        assert_eq!(actual, expected);
+        assert_eq!(options.positions, established.positions);
+        assert_eq!(options.triangles, established.triangles);
+        assert_eq!(options.normals, established.normals);
+        assert_eq!(options.colors, established.colors);
+        assert_eq!(options.masks, established.masks);
+        assert_parent_contract(&options, 642, &parents);
+    }
+
+    #[test]
+    fn invalid_shifted_refinement_is_atomic_and_does_not_replace_arrays() {
+        let mut mesh = Mesh::cube();
+        let before = mesh.snapshot();
+        let positions = mesh.positions.as_ptr();
+        for offset in [f32::NAN, f32::INFINITY, 1_000_001.0] {
+            assert!(mesh
+                .refine_brush_patch_with_options(Vec3::ZERO, 1.0, true, offset, &[])
+                .is_err());
+            assert_eq!(mesh.positions.as_ptr(), positions);
+            assert_eq!(mesh.positions, before.positions);
+            assert_eq!(mesh.normals, before.normals);
+            assert_eq!(mesh.triangles, before.triangles);
+        }
+    }
+
+    #[test]
+    fn dirty_normal_refinement_matches_full_rebuild_after_a_deferred_surface_edit() {
+        let mut local = Mesh::sphere(5);
+        let pole = local
+            .positions
+            .iter()
+            .position(|position| position.distance(Vec3::Z) < 1e-6)
+            .unwrap();
+        local.positions[pole] += Vec3::Z * 0.04;
+        let mut full = local.snapshot();
+        let public_result = full.refine_brush_patch(Vec3::Z, 0.06, true).unwrap();
+        let local_result = local
+            .refine_brush_patch_with_dirty_normals(Vec3::Z, 0.06, true, &[pole])
+            .unwrap();
+        assert!(local_result.vertices_added > 0);
+        assert_eq!(public_result, local_result);
+        assert_eq!(local.positions, full.positions);
+        assert_eq!(local.triangles, full.triangles);
+        assert_eq!(local.masks, full.masks);
+        assert_eq!(local.colors, full.colors);
+        assert_eq!(local.normals, full.normals);
+    }
+
+    #[test]
+    fn no_refinement_defers_normal_rebuild_to_the_draw_caller() {
+        let mut local = Mesh::sphere(6);
+        let pole = local
+            .positions
+            .iter()
+            .position(|position| position.distance(Vec3::Z) < 1e-6)
+            .unwrap();
+        local.positions[pole] += Vec3::Z * 0.001;
+        let before = local.normals.clone();
+        let mut full = local.snapshot();
+        full.recompute_normals();
+        let result = local
+            .refine_brush_patch_with_dirty_normals(Vec3::Z, 0.18, true, &[pole])
+            .unwrap();
+        assert_eq!(result.vertices_added, 0);
+        assert_eq!(local.normals, before);
+        local.recompute_normals_near_vertices(&[pole]);
+        assert_eq!(local.normals, full.normals);
+    }
+}

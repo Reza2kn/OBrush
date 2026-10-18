@@ -1,0 +1,44 @@
+{
+  "checkpoint": "C113",
+  "date": "2026-10-17",
+  "scope": "Portable, single-active-subtool Document to immutable resident point input; no delivered studio WebGPU backend",
+  "source": {
+    "path": "crates/obrush-core/src/resident_point_program.rs",
+    "sha256": "a70763030996a777ff521b5378847065573c916a45d7e18feaf6ce8e898e2d19"
+  },
+  "native_core_test_binary": {
+    "path": "target/debug/deps/obrush_core-60b464d3130689ee",
+    "sha256": "d04533272d32faf3ac4c3fdab69e94fe1ae68ce3b0d58d90bd992f7090f02533"
+  },
+  "fixture": {
+    "path": "crates/obrush-core/tests/fixtures/source-import-options/tetra-13-v3-le.sgl",
+    "sha256": "6b92a73c37f250f96032c49638c9d452cf79a69669abd8c56ac5c996225ef16a",
+    "pose_comparison": "all 16 f32 matrix words bit-identical to staged import"
+  },
+  "cases": {
+    "fresh_sphere": "Mesh::sphere(2), protected masks, identity pose, zero mask roundtrip changed words, unchanged project JSON, owned point rows",
+    "transformed_import": "active imported local pose and source unprotected mask convention retained; unchanged project JSON",
+    "fractional_mask": {
+      "raw_f32_bits": "0x3a83126f",
+      "transient_influence_f32_bits": "0x3f7fbe77",
+      "inverse_f32_bits": "0x3a831200",
+      "roundtrip_changed_words": 1,
+      "document_raw_mask_unchanged": true
+    },
+    "rejection": "empty document and hidden active subtool"
+  },
+  "preserved_failed_check": "First targeted run: 5 passed, 1 failed because the test incorrectly assumed the imported SGL fixture used protected masks. The fixture uses unprotected masks; the assertion was corrected and full workspace tests passed.",
+  "checks": {
+    "cargo_fmt_all_check": "pass",
+    "cargo_test_workspace": "pass",
+    "cargo_clippy_workspace_all_targets_deny_warnings": "pass",
+    "cargo_clippy_core_gpu_wasm_deny_warnings": "pass",
+    "cargo_check_app_wasm": "pass"
+  },
+  "limitations": [
+    "The normal studio does not consume this snapshot and still uses CPU/WASM geometry with WebGL2 drawing.",
+    "One active subtool only; carried pose is not yet used by a live GPU canvas or transformed picking.",
+    "Transient protected-mask influence conversion can change f32 words on roundtrip.",
+    "No real Source brush, history transaction, fallback, device recovery, sustained performance or SculptGL/ZBrush parity result."
+  ]
+}

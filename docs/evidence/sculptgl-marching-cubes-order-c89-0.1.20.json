@@ -1,0 +1,533 @@
+{
+  "feature": "Marching Cubes no-UV source-order voxel weight parity",
+  "status": "Matched no-UV OBJ, resolution-16 sphere: native unmasked weights exact, browser within save rounding; geometry within 3.35e-7; full remesh and SculptGL parity open",
+  "reference_source_commit": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+  "reference_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+  "source": [
+    {
+      "path": "crates/obrush-core/src/remesh.rs",
+      "sha256": "83c0dcc24e87c057ab2dbdba9222b72a02719c7a83ca1d031609695d122b86a2",
+      "bytes": 60125
+    },
+    {
+      "path": "crates/obrush-core/examples/mc_reference_fixture.rs",
+      "sha256": "050abbdfa8e6ff01fd95a057a86b7ad9ae69ca895d9d3070a2914be751be6a2d",
+      "bytes": 1330
+    },
+    {
+      "path": "scripts/check-sculptgl-mc.mjs",
+      "sha256": "a978f29bd75d09c471ce31956130cfced90a40b94fab75c0c4316ddd76b11bb4",
+      "bytes": 57986
+    },
+    {
+      "path": "scripts/check-mc-browser.mjs",
+      "sha256": "574909152dbc56b27f8104570952e8875ad73db6d19696c48678b5f1e768ede4",
+      "bytes": 119642
+    },
+    {
+      "path": "scripts/compare-mc-remesh.py",
+      "sha256": "3953521e1321c93af2dc93147aeb4258990b06698a5bd469dc59bff29b3d8bb8",
+      "bytes": 5500
+    },
+    {
+      "path": "docs/SCULPTGL_MARCHING_CUBES_ORDER_C89.md",
+      "sha256": "5fca82b65ebe1a59070fe27bdf8a9ee1bd89d991183e4382ad6d6916411489f8",
+      "bytes": 2841
+    },
+    {
+      "path": "docs/FEATURE_PARITY.md",
+      "sha256": "ea6bf44f3bb487fb978ae6fd959788125c93c5b509da22c640118ebae76000eb",
+      "bytes": 71529
+    },
+    {
+      "path": "docs/SCULPTGL_PARITY.md",
+      "sha256": "7e240e52d50961747570f7e99ee9ad5f3b60910d5770e52410ed701e5fff1958",
+      "bytes": 174671
+    }
+  ],
+  "fixture": {
+    "path": "crates/obrush-core/tests/fixtures/independent-reference-sphere.obj",
+    "sha256": "165e2cfacb2f0d99312fd3f4f3f79c2696be3eee9b05047ac7f57c891783ba9b",
+    "bytes": 24272
+  },
+  "parameters": {
+    "resolution": 16,
+    "relax_topology": [
+      false,
+      true
+    ],
+    "source_vertices": 266,
+    "source_triangles": 528,
+    "source_protected_vertices": 7,
+    "source_has_uv": false,
+    "obrush_smoothing_steps": [
+      0,
+      1
+    ]
+  },
+  "reference": {
+    "run": {
+      "path": ".artifacts/sculptgl-reference-runtime/mc-c89-no-uv-96fbab6d-9e23-4522-9c85-728d8dead8f0/result.json",
+      "sha256": "0887789aa86b9da37a5bd557f7f4a315e2f62a1bc932356c9b448ff29c4f5202",
+      "bytes": 568763
+    },
+    "harness": {
+      "path": ".artifacts/sculptgl-reference-runtime/mc-c89-no-uv-96fbab6d-9e23-4522-9c85-728d8dead8f0/harness.mjs",
+      "sha256": "a978f29bd75d09c471ce31956130cfced90a40b94fab75c0c4316ddd76b11bb4",
+      "bytes": 57986
+    },
+    "before": {
+      "path": ".artifacts/sculptgl-reference-runtime/mc-c89-no-uv-96fbab6d-9e23-4522-9c85-728d8dead8f0/mc-remesh-false-before.json",
+      "sha256": "f1660f08f158d8321019d366c8f27af5b063771406ebf94d481736006cd9876d",
+      "bytes": 116921
+    },
+    "relax_off": {
+      "path": ".artifacts/sculptgl-reference-runtime/mc-c89-no-uv-96fbab6d-9e23-4522-9c85-728d8dead8f0/mc-remesh-false-after.json",
+      "sha256": "0aa9fb7538a6ffa500b64b24d74ab7f9e388e06608255547218db4fd55acaa5f",
+      "bytes": 480109
+    },
+    "relax_on": {
+      "path": ".artifacts/sculptgl-reference-runtime/mc-c89-no-uv-96fbab6d-9e23-4522-9c85-728d8dead8f0/mc-remesh-true-after.json",
+      "sha256": "880cb84fcd2daed79d674e59949c3e3d891b76b90ee29fabb53c8ce4381a6b3c",
+      "bytes": 520280
+    },
+    "status": "passed reference-only Marching Cubes workflows",
+    "pinned_bundle_sha256": null,
+    "imported_fixture": {
+      "path": ".artifacts/sculptgl-reference-runtime/mc-c89-no-uv-96fbab6d-9e23-4522-9c85-728d8dead8f0/independent-material-sphere-no-uv.obj",
+      "sha256": "165e2cfacb2f0d99312fd3f4f3f79c2696be3eee9b05047ac7f57c891783ba9b",
+      "bytes": 24272
+    },
+    "fixture_bytes_equal_authored_obj": true
+  },
+  "face_order": {
+    "receipt": {
+      "path": ".artifacts/mc-c89-order-comparison.json",
+      "sha256": "f3bafe3209554f9828be289798cc5a4ab031a49abd44dd9f9ca4ffc8eee56baf",
+      "bytes": 668
+    },
+    "result": {
+      "source_sha256": "165e2cfacb2f0d99312fd3f4f3f79c2696be3eee9b05047ac7f57c891783ba9b",
+      "reference_before_sha256": "f1660f08f158d8321019d366c8f27af5b063771406ebf94d481736006cd9876d",
+      "authored_vertices": 266,
+      "authored_faces": 528,
+      "reference_unique_vertex_mapping": 266,
+      "reference_face_count": 528,
+      "ordered_face_count": 528,
+      "exact_face_order": true,
+      "exact_face_ids": 528,
+      "weighted_order_checksum": 48968178,
+      "first_28": [
+        23,
+        22,
+        21,
+        20,
+        19,
+        18,
+        17,
+        16,
+        15,
+        14,
+        13,
+        12,
+        11,
+        10,
+        9,
+        8,
+        7,
+        6,
+        5,
+        4,
+        3,
+        2,
+        1,
+        0,
+        70,
+        25,
+        24,
+        71
+      ]
+    }
+  },
+  "comparisons": {
+    "before_ordering": {
+      "path": ".artifacts/mc-c89-no-uv-before-comparison.json",
+      "sha256": "19944aff911940f678fb2020bab562a6d269302f0a1c7e3c5883006cacacfbb3",
+      "bytes": 2601
+    },
+    "native": {
+      "receipt": {
+        "path": ".artifacts/mc-c89-no-uv-core-comparison.json",
+        "sha256": "4c0e6fd0127de2b45f246be734e4061ded5a095ab380c0dd8807568325a16f64",
+        "bytes": 2603
+      },
+      "unrelaxed_face_mapping": {
+        "mapped_vertices": 1172,
+        "oriented_reference_faces": 2340,
+        "oriented_obrush_faces": 2340,
+        "oriented_intersection": 2340,
+        "unoriented_intersection": 2340
+      },
+      "relaxed_mapped_position_difference": {
+        "maximum": 3.3404118413619183e-07,
+        "rms": 1.2517093895097235e-07
+      },
+      "cases": [
+        {
+          "relaxed": false,
+          "reference": {
+            "vertices": 1172,
+            "triangles": 2340,
+            "signed_world_volume": 4.207933080357755
+          },
+          "obrush": {
+            "vertices": 1172,
+            "triangles": 2340,
+            "signed_world_volume": 4.2079338572456395
+          },
+          "reference_to_obrush_nearest_world": {
+            "maximum": 2.3143999929750734e-07,
+            "rms": 1.0250821640622712e-07,
+            "median": 8.999292495353291e-08,
+            "p95": 1.5957938238004922e-07,
+            "exact_within_1e_6": 1172
+          },
+          "obrush_to_reference_nearest_world": {
+            "maximum": 2.3143999929750734e-07,
+            "rms": 1.0250821640622712e-07,
+            "median": 8.999292495353291e-08,
+            "p95": 1.5957938238004922e-07,
+            "exact_within_1e_6": 1172
+          }
+        },
+        {
+          "relaxed": true,
+          "reference": {
+            "vertices": 1172,
+            "triangles": 2340,
+            "signed_world_volume": 4.205187397215937
+          },
+          "obrush": {
+            "vertices": 1172,
+            "triangles": 2340,
+            "signed_world_volume": 4.205188180354054
+          },
+          "reference_to_obrush_nearest_world": {
+            "maximum": 3.3404118413619183e-07,
+            "rms": 1.2517093895097235e-07,
+            "median": 1.111431828206865e-07,
+            "p95": 1.9767543658187322e-07,
+            "exact_within_1e_6": 1172
+          },
+          "obrush_to_reference_nearest_world": {
+            "maximum": 3.3404118413619183e-07,
+            "rms": 1.2517093895097235e-07,
+            "median": 1.111431828206865e-07,
+            "p95": 1.9767543658187322e-07,
+            "exact_within_1e_6": 1172
+          }
+        }
+      ]
+    },
+    "browser": {
+      "receipt": {
+        "path": ".artifacts/mc-c89-no-uv-browser-comparison.json",
+        "sha256": "64ee2ea564a5e77743b876f85c4b6ae9018784f07dc3d2b7c2d4e9659430ab05",
+        "bytes": 2969
+      },
+      "unrelaxed_face_mapping": {
+        "mapped_vertices": 1172,
+        "oriented_reference_faces": 2340,
+        "oriented_obrush_faces": 2340,
+        "oriented_intersection": 2340,
+        "unoriented_intersection": 2340
+      },
+      "relaxed_mapped_position_difference": {
+        "maximum": 3.275738495026354e-07,
+        "rms": 1.2640567928178256e-07
+      },
+      "cases": [
+        {
+          "relaxed": false,
+          "reference": {
+            "vertices": 1172,
+            "triangles": 2340,
+            "signed_world_volume": 4.207933080357755
+          },
+          "obrush": {
+            "vertices": 1172,
+            "triangles": 2340,
+            "signed_world_volume": 4.207933844615049
+          },
+          "reference_to_obrush_nearest_world": {
+            "maximum": 2.3633570493221745e-07,
+            "rms": 1.0490753656226264e-07,
+            "median": 9.190251826259439e-08,
+            "p95": 1.659503265652377e-07,
+            "exact_within_1e_6": 1172
+          },
+          "obrush_to_reference_nearest_world": {
+            "maximum": 2.3633570493221745e-07,
+            "rms": 1.0490753656226264e-07,
+            "median": 9.190251826259439e-08,
+            "p95": 1.659503265652377e-07,
+            "exact_within_1e_6": 1172
+          }
+        },
+        {
+          "relaxed": true,
+          "reference": {
+            "vertices": 1172,
+            "triangles": 2340,
+            "signed_world_volume": 4.205187397215937
+          },
+          "obrush": {
+            "vertices": 1172,
+            "triangles": 2340,
+            "signed_world_volume": 4.205188185372963
+          },
+          "reference_to_obrush_nearest_world": {
+            "maximum": 3.275738495026354e-07,
+            "rms": 1.2640567928178256e-07,
+            "median": 1.124783262334268e-07,
+            "p95": 2.0107959040792683e-07,
+            "exact_within_1e_6": 1172
+          },
+          "obrush_to_reference_nearest_world": {
+            "maximum": 3.275738495026354e-07,
+            "rms": 1.2640567928178256e-07,
+            "median": 1.124783262334268e-07,
+            "p95": 2.0107959040792683e-07,
+            "exact_within_1e_6": 1172
+          }
+        }
+      ]
+    },
+    "masks": {
+      "receipt": {
+        "path": ".artifacts/mc-c89-mask-comparison.json",
+        "sha256": "450aa8264e887142c349d62f26faf42307626b88599f9505bf018b6694ad32c3",
+        "bytes": 1144
+      },
+      "results": {
+        "native": {
+          "false": {
+            "maximum_unmasked_weight_abs_diff": 0.0,
+            "rms_unmasked_weight_abs_diff": 0.0,
+            "above_1e_6": 0,
+            "exact_equal": 1172
+          },
+          "true": {
+            "maximum_unmasked_weight_abs_diff": 0.0,
+            "rms_unmasked_weight_abs_diff": 0.0,
+            "above_1e_6": 0,
+            "exact_equal": 1172
+          }
+        },
+        "browser": {
+          "false": {
+            "maximum_unmasked_weight_abs_diff": 1.3465118353650496e-08,
+            "rms_unmasked_weight_abs_diff": 2.217199053502453e-09,
+            "above_1e_6": 0,
+            "exact_equal": 976
+          },
+          "true": {
+            "maximum_unmasked_weight_abs_diff": 1.3465118353650496e-08,
+            "rms_unmasked_weight_abs_diff": 2.217199053502453e-09,
+            "above_1e_6": 0,
+            "exact_equal": 976
+          }
+        },
+        "native_browser": {
+          "false": {
+            "maximum_position_distance_same_ids": 4.1398270590549436e-08,
+            "maximum_mask_abs_diff_same_ids": 1.3465118409161647e-08,
+            "face_ids_exact": true
+          },
+          "true": {
+            "maximum_position_distance_same_ids": 4.245192454495046e-08,
+            "maximum_mask_abs_diff_same_ids": 1.3465118409161647e-08,
+            "face_ids_exact": true
+          }
+        }
+      }
+    }
+  },
+  "browser": {
+    "result": {
+      "path": ".artifacts/mask-filter-browser/mc-c89-no-uv-e9c428e0-6974-43e6-b686-73e6c1afcb02/result.json",
+      "sha256": "bae0ddfd7127e4123faf4014c0a32453e6444e2bb4248713413c0146b1538ccf",
+      "bytes": 2123719
+    },
+    "status": "passed Marching Cubes browser workflow",
+    "wasm": {
+      "sha256": "02d1b33fffe07d9d7d60d2799712167f95403975be7e648c6c543c7f380a8827",
+      "served_sha256": "02d1b33fffe07d9d7d60d2799712167f95403975be7e648c6c543c7f380a8827",
+      "bytes": 23311117
+    },
+    "cases": [
+      {
+        "name": "marching-cubes-relaxed-false-visible-workflow",
+        "gates": {
+          "visible_control": true,
+          "closed_solid": true,
+          "triangular_output": true,
+          "history_exact": true,
+          "obj_roundtrip": true,
+          "visible_gpu_save_exact": true
+        }
+      },
+      {
+        "name": "marching-cubes-relaxed-true-visible-workflow",
+        "gates": {
+          "visible_control": true,
+          "closed_solid": true,
+          "triangular_output": true,
+          "history_exact": true,
+          "obj_roundtrip": true,
+          "visible_gpu_save_exact": true
+        }
+      }
+    ],
+    "runtime_errors": {
+      "gl": [],
+      "js": []
+    },
+    "actual_4x_msaa": true,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "synthetic_input": true,
+    "served_port_8792_wasm_sha256": "02d1b33fffe07d9d7d60d2799712167f95403975be7e648c6c543c7f380a8827"
+  },
+  "artifacts": {
+    "web_wasm": {
+      "path": "web/dist/pkg/obrush_app_bg.wasm",
+      "sha256": "02d1b33fffe07d9d7d60d2799712167f95403975be7e648c6c543c7f380a8827",
+      "bytes": 23311117
+    },
+    "macos_binary": {
+      "path": ".artifacts/OBrush.app/Contents/MacOS/OBrush",
+      "sha256": "edad688c5a7df504aac9d09f69fae36f61bd61de70ade1511f5f9fb8630422f7",
+      "bytes": 26396240
+    },
+    "web_mit_notice": {
+      "path": "web/dist/licenses/marching-cubes/SCULPTGL_MIT_NOTICE.txt",
+      "sha256": "99ae6fd4cab305bb78329327a2fce4c7a1fd986586d9ccd7cef3b7467f2c1167",
+      "bytes": 1072
+    },
+    "macos_mit_notice": {
+      "path": ".artifacts/OBrush.app/Contents/Resources/licenses/marching-cubes/SCULPTGL_MIT_NOTICE.txt",
+      "sha256": "99ae6fd4cab305bb78329327a2fce4c7a1fd986586d9ccd7cef3b7467f2c1167",
+      "bytes": 1072
+    },
+    "native_output": {
+      "path": ".artifacts/mc-c89-no-uv-core.json",
+      "sha256": "fbaa7216fe273c112dfa135a83c38919c1f156ef542d2624831b5ea0d01e1f61",
+      "bytes": 370313
+    }
+  },
+  "validation": {
+    "face_order_test": {
+      "receipt": {
+        "path": ".artifacts/mc-c89-order-test.log",
+        "sha256": "214c69a8c3dd091d9767033a863bf10d2853e6b2ce3a0aa8dab77eb466d0cef7",
+        "bytes": 13757
+      },
+      "exit_code": 0
+    },
+    "strict_native_clippy": {
+      "receipt": {
+        "path": ".artifacts/mc-c89-clippy-native.log",
+        "sha256": "f988a25634887a9b1e3baa65ca51171fd987a324efc66db495b84fffc1a27608",
+        "bytes": 223
+      },
+      "exit_code": 0
+    },
+    "strict_wasm_clippy": {
+      "receipt": {
+        "path": ".artifacts/mc-c89-clippy-wasm.log",
+        "sha256": "8d4f355c12881045e7b9af5b91f4c254facda0313b798265f310f89ee2f9c51c",
+        "bytes": 223
+      },
+      "exit_code": 0
+    },
+    "workspace_tests": {
+      "receipt": {
+        "path": ".artifacts/mc-c89-workspace-tests.log",
+        "sha256": "6f72674fa69eec3660ec65787d021ca762e8e1bd16760c48646496a76255ff9e",
+        "bytes": 228349
+      },
+      "exit_code": 0
+    },
+    "wasm_check": {
+      "receipt": {
+        "path": ".artifacts/mc-c89-wasm-check.log",
+        "sha256": "22a6ea8378a7f4d48ec6e66c8532ee117e6ea8a181a115aff889c9a2d60c057f",
+        "bytes": 222
+      },
+      "exit_code": 0
+    },
+    "web_build": {
+      "receipt": {
+        "path": ".artifacts/mc-c89-build-web.log",
+        "sha256": "69bc970635fa797c069860b71f3a09ed13cf3585e8626736a4fe5954da037729",
+        "bytes": 279
+      },
+      "exit_code": 0
+    },
+    "macos_package": {
+      "receipt": {
+        "path": ".artifacts/mc-c89-package-macos.log",
+        "sha256": "7bae817a2833683590c1a9c6fc488e39e579a97a360b9fc9f0500b18cde3afce",
+        "bytes": 407
+      },
+      "exit_code": 0
+    },
+    "reference_browser_run": {
+      "receipt": {
+        "path": ".artifacts/mc-c89-reference-run.log",
+        "sha256": "6debc462461ac4426a10e62c5e830babca0f92fd574ef946df956dbd61ebde5b",
+        "bytes": 589
+      },
+      "exit_code": 0
+    },
+    "obrush_browser_run": {
+      "receipt": {
+        "path": ".artifacts/mc-c89-browser-run.log",
+        "sha256": "bc72c2f7e466567dd2833e1f6ac798942c89d6ea3a18c924a592a0b2af6e6154",
+        "bytes": 1209
+      },
+      "exit_code": 0
+    }
+  },
+  "workspace_tests": {
+    "groups": 70,
+    "passed": 2383,
+    "failed": 0,
+    "ignored": 1
+  },
+  "retained_failed_checks": [
+    {
+      "name": "No-UV rich fixture before source face ordering",
+      "relaxed_max_world": 0.002872636435865474,
+      "resolution": "C89 remesh-local optimized face order"
+    },
+    {
+      "name": "C88 cross-UV fixture comparison",
+      "rich_source_reference_has_uv": true,
+      "obrush_source_has_uv": false,
+      "old_relaxed_max_world": 0.0006440558705510322,
+      "resolution": "C89 compares exact same no-UV OBJ in both apps"
+    }
+  ],
+  "limitations": [
+    "One sphere at resolution 16; arbitrary topology and selected multi-mesh fusion unverified",
+    "Retained-UV remesh still rejected; source material/color voxel transport not paired",
+    "Long-session responsiveness and million-vertex brush gates remain open",
+    "Synthetic isolated browser input, not physical pen or native GUI",
+    "WebGPU compute-and-draw backend is prototype, not delivered"
+  ]
+}

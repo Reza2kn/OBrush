@@ -1,0 +1,10 @@
+# Synthetic fixture matching the MMRRGGBB comment convention emitted by ZBrush.
+# The leading byte is intentionally nonuniform and is not an OBrush mask value.
+v 0 0 0 0.9 0.9 0.9
+v 1 0 0 0.9 0.9 0.9
+v 1 1 0 0.9 0.9 0.9
+v 0 1 0 0.9 0.9 0.9
+f 1 2 3
+f 1 3 4
+#MRGB 00ff00007f00ff00
+#MRGB FF0000FF aA123456

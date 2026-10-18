@@ -1,0 +1,511 @@
+{
+  "scope": "Actual19C3 readonly diagnostic exposes helper probeSave coalescing with bracket and productfile-history command priority. No radius tolerance/input/focus/productpolicy change. Originalfailedstatus unchanged.",
+  "recorded_at": "2026-10-14T05:34:29.407659+00:00",
+  "result": {
+    "path": ".artifacts/sculptgl-preferences-runtime/candidate3-0.1.19-release-diagnostic-6490d361-0da4-44bd-b68e-38ba505a6a21/result.json",
+    "sha256": "a55c120481674bc9fcc0e7ac3b96ff5ae1370fd4f13039ae7c5fe044374063eb",
+    "harness_sha256": "dabde6094e9f89ca57ac02485c319a315250b2da5f3db3353e34470431f5ac55",
+    "candidate": {
+      "candidate": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.19-candidate3",
+      "source_root": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-release-0.1.19-candidate3/source",
+      "status": "immutable candidate binding",
+      "manifest_sha256": "06472b8d14a5647dc0bb64ada2e54f10b5397926f14dc943cad5fba1b5628e56",
+      "build_sha256": "378a6b1a485a7a5a64e6d0658e8a54efd8670530b677668035e844472371eb93",
+      "checked_source_files": 169
+    },
+    "WASM_sha256": "59491afb243778fcbccf9af9bd8a5c6298204a92a32b2efc8fb2c7702eb978d1",
+    "raw_status": "failed local host run",
+    "case_gates": {
+      "source_fixture_and_camera_exact": true,
+      "actual_release_and_setting_same_frame": true,
+      "actual_events_trusted": true,
+      "new_radius_committed_exact": false,
+      "old_captured_endpoint_exact": true,
+      "final_endpoint_useful": true,
+      "new_settings_future_output_differs": false,
+      "whole_single_stroke_history_exact": true,
+      "complete_gpu_exact": true,
+      "post_completion_quiet": true
+    },
+    "actual_downloads": 41,
+    "recorded_saved_GPU_pairs": 37,
+    "owned_pid": 83434,
+    "cleanup": {
+      "owned_chrome_exit_code": 0,
+      "owned_chrome_signal": null,
+      "owned_server_closed": true
+    },
+    "postclosure_sha256": "1c47704bb61ef9459eb5859f8c8152fc12f35ca34772c2e88711b00d41490e97"
+  },
+  "actual_input_delivery": [
+    {
+      "name": "changed-release-frame",
+      "initial_radius": 0.18000000715255737,
+      "final_radius": 0.18000000715255737,
+      "DOM_events": [
+        {
+          "type": "pointerup",
+          "key": null,
+          "buttons": 0,
+          "x": 859,
+          "y": 513,
+          "shift": false,
+          "ctrl": false,
+          "alt": false,
+          "trusted": true,
+          "scene_frame_at": 2308.7000000029802,
+          "at": 2323,
+          "DOM_target": {
+            "tag": "CANVAS",
+            "id": "obrush_canvas"
+          },
+          "DOM_active_element": {
+            "tag": "CANVAS",
+            "id": "obrush_canvas"
+          }
+        },
+        {
+          "type": "keydown",
+          "key": "[",
+          "buttons": null,
+          "x": null,
+          "y": null,
+          "shift": false,
+          "ctrl": false,
+          "alt": false,
+          "trusted": true,
+          "scene_frame_at": 2308.7000000029802,
+          "at": 2324.7999999970198,
+          "DOM_target": {
+            "tag": "CANVAS",
+            "id": "obrush_canvas"
+          },
+          "DOM_active_element": {
+            "tag": "CANVAS",
+            "id": "obrush_canvas"
+          }
+        }
+      ],
+      "bracket_rows": {
+        "CPU_ack": [],
+        "GPU_ack": [
+          {
+            "bracket_pressed": true,
+            "buttons": [],
+            "command": false,
+            "focused_id": null,
+            "frame": 46,
+            "input_focused": true,
+            "input_time": 2.3397999999970196,
+            "keys": [
+              {
+                "key": "OpenBracket",
+                "pressed": true,
+                "repeat": false
+              },
+              {
+                "key": "OpenBracket",
+                "pressed": false,
+                "repeat": false
+              },
+              {
+                "key": "S",
+                "pressed": true,
+                "repeat": false
+              },
+              {
+                "key": "S",
+                "pressed": false,
+                "repeat": false
+              }
+            ],
+            "phase": "before_shortcuts",
+            "primary_down": false,
+            "primary_released": false,
+            "radius": 0.18000000715255737,
+            "stroke_active": false,
+            "text_event_count": 1,
+            "wants_keyboard": false
+          },
+          {
+            "bracket_pressed": true,
+            "buttons": [],
+            "command": false,
+            "focused_id": null,
+            "frame": 46,
+            "input_focused": true,
+            "input_time": 2.3397999999970196,
+            "keys": [
+              {
+                "key": "OpenBracket",
+                "pressed": true,
+                "repeat": false
+              },
+              {
+                "key": "OpenBracket",
+                "pressed": false,
+                "repeat": false
+              },
+              {
+                "key": "S",
+                "pressed": false,
+                "repeat": false
+              }
+            ],
+            "phase": "after_shortcuts",
+            "primary_down": false,
+            "primary_released": false,
+            "radius": 0.18000000715255737,
+            "stroke_active": false,
+            "text_event_count": 1,
+            "wants_keyboard": false
+          }
+        ],
+        "after": [
+          {
+            "bracket_pressed": true,
+            "buttons": [],
+            "command": false,
+            "focused_id": null,
+            "frame": 46,
+            "input_focused": true,
+            "input_time": 2.3397999999970196,
+            "keys": [
+              {
+                "key": "OpenBracket",
+                "pressed": true,
+                "repeat": false
+              },
+              {
+                "key": "OpenBracket",
+                "pressed": false,
+                "repeat": false
+              },
+              {
+                "key": "S",
+                "pressed": true,
+                "repeat": false
+              },
+              {
+                "key": "S",
+                "pressed": false,
+                "repeat": false
+              }
+            ],
+            "phase": "before_shortcuts",
+            "primary_down": false,
+            "primary_released": false,
+            "radius": 0.18000000715255737,
+            "stroke_active": false,
+            "text_event_count": 1,
+            "wants_keyboard": false
+          },
+          {
+            "bracket_pressed": true,
+            "buttons": [],
+            "command": false,
+            "focused_id": null,
+            "frame": 46,
+            "input_focused": true,
+            "input_time": 2.3397999999970196,
+            "keys": [
+              {
+                "key": "OpenBracket",
+                "pressed": true,
+                "repeat": false
+              },
+              {
+                "key": "OpenBracket",
+                "pressed": false,
+                "repeat": false
+              },
+              {
+                "key": "S",
+                "pressed": false,
+                "repeat": false
+              }
+            ],
+            "phase": "after_shortcuts",
+            "primary_down": false,
+            "primary_released": false,
+            "radius": 0.18000000715255737,
+            "stroke_active": false,
+            "text_event_count": 1,
+            "wants_keyboard": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "new-settings-control",
+      "initial_radius": 0.18000000715255737,
+      "final_radius": 0.18000000715255737,
+      "DOM_events": [
+        {
+          "type": "pointerup",
+          "key": null,
+          "buttons": 0,
+          "x": 859,
+          "y": 513,
+          "shift": false,
+          "ctrl": false,
+          "alt": false,
+          "trusted": true,
+          "scene_frame_at": 2535.1000000089407,
+          "at": 2535.7000000029802,
+          "DOM_target": {
+            "tag": "CANVAS",
+            "id": "obrush_canvas"
+          },
+          "DOM_active_element": {
+            "tag": "CANVAS",
+            "id": "obrush_canvas"
+          }
+        }
+      ],
+      "bracket_rows": {
+        "CPU_ack": [
+          {
+            "bracket_pressed": true,
+            "buttons": [],
+            "command": false,
+            "focused_id": null,
+            "frame": 44,
+            "input_focused": true,
+            "input_time": 2.1494000000059605,
+            "keys": [
+              {
+                "key": "OpenBracket",
+                "pressed": true,
+                "repeat": false
+              },
+              {
+                "key": "OpenBracket",
+                "pressed": false,
+                "repeat": false
+              },
+              {
+                "key": "S",
+                "pressed": true,
+                "repeat": false
+              },
+              {
+                "key": "S",
+                "pressed": false,
+                "repeat": false
+              }
+            ],
+            "phase": "before_shortcuts",
+            "primary_down": false,
+            "primary_released": false,
+            "radius": 0.18000000715255737,
+            "stroke_active": false,
+            "text_event_count": 1,
+            "wants_keyboard": false
+          },
+          {
+            "bracket_pressed": true,
+            "buttons": [],
+            "command": false,
+            "focused_id": null,
+            "frame": 44,
+            "input_focused": true,
+            "input_time": 2.1494000000059605,
+            "keys": [
+              {
+                "key": "OpenBracket",
+                "pressed": true,
+                "repeat": false
+              },
+              {
+                "key": "OpenBracket",
+                "pressed": false,
+                "repeat": false
+              },
+              {
+                "key": "S",
+                "pressed": false,
+                "repeat": false
+              }
+            ],
+            "phase": "after_shortcuts",
+            "primary_down": false,
+            "primary_released": false,
+            "radius": 0.18000000715255737,
+            "stroke_active": false,
+            "text_event_count": 1,
+            "wants_keyboard": false
+          }
+        ],
+        "GPU_ack": [
+          {
+            "bracket_pressed": true,
+            "buttons": [],
+            "command": false,
+            "focused_id": null,
+            "frame": 44,
+            "input_focused": true,
+            "input_time": 2.1494000000059605,
+            "keys": [
+              {
+                "key": "OpenBracket",
+                "pressed": true,
+                "repeat": false
+              },
+              {
+                "key": "OpenBracket",
+                "pressed": false,
+                "repeat": false
+              },
+              {
+                "key": "S",
+                "pressed": true,
+                "repeat": false
+              },
+              {
+                "key": "S",
+                "pressed": false,
+                "repeat": false
+              }
+            ],
+            "phase": "before_shortcuts",
+            "primary_down": false,
+            "primary_released": false,
+            "radius": 0.18000000715255737,
+            "stroke_active": false,
+            "text_event_count": 1,
+            "wants_keyboard": false
+          },
+          {
+            "bracket_pressed": true,
+            "buttons": [],
+            "command": false,
+            "focused_id": null,
+            "frame": 44,
+            "input_focused": true,
+            "input_time": 2.1494000000059605,
+            "keys": [
+              {
+                "key": "OpenBracket",
+                "pressed": true,
+                "repeat": false
+              },
+              {
+                "key": "OpenBracket",
+                "pressed": false,
+                "repeat": false
+              },
+              {
+                "key": "S",
+                "pressed": false,
+                "repeat": false
+              }
+            ],
+            "phase": "after_shortcuts",
+            "primary_down": false,
+            "primary_released": false,
+            "radius": 0.18000000715255737,
+            "stroke_active": false,
+            "text_event_count": 1,
+            "wants_keyboard": false
+          }
+        ],
+        "after": [
+          {
+            "bracket_pressed": true,
+            "buttons": [],
+            "command": false,
+            "focused_id": null,
+            "frame": 44,
+            "input_focused": true,
+            "input_time": 2.1494000000059605,
+            "keys": [
+              {
+                "key": "OpenBracket",
+                "pressed": true,
+                "repeat": false
+              },
+              {
+                "key": "OpenBracket",
+                "pressed": false,
+                "repeat": false
+              },
+              {
+                "key": "S",
+                "pressed": true,
+                "repeat": false
+              },
+              {
+                "key": "S",
+                "pressed": false,
+                "repeat": false
+              }
+            ],
+            "phase": "before_shortcuts",
+            "primary_down": false,
+            "primary_released": false,
+            "radius": 0.18000000715255737,
+            "stroke_active": false,
+            "text_event_count": 1,
+            "wants_keyboard": false
+          },
+          {
+            "bracket_pressed": true,
+            "buttons": [],
+            "command": false,
+            "focused_id": null,
+            "frame": 44,
+            "input_focused": true,
+            "input_time": 2.1494000000059605,
+            "keys": [
+              {
+                "key": "OpenBracket",
+                "pressed": true,
+                "repeat": false
+              },
+              {
+                "key": "OpenBracket",
+                "pressed": false,
+                "repeat": false
+              },
+              {
+                "key": "S",
+                "pressed": false,
+                "repeat": false
+              }
+            ],
+            "phase": "after_shortcuts",
+            "primary_down": false,
+            "primary_released": false,
+            "radius": 0.18000000715255737,
+            "stroke_active": false,
+            "text_event_count": 1,
+            "wants_keyboard": false
+          }
+        ]
+      }
+    }
+  ],
+  "diagnosis": {
+    "DOM": "Changed pointerup and bracket keydown target/activeElement both CANVAS#obrush_canvas, trusted, same rendered-frame timestamp.",
+    "egui": "Observed before_shortcuts rows include OpenBracket pressed/released plus S pressed/released, input_focused=true, focused_id=null, wants_keyboard=false. After-shortcuts consumes S pressed and leaves radius unchanged.",
+    "source": "file_history_commands processes normal Save then shortcuts returns early if redo/undo/save/open. The immediate helper Save is an unrelated operation injected before the bracket event completed, creating this observed collision.",
+    "focus_hypothesis_limit": "Earlier focus hypothesis was source-only; these actual traced frames show no widget focus guard. Do not reattribute prior untraced builds with certainty."
+  },
+  "next_separate_source_only_contract": {
+    "helper_sha256": "8d5324450f64cd550816584f7abbc388efb60649acb70c1cfbb40ba85c568094",
+    "preregistration_sha256": "ac918d37805b4ccb4208da647265bc4f1af6bc970255bbc50b7d20aec4b64170",
+    "scope": "Bounded120readonlyRAF observe new OpenBracket pressed after_shortcuts and paired before row before probeSave. No S pressed allowed in either delivery row. Independent of expected radius/focus/success; exact final8724 radius/input/geometry/history/GPU/quiet gates unchanged; compoundtile\u2192drag\u2192sameframe release/bracket preserved. Runtime unexecuted."
+  },
+  "focus_reduction": {
+    "path": ".artifacts/sculptgl-preferences-runtime/candidate3-0.1.19-release-diagnostic-6490d361-0da4-44bd-b68e-38ba505a6a21/focus-diagnostic-summary.json",
+    "sha256": "7c4a04d8447e7f3462499223588a4b4a0b0b8fae964328d6a999b6850ecce597"
+  },
+  "limits": [
+    "Original strict immediate/842/8724/dabde failures remain failed; no retroactive pass",
+    "No physical input latency/timing/reference/nativeGUI claim",
+    "Bounded diagnostic rings may overwrite prior frames; absence does not prove missing delivery",
+    "No independently repacked second37GPU dataset yet; runtime full saved/GPU gates passed",
+    "No secondary guessed productpolicy correction; root preserves file/history command priority"
+  ]
+}
