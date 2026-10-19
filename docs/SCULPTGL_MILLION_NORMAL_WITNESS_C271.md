@@ -1,4 +1,4 @@
-# C270 preregistration: local normal-witness publication
+# C271 preregistration: local normal-witness publication
 
 This isolated trial starts at `f6559c7`. The unchanged frozen C264 million-vertex ordinary Source Brush baseline used the 999,002-vertex, 1,998,000-triangle fixture SHA-256 `dfb5316f62e392e633f03cb662dcb12215ed165a71a9ae72a3fd639528731afe` and the 60-second, 400-requested-moves/s protocol SHA-256 `234870ed03a240931a22f421968917efaeed8becc1df834c998bbe3e9c101a33`. It recorded 957 dabs, 66.7 ms active RAF P95, 68.0 ms app RAF CPU P95, 159.0 ms release acknowledgment, 22.943 ms mean Source geometry and 0/4 responsiveness gates. C268 paged face bounds were rejected after worsening browser responsiveness. These are separate observational runs, not paired timings.
 
