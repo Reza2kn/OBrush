@@ -1865,26 +1865,64 @@ fn selected_attribute_changed(old: &[f32; 10], mesh: &Mesh, index: usize) -> boo
 /// Exact byte comparison of the old and new 40-byte GL rows. This is only
 /// called after the old GPU identity and both immutable Source normal states
 /// have been established. None requests the ordinary whole-buffer fallback.
-fn selected_row_upload_ranges(
+struct SelectedRowScan {
+    ranges: Option<Vec<std::ops::Range<usize>>>,
+    raw_masks_match: Option<bool>,
+    materials_match: Option<bool>,
+}
+
+fn selected_row_upload_scan(
     old_rows: &[[f32; 10]],
     mesh: &Mesh,
     state: &obrush_core::SourceGeometryNormalState,
     selected_chunks: Option<&[u64; 8]>,
-) -> Result<Option<Vec<std::ops::Range<usize>>>, String> {
+    raw_masks: Option<&SourceMaskSnapshot>,
+    old_materials: Option<&Option<Vec<[f32; 2]>>>,
+) -> Result<SelectedRowScan, String> {
     if old_rows.len() != mesh.positions.len() {
-        return Ok(None);
+        return Ok(SelectedRowScan {
+            ranges: None,
+            raw_masks_match: None,
+            materials_match: None,
+        });
     }
     let mut eligible = selected_chunks.copied();
+    let mut raw_masks_match = None;
+    let mut materials_match = None;
     if let Some(bits) = eligible.as_mut() {
         // A controlled geometry dab proves its position/normal write scope,
         // but an independently edited mask or RGB channel can retain the same
-        // normal-state Arc. Check those public channels across the whole mesh
-        // before skipping any geometric chunks. Material/UV use their own
-        // exact upload paths.
+        // normal-state Arc. Check the public channels across the whole mesh
+        // before skipping any geometric chunks. The same walk also verifies
+        // the raw mask and material caches, avoiding two separate million-row
+        // reads on the controlled-dab path. UV keeps its own upload policy.
+        raw_masks_match = raw_masks.map(|old| {
+            old.convention == mesh.mask_convention
+                && old.raw.len() == old_rows.len()
+                && mesh.masks.len() == old_rows.len()
+        });
+        materials_match = old_materials.map(|old| match (old.as_ref(), mesh.materials.as_ref()) {
+            (None, None) => true,
+            (Some(old), Some(new)) => old.len() == old_rows.len() && new.len() == old_rows.len(),
+            _ => false,
+        });
         for (index, old) in old_rows.iter().enumerate() {
             if selected_attribute_changed(old, mesh, index) {
                 let chunk = index / SOURCE_UPLOAD_CHUNK_ROWS;
                 bits[chunk / 64] |= 1_u64 << (chunk % 64);
+            }
+            if raw_masks_match == Some(true)
+                && raw_masks.unwrap().raw[index].to_bits() != mesh.masks[index].to_bits()
+            {
+                raw_masks_match = Some(false);
+            }
+            if materials_match == Some(true)
+                && let (Some(old), Some(new)) =
+                    (old_materials.unwrap().as_ref(), mesh.materials.as_ref())
+                && (old[index][0].to_bits() != new[index][0].to_bits()
+                    || old[index][1].to_bits() != new[index][1].to_bits())
+            {
+                materials_match = Some(false);
             }
         }
     }
@@ -1904,7 +1942,11 @@ fn selected_row_upload_ranges(
         if changed {
             changed_chunks += 1;
             if changed_chunks > MAX_SPARSE_SOURCE_CHUNKS {
-                return Ok(None);
+                return Ok(SelectedRowScan {
+                    ranges: None,
+                    raw_masks_match,
+                    materials_match,
+                });
             }
             if let Some(last) = ranges.last_mut()
                 && last.end == start
@@ -1915,7 +1957,22 @@ fn selected_row_upload_ranges(
             }
         }
     }
-    Ok(Some(ranges))
+    Ok(SelectedRowScan {
+        ranges: Some(ranges),
+        raw_masks_match,
+        materials_match,
+    })
+}
+
+#[cfg(test)]
+fn selected_row_upload_ranges(
+    old_rows: &[[f32; 10]],
+    mesh: &Mesh,
+    state: &obrush_core::SourceGeometryNormalState,
+    selected_chunks: Option<&[u64; 8]>,
+) -> Result<Option<Vec<std::ops::Range<usize>>>, String> {
+    selected_row_upload_scan(old_rows, mesh, state, selected_chunks, None, None)
+        .map(|scan| scan.ranges)
 }
 
 // One active Source object may retain the exact rows last published to GL.
@@ -4044,7 +4101,7 @@ impl GpuMesh {
         }
         let mut selected_chunk_witness = false;
         let mut selected_full_scan = false;
-        let sparse_ranges = if reuse_triangles {
+        let sparse_scan = if reuse_triangles {
             match (
                 self.source_upload_cache.as_ref(),
                 previous_selected.as_ref(),
@@ -4056,13 +4113,23 @@ impl GpuMesh {
                     let chunks = normals.render_selected_chunks_from(old_normals);
                     selected_chunk_witness = chunks.is_some();
                     selected_full_scan = chunks.is_none();
-                    selected_row_upload_ranges(&cache.vertices, mesh, normals, chunks.as_ref())?
+                    Some(selected_row_upload_scan(
+                        &cache.vertices,
+                        mesh,
+                        normals,
+                        chunks.as_ref(),
+                        self.source_mask_snapshot.as_ref(),
+                        Some(&cache.materials),
+                    )?)
                 }
                 _ => None,
             }
         } else {
             None
         };
+        let raw_masks_match = sparse_scan.as_ref().and_then(|scan| scan.raw_masks_match);
+        let materials_match = sparse_scan.as_ref().and_then(|scan| scan.materials_match);
+        let sparse_ranges = sparse_scan.and_then(|scan| scan.ranges);
         let mut vertices = if sparse_ranges.is_some() {
             None
         } else if let Some(warm) = &self.selected_normals {
@@ -4076,20 +4143,22 @@ impl GpuMesh {
         } else {
             Some(packed_geometry_rows(mesh, self.source_normals.as_ref())?)
         };
-        let reuse_materials = self.source_upload_cache.as_ref().is_some_and(|cache| {
-            match (&cache.materials, &mesh.materials) {
-                (None, None) => true,
-                (Some(old), Some(new)) => {
-                    bytemuck::cast_slice::<_, u8>(old) == bytemuck::cast_slice::<_, u8>(new)
+        let reuse_materials = materials_match.unwrap_or_else(|| {
+            self.source_upload_cache.as_ref().is_some_and(|cache| {
+                match (&cache.materials, &mesh.materials) {
+                    (None, None) => true,
+                    (Some(old), Some(new)) => {
+                        bytemuck::cast_slice::<_, u8>(old) == bytemuck::cast_slice::<_, u8>(new)
+                    }
+                    _ => false,
                 }
-                _ => false,
-            }
+            })
         });
         let reuse_source_masks = self.source_masks.is_some()
             && self
                 .source_mask_snapshot
                 .as_ref()
-                .is_some_and(|snapshot| snapshot.matches(mesh));
+                .is_some_and(|snapshot| raw_masks_match.unwrap_or_else(|| snapshot.matches(mesh)));
         if !reuse_source_masks {
             self.source_mask_snapshot = None;
             if let Some(buffer) = self.source_masks.take() {
@@ -5423,6 +5492,64 @@ mod tests {
             ranges,
             "A color edit outside the geometry witness still needs an upload"
         );
+    }
+
+    #[test]
+    fn controlled_chunk_scan_checks_raw_masks_and_materials_without_losing_distant_edits() {
+        let mut old = Mesh::sphere(5);
+        old.mask_convention = obrush_core::MaskConvention::UnprotectedF32V1;
+        old.masks.fill(0.0);
+        old.materials = Some(vec![[0.4, 0.1]; old.positions.len()]);
+        let state = obrush_core::SourceGeometryNormalState::seed(&old).unwrap();
+        let old_rows = packed_geometry_selected_rows_after_validation(&old, &state).unwrap();
+        let raw_masks = SourceMaskSnapshot::capture(&old).unwrap();
+        let old_materials = old.materials.clone();
+        let mut hint = [0_u64; 8];
+        hint[0] = 1;
+
+        let clean = selected_row_upload_scan(
+            &old_rows,
+            &old,
+            &state,
+            Some(&hint),
+            Some(&raw_masks),
+            Some(&old_materials),
+        )
+        .unwrap();
+        assert!(clean.ranges.unwrap().is_empty());
+        assert_eq!(clean.raw_masks_match, Some(true));
+        assert_eq!(clean.materials_match, Some(true));
+
+        let mut edited = old.clone();
+        edited.positions[0].x += 0.125;
+        edited.masks[5_000] = f32::from_bits(1);
+        edited.materials.as_mut().unwrap()[6_000][1] = -0.0;
+        let scan = selected_row_upload_scan(
+            &old_rows,
+            &edited,
+            &state,
+            Some(&hint),
+            Some(&raw_masks),
+            Some(&old_materials),
+        )
+        .unwrap();
+        assert_eq!(scan.ranges.unwrap(), vec![0..2048]);
+        assert_eq!(scan.raw_masks_match, Some(false));
+        assert_eq!(scan.materials_match, Some(false));
+
+        // Without a controlled chunk witness, independent full-channel checks
+        // remain the only authority for mask/material buffer reuse.
+        let fallback = selected_row_upload_scan(
+            &old_rows,
+            &edited,
+            &state,
+            None,
+            Some(&raw_masks),
+            Some(&old_materials),
+        )
+        .unwrap();
+        assert_eq!(fallback.raw_masks_match, None);
+        assert_eq!(fallback.materials_match, None);
     }
 
     #[test]
