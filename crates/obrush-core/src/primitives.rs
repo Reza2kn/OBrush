@@ -1,11 +1,85 @@
 //! Independent bounded primitives and attribute-preserving mesh concatenation.
 //! Coordinates are mesh/world units. No implicit scene normalization or Loop
 //! subdivision is performed. Polygons are triangulated at construction.
-use crate::{Mesh, Vec3, MAX_SUBTOOLS, MAX_TRIANGLES, MAX_VERTICES};
+use crate::{Mesh, SurfaceTopology, Vec3, MAX_SUBTOOLS, MAX_TRIANGLES, MAX_VERTICES};
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 pub const MIN_PRIMITIVE_DIMENSION: f32 = 0.000_001;
 pub const MAX_PRIMITIVE_DIMENSION: f32 = 1_000_000.0;
+
+impl Mesh {
+    /// Cube with a shared, uniformly sampled vertex grid and retained quad
+    /// faces. Seven levels yield SculptGL's default linear cube density:
+    /// 98,306 vertices, 98,304 quads, and 196,608 render triangles.
+    /// Coordinates remain in OBrush's unit-half-extent convention; the host
+    /// applies its own object placement and scene scale.
+    pub fn cube_quad_grid(levels: u32) -> Result<Self, String> {
+        if levels > 8 {
+            return Err("Cube grid supports at most eight refinement levels".into());
+        }
+        let segments = 1_usize << levels;
+        let faces_count = 6 * segments * segments;
+        let triangles_count = faces_count * 2;
+        let vertices_count = 6 * segments * segments + 2;
+        if triangles_count > MAX_TRIANGLES || vertices_count > MAX_VERTICES {
+            return Err("Cube grid exceeds the mesh allocation limit".into());
+        }
+
+        // Integer coordinates weld the twelve shared edges and eight corners
+        // without float comparisons. Each (u, v) frame has outward winding.
+        let frames: [([i32; 3], [i32; 3], [i32; 3]); 6] = [
+            ([segments as i32, 0, 0], [0, 1, 0], [0, 0, 1]),
+            ([0, 0, 0], [0, 0, 1], [0, 1, 0]),
+            ([0, segments as i32, 0], [0, 0, 1], [1, 0, 0]),
+            ([0, 0, 0], [1, 0, 0], [0, 0, 1]),
+            ([0, 0, segments as i32], [1, 0, 0], [0, 1, 0]),
+            ([0, 0, 0], [0, 1, 0], [1, 0, 0]),
+        ];
+        let mut ids = HashMap::<[i32; 3], u32>::with_capacity(vertices_count);
+        let mut positions = Vec::with_capacity(vertices_count);
+        let mut faces = Vec::with_capacity(faces_count);
+        let mut triangles = Vec::with_capacity(triangles_count);
+        for (origin, u, v) in frames {
+            let mut grid = Vec::with_capacity((segments + 1) * (segments + 1));
+            for row in 0..=segments {
+                for column in 0..=segments {
+                    let key = std::array::from_fn(|axis| {
+                        origin[axis] + u[axis] * column as i32 + v[axis] * row as i32
+                    });
+                    let id = *ids.entry(key).or_insert_with(|| {
+                        let id = positions.len() as u32;
+                        let scale = 2.0 / segments as f32;
+                        positions.push(Vec3::new(
+                            key[0] as f32 * scale - 1.0,
+                            key[1] as f32 * scale - 1.0,
+                            key[2] as f32 * scale - 1.0,
+                        ));
+                        id
+                    });
+                    grid.push(id);
+                }
+            }
+            for row in 0..segments {
+                for column in 0..segments {
+                    let first = row * (segments + 1) + column;
+                    let a = grid[first];
+                    let b = grid[first + 1];
+                    let c = grid[first + segments + 2];
+                    let d = grid[first + segments + 1];
+                    faces.push([a, b, c, d]);
+                    triangles.push([a, b, c]);
+                    triangles.push([a, c, d]);
+                }
+            }
+        }
+        debug_assert_eq!(positions.len(), vertices_count);
+        let mut mesh = Self::new(positions, triangles);
+        mesh.surface = Some(SurfaceTopology { faces, uv: None });
+        mesh.validate()?;
+        Ok(mesh)
+    }
+}
 
 #[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
