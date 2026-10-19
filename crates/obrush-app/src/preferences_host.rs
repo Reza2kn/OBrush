@@ -737,7 +737,7 @@ impl OBrushApp {
                 self.finish_stroke();
                 if !self.stroke_rejected {
                     self.cancel_mask_region("Wireframe changed.", true);
-                    self.viewport_style.wireframe = !self.viewport_style.wireframe;
+                    self.toggle_wireframe();
                 }
             }
             Command::Remesh => self.start_topology(TopologyOperation::Remesh(RemeshSettings {

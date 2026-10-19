@@ -4461,6 +4461,21 @@ impl Document {
         self.commit_previous(previous);
         Ok(true)
     }
+    /// Apply the Source wireframe controller to the current selection as one
+    /// document transaction. A mixed selection takes the requested checkbox
+    /// value, rather than inverting every part independently.
+    pub fn set_selected_source_wireframe(&mut self, visible: bool) -> Result<bool, String> {
+        self.edit_selected_subtools(|candidate| {
+            let mut render = candidate
+                .active_object_metadata()
+                .ok_or("Selected part has no source appearance metadata")?
+                .render
+                .clone()
+                .unwrap_or_else(crate::baseline_source_render_defaults);
+            render.show_wireframe = visible;
+            candidate.set_active_source_render(render)
+        })
+    }
     pub fn scene_origin(&self) -> Option<&SglSceneOrigin> {
         self.scene_origin.as_ref()
     }

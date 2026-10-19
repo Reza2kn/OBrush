@@ -1,5 +1,11 @@
 # OBrush feature parity contract
 
+**C242 selected-part wireframe:** [The pinned-source and browser report](SCULPTGL_WIREFRAME_C242.md)
+tracks the Rendering checkbox and W on imported quad/triangle parts. A
+shared-core selected-part Source edit now keeps one OBrush undo step and
+public save/export flags; the exact static/dynamic/multires, transparent and
+native appearance matrix remains open.
+
 **C241 selected mesh counters:** [The paired browser and shared-core report](SCULPTGL_MESH_INFO_C241.md)
 adds top-bar vertex/face counts and a quad-aware face count in the inspector.
 An independent mixed OBJ shows 6 vertices, 2 original faces and 3 render

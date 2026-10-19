@@ -6313,6 +6313,22 @@ impl OBrushApp {
         }
     }
 
+    pub(crate) fn toggle_wireframe(&mut self) {
+        if let Some(metadata) = self.document.active_object_metadata() {
+            let current = metadata
+                .render
+                .as_ref()
+                .is_some_and(|render| render.show_wireframe);
+            match self.document.set_selected_source_wireframe(!current) {
+                Ok(true) => self.changed(),
+                Ok(false) => {}
+                Err(error) => self.message = format!("Wireframe rejected: {error}"),
+            }
+        } else {
+            self.viewport_style.wireframe = !self.viewport_style.wireframe;
+        }
+    }
+
     fn shortcuts(&mut self, ctx: &egui::Context) {
         self.trace_keyboard_route(ctx, "before_shortcuts");
         if self.app_preferences.shortcut_profile
@@ -6395,7 +6411,7 @@ impl OBrushApp {
                 "Viewport setting changed; pending selection cancelled.",
                 true,
             );
-            self.viewport_style.wireframe = !self.viewport_style.wireframe;
+            self.toggle_wireframe();
         }
         if input.8 {
             self.cancel_mask_region("Help command cancelled the pending selection.", true);
@@ -7553,7 +7569,18 @@ impl OBrushApp {
             if self.stroke_rejected {
                 return;
             }
-            match self.document.set_active_source_render(render) {
+            let result = if render.show_wireframe != before.show_wireframe
+                && render.shader == before.shader
+                && render.matcap == before.matcap
+                && render.flat_shading == before.flat_shading
+                && render.opacity.to_bits() == before.opacity.to_bits()
+            {
+                self.document
+                    .set_selected_source_wireframe(render.show_wireframe)
+            } else {
+                self.document.set_active_source_render(render)
+            };
+            match result {
                 Ok(true) => self.changed(),
                 Ok(false) => {}
                 Err(error) => self.message = format!("Source appearance rejected: {error}"),
