@@ -1,5 +1,5 @@
 // Paired, owned-Chrome diagnostic for per-object Source symmetry planes.
-// Usage: node scripts/check-sculptgl-symmetry-offset-c253.mjs WEB_DIST PINNED_HOST_MIRROR
+// Usage: node scripts/check-sculptgl-symmetry-offset-c255.mjs WEB_DIST PINNED_HOST_MIRROR
 import { execFileSync, spawn } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -8,7 +8,7 @@ import path from 'node:path';
 
 const web = path.resolve(process.argv[2] || 'web/dist');
 const reference = path.resolve(process.argv[3] || '.tools/sculptgl-reference/host-mirror');
-const out = path.resolve('.artifacts/sculptgl-symmetry-offset-c253/' + randomUUID());
+const out = path.resolve('.artifacts/sculptgl-symmetry-offset-c255/' + randomUUID());
 await mkdir(out, { recursive: true });
 const sha = value => createHash('sha256').update(value).digest('hex');
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
