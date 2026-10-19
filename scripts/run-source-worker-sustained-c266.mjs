@@ -106,8 +106,10 @@ let page, pressed=false, recording=false, sampler;
 const gpu={stages:{}};
 const gpuStage=async stage=>{
   const v=await page.viewport(),x=(v.screen[0]+v.screen[2])/2+80,y=(v.screen[1]+v.screen[3])/2;
-  await page.pointer('mouseMoved',x,y,'none',0);
-  const observation=await page.evaluate(`window.__sourceGpuReadback.capture(${cohort.vertices})`);
+  const capture=page.evaluate(`window.__sourceGpuReadback.capture(${cohort.vertices})`);
+  await pause(10);
+  await page.pointer('mouseMoved',x+(stage.length%3),y,'none',0);
+  const observation=await capture;
   gpu.stages[stage]=observation;
   if(observation.active_vbo_candidates!==1 || observation.gl_error!==0) throw Error(`GPU ${stage}: ${JSON.stringify(observation)}`);
 };
