@@ -1,5 +1,15 @@
 # OBrush feature parity contract
 
+**C252 combined local build:** [The integrated browser and macOS receipt](SCULPTGL_COMBINED_C252.md)
+records passing workspace tests, strict native/WASM Clippy, fresh web/macOS
+builds, paired primitive/clear browser controls, and an opt-in WebGPU sparse
+release check after merging C249–C251 and the per-object Source mirror work.
+The default SculptGL-profile cube now matches pinned counts for vertices,
+original quads and render triangles. The guide follows the active Source
+object's normalized offset in an OBrush browser pair. Shape/normal appearance,
+retained levels, native GUI, and the million-vertex responsiveness gates remain
+open; the 309 active SculptGL inventory gates are not complete.
+
 **C247 viewport resolution:** [The pinned-source and paired browser report](SCULPTGL_RESOLUTION_C247.md)
 adds a 0.5–2× Source resolution slider with bounded scene rendering. Two
 independent fixtures show measured pixel-target changes, exact unchanged
