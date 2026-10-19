@@ -1632,6 +1632,8 @@ impl OBrushApp {
         }
         let filters = serde_json::json!({
             "ui_zoom_factor":self.egui_ctx.zoom_factor(),
+            "viewport_resolution_scale":self.viewport_style.resolution_scale,
+            "viewport_resolution":self.renderer.lock().ok().map(|r| { let (pixels,error)=r.resolution_status(); serde_json::json!({"pixels":pixels,"error":error}) }),
             "history":{"limit":self.document.history_limit(),"undo":self.document.history_depths().0,"redo":self.document.history_depths().1},
             "viewport_shading":self.viewport_style.shading.name(),"flat_shading":self.viewport_style.flat_shading,"exposure":self.viewport_style.exposure,
             "curvature":self.viewport_style.curvature,"opacity":self.viewport_style.opacity,
@@ -2351,6 +2353,29 @@ impl OBrushApp {
             crate::ui_text::caption(crate::ui_text::CaptionKey::C0903E803CA38),
         );
         self.track_layer_control("environment.darken_unselected", &darken);
+        let resolution_label = crate::i18n::source_text(
+            self.app_preferences.locale,
+            crate::source_text_keys::SourceTextKey::Resolution,
+            crate::i18n::TextArguments::None,
+        )
+        .map(|text| text.text.into_owned())
+        .unwrap_or_else(|_| "Resolution".into());
+        ui.label(format!(
+            "{resolution_label} · {:.2}×",
+            self.viewport_style.resolution_scale
+        ));
+        let resolution = ui.add(
+            egui::Slider::new(&mut self.viewport_style.resolution_scale, 0.5..=2.0)
+                .step_by(0.02)
+                .show_value(false),
+        );
+        self.track_layer_control("viewport.resolution", &resolution);
+        if let Some((pixels, Some(error))) = self.renderer.lock().ok().map(|renderer| {
+            let (pixels, error) = renderer.resolution_status();
+            (pixels, error.map(str::to_owned))
+        }) {
+            ui.label(format!("{}×{} px · {error}", pixels[0], pixels[1]));
+        }
         let grid_label = crate::i18n::source_text(
             self.app_preferences.locale,
             crate::source_text_keys::SourceTextKey::RenderingGrid,

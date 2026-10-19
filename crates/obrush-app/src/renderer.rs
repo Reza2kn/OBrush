@@ -937,6 +937,8 @@ pub struct ViewportStyle {
     pub uv_texture: Option<Arc<ViewTexture>>,
     /// Multisample the real geometry; this never smooths or changes the mesh.
     pub antialias: bool,
+    /// Viewport render pixels per host pixel. Does not scale UI or edit geometry.
+    pub resolution_scale: f32,
     /// A host gesture preview only; vertex buffers and saved geometry stay put.
     pub active_preview_translation: Vec3,
     /// World-axis scale shown during a drag; the document remains unchanged.
@@ -967,6 +969,7 @@ impl Default for ViewportStyle {
             opacity: 1.0,
             uv_texture: None,
             antialias: true,
+            resolution_scale: 1.0,
             active_preview_translation: Vec3::ZERO,
             active_preview_scale: Vec3::ONE,
             active_preview_rotation: Vec3::ZERO,
@@ -993,6 +996,10 @@ pub struct Renderer {
     antialias_target: Option<AntialiasTarget>,
     antialias_size: Option<[i32; 2]>,
     antialias_error: Option<String>,
+    resolution_target: Option<ResolutionTarget>,
+    resolution_size: Option<[i32; 2]>,
+    resolution_error: Option<String>,
+    last_frame_resolution: [i32; 2],
     last_frame_linear: bool,
     last_frame_antialias: FrameAntialias,
     max_samples: i32,
@@ -2107,6 +2114,10 @@ impl Renderer {
                 antialias_target: None,
                 antialias_size: None,
                 antialias_error: None,
+                resolution_target: None,
+                resolution_size: None,
+                resolution_error: None,
+                last_frame_resolution: [0, 0],
                 last_frame_linear: false,
                 last_frame_antialias: FrameAntialias::Unpainted,
                 max_samples: gl.get_parameter_i32(glow::MAX_SAMPLES),
@@ -2149,7 +2160,7 @@ impl Renderer {
             selected_normals: None,
             source: UploadSource::Revision(revision),
         };
-        self.paint_objects(gl, destination, info, &[object], camera, style);
+        self.paint_objects(gl, destination, info, &[object], camera, style, None);
     }
 
     #[allow(clippy::too_many_arguments)]
@@ -2189,7 +2200,144 @@ impl Renderer {
                 source: UploadSource::Shared(&object.mesh),
             })
             .collect();
-        self.paint_objects(gl, destination, info, &objects, camera, style);
+        self.paint_objects_at_resolution(gl, destination, info, &objects, camera, style);
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn paint_objects_at_resolution(
+        &mut self,
+        gl: &glow::Context,
+        destination: Option<glow::Framebuffer>,
+        info: egui::PaintCallbackInfo,
+        objects: &[RenderObject<'_>],
+        camera: &Camera,
+        style: &ViewportStyle,
+    ) {
+        let host = info.viewport_in_pixels();
+        self.last_frame_resolution = [host.width_px, host.height_px];
+        let requested = style.resolution_scale;
+        if !requested.is_finite() || !(0.5..=2.0).contains(&requested) {
+            self.resolution_error = Some("Viewport resolution must be from 0.5 to 2".into());
+            self.paint_objects(gl, destination, info, objects, camera, style, None);
+            return;
+        }
+        if (requested - 1.0).abs() < 0.0001 {
+            self.resolution_error = None;
+            if let Some(target) = self.resolution_target.take() {
+                // SAFETY: the callback's GL context is current and the target
+                // is owned by this renderer.
+                unsafe { target.destroy(gl) };
+            }
+            self.resolution_size = None;
+            self.paint_objects(gl, destination, info, objects, camera, style, None);
+            return;
+        }
+        let scaled = [
+            (host.width_px as f64 * f64::from(requested)).round() as i32,
+            (host.height_px as f64 * f64::from(requested)).round() as i32,
+        ];
+        if host.width_px <= 0 || host.height_px <= 0 || scaled.contains(&0) {
+            return;
+        }
+        // This allocation is independent of the document and ordinary scene
+        // buffers. Reject large targets before asking the GPU to allocate.
+        if !resolution_target_fits(scaled[0], scaled[1], self.max_renderbuffer_size) {
+            self.resolution_error =
+                Some("Viewport resolution exceeds GPU size or memory budget".into());
+            self.paint_objects(gl, destination, info, objects, camera, style, None);
+            return;
+        }
+        // SAFETY: egui has made this GL context current for the callback. The
+        // wrapper restores all state and the painter's supplied framebuffer.
+        unsafe {
+            let state = GlState::capture(gl);
+            if self.resolution_size != Some(scaled) {
+                if let Some(old) = self.resolution_target.take() {
+                    old.destroy(gl);
+                }
+                self.resolution_size = Some(scaled);
+                match ResolutionTarget::new(gl, scaled[0], scaled[1]) {
+                    Ok(target) => {
+                        self.resolution_target = Some(target);
+                        self.resolution_error = None;
+                    }
+                    Err(error) => self.resolution_error = Some(error),
+                }
+            }
+            if let Some((framebuffer, texture)) = self
+                .resolution_target
+                .as_ref()
+                .map(|target| (target.framebuffer, target.texture))
+            {
+                gl.bind_framebuffer(glow::FRAMEBUFFER, Some(framebuffer));
+                gl.disable(glow::SCISSOR_TEST);
+                gl.color_mask(true, true, true, true);
+                gl.depth_mask(true);
+                gl.clear_color(0.0, 0.0, 0.0, 0.0);
+                gl.clear_depth_f32(1.0);
+                gl.clear(glow::COLOR_BUFFER_BIT | glow::DEPTH_BUFFER_BIT);
+                let local_info = egui::PaintCallbackInfo {
+                    viewport: egui::Rect::from_min_size(
+                        egui::Pos2::ZERO,
+                        egui::vec2(scaled[0] as f32, scaled[1] as f32),
+                    ),
+                    clip_rect: egui::Rect::from_min_size(
+                        egui::Pos2::ZERO,
+                        egui::vec2(scaled[0] as f32, scaled[1] as f32),
+                    ),
+                    pixels_per_point: 1.0,
+                    screen_size_px: [scaled[0] as u32, scaled[1] as u32],
+                };
+                self.paint_objects(
+                    gl,
+                    Some(framebuffer),
+                    local_info,
+                    objects,
+                    camera,
+                    style,
+                    Some([host.width_px as u32, host.height_px as u32]),
+                );
+                let clip = info.clip_rect_in_pixels();
+                let left = host.left_px.max(clip.left_px);
+                let bottom = host.from_bottom_px.max(clip.from_bottom_px);
+                let right = (host.left_px + host.width_px).min(clip.left_px + clip.width_px);
+                let top = (host.from_bottom_px + host.height_px)
+                    .min(clip.from_bottom_px + clip.height_px);
+                if right > left && top > bottom {
+                    gl.bind_framebuffer(glow::FRAMEBUFFER, destination);
+                    gl.viewport(
+                        host.left_px,
+                        host.from_bottom_px,
+                        host.width_px,
+                        host.height_px,
+                    );
+                    gl.enable(glow::SCISSOR_TEST);
+                    gl.scissor(left, bottom, right - left, top - bottom);
+                    gl.disable(glow::DEPTH_TEST);
+                    gl.depth_mask(false);
+                    gl.enable(glow::BLEND);
+                    gl.blend_equation_separate(glow::FUNC_ADD, glow::FUNC_ADD);
+                    gl.blend_func_separate(
+                        glow::ONE,
+                        glow::ONE_MINUS_SRC_ALPHA,
+                        glow::ONE_MINUS_DST_ALPHA,
+                        glow::ONE,
+                    );
+                    gl.active_texture(glow::TEXTURE0);
+                    gl.bind_texture(glow::TEXTURE_2D, Some(texture));
+                    gl.use_program(Some(self.composite_program));
+                    gl.bind_vertex_array(Some(self.vertex_array));
+                    gl.uniform_1_i32(self.composite_texture.as_ref(), 0);
+                    gl.draw_arrays(glow::TRIANGLES, 0, 3);
+                }
+                self.last_frame_resolution = scaled;
+            }
+            state.restore(gl);
+            gl.bind_framebuffer(glow::FRAMEBUFFER, destination);
+        }
+        if self.resolution_target.is_none() {
+            self.paint_objects(gl, destination, info, objects, camera, style, None);
+        }
     }
 
     #[allow(clippy::too_many_arguments)]
@@ -2201,6 +2349,7 @@ impl Renderer {
         objects: &[RenderObject<'_>],
         camera: &Camera,
         style: &ViewportStyle,
+        source_host_viewport: Option<[u32; 2]>,
     ) {
         let paint_started = web_time::Instant::now();
         self.background_cursor_matrices = None;
@@ -2216,7 +2365,9 @@ impl Renderer {
             return;
         }
         if let Some(frame) = camera.source_frame() {
-            if frame.viewport.render_pixels != [viewport.width_px as u32, viewport.height_px as u32]
+            if frame.viewport.render_pixels
+                != source_host_viewport
+                    .unwrap_or([viewport.width_px as u32, viewport.height_px as u32])
             {
                 self.scene_error = Some(
                     "Source camera measured viewport differs from actual paint viewport".into(),
@@ -3394,6 +3545,10 @@ impl Renderer {
         }
     }
 
+    pub fn resolution_status(&self) -> ([i32; 2], Option<&str>) {
+        (self.last_frame_resolution, self.resolution_error.as_deref())
+    }
+
     /// Render-only seam correspondence, bounded when explicitly requested.
     /// Counts/fingerprint cover all rows; a truncation flag never implies full
     /// row proof. Core geometry/UV IDs can be independently reconstructed.
@@ -3636,6 +3791,9 @@ impl Renderer {
                 self.background_cursor_creation_error = Some(error);
             }
             if let Some(target) = self.antialias_target.take() {
+                target.destroy(gl);
+            }
+            if let Some(target) = self.resolution_target.take() {
                 target.destroy(gl);
             }
             if let Some(contour) = self.contour.take() {
@@ -4269,6 +4427,112 @@ fn antialias_target_fits(
         && samples >= 2
         && samples <= max_samples
         && width as u64 * height as u64 <= MAX_BYTES / (8 * samples as u64 + 4)
+}
+
+/// One RGBA8 image and one depth24 attachment, capped independently of the
+/// geometry and antialias budgets. Never allocate from an unbounded ratio.
+fn resolution_target_fits(width: i32, height: i32, max_side: i32) -> bool {
+    const MAX_BYTES: u64 = 128 * 1024 * 1024;
+    width > 0
+        && height > 0
+        && width <= max_side
+        && height <= max_side
+        && (width as u64) * (height as u64) <= MAX_BYTES / 8
+}
+
+struct ResolutionTarget {
+    framebuffer: glow::Framebuffer,
+    texture: glow::Texture,
+    depth: glow::Renderbuffer,
+}
+
+impl ResolutionTarget {
+    unsafe fn new(gl: &glow::Context, width: i32, height: i32) -> Result<Self, String> {
+        let (mut framebuffer, mut texture, mut depth) = (None, None, None);
+        let result = (|| unsafe {
+            let fb = gl.create_framebuffer()?;
+            framebuffer = Some(fb);
+            let image = gl.create_texture()?;
+            texture = Some(image);
+            let depth_buffer = gl.create_renderbuffer()?;
+            depth = Some(depth_buffer);
+            gl.bind_framebuffer(glow::FRAMEBUFFER, Some(fb));
+            gl.active_texture(glow::TEXTURE0);
+            gl.bind_texture(glow::TEXTURE_2D, Some(image));
+            for (name, value) in [
+                (glow::TEXTURE_MIN_FILTER, glow::LINEAR),
+                (glow::TEXTURE_MAG_FILTER, glow::LINEAR),
+                (glow::TEXTURE_WRAP_S, glow::CLAMP_TO_EDGE),
+                (glow::TEXTURE_WRAP_T, glow::CLAMP_TO_EDGE),
+            ] {
+                gl.tex_parameter_i32(glow::TEXTURE_2D, name, value as i32);
+            }
+            gl.tex_image_2d(
+                glow::TEXTURE_2D,
+                0,
+                glow::RGBA8 as i32,
+                width,
+                height,
+                0,
+                glow::RGBA,
+                glow::UNSIGNED_BYTE,
+                glow::PixelUnpackData::Slice(None),
+            );
+            gl.framebuffer_texture_2d(
+                glow::FRAMEBUFFER,
+                glow::COLOR_ATTACHMENT0,
+                glow::TEXTURE_2D,
+                Some(image),
+                0,
+            );
+            gl.bind_renderbuffer(glow::RENDERBUFFER, Some(depth_buffer));
+            gl.renderbuffer_storage(glow::RENDERBUFFER, glow::DEPTH_COMPONENT24, width, height);
+            gl.framebuffer_renderbuffer(
+                glow::FRAMEBUFFER,
+                glow::DEPTH_ATTACHMENT,
+                glow::RENDERBUFFER,
+                Some(depth_buffer),
+            );
+            let status = gl.check_framebuffer_status(glow::FRAMEBUFFER);
+            if status != glow::FRAMEBUFFER_COMPLETE {
+                return Err(format!(
+                    "Viewport resolution framebuffer is incomplete (0x{status:x})"
+                ));
+            }
+            Ok(Self {
+                framebuffer: fb,
+                texture: image,
+                depth: depth_buffer,
+            })
+        })();
+        if result.is_err() {
+            unsafe {
+                if let Some(value) = depth {
+                    gl.delete_renderbuffer(value);
+                }
+                if let Some(value) = texture {
+                    gl.delete_texture(value);
+                }
+                if let Some(value) = framebuffer {
+                    gl.delete_framebuffer(value);
+                }
+                for _ in 0..8 {
+                    if gl.get_error() == glow::NO_ERROR {
+                        break;
+                    }
+                }
+            }
+        }
+        result
+    }
+
+    unsafe fn destroy(self, gl: &glow::Context) {
+        unsafe {
+            gl.delete_renderbuffer(self.depth);
+            gl.delete_texture(self.texture);
+            gl.delete_framebuffer(self.framebuffer);
+        }
+    }
 }
 
 struct AntialiasTarget {
@@ -5327,6 +5591,15 @@ mod tests {
             i32::MAX,
             i32::MAX
         ));
+    }
+
+    #[test]
+    fn resolution_storage_has_an_independent_finite_budget() {
+        assert!(resolution_target_fits(1920, 1080, 8192));
+        assert!(resolution_target_fits(3840, 2160, 8192));
+        assert!(!resolution_target_fits(7680, 4320, 8192));
+        assert!(!resolution_target_fits(8193, 1, 8192));
+        assert!(!resolution_target_fits(0, 1080, 8192));
     }
 
     #[test]
