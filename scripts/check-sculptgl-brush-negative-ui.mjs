@@ -1,6 +1,7 @@
 // Preregistered C272 normal-UI Brush Negative pair, one run per side/polarity.
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createHash, randomUUID } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
@@ -49,7 +50,11 @@ if (pinned !== '79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600
 }
 const out = path.join(root, '.artifacts/sculptgl-brush-negative-ui', `${side}-${polarity}-${randomUUID()}`);
 await mkdir(out, { recursive: true });
-const result = {side, negative, protocol_commit:'e09510c', stroke_mode:pressOnly?'one-press':oneMove?'one-move':retraceMoves?`retrace-${retraceMoves}`:'three-point-drag', status:'running', fixture:{path:fixture, bytes:fixtureBytes.length, sha256:sha(fixtureBytes), vertices:expected.vertices, triangles:expected.triangles},
+const result = {side, negative, protocol_commit:'e09510c',
+  obrush_source_commit:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),
+  harness_sha256:sha(await readFile(new URL(import.meta.url))),
+  reference_commit:'8e45dafc0f7906e5238dfffc1a2df742bd25f29d',
+  stroke_mode:pressOnly?'one-press':oneMove?'one-move':retraceMoves?`retrace-${retraceMoves}`:'three-point-drag', status:'running', fixture:{path:fixture, bytes:fixtureBytes.length, sha256:sha(fixtureBytes), vertices:expected.vertices, triangles:expected.triangles},
   requested_brush:{radius,intensity,accumulate,negative},
   browser_build:side === 'root' ? sha(await readFile(path.join(web,'pkg/obrush_app_bg.wasm'))) : pinned,
   browser_js:side === 'root' ? sha(await readFile(path.join(web,'pkg/obrush_app.js'))) : null,
@@ -66,6 +71,7 @@ try {
   const pointerObserver = `(()=>{const rows=[];window.__uiBrushDelivered=rows;for(const type of ['pointerdown','pointermove','pointerup','mousedown','mousemove','mouseup'])window.addEventListener(type,e=>{if(rows.length<2048)rows.push({type,x:e.clientX,y:e.clientY,buttons:e.buttons,trusted:e.isTrusted,at:performance.now()});},true);})();\n`;
   const gpuObserver = side === 'source' ? await readFile(path.join(root,'scripts/source-webgl1-active-words-observer.js'),'utf8') :
     await readFile(path.join(root,'scripts/source-gpu-readback-observer.js'),'utf8');
+  result.gpu_observer_sha256=sha(Buffer.from(gpuObserver));
   const observer = pointerObserver + gpuObserver + '\n' + (side === 'source' ?
     (await readFile(path.join(stage, 'observer/focused-alpha-input-observer.js'),'utf8')) + '\n' +
     (await readFile(path.join(stage, 'observer/focused-alpha-hit-observer.js'),'utf8')) : '');
