@@ -1,5 +1,12 @@
 # OBrush feature parity contract
 
+**C238 corrected pen admission:** [The multi-dab comparison](SCULPTGL_PRESSURE_MULTIDAB_ADMISSION_C238.md)
+matches three geometry-bearing moves per browser on the same 10,114-vertex
+fixture. Both pinned SculptGL and OBrush show roughly `1e-4` deviation from
+an exact half displacement after multiple dabs; the prior one-dab versus
+multi-dab comparison was invalid. This does not establish raw brush-shape or
+physical-pen parity.
+
 **C239 rendering inventory reconciliation:** [The grid/contour evidence audit](SCULPTGL_RENDER_INVENTORY_RECONCILIATION_C239.md)
 links three existing rendering reports into the 317-ID crosswalk. Thirty-nine
 active rows now have scoped evidence; all active acceptance gates remain open.
@@ -14,9 +21,9 @@ gate remains open. This is documentation reconciliation, not a behavior change.
 shows that SculptGL consumes the first held synthetic pen move as Hammer
 `panstart`; later `panmove` events produce sculpt changes. On the same imported
 10,114-vertex mesh, both apps show the expected radius and intensity factor
-direction with exact public Undo/Redo. OBrush's multi-dab intensity response
-and final shape differ, and physical pen behavior remains unverified; pressure
-and full SculptGL/ZBrush parity remain open.
+direction with exact public Undo/Redo. The later C238 audit corrects unequal
+dab admission in this comparison. Final brush shape and physical pen behavior
+remain unverified; pressure and full SculptGL/ZBrush parity remain open.
 
 **C234 paired pressure input:** [The common-fixture browser report](SCULPTGL_PRESSURE_PAIR_C234.md)
 finds exact imported positions across 10,114 vertices and OBrush Source-mode
