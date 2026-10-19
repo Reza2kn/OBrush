@@ -186,6 +186,72 @@ fn back_facing_selected_vertices_are_captured_before_optional_culling() {
 }
 
 #[test]
+fn brush_culling_on_two_opposed_sheets_includes_zero_normal_and_preserves_history() {
+    // The shared center receives equal and opposite face normals. Its zero
+    // normal is front-facing under SculptGL's inclusive <= 0 predicate.
+    let mut mesh =
+        Mesh::from_obj("v 0 0 0\nv 1 0 0\nv 0 1 0\nv 1 0 0\nv 0 1 0\nf 1 2 3\nf 1 5 4\n").unwrap();
+    mesh.mask_convention = MaskConvention::UnprotectedF32V1;
+    mesh.masks.fill(1.0);
+    let original = Document::new(mesh);
+    let initial_positions = original.require_active_mesh().unwrap().positions.clone();
+    let normals = SourceGeometryNormalState::seed(original.require_active_mesh().unwrap()).unwrap();
+    assert_eq!(normals.vertex_normals()[0], Vec3::ZERO);
+    let pass = SourceGeometryPass {
+        center: [0.2, 0.2, 0.],
+        eye_direction: [0., 0., -1.],
+        local_radius_squared: 4.,
+        original_face_index: 0,
+    };
+    for clay in [false, true] {
+        for culling in [false, true] {
+            let mut document = Document::from_json(&original.to_json().unwrap()).unwrap();
+            let before = document.to_json().unwrap();
+            let mut stroke = document
+                .begin_source_geometry_selection_history(SourceGeometryOptions {
+                    tool: SourceGeometryTool::Brush {
+                        clay,
+                        accumulate: true,
+                    },
+                    culling,
+                    clay_order: SourceClayOrderPolicy::OrderedStaticOctree,
+                    prevent_folds: false,
+                    ..Default::default()
+                })
+                .unwrap();
+            let report = dab(&mut document, &mut stroke, pass);
+            document.end_source_geometry_stroke(&stroke).unwrap();
+            let after = document.to_json().unwrap();
+            let moved: Vec<_> = document
+                .require_active_mesh()
+                .unwrap()
+                .positions
+                .iter()
+                .zip(&initial_positions)
+                .enumerate()
+                .filter_map(|(id, (now, old))| (now != old).then_some(id))
+                .collect();
+            assert_eq!(report.selected_vertices, 5, "clay={clay} culling={culling}");
+            assert_eq!(report.front_vertices, 3, "clay={clay} culling={culling}");
+            assert_eq!(
+                moved,
+                if culling {
+                    vec![0, 1, 2]
+                } else {
+                    vec![0, 1, 2, 3, 4]
+                },
+                "clay={clay} culling={culling}"
+            );
+            assert_eq!(selected(&document), [0, 1, 2, 3, 4]);
+            assert!(document.undo());
+            assert_eq!(document.to_json().unwrap(), before);
+            assert!(document.redo());
+            assert_eq!(document.to_json().unwrap(), after);
+        }
+    }
+}
+
+#[test]
 fn cold_protected_noop_selection_joins_later_useful_history_without_losing_redo() {
     let mut d = six();
     d.mesh.as_mut().unwrap().masks.fill(0.0);

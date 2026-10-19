@@ -1,5 +1,10 @@
 # OBrush feature parity contract
 
+**Scoped Source Brush culling:** [The C262 fixture and normal-browser report](SCULPTGL_BRUSH_CULLING_C262.md)
+confirms the existing Source Brush/Clay checkbox and inclusive front-vertex
+predicate on an opposed-sheet/zero-normal fixture, with exact core Undo/Redo.
+The paired full-browser stroke and wider option matrix remain open.
+
 **C260 integrated build:** [The combined Source/browser/macOS receipt](SCULPTGL_COMBINED_C260.md)
 records 2,582 passing workspace tests, strict native/WASM Clippy, fresh
 signed macOS and browser builds, and scoped browser checks for default
