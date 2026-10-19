@@ -70,6 +70,13 @@ decoding on a fresh frozen 100k run. Delta decoding missed the preregistered
 15 ms threshold, so no cached-baseline decoder was built. The held Worker
 continues to fail the frozen RAF-max, 100 ms queue-tail and public-normal
 checks and remains off by default.
+[The validation-once retained-decoder trial](SOURCE_WORKER_VALIDATED_DECODE_PREREG.md)
+passed full build checks but measured 149.2 ms retained decode against its
+fixed `<120 ms` target; active RAF maximum was 450.1 ms against 250 ms. Its
+product code was rejected and the failed browser receipt retained. A
+[typed complete-scene witness design](SOURCE_WORKER_TYPED_SCENE_WITNESS_DESIGN.md)
+sets a proof and profiling gate for the larger witness stage; it has not been
+implemented.
 [The independent display-normal audit](SOURCE_GPU_DISPLAY_NORMAL_ORACLE_PREREG.md)
 matches fresh Source face normals to active GPU rows before sculpting and after
 Undo. Edited After and Redo states have byte-identical public meshes but
