@@ -23,6 +23,10 @@ const cohort = protocol.cohorts.find(row => row.label === label);
 requireGate(cohort, 'cohort must be 100k or 1m');
 const bench = path.resolve(args['bench-stage'] || '');
 requireGate(args['bench-stage'] && (await stat(path.join(bench, 'workspace/large-perf-driver-c203.mjs'))).isFile(), 'explicit C58/C209 bench stage required');
+const fixtureManifestBytes=await readFile(path.join(bench,'FIXTURE_MANIFEST.json'));
+requireGate(hash(fixtureManifestBytes)===protocol.fixture_manifest_sha256,'frozen independent fixture manifest hash');
+const originalProtocolBytes=await readFile(path.join(bench,'SUSTAINED_PREREGISTRATION.json'));
+requireGate(hash(originalProtocolBytes)===protocol.parent_protocol_sha256,'original 60-second protocol hash');
 const helperNames = [
   'workspace/paired-driver-60s.mjs', 'workspace/large-perf-driver-c203.mjs',
   'workspace/perf-driver.mjs', 'workspace/perf-recording-transfer.mjs',
@@ -35,10 +39,16 @@ const fixture = path.resolve(args.fixture || '');
 requireGate(args.fixture && hash(await readFile(fixture)) === cohort.sgl_sha256, 'frozen SGL SHA-256 mismatch');
 const fixtureBytes = (await stat(fixture)).size;
 requireGate(fixtureBytes > 0 && fixtureBytes <= 128 * 1024 * 1024, 'bounded fixture');
+const manifestItem=JSON.parse(fixtureManifestBytes).files.find(row=>row.label===label);
+requireGate(manifestItem&&manifestItem.sha256===cohort.sgl_sha256&&
+  manifestItem.bytes===fixtureBytes&&manifestItem.vertices===cohort.vertices&&
+  manifestItem.triangles===cohort.triangles,'manifest/cohort/fixture identity');
 if (args.preflight === 'true') {
   console.log(JSON.stringify({status:'static preflight only; no browser or build',mode,label,
     product_commit:(await import('node:child_process')).execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),
-    protocol_sha256:hash(protocolBytes),fixture_sha256:cohort.sgl_sha256,fixture_bytes:fixtureBytes,helper_hashes:helperHashes},null,2));
+    protocol_sha256:hash(protocolBytes),source_protocol_sha256:hash(originalProtocolBytes),
+    fixture_manifest_sha256:hash(fixtureManifestBytes),fixture_sha256:cohort.sgl_sha256,
+    fixture_bytes:fixtureBytes,helper_hashes:helperHashes},null,2));
   process.exit(0);
 }
 const { OwnedCdp } = await import(pathToFileURL(path.join(bench, 'workspace/paired-driver-60s.mjs')));
@@ -48,7 +58,7 @@ const { installPerfExport } = await import(pathToFileURL(path.join(bench, 'obser
 const { installPerfMemory } = await import(pathToFileURL(path.join(bench, 'observer/perf-memory.mjs')));
 const { readScalarRecording } = await import(pathToFileURL(path.join(bench, 'workspace/perf-recording-transfer.mjs')));
 const { sampleMemory, startMemorySamples } = await import(pathToFileURL(path.join(bench, 'workspace/perf-memory-sampler.mjs')));
-const frozen = JSON.parse(await readFile(path.join(bench, 'SUSTAINED_PREREGISTRATION.json')));
+const frozen = JSON.parse(originalProtocolBytes);
 const out = path.join(root, '.artifacts/source-worker-sustained-c266', `${label}-${mode}-${randomUUID()}`);
 await mkdir(out, { recursive: true });
 const source = `(${installPerfExport.toString()})(window);\n` +
@@ -80,6 +90,7 @@ const source = `(${installPerfExport.toString()})(window);\n` +
   })();`;
 
 const result = { status:'running', out, mode, protocol_sha256:hash(protocolBytes),
+  source_protocol_sha256:hash(originalProtocolBytes),fixture_manifest_sha256:hash(fixtureManifestBytes),
   product_commit:(await import('node:child_process')).execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),
   helper_hashes:helperHashes, fixture:{label,vertices:cohort.vertices,triangles:cohort.triangles,
     path:fixture,sha256:cohort.sgl_sha256,bytes:fixtureBytes},
