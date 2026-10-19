@@ -54,3 +54,24 @@ This is a bounded default-placement result. It does not yet compare camera
 pixels, picked brush response, source UV/material state, exact vertex order,
 normal appearance, native GUI, or sustained high-density responsiveness.
 SculptGL's active scene gates and ZBrush parity remain open.
+
+## Combined shape-harness correction
+
+After integration, the older cylinder/torus shape harness still compared
+SculptGL **world** positions to OBrush **local** positions. Its first combined
+receipt at
+`.artifacts/sculptgl-cylinder-torus-shape/20b37960-9496-439d-85d1-3ed52f543184/result.json`
+(SHA-256 `f0893589fce0cd10edc1ceb21718b25262f8705cd9e7d575262491066b12e373`)
+therefore reported large, invalid world differences despite passing its local
+geometry gates. The corrected harness reads the active affine from the public
+`scene_v7` project record, validates its 16 finite values, and compares both
+world surfaces with their saved matrices. Script SHA-256:
+`8af38264e76260c12195012225f81bcda2faa8c528c06107e9b5689d39103167`.
+The repeated normal-browser receipt at
+`.artifacts/sculptgl-cylinder-torus-shape/2558e997-a345-408f-8013-29574b649168/result.json`
+(SHA-256 `196f2339c8b1f8604b7c0dcb562e8b1dd15c449cb9a7b15ce1abefe032a83751`)
+used the combined browser WASM SHA-256
+`66f80111dd6c871f557050037cdbba9068828220f5da430c4c501d323d15fb90` and
+passes the same local topology/position gates and now checks world bounds:
+maximum absolute differences `3.690e-7` for Cylinder and `2.180e-7` for
+Torus. Normal/pixel appearance and edited-level response remain open.

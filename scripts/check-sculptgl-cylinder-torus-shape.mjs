@@ -238,16 +238,19 @@ try {
     const faces=mesh.surface?.faces ?? mesh.triangles;
     const positions=mesh.positions.flat(),normals=mesh.normals.flat();
     const own=shape(positions,normals,faces);
+    const activePose=saved.project.scene_v7?.objects?.find(object=>object.id===saved.project.scene.active_id)?.affine?.local_to_world;
+    if(!Array.isArray(activePose)||activePose.length!==16||activePose.some(value=>!Number.isFinite(value)))throw Error(`Missing valid ${name} active affine in public project`);
+    const ownWorld=shape(positions,normals,faces,activePose);
     const areaNormals=originalFaceAreaNormals(positions,faces);
     const paired=pairedVertices(refRaw[name].positions,refRaw[name].normals,positions,normals);
     const gpu=await until(()=>gpuNormal(paired.worst.obrush_id),`OBRush ${name} GPU normal sample`);
     gpu.reference_direction_degrees=normalAngle(paired.worst.reference_normal,gpu.normal);
     gpu.saved_direction_degrees=normalAngle(paired.worst.obrush_normal,gpu.normal);
-    result.cases.push({name,reference:refData[name],obrush:{ui,saved_file:saved.file,saved_sha256:sha(saved.bytes),shape:own,scene:saved.project.scene,gpu_normal_at_worst_saved_vertex:gpu},comparison_local:compare(refData[name].local,own),comparison_world:compare(refData[name].world,own),paired_vertices:paired,diagnostic_original_face_area_normals:pairedVertices(refRaw[name].positions,refRaw[name].normals,positions,areaNormals)});
+    result.cases.push({name,reference:refData[name],obrush:{ui,saved_file:saved.file,saved_sha256:sha(saved.bytes),shape:own,world_shape:ownWorld,scene:saved.project.scene,active_pose:activePose,gpu_normal_at_worst_saved_vertex:gpu},comparison_local:compare(refData[name].local,own),comparison_world:compare(refData[name].world,ownWorld),paired_vertices:paired,diagnostic_original_face_area_normals:pairedVertices(refRaw[name].positions,refRaw[name].normals,positions,areaNormals)});
   }
   const c=result.cases.find(x=>x.name==='cylinder'),t=result.cases.find(x=>x.name==='torus');
-  if(!c||!t||result.cases.some(x=>x.reference.reported.vertices!==x.obrush.ui.vertices||x.reference.reported.faces!==x.obrush.ui.faces||x.reference.local.nonmanifold_edges!==0||x.obrush.shape.nonmanifold_edges!==0||x.paired_vertices.unmatched_obrush!==0||x.paired_vertices.unused_reference!==0||x.paired_vertices.position_max_distance>1e-6))throw Error('Geometry count/manifold/local-position gate failed');
-  result.status='passed scoped browser extraction and manifold/count gates; shape deltas require interpretation';
+  if(!c||!t||result.cases.some(x=>x.reference.reported.vertices!==x.obrush.ui.vertices||x.reference.reported.faces!==x.obrush.ui.faces||x.reference.local.nonmanifold_edges!==0||x.obrush.shape.nonmanifold_edges!==0||x.paired_vertices.unmatched_obrush!==0||x.paired_vertices.unused_reference!==0||x.paired_vertices.position_max_distance>1e-6||x.comparison_world.bounds_abs_diff.flat().some(value=>value>1e-4)))throw Error('Geometry count/manifold/local-position/world-bound gate failed');
+  result.status='passed scoped browser local shape and affine world-bound gates; normals and pixels remain open';
 } catch(error) { primaryError=error; result.status='failed'; result.errors.push(String(error.stack||error)); }
 finally {
   result.download_events=downloadEvents;
