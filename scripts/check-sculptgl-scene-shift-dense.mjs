@@ -102,7 +102,7 @@ function project(point, camera) {
   const v = camera.viewport;
   return [Math.round(v[0] + (c[0] / c[3] + 1) * (v[2] - v[0]) / 2), Math.round(v[1] + (1 - c[1] / c[3]) * (v[3] - v[1]) / 2)];
 }
-const ownInfo = `(()=>{const m=window.obrushBrushMetrics?.();return m?.subtools?{count:m.subtools.length,selected:m.selected_subtool_ids,active:m.active_subtool_id,history:m.history,camera:m.camera,brush:m.brush,source_geometry:m.source_geometry,message:m.message}:null})()`;
+const ownInfo = `(()=>{const m=window.obrushBrushMetrics?.();return m?.subtools?{count:m.subtools.length,subtools:m.subtools,selected:m.selected_subtool_ids,active:m.active_subtool_id,history:m.history,camera:m.camera,brush:{kind:m.kind,radius:m.radius,strength:m.strength},source_geometry:m.source_geometry,message:m.message}:null})()`;
 async function ownSave() {
   await evaluate('window.__capturedProject=null;window.obrushDownload=(name,contents)=>{window.__capturedProject={name,contents}};true');
   await send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: 335, y: 26, buttons: 0 });
@@ -162,9 +162,13 @@ try {
   await drag('source', ...sourcePoint);
   const sourceAfter = await sourcePositions();
   const sourceHistoryAfter = await evaluate('window.__sculptglReferenceInstance.getStateManager()._undos.length');
-  await chord('source-undo', 'z');
+  result.trace.push({ label: 'source-undo', at_epoch_ms: Date.now(), public_controller: '_ctrlStates.onUndo' });
+  await evaluate('window.__sculptglReferenceInstance.getGui()._ctrlStates.onUndo();true');
+  await sleep(200);
   const sourceUndo = await sourcePositions();
-  await chord('source-redo', 'y');
+  result.trace.push({ label: 'source-redo', at_epoch_ms: Date.now(), public_controller: '_ctrlStates.onRedo' });
+  await evaluate('window.__sculptglReferenceInstance.getGui()._ctrlStates.onRedo();true');
+  await sleep(200);
   const sourceRedo = await sourcePositions();
   result.cases.source = { point: sourcePoint, initial_history: sourceHistoryBefore, final_history: sourceHistoryAfter, drag: diff(sourceBefore, sourceAfter), undo: diff(sourceBefore, sourceUndo), redo: diff(sourceAfter, sourceRedo) };
 
@@ -192,9 +196,14 @@ try {
     };
   }
   if (!result.cases.source.drag.changed_components) result.gaps.push('Pinned SculptGL Shift-drag did not move vertices in this pose.');
+  if (result.cases.source.undo.changed_components || result.cases.source.redo.changed_components) throw Error('Source Undo/Redo did not recover exact geometry');
   if (!result.cases.baseline.drag.changed_components) result.gaps.push('C260 Shift-drag did not move vertices in this pose.');
   if (!result.cases.candidate.drag.changed_components) result.gaps.push('Candidate Shift-drag did not move vertices in this pose.');
   if (result.cases.candidate.undo.changed_components || result.cases.candidate.redo.changed_components) throw Error('Candidate public Save/Undo/Redo failed exact geometry recovery');
+  for (const side of ['baseline', 'candidate']) {
+    const test = result.cases[side];
+    if (test.initial.save_sha256 !== test.undo_save_sha256 || test.final.save_sha256 !== test.redo_save_sha256) throw Error(`${side} public Save/Undo/Redo failed byte-exact project recovery`);
+  }
   if (result.cases.baseline.drag.changed_components && !result.cases.candidate.drag.changed_components) throw Error('Candidate regressed working C260 Shift-drag Smooth');
   if (result.exceptions.length) throw Error('Browser exceptions: ' + result.exceptions.join('; '));
   result.status = result.gaps.length ? 'INCONCLUSIVE' : 'PASS scoped physical Shift-drag Smooth';
@@ -204,7 +213,7 @@ try {
   process.exitCode = 1;
 } finally {
   try { socket?.close(); } catch {}
-  try { chrome?.kill('SIGTERM'); } catch {}
+  try { chrome?.kill('SIGKILL'); chrome?.stderr?.destroy(); chrome?.stdout?.destroy(); } catch {}
   try { await new Promise(resolve => server?.close(resolve) ?? resolve()); } catch {}
   await writeFile(path.join(out, 'result.json'), JSON.stringify(result, null, 2));
   console.log(JSON.stringify({ status: result.status, failure: result.failure ?? null, out }));

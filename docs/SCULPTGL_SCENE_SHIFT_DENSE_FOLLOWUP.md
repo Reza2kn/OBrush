@@ -22,6 +22,37 @@ Save project. It then sends the Source-profile Ctrl+Z/Ctrl+Y shortcuts and
 re-saves to check Undo/Redo recovery. This is a scoped interaction check; the
 brush response shapes and broader selection operation are separate gates.
 
-Browser receipt, observed position deltas, build hashes, validation, and any
-failed checks will be recorded after the shared browser/build lane is
-available. The Source and ZBrush parity gates remain open.
+The frozen C260 portable WASM is
+`66f80111dd6c871f557050037cdbba9068828220f5da430c4c501d323d15fb90`;
+the C261 candidate is
+`0e8b1515ed9e97c4ee7674468f2b8ab58d95aa57892386652530cc5bc308fd2e`.
+The pinned Source bundle is
+`79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600`
+at `8e45dafc0f7906e5238dfffc1a2df742bd25f29d`. All three ran the same
+fixture and six-step physical Shift-modified drag, with 80 ms down hold,
+6/12/18/24/30/36-pixel moves separated by 70 ms, and a 350 ms release
+pause. Source's projected page contact was `[697,477]`; both OBrush builds
+used `[845,472]` for their own camera on the same world mound. The complete
+45-event pointer/controller/shortcut trace is in the receipt.
+
+| Browser | Changed position components | Largest component delta | History | Undo/Redo |
+| --- | ---: | ---: | --- | --- |
+| Pinned SculptGL | 15 | 0.00190204 | 1 → 2 | Exact geometry through the GUI Undo/Redo controller callbacks |
+| OBrush C260 | 59 | 0.0355874 | 1 → 2 | Byte-exact public project Save after Ctrl+Z/Ctrl+Y |
+| OBrush C261 | 54 | 0.0314101 | 1 → 2 | Byte-exact public project Save after Ctrl+Z/Ctrl+Y |
+
+The final normal-browser receipt is
+`.artifacts/sculptgl-scene-shift-dense/33116e22-e8b0-438e-838f-c910917b3a4e/result.json`
+(SHA-256 `d214c36b7f094d5367100bf4fc77c19e36ea1030403f9516e16668beb76c2d18`).
+The C261 Shift-drag route **does** reach Smooth and changes the dense mesh;
+the prior coarse-box no-op did not reveal a routing regression. Its deformation
+is not the same as C260 or SculptGL, and this test does not close brush-response
+parity. The first harness run failed its C260 import wait because its diagnostic
+snapshot omitted `subtools`; the pinned Source portion had already changed 15
+components with exact Undo but its keyboard Redo probe was inconclusive. That
+failed receipt is preserved at
+`.artifacts/sculptgl-scene-shift-dense/117e2546-b7f2-4333-9de6-81eebbfb300c/result.json`
+(SHA-256 `cc981b66317603e4336d38561916a8604509ea1b1b8c7e03b02b7e03de310cdd`).
+The harness then used the same Source GUI Undo/Redo controller path as the
+earlier C248 scene audit and corrected the missing diagnostic field. The Source
+and ZBrush parity gates remain open.
