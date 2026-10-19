@@ -580,6 +580,50 @@ fn move_topology_check_isolates_a_picked_sheet_among_nearby_surfaces() {
 }
 
 #[test]
+fn connected_move_round_trips_public_project_and_one_history_step() {
+    // Independently generated, nearby disconnected sheets. The front seed is
+    // in the picked triangle; the rear sheet lies inside the same 0.5 radius.
+    let original = joined_sheets(false);
+    let seed = [index(0, 0) as u32, index(1, 0) as u32, index(1, 1) as u32];
+    let rear = SIDE * SIDE + index(3, 2);
+    let mut document = Document::new(original.snapshot());
+    let before = document.to_json().unwrap();
+    let mut settings = configured(BrushKind::Move);
+    settings.move_topology_check = true;
+    settings.backface_culling = false;
+    let mut stroke = document
+        .active_mesh()
+        .unwrap()
+        .prepare_move_stroke_with_seed(Vec3::ZERO, Vec3::Z, &settings, Some(seed))
+        .unwrap();
+    document.begin_stroke();
+    let result = stroke.apply(
+        document.active_mesh_mut().unwrap(),
+        Vec3::X * 0.02,
+        &settings,
+    );
+    document.end_stroke();
+    assert!(result.changed_vertices > 0);
+    assert_eq!(
+        document.active_mesh().unwrap().positions[rear],
+        original.positions[rear]
+    );
+    assert_ne!(
+        document.active_mesh().unwrap().positions[index(3, 2)],
+        original.positions[index(3, 2)]
+    );
+    let after = document.to_json().unwrap();
+    assert_eq!(
+        Document::from_json(&after).unwrap().to_json().unwrap(),
+        after
+    );
+    assert!(document.undo());
+    assert_eq!(document.to_json().unwrap(), before);
+    assert!(document.redo());
+    assert_eq!(document.to_json().unwrap(), after);
+}
+
+#[test]
 fn move_topology_paths_cannot_escape_the_radius_and_reenter_a_connected_mesh() {
     let text="v -0.3 -0.1 0\nv -0.1 -0.1 0\nv -0.2 0.1 0\nv 0.1 -0.1 0\nv 0.3 -0.1 0\nv 0.2 0.1 0\nv -0.3 1 0\nv -0.1 1 0\nv 0.1 1 0\nv 0.3 1 0\nv -0.3 1.2 0\nv 0.3 1.2 0\nf 1 2 3\nf 4 5 6\nf 1 3 7\nf 3 8 7\nf 6 5 10\nf 6 10 9\nf 7 8 11\nf 8 12 11\nf 8 9 12\nf 9 10 12\n";
     let original = Mesh::from_obj(text).unwrap();

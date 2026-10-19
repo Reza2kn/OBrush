@@ -983,6 +983,9 @@ pub struct OBrushApp {
     resident_studio: crate::resident_studio::ResidentStudioBridge,
     brush: BrushSettings,
     preferences: BrushPreferenceStore,
+    /// Apply the pinned Move selection default once when entering the Source
+    /// profile, without resetting a later user choice on profile switches.
+    source_move_default_applied: bool,
     alpha_conversion: AlphaConversion,
     alpha_import_request: Option<AlphaImportRequest>,
     next_alpha_import_id: u32,
@@ -1201,6 +1204,7 @@ impl OBrushApp {
             resident_studio: Default::default(),
             brush,
             preferences,
+            source_move_default_applied: false,
             alpha_conversion: AlphaConversion::LegacyWeightedOpacity,
             alpha_import_request: None,
             next_alpha_import_id: 1,

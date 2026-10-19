@@ -246,6 +246,9 @@ impl OBrushApp {
     pub(super) fn apply_startup(&mut self, mut startup: StartupOptions) -> Result<(), String> {
         self.app_preferences = startup.preferences;
         self.shortcut_resolver = startup.shortcuts;
+        if self.source_shortcut_profile() {
+            self.apply_source_move_default()?;
+        }
         apply_theme(&self.egui_ctx, &self.app_preferences.theme);
         let Some(mut source) = startup.source.take() else {
             return Ok(());
@@ -316,6 +319,20 @@ impl OBrushApp {
     }
     pub fn source_shortcut_profile(&self) -> bool {
         self.app_preferences.shortcut_profile == PreferenceProfile::SculptGl
+    }
+    fn apply_source_move_default(&mut self) -> Result<(), String> {
+        if self.source_move_default_applied {
+            return Ok(());
+        }
+        let mut move_preferences = self.preferences.tool(BrushKind::Move).clone();
+        move_preferences.move_topology_check = true;
+        self.preferences
+            .set_tool(BrushKind::Move, move_preferences)?;
+        self.source_move_default_applied = true;
+        if self.brush.kind == BrushKind::Move {
+            self.load_brush_view();
+        }
+        Ok(())
     }
     pub(super) fn app_preferences_metrics(&self) -> serde_json::Value {
         let palette = match &self.app_preferences.theme {
@@ -418,6 +435,12 @@ impl OBrushApp {
             if profile != self.app_preferences.shortcut_profile && self.preference_barrier() {
                 self.app_preferences.shortcut_profile = profile;
                 self.shortcut_resolver = crate::shortcut_profile::ShortcutResolver::new(profile);
+                if profile == PreferenceProfile::SculptGl {
+                    if let Err(error) = self.apply_source_move_default() {
+                        self.message = error;
+                        return;
+                    }
+                }
                 self.message = format!(
                     "{} shortcuts selected. Document kept.",
                     profile_name(profile)
