@@ -11,9 +11,14 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 audit_module = SourceFileLoader("source_gpu_audit", str(HERE / "audit-source-gpu-words.py")).load_module()
+verifier_module = SourceFileLoader("source_worker_verifier", str(HERE / "verify-source-worker-sustained.py")).load_module()
 
 
 class GpuWordAuditTest(unittest.TestCase):
+    def test_timing_percentile_rejects_nonfinite_sample(self):
+        with self.assertRaises(ValueError):
+            verifier_module.percentile([16.0, float("nan"), 17.0], .95)
+
     def test_normal_word_change_is_detected_independently(self):
         positions = [[0, 0, 0], [1, 0, 0], [0, 1, 0]]
         normals = [[0, 0, 1]] * 3

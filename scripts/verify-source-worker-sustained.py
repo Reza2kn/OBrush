@@ -37,9 +37,10 @@ def sha_file(path, limit):
 
 
 def percentile(values, portion):
-    values = sorted(value for value in values if math.isfinite(value))
-    if not values:
+    if not values or any(not isinstance(value, (int, float)) or not math.isfinite(value)
+                         for value in values):
         raise ValueError("empty or non-finite samples")
+    values = sorted(values)
     return values[math.ceil(portion * len(values)) - 1]
 
 
