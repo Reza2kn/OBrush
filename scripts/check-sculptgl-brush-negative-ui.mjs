@@ -70,6 +70,45 @@ const result = {side, negative, protocol_commit:'e09510c',
   page_observations:[], cleanup_errors:[]};
 const owner = new OwnedCdp(out, result);
 let page, pressed = false;
+async function prepareSourceBrushFixture(page) {
+  await page.alignViewport();
+  for (const [label,value] of [['Scale and center',false],['Export all',true],['sRGB vertex color',true]])
+    await page.sourceCheckbox('_ctrlFiles',label,value);
+  await page.clear();
+  await page.file('#fileopen',fixture);
+  await page.wait(()=>page.state(),s=>s.meshes.length===1&&s.meshes[0].vertices===expected.vertices,
+    'Complete independent Source fixture import');
+  await page.sourceSelect('_ctrlSculpting',page.controller('_ctrlSculpting')+'._ctrlSculpt.domSelect',0);
+  const menu=page.controller('_ctrlSculpting')+'._menu.domUl';
+  const nums=`Array.from(${menu}.querySelectorAll('input[type=number]')).filter(e=>e.getBoundingClientRect().width>0)`;
+  await page.sourceNumber('_ctrlSculpting',nums+'[0]',64);
+  await page.sourceNumber('_ctrlSculpting',nums+'[1]',25);
+  for(const [label,value] of [['Clay',false],['Accumulate',false],['Negative',false],
+    ['Thin surface',false],['Symmetry',false],['Continuous',false]])
+    await page.sourceCheckbox('_ctrlSculpting',label,value);
+  const tablet=page.controller('_ctrlTablet')+'._menu.domUl.querySelectorAll("input[type=number]")';
+  await page.sourceNumber('_ctrlTablet',tablet+'[0]',0);
+  await page.sourceNumber('_ctrlTablet',tablet+'[1]',0);
+  const alpha=await page.evaluate(`(()=>{const menu=${menu},e=Array.from(menu.querySelectorAll('select')).find(e=>Array.from(e.options).some(o=>o.value==='None'));return {value:e?.value,owner:window.__sculptglReferenceInstance.getSculptManager().getCurrentTool()._idAlpha};})()`);
+  result.source_alpha_initial=alpha;
+  if(alpha.value!=='None'||![0,'None'].includes(alpha.owner))throw Error('Source Alpha None was not published');
+  await page.sourceSelect('_ctrlCamera',page.controller('_ctrlCamera')+'._ctrlProjection.domSelect',1);
+  await page.sourceButton('_ctrlCamera','Reset (bar)');
+  await page.closeMenus();
+  const viewport=await page.viewport();
+  const point=[viewport.screen[0]+16,viewport.screen[1]+viewport.pixels[3]-16];
+  await page.pointer('mouseMoved',...point);
+  if(await page.evaluate('window.__sculptglReferenceInstance._focusGui!==false'))
+    throw Error('Actual Source canvas does not own fit gesture');
+  for(let tap=0;tap<2;tap++){
+    await page.pointer('mousePressed',...point,'left',1,{clickCount:tap+1});
+    await page.pointer('mouseReleased',...point,'left',0,{clickCount:tap+1});
+  }
+  await page.wait(()=>page.evaluate('Object.values(window.__sculptglReferenceInstance.getCamera()._timers).every(v=>v===0||v===-1||v===null)'),
+    v=>v,'Source fit timers settle');
+  await page.closeMenus();
+  return {state:await page.state(),viewport:await page.viewport()};
+}
 try {
   if (side==='root' && webUrl) {
     result.served_http_hashes={};
@@ -96,7 +135,8 @@ try {
   page = await owner.page(side, url, observer);
   Object.setPrototypeOf(page, PerfDriver.prototype);
   await page.send('Page.bringToFront');
-  result.setup = await page.prepareFixture({path:fixture, vertices:expected.vertices});
+  result.setup = side==='source' ? await prepareSourceBrushFixture(page) :
+    await page.prepareFixture({path:fixture, vertices:expected.vertices});
   if (side === 'source') {
     const menu = 'window.__sculptglReferenceInstance.getGui()._ctrlSculpting._menu.domUl';
     const numbers = `Array.from(${menu}.querySelectorAll('input[type=number]')).filter(e=>e.getBoundingClientRect().width>0)`;
@@ -200,7 +240,7 @@ try {
     throw Error('OBRush pressure factors are not zero');
   }
   if (side === 'source' ? !(p._accumulate===accumulate && p._negative===negative && !p._clay &&
-    !p._culling && p._idAlpha === 'None' && !result.config.state.symmetry && !result.config.state.continuous) :
+    !p._culling && [0,'None'].includes(p._idAlpha) && !result.config.state.symmetry && !result.config.state.continuous) :
     !(p.options.tool.Brush.accumulate===accumulate && p.options.negative===negative &&
       !p.options.tool.Brush.clay && !p.options.culling && !p.options.prevent_folds &&
       !result.config.state.symmetry_x && !result.config.state.continuous.requested &&
