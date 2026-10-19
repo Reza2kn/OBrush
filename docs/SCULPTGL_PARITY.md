@@ -1,5 +1,10 @@
 # SculptGL parity checkpoint
 
+[The C230 pressure-factor controls](SCULPTGL_PRESSURE_CONTROLS_C230.md)
+expose the pinned intensity/radius formula in ordinary OBrush brushing and
+resample it per pen dab. The normal browser UI displays the factor values;
+physical pen and full paired stroke behavior remain open.
+
 [The current 317-ID crosswalk](SCULPTGL_CURRENT_LEDGER.md) separates active,
 inactive and absent pinned-source rows and links later scoped evidence. The
 inventory below is a frozen historical gap snapshot, not current OBrush status.

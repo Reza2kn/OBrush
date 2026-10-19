@@ -408,6 +408,7 @@ const BRUSHES: [(BrushKind, &str, &str); 14] = [
 struct ActiveStroke {
     settings: BrushSettings,
     screen_radius: ScreenRadiusPreferences,
+    pressure_factors: Option<(f32, f32, f32, f32)>,
     last_screen: Option<Pos2>,
     sampler: StrokeSampler,
     movement: Option<ActiveMove>,
@@ -422,6 +423,18 @@ struct ActiveStroke {
     source_geometry_dirty_before: Option<bool>,
     source_paint_display_before: Option<(bool, bool)>,
     continuous_locked: Option<ActiveContinuousLocked>,
+}
+
+fn pressure_factors_for_stroke(
+    preferences: &BrushPreferenceStore,
+    kind: BrushKind,
+) -> Option<(f32, f32, f32, f32)> {
+    let PressureProfile::SculptGlFactors { intensity, radius } = preferences.global().pressure
+    else {
+        return None;
+    };
+    let tool = preferences.tool(kind);
+    Some((tool.strength, tool.radius, intensity, radius))
 }
 
 struct ActiveContinuousLocked {
@@ -451,14 +464,32 @@ fn captured_stroke_dab(
     rect: egui::Rect,
     kind: BrushKind,
     invert: bool,
-    pressure: f32,
+    input: ContactInput,
 ) -> Option<CapturedDab> {
     if !rect.contains(pos) {
         return None;
     }
     let screen_radius = stroke.screen_radius;
     let mut settings = stroke.settings.clone();
-    settings.pressure = pressure;
+    let (contact, curve) = match input {
+        ContactInput::Mouse => (1.0, 0.5),
+        ContactInput::Pen(pressure) if pressure.is_finite() => {
+            (pressure.clamp(0.0, 1.0), pressure.clamp(0.0, 1.0))
+        }
+        ContactInput::Pen(_) => return None,
+    };
+    let mut pixels = screen_radius.pixels;
+    if let Some((base_strength, base_radius, intensity, radius)) = stroke.pressure_factors {
+        let slope = curve * 2.0 - 1.0;
+        settings.strength = base_strength * (1.0 + intensity * slope);
+        settings.radius = base_radius * (1.0 + radius * slope);
+        settings.pressure = if contact > 0.0 { 1.0 } else { 0.0 };
+        settings.pressure_strength = false;
+        settings.pressure_radius = false;
+        pixels *= 1.0 + radius * slope;
+    } else {
+        settings.pressure = contact;
+    }
     settings.alpha_tangent = Some(camera.axes().0);
     settings.kind = kind;
     settings.invert ^= invert;
@@ -466,14 +497,7 @@ fn captured_stroke_dab(
     settings.culling_axis = Some(-ray.direction);
     let footprint = screen_radius
         .enabled
-        .then(|| {
-            ScreenFootprint::capture(
-                camera,
-                screen_radius.pixels,
-                rect.height(),
-                rect.aspect_ratio(),
-            )
-        })
+        .then(|| ScreenFootprint::capture(camera, pixels, rect.height(), rect.aspect_ratio()))
         .flatten();
     if screen_radius.enabled && footprint.is_none() {
         return None;
@@ -791,10 +815,12 @@ fn preference_view_candidate(
     let mut global = store.global();
     global.symmetry_x = brush.symmetry_x;
     global.symmetry_offset = brush.symmetry_offset;
-    global.pressure = PressureProfile::LegacyBinary {
-        strength: brush.pressure_strength,
-        radius: brush.pressure_radius,
-    };
+    if matches!(global.pressure, PressureProfile::LegacyBinary { .. }) {
+        global.pressure = PressureProfile::LegacyBinary {
+            strength: brush.pressure_strength,
+            radius: brush.pressure_radius,
+        };
+    }
     if &prefs == old && global == store.global() {
         return Ok(None);
     }
@@ -952,6 +978,7 @@ pub struct OBrushApp {
     )>,
     source_allow_mask_loss: bool,
     contact_pressure: crate::pressure::ContactPressure,
+    last_input_pen: bool,
     selected_layer: Option<usize>,
     layer_name_index: Option<usize>,
     layer_name_draft: String,
@@ -1169,6 +1196,7 @@ impl OBrushApp {
             source_mask_preview: None,
             source_allow_mask_loss: false,
             contact_pressure: Default::default(),
+            last_input_pen: false,
             selected_layer: None,
             layer_name_index: None,
             layer_name_draft: String::new(),
@@ -1304,6 +1332,14 @@ impl OBrushApp {
             "last_completed":self.last_source_paint_report,
             "retained_normal_state":self.document.active_subtool_id().and_then(|id|self.document.source_geometry_state(id)).map(|state|obrush_core::SourcePaintNormalView::RetainedGeometry(&state).report())});
 
+        let pressure_profile = match self.preferences.global().pressure {
+            PressureProfile::LegacyBinary { strength, radius } => {
+                serde_json::json!({"kind":"legacy","strength":strength,"radius":radius})
+            }
+            PressureProfile::SculptGlFactors { intensity, radius } => {
+                serde_json::json!({"kind":"sculptgl_factors","intensity":intensity,"radius":radius})
+            }
+        };
         let mut metrics = serde_json::json!({
             "continuous":{"requested":self.preferences.global().continuous,"eligible":supports_continuous(self.brush.kind,false),
                 "locked_conflict":self.preferences.global().continuous && self.brush_lock_position,
@@ -1337,6 +1373,10 @@ impl OBrushApp {
             "scene_clip_rect":self.scene_clip_rect,
             "subtool_uploads":uploads,"scene_error":scene_error
         });
+        if let Some(metrics) = metrics.as_object_mut() {
+            metrics.insert("pressure_profile".into(), pressure_profile);
+            metrics.insert("input_is_pen".into(), self.last_input_pen.into());
+        }
         // Keep diagnostic values unchanged without pushing the combined json!
         // invocation above its compiler macro-recursion bound.
         metrics["keyboard_diagnostics"] = serde_json::json!(self.keyboard_diagnostics);
@@ -1584,7 +1624,7 @@ impl OBrushApp {
             metrics.extend(regions);
         }
         let modifiers = self.egui_ctx.input(|i| i.modifiers);
-        let hover=self.preferences.preview(PreferenceModifiers {shift:modifiers.shift,control:modifiers.ctrl,alt:modifiers.alt},ContactInput::Pen(self.brush.pressure),None,None)
+        let hover=self.preferences.preview(PreferenceModifiers {shift:modifiers.shift,control:modifiers.ctrl,alt:modifiers.alt},self.current_contact_input(),None,None)
             .ok().map(|p|serde_json::json!({"kind":p.settings.kind.name(),"radius":p.settings.radius,"effective_world_radius":p.settings.effective_radius(),"pressure":p.settings.pressure,"screen_space_radius":p.screen_radius.enabled,"screen_radius_pixels":p.screen_radius.base_pixels,"effective_screen_pixels":p.screen_radius.effective_pixels,"alpha_width":p.settings.alpha.as_ref().map(|a|a.width()),"alpha_height":p.settings.alpha.as_ref().map(|a|a.height())}));
         metrics["preferences"] = serde_json::json!({
             "hover":hover,
@@ -1634,6 +1674,7 @@ impl OBrushApp {
         }
     }
     pub fn set_input_pressure(&mut self, pressure: f32, pen: bool, released: bool) {
+        self.last_input_pen = pen;
         self.source_paint_raw
             .receive(f64::from(pressure), pen, released, false, None);
         if pen {
@@ -1647,6 +1688,14 @@ impl OBrushApp {
         }
         self.brush.pressure = self.contact_pressure.current();
         self.egui_ctx.request_repaint();
+    }
+
+    fn current_contact_input(&self) -> ContactInput {
+        if self.last_input_pen {
+            ContactInput::Pen(self.brush.pressure)
+        } else {
+            ContactInput::Mouse
+        }
     }
 
     /// Production browser input bridge for navigation chords omitted by the
@@ -1665,11 +1714,26 @@ impl OBrushApp {
         self.brush_lock_position = prefs.lock_position;
         if let Ok(sample) = self.preferences.preview(
             PreferenceModifiers::default(),
-            ContactInput::Pen(pressure),
+            if self.last_input_pen {
+                ContactInput::Pen(pressure)
+            } else {
+                ContactInput::Mouse
+            },
             None,
             None,
         ) {
             self.brush = sample.settings;
+            // SculptGL factors belong to the captured input sample. Keep the
+            // inspector's editable values at their unscaled tool defaults so
+            // a later unrelated setting change cannot bake pen pressure into
+            // the saved radius or strength.
+            if matches!(
+                self.preferences.global().pressure,
+                PressureProfile::SculptGlFactors { .. }
+            ) {
+                self.brush.radius = prefs.radius;
+                self.brush.strength = prefs.strength;
+            }
             self.brush.adaptive_detail &= self.adaptive_detail_available();
         }
         self.alpha_name = alpha_selection_name(&self.preferences, prefs.alpha);
@@ -1795,20 +1859,24 @@ impl OBrushApp {
             .preferences
             .preview(
                 temporary_modifiers(self.preferences.selected(), kind),
-                ContactInput::Pen(self.brush.pressure),
+                self.current_contact_input(),
                 None,
                 None,
             )
             .ok()?;
         let mut settings = sample.settings;
         if sample.screen_radius.enabled {
-            settings.radius = ScreenFootprint::capture(
-                &self.camera,
-                sample.screen_radius.base_pixels,
-                rect.height(),
-                rect.aspect_ratio(),
-            )?
-            .radius_at_world(&self.document, point)?;
+            let pixels = if matches!(
+                self.preferences.global().pressure,
+                PressureProfile::SculptGlFactors { .. }
+            ) {
+                sample.screen_radius.effective_pixels
+            } else {
+                sample.screen_radius.base_pixels
+            };
+            settings.radius =
+                ScreenFootprint::capture(&self.camera, pixels, rect.height(), rect.aspect_ratio())?
+                    .radius_at_world(&self.document, point)?;
         }
         settings.adaptive_detail &= self.adaptive_detail_available();
         Some(settings)
@@ -3002,6 +3070,29 @@ impl OBrushApp {
         true
     }
 
+    fn set_pressure_profile(&mut self, pressure: PressureProfile) -> bool {
+        if !self.commit_brush_view() {
+            return false;
+        }
+        let mut candidate = self.preferences.clone();
+        let mut global = candidate.global();
+        if global.pressure == pressure {
+            return true;
+        }
+        global.pressure = pressure;
+        if let Err(error) = candidate.set_global(global) {
+            self.message = format!("Pressure setting rejected: {error}");
+            return false;
+        }
+        self.finish_stroke();
+        if self.stroke_rejected {
+            return false;
+        }
+        self.preferences = candidate;
+        self.load_brush_view();
+        true
+    }
+
     fn continuous_frame(&mut self, ctx: &egui::Context, rect: egui::Rect) {
         let Some(stroke) = self.stroke.as_ref() else {
             self.stop_continuous(StopReason::StrokeChanged);
@@ -3090,7 +3181,7 @@ impl OBrushApp {
             rect,
             key.kind,
             self.stroke.as_ref().unwrap().invert,
-            self.brush.pressure,
+            self.current_contact_input(),
         );
         let Some(capture) = capture else {
             self.continuous_clock.stop(StopReason::Command);
@@ -6647,20 +6738,82 @@ impl OBrushApp {
                 ));
             self.track_morph_control("settings.symmetry", &symmetry);
             ui.add_space(10.0);
-            let pressure_strength = ui.checkbox(
-                &mut self.brush.pressure_strength,
-                crate::ui_text::caption(crate::ui_text::CaptionKey::C417A00C008A1),
+            let mut sculptgl_pressure = matches!(
+                self.preferences.global().pressure,
+                PressureProfile::SculptGlFactors { .. }
             );
-            self.track_morph_control("settings.pressure_strength", &pressure_strength);
-            let pressure_radius = ui
-                .checkbox(
-                    &mut self.brush.pressure_radius,
-                    crate::ui_text::caption(crate::ui_text::CaptionKey::C4C39AE12DFA7),
-                )
-                .on_hover_text(crate::ui_text::caption(
-                    crate::ui_text::CaptionKey::C9E1DEE7A566A,
-                ));
-            self.track_morph_control("settings.pressure_radius", &pressure_radius);
+            if ui
+                .checkbox(&mut sculptgl_pressure, "SculptGL pressure curve")
+                .changed()
+            {
+                let pressure = if sculptgl_pressure {
+                    PressureProfile::SculptGlFactors {
+                        intensity: 0.0,
+                        radius: 0.75,
+                    }
+                } else {
+                    PressureProfile::LegacyBinary {
+                        strength: true,
+                        radius: false,
+                    }
+                };
+                self.set_pressure_profile(pressure);
+            }
+            match self.preferences.global().pressure {
+                PressureProfile::SculptGlFactors {
+                    mut intensity,
+                    mut radius,
+                } => {
+                    ui.horizontal(|ui| {
+                        ui.label("Intensity factor");
+                        ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                            ui.label(format!("{intensity:.2}"));
+                        });
+                    });
+                    let changed = ui
+                        .add(
+                            egui::Slider::new(&mut intensity, 0.0..=1.0)
+                                .step_by(0.01)
+                                .show_value(false),
+                        )
+                        .changed();
+                    ui.horizontal(|ui| {
+                        ui.label("Radius factor");
+                        ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                            ui.label(format!("{radius:.2}"));
+                        });
+                    });
+                    let changed = changed
+                        | ui.add(
+                            egui::Slider::new(&mut radius, 0.0..=1.0)
+                                .step_by(0.01)
+                                .show_value(false),
+                        )
+                        .changed();
+                    if changed {
+                        self.set_pressure_profile(PressureProfile::SculptGlFactors {
+                            intensity,
+                            radius,
+                        });
+                    }
+                }
+                PressureProfile::LegacyBinary { .. } => {
+                    let pressure_strength = ui.checkbox(
+                        &mut self.brush.pressure_strength,
+                        crate::ui_text::caption(crate::ui_text::CaptionKey::C417A00C008A1),
+                    );
+                    self.track_morph_control("settings.pressure_strength", &pressure_strength);
+                    let pressure_radius = ui
+                        .checkbox(
+                            &mut self.brush.pressure_radius,
+                            crate::ui_text::caption(crate::ui_text::CaptionKey::C4C39AE12DFA7),
+                        )
+                        .on_hover_text(crate::ui_text::caption(
+                            crate::ui_text::CaptionKey::C9E1DEE7A566A,
+                        ));
+                    self.track_morph_control("settings.pressure_radius", &pressure_radius);
+                }
+            }
             self.brush_options_panel(ui);
             if self.brush.kind == BrushKind::Morph {
                 ui.label(
@@ -9502,6 +9655,7 @@ impl OBrushApp {
                     enabled: self.preferences.tool(kind).screen_space_radius,
                     pixels: self.preferences.tool(kind).screen_radius_pixels,
                 },
+                pressure_factors: pressure_factors_for_stroke(&self.preferences, kind),
                 last_screen: Some(pos),
                 sampler: StrokeSampler::new(pos, (radius_px * 0.12).max(1.0)),
                 movement,
@@ -9832,7 +9986,7 @@ impl OBrushApp {
             rect,
             kind,
             invert,
-            self.brush.pressure,
+            self.current_contact_input(),
         )
         else {
             return;
@@ -10135,7 +10289,7 @@ impl OBrushApp {
                             control: modifiers.ctrl,
                             alt: modifiers.alt,
                         },
-                        ContactInput::Pen(self.brush.pressure),
+                        self.current_contact_input(),
                         None,
                         None,
                     );
@@ -11855,6 +12009,48 @@ mod preference_host_tests {
     }
 
     #[test]
+    fn sculptgl_pressure_factors_survive_unrelated_brush_edits_without_compounding() {
+        let mut s = store();
+        let mut global = s.global();
+        global.pressure = PressureProfile::SculptGlFactors {
+            intensity: 0.5,
+            radius: 0.75,
+        };
+        s.set_global(global).unwrap();
+        let base = s.tool(BrushKind::Draw).clone();
+        let mut view = sample(&s, BrushKind::Draw, 0.25);
+        view.radius = base.radius;
+        view.strength = base.strength;
+        view.color = [0.25, 0.5, 0.75];
+        s = preference_view_candidate(&s, &view, false, 75.0, false)
+            .unwrap()
+            .unwrap();
+        assert_eq!(s.global().pressure, global.pressure);
+        assert_eq!(s.tool(BrushKind::Draw).radius, base.radius);
+        assert_eq!(s.tool(BrushKind::Draw).strength, base.strength);
+        assert_eq!(s.tool(BrushKind::Draw).color, view.color);
+        for (pressure, intensity, radius) in [
+            (0.0, 0.5, 0.25),
+            (0.25, 0.75, 0.625),
+            (0.5, 1.0, 1.0),
+            (1.0, 1.5, 1.75),
+        ] {
+            let response = s
+                .preview(
+                    PreferenceModifiers::default(),
+                    ContactInput::Pen(pressure),
+                    None,
+                    None,
+                )
+                .unwrap();
+            assert_eq!(response.pressure.intensity_multiplier, intensity);
+            assert_eq!(response.pressure.radius_multiplier, radius);
+            assert!((response.settings.strength - base.strength * intensity).abs() < 1e-7);
+            assert!((response.settings.radius - base.radius * radius).abs() < 1e-7);
+        }
+    }
+
+    #[test]
     fn candidate_view_retains_per_tool_screen_alpha_color_and_global_preferences() {
         let mut s = store();
         let mut p = s.tool(BrushKind::Draw).clone();
@@ -12222,6 +12418,7 @@ mod preference_host_tests {
                 enabled: screen,
                 pixels: 75.0,
             },
+            pressure_factors: None,
             last_screen: None,
             sampler: StrokeSampler::new(Pos2::ZERO, 1.0),
             movement: None,
@@ -12270,7 +12467,7 @@ mod preference_host_tests {
             rect,
             BrushKind::Paint,
             true,
-            0.25,
+            ContactInput::Pen(0.25),
         )
         .unwrap();
         assert_eq!(dab.settings.color, [0.125, 0.75, 0.375]);
@@ -12306,7 +12503,7 @@ mod preference_host_tests {
             rect,
             BrushKind::Draw,
             false,
-            0.25,
+            ContactInput::Pen(0.25),
         )
         .unwrap();
         let radius = dab.footprint.unwrap().radius_at(Vec3::ZERO).unwrap();
@@ -12314,6 +12511,45 @@ mod preference_host_tests {
         at_hit.radius = radius;
         assert!((at_hit.effective_radius().unwrap() - radius * 0.25).abs() < 1e-7);
         assert_eq!(stroke.screen_radius.pixels, 75.0);
+    }
+
+    #[test]
+    fn captured_pressure_curve_tracks_each_pen_dab_and_keeps_mouse_neutral() {
+        let settings = BrushSettings {
+            kind: BrushKind::Draw,
+            radius: 0.18,
+            strength: 0.35,
+            ..Default::default()
+        };
+        let mut stroke = captured_continuous_fixture(settings, true);
+        stroke.pressure_factors = Some((0.35, 0.18, 0.5, 0.75));
+        let camera = Camera::default();
+        let rect = egui::Rect::from_min_size(Pos2::ZERO, egui::vec2(800.0, 600.0));
+        let dab = |input| {
+            captured_stroke_dab(
+                &stroke,
+                &camera,
+                rect.center(),
+                rect,
+                BrushKind::Draw,
+                false,
+                input,
+            )
+            .unwrap()
+        };
+        let low = dab(ContactInput::Pen(0.25));
+        let high = dab(ContactInput::Pen(0.75));
+        let mouse = dab(ContactInput::Mouse);
+        assert!((low.settings.strength - 0.2625).abs() < 1e-7);
+        assert!((high.settings.strength - 0.4375).abs() < 1e-7);
+        assert!((mouse.settings.strength - 0.35).abs() < 1e-7);
+        assert!((low.settings.radius - 0.1125).abs() < 1e-7);
+        assert!((high.settings.radius - 0.2475).abs() < 1e-7);
+        assert!((mouse.settings.radius - 0.18).abs() < 1e-7);
+        let radius = |dab: CapturedDab| dab.footprint.unwrap().radius_at(Vec3::ZERO).unwrap();
+        let mouse_radius = radius(mouse);
+        assert!((radius(low) / mouse_radius - 0.625).abs() < 1e-6);
+        assert!((radius(high) / mouse_radius - 1.375).abs() < 1e-6);
     }
 
     #[test]
@@ -12329,7 +12565,7 @@ mod preference_host_tests {
                 rect,
                 BrushKind::Draw,
                 false,
-                1.0
+                ContactInput::Pen(1.0)
             )
             .is_none()
         );
@@ -12342,7 +12578,7 @@ mod preference_host_tests {
                 empty,
                 BrushKind::Draw,
                 false,
-                1.0
+                ContactInput::Pen(1.0)
             )
             .is_none()
         );
@@ -12952,6 +13188,7 @@ impl OBrushApp {
                 enabled: true,
                 pixels: self.source_paint_preferences.radius as f32,
             },
+            pressure_factors: None,
             last_screen: Some(pos),
             sampler: StrokeSampler::new(pos, 1.0),
             movement: None,
@@ -13015,7 +13252,7 @@ impl OBrushApp {
                 .preferences
                 .preview(
                     temporary_modifiers(self.preferences.selected(), kind),
-                    ContactInput::Pen(self.brush.pressure),
+                    self.current_contact_input(),
                     None,
                     None,
                 )?
@@ -13073,6 +13310,7 @@ impl OBrushApp {
                 enabled: true,
                 pixels: self.preferences.tool(kind).screen_radius_pixels,
             },
+            pressure_factors: pressure_factors_for_stroke(&self.preferences, kind),
             last_screen: Some(pos),
             sampler: StrokeSampler::new(pos, 1.0),
             movement: None,

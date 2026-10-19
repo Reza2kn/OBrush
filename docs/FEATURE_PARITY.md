@@ -1,5 +1,12 @@
 # OBrush feature parity contract
 
+**C230 pressure factors:** [The scoped control and input report](SCULPTGL_PRESSURE_CONTROLS_C230.md)
+exposes SculptGL-style 0..1 intensity/radius factors for ordinary OBrush
+brushes and resamples them for every pen dab while keeping mouse input neutral.
+The full workspace, strict native/WASM Clippy, browser build and macOS package
+pass; an isolated UI check shows the controls. Physical pens, separate Source
+response and full paired reference behavior remain open.
+
 The [current SculptGL inventory crosswalk](SCULPTGL_CURRENT_LEDGER.md) counts
 all 317 pinned source IDs without treating the historical 0.1.14 gap labels
 as present implementation status. Its linked row-level evidence is scoped;

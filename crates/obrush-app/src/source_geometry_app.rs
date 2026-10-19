@@ -459,6 +459,7 @@ impl OBrushApp {
                 enabled: true,
                 pixels: prefs.radius as f32,
             },
+            pressure_factors: None,
             last_screen: Some(pos),
             sampler: StrokeSampler::new(pos, 1.),
             movement: None,

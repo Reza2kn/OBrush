@@ -1,6 +1,8 @@
 // CLI-only brush input checks. Owns a temporary loopback server, headless
 // Chrome process/profile, and test tab; never attaches to user browser state.
-// Usage: node scripts/check-brush-inputs.mjs [web/dist] [run-label]
+// Usage: node scripts/check-brush-inputs.mjs [web/dist] [run-label] [--pressure-only]
+// --pressure-only runs four independent default-policy pen/mouse cases while
+// the wider alpha workflow keeps its separate import-request gate.
 import { spawn } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -10,6 +12,7 @@ import { deflateSync } from 'node:zlib';
 
 const web = path.resolve(process.argv[2] || 'web/dist');
 const label = process.argv[3] || 'brush-inputs';
+const pressureOnly = process.argv.includes('--pressure-only');
 const out = path.resolve(`.artifacts/brush-inputs-0.1.6/${label}-${randomUUID()}`);
 const profile = path.join(out, 'isolated-profile');
 await mkdir(profile, { recursive: true });
@@ -229,11 +232,12 @@ try {
   if (hash(wasm) !== hash(served)) throw new Error('Served WASM differs from local build');
 
   const documents = {};
-  for (const [name, pointerType, pressure, alpha, uiControl] of [
+  const cases = [
     ['pen-zero', 'pen', 0, null], ['pen-quarter', 'pen', 0.25, null], ['pen-full', 'pen', 1, null],
     ['mouse-default', 'mouse', 0.5, null], ['alpha-black', 'pen', 1, 'black'], ['alpha-white', 'pen', 1, 'white'], ['alpha-asymmetric', 'pen', 1, 'asymmetric'],
     ['pen-radius-half', 'pen', 0.5, null, 'pressure-radius'], ['alpha-rotated', 'pen', 1, 'asymmetric', 'rotation'],
-  ]) {
+  ];
+  for (const [name, pointerType, pressure, alpha, uiControl] of pressureOnly ? cases.slice(0, 4) : cases) {
     await fresh();
     const trial = { name, pointer_type: pointerType, force: pressure, alpha, snapshots: [] }; result.cases.push(trial);
     trial.initial_settings = await evaluate('window.obrushBrushMetrics()');
@@ -295,6 +299,31 @@ try {
     }
     await writeFile(path.join(out, `${name}.json`), JSON.stringify(trial, null, 2) + '\n');
   }
+  if (pressureOnly) {
+    const same = (a, b) => meshHash(a) === meshHash(b);
+    const base = documents['pen-full'].initial.mesh.positions;
+    const full = documents['pen-full'].final.mesh.positions;
+    const quarter = documents['pen-quarter'].final.mesh.positions;
+    let maxError = 0;
+    let changed = 0;
+    for (let index = 0; index < base.length; index++) {
+      for (let channel = 0; channel < 3; channel++) {
+        const delta = full[index][channel] - base[index][channel];
+        const actual = quarter[index][channel] - base[index][channel];
+        maxError = Math.max(maxError, Math.abs(actual - delta * 0.25));
+        if (actual !== 0) changed++;
+      }
+    }
+    result.quarter_pressure_response = { changed_position_components: changed, max_absolute_position_error: maxError, expected_ratio: 0.25 };
+    result.comparisons = {
+      zero_pressure_exact_noop: same(documents['pen-zero'].initial, documents['pen-zero'].final),
+      mouse_default_matches_pen_full_exactly: same(documents['mouse-default'].final, documents['pen-full'].final),
+      quarter_pressure_scales_geometry: changed > 0 && maxError <= 3e-7,
+    };
+    if (!Object.values(result.comparisons).every(Boolean) || result.exceptions.length || result.console_errors.length) throw new Error('Basic pressure browser gate failed');
+    result.status = 'passed basic pressure browser checks';
+    result.limitations = ['Synthetic trusted CDP input on four fresh spheres; SculptGL factor controls, pressure ramps, physical tablets and alpha import are outside this mode.'];
+  } else {
   const same = (a, b) => meshHash(a) === meshHash(b);
   result.comparisons = {
     zero_pressure_exact_noop: same(documents['pen-zero'].initial, documents['pen-zero'].final),
@@ -343,6 +372,7 @@ try {
   if (result.exceptions.length || result.console_errors.length) throw new Error('JavaScript exception or console error');
   result.status = 'passed pressure and raster-alpha browser checks';
   result.limitations = ['Synthetic trusted CDP pen events; physical pen/tablet and native GUI pressure are unverified.', 'Nine stationary fresh-sphere samples exercise pressure capture, pressure-radius/rotation controls, bounded PNG upload, actual rendered geometry, save, and alpha undo/redo; long pressure ramps and arbitrary device event rates remain separate gates.', 'Raster alpha is an 8-bit grayscale scalar applied within the existing radial brush footprint; no UV/textures/vector-displacement compatibility or ZBrush response equivalence.'];
+  }
 } catch (error) {
   result.status = 'failed pressure and raster-alpha browser checks'; result.failure = String(error); process.exitCode = 1;
   try { result.failure_runtime = await evaluate('({metrics:window.obrushBrushMetrics?.(),runtime:window.__brushCheck,notice:document.getElementById("notice")?.textContent})'); result.failure_screenshot = await screenshot('failure'); } catch { }
