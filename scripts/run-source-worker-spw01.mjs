@@ -65,9 +65,11 @@ const source = `(${installPerfExport.toString()})(window);\n` +
   `(${installPerfMemory.toString()})(window);\n` +
   `(${installPerfRecorder.toString()})(window,${JSON.stringify(frozen.recorder_limits)});\n` +
   await readFile(path.join(root, 'scripts/source-gpu-readback-observer.js'), 'utf8') + '\n' +
-  `(()=>{const trace={messages:[],main:{},files:[],errors:[],overflow:false};window.__workerSustained=trace;
+  `(()=>{const trace={messages:[],main:{},files:[],buttonEvents:[],errors:[],overflow:false};window.__workerSustained=trace;
     document.addEventListener('change',e=>{if(e.target?.type==='file')trace.files.push({at:performance.now(),trusted:e.isTrusted,
       id:e.target.id,names:Array.from(e.target.files||[],f=>f.name)});},true);
+    for(const type of ['pointerdown','pointerup'])document.addEventListener(type,e=>{if(e.target?.textContent?.includes('Source Worker · trial'))
+      trace.buttonEvents.push({type,at:performance.now(),trusted:e.isTrusted,x:e.clientX,y:e.clientY});},true);
     const Original=window.Worker;window.Worker=class extends Original{
       constructor(...a){super(...a);if(!String(a[0]).includes('source-geometry-worker'))return;
         const post=this.postMessage.bind(this);this.postMessage=(m,t)=>{if(trace.messages.length>=100000){trace.overflow=true;return post(m,t)}
@@ -140,7 +142,14 @@ try {
     const trial=await page.evaluate(`(()=>{const b=Array.from(document.querySelectorAll('button')).find(x=>x.textContent.includes('Source Worker · trial off'));
       if(!b) return null; const r=b.getBoundingClientRect();return {x:(r.left+r.right)/2,y:(r.top+r.bottom)/2,rect:[r.left,r.top,r.right,r.bottom]};})()`);
     requireGate(trial,'normal rendered Worker trial button');result.ui_actions.push({kind:'worker trial button',...trial});
-    await page.click(trial.x,trial.y);requireGate((await workerStatus()).enabled===true,'normal Worker button did not enable');
+    await page.pointer('mouseMoved',trial.x,trial.y);
+    await page.pointer('mousePressed',trial.x,trial.y,'left',1);
+    await page.pointer('mouseReleased',trial.x,trial.y,'left',0);
+    requireGate((await workerStatus()).enabled===true,'normal Worker button did not enable');
+    const buttonEvents=await page.evaluate('window.__workerSustained.buttonEvents');
+    requireGate(buttonEvents.length===2&&buttonEvents.every(row=>row.trusted),
+      'normal Worker button lacked trusted down/up');
+    result.worker_sustained_attestation.trusted_button_events=buttonEvents;
   }
   result.before=(await page.save('before')).record;await gpuStage('before');
   const viewport=await page.viewport(),center=[(viewport.screen[0]+viewport.screen[2])/2,(viewport.screen[1]+viewport.screen[3])/2];
