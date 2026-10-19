@@ -48,6 +48,11 @@ the held Worker remains query-gated and off by default.
 attributes 373.6 ms to complete-scene witness/delta decode and 171.0 ms to
 retained warm decode in a separate 100k run. It leaves the product algorithm
 unchanged and retains the frozen queue-tail, RAF-max and GPU-normal failures.
+[The streamed scene-witness trial](SOURCE_WORKER_SCENE_WITNESS_RESULT.md)
+then reduced that measured scene/delta stage to 283.7 ms on a fresh 100k run
+while preserving exact public history and GPU positions. The frozen RAF-max,
+100 ms queue-tail and GPU-normal gates still fail, so the Worker stays off by
+default.
 [The independent display-normal audit](SOURCE_GPU_DISPLAY_NORMAL_ORACLE_PREREG.md)
 matches fresh Source face normals to active GPU rows before sculpting and after
 Undo. Edited After and Redo states have byte-identical public meshes but
