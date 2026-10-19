@@ -5496,21 +5496,7 @@ impl OBrushApp {
         if self.stroke_rejected {
             return;
         }
-        let snapshots = self.document.subtool_render_snapshots();
-        let max_x = snapshots
-            .iter()
-            .flat_map(|s| {
-                s.mesh.positions.iter().map(move |p| {
-                    s.metadata.as_ref().map_or(f64::from(p.x), |m| {
-                        m.affine.world_point(*p).map_or(f64::from(p.x), |v| v.x)
-                    })
-                })
-            })
-            .map(|x| x as f32)
-            .reduce(f32::max)
-            .unwrap_or(-1.25);
         let name = primitive.name();
-        let offset = max_x + 1.25;
         if self.source_shortcut_profile() && self.primitive_detail == 6 {
             let base = match primitive {
                 PrimitiveKind::Sphere | PrimitiveKind::Cube => Mesh::cube_quad_grid(0),
@@ -5540,13 +5526,31 @@ impl OBrushApp {
                             name,
                             &settings,
                             steps,
-                            Vec3::new(offset, 0.0, 0.0),
+                            if matches!(primitive, PrimitiveKind::Cube | PrimitiveKind::Cylinder) {
+                                0.7
+                            } else {
+                                1.0
+                            },
                         )
                         .map(|_| ())
                 },
                 "Part added with retained subdivision levels. Undo restores the scene.",
             );
         } else {
+            let snapshots = self.document.subtool_render_snapshots();
+            let max_x = snapshots
+                .iter()
+                .flat_map(|s| {
+                    s.mesh.positions.iter().map(move |p| {
+                        s.metadata.as_ref().map_or(f64::from(p.x), |m| {
+                            m.affine.world_point(*p).map_or(f64::from(p.x), |v| v.x)
+                        })
+                    })
+                })
+                .map(|x| x as f32)
+                .reduce(f32::max)
+                .unwrap_or(-1.25);
+            let offset = max_x + 1.25;
             let mut mesh = match primitive.create_for_scene(self.primitive_detail, false) {
                 Ok(mesh) => mesh,
                 Err(error) => {

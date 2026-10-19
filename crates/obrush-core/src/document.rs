@@ -1843,12 +1843,25 @@ impl Document {
         name: &str,
         settings: &crate::StaticSubdivisionSettings,
         subdivisions: usize,
-        translation: crate::Vec3,
+        scale_fraction: f32,
     ) -> Result<u32, String> {
         base.validate()?;
-        let stack = Multiresolution::source_primitive(&base, settings, subdivisions, translation)?;
+        let affine = crate::primitives::source_primitive_affine(&base, scale_fraction)?;
+        let stack =
+            Multiresolution::source_primitive(&base, settings, subdivisions, crate::Vec3::ZERO)?;
         let mesh = stack.levels[stack.active].snapshot();
-        self.add_subtool_impl(mesh, name, true, None, Some(stack))
+        let metadata = SceneObjectMetadata {
+            source_center_initialized: true,
+            symmetry_offset: 0.0,
+            affine: crate::ObjectAffineF32V1::from_local_points(
+                affine.local_to_world,
+                &mesh.positions,
+            )?,
+            render: None,
+            picking_policy: crate::SglPickingPolicy::SourceScaleRowV1,
+            origin: None,
+        };
+        self.add_subtool_impl(mesh, name, true, Some(metadata), Some(stack))
     }
 
     /// Append a validated imported mesh retaining its supplied normal bits.

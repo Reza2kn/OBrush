@@ -1,4 +1,28 @@
-use crate::{Document, Mesh, StaticSubdivisionSettings, Vec3, TRIANGLE_CORNER};
+use crate::{Document, Mesh, StaticSubdivisionSettings, TRIANGLE_CORNER};
+
+#[test]
+fn source_seed_matrix_matches_pinned_default_primitive_scales() {
+    // Pinned first-add `normalizeSize()` matrices, including the subsequent
+    // 0.7 product for Cube/Cylinder. Sphere/Cube have a factor-two different
+    // independently authored local seed, so their stored matrix is half of
+    // the reference's and their world surfaces are the comparison target.
+    let cases: [(Mesh, f32, f32); 4] = [
+        (Mesh::cube_quad_grid(0).unwrap(), 1.0, 57.735_027 / 2.0),
+        (Mesh::cube_quad_grid(0).unwrap(), 0.7, 40.414_52 / 2.0),
+        (Mesh::source_cylinder_base().unwrap(), 0.7, 28.577_381),
+        (Mesh::source_torus_base().unwrap(), 1.0, 58.520_573),
+    ];
+    for (mesh, fraction, expected) in cases {
+        let affine = crate::primitives::source_primitive_affine(&mesh, fraction).unwrap();
+        for index in [0, 5, 10] {
+            assert!((affine.local_to_world[index] - expected).abs() < 0.000_02);
+        }
+        assert_eq!(affine.local_to_world[12..15], [0.0; 3]);
+    }
+    assert!(
+        crate::primitives::source_primitive_affine(&Mesh::cube_quad_grid(0).unwrap(), 0.9).is_err()
+    );
+}
 
 type PrimitiveCase = (
     fn() -> Result<Mesh, String>,
@@ -90,7 +114,7 @@ fn source_default_primitives_retain_clamped_levels_and_history() {
             &format!("Primitive {index}"),
             &StaticSubdivisionSettings { linear_edges },
             steps,
-            Vec3::ZERO,
+            if matches!(index, 1 | 2) { 0.7 } else { 1.0 },
         )
         .unwrap();
         assert_eq!(doc.level_count(), retained);
@@ -148,7 +172,7 @@ fn invalid_source_primitive_level_request_leaves_document_and_redo_alone() {
             "Rejected",
             &StaticSubdivisionSettings::default(),
             8,
-            Vec3::ZERO,
+            1.0,
         )
         .is_err());
     assert_eq!(doc.to_json().unwrap(), before);

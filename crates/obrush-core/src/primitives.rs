@@ -12,6 +12,48 @@ use std::collections::HashMap;
 pub const MIN_PRIMITIVE_DIMENSION: f32 = 0.000_001;
 pub const MAX_PRIMITIVE_DIMENSION: f32 = 1_000_000.0;
 
+/// Pinned Source `normalizeSize`: scale the *seed* diagonal to 100 world
+/// units before subdivision. Cube and Cylinder then multiply that f32 matrix
+/// by 0.7. The fine local mesh stays unbaked, so every retained level shares
+/// one pose and public project/history preserve it exactly.
+pub(crate) fn source_primitive_affine(
+    base: &Mesh,
+    scale_fraction: f32,
+) -> Result<crate::ObjectAffineF32V1, String> {
+    if scale_fraction != 1.0 && scale_fraction.to_bits() != 0.7_f32.to_bits() {
+        return Err("Source primitive scale fraction must be 1 or 0.7".into());
+    }
+    base.validate()?;
+    let mut low = [f64::INFINITY; 3];
+    let mut high = [f64::NEG_INFINITY; 3];
+    for position in &base.positions {
+        for (axis, value) in position.to_array().into_iter().enumerate() {
+            let value = f64::from(value);
+            low[axis] = low[axis].min(value);
+            high[axis] = high[axis].max(value);
+        }
+    }
+    let diagonal = (0..3)
+        .map(|axis| (high[axis] - low[axis]).powi(2))
+        .sum::<f64>()
+        .sqrt();
+    if !diagonal.is_finite() || diagonal <= 0.0 {
+        return Err("Source primitive seed has no finite diagonal".into());
+    }
+    let normalized = (100.0 / diagonal) as f32;
+    let scale = if scale_fraction == 1.0 {
+        normalized
+    } else {
+        (f64::from(normalized) * 0.7) as f32
+    };
+    let mut matrix = [0.0_f32; 16];
+    matrix[0] = scale;
+    matrix[5] = scale;
+    matrix[10] = scale;
+    matrix[15] = 1.0;
+    crate::ObjectAffineF32V1::from_local_points(matrix, &base.positions)
+}
+
 impl Mesh {
     /// Smooth the six-quad closed cube as an original-quad surface. Seven
     /// four-way levels give the pinned SculptGL Add Sphere face density;
