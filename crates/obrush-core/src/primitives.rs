@@ -1,7 +1,11 @@
 //! Independent bounded primitives and attribute-preserving mesh concatenation.
-//! Coordinates are mesh/world units. No implicit scene normalization or Loop
-//! subdivision is performed. Polygons are triangulated at construction.
-use crate::{Mesh, SurfaceTopology, Vec3, MAX_SUBTOOLS, MAX_TRIANGLES, MAX_VERTICES};
+//! Coordinates are mesh/world units. No implicit scene normalization is
+//! performed. Source-profile defaults explicitly apply static subdivision;
+//! the ordinary constructors do not. Polygons are triangulated for rendering.
+use crate::{
+    Mesh, StaticSubdivisionSettings, SurfaceTopology, Vec3, MAX_SUBTOOLS, MAX_TRIANGLES,
+    MAX_VERTICES, TRIANGLE_CORNER,
+};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -197,9 +201,42 @@ pub struct SubtoolMergeReport {
 }
 
 impl Mesh {
+    /// Pinned SculptGL's default cylinder begins with 64×64 side quads and
+    /// triangular caps, then takes two smooth static subdivision steps.
+    /// This is the Source-profile Add path; generic cylinder settings remain
+    /// available through `cylinder` without changing their legacy topology.
+    pub fn source_default_cylinder() -> Result<Self, String> {
+        let mut mesh = Self::cylinder_with_original_faces(&CylinderSettings::default(), true)?;
+        for _ in 0..2 {
+            mesh = mesh
+                .subdivided_static(&StaticSubdivisionSettings::default())?
+                .mesh;
+        }
+        Ok(mesh)
+    }
+
+    /// Pinned SculptGL's default torus begins with 32×128 quads and takes
+    /// two smooth static subdivision steps while retaining original quads.
+    pub fn source_default_torus() -> Result<Self, String> {
+        let mut mesh = Self::torus_with_original_faces(&TorusSettings::default(), true)?;
+        for _ in 0..2 {
+            mesh = mesh
+                .subdivided_static(&StaticSubdivisionSettings::default())?
+                .mesh;
+        }
+        Ok(mesh)
+    }
+
     /// Closed or explicitly uncapped Y-axis cylinder/frustum. A zero endpoint
     /// radius becomes one shared cone apex, irrespective of that cap flag.
     pub fn cylinder(settings: &CylinderSettings) -> Result<Self, String> {
+        Self::cylinder_with_original_faces(settings, false)
+    }
+
+    fn cylinder_with_original_faces(
+        settings: &CylinderSettings,
+        retain_original_faces: bool,
+    ) -> Result<Self, String> {
         dimension(settings.radius_top, true, "top radius")?;
         dimension(settings.radius_bottom, true, "bottom radius")?;
         dimension(settings.height, false, "height")?;
@@ -241,6 +278,11 @@ impl Mesh {
         counts(vertices, triangles)?;
         let mut positions = allocate(vertices)?;
         let mut faces = allocate(triangles)?;
+        let mut original_faces = if retain_original_faces {
+            Some(allocate(triangles)?)
+        } else {
+            None
+        };
         let mut rings = allocate(rows)?;
         for row in 0..=height {
             let t = row as f64 / height as f64;
@@ -270,19 +312,36 @@ impl Mesh {
                 let next = (slice + 1) % radial;
                 if upper_apex {
                     faces.push([upper, lower + slice as u32, lower + next as u32]);
+                    if let Some(original) = &mut original_faces {
+                        original.push([
+                            upper,
+                            lower + slice as u32,
+                            lower + next as u32,
+                            TRIANGLE_CORNER,
+                        ]);
+                    }
                 } else if lower_apex {
                     faces.push([upper + slice as u32, lower, upper + next as u32]);
+                    if let Some(original) = &mut original_faces {
+                        original.push([
+                            upper + slice as u32,
+                            lower,
+                            upper + next as u32,
+                            TRIANGLE_CORNER,
+                        ]);
+                    }
                 } else {
-                    faces.push([
+                    let quad = [
                         upper + slice as u32,
                         lower + slice as u32,
                         lower + next as u32,
-                    ]);
-                    faces.push([
-                        upper + slice as u32,
-                        lower + next as u32,
                         upper + next as u32,
-                    ]);
+                    ];
+                    faces.push([quad[0], quad[1], quad[2]]);
+                    faces.push([quad[0], quad[2], quad[3]]);
+                    if let Some(original) = &mut original_faces {
+                        original.push(quad);
+                    }
                 }
             }
         }
@@ -290,30 +349,45 @@ impl Mesh {
             let center = positions.len() as u32;
             positions.push(Vec3::Y * settings.height * 0.5);
             for slice in 0..radial {
-                faces.push([
+                let triangle = [
                     rings[0].0 + slice as u32,
                     rings[0].0 + ((slice + 1) % radial) as u32,
                     center,
-                ]);
+                ];
+                faces.push(triangle);
+                if let Some(original) = &mut original_faces {
+                    original.push([triangle[0], triangle[1], triangle[2], TRIANGLE_CORNER]);
+                }
             }
         }
         if settings.cap_bottom && !bottom_apex {
             let center = positions.len() as u32;
             positions.push(-Vec3::Y * settings.height * 0.5);
             for slice in 0..radial {
-                faces.push([
+                let triangle = [
                     rings[height].0 + ((slice + 1) % radial) as u32,
                     rings[height].0 + slice as u32,
                     center,
-                ]);
+                ];
+                faces.push(triangle);
+                if let Some(original) = &mut original_faces {
+                    original.push([triangle[0], triangle[1], triangle[2], TRIANGLE_CORNER]);
+                }
             }
         }
-        finish(positions, faces)
+        finish_with_original_faces(positions, faces, original_faces)
     }
 
     /// Full genus-one torus, or a partial arc with explicit end-cap policy.
     /// Ring self-intersection/horn tori are rejected (`major_radius > tube_radius`).
     pub fn torus(settings: &TorusSettings) -> Result<Self, String> {
+        Self::torus_with_original_faces(settings, false)
+    }
+
+    fn torus_with_original_faces(
+        settings: &TorusSettings,
+        retain_original_faces: bool,
+    ) -> Result<Self, String> {
         dimension(settings.major_radius, false, "major radius")?;
         dimension(settings.tube_radius, false, "tube radius")?;
         if settings.major_radius <= settings.tube_radius {
@@ -352,6 +426,11 @@ impl Mesh {
         counts(vertices, triangles)?;
         let mut positions = allocate(vertices)?;
         let mut faces = allocate(triangles)?;
+        let mut original_faces = if retain_original_faces {
+            Some(allocate(triangles)?)
+        } else {
+            None
+        };
         for ring in 0..tubular {
             let theta = settings.arc * ring as f64 / spans as f64;
             for slice in 0..radial {
@@ -398,6 +477,9 @@ impl Mesh {
                 let d = (next_ring * radial + slice) as u32;
                 faces.push([a, b, c]);
                 faces.push([a, c, d]);
+                if let Some(original) = &mut original_faces {
+                    original.push([a, b, c, d]);
+                }
             }
         }
         if capped {
@@ -412,11 +494,17 @@ impl Mesh {
             let last = (tubular - 1) * radial;
             for slice in 0..radial {
                 let next = (slice + 1) % radial;
-                faces.push([first, next as u32, slice as u32]);
-                faces.push([end, (last + slice) as u32, (last + next) as u32]);
+                let first_cap = [first, next as u32, slice as u32];
+                let end_cap = [end, (last + slice) as u32, (last + next) as u32];
+                faces.push(first_cap);
+                faces.push(end_cap);
+                if let Some(original) = &mut original_faces {
+                    original.push([first_cap[0], first_cap[1], first_cap[2], TRIANGLE_CORNER]);
+                    original.push([end_cap[0], end_cap[1], end_cap[2], TRIANGLE_CORNER]);
+                }
             }
         }
-        finish(positions, faces)
+        finish_with_original_faces(positions, faces, original_faces)
     }
 
     /// Concatenate disconnected surfaces in supplied order without welding or
@@ -600,7 +688,11 @@ fn allocate<T>(count: usize) -> Result<Vec<T>, String> {
         .map_err(|_| "Cannot allocate bounded primitive field")?;
     Ok(values)
 }
-fn finish(positions: Vec<Vec3>, triangles: Vec<[u32; 3]>) -> Result<Mesh, String> {
+fn finish_with_original_faces(
+    positions: Vec<Vec3>,
+    triangles: Vec<[u32; 3]>,
+    original_faces: Option<Vec<[u32; 4]>>,
+) -> Result<Mesh, String> {
     for triangle in &triangles {
         let a = positions[triangle[0] as usize].as_dvec3();
         let b = positions[triangle[1] as usize].as_dvec3();
@@ -613,7 +705,8 @@ fn finish(positions: Vec<Vec3>, triangles: Vec<[u32; 3]>) -> Result<Mesh, String
             );
         }
     }
-    let mesh = Mesh::new(positions, triangles);
+    let mut mesh = Mesh::new(positions, triangles);
+    mesh.surface = original_faces.map(|faces| SurfaceTopology { faces, uv: None });
     mesh.validate()?;
     Ok(mesh)
 }
