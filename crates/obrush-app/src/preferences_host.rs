@@ -435,11 +435,11 @@ impl OBrushApp {
             if profile != self.app_preferences.shortcut_profile && self.preference_barrier() {
                 self.app_preferences.shortcut_profile = profile;
                 self.shortcut_resolver = crate::shortcut_profile::ShortcutResolver::new(profile);
-                if profile == PreferenceProfile::SculptGl {
-                    if let Err(error) = self.apply_source_move_default() {
-                        self.message = error;
-                        return;
-                    }
+                if profile == PreferenceProfile::SculptGl
+                    && let Err(error) = self.apply_source_move_default()
+                {
+                    self.message = error;
+                    return;
                 }
                 self.message = format!(
                     "{} shortcuts selected. Document kept.",
