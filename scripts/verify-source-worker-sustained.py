@@ -143,10 +143,13 @@ def summarize(result_path, audit_path=None, gpu_path=None, worker_path=None, mod
     # the main-thread queue's zero as a completed Worker gesture.
     if mode == "worker":
         end_queue = tail[-1].get("worker", {}) if tail else {}
-        queue_empty = lambda row: row.get("worker", {}).get("active") is False and row.get("worker", {}).get("pending") is None and row.get("worker", {}).get("queuedSamples") == 0
+        queue_empty = lambda row: row.get("worker", {}).get("active") is False and row.get("worker", {}).get("pending") is None and row.get("worker", {}).get("queuedSamples") == 0 and row.get("worker", {}).get("releaseEndpointPending") is False
         applied = lambda row: row.get("worker", {}).get("acknowledgedDabs")
         check(report, "worker_one_public_commit", end_queue.get("commits") == 1
               and end_queue.get("rejections") == 0)
+        check(report, "worker_release_endpoint", end_queue.get("lastEndpointDropped") is False
+              and (end_queue.get("lastEndpointApplied") is True
+                   or end_queue.get("lastEndpointAlreadyCovered") is True))
     else:
         queue_empty = lambda row: row.get("queue", {}).get("pending_dabs") == 0
         applied = lambda row: row.get("queue", {}).get("applied_dabs")

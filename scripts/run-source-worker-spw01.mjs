@@ -82,7 +82,8 @@ const source = `(${installPerfExport.toString()})(window);\n` +
     };
     window.__instrumentWorkerMain=async()=>{try{const backend=window.obrushWasmBackend==='simd'?'./pkg-simd/obrush_app.js':'./pkg/obrush_app.js';
       const mod=await import(backend),p=mod.WebHandle.prototype;
-      for(const name of ['source_worker_held_begin','source_worker_held_seed_packet','source_worker_held_samples','source_worker_held_preview','source_worker_held_commit']){
+      for(const name of ['source_worker_held_begin','source_worker_held_seed_packet','source_worker_held_samples',
+        'source_worker_held_endpoint','source_worker_held_preview','source_worker_held_commit']){
         const original=p[name];if(typeof original!=='function')throw Error('Missing '+name);
         p[name]=function(...a){const start=performance.now();try{return original.apply(this,a)}finally{const v=trace.main[name]||{count:0,total_ms:0,max_ms:0};
           const ms=performance.now()-start;v.count++;v.total_ms+=ms;v.max_ms=Math.max(v.max_ms,ms);trace.main[name]=v;}};}
@@ -204,7 +205,7 @@ try {
   if(mode==='worker'&&result.worker_trace){
     const main=result.worker_trace.main||{},rows=result.worker_trace.messages||[];
     const names=['source_worker_held_begin','source_worker_held_seed_packet','source_worker_held_samples',
-      'source_worker_held_preview','source_worker_held_commit'];
+      'source_worker_held_endpoint','source_worker_held_preview','source_worker_held_commit'];
     const mainMs=name=>Number(main[name]?.total_ms)||0;
     const messages=rows.filter(row=>row.bytes>0).map(row=>({
       kind:row.kind==='begin'?'init':row.kind==='finish'?'publish':'dab',
@@ -213,8 +214,8 @@ try {
     const sends=new Map(rows.filter(row=>row.direction==='main-to-worker').map(row=>[row.id,row]));
     const roundTrips=rows.filter(row=>row.direction==='worker-to-main'&&sends.has(row.id))
       .map(row=>({id:row.id,kind:row.kind,ms:row.at-sends.get(row.id).at}));
-    const mainStages={serialize:mainMs(names[0])+mainMs(names[1])+mainMs(names[2]),
-      validate:mainMs(names[3]),publish:mainMs(names[4])};
+    const mainStages={serialize:mainMs(names[0])+mainMs(names[1])+mainMs(names[2])+mainMs(names[3]),
+      validate:mainMs(names[4]),publish:mainMs(names[5])};
     const largestMainStage=Object.entries(mainStages).sort((a,b)=>b[1]-a[1])[0]||null;
     const transport={result_sha256:hash(resultBytes),messages,
       accepted_dabs:result.worker_trial?.acknowledgedDabs??null,

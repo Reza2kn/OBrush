@@ -2,7 +2,8 @@
 
 Status: **preregistered; no run or parity claim**. This freezes the measurement
 before a browser build or trial. The product change is the opt-in
-`?source-worker-held` route at source commit `866defb`. The default studio is
+`?source-worker-held` route with endpoint preservation integrated at source
+commit `2bc894d`. The default studio is
 untouched. The independent pinned SculptGL reference is commit
 `8e45dafc0f7906e5238dfffc1a2df742bd25f29d`; source protocol SHA-256 is
 `234870ed03a240931a22f421968917efaeed8becc1df834c998bbe3e9c101a33`.
@@ -23,7 +24,8 @@ accumulate, symmetry, culling or pressure factors. Reset to orthographic,
 frame the whole scene, and record actual camera/viewport matrices. Start
 one trusted held pointer at center + (80, 0), send 24,000 timestamped CDP
 mouse moves at 400/s around the two-second 80×60 px ellipse over 60 seconds,
-then issue a real release. No direct Worker API or hand-authored WASM dab may
+then issue a real release. Verify the final endpoint is applied or already
+covered, with no dropped endpoint. No direct Worker API or hand-authored WASM dab may
 replace the pointer path. Preserve every requested send, acknowledgment,
 failure, delivered trusted DOM event, worker-accepted dab, coalesced move and
 released queue tail. The worker switch itself may be activated only by its
