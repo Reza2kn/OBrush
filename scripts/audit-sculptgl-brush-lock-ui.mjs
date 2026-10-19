@@ -8,12 +8,28 @@ const shared = path.resolve(process.env.OBRUSH_SHARED_ROOT ?? local);
 const { decodeIndependent } = await import(pathToFileURL(path.join(shared,'.artifacts/sculptgl-large-sustained-c58-stage/workspace/independent-fixtures.mjs')).href);
 const { decodeRootF32Model } = await import(pathToFileURL(path.join(shared,'.artifacts/sculptgl-large-sustained-c58-stage/workspace/perf-model.mjs')).href);
 
-const [sourcePath, rootPath] = process.argv.slice(2);
+const [sourcePath, rootPath, frozenSourcePath] = process.argv.slice(2);
 if (!sourcePath || !rootPath) throw Error('Pass source and root result.json paths');
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const f32 = word => {const bytes=Buffer.allocUnsafe(4);bytes.writeUInt32LE(word);return bytes.readFloatLE();};
 const source = JSON.parse(await readFile(sourcePath));
 const root = JSON.parse(await readFile(rootPath));
+if (frozenSourcePath) {
+  const frozen = JSON.parse(await readFile(frozenSourcePath));
+  if(frozen.side!=='source'||source.fixture.sha256!==frozen.fixture.sha256||
+     source.alpha_fixture.sha256!==frozen.alpha_fixture.sha256||
+     JSON.stringify(source.requested_path)!==JSON.stringify(frozen.requested_path)||
+     JSON.stringify(source.requested_brush)!==JSON.stringify(frozen.requested_brush)||
+     ['before','after','undo','redo'].some(stage=>
+       source[stage]?.sha256!==frozen[stage]?.sha256||
+       source[`${stage}_gpu`]?.position_words_sha256!==frozen[`${stage}_gpu`]?.position_words_sha256||
+       source[`${stage}_gpu`]?.normal_words_sha256!==frozen[`${stage}_gpu`]?.normal_words_sha256)||
+     source.held_previews?.length!==frozen.held_previews?.length||
+     source.held_previews.some((preview,i)=>
+       preview.gpu.position_words_sha256!==frozen.held_previews[i].gpu.position_words_sha256||
+       preview.gpu.normal_words_sha256!==frozen.held_previews[i].gpu.normal_words_sha256))
+    throw Error('Fresh Source capture differs from frozen C273 public/GPU oracle');
+}
 if (source.side !== 'source' || root.side !== 'root' || source.fixture.sha256 !== root.fixture.sha256 ||
     source.alpha_fixture.sha256 !== root.alpha_fixture.sha256 ||
     source.lock_position !== true || root.lock_position !== true ||
@@ -179,15 +195,26 @@ for(const [side,receipt] of [['source',source],['root',root]]){
   };
 }
 audit.held_preview=previewGate;
-const rootReports=root.held_previews.map(p=>p.live?.state?.locked_stamp_report?.report);
-audit.root_lock_reports=rootReports.map(r=>r??null);
-const rootReportGate=rootReports.length===3&&rootReports.every(r=>r&&r.action==='preview'&&
-  r.dab_changed_vertices>0&&r.at_origin===false)&&
-  rootReports.every(r=>JSON.stringify(r.center)===JSON.stringify(rootReports[0].center))&&
-  Math.abs(rootReports[0].radius-rootReports[1].radius)<=1e-6&&
-  Math.abs(rootReports[0].radius-rootReports[2].radius)<=1e-6&&
-  Math.abs(Math.abs(rootReports[1].alpha_rotation-rootReports[0].alpha_rotation)-Math.PI/2)<=2e-6&&
-  Object.is(rootReports[0].alpha_rotation,rootReports[2].alpha_rotation);
+const rootReports=root.held_previews.map(p=>({
+  active:p.live?.state?.source_geometry?.active??null,
+  track:p.live?.state?.source_geometry?.alpha_tracks?.tracks?.primary??null
+}));
+audit.root_lock_reports=rootReports;
+const frameAxis=r=>r?.track?.frame?.slice(0,3);
+const axisA=frameAxis(rootReports[0]),axisB=frameAxis(rootReports[1]);
+const dot=axisA&&axisB?axisA.reduce((sum,v,i)=>sum+v*axisB[i],0):NaN;
+const angle=Math.acos(Math.max(-1,Math.min(1,dot)));
+audit.root_lock_frame_angle=angle;
+const rootReportGate=rootReports.length===3&&rootReports.every(r=>
+  r.active?.locked_press?.length===2&&r.active?.locked_preview?.length===3&&
+  r.active.locked_preview[0]>0&&r.active.controlled?.combined?.changed_vertices>0&&
+  r.active.captured_controls?.claim>0&&r.track?.keep_origin===true)&&
+  rootReports.every(r=>JSON.stringify(r.active.locked_press)===JSON.stringify(rootReports[0].active.locked_press))&&
+  rootReports.every(r=>JSON.stringify(r.track.origin)===JSON.stringify(rootReports[0].track.origin))&&
+  Math.abs(rootReports[0].active.locked_preview[0]-rootReports[1].active.locked_preview[0])<=1e-6&&
+  Math.abs(rootReports[0].active.locked_preview[0]-rootReports[2].active.locked_preview[0])<=1e-6&&
+  Math.abs(angle-Math.PI/2)<=2e-6&&
+  JSON.stringify(rootReports[0].track.frame)===JSON.stringify(rootReports[2].track.frame);
 audit.root_lock_report_gate=rootReportGate;
 function compareHeldWords(stage,field){
   const streams={};
@@ -222,7 +249,7 @@ audit.status=Object.values(audit.history).every(Boolean)&&Object.values(audit.fa
   Object.values(previewGate).every(x=>x.no_press_dab&&x.useful_first&&x.rotated_distinct&&
     x.repeated_endpoint_exact&&x.release_matches_last_preview&&x.quiet_stable)&&
   rootReportGate&&
-  audit.source_change.different_vertices>0&&audit.root_change.different_vertices>0&&
+  audit.source_change.different_vertices===26&&audit.root_change.different_vertices===26&&
   audit.after_pair.max_abs_component<=1e-6?'COMPLETE scoped paired geometry and active GPU observation':'FAILED paired admission; output retained';
 audit.changed_vertex_membership_equal=JSON.stringify(audit.source_change.changed_ids)===JSON.stringify(audit.root_change.changed_ids);
 if(!audit.changed_vertex_membership_equal ||

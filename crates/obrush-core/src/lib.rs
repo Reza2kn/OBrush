@@ -72,8 +72,8 @@ pub use brush::{
 };
 pub use decimate::{DecimatePhase, DecimateProgress, DecimateReport, DecimateSettings};
 pub use document::{
-    CertifiedSourceRenderSnapshot, PreparedSourceGeometryDab, SourceGeometryPreparationTime,
-    SourceGeometryReleaseTiming,
+    CertifiedSourceRenderSnapshot, PreparedSourceGeometryDab, SourceGeometryLockedPreview,
+    SourceGeometryPreparationTime, SourceGeometryReleaseTiming,
 };
 pub use document::{
     Document, ImportedSubtool, MorphTargetDeletionDisposition, SglAppendReport,

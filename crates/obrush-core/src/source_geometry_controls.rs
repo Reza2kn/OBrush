@@ -71,6 +71,8 @@ pub struct SourceGeometryAlphaTrack {
     pub frame: [f32; 16],
     pub side: f64,
     pub undefined_normal: Option<SourcePickedNormalUndefined>,
+    /// Source Lock updates the frame while retaining the press-point origin.
+    pub keep_origin: bool,
 }
 impl Default for SourceGeometryAlphaTrack {
     fn default() -> Self {
@@ -81,6 +83,7 @@ impl Default for SourceGeometryAlphaTrack {
             ],
             side: 0.0,
             undefined_normal: None,
+            keep_origin: false,
         }
     }
 }
@@ -145,7 +148,9 @@ impl SourceGeometryAlphaTrack {
                 ..
             } => [0.0; 3],
             SourcePickedNormalDisposition::Undefined { reason, .. } => {
-                self.origin = pass.center;
+                if !self.keep_origin {
+                    self.origin = pass.center;
+                }
                 self.undefined_normal = Some(reason);
                 return Ok(self);
             }
@@ -156,7 +161,9 @@ impl SourceGeometryAlphaTrack {
             up[i] += normal[i] * projection;
         }
         up = normalized(up);
-        self.origin = pass.center;
+        if !self.keep_origin {
+            self.origin = pass.center;
+        }
         let radius = pass.local_radius_squared.sqrt();
         let target = std::array::from_fn(|i| self.origin[i] + normal[i] * radius);
         self.frame = look_at(self.origin, target, up)?;

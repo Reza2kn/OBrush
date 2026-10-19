@@ -168,6 +168,15 @@ pub struct PreparedSourceGeometryDab<'a> {
     exact_domain_verified: bool,
     preparation_time: SourceGeometryPreparationTime,
 }
+/// One absolute Source Brush Lock preview. The ordinary Source brush report is
+/// retained separately from the visible replacement's screen-space contract.
+#[derive(Clone, Debug)]
+pub struct SourceGeometryLockedPreview {
+    pub report: crate::SourceGeometryControlledReport,
+    pub radius_pixels: f64,
+    pub synthetic_screen: [f64; 2],
+    pub center_screen: [f64; 2],
+}
 /// An immutable render pair captured immediately after a checked controlled
 /// dab. Its private constructor prevents an arbitrary mesh/state pair from
 /// bypassing the renderer's ordinary stale-state validation.
@@ -291,6 +300,103 @@ pub(super) fn retained_bytes(
 }
 
 impl Document {
+    /// Replace a held Source Brush Lock preview against the one press baseline.
+    /// The previous stroke is canceled before a fresh selection-history claim
+    /// is opened, so neither a preview nor a rejected candidate spends Undo or
+    /// consumes Redo. The caller owns the captured press alpha tracks and must
+    /// pass them again for every replacement, with keep_origin set on the
+    /// primary track. This never calls the unrelated legacy LockedStamp.
+    pub fn replace_source_geometry_locked_preview(
+        &mut self,
+        stroke: &mut SourceGeometryStroke,
+        press_screen: [f64; 2],
+        mut input: crate::PaintPreparationInput,
+        controls: &crate::SourceGeometryControls,
+        press_tracks: crate::SourceGeometryAlphaTracks,
+    ) -> Result<SourceGeometryLockedPreview, SourceGeometryError> {
+        if !matches!(
+            stroke.options().tool,
+            crate::SourceGeometryTool::Brush { clay: false, .. }
+        ) || controls.mirror
+            || !press_tracks.primary.keep_origin
+            || !press_screen
+                .iter()
+                .chain(input.screen.iter())
+                .all(|v| v.is_finite() && v.abs() <= 1_000_000.0)
+            || !input.pressure.is_finite()
+            || !(0.0..=1.0).contains(&input.pressure)
+        {
+            // A rejected held update closes an owned preview. The host may
+            // release immediately afterward, but no canceled edit can commit.
+            self.cancel_source_geometry_stroke(stroke)?;
+            return Err(SourceGeometryError::InvalidInput);
+        }
+        let dx = input.screen[0] - press_screen[0];
+        let dy = input.screen[1] - press_screen[1];
+        let radius = (dx * dx + dy * dy).sqrt();
+        if !radius.is_finite() || radius > 1_000_000.0 {
+            self.cancel_source_geometry_stroke(stroke)?;
+            return Err(SourceGeometryError::InvalidInput);
+        }
+        let prior_changed = usize::from(stroke.locked_preview_changed);
+        input.screen_radius = radius;
+        input.screen = if radius == 0.0 {
+            press_screen
+        } else {
+            [
+                press_screen[0] + dx / radius * 1e-3,
+                press_screen[1] + dy / radius * 1e-3,
+            ]
+        };
+        let mut options = stroke.options();
+        // Source Brush uses live vertices whenever Lock is active, even when
+        // the visible Accumulate checkbox is off.
+        options.tool = crate::SourceGeometryTool::Brush {
+            clay: false,
+            accumulate: true,
+        };
+        self.cancel_source_geometry_stroke(stroke)?;
+        let mut next = self.begin_source_geometry_selection_history(options)?;
+        if radius == 0.0 {
+            let mut report = SourceGeometryReport::noop(SourceGeometryNoop::EmptySelection);
+            report.changed_vertices = prior_changed;
+            *stroke = next;
+            return Ok(SourceGeometryLockedPreview {
+                report: crate::SourceGeometryControlledReport {
+                    combined: report,
+                    passes: [None, None],
+                    contacts: [None, None],
+                    tracks: press_tracks,
+                    alpha_dimensions: controls.alpha.as_ref().map(|a| [a.width(), a.height()]),
+                },
+                radius_pixels: 0.0,
+                synthetic_screen: press_screen,
+                center_screen: press_screen,
+            });
+        }
+        let result = self
+            .prepare_source_geometry_controlled_dab(&mut next, input, None)
+            .and_then(|prepared| prepared.apply(input.pressure, true, controls, press_tracks));
+        match result {
+            Ok(mut report) => {
+                next.locked_preview_changed = report.combined.changed_vertices > 0;
+                report.combined.changed_vertices =
+                    report.combined.changed_vertices.max(prior_changed);
+                *stroke = next;
+                Ok(SourceGeometryLockedPreview {
+                    report,
+                    radius_pixels: radius,
+                    synthetic_screen: input.screen,
+                    center_screen: press_screen,
+                })
+            }
+            Err(error) => {
+                self.cancel_source_geometry_stroke(&next)?;
+                *stroke = next;
+                Err(error)
+            }
+        }
+    }
     pub(crate) fn source_geometry_state_count(&self) -> usize {
         self.source_geometry_states.len()
     }

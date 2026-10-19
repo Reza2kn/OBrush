@@ -201,7 +201,7 @@ impl OBrushApp {
                     .into(),
             );
         }
-        if self.preferences.tool(kind).lock_position {
+        if self.preferences.tool(kind).lock_position && kind != BrushKind::Draw {
             return Err("Turn off Lock stamp center in OBrush settings first.".into());
         }
         if settings.invert {
@@ -389,6 +389,13 @@ impl OBrushApp {
             );
             self.track_source_geometry_control("source_geometry.accumulate", &r);
         }
+        if kind == BrushKind::Draw && current.mode == SourceGeometryMode::SourceOrdinary {
+            let locked = ui.checkbox(
+                &mut self.brush_lock_position,
+                crate::ui_text::caption(crate::ui_text::CaptionKey::C189B82C8A250),
+            );
+            self.track_source_geometry_control("source_geometry.lock_position", &locked);
+        }
         if current.mode == SourceGeometryMode::SourceOrdinary {
             self.source_geometry_alpha_panel(ui);
         }
@@ -433,6 +440,10 @@ impl OBrushApp {
         let Some(prefs) = self.effective_source_geometry_preferences(kind) else {
             return;
         };
+        if self.preferences.tool(kind).lock_position && self.preferences.global().continuous {
+            self.message = "Turn off Continuous before Source Brush Lock.".into();
+            return;
+        }
         let mut settings = match self.source_geometry_settings(kind) {
             Ok(s) => s,
             Err(e) => {

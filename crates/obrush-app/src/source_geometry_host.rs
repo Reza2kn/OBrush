@@ -385,6 +385,9 @@ pub struct SourceGeometrySession {
     last_stage_time: Option<SourceGeometryStageTime>,
     last_render_snapshot: Option<obrush_core::CertifiedSourceRenderSnapshot>,
     last_release_timing: Option<obrush_core::SourceGeometryReleaseTiming>,
+    locked_press: Option<SourceGeometryInput>,
+    locked_press_tracks: Option<obrush_core::SourceGeometryAlphaTracks>,
+    last_locked_preview: Option<[f64; 3]>,
 }
 impl SourceGeometrySession {
     pub fn begin(
@@ -461,6 +464,9 @@ impl SourceGeometrySession {
             last_stage_time: None,
             last_render_snapshot: None,
             last_release_timing: None,
+            locked_press: None,
+            locked_press_tracks: None,
+            last_locked_preview: None,
         })))
     }
     pub fn preferences(&self) -> SourceGeometryPreferences {
@@ -477,6 +483,15 @@ impl SourceGeometrySession {
             return Err(SourceGeometryError::NoOpenStroke);
         }
         validate_input(input)?;
+        if let Some(press) = self.locked_press {
+            let dx = input.screen[0] - press.screen[0];
+            let dy = input.screen[1] - press.screen[1];
+            if !dx.is_finite() || !dy.is_finite() || (dx * dx + dy * dy).sqrt() > 65_536. {
+                return Err(SourceGeometryError::InvalidInput);
+            }
+            self.last_screen = input.screen;
+            return Ok(vec![input]);
+        }
         let dx = input.screen[0] - self.last_screen[0];
         let dy = input.screen[1] - self.last_screen[1];
         let distance = (dx * dx + dy * dy).sqrt();
@@ -513,7 +528,18 @@ impl SourceGeometrySession {
             return Err(SourceGeometryError::NoOpenStroke);
         }
         if self.controls.is_some() {
-            let result = self.apply_controlled(doc, input);
+            let result = if self.locked_press.is_some() {
+                let result = self.apply_locked(doc, input);
+                if let Err(error) = &result {
+                    if doc.source_geometry_active_claim() == Some(self.stroke.claim_id()) {
+                        let _ = doc.cancel_source_geometry_stroke(&self.stroke);
+                    }
+                    self.failed = Some(error.clone());
+                }
+                result
+            } else {
+                self.apply_controlled(doc, input)
+            };
             self.observe_dab(input, &result);
             return result;
         }
@@ -623,6 +649,7 @@ impl SourceGeometrySession {
             return Err(SourceGeometryError::NoOpenStroke);
         }
         if self.controls.is_some()
+            && self.failed.is_none()
             && doc.source_geometry_active_claim() != Some(self.stroke.claim_id())
         {
             return Err(SourceGeometryError::NoOpenStroke);
@@ -630,7 +657,11 @@ impl SourceGeometrySession {
         // Rejected input cannot leave partially accepted earlier dabs as a
         // falsely completed Source workflow. Exact cancellation retains redo.
         let result = if self.failed.is_some() {
-            doc.cancel_source_geometry_stroke(&self.stroke)
+            if doc.source_geometry_active_claim() == Some(self.stroke.claim_id()) {
+                doc.cancel_source_geometry_stroke(&self.stroke)
+            } else {
+                Ok(())
+            }
         } else {
             match doc.end_source_geometry_stroke_timed(&self.stroke) {
                 Ok(timing) => {
@@ -665,11 +696,12 @@ impl SourceGeometrySession {
             "pose32":self.pose,"finished":self.finished,"failed":self.failed,
             "last_report":self.last_report,"last_pass":self.last_pass,"triangle":self.last_triangle,"dab_observations":self.dab_observations.diagnostics(),"release_timing":self.last_release_timing,
             "controlled":self.last_controlled,"mirror_triangle":self.last_mirror_triangle,"mirror_plane":self.last_mirror_plane,"captured_controls":self.controls.as_ref().map(CapturedGeometryControls::diagnostics),
+            "locked_press":self.locked_press.map(|i|i.screen),"locked_preview":self.last_locked_preview,
             "input":self.last_input.map(|i|serde_json::json!({"screen64":i.screen,
                 "pressure64":i.raw.pressure,"pen":i.raw.pen,"absent":i.raw.absent,
                 "browser_number":i.raw.browser_number,"in_contact":i.in_contact,
                 "view64":i.view.world_to_clip,"viewport64":i.view.viewport})),
-            "scope":if self.controls.is_some(){"ordinary static U; captured nearest alpha/local X mirror; two pre-dab contacts then sequential passes; no Lock/manual rotation/dynamic/hierarchy; Source camera/hypot/ray candidate order and cross-Legacy tracks unpaired"}else{"old ordinary U/static/alphaNone/no symmetry/no Lock; bounded ordered static selection or explicit singleleaf<=100 compatibility; supplied faces/order and precise OBrush camera not paired Source equality"}})
+            "scope":if self.locked_press.is_some(){"Source Brush Lock absolute preview on static U; alpha origin retained, Source brush response; C276 integer-coordinate pair passed, fractional coordinates and broader Lock behavior remain open"}else if self.controls.is_some(){"ordinary static U; captured nearest alpha/local X mirror; two pre-dab contacts then sequential passes; no Lock/manual rotation/dynamic/hierarchy; Source camera/hypot/ray candidate order and cross-Legacy tracks unpaired"}else{"old ordinary U/static/alphaNone/no symmetry/no Lock; bounded ordered static selection or explicit singleleaf<=100 compatibility; supplied faces/order and precise OBrush camera not paired Source equality"}})
     }
 }
 pub fn apply_shared(
@@ -730,10 +762,16 @@ pub fn blocker_controls(
     prefs: SourceGeometryPreferences,
 ) -> Result<(), SourceGeometryError> {
     prefs.validate()?;
-    if settings.alpha_rotation != 0.0
-        || settings.symmetry_offset != 0.0
-        || locked
-        || settings.adaptive_detail
+    if settings.alpha_rotation != 0.0 || settings.symmetry_offset != 0.0 || settings.adaptive_detail
+    {
+        return Err(SourceGeometryError::UnsupportedDomain);
+    }
+    if locked
+        && (!matches!(
+            prefs.options.tool,
+            SourceGeometryTool::Brush { clay: false, .. }
+        ) || settings.kind != BrushKind::Draw
+            || settings.symmetry_x)
     {
         return Err(SourceGeometryError::UnsupportedDomain);
     }
@@ -759,7 +797,7 @@ pub fn blocker_controls(
         | (BrushKind::Crease, SourceGeometryTool::Crease) => {
             doc.source_geometry_blocker(prefs.options)
         }
-        _ => blocker(doc, &plain, locked, prefs),
+        _ => blocker(doc, &plain, false, prefs),
     }
 }
 impl SourceGeometrySession {
@@ -817,6 +855,12 @@ impl SourceGeometrySession {
             )?;
             let initialized =
                 doc.prepare_source_geometry_press_alpha(&session.stroke, contacts.passes, before)?;
+            if locked {
+                let mut press_tracks = initialized;
+                press_tracks.primary.keep_origin = true;
+                session.locked_press = Some(input);
+                session.locked_press_tracks = Some(press_tracks);
+            }
             let mut current = tracks
                 .lock()
                 .map_err(|_| SourceGeometryError::StrokeBindingChanged)?;
@@ -855,6 +899,77 @@ impl SourceGeometrySession {
             return Err(e);
         }
         Ok(shared)
+    }
+    fn apply_locked(
+        &mut self,
+        doc: &mut Document,
+        input: SourceGeometryInput,
+    ) -> Result<SourceGeometryReport, SourceGeometryError> {
+        validate_input(input)?;
+        if !input.in_contact {
+            return Ok(self.record_noop(input, SourceGeometryNoop::NoContact));
+        }
+        let press = self.locked_press.ok_or(SourceGeometryError::InvalidInput)?;
+        if Some(self.subtool) != doc.active_subtool_id()
+            || self.level != doc.current_level()
+            || !doc.active_subtool_visible()
+            || self.pose.map(|m| m.map(f32::to_bits))
+                != doc
+                    .active_object_metadata()
+                    .map(|m| m.affine.local_to_world.map(f32::to_bits))
+            || input.view.world_to_clip.map(f64::to_bits)
+                != press.view.world_to_clip.map(f64::to_bits)
+            || input.view.viewport.map(f64::to_bits) != press.view.viewport.map(f64::to_bits)
+        {
+            return Err(SourceGeometryError::StrokeBindingChanged);
+        }
+        let capture = self
+            .controls
+            .as_mut()
+            .ok_or(SourceGeometryError::InvalidInput)?;
+        let mut global = capture
+            .tracks
+            .lock()
+            .map_err(|_| SourceGeometryError::StrokeBindingChanged)?;
+        if global.owner != Some(capture.claim)
+            || !same_tracks(global.tracks, capture.expected)
+            || doc.source_geometry_active_claim() != Some(self.stroke.claim_id())
+        {
+            return Err(SourceGeometryError::StrokeBindingChanged);
+        }
+        let tracks = self
+            .locked_press_tracks
+            .ok_or(SourceGeometryError::InvalidInput)?;
+        let result = doc.replace_source_geometry_locked_preview(
+            &mut self.stroke,
+            press.screen,
+            PaintPreparationInput {
+                view: input.view,
+                screen: input.screen,
+                screen_radius: self.preferences.radius,
+                pressure: input.raw.pressure,
+                radius_factor: self.preferences.radius_factor,
+            },
+            &capture.options,
+            tracks,
+        )?;
+        capture.claim = self.stroke.claim_id();
+        capture.expected = result.report.tracks;
+        global.owner = Some(capture.claim);
+        global.tracks = capture.expected;
+        self.last_locked_preview = Some([
+            result.radius_pixels,
+            result.synthetic_screen[0],
+            result.synthetic_screen[1],
+        ]);
+        self.last_input = Some(input);
+        self.last_pass = result.report.contacts[0];
+        self.last_triangle = None;
+        self.last_controlled = Some(result.report.clone());
+        self.last_render_snapshot = None;
+        self.last_stage_time = None;
+        self.last_report = Some(result.report.combined.clone());
+        Ok(result.report.combined)
     }
     fn apply_controlled(
         &mut self,
@@ -972,6 +1087,8 @@ impl SourceGeometrySession {
             if current.owner == Some(c.claim) {
                 if restore {
                     current.tracks = c.before;
+                } else if self.locked_press.is_some() {
+                    current.tracks.primary.keep_origin = false;
                 }
                 current.owner = None;
             }
@@ -990,6 +1107,7 @@ pub(crate) fn same_tracks(
                 && a.frame.map(f32::to_bits) == b.frame.map(f32::to_bits)
                 && a.side.to_bits() == b.side.to_bits()
                 && a.undefined_normal == b.undefined_normal
+                && a.keep_origin == b.keep_origin
         })
 }
 
@@ -1030,6 +1148,73 @@ mod tests {
             raw: RawPressureSample::default(),
             in_contact: true,
         }
+    }
+    #[test]
+    fn locked_preview_stale_alpha_lease_cancels_before_release() {
+        let mut d = doc();
+        let before = d.to_json().unwrap();
+        let mut brush = settings();
+        brush.kind = BrushKind::Draw;
+        let prefs = SourceGeometryPreferences {
+            mode: SourceGeometryMode::SourceOrdinary,
+            radius: 40.,
+            options: SourceGeometryOptions {
+                tool: SourceGeometryTool::Brush {
+                    clay: false,
+                    accumulate: false,
+                },
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let tracks = Arc::new(Mutex::new(SourceGeometryAlphaState::default()));
+        let session = SourceGeometrySession::begin_with_controls(
+            &mut d,
+            &brush,
+            true,
+            prefs,
+            input(),
+            tracks.clone(),
+        )
+        .unwrap();
+        assert_eq!(d.to_json().unwrap(), before);
+        let mut moved = input();
+        moved.screen = [90., 50.];
+        assert!(
+            apply_shared(&mut d, &session, moved)
+                .unwrap()
+                .changed_vertices
+                > 0
+        );
+        assert_ne!(d.to_json().unwrap(), before);
+        let complete_preview = d.to_json().unwrap();
+        let mut no_contact = moved;
+        no_contact.raw = RawPressureSample {
+            pressure: 0.,
+            pen: true,
+            browser_number: true,
+            absent: false,
+        };
+        no_contact.in_contact = false;
+        assert_eq!(
+            apply_shared(&mut d, &session, no_contact).unwrap().noop,
+            Some(SourceGeometryNoop::NoContact)
+        );
+        assert_eq!(d.to_json().unwrap(), complete_preview);
+        assert_eq!(d.history_depths(), (0, 0));
+        tracks.lock().unwrap().tracks.primary.side += 1.;
+        moved.screen = [50., 10.];
+        assert_eq!(
+            apply_shared(&mut d, &session, moved).unwrap_err(),
+            SourceGeometryError::StrokeBindingChanged
+        );
+        assert_eq!(d.to_json().unwrap(), before);
+        assert_eq!(d.source_geometry_active_claim(), None);
+        session.lock().unwrap().finish(&mut d).unwrap();
+        assert_eq!(d.to_json().unwrap(), before);
+        assert!(!d.can_undo());
+        assert!(!d.can_redo());
+        assert!(tracks.lock().unwrap().owner.is_none());
     }
     #[test]
     fn timed_controlled_dab_matches_the_ordinary_document_and_history() {

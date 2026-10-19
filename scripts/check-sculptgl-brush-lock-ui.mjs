@@ -191,7 +191,7 @@ try {
     await page.rootNumber('source_geometry.pressure.radius.value',0);
     await page.rootNumber('source_geometry.pressure.intensity.value',0);
   }
-  if (side === 'root') await page.rootCheckbox('settings.lock_position',s=>s.lock_position,true);
+  if (side === 'root') await page.rootCheckbox('source_geometry.lock_position',s=>s.lock_position,true);
   if (matchSourcePath) {
     const sourceRun = JSON.parse(await readFile(matchSourcePath));
     if (sourceRun.side !== 'source' || sourceRun.fixture.sha256 !== result.fixture.sha256 ||

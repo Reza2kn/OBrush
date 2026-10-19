@@ -890,6 +890,9 @@ pub struct SourceGeometryStroke {
     /// Opt-in captured pre-culling union for normal history. Generic callers
     /// retain their original snapshot history and allocate no selection rows.
     pub(crate) history_selected: Option<Arc<Vec<bool>>>,
+    /// Whether the current Source Lock preview changed geometry. Used only to
+    /// request a full redraw when replacing it, without scanning the mesh.
+    pub(crate) locked_preview_changed: bool,
 }
 impl SourceGeometryStroke {
     pub fn new(options: SourceGeometryOptions) -> Result<Self, SourceGeometryError> {
@@ -904,6 +907,7 @@ impl SourceGeometryStroke {
             domain: None,
             visited_leaves: Vec::new(),
             history_selected: None,
+            locked_preview_changed: false,
         })
     }
     /// Read-only transient globally unique claim; never project data.
@@ -2358,6 +2362,7 @@ impl SourceGeometryStroke {
                 .transpose()?,
             visited_leaves: copied(&self.visited_leaves)?,
             history_selected: self.history_selected.clone(),
+            locked_preview_changed: self.locked_preview_changed,
         })
     }
     fn staged_bytes(&self) -> usize {
