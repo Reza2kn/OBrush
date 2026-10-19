@@ -1,6 +1,6 @@
 # Source Worker validated retained decode: proposed trial
 
-**Status:** design only; no product edit, build, or browser run authorized for this isolated trial. Base is integrated `6e108d2`. The prior direct-decode candidate `1bd5424` was rejected and reverted in `2db3e1b`; its frozen 100k result SHA-256 is `2aac2ed760a474ab63930e950b2fb270ff4c6a0a8bb7d8990a9c2a2211d2225a`. It measured 155.6 ms retained decode against the fixed <120 ms target, with a 466.7 ms active RAF maximum and a late release-tail probe. The strict GPU saved-normal oracle failed at every state. Preserve this receipt; no result replacement or threshold change.
+**Status:** trial completed and rejected; see the result below. The design base was integrated `6e108d2`. The prior direct-decode candidate `1bd5424` was rejected and reverted in `2db3e1b`; its frozen 100k result SHA-256 is `2aac2ed760a474ab63930e950b2fb270ff4c6a0a8bb7d8990a9c2a2211d2225a`. It measured 155.6 ms retained decode against the fixed <120 ms target, with a 466.7 ms active RAF maximum and a late release-tail probe. The strict GPU saved-normal oracle failed at every state. Preserve this receipt; no result replacement or threshold change.
 
 ## Hypothesis and bounded change
 
