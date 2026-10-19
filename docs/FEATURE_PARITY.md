@@ -81,8 +81,11 @@ passed full build checks but measured 149.2 ms retained decode against its
 fixed `<120 ms` target; active RAF maximum was 450.1 ms against 250 ms. Its
 product code was rejected and the failed browser receipt retained. A
 [typed complete-scene witness design](SOURCE_WORKER_TYPED_SCENE_WITNESS_DESIGN.md)
-sets a proof and profiling gate for the larger witness stage; it has not been
-implemented.
+sets a proof gate for the larger witness stage. [The read-only phase
+profile](SOURCE_WORKER_TYPED_SCENE_WITNESS_GATE_RESULT.md) measured 251.1 ms
+in JSON serialization and hashing within a 265.9 ms witness, clearing its
+preregistered 150 ms investigation threshold. No typed serializer has been
+implemented, and the frozen RAF, queue-tail and normal checks still fail.
 [The independent display-normal audit](SOURCE_GPU_DISPLAY_NORMAL_ORACLE_PREREG.md)
 matches fresh Source face normals to active GPU rows before sculpting and after
 Undo. Edited After and Redo states have byte-identical public meshes but

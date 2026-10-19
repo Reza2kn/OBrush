@@ -15,6 +15,10 @@ The raw result SHA-256 is
 Raw browser, shape, GPU, static-normal and failed frozen-verifier receipts
 remain under
 `.artifacts/source-worker-sustained-spw01/100k-worker-dd329384-9ee2-448a-8fed-4526d40a2374/`.
+The read-only instrumentation patch is retained locally as
+`.artifacts/source-worker-sustained-spw01/typed-scene-gate-timing.patch`
+(SHA-256 `200f38e9972457f7ce7f4d156f9a72458c252e99350b8ee68052f33f287b9f66`);
+it was not merged into product source.
 
 | Complete-scene witness phase | Measured time |
 | --- | ---: |
