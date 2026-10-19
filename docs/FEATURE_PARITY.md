@@ -5,6 +5,12 @@ confirms the existing Source Brush/Clay checkbox and inclusive front-vertex
 predicate on an opposed-sheet/zero-normal fixture, with exact core Undo/Redo.
 The paired full-browser stroke and wider option matrix remain open.
 
+**Seed-only Source Worker state seam:** [The retained seed witness](SOURCE_WORKER_RETAINED_SEED_SEAM.md)
+checks a fixed 112-byte cross-realm packet and exact later-dab reconstruction
+for a generation-zero Source normal/tree state. It refuses warm retained state
+and does not publish a Worker brush or transfer a Document and its history;
+ordinary browser responsiveness and all parity gates remain open.
+
 **C260 integrated build:** [The combined Source/browser/macOS receipt](SCULPTGL_COMBINED_C260.md)
 records 2,582 passing workspace tests, strict native/WASM Clippy, fresh
 signed macOS and browser builds, and scoped browser checks for default

@@ -51,6 +51,7 @@ mod source_primitive_levels_tests;
 pub mod source_ring;
 mod source_worker_cold_capture;
 mod source_worker_delta;
+mod source_worker_retained_seed;
 mod source_worker_transaction;
 mod static_subdivision;
 mod subtools;
@@ -155,6 +156,9 @@ pub use source_picked_normal::{
 pub use source_worker_cold_capture::SourceWorkerColdCapture;
 pub use source_worker_delta::{
     decode_source_worker_mesh_delta, encode_source_worker_mesh_delta, MAX_SOURCE_WORKER_DELTA_BYTES,
+};
+pub use source_worker_retained_seed::{
+    decode_source_worker_retained_seed, encode_source_worker_retained_seed,
 };
 pub use source_worker_transaction::{SourceWorkerTransaction, SourceWorkerTransactionError};
 pub use static_subdivision::{

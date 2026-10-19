@@ -319,6 +319,83 @@ impl SourceGeometryNormalState {
     pub fn generation(&self) -> u64 {
         self.generation
     }
+    /// A generation-zero producer can be reconstructed from its exact mesh.
+    /// Later generations retain selected-refresh normals and historical tree
+    /// layout; rebuilding those from the current mesh changes later dabs.
+    pub(crate) fn matches_seed_reconstruction(
+        &self,
+        mesh: &Mesh,
+    ) -> Result<bool, SourceGeometryError> {
+        if self.generation != 0
+            || self.render_predecessor.is_some()
+            || self.render_selected_chunks != [0; SOURCE_GEOMETRY_CHUNK_WORDS]
+            || !self.matches_mesh(mesh)
+        {
+            return Ok(false);
+        }
+        let seed = Self::seed(mesh)?;
+        Ok(self.faces == seed.faces
+            && self.face_triangle_rows == seed.face_triangle_rows
+            && self.position_words == seed.position_words
+            && self.stored_original_faces == seed.stored_original_faces
+            && self.interaction_center.map(f32::to_bits)
+                == seed.interaction_center.map(f32::to_bits)
+            && self.face_normals.len() == seed.face_normals.len()
+            && self
+                .face_normals
+                .iter()
+                .zip(&seed.face_normals)
+                .all(|(a, b)| a.to_array().map(f32::to_bits) == b.to_array().map(f32::to_bits))
+            && self.vertex_normals.len() == seed.vertex_normals.len()
+            && self
+                .vertex_normals
+                .iter()
+                .zip(&seed.vertex_normals)
+                .all(|(a, b)| a.to_array().map(f32::to_bits) == b.to_array().map(f32::to_bits))
+            && self.ordered_tree.same_words(&seed.ordered_tree))
+    }
+    /// The complete seed behavior fingerprint, including raw normal rows and
+    /// ordered-tree words. A decoder compares this after rebuilding so a
+    /// different runtime/algorithm cannot silently accept a changed seed.
+    pub(crate) fn seed_fingerprint(&self) -> [u8; 32] {
+        let mut hash = blake3::Hasher::new();
+        hash.update(b"OBR-SOURCE-RETAINED-SEED-STATE-1");
+        hash.update(&self.generation.to_le_bytes());
+        hash.update(&[u8::from(self.stored_original_faces)]);
+        for word in self.interaction_center {
+            hash.update(&word.to_bits().to_le_bytes());
+        }
+        hash.update(&(self.faces.len() as u64).to_le_bytes());
+        for face in self.faces.iter() {
+            for index in face {
+                hash.update(&index.to_le_bytes());
+            }
+        }
+        hash.update(&(self.face_triangle_rows.len() as u64).to_le_bytes());
+        for row in self.face_triangle_rows.iter() {
+            hash.update(&row.to_le_bytes());
+        }
+        hash.update(&(self.position_words.len() as u64).to_le_bytes());
+        for position in &self.position_words {
+            for word in position {
+                hash.update(&word.to_le_bytes());
+            }
+        }
+        hash.update(&(self.face_normals.len() as u64).to_le_bytes());
+        for normal in &self.face_normals {
+            for word in normal.to_array() {
+                hash.update(&word.to_bits().to_le_bytes());
+            }
+        }
+        hash.update(&(self.vertex_normals.len() as u64).to_le_bytes());
+        for normal in &self.vertex_normals {
+            for word in normal.to_array() {
+                hash.update(&word.to_bits().to_le_bytes());
+            }
+        }
+        self.ordered_tree.update_seed_digest(&mut hash);
+        *hash.finalize().as_bytes()
+    }
     /// Returns only chunks selected by a fully checked controlled operation
     /// whose predecessor is the exact still-owned state already rendered.
     pub fn render_selected_chunks_from(

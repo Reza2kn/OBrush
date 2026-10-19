@@ -845,6 +845,71 @@ impl OrderedTree {
                     _ => false,
                 })
     }
+    /// Stream the behavior-bearing ordered-tree words into a seed transfer
+    /// witness without allocating a diagnostic snapshot.
+    pub(crate) fn update_seed_digest(&self, hash: &mut blake3::Hasher) {
+        let usize_word = |hash: &mut blake3::Hasher, value: usize| {
+            hash.update(&(value as u64).to_le_bytes());
+        };
+        hash.update(&self.next_serial.to_le_bytes());
+        hash.update(&self.rebuilds.to_le_bytes());
+        usize_word(hash, self.cells.len());
+        for cell in &self.cells {
+            match cell {
+                None => {
+                    hash.update(&[0]);
+                }
+                Some(cell) => {
+                    hash.update(&[1]);
+                    hash.update(&cell.serial.to_le_bytes());
+                    hash.update(&[u8::from(cell.parent.is_some())]);
+                    if let Some(parent) = cell.parent {
+                        usize_word(hash, parent);
+                    }
+                    hash.update(&[cell.depth]);
+                    for word in cell.split.into_iter().chain(cell.loose) {
+                        hash.update(&word.to_bits().to_le_bytes());
+                    }
+                    hash.update(&[u8::from(cell.children.is_some())]);
+                    if let Some(children) = cell.children {
+                        for child in children {
+                            usize_word(hash, child);
+                        }
+                    }
+                    usize_word(hash, cell.faces.len());
+                    for face in &cell.faces {
+                        hash.update(&face.to_le_bytes());
+                    }
+                }
+            }
+        }
+        usize_word(hash, self.free.len());
+        for slot in &self.free {
+            usize_word(hash, *slot);
+        }
+        usize_word(hash, self.face_boxes.len());
+        for bounds in &self.face_boxes {
+            for word in bounds {
+                hash.update(&word.to_bits().to_le_bytes());
+            }
+        }
+        usize_word(hash, self.face_leaves.len());
+        for leaf in &self.face_leaves {
+            hash.update(&leaf.to_le_bytes());
+        }
+        usize_word(hash, self.face_positions.len());
+        for position in &self.face_positions {
+            hash.update(&position.to_le_bytes());
+        }
+        usize_word(hash, self.rings.starts.len());
+        for start in &self.rings.starts {
+            hash.update(&start.to_le_bytes());
+        }
+        usize_word(hash, self.rings.faces.len());
+        for face in &self.rings.faces {
+            hash.update(&face.to_le_bytes());
+        }
+    }
     pub(crate) fn snapshot(&self) -> Result<SourceOrderedTreeSnapshot, SourceGeometryError> {
         let mut cells = reserved(self.cells.iter().flatten().count())?;
         for (i, c) in self.cells.iter().enumerate() {
