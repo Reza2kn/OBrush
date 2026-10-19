@@ -21,3 +21,19 @@ The normal **Save project** shortcut after stroke one produced SHA-256 `b7c81753
 Each committed stroke discarded one queued endpoint sample at release (`lastEndpointDropped=true`), so this route can stop short of the actual mouse-up position. The preview owner check is deliberately provisional: document revision, mesh identity and retained-state identity avoid per-dab full serialization, but the final complete-scene digest is authoritative. A core test demonstrates that an in-place mutation can pass the provisional witness and is rejected at final publication. Other UI document publications cancel the held preview; control/style/view changes reject the final commit. A zero-effect Worker release preserves redo in a core test, but the no-op browser UI path was not exercised here.
 
 Core geometry still allocates full-vertex normal scratch and copies full domain-normal words per changed dab. The released result also encodes and checks complete geometry. The frozen 100k/million-vertex sustained-pointer gate, endpoint fidelity, 1m worker CPU cost, and broad mutation matrix remain open. Keep the trial query-gated and off by default.
+
+## Integrated build check
+
+After integration, the workspace test suite, strict native/WASM Clippy,
+`scripts/build-web.sh`, and `scripts/package-macos.sh` passed. The first
+display-free Worker smoke failed because its diagnostic script still read the
+old preview row-count offset (16) from the new sparse packet; the Worker itself
+returned a valid 228-byte `OBRSPRV1` preview. The failed receipt is
+`.artifacts/source-worker-realm/dacf8065-bf0c-4a4d-93dc-4748a0abf8aa/result.json`
+(SHA-256 `a662540c4e98128e8ee6bf2576cd7ef7f3f785442255bff59c89c0d0ecee0e18`).
+The script now checks the sparse magic and reads its row count at offset 36;
+the repeated owned-Chrome smoke passed with three preview rows and three final
+rows. Its receipt is
+`.artifacts/source-worker-realm/08ae50db-ed31-48d2-be6d-6447c6a75874/result.json`
+(SHA-256 `65b3c67ede931add5a33fc517bca42321ee4c18901cf6e28d239625301d40e6d`).
+This small realm check does not close ordinary held-pointer or performance gates.

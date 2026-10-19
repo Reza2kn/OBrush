@@ -50,9 +50,12 @@ window.runSourceWorkerRealm=async(project,options,input)=>{
     await call('begin',{project,options,strokeEpoch:'91',warmSeed:new Uint8Array()});
     const applied=await call('apply',{strokeEpoch:'91',sequence:'1',input});
     const finished=await call('finish',{strokeEpoch:'91',sequence:'2'});
-    const rows=packet=>new DataView(packet.buffer,packet.byteOffset,packet.byteLength).getUint32(16,true);
-    return {apply_bytes:applied.delta.byteLength,apply_rows:rows(applied.delta),
-      final_bytes:finished.delta.byteLength,final_rows:rows(finished.delta),
+    const preview=new DataView(applied.delta.buffer,applied.delta.byteOffset,applied.delta.byteLength);
+    const final=new DataView(finished.delta.buffer,finished.delta.byteOffset,finished.delta.byteLength);
+    const previewMagic=String.fromCharCode(...applied.delta.slice(0,8));
+    if(previewMagic!=='OBRSPRV1')throw Error('Worker preview did not use the sparse packet');
+    return {apply_bytes:applied.delta.byteLength,apply_rows:preview.getUint32(36,true),
+      final_bytes:finished.delta.byteLength,final_rows:final.getUint32(16,true),
       retained_bytes:finished.retained.byteLength,timing:applied.timing,
       worker_type:worker.constructor.name};
   }finally{worker.terminate();}
