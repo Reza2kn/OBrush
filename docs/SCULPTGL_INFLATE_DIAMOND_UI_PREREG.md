@@ -75,3 +75,18 @@ equal CSS offsets in unequal projections are equal world rays. Require
 at least one changed vertex per app. If this cohort also misses or diverges,
 retain that result; do not continue moving the stroke or widening tolerance
 within C270B.
+
+## Prospective C270C longer interior move
+
+The C270B public files again changed zero vertices in both browsers. Complete
+browser screenshots show the diamond centered under the requested interior
+path. One unproven explanation is that a 16-pixel move is below each tool's
+spacing threshold at a 400-pixel radius. Before any C270C run, freeze a
+single new gesture: press at center `(+8,+64)` CSS pixels, move once to
+`(+88,+64)` (80 pixels of horizontal travel), release. Retain the same
+fixture, polarity, controls, orthographic X/Y ray calibration, public
+Save/Undo/Redo, complete Float32 and active GPU checks, and `3.0e-8`
+numerical tolerance. Do not adjust spacing, radius, intensity, point count,
+or output tolerance in response to the result. If no useful deformation
+appears, classify this normal-UI four-vertex fixture as unadmitted and move
+to a different prospectively designed fixture in later work.
