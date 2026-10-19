@@ -136,6 +136,8 @@ for(const state of ['on','off']){
   for(const stage of ['before','first','after','undo','redo']){
     paired[`${state}_${stage}`]=cmp(mesh[`source_${state}_${stage}`].positions,mesh[`root_${state}_${stage}`].positions);
     check(paired[`${state}_${stage}`].max_abs_component<=1e-6,`${state} ${stage}: paired XYZ >1e-6`);
+    if(stage==='before')check(paired[`${state}_${stage}`].different_components===0,
+      `${state}: initial mapped positions are not exact`);
     check(exactRows(mesh[`source_${state}_${stage}`].attributes,mesh[`root_${state}_${stage}`].attributes)&&
       exactRows(mesh[`source_${state}_${stage}`].faces,mesh[`root_${state}_${stage}`].faces),`${state} ${stage}: paired attributes/faces`);
     const normals=cmp(normalMap(s,stage),normalMap(r,stage));
@@ -147,6 +149,12 @@ for(const state of ['on','off']){
     const root=cmp(mesh[`root_${state}_before`].positions,mesh[`root_${state}_${stage}`].positions);
     changes[`${state}_${stage}`]={source,root};
     check(source.changed_vertices>0&&exactRows(source.changed_ids,root.changed_ids),`${state} ${stage}: changed RGB ID membership`);
+    for(const side of ['source','root']){
+      const before=mesh[`${side}_${state}_before`].positions,after=mesh[`${side}_${state}_${stage}`].positions;
+      const changed=new Set(changes[`${state}_${stage}`][side].changed_ids);
+      check(before.every((row,id)=>changed.has(id)||exactRows(row,after[id])),
+        `${side}_${state} ${stage}: untouched vertex changed`);
+    }
   }
   for(let held=0;held<6;held++){
     const streams={};
