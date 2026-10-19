@@ -47,6 +47,7 @@ mod source_paint_normal_view;
 mod source_pick_snapshot;
 mod source_picked_normal;
 pub mod source_ring;
+mod source_worker_transaction;
 mod static_subdivision;
 mod subtools;
 mod topology;
@@ -147,6 +148,7 @@ pub use source_picked_normal::{
     SourcePickedNormalError, SourcePickedNormalRejection, SourcePickedNormalReport,
     SourcePickedNormalUndefined, MAX_SOURCE_PICK_COORDINATE,
 };
+pub use source_worker_transaction::{SourceWorkerTransaction, SourceWorkerTransactionError};
 pub use static_subdivision::{
     StaticSubdivisionMap, StaticSubdivisionOutcome, StaticSubdivisionReport,
     StaticSubdivisionSettings, MAX_STATIC_MAP_BYTES,
