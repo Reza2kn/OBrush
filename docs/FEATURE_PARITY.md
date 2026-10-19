@@ -1,5 +1,10 @@
 # OBrush feature parity contract
 
+The [current SculptGL inventory crosswalk](SCULPTGL_CURRENT_LEDGER.md) counts
+all 317 pinned source IDs without treating the historical 0.1.14 gap labels
+as present implementation status. Its linked row-level evidence is scoped;
+the full active acceptance gates remain open.
+
 **C229 retained topology scan:** [The two-run million-vertex report](SCULPTGL_RETAINED_TOPOLOGY_WALK_C229.md)
 records a full public-mesh validation with a faster observed face/triangle
 walk and exact file/history/shape audits. Retained match mean is 6.47/6.57 ms

@@ -1,5 +1,9 @@
 # SculptGL parity checkpoint
 
+[The current 317-ID crosswalk](SCULPTGL_CURRENT_LEDGER.md) separates active,
+inactive and absent pinned-source rows and links later scoped evidence. The
+inventory below is a frozen historical gap snapshot, not current OBrush status.
+
 [The C229 retained-topology scan](SCULPTGL_RETAINED_TOPOLOGY_WALK_C229.md)
 keeps full stale-mesh validation and observes a lower retained-match mean in
 two million-vertex browser runs. Exact file/history/shape audits pass, but
