@@ -17,6 +17,10 @@ and cancellation on a 40k sphere. It remains query-gated and unpromoted:
 [the release-endpoint follow-up](SOURCE_WORKER_RELEASE_ENDPOINT_TRIAL.md)
 now delivers the final pointer sample on two scoped Chrome strokes, but its
 release took `292.5/305.6 ms` and the 100k/million-vertex sustained gate is open.
+[The SPW01 sustained diagnostic](SOURCE_WORKER_SPW01_100K_DIAGNOSTIC.md)
+passes the 100k ordinary shape/history check but records a Worker admission
+failure on the frozen imported Source model: its metadata is unsupported by
+the sparse preview renderer. The 1m Worker run remains unmeasured.
 [The warm retained-state codec](SOURCE_WORKER_RETAINED_WARM_SEAM.md) preserves
 later-dab geometry across a simulated realm transfer, and [the Chrome Worker
 diagnostic](SOURCE_WORKER_CROSS_REALM_DIAGNOSTIC.md) checks a small cold stroke
