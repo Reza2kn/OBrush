@@ -9,7 +9,7 @@ use crate::{
     SourcePickedNormalDisposition, SourcePickedNormalError, SourcePickedNormalRejection,
     SourcePickedNormalUndefined, Vec3, TRIANGLE_CORNER,
 };
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::sync::{Arc, Weak};
 use std::time::Duration;
@@ -38,7 +38,7 @@ pub const SOURCE_CLAY_SINGLE_LEAF_FACES: usize = 100;
 pub const SOURCE_GEOMETRY_CHUNK_ROWS: usize = 2048;
 const SOURCE_GEOMETRY_CHUNK_WORDS: usize = 8;
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub enum SourceGeometryTool {
     Brush { clay: bool, accumulate: bool },
     Inflate,
@@ -61,13 +61,13 @@ impl Default for SourceGeometryTool {
 }
 /// Compatibility remains the default until the independent ordered-selection
 /// and normal consumer gates are exercised. It is not a Source octree claim.
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub enum SourceClayOrderPolicy {
     #[default]
     SingleLeaf,
     OrderedStaticOctree,
 }
-#[derive(Clone, Copy, Debug, PartialEq, Serialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SourceGeometryOptions {
     pub tool: SourceGeometryTool,
     pub intensity: f64,

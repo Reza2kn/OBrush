@@ -291,6 +291,73 @@ pub(super) fn retained_bytes(
 }
 
 impl Document {
+    /// Publish a completed off-thread Source gesture as one public history
+    /// event. The caller must first prove a one-use scene/epoch witness and
+    /// decode the checked mesh and retained-state packets. No fallible work
+    /// remains after the state exchange begins.
+    pub(crate) fn publish_cold_source_worker_result(
+        &mut self,
+        candidate: crate::Mesh,
+        retained: Arc<SourceGeometryNormalState>,
+    ) -> Result<bool, String> {
+        if self.stroke_start.is_some()
+            || self.source_geometry_active.is_some()
+            || self.material_paint_stroke
+            || self.has_source_geometry_normal_state()
+        {
+            return Err("Source worker publication requires an idle cold document".into());
+        }
+        let id = self.active_subtool_id().ok_or("No active Source part")?;
+        let before = self.active_mesh().ok_or("No active Source mesh")?;
+        // The delta decoder already checks these fields. Keep a second check
+        // here so future callers cannot publish a changed mask, topology or
+        // attribute through this private Document entry.
+        crate::encode_source_worker_mesh_delta(before, &candidate, id)?;
+        if !retained.matches_mesh(&candidate) {
+            return Err("Source worker retained state does not match the candidate mesh".into());
+        }
+        if retained.approximate_bytes() > crate::MAX_SOURCE_GEOMETRY_STATE_BYTES {
+            return Err("Source worker retained state exceeds its budget".into());
+        }
+        self.check_scene_candidate(&candidate, None, None, None, self.scene.as_ref())?;
+        Self::check_output_budget(
+            &candidate,
+            &self.name,
+            self.multiresolution.as_ref(),
+            self.layers.as_ref(),
+            self.morph_target.as_ref(),
+        )?;
+        let previous = self.snapshot_state();
+        if previous
+            .approximate_bytes()
+            .checked_add(retained.approximate_bytes())
+            .is_none_or(|bytes| bytes > HISTORY_BUDGET_BYTES)
+        {
+            return Err("Source worker history exceeds its budget".into());
+        }
+        let changed = !before
+            .positions
+            .iter()
+            .zip(&candidate.positions)
+            .all(|(a, b)| a.to_array().map(f32::to_bits) == b.to_array().map(f32::to_bits))
+            || !before
+                .normals
+                .iter()
+                .zip(&candidate.normals)
+                .all(|(a, b)| a.to_array().map(f32::to_bits) == b.to_array().map(f32::to_bits));
+        // A no-op Source gesture can still establish transient retained state,
+        // but must not erase the existing redo branch.
+        self.source_geometry_states
+            .try_reserve_exact(1)
+            .map_err(|_| "Cannot reserve Source worker retained state")?;
+        self.mesh = Some(candidate);
+        self.source_geometry_states.push((id, retained));
+        if changed {
+            self.commit_previous(previous);
+        }
+        Ok(changed)
+    }
+
     /// Adopt the caller's normal Paint snapshot after proving its captured
     /// per-object producer. Existing cold/generic history APIs are unchanged.
     pub fn claim_retained_source_paint_stroke(

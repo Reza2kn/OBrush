@@ -1051,6 +1051,7 @@ pub struct OBrushApp {
     last_paint_fill: Option<HostPaintFillReport>,
     source_paint_preferences: crate::source_paint_host::SourcePaintPreferences,
     source_geometry_preferences: source_geometry_app::GeometryPreferenceStore,
+    source_worker_cold: crate::source_geometry_worker_host::ColdSourceWorkerBridge,
     source_geometry_alpha_tracks: crate::source_geometry_host::SharedSourceGeometryAlphaTracks,
     source_geometry_editor_drafts: [source_geometry_ui::GeometryEditorDrafts; 7],
     source_geometry_controls_hit_rect: ui_hit_rect::HitRectDiagnostics,
@@ -1280,6 +1281,7 @@ impl OBrushApp {
             last_paint_fill: None,
             source_paint_preferences: Default::default(),
             source_geometry_preferences: Default::default(),
+            source_worker_cold: Default::default(),
             source_geometry_alpha_tracks: Arc::new(Mutex::new(Default::default())),
             source_geometry_editor_drafts: std::array::from_fn(|_| Default::default()),
             source_geometry_controls_hit_rect: Default::default(),
@@ -6058,6 +6060,67 @@ impl OBrushApp {
         &self,
     ) -> Option<obrush_core::resident_point_program::ResidentCommitTiming> {
         self.resident_studio.last_commit_timing()
+    }
+
+    /// Captures an idle, cold Source document for the browser's display-free
+    /// Worker. This bridge is a checked transport seam, not an input shortcut:
+    /// the ordinary held-pointer route must explicitly own and feed it before
+    /// Worker sculpting can be enabled in the studio.
+    pub fn source_worker_cold_begin(&mut self) -> Result<(u64, u64, String, String), String> {
+        self.resident_studio_idle()?;
+        let kind = self.brush.kind;
+        let prefs = self
+            .effective_source_geometry_preferences(kind)
+            .filter(|prefs| {
+                prefs.mode == crate::source_geometry_host::SourceGeometryMode::SourceOrdinary
+            })
+            .ok_or("Select an ordinary Source geometry brush before Worker capture")?;
+        let settings = self
+            .source_geometry_settings(kind)
+            .map_err(|e| e.to_string())?;
+        crate::source_geometry_host::blocker_controls(
+            &self.document,
+            &settings,
+            self.preferences.tool(kind).lock_position,
+            prefs,
+        )
+        .map_err(|e| e.to_string())?;
+        if settings.alpha.is_some() || settings.symmetry_x || self.preferences.global().continuous {
+            return Err(
+                "Cold Source Worker transport currently requires plain static controls".into(),
+            );
+        }
+        let revision = self.revision;
+        let (epoch, project, options) =
+            self.source_worker_cold
+                .begin(&self.document, prefs.options, revision)?;
+        Ok((epoch, revision, project, options))
+    }
+
+    pub fn source_worker_cold_commit(
+        &mut self,
+        epoch: u64,
+        revision: u64,
+        delta: &[u8],
+        retained: &[u8],
+    ) -> Result<bool, String> {
+        self.resident_studio_idle()?;
+        if self.revision != revision {
+            self.source_worker_cold.cancel(epoch);
+            return Err("Source worker studio revision changed before publication".into());
+        }
+        let changed =
+            self.source_worker_cold
+                .commit(&mut self.document, epoch, revision, delta, retained)?;
+        if changed {
+            self.changed();
+            self.egui_ctx.request_repaint();
+        }
+        Ok(changed)
+    }
+
+    pub fn source_worker_cold_cancel(&mut self, epoch: u64) -> bool {
+        self.source_worker_cold.cancel(epoch)
     }
 
     pub fn load_document(&mut self, name: &str, contents: &str) -> Result<(), String> {

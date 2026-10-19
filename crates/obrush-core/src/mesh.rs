@@ -1478,8 +1478,8 @@ impl Mesh {
         }
     }
 
-    /// Additive bounded caller path. The established snapshot() is unchanged.
-    pub(crate) fn try_snapshot(&self) -> Result<Self, String> {
+    /// Fallible snapshot for bounded callers, including the display-free Worker.
+    pub fn try_snapshot(&self) -> Result<Self, String> {
         fn copy<T: Copy>(values: &[T]) -> Result<Vec<T>, String> {
             let mut out = Vec::new();
             out.try_reserve_exact(values.len())

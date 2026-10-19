@@ -10,6 +10,7 @@ use crate::{
     decode_source_worker_mesh_delta, resource_limits::MAX_PROJECT_BYTES, Document, Mesh,
     SourceGeometryOptions,
 };
+use std::sync::Arc;
 
 /// One-use witness for the complete main-thread scene before any worker seed.
 /// `revision` is assigned by the host and must advance on every document edit.
@@ -103,12 +104,40 @@ impl SourceWorkerColdCapture {
             .ok_or("Source worker reply has no active mesh")?;
         decode_source_worker_mesh_delta(mesh, self.active_subtool_id, delta)
     }
+
+    /// Consume the complete-scene witness and atomically publish a checked
+    /// worker result with its exact retained Source state. The retained packet
+    /// is authenticated and decoded against the checked candidate *inside*
+    /// this one-use publication boundary. An empty delta and empty packet are
+    /// a no-op; every other result needs a valid retained packet. A failed
+    /// check leaves public state/history intact.
+    pub fn commit_candidate(
+        self,
+        document: &mut Document,
+        epoch: u64,
+        revision: u64,
+        delta: &[u8],
+        retained_packet: &[u8],
+    ) -> Result<bool, String> {
+        let id = self.active_subtool_id;
+        let candidate = match self.decode_candidate(document, epoch, revision, delta)? {
+            Some(mesh) => mesh,
+            None if retained_packet.is_empty() => return Ok(false),
+            None => return Err("Source worker no-op unexpectedly included retained state".into()),
+        };
+        let retained = crate::decode_source_worker_retained_warm(&candidate, id, retained_packet)?;
+        document.publish_cold_source_worker_result(candidate, Arc::new(retained))
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{encode_source_worker_mesh_delta, MaskConvention, SourceGeometryPass};
+    use crate::{
+        encode_source_worker_mesh_delta, encode_source_worker_retained_warm, MaskConvention,
+        SourceGeometryAlphaTracks, SourceGeometryControls, SourceGeometryPass,
+        SourceWorkerTransaction,
+    };
 
     fn fixture() -> Document {
         let mut mesh = Mesh::import_obj(b"v 0 0 0\nv 4 0 0\nv 0 4 0\nf 1 2 3\n")
@@ -182,5 +211,137 @@ mod tests {
         doc.end_source_geometry_stroke(&stroke).unwrap();
         assert!(doc.has_source_geometry_normal_state());
         assert!(SourceWorkerColdCapture::capture(&doc, options, 2, 3).is_err());
+    }
+
+    #[test]
+    fn completed_worker_result_publishes_exact_mesh_state_and_one_history_step() {
+        let mut main = fixture();
+        let before = main.to_json().unwrap();
+        let capture =
+            SourceWorkerColdCapture::capture(&main, SourceGeometryOptions::inflate(), 47, 5)
+                .unwrap();
+        let worker = Document::from_json(&before).unwrap();
+        let mut transaction =
+            SourceWorkerTransaction::begin(worker, SourceGeometryOptions::inflate(), 47).unwrap();
+        transaction
+            .apply_controlled(
+                47,
+                1,
+                [
+                    Some(SourceGeometryPass {
+                        center: [0.0; 3],
+                        eye_direction: [0.0, 0.0, -1.0],
+                        local_radius_squared: 4.0,
+                        original_face_index: 0,
+                    }),
+                    None,
+                ],
+                0.5,
+                true,
+                &SourceGeometryControls::default(),
+                SourceGeometryAlphaTracks::default(),
+            )
+            .unwrap();
+        let mut worker = transaction.finish(47, 2).unwrap();
+        let expected = worker.to_json().unwrap();
+        let state = worker.source_geometry_state(1).unwrap();
+        let retained =
+            encode_source_worker_retained_warm(&state, worker.active_mesh().unwrap(), 1).unwrap();
+        let delta = encode_source_worker_mesh_delta(
+            main.active_mesh().unwrap(),
+            worker.active_mesh().unwrap(),
+            1,
+        )
+        .unwrap();
+        let mut corrupt = retained.clone();
+        corrupt[12] ^= 1;
+        assert!(capture
+            .commit_candidate(&mut main, 47, 5, &delta, &corrupt)
+            .is_err());
+        assert_eq!(main.to_json().unwrap(), before);
+        assert_eq!(main.history_depths(), (0, 0));
+        let capture =
+            SourceWorkerColdCapture::capture(&main, SourceGeometryOptions::inflate(), 47, 5)
+                .unwrap();
+        assert!(capture
+            .commit_candidate(&mut main, 47, 5, &delta, &retained)
+            .unwrap());
+        assert_eq!(main.to_json().unwrap(), expected);
+        assert_eq!(main.history_depths(), (1, 0));
+        assert!(main
+            .source_geometry_state(1)
+            .unwrap()
+            .matches_mesh(main.active_mesh().unwrap()));
+        assert!(main.undo());
+        assert_eq!(main.to_json().unwrap(), before);
+        assert!(main.redo());
+        assert_eq!(main.to_json().unwrap(), expected);
+        assert!(main
+            .source_geometry_state(1)
+            .unwrap()
+            .matches_mesh(main.active_mesh().unwrap()));
+
+        let next = SourceGeometryPass {
+            center: [0.3, 0.2, 0.0],
+            eye_direction: [0.0, 0.0, -1.0],
+            local_radius_squared: 4.0,
+            original_face_index: 0,
+        };
+        for document in [&mut main, &mut worker] {
+            let mut stroke = document
+                .begin_source_geometry_selection_history(SourceGeometryOptions::inflate())
+                .unwrap();
+            document
+                .apply_source_geometry_controlled_dab(
+                    &mut stroke,
+                    [Some(next), None],
+                    0.5,
+                    true,
+                    &SourceGeometryControls::default(),
+                    SourceGeometryAlphaTracks::default(),
+                )
+                .unwrap();
+            document.end_source_geometry_stroke(&stroke).unwrap();
+        }
+        assert_eq!(main.to_json().unwrap(), worker.to_json().unwrap());
+    }
+
+    #[test]
+    fn rejected_worker_publication_preserves_redo_and_complete_scene() {
+        let mut main = fixture();
+        let mut edit = main.active_mesh().unwrap().snapshot();
+        edit.positions[0].z = 0.5;
+        main.replace_mesh(edit).unwrap();
+        assert!(main.undo());
+        let before = main.to_json().unwrap();
+        let depths = main.history_depths();
+        let capture =
+            SourceWorkerColdCapture::capture(&main, SourceGeometryOptions::inflate(), 9, 10)
+                .unwrap();
+        let mesh = main.active_mesh().unwrap();
+        let delta = encode_source_worker_mesh_delta(mesh, mesh, 1).unwrap();
+        assert!(capture
+            .commit_candidate(&mut main, 9, 11, &delta, &[])
+            .is_err());
+        assert_eq!(main.to_json().unwrap(), before);
+        assert_eq!(main.history_depths(), depths);
+
+        let capture =
+            SourceWorkerColdCapture::capture(&main, SourceGeometryOptions::inflate(), 9, 10)
+                .unwrap();
+        assert!(!capture
+            .commit_candidate(&mut main, 9, 10, &delta, &[])
+            .unwrap());
+        assert_eq!(main.to_json().unwrap(), before);
+        assert_eq!(main.history_depths(), depths);
+
+        let capture =
+            SourceWorkerColdCapture::capture(&main, SourceGeometryOptions::inflate(), 9, 10)
+                .unwrap();
+        assert!(capture
+            .commit_candidate(&mut main, 9, 10, &delta, &[1, 2, 3])
+            .is_err());
+        assert_eq!(main.to_json().unwrap(), before);
+        assert_eq!(main.history_depths(), depths);
     }
 }

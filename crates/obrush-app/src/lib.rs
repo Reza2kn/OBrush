@@ -41,7 +41,10 @@ mod source_camera_integration_tests;
 mod source_camera_math;
 mod source_contour_gl;
 mod source_display;
+#[cfg(target_arch = "wasm32")]
+mod source_geometry_browser_worker;
 pub mod source_geometry_host;
+mod source_geometry_worker_host;
 mod source_mask_view;
 mod source_modal;
 mod source_paint_cursor;
@@ -180,6 +183,55 @@ impl WebHandle {
             .resident_studio_begin()
             .map_err(|error| JsValue::from_str(&error))?;
         Ok(serde_json::json!({"id":id.to_string(),"project":project}).to_string())
+    }
+
+    /// Checked, cold Source Worker transport. The ordinary input route does
+    /// not call this yet; browser diagnostics can verify cross-realm messages
+    /// without gaining permission to edit an unvalidated studio Document.
+    #[cfg(debug_assertions)]
+    pub fn source_worker_cold_begin(&self) -> Result<String, JsValue> {
+        let (epoch, revision, project, options) = self
+            .runner
+            .app_mut::<OBrushApp>()
+            .ok_or_else(|| JsValue::from_str("OBrush is not running"))?
+            .source_worker_cold_begin()
+            .map_err(|error| JsValue::from_str(&error))?;
+        Ok(
+            serde_json::json!({"epoch":epoch.to_string(),"revision":revision.to_string(),
+            "project":project,"options":options})
+            .to_string(),
+        )
+    }
+
+    #[cfg(debug_assertions)]
+    pub fn source_worker_cold_commit(
+        &self,
+        epoch: &str,
+        revision: &str,
+        delta: &[u8],
+        retained: &[u8],
+    ) -> Result<bool, JsValue> {
+        let epoch = epoch
+            .parse::<u64>()
+            .map_err(|error| JsValue::from_str(&error.to_string()))?;
+        let revision = revision
+            .parse::<u64>()
+            .map_err(|error| JsValue::from_str(&error.to_string()))?;
+        self.runner
+            .app_mut::<OBrushApp>()
+            .ok_or_else(|| JsValue::from_str("OBrush is not running"))?
+            .source_worker_cold_commit(epoch, revision, delta, retained)
+            .map_err(|error| JsValue::from_str(&error))
+    }
+
+    #[cfg(debug_assertions)]
+    pub fn source_worker_cold_cancel(&self, epoch: &str) -> bool {
+        let Ok(epoch) = epoch.parse::<u64>() else {
+            return false;
+        };
+        self.runner
+            .app_mut::<OBrushApp>()
+            .is_some_and(|mut app| app.source_worker_cold_cancel(epoch))
     }
 
     /// Eight little-endian token bytes followed by the versioned, checked
