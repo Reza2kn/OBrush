@@ -21,6 +21,11 @@ release took `292.5/305.6 ms` and the 100k/million-vertex sustained gate is open
 passes the 100k ordinary shape/history check but records a Worker admission
 failure on the frozen imported Source model: its metadata is unsupported by
 the sparse preview renderer. The 1m Worker run remains unmeasured.
+[The independent display-normal audit](SOURCE_GPU_DISPLAY_NORMAL_ORACLE_PREREG.md)
+matches fresh Source face normals to active GPU rows before sculpting and after
+Undo. Edited After and Redo states have byte-identical public meshes but
+1,147 differing GPU normal rows in an owned 100k browser run; the frozen
+saved-normal GPU gate remains failed and no edited-state oracle is canonical.
 [The warm retained-state codec](SOURCE_WORKER_RETAINED_WARM_SEAM.md) preserves
 later-dab geometry across a simulated realm transfer, and [the Chrome Worker
 diagnostic](SOURCE_WORKER_CROSS_REALM_DIAGNOSTIC.md) checks a small cold stroke
