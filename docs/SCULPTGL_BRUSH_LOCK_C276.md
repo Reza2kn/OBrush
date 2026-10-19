@@ -70,3 +70,35 @@ The setup helper was corrected to use the already verified 1024×768 normal
 alignment and then add 40 integer window-height pixels. Both applications
 were rerun with that same corrected harness SHA; fixture, controls, pointer
 trace and acceptance tolerances were unchanged.
+
+## Final source-matched build rerun
+
+The first passing pair above used WASM built just before two subsequent
+strict-Clippy source cleanups. To close that provenance gap, the complete
+candidate source and harness were committed as
+`fbc5c688354a83be478e54f88cd122f3a63e6715`, then rebuilt with
+`scripts/build-web.sh` and rerun once under the unchanged C276 fixture,
+controls, input and gates. The resulting portable WASM SHA-256 is
+`913ed5f6ac0fd3f3e0e55788d40d7421d844820bf92f664a4c8a6b7858bd8f99`;
+its JavaScript SHA-256 is
+`03d74bea813d209f42f0aecbabcf7a4f85d39d509ed8b65f742def4ec3d4b440`.
+The C276 capture and audit harness SHA-256 values remained
+`80873618d94c59551042b78afceca2880d699a92b55c679dba0f263d5df176fe`
+and `1193902530f8160c8ac43e1a62dac6929b194bbfef4c5237acf32036b97eb357`.
+
+The final Source result is
+`.artifacts/sculptgl-brush-lock-ui/source-ffda4a73-fbe8-4a10-b900-0c94dc743a8b/result.json`
+(SHA-256 `e088c49c08135203972d5a810751bcdf1f12812cd1118767a6cfa5c952886acb`),
+the OBrush result is
+`.artifacts/sculptgl-brush-lock-ui/root-435bfa64-7624-49ec-9b18-52da7d2d5770/result.json`
+(SHA-256 `0b3dd52de07cf5009c0c58f6fd7dd9a85dc4d29056587f6f8740b092c80c2d19`),
+and the paired audit is
+`.artifacts/sculptgl-brush-lock-ui/source-ffda4a73-fbe8-4a10-b900-0c94dc743a8b/paired-audit-root-435bfa64-7624-49ec-9b18-52da7d2d5770.json`
+(SHA-256 `1a128d43842a4cf42efd9dfa54c36891422be8f5772b75e18ab4d6e9d38ccb05`).
+It again passed: exact delivered integer gesture and world radius, the same
+26 changed IDs, final paired XYZ maximum `5.186961971048731e-13`, held
+position maximum `7.450580596923828e-9`, held display-normal maximum
+`1.1641532182693481e-10`, bit-identical final active GPU display normals,
+and exact public Save/Undo/Redo and active GPU position agreement. The
+source-matched rerun does not resolve the fractional-coordinate C274 failure
+or establish the broader Brush Lock row.
