@@ -13,6 +13,8 @@ const VERSION: u32 = 1;
 const HEADER_BYTES: usize = 40;
 const ROW_BYTES: usize = 52;
 const CHECKSUM_BYTES: usize = 32;
+// Match Mesh's public coordinate bound without a whole-mesh validation walk.
+const MAX_PREVIEW_COORDINATE: f32 = 1_000_000.0;
 pub const MAX_SOURCE_WORKER_PREVIEW_BYTES: usize = 64 * 1024 * 1024;
 
 /// The old and new display words of one vertex. Both normals and positions
@@ -46,8 +48,21 @@ fn words_from_baseline(positions: &[Vec3], normals: &[Vec3], index: usize) -> [u
     [p[0], p[1], p[2], n[0], n[1], n[2]]
 }
 
-fn finite(words: &[u32; 6]) -> bool {
-    words.iter().all(|word| f32::from_bits(*word).is_finite())
+fn valid_geometry_words(words: &[u32; 6]) -> bool {
+    let point = Vec3::new(
+        f32::from_bits(words[0]),
+        f32::from_bits(words[1]),
+        f32::from_bits(words[2]),
+    );
+    let normal = Vec3::new(
+        f32::from_bits(words[3]),
+        f32::from_bits(words[4]),
+        f32::from_bits(words[5]),
+    );
+    point.is_finite()
+        && point.abs().max_element() <= MAX_PREVIEW_COORDINATE
+        && normal.is_finite()
+        && normal.length_squared().is_finite()
 }
 
 /// Encode preselected changed rows in ascending unique order. This function
@@ -94,8 +109,8 @@ pub fn encode_source_worker_sparse_preview_rows(
         let new = row.new_words();
         if row.index as usize >= vertex_count
             || previous.is_some_and(|index| row.index <= index)
-            || !finite(&old)
-            || !finite(&new)
+            || !valid_geometry_words(&old)
+            || !valid_geometry_words(&new)
             || old == new
         {
             return Err("Source preview row is invalid, unordered or unchanged".into());
@@ -233,8 +248,8 @@ impl SourceWorkerSparsePreviewOverlay {
             }
             let old: [u32; 6] = words[..6].try_into().unwrap();
             let new: [u32; 6] = words[6..].try_into().unwrap();
-            if !finite(&old) || !finite(&new) || old == new {
-                return Err("Source preview row is nonfinite or unchanged".into());
+            if !valid_geometry_words(&old) || !valid_geometry_words(&new) || old == new {
+                return Err("Source preview row geometry is invalid or unchanged".into());
             }
             let baseline = words_from_baseline(positions, normals, index as usize);
             let current = self.changed.get(&index).copied().unwrap_or(baseline);
@@ -418,6 +433,10 @@ mod tests {
             .unwrap()
             .apply(&positions, &normals, &nonfinite)
             .is_err());
+        assert!(
+            encode_source_worker_sparse_preview_rows(9, 1, 7, 3, &[row(0, 0.0, 1_000_001.0)])
+                .is_err()
+        );
         // The baseline is +0.0; a claimed -0.0 predecessor is stale even
         // though floating point equality would say they match.
         let mut signed_zero = packet(1, &[row(0, 0.0, 0.25)]);
