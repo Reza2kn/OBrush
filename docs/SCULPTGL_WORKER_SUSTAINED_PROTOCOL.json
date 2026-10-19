@@ -1,0 +1,58 @@
+{
+  "id": "SP-WORKER-01",
+  "status": "frozen protocol; no candidate qualified",
+  "parent_protocol_sha256": "234870ed03a240931a22f421968917efaeed8becc1df834c998bbe3e9c101a33",
+  "reference_commit": "8e45dafc0f7906e5238dfffc1a2df742bd25f29d",
+  "fixture_manifest_sha256": "f83022cb2766e44a147fb490c169e40a0a35e7a4e89c48d644566af16d0aea4a",
+  "cohorts": [
+    {"label": "100k", "vertices": 99602, "triangles": 199200, "sgl_sha256": "8f8d76f0d71e420a81358a0a44d3a4ffa2a3ac76e9221165e1359c8e720a7093", "seconds": 60, "requested_moves": 24000},
+    {"label": "1m", "vertices": 999002, "triangles": 1998000, "sgl_sha256": "dfb5316f62e392e633f03cb662dcb12215ed165a71a9ae72a3fd639528731afe", "seconds": 60, "requested_moves": 24000}
+  ],
+  "input": {
+    "normal_browser_path_required": true,
+    "source_tool": "Draw/Brush; Source ordinary row 0; clay=false",
+    "radius_css_px": 64,
+    "intensity": 0.25,
+    "symmetry": false,
+    "pressure_factors": [0, 0],
+    "camera": "Normal orthographic Reset and whole-scene Frame/Fit; record actual matrices and viewport",
+    "motion_hz": 400,
+    "held_stroke": "Same actual viewport center+(80,0), trusted press, 2-second ellipse x80/y60 for 60 seconds without release, then actual release",
+    "no_manual_worker_api": true,
+    "no_synthetic_wasm_dab_shortcut": true
+  },
+  "bounds": {
+    "owned_chrome_per_run": 1,
+    "one_browser_run_at_a_time": true,
+    "public_save_max_bytes": 536870912,
+    "scalar_recorder_max_bytes": 134217728,
+    "gpu_readback_max_bytes": 67108864,
+    "worker_transfer_max_bytes_per_message": 268435456,
+    "tail_samples": 40,
+    "tail_sample_ms": 50,
+    "file_publication_raf_limit": 1800,
+    "physical_memory_sampling_hz": 1
+  },
+  "gates": {
+    "active_raf_p95_ms": 33.34,
+    "active_raf_max_ms": 250,
+    "app_frame_cpu_p95_ms": 16.667,
+    "release_ack_ms": 100,
+    "released_queue_zero_ms": 100,
+    "pacing_p99_lateness_ms": 25,
+    "pacing_max_lateness_ms": 100,
+    "shape_max_edge_stretch_ratio": 4,
+    "shape_new_degenerates": 0,
+    "shape_orientation_reversals": 0
+  },
+  "required_evidence": [
+    "Exact source commit, built WASM/JS hashes, actual served bytes, fixture bytes/hash, protocol hash, Chrome version, scene/settings/camera/viewport",
+    "All 24000 requested timestamps, all CDP acknowledgments and failures, trusted delivered DOM events, app queued/coalesced/applied dabs and worker-accepted dabs with serial order",
+    "Independent active RAF and app update CPU distributions, release request/acknowledgment and 2-second queue tail, recorder caps/errors, browser console/protocol exceptions",
+    "Worker transport trace with input, delta and publication message byte lengths, transfer versus clone, main-thread serialization/validation/publication CPU, worker geometry CPU, main-to-worker and worker-to-main time",
+    "Normal browser public Save before/after/stable/Undo/Redo complete GUID files with streamed SHA and exact bytes; independent whole-file position, normal, other-channel, topology and changed-face audit",
+    "After each public state, actual active WebGL VBO readback with exact f32 position and normal word hashes against the public project, including Undo/Redo; record candidate buffers and reject missing/ambiguous match",
+    "Owned Chrome/server closure, 1Hz memory samples, and all failures retained"
+  ],
+  "comparison_policy": "Run serial fresh owned browsers in alternating ordinary/worker/worker/ordinary order per cohort, with identical host and settings. Report raw per-run values, delivered dabs and differences; do not infer geometry or speed parity from differing delivered dabs. Both 100k and 1m cohorts must pass every file, GPU, interaction and cap gate before any worker responsiveness claim. Full SculptGL parity remains a separate 317-ID inventory task."
+}
