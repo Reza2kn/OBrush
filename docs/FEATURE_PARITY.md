@@ -64,6 +64,12 @@ default.
 155.6 ms against a preregistered `<120 ms` browser target and failed its GPU
 normal check. Its product and diagnostic code were rejected; the raw failure
 receipt remains available.
+[The verified-baseline split](SOURCE_WORKER_VERIFIED_BASELINE_RESULT.md)
+measured 267.9 ms in complete-scene witness work and only 13.4 ms in delta
+decoding on a fresh frozen 100k run. Delta decoding missed the preregistered
+15 ms threshold, so no cached-baseline decoder was built. The held Worker
+continues to fail the frozen RAF-max, 100 ms queue-tail and public-normal
+checks and remains off by default.
 [The independent display-normal audit](SOURCE_GPU_DISPLAY_NORMAL_ORACLE_PREREG.md)
 matches fresh Source face normals to active GPU rows before sculpting and after
 Undo. Edited After and Redo states have byte-identical public meshes but

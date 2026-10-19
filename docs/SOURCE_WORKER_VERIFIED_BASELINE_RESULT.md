@@ -15,6 +15,10 @@ The raw result SHA-256 is
 All raw browser, shape, GPU, static-normal and failed-verifier receipts are
 retained locally under
 `.artifacts/source-worker-sustained-spw01/100k-worker-0c99e5aa-19a4-423d-8b8f-32948cbe5b0b/`.
+The read-only split instrumentation is retained locally as
+`.artifacts/source-worker-sustained-spw01/verified-baseline-split-timing.patch`
+(SHA-256 `984b1f573c796231415055ac0a19388e7b6ed623d8cffcb6456241de5c9ed3b8`);
+it was not merged into the product source.
 
 The combined scene-and-delta stage was 281.3 ms, comprising **267.9 ms
 complete-scene witness** and **13.4 ms delta decode**. The Rust final total
