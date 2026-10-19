@@ -7555,10 +7555,14 @@ impl OBrushApp {
             crate::ui_text::caption(crate::ui_text::CaptionKey::C856D2A1F51BF),
         );
         self.track_layer_control("source.wire", &wire);
-        let alpha = ui.add(egui::Slider::new(&mut render.opacity, 0.0..=1.0).text(
+        let mut transparency = ((1.0 - render.opacity) * 100.0).round() as u32;
+        let alpha = ui.add(egui::Slider::new(&mut transparency, 0..=100).text(
             crate::ui_text::caption(crate::ui_text::CaptionKey::C404BB0A38ADC),
         ));
         self.track_layer_control("source.opacity", &alpha);
+        if alpha.changed() {
+            render.opacity = 1.0 - transparency as f32 / 100.0;
+        }
         if render.shader != before.shader
             || render.matcap != before.matcap
             || render.show_wireframe != before.show_wireframe
@@ -7569,14 +7573,21 @@ impl OBrushApp {
             if self.stroke_rejected {
                 return;
             }
-            let result = if render.show_wireframe != before.show_wireframe
+            let only_wireframe_changed = render.show_wireframe != before.show_wireframe
                 && render.shader == before.shader
                 && render.matcap == before.matcap
                 && render.flat_shading == before.flat_shading
-                && render.opacity.to_bits() == before.opacity.to_bits()
-            {
+                && render.opacity.to_bits() == before.opacity.to_bits();
+            let only_transparency_changed = render.opacity.to_bits() != before.opacity.to_bits()
+                && render.shader == before.shader
+                && render.matcap == before.matcap
+                && render.flat_shading == before.flat_shading
+                && render.show_wireframe == before.show_wireframe;
+            let result = if only_wireframe_changed {
                 self.document
                     .set_selected_source_wireframe(render.show_wireframe)
+            } else if only_transparency_changed {
+                self.document.set_selected_source_transparency(transparency)
             } else {
                 self.document.set_active_source_render(render)
             };

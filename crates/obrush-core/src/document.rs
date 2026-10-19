@@ -4476,6 +4476,25 @@ impl Document {
             candidate.set_active_source_render(render)
         })
     }
+    /// SculptGL's Transparency control applies one inverse-opacity value to
+    /// every selected source mesh. Keep the selection edit atomic so a mixed
+    /// or invalid scene cannot leave only some objects changed.
+    pub fn set_selected_source_transparency(&mut self, percent: u32) -> Result<bool, String> {
+        if percent > 100 {
+            return Err("Source transparency must be between 0 and 100 percent".into());
+        }
+        let opacity = 1.0 - percent as f32 / 100.0;
+        self.edit_selected_subtools(|candidate| {
+            let mut render = candidate
+                .active_object_metadata()
+                .ok_or("Selected part has no source appearance metadata")?
+                .render
+                .clone()
+                .unwrap_or_else(crate::baseline_source_render_defaults);
+            render.opacity = opacity;
+            candidate.set_active_source_render(render)
+        })
+    }
     pub fn scene_origin(&self) -> Option<&SglSceneOrigin> {
         self.scene_origin.as_ref()
     }

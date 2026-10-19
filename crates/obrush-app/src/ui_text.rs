@@ -1228,7 +1228,7 @@ const SPECS: [CaptionSpec; 365] = [
     },
     CaptionSpec {
         id: "app.source_appearance_panel.404bb0a38adc",
-        english: "Source opacity",
+        english: "Source transparency",
         source: Some(SourceTextKey::RenderingTransparency),
     },
     CaptionSpec {
