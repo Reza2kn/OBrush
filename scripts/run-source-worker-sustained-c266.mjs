@@ -197,12 +197,19 @@ try {
       kind:row.kind==='begin'?'init':row.kind==='finish'?'publish':'dab',
       direction:row.direction,bytes:row.bytes,transfer_or_clone:row.transfer_or_clone,
       id:row.id,at:row.at,timing:row.timing||null}));
+    const sends=new Map(rows.filter(row=>row.direction==='main-to-worker').map(row=>[row.id,row]));
+    const roundTrips=rows.filter(row=>row.direction==='worker-to-main'&&sends.has(row.id))
+      .map(row=>({id:row.id,kind:row.kind,ms:row.at-sends.get(row.id).at}));
+    const mainStages={serialize:mainMs(names[0])+mainMs(names[1])+mainMs(names[2]),
+      validate:mainMs(names[3]),publish:mainMs(names[4])};
+    const largestMainStage=Object.entries(mainStages).sort((a,b)=>b[1]-a[1])[0]||null;
     const transport={result_sha256:hash(resultBytes),messages,
       accepted_dabs:result.worker_trial?.acknowledgedDabs??null,
-      main_serialize_cpu_ms:mainMs(names[0])+mainMs(names[1])+mainMs(names[2]),
-      main_validate_cpu_ms:mainMs(names[3]),main_publish_cpu_ms:mainMs(names[4]),
+      main_serialize_cpu_ms:mainStages.serialize,
+      main_validate_cpu_ms:mainStages.validate,main_publish_cpu_ms:mainStages.publish,
       worker_geometry_cpu_ms:rows.filter(row=>row.direction==='worker-to-main'&&row.kind==='apply')
         .reduce((sum,row)=>sum+(Number(row.timing?.worker_call_ms)||0),0),
+      round_trips:roundTrips,largest_main_stage:largestMainStage,
       main_method_calls:main,trace_errors:result.worker_trace.errors||[],
       trace_overflow:result.worker_trace.overflow===true,
       scope:'Worker geometry CPU sums reported apply calls; begin/finish CPU omitted and is a remaining admission gap. Incoming transfer classification is unknown unless independently attested.'};
