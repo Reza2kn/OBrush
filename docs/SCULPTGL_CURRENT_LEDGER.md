@@ -116,7 +116,7 @@ A scoped report may cover one fixture or option and never closes its full accept
 | SGL-INPUT-SYMMETRY-LINE | Active | Unreconciled | Open |
 | SGL-INPUT-CONTINUOUS | Active | Unreconciled | Open |
 | SGL-INPUT-PRESSURE-RADIUS | Active | [SCULPTGL_PRESSURE_FACTOR_BROWSER_C231](SCULPTGL_PRESSURE_FACTOR_BROWSER_C231.md) | Open |
-| SGL-INPUT-PRESSURE-INTENSITY | Active | [SCULPTGL_PRESSURE_FACTOR_BROWSER_C231](SCULPTGL_PRESSURE_FACTOR_BROWSER_C231.md) | Open |
+| SGL-INPUT-PRESSURE-INTENSITY | Active | [SCULPTGL_PRESSURE_RAMP_BROWSER_C232](SCULPTGL_PRESSURE_RAMP_BROWSER_C232.md) | Open |
 | SGL-INPUT-SHIFT-SMOOTH | Active | Unreconciled | Open |
 | SGL-INPUT-CTRL-MASK | Active | Unreconciled | Open |
 | SGL-INPUT-ALT-NEGATIVE | Active | Unreconciled | Open |

@@ -1,5 +1,12 @@
 # OBrush feature parity contract
 
+**C232 held-stroke pressure ramp:** [The four-case normal-browser report](SCULPTGL_PRESSURE_RAMP_BROWSER_C232.md)
+shows a trusted synthetic pen move from pressure 0.25 to 0.75 changes Draw
+geometry with intensity factor 1, while factor 0 stays exact. The first GPU
+dab matches between compared runs, all final GPU buffers match public saves,
+and one-stroke Undo/Redo is exact. Physical tablets and paired reference
+strokes remain open.
+
 **C231 browser factor response:** [The four-case normal-browser report](SCULPTGL_PRESSURE_FACTOR_BROWSER_C231.md)
 verifies visible factor controls, trusted synthetic pen/mouse events, saved
 geometry and GPU readback. Radius factor 1 narrows the changed original-vertex

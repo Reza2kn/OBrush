@@ -1,5 +1,10 @@
 # SculptGL parity checkpoint
 
+[The C232 held-stroke pressure ramp](SCULPTGL_PRESSURE_RAMP_BROWSER_C232.md)
+passes a four-case normal-browser check of trusted synthetic pen movement,
+per-dab factors, actual GPU state, public saves and one-step history. Physical
+pen and paired SculptGL stroke behavior remain open.
+
 [The C231 normal-browser factor test](SCULPTGL_PRESSURE_FACTOR_BROWSER_C231.md)
 passes a four-case saved-mesh and GPU comparison for visible pressure controls
 on one fresh sphere. Physical pen, pressure-ramp and paired reference checks
