@@ -108,6 +108,18 @@ def render() -> str:
         "Worker sculpt or passing million-vertex held-pointer result, so all "
         "full responsiveness gates remain open.",
         "",
+        "The [C264 current million-vertex run](SCULPTGL_MILLION_CURRENT_C264.md) "
+        "passes scoped public-file and shape checks but fails all four "
+        "responsiveness gates. [C271](SCULPTGL_MILLION_NORMAL_WITNESS_C271.md) "
+        "also failed all four after a narrow normal-copy optimization, so "
+        "its product code was rejected. The query-gated "
+        "[metadata-aware Worker trial](SOURCE_WORKER_METADATA_PREVIEW_RESULT.md) "
+        "passes a 100k public-history and GPU-position check but fails "
+        "worst-case pacing, queue-tail and all-state GPU-normal gates; its "
+        "million-vertex run remains unmeasured. "
+        "[C270 Inflate UI](SCULPTGL_INFLATE_DIAMOND_UI_C270.md) is one "
+        "scoped positive/negative fixture, not a full brush gate.",
+        "",
         "| ID | Pinned reference scope | Current row-level evidence | Parity gate |",
         "| --- | --- | --- | --- |",
     ]
