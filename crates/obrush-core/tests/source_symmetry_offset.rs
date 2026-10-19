@@ -8,6 +8,19 @@ fn independent_triangle() -> Mesh {
     mesh
 }
 
+#[test]
+fn view_only_source_guide_can_seed_an_imported_protected_mask_mesh() {
+    let mut mesh = independent_triangle();
+    let source_bounds = obrush_core::SourceGeometryNormalState::seed(&mesh)
+        .unwrap()
+        .root_loose();
+    mesh.mask_convention = MaskConvention::ProtectedF32V1;
+    assert!(obrush_core::SourceGeometryNormalState::seed(&mesh).is_err());
+    let guide = obrush_core::SourceGeometryNormalState::seed_for_guide(&mesh).unwrap();
+    assert_eq!(guide.root_loose(), source_bounds);
+    assert_eq!(mesh.mask_convention, MaskConvention::ProtectedF32V1);
+}
+
 fn metadata(mesh: &Mesh) -> SceneObjectMetadata {
     SceneObjectMetadata {
         source_center_initialized: true,

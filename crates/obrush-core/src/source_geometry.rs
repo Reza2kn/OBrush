@@ -249,6 +249,14 @@ impl SourceGeometryNormalState {
             .map_err(|_| SourceGeometryError::InvalidMesh)?;
         Self::seed_validated(mesh)
     }
+    /// A view-only symmetry guide needs the Source octree's loose root even
+    /// when an imported mesh still uses OBrush's protected-mask convention.
+    /// The brush's stricter `seed` path remains unchanged.
+    pub fn seed_for_guide(mesh: &Mesh) -> Result<Self, SourceGeometryError> {
+        mesh.validate()
+            .map_err(|_| SourceGeometryError::InvalidMesh)?;
+        Self::seed_validated(mesh)
+    }
     fn seed_validated(mesh: &Mesh) -> Result<Self, SourceGeometryError> {
         let required = normal_bytes(mesh.positions.len(), face_count(mesh))?;
         let seed_storage = SourceNormalField::storage_requirement(mesh)

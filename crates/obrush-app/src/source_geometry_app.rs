@@ -144,13 +144,18 @@ impl OBrushApp {
             Ok(super::source_geometry_ui::GeometryCommit::Accepted(p)) => {
                 let mut stored = p;
                 if self.document.active_object_metadata().is_some() {
-                    if p.mirror_offset.to_bits() != old.mirror_offset.to_bits()
-                        && let Err(error) = self
+                    if p.mirror_offset.to_bits() != old.mirror_offset.to_bits() {
+                        match self
                             .document
                             .set_active_source_symmetry_offset(p.mirror_offset)
-                    {
-                        self.message = error;
-                        return false;
+                        {
+                            Ok(true) => self.changed(),
+                            Ok(false) => {}
+                            Err(error) => {
+                                self.message = error;
+                                return false;
+                            }
+                        }
                     }
                     // A source-object edit must not leak into plain meshes'
                     // older per-tool fallback value.

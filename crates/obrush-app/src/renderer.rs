@@ -1262,7 +1262,7 @@ fn source_guide_root_loose(
     }
     let bounds = match object.selected_normals {
         Some(state) if state.matches_mesh(object.mesh) => state.root_loose(),
-        _ => obrush_core::SourceGeometryNormalState::seed(object.mesh)
+        _ => obrush_core::SourceGeometryNormalState::seed_for_guide(object.mesh)
             .map_err(|error| format!("Cannot prepare Source mirror guide: {error:?}"))?
             .root_loose(),
     };
