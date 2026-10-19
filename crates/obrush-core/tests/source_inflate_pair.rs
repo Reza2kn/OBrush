@@ -45,7 +45,13 @@ fn dab(negative: bool, intensity: f64) -> (Document, String, String) {
 
 #[test]
 fn preregistered_positive_negative_and_zero_inflate_have_exact_public_history() {
-    for (negative, sign) in [(false, 1.0), (true, -1.0)] {
+    // Measured by the pinned direct Inflate method after the prospective
+    // tolerance was frozen in SCULPTGL_INFLATE_PAIR_PREREG.md. The complete
+    // source receipt is docs/evidence/sculptgl-inflate-kernel-c269.json.
+    for (negative, sign, reference_z_words) in [
+        (false, 1.0, [0x3ca8f5c3, 0x3c28f5c3, 0, 0x3ca8f5c3]),
+        (true, -1.0, [0xbca8f5c3, 0xbc28f5c3, 0, 0xbca8f5c3]),
+    ] {
         let (mut document, before, after) = dab(negative, 0.3);
         let mesh = document.require_active_mesh().unwrap();
         let original_mesh = diamond();
@@ -60,6 +66,12 @@ fn preregistered_positive_negative_and_zero_inflate_have_exact_public_history() 
             assert!(
                 ((xyz[2] as f64) - sign * expected[id]).abs() <= 3.0e-8,
                 "vertex {id} Z differs from independent Inflate arithmetic"
+            );
+            let paired_difference =
+                (xyz[2] as f64 - f32::from_bits(reference_z_words[id]) as f64).abs();
+            assert!(
+                paired_difference <= 3.0e-8,
+                "vertex {id} exceeds preregistered pinned-reference tolerance: {paired_difference}"
             );
             if id == 2 {
                 assert_eq!(xyz[2].to_bits(), original[2].to_bits());

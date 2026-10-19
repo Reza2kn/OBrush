@@ -1,0 +1,803 @@
+{
+  "status": "passed scoped pinned direct Inflate arithmetic",
+  "pinned_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+  "fixture_sha256": "9f1d457957a63a832cb229e66692e573da3e398d3ec256ce57272a3028a0cd35",
+  "fixture_positions": [
+    [
+      -0.5,
+      0,
+      0
+    ],
+    [
+      0,
+      -0.5,
+      0
+    ],
+    [
+      0.5,
+      0,
+      0
+    ],
+    [
+      0,
+      0.5,
+      0
+    ]
+  ],
+  "fixture_faces": [
+    [
+      0,
+      1,
+      2
+    ],
+    [
+      0,
+      2,
+      3
+    ]
+  ],
+  "masks": [
+    1,
+    0.5,
+    0,
+    1
+  ],
+  "cases": [
+    {
+      "name": "positive",
+      "positions": [
+        -0.5,
+        0,
+        0.020625000819563866,
+        0,
+        -0.5,
+        0.010312500409781933,
+        0.5,
+        0,
+        0,
+        0,
+        0.5,
+        0.020625000819563866
+      ],
+      "bits": [
+        3204448256,
+        0,
+        1017705923,
+        0,
+        3204448256,
+        1009317315,
+        1056964608,
+        0,
+        0,
+        0,
+        1056964608,
+        1017705923
+      ],
+      "proxy": [
+        -0.5,
+        0,
+        0,
+        0,
+        -0.5,
+        0,
+        0.5,
+        0,
+        0,
+        0,
+        0.5,
+        0
+      ],
+      "normals": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "materials": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0.5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "negative": false,
+      "intensity": 0.3,
+      "alpha_null": true
+    },
+    {
+      "name": "negative",
+      "positions": [
+        -0.5,
+        0,
+        -0.020625000819563866,
+        0,
+        -0.5,
+        -0.010312500409781933,
+        0.5,
+        0,
+        0,
+        0,
+        0.5,
+        -0.020625000819563866
+      ],
+      "bits": [
+        3204448256,
+        0,
+        3165189571,
+        0,
+        3204448256,
+        3156800963,
+        1056964608,
+        0,
+        0,
+        0,
+        1056964608,
+        3165189571
+      ],
+      "proxy": [
+        -0.5,
+        0,
+        0,
+        0,
+        -0.5,
+        0,
+        0.5,
+        0,
+        0,
+        0,
+        0.5,
+        0
+      ],
+      "normals": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "materials": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0.5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "negative": true,
+      "intensity": 0.3,
+      "alpha_null": true
+    },
+    {
+      "name": "zero",
+      "positions": [
+        -0.5,
+        0,
+        0,
+        0,
+        -0.5,
+        0,
+        0.5,
+        0,
+        0,
+        0,
+        0.5,
+        0
+      ],
+      "bits": [
+        3204448256,
+        0,
+        0,
+        0,
+        3204448256,
+        0,
+        1056964608,
+        0,
+        0,
+        0,
+        1056964608,
+        0
+      ],
+      "proxy": [
+        -0.5,
+        0,
+        0,
+        0,
+        -0.5,
+        0,
+        0.5,
+        0,
+        0,
+        0,
+        0.5,
+        0
+      ],
+      "normals": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "materials": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0.5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "negative": false,
+      "intensity": 0,
+      "alpha_null": true
+    }
+  ],
+  "requests": [
+    {
+      "side": "pinned-sculptgl",
+      "path": "/index.html",
+      "bytes": 1836,
+      "sha256": "a87cc1246a6bc39cebf81b78dcf6d6c5c6201ef72710dab7f177d1fe4acd11f0",
+      "status": 200
+    },
+    {
+      "side": "pinned-sculptgl",
+      "path": "/sculptgl.js",
+      "bytes": 471154,
+      "sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+      "status": 200
+    },
+    {
+      "side": "pinned-sculptgl",
+      "path": "/css/yagui.css",
+      "bytes": 7956,
+      "sha256": "ea2cf25b05157a7d58a066c8fbffdc3015ba474c7215017670c8b0af322c3583",
+      "status": 200
+    },
+    {
+      "side": "pinned-sculptgl",
+      "path": "/resources/matcaps/redClay.jpg",
+      "bytes": 4724,
+      "sha256": "5a47930ee4cbdd4862d9171bd0ed45d3d056b3a409b2298cdcf2a339cffe6e85",
+      "status": 200
+    },
+    {
+      "side": "pinned-sculptgl",
+      "path": "/resources/matcaps/matcapFV.jpg",
+      "bytes": 23762,
+      "sha256": "07489012c6a15d2b5934bea3a2b272a6c8331a69d81c74b29fd0a34ac946c28e",
+      "status": 200
+    },
+    {
+      "side": "pinned-sculptgl",
+      "path": "/resources/matcaps/skinHazardousarts.jpg",
+      "bytes": 41866,
+      "sha256": "0cb2a4c7a8cd9c443357b368edbdb588aa9cd62c7538f1dd536a575d039a72cf",
+      "status": 200
+    },
+    {
+      "side": "pinned-sculptgl",
+      "path": "/resources/matcaps/pearl.jpg",
+      "bytes": 19131,
+      "sha256": "389a3059e02d529bc1eee425aa996d31df1b423b5f86bf28a96064b07f275dca",
+      "status": 200
+    },
+    {
+      "side": "pinned-sculptgl",
+      "path": "/resources/matcaps/skinHazardousarts2.jpg",
+      "bytes": 40672,
+      "sha256": "ba0c5c776878b828272121102ce0fe8770c8a8f9e418db6f715ee3a231df3982",
+      "status": 200
+    },
+    {
+      "side": "pinned-sculptgl",
+      "path": "/resources/matcaps/skin.jpg",
+      "bytes": 19134,
+      "sha256": "bba87eca8c8d50e051e656aab5d5d6b619292e2a38828ab0be41bc1d7b4d9171",
+      "status": 200
+    },
+    {
+      "side": "pinned-sculptgl",
+      "path": "/resources/matcaps/clay.jpg",
+      "bytes": 11605,
+      "sha256": "df09e11e65143e18b6816d900531ade5ec550b36b034eef43d60b6158c20b1cb",
+      "status": 200
+    },
+    {
+      "side": "pinned-sculptgl",
+      "path": "/resources/matcaps/green.jpg",
+      "bytes": 37136,
+      "sha256": "a10a1625e0614b3e64c2b9e9de0aad38a5f939f96f372a39f995e93df7f9224b",
+      "status": 200
+    },
+    {
+      "side": "pinned-sculptgl",
+      "path": "/resources/matcaps/white.jpg",
+      "bytes": 17483,
+      "sha256": "bbff1f63d886994a791b540a3f4939000b5074a51126ef0771bf25304f0edf79",
+      "status": 200
+    },
+    {
+      "side": "pinned-sculptgl",
+      "path": "/resources/alpha/square.jpg",
+      "bytes": 1880,
+      "sha256": "7181d0e69f6a2a3fb414a4e89aea0de326377fc7810cf87739b50b1bf9f42514",
+      "status": 200
+    },
+    {
+      "side": "pinned-sculptgl",
+      "path": "/resources/alpha/skin.jpg",
+      "bytes": 33837,
+      "sha256": "c1bbeacc8f6609375d61cf143814ca894d4b1dab0b00f8551a283789f665caf5",
+      "status": 200
+    },
+    {
+      "side": "pinned-sculptgl",
+      "path": "/favicon.ico",
+      "status": 404,
+      "error": "Error: ENOENT: no such file or directory, open '/Users/Ajab/AI/OBrush/.tools/sculptgl-reference/host-mirror/favicon.ico'"
+    }
+  ],
+  "cdp_trace": [
+    {
+      "id": 1,
+      "session": null,
+      "method": "Browser.getVersion",
+      "at": "2026-10-19T19:30:39.995Z",
+      "received_utf8_bytes": 296,
+      "outcome": "completed"
+    },
+    {
+      "id": 2,
+      "session": null,
+      "method": "Browser.setDownloadBehavior",
+      "at": "2026-10-19T19:30:40.025Z",
+      "received_utf8_bytes": 20,
+      "outcome": "completed"
+    },
+    {
+      "id": 3,
+      "session": null,
+      "method": "Target.createTarget",
+      "at": "2026-10-19T19:30:40.047Z",
+      "received_utf8_bytes": 65,
+      "outcome": "completed"
+    },
+    {
+      "id": 4,
+      "session": null,
+      "method": "Target.attachToTarget",
+      "at": "2026-10-19T19:30:40.121Z",
+      "received_utf8_bytes": 66,
+      "outcome": "completed"
+    },
+    {
+      "id": 5,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Page.enable",
+      "at": "2026-10-19T19:30:40.149Z",
+      "received_utf8_bytes": 67,
+      "outcome": "completed"
+    },
+    {
+      "id": 6,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Runtime.enable",
+      "at": "2026-10-19T19:30:40.162Z",
+      "received_utf8_bytes": 67,
+      "outcome": "completed"
+    },
+    {
+      "id": 7,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Network.enable",
+      "at": "2026-10-19T19:30:40.172Z",
+      "received_utf8_bytes": 67,
+      "outcome": "completed"
+    },
+    {
+      "id": 8,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "DOM.enable",
+      "at": "2026-10-19T19:30:40.176Z",
+      "received_utf8_bytes": 67,
+      "outcome": "completed"
+    },
+    {
+      "id": 9,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Fetch.enable",
+      "at": "2026-10-19T19:30:40.177Z",
+      "received_utf8_bytes": 67,
+      "outcome": "completed"
+    },
+    {
+      "id": 10,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Page.setInterceptFileChooserDialog",
+      "at": "2026-10-19T19:30:40.178Z",
+      "received_utf8_bytes": 68,
+      "outcome": "completed"
+    },
+    {
+      "id": 11,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Emulation.setDeviceMetricsOverride",
+      "at": "2026-10-19T19:30:40.180Z",
+      "received_utf8_bytes": 68,
+      "outcome": "completed"
+    },
+    {
+      "id": 12,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Emulation.setFocusEmulationEnabled",
+      "at": "2026-10-19T19:30:40.183Z",
+      "received_utf8_bytes": 68,
+      "outcome": "completed"
+    },
+    {
+      "id": 13,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Page.addScriptToEvaluateOnNewDocument",
+      "at": "2026-10-19T19:30:40.184Z",
+      "received_utf8_bytes": 84,
+      "outcome": "completed"
+    },
+    {
+      "id": 14,
+      "session": null,
+      "method": "Browser.getWindowForTarget",
+      "at": "2026-10-19T19:30:40.185Z",
+      "received_utf8_bytes": 120,
+      "outcome": "completed"
+    },
+    {
+      "id": 15,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Runtime.evaluate",
+      "at": "2026-10-19T19:30:40.186Z",
+      "expression_sha256": "6df7dc748a05df834574ef79894be7ca6fdce4ee795fc956f2dbeb635eb2864c",
+      "expression_start": "window.__pairedObserved?({contexts:window.__pairedObserved.contexts,errors:window.__pairedObserved.errors,gl_errors:window.__pairedObserved.gl_errors,readback_e",
+      "received_utf8_bytes": 124,
+      "outcome": "completed"
+    },
+    {
+      "id": 16,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Page.navigate",
+      "at": "2026-10-19T19:30:40.188Z",
+      "received_utf8_bytes": 177,
+      "outcome": "completed"
+    },
+    {
+      "id": 17,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Fetch.continueRequest",
+      "at": "2026-10-19T19:30:40.192Z",
+      "received_utf8_bytes": 68,
+      "outcome": "completed"
+    },
+    {
+      "id": 18,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Runtime.evaluate",
+      "at": "2026-10-19T19:30:40.199Z",
+      "expression_sha256": "f17420f7be9d4fc9dfd0d85b0fe37beafc9524deb594ed73896c90e1145fcc99",
+      "expression_start": "!!window.__sculptglReferenceInstance?.getGui()",
+      "received_utf8_bytes": 109,
+      "outcome": "completed"
+    },
+    {
+      "id": 19,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Fetch.failRequest",
+      "at": "2026-10-19T19:30:40.211Z",
+      "received_utf8_bytes": 68,
+      "outcome": "completed"
+    },
+    {
+      "id": 20,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Fetch.continueRequest",
+      "at": "2026-10-19T19:30:40.212Z",
+      "received_utf8_bytes": 68,
+      "outcome": "completed"
+    },
+    {
+      "id": 21,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Fetch.continueRequest",
+      "at": "2026-10-19T19:30:40.212Z",
+      "received_utf8_bytes": 68,
+      "outcome": "completed"
+    },
+    {
+      "id": 22,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Runtime.evaluate",
+      "at": "2026-10-19T19:30:40.311Z",
+      "expression_sha256": "f17420f7be9d4fc9dfd0d85b0fe37beafc9524deb594ed73896c90e1145fcc99",
+      "expression_start": "!!window.__sculptglReferenceInstance?.getGui()",
+      "received_utf8_bytes": 108,
+      "outcome": "completed"
+    },
+    {
+      "id": 23,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Fetch.continueRequest",
+      "at": "2026-10-19T19:30:40.402Z",
+      "received_utf8_bytes": 68,
+      "outcome": "completed"
+    },
+    {
+      "id": 24,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Fetch.continueRequest",
+      "at": "2026-10-19T19:30:40.402Z",
+      "received_utf8_bytes": 68,
+      "outcome": "completed"
+    },
+    {
+      "id": 25,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Fetch.continueRequest",
+      "at": "2026-10-19T19:30:40.403Z",
+      "received_utf8_bytes": 68,
+      "outcome": "completed"
+    },
+    {
+      "id": 26,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Fetch.continueRequest",
+      "at": "2026-10-19T19:30:40.403Z",
+      "received_utf8_bytes": 68,
+      "outcome": "completed"
+    },
+    {
+      "id": 27,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Fetch.continueRequest",
+      "at": "2026-10-19T19:30:40.403Z",
+      "received_utf8_bytes": 68,
+      "outcome": "completed"
+    },
+    {
+      "id": 28,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Fetch.continueRequest",
+      "at": "2026-10-19T19:30:40.404Z",
+      "received_utf8_bytes": 68,
+      "outcome": "completed"
+    },
+    {
+      "id": 29,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Fetch.continueRequest",
+      "at": "2026-10-19T19:30:40.405Z",
+      "received_utf8_bytes": 68,
+      "outcome": "completed"
+    },
+    {
+      "id": 30,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Fetch.continueRequest",
+      "at": "2026-10-19T19:30:40.407Z",
+      "received_utf8_bytes": 68,
+      "outcome": "completed"
+    },
+    {
+      "id": 31,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Fetch.continueRequest",
+      "at": "2026-10-19T19:30:40.408Z",
+      "received_utf8_bytes": 68,
+      "outcome": "completed"
+    },
+    {
+      "id": 32,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Fetch.continueRequest",
+      "at": "2026-10-19T19:30:40.409Z",
+      "received_utf8_bytes": 68,
+      "outcome": "completed"
+    },
+    {
+      "id": 33,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Fetch.continueRequest",
+      "at": "2026-10-19T19:30:40.409Z",
+      "received_utf8_bytes": 68,
+      "outcome": "completed"
+    },
+    {
+      "id": 34,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Runtime.evaluate",
+      "at": "2026-10-19T19:30:40.434Z",
+      "expression_sha256": "2423c60c6f874a5fde56bae964a51d7c580a46803cd6c6c28b9e6d6b403643d4",
+      "expression_start": "!!window.__sculptglReferenceInstance?.getSculptManager?.()",
+      "received_utf8_bytes": 108,
+      "outcome": "completed"
+    },
+    {
+      "id": 35,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Runtime.evaluate",
+      "at": "2026-10-19T19:30:40.449Z",
+      "expression_sha256": "95d12b68bc4d1cc85f9e7e4edd994e42a343f344ee256b5c503ec47850264fb2",
+      "expression_start": "(() => {\n      const app = window.__sculptglReferenceInstance;\n      const tool = app.getSculptManager().getTool(1);\n      if (typeof tool?.inflate !== 'functio",
+      "received_utf8_bytes": 476,
+      "outcome": "completed"
+    },
+    {
+      "id": 36,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Fetch.continueRequest",
+      "at": "2026-10-19T19:30:40.451Z",
+      "received_utf8_bytes": 68,
+      "outcome": "completed"
+    },
+    {
+      "id": 37,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Runtime.evaluate",
+      "at": "2026-10-19T19:30:40.451Z",
+      "expression_sha256": "2cb2fa5f6de8b4d47161bae69352f192706613ce65239674a365fee1fc996fef",
+      "expression_start": "(() => {\n      const app = window.__sculptglReferenceInstance;\n      const tool = app.getSculptManager().getTool(1);\n      if (typeof tool?.inflate !== 'functio",
+      "received_utf8_bytes": 478,
+      "outcome": "completed"
+    },
+    {
+      "id": 38,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Runtime.evaluate",
+      "at": "2026-10-19T19:30:40.452Z",
+      "expression_sha256": "72f1db7eac0601210fbb634a4872ed078d77ed030a452b8fcbcfc26da5d412f1",
+      "expression_start": "(() => {\n      const app = window.__sculptglReferenceInstance;\n      const tool = app.getSculptManager().getTool(1);\n      if (typeof tool?.inflate !== 'functio",
+      "received_utf8_bytes": 390,
+      "outcome": "completed"
+    },
+    {
+      "id": 39,
+      "session": "C7BC1EDC2F88E79211904D4EA9A12495",
+      "method": "Runtime.evaluate",
+      "at": "2026-10-19T19:30:40.453Z",
+      "expression_sha256": "6df7dc748a05df834574ef79894be7ca6fdce4ee795fc956f2dbeb635eb2864c",
+      "expression_start": "window.__pairedObserved?({contexts:window.__pairedObserved.contexts,errors:window.__pairedObserved.errors,gl_errors:window.__pairedObserved.gl_errors,readback_e",
+      "received_utf8_bytes": 124,
+      "outcome": "completed"
+    },
+    {
+      "id": 40,
+      "session": null,
+      "method": "Browser.close",
+      "at": "2026-10-19T19:30:40.454Z",
+      "received_utf8_bytes": 21,
+      "outcome": "completed"
+    }
+  ],
+  "ui_actions": [],
+  "input_trace": [],
+  "download_events": [],
+  "downloads": [],
+  "screenshots": [],
+  "dialogs": [],
+  "exceptions": [],
+  "console_errors": [],
+  "blocked_external_requests": [
+    {
+      "side": "pinned-sculptgl",
+      "url": "https://fonts.googleapis.com/css?family=Open+Sans:400,600"
+    }
+  ],
+  "cleanup_errors": [],
+  "owned_pid": 93370,
+  "socket_transport": {
+    "state": "close",
+    "closed": [
+      {
+        "kind": "close",
+        "at": "2026-10-19T19:30:40.455Z",
+        "ready_state": 3,
+        "code": 1000,
+        "reason": "",
+        "message": null
+      }
+    ],
+    "errors": []
+  },
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/155.0.8059.80",
+    "revision": "@43a195105613ac83c21d3f14de279f4a045c7da0",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+    "jsVersion": "15.5.35.23"
+  },
+  "owned_exit_events": [
+    {
+      "pid": 93370,
+      "code": 0,
+      "signal": null,
+      "at": "2026-10-19T19:30:40.550Z",
+      "phase": "Actual owned ChildProcess exit callback"
+    }
+  ],
+  "cleanup": {
+    "owned_chrome_exit_code": 0,
+    "owned_chrome_signal": null,
+    "owned_servers_closed": 1
+  },
+  "owned_closure_observation": {
+    "owned_pid": 93370,
+    "spawned_child_pid": 93370,
+    "at": "2026-10-19T19:30:40.550Z",
+    "exit_code": 0,
+    "signal": null,
+    "exit_events": [
+      {
+        "pid": 93370,
+        "code": 0,
+        "signal": null,
+        "at": "2026-10-19T19:30:40.550Z",
+        "phase": "Actual owned ChildProcess exit callback"
+      }
+    ],
+    "expected_servers": 1,
+    "actual_servers_closed": 1,
+    "query": {
+      "pid": 93370,
+      "outcome": "absent",
+      "error_code": "ESRCH",
+      "message": "Error: kill ESRCH"
+    }
+  },
+  "owned_closure_admission": {
+    "observed_owned_process_absent": true,
+    "owned_pid": 93370,
+    "actual_exit_code": 0,
+    "actual_signal": null,
+    "actual_servers_closed": 1,
+    "exit_status": "Actual exit0 recorded",
+    "scope": "Physicalownedprocess/server closure only; no input/render/history/referenceparity inferred"
+  }
+}

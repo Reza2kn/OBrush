@@ -1,5 +1,11 @@
 # OBrush feature parity contract
 
+**Scoped Inflate witness:** [The C269 direct pinned-method report](SCULPTGL_INFLATE_PAIR_C269.md)
+records the reference's positive, negative and zero Float32 response on one
+independent masked diamond, alongside a passing shared-core arithmetic and
+public-history test. Its post-reference paired-word assertion and normal UI
+comparison remain unrun; the Inflate and full parity gates stay open.
+
 **Current million-vertex browser baseline:** [The C264 frozen Source Brush run](SCULPTGL_MILLION_CURRENT_C264.md)
 passes independent complete Save/Undo/Redo and affected-face shape checks, but
 fails all four responsiveness gates (RAF P95 66.7 ms, release 159.0 ms).
