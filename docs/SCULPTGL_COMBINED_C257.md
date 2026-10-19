@@ -52,7 +52,10 @@ respective C255/C256 reports. The cylinder/torus isolated web build's stale
 shared-target failure and successful targeted rebuild are preserved in
 `.artifacts/cylinder-torus-build/` and described in
 [the topology report](SCULPTGL_CYLINDER_TORUS_SOURCE_TOPOLOGY.md).
-Reference cylinder/torus coordinates and normal fields, exact primitive
+The later [paired cylinder/torus shape check](SCULPTGL_CYLINDER_TORUS_SHAPE_PAIR.md)
+matched every local position within `1e-6`, but found cylinder normal-angle
+differences up to `6.043°` and much larger world-space extents because the
+reference applies object scales that OBrush does not retain. Exact primitive
 world placement, retained four-level Source hierarchies, native GUI details,
 and ordinary held-pointer responsiveness at 100k/1m vertices remain open.
 Every active inventory acceptance gate remains open.
