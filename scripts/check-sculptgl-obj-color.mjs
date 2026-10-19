@@ -262,7 +262,7 @@ try {
     ['ply_ascii','PLY text','ply'], ['ply_binary','PLY binary','ply'],
   ];
   const sceneExports = [];
-  let selectedPlyBinary;
+  let selectedPlyBinary, selectedStlBinary;
   for (const [key, name, extension] of selections) {
     await clickControl('file.export_format');
     await clickControl('file.export_format.' + key);
@@ -284,6 +284,7 @@ try {
     } else if (key === 'stl_binary') {
       inspection.faces = file.bytes.readUInt32LE(80);
       requireTrue(inspection.faces === 2 && file.bytes.length === 184, 'Selected binary STL count/size differs');
+      selectedStlBinary = file.bytes;
     } else if (key === 'stl_ascii') {
       inspection.faces = file.bytes.toString('utf8').split('facet normal').length - 1;
       requireTrue(inspection.faces === 2, 'Selected text STL face count differs');
@@ -353,6 +354,18 @@ try {
   requireTrue(maximumPlyPositionError<1e-4,'Paired PLY world positions differ');
   requireTrue(JSON.stringify(sourcePly.faces.slice(-2).map(face=>face.map(index=>index-vertexOffset)))===JSON.stringify(selectedPlyBinary.faces),'Paired PLY imported-object face records differ');
   result.cases.push({pinned_sculptgl_binary_ply:{reference_sha256:sha(sourcePlyBytes),reference_bytes:sourcePlyBytes.length,obrush_selected_sha256:sceneExports.find(item=>item.format==='PLY binary').sha256,selected_vertices:6,selected_faces:2,matched_rgb_bytes:true,matched_face_records:true,maximum_world_position_component_error:maximumPlyPositionError,obrush_face_padding_bytes:selectedPlyBinary.face_padding_bytes,reference_face_padding_bytes:sourcePly.face_padding_bytes}});
+  const oldStlCount=downloadsSeen.length;
+  await evaluate('(()=>{window.__sculptglReferenceInstance._gui._ctrlFiles.saveFileAsSTL();return true;})()');
+  const sourceStlEvent=await until(async()=>downloadsSeen.slice(oldStlCount).find(item=>item.state==='completed'),'pinned SculptGL STL download');
+  const sourceStlBytes=await readFile(path.join(downloads,sourceStlEvent.guid));
+  const sourceStlFaces=sourceStlBytes.readUInt32LE(80);
+  requireTrue(sourceStlBytes.length===84+sourceStlFaces*50 && sourceStlFaces>2,'Pinned SculptGL STL shape differs');
+  const sourceTail=sourceStlBytes.subarray(sourceStlBytes.length-100);
+  const oursTail=selectedStlBinary.subarray(84);
+  let differingStlBytes=0;
+  for(let i=0;i<100;i++) differingStlBytes+=Number(sourceTail[i]!==oursTail[i]);
+  result.cases.push({pinned_sculptgl_binary_stl:{reference_sha256:sha(sourceStlBytes),reference_bytes:sourceStlBytes.length,reference_facets:sourceStlFaces,obrush_selected_sha256:sha(selectedStlBinary),selected_facets:2,differing_imported_object_facet_bytes:differingStlBytes,source_header_zero:sourceStlBytes.subarray(0,80).every(byte=>byte===0),obrush_header_zero:selectedStlBinary.subarray(0,80).every(byte=>byte===0)}});
+  requireTrue(differingStlBytes===0,'Paired SculptGL STL imported-object facet bytes differ');
   for (const zbrush of [true,false]) {
     for (const appendRgb of [false,true]) {
       const oldCount=downloadsSeen.length;

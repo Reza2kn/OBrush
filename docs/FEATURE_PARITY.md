@@ -1,5 +1,10 @@
 # OBrush feature parity contract
 
+**C224 SculptGL-profile binary STL:** [The paired browser report](SCULPTGL_BINARY_STL_C224.md)
+records a shared-Rust writer and zero differing bytes across two imported
+object facets in pinned SculptGL versus OBrush normal-browser downloads.
+Broader STL interchange, native UI and large-scene responsiveness remain open.
+
 **C223 exact reference PLY return:** [The shared-core and browser report](SCULPTGL_PLY_QUAD_RETURN_C223.md)
 retains the 98,304 original quads in a pinned SculptGL PLY and returns all
 9,535,926 bytes exactly through OBrush's normal browser File Add/Export path.

@@ -259,6 +259,26 @@ fn stl_color_export_averages_then_quantizes_to_five_bits() {
     );
 }
 #[test]
+fn sculptgl_stl_export_has_blank_header_and_exact_colored_facet() {
+    let mut mesh = simple_mesh();
+    mesh.colors = [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]].to_vec();
+    let before = mesh.clone();
+    let bytes = mesh.to_stl_sculptgl().unwrap();
+    assert_eq!(bytes.len(), 134);
+    assert!(bytes[..80].iter().all(|&byte| byte == 0));
+    assert_eq!(&bytes[80..84], &1_u32.to_le_bytes());
+    let mut expected_facet = stl_binary(
+        &triangle_points(),
+        &[0x8000 | (10 << 10) | (10 << 5) | 10],
+        None,
+    );
+    // The source float32 cross product retains negative zero on this axis.
+    expected_facet[88..92].copy_from_slice(&(-0.0_f32).to_le_bytes());
+    assert_eq!(&bytes[84..], &expected_facet[84..]);
+    assert_eq!(mesh.positions, before.positions);
+    assert_eq!(mesh.colors, before.colors);
+}
+#[test]
 fn stl_ascii_export_round_trip_retains_geometry() {
     let mesh = simple_mesh();
     let bytes = mesh.to_stl(StlEncoding::Ascii).unwrap();

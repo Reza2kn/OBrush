@@ -1,5 +1,12 @@
 # SculptGL parity checkpoint
 
+[The C224 binary STL report](SCULPTGL_BINARY_STL_C224.md) adds a separate
+SculptGL-profile shared-Rust writer. Two imported-object facets match the
+pinned SculptGL browser export byte-for-byte on one independent fixture;
+full STL, File-family and responsiveness parity remain open. The inventory
+table below is a historical starting snapshot, not current implementation
+status.
+
 [The C223 PLY quad-return report](SCULPTGL_PLY_QUAD_RETURN_C223.md) retains
 valid authored quads through shared-Rust PLY import. A normal-browser File Add,
 selected binary export and Undo/Redo sequence returns the pinned SculptGL

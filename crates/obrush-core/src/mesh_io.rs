@@ -66,6 +66,50 @@ pub struct MeshImport {
 }
 
 impl Mesh {
+    /// SculptGL File > Save STL byte layout. This remains separate from the
+    /// ordinary STL writer so the ordinary header and double-precision normal
+    /// calculation do not silently change.
+    pub fn to_stl_sculptgl(&self) -> Result<Vec<u8>, String> {
+        self.validate()?;
+        if self.has_attributes() {
+            return Err("This exporter cannot preserve materials/original faces/UV metadata; export a version6 project or explicitly detach unsupported attributes".into());
+        }
+        let size = self
+            .triangles
+            .len()
+            .checked_mul(50)
+            .and_then(|n| n.checked_add(84))
+            .ok_or("STL output length overflow")?;
+        output_limit(size)?;
+        let mut data = bounded_vec(size)?;
+        data.resize(80, 0);
+        data.extend_from_slice(&(self.triangles.len() as u32).to_le_bytes());
+        for &triangle in &self.triangles {
+            let p = triangle.map(|index| self.positions[index as usize]);
+            // The pinned exporter uses float32 vec3 intermediates: first
+            // (p1 - p0), then (p2 - that edge), then their cross product.
+            let edge = p[1] - p[0];
+            let other = p[2] - edge;
+            let cross = edge.cross(other);
+            let normal = cross.normalize_or_zero();
+            push_vec3(&mut data, normal, false);
+            for point in p {
+                push_vec3(&mut data, point, false);
+            }
+            let mut rgb = [0_u16; 3];
+            for (channel, value) in rgb.iter_mut().enumerate() {
+                let sum: f64 = triangle
+                    .iter()
+                    .map(|&i| f64::from(self.colors[i as usize][channel]))
+                    .sum();
+                *value = (sum * (31.0 / 3.0)).round() as u16;
+            }
+            let attribute = 0x8000 | (rgb[0] << 10) | (rgb[1] << 5) | rgb[2];
+            data.extend_from_slice(&attribute.to_le_bytes());
+        }
+        Ok(data)
+    }
+
     /// Parse an STL entirely before returning a validated, independent mesh.
     pub fn import_stl(source: &[u8]) -> Result<MeshImport, String> {
         input_limit(source, "STL")?;

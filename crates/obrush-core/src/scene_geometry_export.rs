@@ -15,6 +15,7 @@ pub enum SceneGeometryFormat {
     Ply(PlyEncoding),
     PlySculptGl,
     Stl(StlEncoding),
+    StlSculptGl,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -610,6 +611,7 @@ impl Document {
             SceneGeometryFormat::Ply(encoding) => joined_mesh(&parts)?.to_ply(encoding)?,
             SceneGeometryFormat::PlySculptGl => ply_with_source_colors(&parts, &mut report)?,
             SceneGeometryFormat::Stl(encoding) => joined_mesh(&parts)?.to_stl(encoding)?,
+            SceneGeometryFormat::StlSculptGl => joined_mesh(&parts)?.to_stl_sculptgl()?,
         };
         if bytes.len() > OUTPUT_LIMIT {
             return Err("Scene geometry output exceeds 128 MiB".into());
@@ -921,6 +923,7 @@ mod tests {
             SceneGeometryFormat::Ply(PlyEncoding::BinaryLittleEndian),
             SceneGeometryFormat::Stl(StlEncoding::Ascii),
             SceneGeometryFormat::Stl(StlEncoding::Binary),
+            SceneGeometryFormat::StlSculptGl,
         ];
         for format in formats {
             assert!(document
@@ -953,7 +956,9 @@ mod tests {
                 SceneGeometryFormat::Ply(_) | SceneGeometryFormat::PlySculptGl => {
                     Mesh::import_ply(&selected.bytes).unwrap().mesh
                 }
-                SceneGeometryFormat::Stl(_) => Mesh::import_stl(&selected.bytes).unwrap().mesh,
+                SceneGeometryFormat::Stl(_) | SceneGeometryFormat::StlSculptGl => {
+                    Mesh::import_stl(&selected.bytes).unwrap().mesh
+                }
             };
             assert_eq!(imported.triangles.len(), 2);
             assert!(imported

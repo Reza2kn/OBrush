@@ -637,7 +637,10 @@ impl ExportFormat {
                 obrush_core::SceneGeometryFormat::ObjSculptGl,
             ),
             Self::StlAscii => obrush_core::SceneGeometryFormat::Stl(StlEncoding::Ascii),
-            Self::StlBinary => obrush_core::SceneGeometryFormat::Stl(StlEncoding::Binary),
+            Self::StlBinary => source_obj.map_or(
+                obrush_core::SceneGeometryFormat::Stl(StlEncoding::Binary),
+                |_| obrush_core::SceneGeometryFormat::StlSculptGl,
+            ),
             Self::PlyAscii => obrush_core::SceneGeometryFormat::Ply(PlyEncoding::Ascii),
             Self::PlyBinary => source_obj.map_or(
                 obrush_core::SceneGeometryFormat::Ply(PlyEncoding::BinaryLittleEndian),
