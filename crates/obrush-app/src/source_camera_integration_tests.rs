@@ -209,6 +209,7 @@ fn affine_local_render_and_f64_ray_share_one_large_offset_frame() {
     let affine = ObjectAffineF32V1::from_local_points(matrix, &m.positions).unwrap();
     let metadata = SceneObjectMetadata {
         source_center_initialized: false,
+        symmetry_offset: 0.0,
         affine: affine.clone(),
         render: None,
         picking_policy: SglPickingPolicy::SourceScaleRowV1,
@@ -463,6 +464,7 @@ fn source_fit_uses_reflected_sheared_world_box_and_excludes_grid() {
         ObjectAffineF32V1::from_local_points(matrix, &transformed[0].mesh.positions).unwrap();
     transformed[0].metadata = Some(SceneObjectMetadata {
         source_center_initialized: false,
+        symmetry_offset: 0.0,
         affine,
         render: None,
         picking_policy: SglPickingPolicy::SourceScaleRowV1,

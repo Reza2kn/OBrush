@@ -315,6 +315,7 @@ mod tests {
         let (mv, normal) = affine_matrices();
         let metadata = SceneObjectMetadata {
             source_center_initialized: false,
+            symmetry_offset: 0.0,
             affine: ObjectAffineF32V1 {
                 interaction_center: [4., -2., 1.],
                 local_to_world: glam::Mat4::IDENTITY.to_cols_array(),

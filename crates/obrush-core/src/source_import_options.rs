@@ -206,6 +206,7 @@ pub fn prepare_source_mesh_import(
         std::array::from_fn(|axis| ((referenced[axis] + referenced[axis + 3]) * 0.5) as f32);
     let metadata = SceneObjectMetadata {
         source_center_initialized: true,
+        symmetry_offset: 0.0,
         affine,
         render: None,
         picking_policy: SglPickingPolicy::SourceScaleRowV1,

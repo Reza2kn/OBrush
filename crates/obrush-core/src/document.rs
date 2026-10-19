@@ -4428,6 +4428,38 @@ impl Document {
     pub fn active_object_metadata(&self) -> Option<&SceneObjectMetadata> {
         self.active_metadata.as_ref()
     }
+    /// Edit SculptGL's normalized X symmetry offset on only the active Source
+    /// object. The older absolute BrushSettings offset is deliberately separate.
+    pub fn set_active_source_symmetry_offset(&mut self, offset: f64) -> Result<bool, String> {
+        if !offset.is_finite() || !(-1.0..=1.0).contains(&offset) {
+            return Err("Source symmetry offset must be finite and in [-1, 1]".into());
+        }
+        let mut candidate = self
+            .active_metadata
+            .clone()
+            .ok_or("Active part has no Source object metadata")?;
+        candidate.symmetry_offset = offset;
+        candidate.validate(self.require_active_mesh()?)?;
+        if self
+            .active_metadata
+            .as_ref()
+            .is_some_and(|current| current.same_bits(&candidate))
+        {
+            return Ok(false);
+        }
+        self.finish_layer_stroke()?;
+        self.check_scene_candidate(
+            self.require_active_mesh()?,
+            self.multiresolution.as_ref(),
+            self.layers.as_ref(),
+            self.morph_target.as_ref(),
+            self.scene.as_ref(),
+        )?;
+        let previous = self.snapshot_state();
+        self.active_metadata = Some(candidate);
+        self.commit_previous(previous);
+        Ok(true)
+    }
     /// Explicit object appearance edit. Raw SGL origin is immutable provenance;
     /// this stores the editable render record and one complete scene undo state.
     pub fn set_active_source_render(
@@ -4611,6 +4643,7 @@ impl Document {
         for object in staged.objects {
             let metadata = SceneObjectMetadata {
                 source_center_initialized: object.source_center_initialized,
+                symmetry_offset: 0.0,
                 affine: object.affine,
                 render: object.render,
                 picking_policy: staged.picking_policy,

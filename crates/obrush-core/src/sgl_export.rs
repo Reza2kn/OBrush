@@ -74,6 +74,8 @@ pub struct SglExportReport {
     pub ordinary_appearance_conversions: usize,
     pub immutable_origins_not_embedded: usize,
     pub omitted_picking_policy_objects: usize,
+    /// SGL has no per-mesh symmetry-offset word.
+    pub omitted_symmetry_offset_objects: usize,
 }
 impl SglExportReport {
     pub fn requires_allow(&self) -> bool {
@@ -97,6 +99,7 @@ impl SglExportReport {
             || self.omitted_morph_targets > 0
             || self.ordinary_appearance_conversions > 0
             || self.omitted_picking_policy_objects > 0
+            || self.omitted_symmetry_offset_objects > 0
             || self.maximum_derived_scale_rounding_error > 0.0
     }
 }
@@ -457,6 +460,7 @@ pub(crate) fn plan(
                 .max(source_scale(view.metadata).1);
         }
         if let Some(meta) = view.metadata {
+            report.omitted_symmetry_offset_objects += usize::from(meta.symmetry_offset != 0.0);
             report.omitted_picking_policy_objects +=
                 usize::from(meta.picking_policy != crate::SglPickingPolicy::SourceScaleRowV1);
             report.defaulted_render_objects += usize::from(meta.render.is_none());

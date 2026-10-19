@@ -86,6 +86,7 @@ impl Document {
                 .ok_or("SubTool ID allocator is exhausted")?;
             let metadata = crate::SceneObjectMetadata {
                 source_center_initialized: object.source_center_initialized,
+                symmetry_offset: 0.0,
                 affine: object.affine,
                 render: object.render,
                 picking_policy: staged.picking_policy,

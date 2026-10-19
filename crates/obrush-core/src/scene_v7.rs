@@ -18,6 +18,9 @@ pub struct SceneObjectOrigin {
 pub struct SceneObjectMetadata {
     /// Explicit Source import center is current export state; origin stays immutable.
     pub source_center_initialized: bool,
+    /// SculptGL's per-mesh slider value, normalized by the current local radius.
+    /// Its binary SGL format does not serialize this value; .obrush does.
+    pub symmetry_offset: f64,
     /// Editable local-to-world pose; raw encoded center/scale remain in origin.
     pub affine: ObjectAffineF32V1,
     pub render: Option<SglRenderSettings>,
@@ -53,6 +56,9 @@ impl SceneObjectMetadata {
     }
 
     fn validate_non_position_fields(&self) -> Result<(), String> {
+        if !self.symmetry_offset.is_finite() || !(-1.0..=1.0).contains(&self.symmetry_offset) {
+            return Err("Source symmetry offset must be finite and in [-1, 1]".into());
+        }
         if let Some(render) = &self.render {
             crate::sgl::validate_render(render)?;
         }
@@ -68,7 +74,9 @@ impl SceneObjectMetadata {
         Ok(())
     }
     pub(crate) fn same_bits(&self, b: &Self) -> bool {
-        self.affine.local_to_world.map(f32::to_bits) == b.affine.local_to_world.map(f32::to_bits)
+        self.symmetry_offset.to_bits() == b.symmetry_offset.to_bits()
+            && self.affine.local_to_world.map(f32::to_bits)
+                == b.affine.local_to_world.map(f32::to_bits)
             && self.affine.interaction_center.map(f32::to_bits)
                 == b.affine.interaction_center.map(f32::to_bits)
             && render_bits_equal(self.render.as_ref(), b.render.as_ref())
@@ -192,11 +200,16 @@ fn center_policy_is_false(value: &bool) -> bool {
 pub(crate) struct ObjectPoseProject {
     #[serde(default, skip_serializing_if = "center_policy_is_false")]
     pub(crate) source_center_initialized: bool,
+    #[serde(default, skip_serializing_if = "is_zero_f64")]
+    pub(crate) symmetry_offset: f64,
     pub(crate) id: u32,
     pub(crate) affine: ObjectAffineF32V1,
     pub(crate) render: Option<SglRenderSettings>,
     pub(crate) picking_policy: SglPickingPolicy,
     pub(crate) origin: Option<usize>,
+}
+fn is_zero_f64(value: &f64) -> bool {
+    *value == 0.0
 }
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
@@ -347,6 +360,7 @@ impl SceneV7Project {
             };
             poses.push(ObjectPoseProject {
                 source_center_initialized: metadata.source_center_initialized,
+                symmetry_offset: metadata.symmetry_offset,
                 id,
                 affine: metadata.affine.clone(),
                 render: metadata.render.clone(),
@@ -444,6 +458,7 @@ impl SceneV7Project {
                 pose.id,
                 SceneObjectMetadata {
                     source_center_initialized: pose.source_center_initialized,
+                    symmetry_offset: pose.symmetry_offset,
                     affine: pose.affine,
                     render: pose.render,
                     picking_policy: pose.picking_policy,

@@ -902,6 +902,7 @@ mod tests {
         matrix[12] = 10.0;
         let metadata = SceneObjectMetadata {
             source_center_initialized: true,
+            symmetry_offset: 0.0,
             affine: ObjectAffineF32V1::from_local_points(matrix, &posed.positions).unwrap(),
             render: None,
             picking_policy: SglPickingPolicy::SourceScaleRowV1,

@@ -65,7 +65,26 @@ impl GeometryPreferenceStore {
         Ok(())
     }
 }
+fn preferences_for_active_object(
+    document: &Document,
+    mut prefs: SourceGeometryPreferences,
+) -> SourceGeometryPreferences {
+    if let Some(metadata) = document.active_object_metadata() {
+        prefs.mirror_offset = metadata.symmetry_offset;
+    }
+    prefs
+}
 impl OBrushApp {
+    /// Source objects own their normalized mirror offset. Plain OBrush meshes
+    /// still use the older per-tool Source preference until they gain metadata.
+    pub(super) fn effective_source_geometry_preferences(
+        &self,
+        kind: BrushKind,
+    ) -> Option<SourceGeometryPreferences> {
+        self.source_geometry_preferences
+            .get(kind)
+            .map(|prefs| preferences_for_active_object(&self.document, prefs))
+    }
     pub(super) fn source_geometry_requested(&self, kind: BrushKind) -> bool {
         self.source_geometry_preferences
             .get(kind)
@@ -93,6 +112,7 @@ impl OBrushApp {
     }
     pub(super) fn source_geometry_diagnostics(&self) -> serde_json::Value {
         serde_json::json!({"per_tool":self.source_geometry_preferences.rows.map(SourceGeometryPreferences::diagnostics),
+            "active_object_symmetry_offset":self.document.active_object_metadata().map(|m|m.symmetry_offset),
             "active":self.stroke.as_ref().and_then(|s|s.source_geometry.as_ref()).and_then(|s|s.lock().ok()).map(|s|s.diagnostics()),
             "last_completed":self.last_source_geometry_report,"state_bytes":self.document.source_geometry_retained_bytes(),
             "alpha_tracks":self.source_geometry_alpha_tracks.lock().ok().map(|t|serde_json::json!({"tracks":t.snapshot(),"claim":t.active_claim()})),
@@ -108,16 +128,35 @@ impl OBrushApp {
         kind: BrushKind,
         candidate: SourceGeometryPreferences,
     ) -> bool {
-        let Some(old) = self.source_geometry_preferences.get(kind) else {
+        let Some(old) = self.effective_source_geometry_preferences(kind) else {
             return false;
         };
+        let stored_offset = self
+            .source_geometry_preferences
+            .get(kind)
+            .expect("effective preferences have a stored tool row")
+            .mirror_offset;
         match super::source_geometry_ui::commit_candidate(old, candidate, || {
             self.finish_stroke();
             !self.stroke_rejected
         }) {
             Ok(super::source_geometry_ui::GeometryCommit::Unchanged) => true,
             Ok(super::source_geometry_ui::GeometryCommit::Accepted(p)) => {
-                match self.source_geometry_preferences.set(kind, p) {
+                let mut stored = p;
+                if self.document.active_object_metadata().is_some() {
+                    if p.mirror_offset.to_bits() != old.mirror_offset.to_bits()
+                        && let Err(error) = self
+                            .document
+                            .set_active_source_symmetry_offset(p.mirror_offset)
+                    {
+                        self.message = error;
+                        return false;
+                    }
+                    // A source-object edit must not leak into plain meshes'
+                    // older per-tool fallback value.
+                    stored.mirror_offset = stored_offset;
+                }
+                match self.source_geometry_preferences.set(kind, stored) {
                     Ok(()) => true,
                     Err(e) => {
                         self.message = e.to_string();
@@ -181,7 +220,7 @@ impl OBrushApp {
     }
     pub(super) fn source_geometry_panel(&mut self, ui: &mut egui::Ui) {
         let kind = self.brush.kind;
-        let Some(current) = self.source_geometry_preferences.get(kind) else {
+        let Some(current) = self.effective_source_geometry_preferences(kind) else {
             return;
         };
         ui.label(
@@ -386,7 +425,7 @@ impl OBrushApp {
         if self.stroke_rejected {
             return;
         }
-        let Some(prefs) = self.source_geometry_preferences.get(kind) else {
+        let Some(prefs) = self.effective_source_geometry_preferences(kind) else {
             return;
         };
         let mut settings = match self.source_geometry_settings(kind) {
@@ -972,3 +1011,43 @@ mod crease_tests;
 #[cfg(test)]
 #[path = "source_history_host_tests.rs"]
 mod history_tests;
+
+#[cfg(test)]
+mod source_symmetry_offset_tests {
+    use super::*;
+
+    #[test]
+    fn active_source_object_overrides_transient_tool_offset_without_mutating_it() {
+        let mut document = Document::empty();
+        document
+            .replace_sgl_bytes(
+                include_bytes!("../../obrush-core/tests/fixtures/independent-affine-two-mesh.sgl"),
+                &obrush_core::SglStageSettings::default(),
+            )
+            .unwrap();
+        let tool = SourceGeometryPreferences {
+            mirror_offset: -0.75,
+            ..Default::default()
+        };
+        assert_eq!(
+            preferences_for_active_object(&document, tool).mirror_offset,
+            0.0
+        );
+        document.set_active_source_symmetry_offset(0.25).unwrap();
+        assert_eq!(
+            preferences_for_active_object(&document, tool).mirror_offset,
+            0.25
+        );
+        assert_eq!(tool.mirror_offset, -0.75);
+        document.select_subtools(&[1], Some(1)).unwrap();
+        assert_eq!(
+            preferences_for_active_object(&document, tool).mirror_offset,
+            0.0
+        );
+        document.select_subtools(&[2], Some(2)).unwrap();
+        assert_eq!(
+            preferences_for_active_object(&document, tool).mirror_offset,
+            0.25
+        );
+    }
+}

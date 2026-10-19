@@ -199,6 +199,7 @@ pub(crate) fn prepare(
     for object in &staged.objects {
         let metadata = obrush_core::SceneObjectMetadata {
             source_center_initialized: object.source_center_initialized,
+            symmetry_offset: 0.0,
             affine: object.affine.clone(),
             render: object.render.clone(),
             picking_policy: staged.picking_policy,
@@ -230,6 +231,7 @@ pub(crate) fn prepare_with_options(
     for object in &applied.staged.objects {
         let metadata = obrush_core::SceneObjectMetadata {
             source_center_initialized: object.source_center_initialized,
+            symmetry_offset: 0.0,
             affine: object.affine.clone(),
             render: object.render.clone(),
             picking_policy: applied.staged.picking_policy,

@@ -5867,6 +5867,7 @@ mod source_normal_consumer_tests {
         let studio = ViewportStyle::default();
         let metadata = SceneObjectMetadata {
             source_center_initialized: false,
+            symmetry_offset: 0.0,
             affine: obrush_core::ObjectAffineF32V1::from_local_points(
                 Mat4::IDENTITY.to_cols_array(),
                 &m.positions,

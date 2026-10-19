@@ -190,6 +190,9 @@ impl OBrushApp {
             ui.label(format!("Header/render defaults: {}/{}. Changed header/center/scale fields: {}/{}/{}.",report.defaulted_header_fields+report.declared_display_default_fields,report.defaulted_render_objects,report.changed_header_fields,report.changed_source_centers,report.changed_source_scales));
             ui.label(format!("SGL omits {} retained levels, {} layers and {} Morph Targets; {} names, {} stable IDs and {} hidden flags.",report.omitted_retained_levels,report.omitted_layers,report.omitted_morph_targets,report.omitted_subtool_names,report.omitted_stable_ids,report.omitted_visibility_objects));
             ui.label(format!("Retained hierarchies omitted: {}. Selection omitted: {} · Solo omitted: {} · custom picking policies omitted: {}.",report.omitted_retained_hierarchies,report.omitted_selection,report.omitted_solo,report.omitted_picking_policy_objects));
+            if report.omitted_symmetry_offset_objects > 0 {
+                ui.label(format!("{} nonzero per-object symmetry offsets cannot be stored in SGL. Save .obrush to retain them.", report.omitted_symmetry_offset_objects));
+            }
             ui.label(format!("New RGB/material channels: {}/{}. Maximum derived-scale rounding error: {:.9e}.",report.absent_rgb_channels_created,report.absent_material_channels_created,report.maximum_derived_scale_rounding_error));
             ui.label(format!("Normals will be recomputed for {} points. {} source-origin archives are not embedded. SGL carries no OBrush history; save .obrush to retain those fields.",report.normals_recomputed_on_import_vertices,report.immutable_origins_not_embedded));
             if report.ordinary_appearance_conversions>0{ui.label(crate::ui_text::caption(crate::ui_text::CaptionKey::CD223A8379435));}
