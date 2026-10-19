@@ -16,6 +16,9 @@ await mkdir(downloads, { recursive: true });
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 const bundle = await readFile(path.join(reference, 'sculptgl.js'));
+const gpuHelper = await readFile('scripts/check-subtools.mjs', 'utf8');
+const gpuInstrument = gpuHelper.slice(gpuHelper.indexOf('const instrument = `') + 20, gpuHelper.indexOf('\n\nconst pointer =')).slice(0, -2);
+if (!gpuInstrument.startsWith('(()=>{') || !gpuInstrument.endsWith('})();')) throw Error('GPU observer source boundary changed');
 const manifest = JSON.parse(await readFile(path.join(reference, 'mirror-manifest.json')));
 if (sha(bundle) !== manifest.original_bundle.sha256) throw Error('Pinned reference bundle hash changed');
 const result = {
@@ -113,6 +116,25 @@ function shape(positions, normals, faces, transform) {
 function compare(a,b) {
   return {vertex_delta:b.vertices-a.vertices,face_delta:b.original_faces-a.original_faces,bounds_abs_diff:a.bounds.map((arr,i)=>arr.map((x,k)=>Math.abs(x-b.bounds[i][k]))),centroid_abs_diff:a.centroid.map((x,k)=>Math.abs(x-b.centroid[k])),abs_quantile_diff:a.abs_quantiles.map((arr,k)=>arr.map((x,j)=>Math.abs(x-b.abs_quantiles[k][j]))),radial_quantile_diff:a.radial_quantiles.map((x,j)=>Math.abs(x-b.radial_quantiles[j]))};
 }
+function originalFaceAreaNormals(positions, faces) {
+  const normals = new Float64Array(positions.length);
+  const point = id => positions.slice(id * 3, id * 3 + 3);
+  const sub = (a,b) => a.map((x,i)=>x-b[i]);
+  const cross = (a,b) => [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+  for(const face of faces){
+    const ids=face.filter(x=>x!==4294967295 && x!==null),[a,b,c]=ids.map(point);
+    const edge=sub(c,a),normal=cross(sub(b,a),edge);
+    if(ids.length===4){const other=cross(sub(c,point(ids[3])),edge);for(let k=0;k<3;k++)normal[k]+=other[k];}
+    for(const id of ids)for(let k=0;k<3;k++)normals[id*3+k]+=normal[k];
+  }
+  return Array.from(normals);
+}
+function normalAngle(a,b) {
+  return Math.acos(Math.max(-1,Math.min(1,a.reduce((s,v,i)=>s+v*b[i],0)/(Math.hypot(...a)*Math.hypot(...b)))))*180/Math.PI;
+}
+async function gpuNormal(id) {
+  return evalRead(`(()=>{const g=window.__brushGl,p=window.__brushCheck,d=p?.scene_frame?.draws?.find(x=>x.active);if(!g||!d)return null;const old=g.__sceneArrayBuffer,b=new Float32Array(3);g.bindBuffer(g.ARRAY_BUFFER,d.vertices);g.getBufferSubData(g.ARRAY_BUFFER,${id}*40+12,b);g.bindBuffer(g.ARRAY_BUFFER,old);return {normal:Array.from(b),vertex_bytes:g.__sceneBuffers.get(d.vertices)?.bytes,draw_count:d.count}})()`);
+}
 function pairedVertices(aPositions,aNormals,bPositions,bNormals) {
   const cell=1e-5,tolerance=1e-6,key=(x,y,z)=>`${x},${y},${z}`;
   const reference=new Map(),used=new Uint8Array(aPositions.length/3);
@@ -120,7 +142,7 @@ function pairedVertices(aPositions,aNormals,bPositions,bNormals) {
     const x=Math.floor(aPositions[i*3]/cell),y=Math.floor(aPositions[i*3+1]/cell),z=Math.floor(aPositions[i*3+2]/cell),k=key(x,y,z),bucket=reference.get(k)||[];
     bucket.push(i);reference.set(k,bucket);
   }
-  let paired=0,unmatched=0,maximumAngle=0,angleSum=0,maxDistance=0,distanceSum=0;
+  let paired=0,unmatched=0,maximumAngle=0,angleSum=0,maxDistance=0,distanceSum=0,worst=null;
   for(let i=0;i<bPositions.length/3;i++){
     const x=Math.floor(bPositions[i*3]/cell),y=Math.floor(bPositions[i*3+1]/cell),z=Math.floor(bPositions[i*3+2]/cell);
     let best=-1,bestDistance=Infinity;
@@ -136,9 +158,10 @@ function pairedVertices(aPositions,aNormals,bPositions,bNormals) {
     const a=aNormals.slice(best*3,best*3+3),b=bNormals.slice(i*3,i*3+3),aLength=Math.hypot(...a),bLength=Math.hypot(...b);
     const dot=a.reduce((s,v,j)=>s+v*b[j],0)/(aLength*bLength);
     const angle=Math.acos(Math.max(-1,Math.min(1,dot)))*180/Math.PI;
-    maximumAngle=Math.max(maximumAngle,angle);angleSum+=angle;
+    if(angle>maximumAngle){maximumAngle=angle;worst={reference_id:best,obrush_id:i,position:bPositions.slice(i*3,i*3+3),reference_normal:a,obrush_normal:b,angle_degrees:angle};}
+    angleSum+=angle;
   }
-  return {cell_width:cell,maximum_match_distance:tolerance,paired,unmatched_obrush:unmatched,unused_reference:used.length-paired,position_mean_distance:distanceSum/paired,position_max_distance:maxDistance,normal_direction_mean_degrees:angleSum/paired,normal_direction_max_degrees:maximumAngle};
+  return {cell_width:cell,maximum_match_distance:tolerance,paired,unmatched_obrush:unmatched,unused_reference:used.length-paired,position_mean_distance:distanceSum/paired,position_max_distance:maxDistance,normal_direction_mean_degrees:angleSum/paired,normal_direction_max_degrees:maximumAngle,worst};
 }
 let primaryError;
 try {
@@ -192,6 +215,7 @@ try {
     await until(async()=>(await evalRead(referenceCount))?.parts===0,'reference reset');
   }
   result.stage='OBRush navigation';
+  await send('Page.addScriptToEvaluateOnNewDocument',{source:gpuInstrument});
   await send('Page.navigate',{url:`${base}/?obrushprofile=sculptgl`});
   await until(async()=>(await evalRead(obrushInfo))?.subtools===1,'OBRush startup');
   for(const name of ['cylinder','torus']){
@@ -214,7 +238,12 @@ try {
     const faces=mesh.surface?.faces ?? mesh.triangles;
     const positions=mesh.positions.flat(),normals=mesh.normals.flat();
     const own=shape(positions,normals,faces);
-    result.cases.push({name,reference:refData[name],obrush:{ui,saved_file:saved.file,saved_sha256:sha(saved.bytes),shape:own,scene:saved.project.scene},comparison_local:compare(refData[name].local,own),comparison_world:compare(refData[name].world,own),paired_vertices:pairedVertices(refRaw[name].positions,refRaw[name].normals,positions,normals)});
+    const areaNormals=originalFaceAreaNormals(positions,faces);
+    const paired=pairedVertices(refRaw[name].positions,refRaw[name].normals,positions,normals);
+    const gpu=await until(()=>gpuNormal(paired.worst.obrush_id),`OBRush ${name} GPU normal sample`);
+    gpu.reference_direction_degrees=normalAngle(paired.worst.reference_normal,gpu.normal);
+    gpu.saved_direction_degrees=normalAngle(paired.worst.obrush_normal,gpu.normal);
+    result.cases.push({name,reference:refData[name],obrush:{ui,saved_file:saved.file,saved_sha256:sha(saved.bytes),shape:own,scene:saved.project.scene,gpu_normal_at_worst_saved_vertex:gpu},comparison_local:compare(refData[name].local,own),comparison_world:compare(refData[name].world,own),paired_vertices:paired,diagnostic_original_face_area_normals:pairedVertices(refRaw[name].positions,refRaw[name].normals,positions,areaNormals)});
   }
   const c=result.cases.find(x=>x.name==='cylinder'),t=result.cases.find(x=>x.name==='torus');
   if(!c||!t||result.cases.some(x=>x.reference.reported.vertices!==x.obrush.ui.vertices||x.reference.reported.faces!==x.obrush.ui.faces||x.reference.local.nonmanifold_edges!==0||x.obrush.shape.nonmanifold_edges!==0||x.paired_vertices.unmatched_obrush!==0||x.paired_vertices.unused_reference!==0||x.paired_vertices.position_max_distance>1e-6))throw Error('Geometry count/manifold/local-position gate failed');
