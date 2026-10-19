@@ -325,6 +325,12 @@ impl WebHandle {
         }
     }
 
+    pub fn queue_browser_pen_move(&self, pressure: f32, x: f32, y: f32) {
+        if let Some(mut app) = self.runner.app_mut::<OBrushApp>() {
+            app.queue_browser_pen_move(pressure, x, y);
+        }
+    }
+
     /// Forwards actual DOM navigation-button state, including chord pointer
     /// moves which do not produce a separate browser pointer-down event.
     pub fn set_navigation_buttons(&self, buttons: u16) {

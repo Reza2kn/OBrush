@@ -1,5 +1,13 @@
 # OBrush feature parity contract
 
+**C245 same-frame browser pen samples:** [The normal-browser diagnostic](SCULPTGL_PEN_BURST_C245.md)
+shows that two trusted held pen moves arriving before one app frame previously
+lost the first move's pressure and position. A bounded ordered browser queue
+now retains both for an active ordinary brush; distinct pressure traces
+produce distinct saved Draw meshes with exact GPU/save and Undo/Redo checks.
+Physical pens, native stylus input, transformed layouts, overflow behavior in
+the browser, matched SculptGL brush shape and full parity remain open.
+
 **C246 global darken-unselected audit:** [The pinned-source and paired browser
 report](SCULPTGL_DARKEN_C246.md) confirms the existing OBrush Source shader
 selects the same unselected-part `0.3` linear-color factor on one independent

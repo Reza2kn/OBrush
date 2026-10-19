@@ -151,6 +151,14 @@
         if(event.pointerType==='pen'){
           if(event.buttons || type==='pointerdown' || type==='pointerup' || type==='pointercancel')
             handle.set_input_pressure(event.pressure,true,type==='pointerup'||type==='pointercancel');
+          if(type==='pointermove' && (event.buttons & 1)){
+            const bounds=canvas.getBoundingClientRect();
+            // At 100% UI zoom, the canvas-local CSS position is the egui
+            // logical position. A CSS-transformed canvas needs a separate
+            // coordinate proof; keep the existing final-event path there.
+            if(Math.abs(bounds.width-canvas.clientWidth)<1 && Math.abs(bounds.height-canvas.clientHeight)<1)
+              handle.queue_browser_pen_move(event.pressure,event.clientX-bounds.left,event.clientY-bounds.top);
+          }
         }else if(event.pointerType==='mouse')handle.set_input_pressure(1,false,false);
         const sourceRect=canvas.getBoundingClientRect();
         handle.set_source_paint_input(event.pointerType==='pen'?event.pressure:0.5,event.pointerType==='pen',type==='pointerup'||type==='pointercancel',event.clientX-sourceRect.left,event.clientY-sourceRect.top,type==='pointercancel');

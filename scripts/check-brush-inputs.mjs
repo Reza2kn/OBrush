@@ -1,7 +1,7 @@
 // CLI-only brush input checks. Owns a temporary loopback server, headless
 // Chrome process/profile, and test tab; never attaches to user browser state.
 // Usage: node scripts/check-brush-inputs.mjs [web/dist] [run-label]
-//        [--pressure-only | --factors-only | --ramp-only]
+//        [--pressure-only | --factors-only | --ramp-only | --burst-only]
 import { spawn } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -14,8 +14,9 @@ const label = process.argv[3] || 'brush-inputs';
 const pressureOnly = process.argv.includes('--pressure-only');
 const factorOnly = process.argv.includes('--factors-only');
 const rampOnly = process.argv.includes('--ramp-only');
-if ([pressureOnly, factorOnly, rampOnly].filter(Boolean).length > 1) throw new Error('Select one brush input mode');
-const viewportHeight = factorOnly || rampOnly ? 720 : 1000;
+const burstOnly = process.argv.includes('--burst-only');
+if ([pressureOnly, factorOnly, rampOnly, burstOnly].filter(Boolean).length > 1) throw new Error('Select one brush input mode');
+const viewportHeight = factorOnly || rampOnly || burstOnly ? 720 : 1000;
 const out = path.resolve(`.artifacts/brush-inputs-0.1.6/${label}-${randomUUID()}`);
 const profile = path.join(out, 'isolated-profile');
 await mkdir(profile, { recursive: true });
@@ -97,9 +98,12 @@ const evaluate = async expression => {
   return value.result.value;
 };
 const instrument = `(()=>{
- const p=window.__brushCheck={events:[],keys:[],contexts:[],allocations:[],viewports:{},gl_errors:[],js_errors:[]};
+ const p=window.__brushCheck={events:[],keys:[],contexts:[],allocations:[],viewports:{},gl_errors:[],js_errors:[],raf_count:0,hold_raf:false,deferred_raf:[]};
+ const raf=window.requestAnimationFrame;
+ window.requestAnimationFrame=function(callback){return raf.call(this,time=>{if(p.hold_raf){p.deferred_raf.push(callback);return;}p.raf_count++;callback(time);});};
+ p.releaseHeldRaf=()=>{p.hold_raf=false;const callbacks=p.deferred_raf.splice(0);for(const callback of callbacks){p.raf_count++;callback(performance.now());}};
  for(const type of ['keydown','keyup'])window.addEventListener(type,event=>p.keys.push({type,key:event.key,meta:event.metaKey,ctrl:event.ctrlKey,shift:event.shiftKey,trusted:event.isTrusted,target:event.target.id}),true);
- for(const type of ['pointermove','pointerdown','pointerup','pointercancel'])window.addEventListener(type,event=>p.events.push({type,pointer_type:event.pointerType,pressure:event.pressure,x:event.clientX,y:event.clientY,buttons:event.buttons,trusted:event.isTrusted,at:performance.now()}),true);
+ for(const type of ['pointermove','pointerdown','pointerup','pointercancel'])window.addEventListener(type,event=>p.events.push({type,pointer_type:event.pointerType,pressure:event.pressure,x:event.clientX,y:event.clientY,buttons:event.buttons,trusted:event.isTrusted,raf_count:p.raf_count,at:performance.now()}),true);
  window.addEventListener('error',event=>p.js_errors.push(String(event.error||event.message)));
  window.addEventListener('unhandledrejection',event=>p.js_errors.push(String(event.reason)));
  const get=HTMLCanvasElement.prototype.getContext;
@@ -262,7 +266,7 @@ try {
   session = (await send('Target.attachToTarget', { targetId: target.targetId, flatten: true }, null)).sessionId;
   for (const domain of ['Page', 'Runtime', 'Network']) await send(`${domain}.enable`);
   await send('Fetch.enable', { patterns: [{ urlPattern: '*', requestStage: 'Request' }] });
-  await send('Emulation.setDeviceMetricsOverride', { width: factorOnly || rampOnly ? 1280 : 1600, height: viewportHeight, deviceScaleFactor: 1, mobile: false });
+  await send('Emulation.setDeviceMetricsOverride', { width: factorOnly || rampOnly || burstOnly ? 1280 : 1600, height: viewportHeight, deviceScaleFactor: 1, mobile: false });
   await send('Emulation.setFocusEmulationEnabled', { enabled: true });
   await send('Target.activateTarget', { targetId: target.targetId }, null);
   await send('Page.addScriptToEvaluateOnNewDocument', { source: instrument });
@@ -272,7 +276,10 @@ try {
   if (hash(wasm) !== hash(served)) throw new Error('Served WASM differs from local build');
 
   const documents = {};
-  const cases = rampOnly ? [
+  const cases = burstOnly ? [
+    ['burst-low-high', 'pen', 0.25, null, null, [1, 0], 0.75],
+    ['burst-near-high', 'pen', 0.25, null, null, [1, 0], 0.75],
+  ] : rampOnly ? [
     ['ramp-constant-quarter', 'pen', 0.25, null, null, [1, 0], 0.25],
     ['ramp-quarter-to-three-quarter', 'pen', 0.25, null, null, [1, 0], 0.75],
     ['ramp-neutral-constant', 'pen', 0.25, null, null, [0, 0], 0.25],
@@ -319,18 +326,44 @@ try {
     await pointer('mouseMoved', x, y, pointerType, pressure, false); await pause(60);
     await pointer('mousePressed', x, y, pointerType, pressure, true); await pause(120);
     trial.settings_during_contact = await evaluate('window.obrushBrushMetrics()');
-    if (rampOnly) {
+    if (burstOnly) {
+      trial.canvas_css = await evaluate(`(()=>{const c=document.getElementById('obrush_canvas'),r=c.getBoundingClientRect();return {left:r.left,top:r.top,width:r.width,height:r.height,client_width:c.clientWidth,client_height:c.clientHeight}})()`);
+      const words=trial.settings_during_contact.background_cursor?.pointer?.last_input?.logical_words;
+      trial.egui_press_position = words?.map(word=>{const buffer=new ArrayBuffer(4),view=new DataView(buffer);view.setUint32(0,word,true);return view.getFloat32(0,true);});
+      if (Math.abs(trial.canvas_css.width-trial.canvas_css.client_width)>=1 || Math.abs(trial.canvas_css.height-trial.canvas_css.client_height)>=1 || Math.abs(trial.egui_press_position?.[0]-x)>0.5 || Math.abs(trial.egui_press_position?.[1]-y)>0.5) throw new Error(`DOM-to-egui pen position mapping was not exact: ${name}`);
+    }
+    if (rampOnly || burstOnly) {
       trial.gpu_after_first_dab = await gpuDigest();
       trial.metrics_after_first_dab = await evaluate('window.obrushSculptMetrics()');
-      await pointer('mouseMoved', x + 100, y, pointerType, movePressure, true); await pause(200);
+      if (burstOnly) {
+        const firstPressure = name === 'burst-low-high' ? 0.25 : 0.70;
+        trial.burst_dom_offset = await evaluate('window.__brushCheck.events.length');
+        const requested = [[x + 50, firstPressure], [x + 100, 0.75]].map(([moveX, force]) => ({type:'mouseMoved',x:moveX,y,pointerType:'pen',force,button:'none',buttons:1}));
+        result.input_trace.push(...requested.map(params=>({...params,at_epoch_ms:Date.now()})));
+        trial.burst = requested;
+        await evaluate('window.__brushCheck.hold_raf=true');
+        try {
+          await send('Input.dispatchMouseEvent',requested[0]);
+          await pause(3);
+          await send('Input.dispatchMouseEvent',requested[1]);
+          trial.burst_dom_events = await evaluate(`window.__brushCheck.events.slice(${trial.burst_dom_offset}).filter(event=>event.pointer_type==='pen'&&event.type==='pointermove'&&event.y===${y}&&(event.x===${x + 50}||event.x===${x + 100}))`);
+          if (trial.burst_dom_events.length !== 2 || trial.burst_dom_events.some(event=>!event.trusted)) throw new Error(`CDP burst was not delivered as two trusted DOM events: ${name}`);
+          if (trial.burst_dom_events[0].raf_count !== trial.burst_dom_events[1].raf_count) throw new Error(`CDP burst crossed a browser animation frame: ${name}`);
+        } finally {
+          await evaluate('window.__brushCheck.releaseHeldRaf()');
+        }
+        await pause(200);
+      } else {
+        await pointer('mouseMoved', x + 100, y, pointerType, movePressure, true); await pause(200);
+      }
       trial.settings_after_move = await evaluate('window.obrushBrushMetrics()');
       trial.metrics_after_move = await evaluate('window.obrushSculptMetrics()');
       trial.move_dom_pen_events = await evaluate(`window.__brushCheck.events.filter(event=>event.pointer_type==='pen'&&event.type==='pointermove'&&event.x===${x + 100}&&event.y===${y})`);
-      if (!trial.move_dom_pen_events.some(event => event.trusted && Math.abs(event.pressure - movePressure) < 1e-6)) throw new Error(`Missing trusted moving pressure event: ${name}`);
+      if (!trial.move_dom_pen_events.some(event => (burstOnly || event.trusted) && Math.abs(event.pressure - movePressure) < 1e-6)) throw new Error(`Missing moving pressure event: ${name}`);
       if (Math.abs(trial.settings_after_move.pressure - movePressure) > 1e-6) throw new Error(`Moving contact pressure was not sampled: ${name}`);
       if (trial.metrics_after_move.processed_dabs <= trial.metrics_after_first_dab.processed_dabs) throw new Error(`Moving pressure did not produce another dab: ${name}`);
     }
-    await pointer('mouseReleased', rampOnly ? x + 100 : x, y, pointerType, 0, false); await pause(350);
+    await pointer('mouseReleased', rampOnly || burstOnly ? x + 100 : x, y, pointerType, 0, false); await pause(350);
     trial.gpu_before_save = await gpuDigest();
     trial.metrics_after_release = await evaluate('window.obrushSculptMetrics()');
     const final = await save(`${name}-final`); trial.snapshots.push(metadata(final)); documents[name] = { initial: initial.document, final: final.document };
@@ -344,11 +377,11 @@ try {
     const expectedPressure = pointerType === 'mouse' ? 1 : pressure;
     if (typeof trial.settings_during_contact.pressure !== 'number' || Math.abs(trial.settings_during_contact.pressure - expectedPressure) > 1e-6) throw new Error(`Host captured wrong pressure: ${name}`);
     if (trial.metrics_after_release.pending_dabs !== 0) throw new Error(`Release retains pending input: ${name}`);
-    if (name === 'ramp-quarter-to-three-quarter') {
+    if (name === 'ramp-quarter-to-three-quarter' || name === 'burst-low-high') {
       await chord('z'); const undo = await save(`${name}-undo`); trial.snapshots.push(metadata(undo));
       await chord('z', true); const redo = await save(`${name}-redo`); trial.snapshots.push(metadata(redo));
       trial.history = { undo_exact_initial: meshHash(undo.document) === meshHash(initial.document), redo_exact_final: meshHash(redo.document) === meshHash(final.document) };
-      if (!Object.values(trial.history).every(Boolean)) throw new Error('Pressure ramp did not form an exact one-step history edit');
+      if (!Object.values(trial.history).every(Boolean)) throw new Error('Pressure stroke did not form an exact one-step history edit');
     }
     if (name === 'alpha-asymmetric' || name === 'alpha-rotated' || name === 'pen-radius-half') trial.screenshot = await screenshot(name);
     if (name === 'alpha-asymmetric') {
@@ -377,7 +410,32 @@ try {
     }
     await writeFile(path.join(out, `${name}.json`), JSON.stringify(trial, null, 2) + '\n');
   }
-  if (rampOnly) {
+  if (burstOnly) {
+    const first = result.cases.find(trial => trial.name === 'burst-low-high');
+    const second = result.cases.find(trial => trial.name === 'burst-near-high');
+    result.burst_response = {
+      same_initial_mesh: meshHash(documents[first.name].initial) === meshHash(documents[second.name].initial),
+      same_first_dab_gpu: first.gpu_after_first_dab.sha256 === second.gpu_after_first_dab.sha256,
+      first_case_final_mesh: meshHash(documents[first.name].final),
+      second_case_final_mesh: meshHash(documents[second.name].final),
+      same_final_mesh: meshHash(documents[first.name].final) === meshHash(documents[second.name].final),
+      first_case_dabs: first.metrics_after_move.processed_dabs,
+      second_case_dabs: second.metrics_after_move.processed_dabs,
+      samples: [first.burst, second.burst],
+    };
+    if (!result.burst_response.same_initial_mesh || !result.burst_response.same_first_dab_gpu) throw new Error('Burst cases did not share the exact first-dab baseline');
+    if (first.metrics_after_move.processed_dabs <= first.metrics_after_first_dab.processed_dabs || second.metrics_after_move.processed_dabs <= second.metrics_after_first_dab.processed_dabs) throw new Error('Synchronous pointer burst produced no sculpt dabs');
+    result.comparisons = {
+      exact_initial_and_press: result.burst_response.same_initial_mesh && result.burst_response.same_first_dab_gpu,
+      retained_first_pressure_changes_shape: !result.burst_response.same_final_mesh,
+      all_queued_pen_samples_drained: result.cases.every(trial=>trial.metrics_after_move.browser_pen_moves_queued===0 && trial.metrics_after_move.browser_pen_moves_dropped===0),
+      exact_one_stroke_history: Object.values(first.history).every(Boolean),
+      exact_gpu_public_save: result.cases.every(trial=>trial.gpu_matches_saved_mesh),
+    };
+    if (!Object.values(result.comparisons).every(Boolean)) throw new Error('Same-frame pen pressure burst gate failed');
+    result.status = 'passed same-frame pen pressure burst';
+    result.limitations = ['The two CDP pen events are trusted browser inputs, but their arrival before the same RAF must be checked per case; physical tablets and native GUI behavior remain unverified.'];
+  } else if (rampOnly) {
     const same = (a, b) => meshHash(a) === meshHash(b);
     const constant = result.cases.find(trial => trial.name === 'ramp-constant-quarter');
     const rising = result.cases.find(trial => trial.name === 'ramp-quarter-to-three-quarter');

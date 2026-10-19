@@ -449,6 +449,52 @@ struct CapturedDab {
     footprint: Option<ScreenFootprint>,
 }
 
+#[derive(Clone, Copy, Debug)]
+struct BrowserPenMove {
+    pos: Pos2,
+    pressure: f32,
+}
+
+const MAX_BROWSER_PEN_MOVES: usize = 256;
+
+#[derive(Default)]
+struct BrowserPenSamples {
+    queued: std::collections::VecDeque<BrowserPenMove>,
+    dropped: u64,
+    overflowed: bool,
+}
+
+impl BrowserPenSamples {
+    fn push(&mut self, sample: BrowserPenMove) {
+        if self.queued.len() == MAX_BROWSER_PEN_MOVES {
+            self.queued.pop_front();
+            self.dropped = self.dropped.saturating_add(1);
+            self.overflowed = true;
+        }
+        self.queued.push_back(sample);
+    }
+
+    fn drain(&mut self) -> (std::collections::VecDeque<BrowserPenMove>, bool) {
+        let overflowed = std::mem::take(&mut self.overflowed);
+        (std::mem::take(&mut self.queued), overflowed)
+    }
+
+    fn clear(&mut self) {
+        self.queued.clear();
+        self.overflowed = false;
+    }
+}
+
+fn browser_pen_ordinary_stroke(stroke: &ActiveStroke) -> bool {
+    stroke.queued
+        && stroke.continuous.is_none()
+        && stroke.locked_stamp.is_none()
+        && stroke.local_transform.is_none()
+        && stroke.source_geometry.is_none()
+        && stroke.source_paint.is_none()
+        && !matches!(stroke.kind, BrushKind::Drag)
+}
+
 fn camera_ray_at(camera: &Camera, screen: Pos2, rect: egui::Rect) -> Ray {
     let ndc = glam::Vec2::new(
         2.0 * (screen.x - rect.left()) / rect.width() - 1.0,
@@ -926,6 +972,7 @@ pub struct OBrushApp {
     stroke: Option<ActiveStroke>,
     background_mask_gesture: Option<BackgroundMaskGesture>,
     pending_dabs: DabQueue,
+    browser_pen_samples: BrowserPenSamples,
     keyboard_diagnostics: std::collections::VecDeque<serde_json::Value>,
     source_keyboard_camera: preferences_host::SourceKeyboardCamera,
     continuous_clock: HostContinuousClock,
@@ -1151,6 +1198,7 @@ impl OBrushApp {
             stroke: None,
             background_mask_gesture: None,
             pending_dabs: DabQueue::default(),
+            browser_pen_samples: BrowserPenSamples::default(),
             keyboard_diagnostics: std::collections::VecDeque::with_capacity(32),
             source_keyboard_camera: Default::default(),
             continuous_clock: HostContinuousClock::new(ClockPolicy::default())
@@ -1279,6 +1327,9 @@ impl OBrushApp {
 
     pub fn sculpt_metrics(&self) -> String {
         let mut metrics = self.pending_dabs.metrics();
+        metrics["browser_pen_moves_queued"] = self.browser_pen_samples.queued.len().into();
+        metrics["browser_pen_moves_dropped"] = self.browser_pen_samples.dropped.into();
+        metrics["browser_pen_moves_overflowed"] = self.browser_pen_samples.overflowed.into();
         metrics["render_snapshot_timing"] = self.render_snapshot_timing.metrics();
         metrics["render_certified_handoffs"] = self.render_certified_handoffs.into();
         metrics["app_update_timing"] = serde_json::json!({
@@ -1709,6 +1760,34 @@ impl OBrushApp {
         self.egui_ctx.request_repaint();
     }
 
+    /// Retain ordered held pen positions with their own pressure until the
+    /// next frame. Egui's pointer state exposes only the final position of a
+    /// same-frame burst; the bounded queue keeps intermediate brush dabs from
+    /// inheriting the final event's pressure.
+    pub fn queue_browser_pen_move(&mut self, pressure: f32, x: f32, y: f32) {
+        if !self
+            .stroke
+            .as_ref()
+            .is_some_and(browser_pen_ordinary_stroke)
+        {
+            return;
+        }
+        if !pressure.is_finite()
+            || !(0.0..=1.0).contains(&pressure)
+            || !x.is_finite()
+            || !y.is_finite()
+            || x.abs() > 100_000.0
+            || y.abs() > 100_000.0
+        {
+            return;
+        }
+        self.browser_pen_samples.push(BrowserPenMove {
+            pos: Pos2::new(x, y),
+            pressure,
+        });
+        self.egui_ctx.request_repaint();
+    }
+
     fn current_contact_input(&self) -> ContactInput {
         if self.last_input_pen {
             ContactInput::Pen(self.brush.pressure)
@@ -1918,6 +1997,7 @@ impl OBrushApp {
     /// Explicit browser contact loss differs from a normal button release.
     /// The interruption stays latched until the next application update.
     pub fn cancel_pointer_contact(&mut self) {
+        self.browser_pen_samples.clear();
         if self
             .stroke
             .as_ref()
@@ -2846,6 +2926,7 @@ impl OBrushApp {
     }
 
     fn finish_stroke_deferred(&mut self) {
+        self.browser_pen_samples.clear();
         self.stop_continuous(StopReason::Command);
         if let Some(stroke) = self.stroke.take() {
             if let Some(session) = stroke.source_geometry.as_ref() {
@@ -9762,10 +9843,54 @@ impl OBrushApp {
             } else {
                 (kind, modifiers.alt)
             };
-            self.sample_stroke_to(pos, rect, sample_kind, invert);
+            let replay = self
+                .stroke
+                .as_ref()
+                .is_some_and(browser_pen_ordinary_stroke)
+                && self.last_input_pen
+                && !modifiers.shift
+                && !modifiers.ctrl
+                && !modifiers.alt
+                && ctx.zoom_factor() == 1.0;
+            if replay {
+                let (samples, overflowed) = self.browser_pen_samples.drain();
+                if overflowed {
+                    if let Some(stroke) = self.stroke.as_mut() {
+                        stroke.last_screen = None;
+                        stroke.sampler.break_path();
+                    }
+                    self.message =
+                        "Pen input exceeded the per-frame sample limit; the path was split.".into();
+                }
+                for sample in samples {
+                    if self.stroke.is_none() {
+                        break;
+                    }
+                    if rect.contains(sample.pos) {
+                        self.brush.pressure = sample.pressure;
+                        self.sample_stroke_to(sample.pos, rect, sample_kind, invert);
+                    } else if let Some(stroke) = self.stroke.as_mut() {
+                        stroke.last_screen = None;
+                        stroke.sampler.break_path();
+                    }
+                }
+                self.brush.pressure = if released {
+                    self.contact_pressure.endpoint()
+                } else {
+                    self.contact_pressure.current()
+                };
+            } else {
+                self.browser_pen_samples.clear();
+            }
+            if self.stroke.is_some() {
+                self.sample_stroke_to(pos, rect, sample_kind, invert);
+            }
         }
         if released {
+            self.browser_pen_samples.clear();
             self.finish_stroke_deferred();
+        } else if !down {
+            self.browser_pen_samples.clear();
         }
     }
 
@@ -12524,6 +12649,45 @@ mod preference_host_tests {
             source_paint_display_before: None,
             continuous_locked: None,
         }
+    }
+
+    #[test]
+    fn browser_pen_samples_are_bounded_fifo_and_clear_cancels_an_overflow() {
+        let mut samples = BrowserPenSamples::default();
+        for x in 0..=MAX_BROWSER_PEN_MOVES {
+            samples.push(BrowserPenMove {
+                pos: Pos2::new(x as f32, 12.0),
+                pressure: x as f32 / MAX_BROWSER_PEN_MOVES as f32,
+            });
+        }
+        assert_eq!(samples.queued.len(), MAX_BROWSER_PEN_MOVES);
+        assert_eq!(samples.dropped, 1);
+        let (drained, overflowed) = samples.drain();
+        assert!(overflowed);
+        assert_eq!(drained.front().unwrap().pos.x, 1.0);
+        assert_eq!(drained.back().unwrap().pos.x, MAX_BROWSER_PEN_MOVES as f32);
+        assert!(samples.queued.is_empty());
+        samples.push(BrowserPenMove {
+            pos: Pos2::new(10.0, 20.0),
+            pressure: 0.25,
+        });
+        samples.clear();
+        assert!(samples.queued.is_empty());
+        assert!(!samples.overflowed);
+        assert_eq!(samples.dropped, 1);
+    }
+
+    #[test]
+    fn browser_pen_replay_only_accepts_active_ordinary_queued_strokes() {
+        let mut stroke = captured_continuous_fixture(BrushSettings::default(), false);
+        assert!(!browser_pen_ordinary_stroke(&stroke));
+        stroke.continuous = None;
+        assert!(browser_pen_ordinary_stroke(&stroke));
+        stroke.kind = BrushKind::Drag;
+        assert!(!browser_pen_ordinary_stroke(&stroke));
+        stroke.kind = BrushKind::Draw;
+        stroke.queued = false;
+        assert!(!browser_pen_ordinary_stroke(&stroke));
     }
 
     #[test]
