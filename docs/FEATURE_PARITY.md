@@ -1,5 +1,12 @@
 # OBrush feature parity contract
 
+**C234 paired pressure input:** [The common-fixture browser report](SCULPTGL_PRESSURE_PAIR_C234.md)
+finds exact imported positions across 10,114 vertices and OBrush Source-mode
+response to radius and intensity factors. Pinned SculptGL's synthetic pen
+gestures leave saved geometry unchanged even at full pressure, despite trusted
+move delivery; its mouse gesture changes geometry. The reference pen input
+path remains unresolved, so this is not pressure geometry parity.
+
 **C233 app-frame profile:** [The complete million-vertex browser report](SCULPTGL_APP_FRAME_PROFILE_C233.md)
 records 50.13 ms per update inside the viewport during a frozen long stroke,
 versus 1.09 ms before it. Source geometry averages 22.41 ms per dab in that
