@@ -49,6 +49,7 @@ mod source_picked_normal;
 #[cfg(test)]
 mod source_primitive_levels_tests;
 pub mod source_ring;
+mod source_worker_cold_capture;
 mod source_worker_delta;
 mod source_worker_transaction;
 mod static_subdivision;
@@ -151,6 +152,7 @@ pub use source_picked_normal::{
     SourcePickedNormalError, SourcePickedNormalRejection, SourcePickedNormalReport,
     SourcePickedNormalUndefined, MAX_SOURCE_PICK_COORDINATE,
 };
+pub use source_worker_cold_capture::SourceWorkerColdCapture;
 pub use source_worker_delta::{
     decode_source_worker_mesh_delta, encode_source_worker_mesh_delta, MAX_SOURCE_WORKER_DELTA_BYTES,
 };

@@ -508,6 +508,12 @@ impl Document {
             self.source_geometry_states.capacity(),
         )
     }
+    /// Presence, rather than estimated allocation size, is the admission
+    /// witness for a cross-realm cold Source capture. A state can be semantically
+    /// live even if a future compact representation reports zero payload bytes.
+    pub fn has_source_geometry_normal_state(&self) -> bool {
+        !self.source_geometry_states.is_empty()
+    }
     fn source_geometry_domain(
         &self,
         options: SourceGeometryOptions,
