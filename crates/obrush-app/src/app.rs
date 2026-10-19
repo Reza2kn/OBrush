@@ -1010,6 +1010,7 @@ pub struct OBrushApp {
     app_panel_timing: DabTiming,
     app_viewport_timing: DabTiming,
     stroke: Option<ActiveStroke>,
+    pending_scene_selection: Option<crate::source_display::PendingViewportSelection>,
     background_mask_gesture: Option<BackgroundMaskGesture>,
     pending_dabs: DabQueue,
     browser_pen_samples: BrowserPenSamples,
@@ -1237,6 +1238,7 @@ impl OBrushApp {
             app_panel_timing: DabTiming::default(),
             app_viewport_timing: DabTiming::default(),
             stroke: None,
+            pending_scene_selection: None,
             background_mask_gesture: None,
             pending_dabs: DabQueue::default(),
             browser_pen_samples: BrowserPenSamples::default(),
@@ -2939,6 +2941,7 @@ impl OBrushApp {
         self.cancel_uv_bake(false);
         self.paint_pick_armed = false;
         self.paint_pick_dragging = false;
+        self.pending_scene_selection = None;
         self.last_paint_sample = None;
         let had_region = self.mask_region_gesture.is_some();
         self.cancel_mask_region(
@@ -9527,16 +9530,20 @@ impl OBrushApp {
     }
     fn sculpt_input(&mut self, ctx: &egui::Context, response: &egui::Response) {
         if self.pending_sgl_export.is_some() {
+            self.pending_scene_selection = None;
             return;
         }
         if self.transform_mode || self.transform_drag.is_some() {
+            self.pending_scene_selection = None;
             self.transform_input(ctx, response);
             return;
         }
         if self.mask_region_input(ctx, response) {
+            self.pending_scene_selection = None;
             return;
         }
         if self.background_mask_input(ctx, response) {
+            self.pending_scene_selection = None;
             return;
         }
         self.unprocessed_release = None;
@@ -9558,6 +9565,7 @@ impl OBrushApp {
             self.brush.pressure = self.contact_pressure.endpoint();
         }
         if !focused {
+            self.pending_scene_selection = None;
             self.paint_pick_armed = false;
             self.paint_pick_dragging = false;
             self.cancel_absolute_locked_stamp();
@@ -9604,6 +9612,7 @@ impl OBrushApp {
                 })
         });
         let Some(pos) = pos.filter(|p| p.is_finite() && (rect.contains(*p) || locked_drag)) else {
+            self.pending_scene_selection = None;
             if self.interrupt_source_paint_tail("Source Paint left its viewport") {
                 self.unprocessed_release = None;
                 self.finish_stroke_deferred();
@@ -9620,10 +9629,60 @@ impl OBrushApp {
             return;
         };
         if ctx.input(|input| viewport_navigation_requested(input, self.navigation_down())) {
+            self.pending_scene_selection = None;
             if released {
                 self.finish_stroke_deferred();
             }
             return;
+        }
+        // Source Shift-click changes scene membership only on release. A drag
+        // crosses four logical pixels and resumes the existing temporary
+        // Smooth path, including its ordinary stroke/history lifecycle.
+        let mut pressed = pressed;
+        if self.pending_scene_selection.is_none()
+            && pressed
+            && modifiers.shift
+            && !modifiers.ctrl
+            && !modifiers.alt
+            && self.source_shortcut_profile()
+            && self.stroke.is_none()
+            && response.hovered()
+            && let Some(hit) = self.scene_pick(pos, rect)
+        {
+            self.pending_scene_selection = Some(crate::source_display::PendingViewportSelection {
+                id: hit.id,
+                start: pos,
+                viewport: rect,
+                revision: self.revision,
+            });
+        }
+        if let Some(pending) = self.pending_scene_selection {
+            use crate::source_display::ViewportSelectionStep;
+            match pending.step(pos, down, released, modifiers.shift, rect, self.revision) {
+                ViewportSelectionStep::Wait => return,
+                ViewportSelectionStep::Select => {
+                    self.pending_scene_selection = None;
+                    let (ids, active) = crate::source_display::panel_selection(
+                        &self.document.selected_subtool_ids(),
+                        self.document.active_subtool_id(),
+                        pending.id,
+                        true,
+                    );
+                    self.scene_action(
+                        |document| document.select_subtools(&ids, active),
+                        "Part selection updated.",
+                    );
+                    return;
+                }
+                ViewportSelectionStep::SmoothDrag => {
+                    self.pending_scene_selection = None;
+                    pressed = true;
+                }
+                ViewportSelectionStep::Cancel => {
+                    self.pending_scene_selection = None;
+                    return;
+                }
+            }
         }
         if self.paint_pick_armed && (modifiers.ctrl || modifiers.shift) {
             self.paint_pick_armed = false;

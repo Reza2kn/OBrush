@@ -1,6 +1,7 @@
 //! View-only guide and selection uniforms. No brush geometry or stored channels change.
 //! The active Source-object guide uses its normalized per-object mirror plane.
 //! Legacy brush offsets and non-X symmetry normals remain separate.
+use eframe::egui::{Pos2, Rect};
 use glam::{DMat3, DMat4, DVec3};
 use obrush_core::{
     BrushSettings, Document, Mesh, SceneObjectMetadata, SglDisplaySettings, SourceMirrorPlane,
@@ -183,6 +184,56 @@ pub(crate) fn panel_selection(
     }
 }
 
+/// A Source viewport Shift contact waits for a click or a drag. Waiting
+/// prevents the pointer-down frame from stamping Smooth before selection is
+/// known; a drag resumes the ordinary temporary Smooth path.
+#[derive(Clone, Copy, Debug)]
+pub(crate) struct PendingViewportSelection {
+    pub id: u32,
+    pub start: Pos2,
+    pub viewport: Rect,
+    pub revision: u64,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) enum ViewportSelectionStep {
+    Wait,
+    Select,
+    SmoothDrag,
+    Cancel,
+}
+
+impl PendingViewportSelection {
+    pub(crate) fn step(
+        self,
+        pointer: Pos2,
+        down: bool,
+        released: bool,
+        shift: bool,
+        viewport: Rect,
+        revision: u64,
+    ) -> ViewportSelectionStep {
+        if !shift || viewport != self.viewport || revision != self.revision {
+            return ViewportSelectionStep::Cancel;
+        }
+        // Pixels are egui logical viewport points, independent of DPR.
+        if pointer.distance_sq(self.start) > 16.0 {
+            return if down {
+                ViewportSelectionStep::SmoothDrag
+            } else {
+                ViewportSelectionStep::Cancel
+            };
+        }
+        if released {
+            ViewportSelectionStep::Select
+        } else if down {
+            ViewportSelectionStep::Wait
+        } else {
+            ViewportSelectionStep::Cancel
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -276,6 +327,36 @@ mod tests {
             (vec![second], Some(second))
         );
         assert_eq!((document.can_undo(), document.can_redo()), history);
+    }
+    #[test]
+    fn source_shift_click_waits_without_stamp_then_routes_drag_to_smooth() {
+        let viewport = Rect::from_min_max(Pos2::ZERO, Pos2::new(800.0, 600.0));
+        let pending = PendingViewportSelection {
+            id: 3,
+            start: Pos2::new(200.0, 300.0),
+            viewport,
+            revision: 7,
+        };
+        assert_eq!(
+            pending.step(pending.start, true, false, true, viewport, 7),
+            ViewportSelectionStep::Wait
+        );
+        assert_eq!(
+            pending.step(pending.start, false, true, true, viewport, 7),
+            ViewportSelectionStep::Select
+        );
+        assert_eq!(
+            pending.step(Pos2::new(205.0, 300.0), true, false, true, viewport, 7),
+            ViewportSelectionStep::SmoothDrag
+        );
+        assert_eq!(
+            pending.step(pending.start, true, false, false, viewport, 7),
+            ViewportSelectionStep::Cancel
+        );
+        assert_eq!(
+            pending.step(pending.start, true, false, true, viewport, 8),
+            ViewportSelectionStep::Cancel
+        );
     }
     #[test]
     fn removing_nonactive_panel_member_reactivates_first_remaining_source_member() {

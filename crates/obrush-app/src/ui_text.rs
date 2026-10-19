@@ -823,7 +823,7 @@ const SPECS: [CaptionSpec; 365] = [
     },
     CaptionSpec {
         id: "app.subtools_panel.5c593338a00c",
-        english: "Click a part to select it; Ctrl/Cmd-click its name to select several. Sculpting and OBJ export use the active part. The merge checklist is separate.",
+        english: "Click a part to select it; Ctrl/Cmd-click its name to select several. In the SculptGL profile, Shift-click a surface to toggle selection and Shift-drag to smooth. Sculpting and OBJ export use the active part. The merge checklist is separate.",
         source: None,
     },
     CaptionSpec {
