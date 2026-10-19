@@ -150,6 +150,11 @@ try {
     requireGate(buttonEvents.length===2&&buttonEvents.every(row=>row.trusted),
       'normal Worker button lacked trusted down/up');
     result.worker_sustained_attestation.trusted_button_events=buttonEvents;
+    // The fixed trial button owns DOM focus after the trusted click. Restore
+    // the same canvas keyboard target used by the ordinary public Save flow.
+    requireGate(await page.evaluate(`(()=>{const canvas=document.getElementById('obrush_canvas');
+      canvas.focus();return document.activeElement===canvas})()`),
+      'normal canvas keyboard focus after Worker trial selection');
   }
   result.before=(await page.save('before')).record;await gpuStage('before');
   const viewport=await page.viewport(),center=[(viewport.screen[0]+viewport.screen[2])/2,(viewport.screen[1]+viewport.screen[3])/2];
