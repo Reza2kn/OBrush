@@ -63,3 +63,12 @@ No failed receipt was replaced or deleted.
 All five inventory rows remain open. The broader gates still need matched
 shape/normals, retained subdivision behavior, save/reload, repeated additions,
 clear confirmation/cancel, camera/action state and native GUI checks.
+
+The same harness passed again after the merged C247/C248/symmetry-offset
+browser build. Its second receipt is
+`.artifacts/sculptgl-primitives-browser/7bf81978-c9af-422e-bac4-ad8b8e253ae9/result.json`
+(SHA-256 `66411753dffbd98ae67d704f5c9751132882ca88e59d3d20f4b2943f3c4044b5`),
+with served baseline WASM SHA-256
+`88c1be7ca7d4d6a9dc45b59025bedcdc41b174c4e16d212cb9e9f87b439df13f`.
+The same counts and undo/redo/clear gates passed; this rerun does not close
+the shape or retained-level gaps.
