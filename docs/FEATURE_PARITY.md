@@ -53,6 +53,10 @@ then reduced that measured scene/delta stage to 283.7 ms on a fresh 100k run
 while preserving exact public history and GPU positions. The frozen RAF-max,
 100 ms queue-tail and GPU-normal gates still fail, so the Worker stays off by
 default.
+[The retained warm-decode trial](SOURCE_WORKER_WARM_DECODE_TRIAL.md) reached
+155.6 ms against a preregistered `<120 ms` browser target and failed its GPU
+normal check. Its product and diagnostic code were rejected; the raw failure
+receipt remains available.
 [The independent display-normal audit](SOURCE_GPU_DISPLAY_NORMAL_ORACLE_PREREG.md)
 matches fresh Source face normals to active GPU rows before sculpting and after
 Undo. Edited After and Redo states have byte-identical public meshes but
