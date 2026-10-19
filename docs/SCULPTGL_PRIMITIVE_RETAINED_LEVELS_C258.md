@@ -70,7 +70,10 @@ lockfile-matched CLI and the shared target passed. The first redundant full
 workspace test run was intentionally interrupted after no failure while the
 existing slow `crease_detail` group ran, to release the shared Cargo lane for
 other parallel work; its incomplete log is retained at
-`/tmp/obrush-primitive-levels-workspace.log`. A complete integrated workspace
+`.artifacts/primitive-levels-build/obrush-primitive-levels-workspace.log`
+(SHA-256 `66cfde61f020e621293cdd65802dada580ae943c773782f45a3e87cd61ce3399`).
+The final focused fixture log is alongside it (SHA-256
+`49f246498c3951141c850c78d82466e0b99a0b274b454edd6b7827a0f2b36492`). A complete integrated workspace
 run remains required after merging.
 
 This closes only the missing retained-level *presence and count* for default

@@ -1,5 +1,15 @@
 # OBrush feature parity contract
 
+**C258 Source primitive levels:** [The paired browser and core receipt](SCULPTGL_PRIMITIVE_RETAINED_LEVELS_C258.md)
+records default Sphere/Cube/Cylinder/Torus retained-level counts matching the
+pinned SculptGL runtime at `4/4/3/3`, with a dense Cube
+Add→Undo→Redo→Save→Clear→Open→Lower→Higher→Save round trip. The
+[cylinder normal diagnostic](SCULPTGL_CYLINDER_NORMAL_GPU_PAIR.md) narrows the
+previous `6.043°` difference to serialized mesh-normal cache: one sampled
+active viewport normal differs from the reference by `0.0000153°`. Edited
+coarse-to-fine response, world placement, full displayed-normal and pixel
+comparisons, native GUI and sustained brush responsiveness remain open.
+
 **C257 combined Source primitives:** [The integrated browser and macOS receipt](SCULPTGL_COMBINED_C257.md)
 records passing workspace tests, strict native/WASM Clippy, fresh web/macOS
 builds, all four pinned default primitive counts in the normal browser,
