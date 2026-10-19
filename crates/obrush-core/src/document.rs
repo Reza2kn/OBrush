@@ -4495,6 +4495,21 @@ impl Document {
             candidate.set_active_source_render(render)
         })
     }
+    /// Apply flat shading to every selected Source part atomically. The Source
+    /// checkbox supplies one value for the selection, even if its prior values
+    /// differ; plain parts cannot acquire Source render data implicitly.
+    pub fn set_selected_source_flat_shading(&mut self, flat: bool) -> Result<bool, String> {
+        self.edit_selected_subtools(|candidate| {
+            let mut render = candidate
+                .active_object_metadata()
+                .ok_or("Selected part has no source appearance metadata")?
+                .render
+                .clone()
+                .unwrap_or_else(crate::baseline_source_render_defaults);
+            render.flat_shading = flat;
+            candidate.set_active_source_render(render)
+        })
+    }
     pub fn scene_origin(&self) -> Option<&SglSceneOrigin> {
         self.scene_origin.as_ref()
     }

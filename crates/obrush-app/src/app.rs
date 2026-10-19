@@ -7573,6 +7573,11 @@ impl OBrushApp {
             if self.stroke_rejected {
                 return;
             }
+            let only_flat_changed = render.flat_shading != before.flat_shading
+                && render.shader == before.shader
+                && render.matcap == before.matcap
+                && render.show_wireframe == before.show_wireframe
+                && render.opacity.to_bits() == before.opacity.to_bits();
             let only_wireframe_changed = render.show_wireframe != before.show_wireframe
                 && render.shader == before.shader
                 && render.matcap == before.matcap
@@ -7583,7 +7588,10 @@ impl OBrushApp {
                 && render.matcap == before.matcap
                 && render.flat_shading == before.flat_shading
                 && render.show_wireframe == before.show_wireframe;
-            let result = if only_wireframe_changed {
+            let result = if only_flat_changed {
+                self.document
+                    .set_selected_source_flat_shading(render.flat_shading)
+            } else if only_wireframe_changed {
                 self.document
                     .set_selected_source_wireframe(render.show_wireframe)
             } else if only_transparency_changed {
