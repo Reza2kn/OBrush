@@ -116,7 +116,7 @@ async function screenshot(name) {
   result.screenshots.push({ name, file, sha256: sha(bytes) });
 }
 const referenceInfo = `(()=>{const app=window.__sculptglReferenceInstance,mesh=app?.getMesh(),gui=app?.getGui()?._ctrlMesh;return app&&gui?{vertices:mesh?.getNbVertices()??0,faces:mesh?.getNbFaces()??0,triangles:mesh?.getNbTriangles()??0,active_id:mesh?.getID()??null,ui_vertices:gui.domVerts.textContent.trim(),ui_faces:gui.domFaces.textContent.trim(),meshes:app.getMeshes().length,parts:app.getMeshes().map(m=>({id:m.getID(),vertices:m.getNbVertices(),faces:m.getNbFaces(),triangles:m.getNbTriangles(),levels:m._meshes?.length??1})),history:{undo:app.getStateManager()._undos.length,redo:app.getStateManager()._redos.length}}:null})()`;
-const obrushInfo = `(()=>{if(typeof window.obrushBrushMetrics!=='function')return null;const m=window.obrushBrushMetrics();return {vertices:m.vertices,faces:m.faces,triangles:m.triangles,active_subtool_id:m.active_subtool_id,scene_controls:m.scene_controls,layer_controls:m.layer_controls,subtools:m.subtools?.length,parts:m.subtools?.map(s=>({id:s.id,name:s.name,vertices:s.vertices,faces:s.faces,triangles:s.triangles})),history:m.history,viewport:m.camera?.viewport,message:m.message}})()`;
+const obrushInfo = `(()=>{if(typeof window.obrushBrushMetrics!=='function')return null;const m=window.obrushBrushMetrics();return {vertices:m.vertices,faces:m.faces,triangles:m.triangles,levels:m.subdivision_levels,level:m.subdivision_level,active_subtool_id:m.active_subtool_id,scene_controls:m.scene_controls,layer_controls:m.layer_controls,subtools:m.subtools?.length,parts:m.subtools?.map(s=>({id:s.id,name:s.name,vertices:s.vertices,faces:s.faces,triangles:s.triangles})),history:m.history,viewport:m.camera?.viewport,message:m.message}})()`;
 try {
   server = createServer(async (request, response) => {
     try {
@@ -233,7 +233,7 @@ try {
     if (!bytes.length) return null;
     try { return { file, bytes, project: JSON.parse(bytes.toString('utf8')) }; } catch { return null; }
   }, 'OBRush dense cube project download');
-  result.saved_cube = { file: savedFile.file, bytes: savedFile.bytes.length, sha256: sha(savedFile.bytes), vertices: savedFile.project.mesh.positions.length, triangles: savedFile.project.mesh.triangles.length, original_faces: savedFile.project.mesh.surface?.faces?.length ?? null };
+  result.saved_cube = { file: savedFile.file, bytes: savedFile.bytes.length, sha256: sha(savedFile.bytes), vertices: savedFile.project.mesh.positions.length, triangles: savedFile.project.mesh.triangles.length, original_faces: savedFile.project.mesh.surface?.faces?.length ?? null, retained_levels: savedFile.project.multiresolution?.levels?.length ?? null, active_level: savedFile.project.multiresolution?.active_level ?? null };
   await action('scene.clear');
   const beforeReload = await until(async () => { const info = await evalRead(obrushInfo); return info?.subtools === 0 ? info : null; }, 'OBRush clear before dense cube reload');
   result.cases.push({ name: 'obrush-direct-cube-clear-for-reload', ...beforeReload });
@@ -243,6 +243,12 @@ try {
   await send('DOM.setFileInputFiles', { nodeId: node, files: [savedFile.file] });
   const cubeReload = await until(async () => { const info = await evalRead(obrushInfo); return info?.subtools === 1 && info.vertices === 98306 && info.message?.startsWith('Loaded ') ? info : null; }, 'OBRush dense cube project reload');
   result.cases.push({ name: 'obrush-direct-cube-reload', ...cubeReload });
+  await action('object.lower');
+  const cubeLower = await until(async () => { const info = await evalRead(obrushInfo); return info?.level === 2 && info.vertices === 24578 ? info : null; }, 'OBRush retained cube lower level');
+  result.cases.push({ name: 'obrush-direct-cube-lower', ...cubeLower });
+  await action('object.higher');
+  const cubeHigher = await until(async () => { const info = await evalRead(obrushInfo); return info?.level === 3 && info.vertices === 98306 ? info : null; }, 'OBRush retained cube higher level');
+  result.cases.push({ name: 'obrush-direct-cube-higher', ...cubeHigher });
   await clickRect([303, 13, 387, 39]);
   const reSavedFile = await until(async () => {
     const completed = downloadEvents.find(e => e.method === 'Browser.downloadProgress' && e.state === 'completed' && e.guid !== downloadEvents.find(first => first.method === 'Browser.downloadProgress' && first.state === 'completed')?.guid);
@@ -253,13 +259,16 @@ try {
   result.resaved_cube = { bytes: reSavedFile.bytes.length, sha256: sha(reSavedFile.bytes), exact_json: JSON.stringify(reSavedFile.project) === JSON.stringify(savedFile.project) };
   const referenceCases = result.cases.filter(c => c.name.startsWith('reference-add-'));
   const ownCases = result.cases.filter(c => c.name.startsWith('obrush-add-'));
+  const expectedLevels = [4, 4, 3, 3];
   if (ref.faces !== 2 || own.faces !== 2 || referenceCases.length !== 4 || ownCases.length !== 4
     || referenceCases.some((c, index) => c.meshes !== ref.meshes + index + 1 || c.parts.at(-1).faces < 1
       || c.active_id !== c.parts.at(-1).id || c.history.undo !== ref.history.undo + index + 1
       || JSON.stringify(c.parts.slice(0, ref.parts.length)) !== JSON.stringify(ref.parts))
     || ownCases.some((c, index) => c.subtools !== own.subtools + index + 1 || c.faces < 1
       || c.active_subtool_id !== c.parts.at(-1).id || c.history.undo !== own.history.undo + index + 1
-      || JSON.stringify(c.parts.slice(0, own.parts.length)) !== JSON.stringify(own.parts))
+      || JSON.stringify(c.parts.slice(0, own.parts.length)) !== JSON.stringify(own.parts)
+      || c.levels !== expectedLevels[index] || c.level !== expectedLevels[index] - 1
+      || referenceCases[index].parts.at(-1).levels !== expectedLevels[index])
     || referenceUndo.parts.at(-1).id !== referenceCases.at(-2).parts.at(-1).id
     || referenceRedo.parts.at(-1).id !== referenceCases.at(-1).parts.at(-1).id
     || ownUndo.parts.at(-1).id !== ownCases.at(-2).parts.at(-1).id
@@ -268,10 +277,13 @@ try {
     || denseCube.faces !== 98304 || denseCube.triangles !== 196608
     || cubeUndo.faces !== 0 || cubeRedo.faces !== denseCube.faces
     || result.saved_cube.vertices !== denseCube.vertices || result.saved_cube.triangles !== denseCube.triangles
-    || result.saved_cube.original_faces !== denseCube.faces || cubeReload.faces !== denseCube.faces
+    || result.saved_cube.original_faces !== denseCube.faces || result.saved_cube.retained_levels !== 4
+    || result.saved_cube.active_level !== 3 || cubeReload.faces !== denseCube.faces || cubeReload.levels !== 4
+    || cubeLower.faces !== 24576 || cubeLower.levels !== 4
+    || cubeHigher.faces !== denseCube.faces || cubeHigher.levels !== 4
     || beforeReload.faces !== 0 || !result.resaved_cube.exact_json)
     throw Error('Additive primitive or clear-scene gate failed');
-  result.status = 'passed scoped additive controls, retained imported part, primitive undo/redo, empty scene, and direct dense cube undo/save/reload; reference shape remains open';
+  result.status = 'passed scoped additive controls, pinned primitive level counts, retained imported part, primitive undo/redo, empty scene, and direct dense cube undo/save/reload; reference placement and full navigation remain open';
 } catch (error) {
   result.status = 'failed';
   result.errors.push(String(error.stack || error));

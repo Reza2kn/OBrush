@@ -206,7 +206,7 @@ impl Mesh {
     /// This is the Source-profile Add path; generic cylinder settings remain
     /// available through `cylinder` without changing their legacy topology.
     pub fn source_default_cylinder() -> Result<Self, String> {
-        let mut mesh = Self::cylinder_with_original_faces(&CylinderSettings::default(), true)?;
+        let mut mesh = Self::source_cylinder_base()?;
         for _ in 0..2 {
             mesh = mesh
                 .subdivided_static(&StaticSubdivisionSettings::default())?
@@ -218,13 +218,23 @@ impl Mesh {
     /// Pinned SculptGL's default torus begins with 32×128 quads and takes
     /// two smooth static subdivision steps while retaining original quads.
     pub fn source_default_torus() -> Result<Self, String> {
-        let mut mesh = Self::torus_with_original_faces(&TorusSettings::default(), true)?;
+        let mut mesh = Self::source_torus_base()?;
         for _ in 0..2 {
             mesh = mesh
                 .subdivided_static(&StaticSubdivisionSettings::default())?
                 .mesh;
         }
         Ok(mesh)
+    }
+
+    /// Source-profile cylinder before its two retained smooth steps.
+    pub fn source_cylinder_base() -> Result<Self, String> {
+        Self::cylinder_with_original_faces(&CylinderSettings::default(), true)
+    }
+
+    /// Source-profile torus before its two retained smooth steps.
+    pub fn source_torus_base() -> Result<Self, String> {
+        Self::torus_with_original_faces(&TorusSettings::default(), true)
     }
 
     /// Closed or explicitly uncapped Y-axis cylinder/frustum. A zero endpoint

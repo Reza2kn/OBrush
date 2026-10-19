@@ -5496,15 +5496,6 @@ impl OBrushApp {
         if self.stroke_rejected {
             return;
         }
-        let mut mesh = match primitive
-            .create_for_scene(self.primitive_detail, self.source_shortcut_profile())
-        {
-            Ok(mesh) => mesh,
-            Err(error) => {
-                self.message = format!("Cannot create {}: {error}", primitive.name());
-                return;
-            }
-        };
         let snapshots = self.document.subtool_render_snapshots();
         let max_x = snapshots
             .iter()
@@ -5518,14 +5509,59 @@ impl OBrushApp {
             .map(|x| x as f32)
             .reduce(f32::max)
             .unwrap_or(-1.25);
-        for point in &mut mesh.positions {
-            point.x += max_x + 1.25;
-        }
         let name = primitive.name();
-        self.scene_action(
-            |document| document.add_subtool(mesh, name).map(|_| ()),
-            "Part added. Sculpt each part separately; Undo restores the scene.",
-        );
+        let offset = max_x + 1.25;
+        if self.source_shortcut_profile() && self.primitive_detail == 6 {
+            let base = match primitive {
+                PrimitiveKind::Sphere | PrimitiveKind::Cube => Mesh::cube_quad_grid(0),
+                PrimitiveKind::Cylinder => Mesh::source_cylinder_base(),
+                PrimitiveKind::Torus => Mesh::source_torus_base(),
+            };
+            let base = match base {
+                Ok(mesh) => mesh,
+                Err(error) => {
+                    self.message = format!("Cannot create {name}: {error}");
+                    return;
+                }
+            };
+            let settings = obrush_core::StaticSubdivisionSettings {
+                linear_edges: matches!(primitive, PrimitiveKind::Cube),
+            };
+            let steps = if matches!(primitive, PrimitiveKind::Sphere | PrimitiveKind::Cube) {
+                7
+            } else {
+                2
+            };
+            self.scene_action(
+                |document| {
+                    document
+                        .add_source_primitive_subtool(
+                            base,
+                            name,
+                            &settings,
+                            steps,
+                            Vec3::new(offset, 0.0, 0.0),
+                        )
+                        .map(|_| ())
+                },
+                "Part added with retained subdivision levels. Undo restores the scene.",
+            );
+        } else {
+            let mut mesh = match primitive.create_for_scene(self.primitive_detail, false) {
+                Ok(mesh) => mesh,
+                Err(error) => {
+                    self.message = format!("Cannot create {name}: {error}");
+                    return;
+                }
+            };
+            for point in &mut mesh.positions {
+                point.x += offset;
+            }
+            self.scene_action(
+                |document| document.add_subtool(mesh, name).map(|_| ()),
+                "Part added. Sculpt each part separately; Undo restores the scene.",
+            );
+        }
         self.frame_scene();
     }
 

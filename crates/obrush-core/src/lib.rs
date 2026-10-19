@@ -46,6 +46,8 @@ mod source_ordered_tree;
 mod source_paint_normal_view;
 mod source_pick_snapshot;
 mod source_picked_normal;
+#[cfg(test)]
+mod source_primitive_levels_tests;
 pub mod source_ring;
 mod source_worker_transaction;
 mod static_subdivision;

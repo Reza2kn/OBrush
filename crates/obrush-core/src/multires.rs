@@ -58,6 +58,41 @@ pub(crate) struct MultiresProjectRef<'a> {
 }
 
 impl Multiresolution {
+    /// Construct Source's default primitive hierarchy as one candidate. The
+    /// generator keeps the last four levels, including the visible fine mesh,
+    /// without publishing any intermediate document or history state.
+    pub(crate) fn source_primitive(
+        base: &Mesh,
+        settings: &crate::StaticSubdivisionSettings,
+        subdivisions: usize,
+        translation: crate::Vec3,
+    ) -> Result<Self, String> {
+        if subdivisions == 0 || subdivisions >= MAX_SUBDIVISION_LEVELS {
+            return Err("Source primitive subdivision count is out of range".into());
+        }
+        if !translation.is_finite() {
+            return Err("Source primitive placement must be finite".into());
+        }
+        let mut stack = Self::first_static_source(base, settings)?;
+        while stack.active < subdivisions {
+            let active = &stack.levels[stack.active];
+            stack = stack.added(active)?;
+        }
+        let start = stack.levels.len().saturating_sub(4);
+        if start != 0 {
+            stack.retain_range(start, stack.levels.len())?;
+        }
+        if translation != crate::Vec3::ZERO {
+            for level in &mut stack.levels {
+                for point in &mut level.positions {
+                    *point += translation;
+                }
+            }
+        }
+        stack.validate_budget()?;
+        Ok(stack)
+    }
+
     /// Transform an already reconciled hierarchy, making the active baseline
     /// exactly match the visible composed surface to avoid later delta drift.
     pub(crate) fn transformed(

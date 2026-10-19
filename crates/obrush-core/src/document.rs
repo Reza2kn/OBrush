@@ -1831,7 +1831,24 @@ impl Document {
     }
 
     pub fn add_subtool(&mut self, mesh: Mesh, name: &str) -> Result<u32, String> {
-        self.add_subtool_impl(mesh, name, false, None)
+        self.add_subtool_impl(mesh, name, false, None, None)
+    }
+
+    /// Add a Source-profile primitive and its last four static subdivision
+    /// levels as one validated scene/history transaction. The base and all
+    /// subdivision work remain in the shared native/WASM core.
+    pub fn add_source_primitive_subtool(
+        &mut self,
+        base: Mesh,
+        name: &str,
+        settings: &crate::StaticSubdivisionSettings,
+        subdivisions: usize,
+        translation: crate::Vec3,
+    ) -> Result<u32, String> {
+        base.validate()?;
+        let stack = Multiresolution::source_primitive(&base, settings, subdivisions, translation)?;
+        let mesh = stack.levels[stack.active].snapshot();
+        self.add_subtool_impl(mesh, name, true, None, Some(stack))
     }
 
     /// Append a validated imported mesh retaining its supplied normal bits.
@@ -1841,7 +1858,7 @@ impl Document {
         mesh: Mesh,
         name: &str,
     ) -> Result<u32, String> {
-        self.add_subtool_impl(mesh, name, true, None)
+        self.add_subtool_impl(mesh, name, true, None, None)
     }
 
     /// Append a preflighted source mesh with its editable local-to-world pose.
@@ -1853,7 +1870,7 @@ impl Document {
         preserve_normals: bool,
         metadata: SceneObjectMetadata,
     ) -> Result<u32, String> {
-        self.add_subtool_impl(mesh, name, preserve_normals, Some(metadata))
+        self.add_subtool_impl(mesh, name, preserve_normals, Some(metadata), None)
     }
 
     pub fn add_subtools_with_metadata(
@@ -1947,6 +1964,7 @@ impl Document {
         name: &str,
         preserve_normals: bool,
         metadata: Option<SceneObjectMetadata>,
+        multiresolution: Option<Multiresolution>,
     ) -> Result<u32, String> {
         crate::subtools::validate_name(name)?;
         mesh.validate()?;
@@ -1956,6 +1974,11 @@ impl Document {
         }
         if let Some(metadata) = &metadata {
             metadata.validate(&mesh)?;
+        }
+        if let Some(stack) = &multiresolution {
+            stack.validate_budget()?;
+            stack.reconciled(&mesh)?;
+            Self::check_output_budget(&mesh, &self.name, Some(stack), None, None)?;
         }
         let mut scene = self.scene.clone().unwrap_or_else(|| {
             if self.mesh.is_some() {
@@ -1985,7 +2008,7 @@ impl Document {
         scene.selected_ids = vec![id];
         self.check_scene_candidate_inner(
             &mesh,
-            None,
+            multiresolution.as_ref(),
             None,
             None,
             Some(&scene),
@@ -1994,7 +2017,7 @@ impl Document {
         let previous = self.snapshot_state();
         self.mesh = Some(mesh);
         self.active_metadata = metadata;
-        self.multiresolution = None;
+        self.multiresolution = multiresolution;
         self.layers = None;
         self.morph_target = None;
         self.scene = Some(scene);
