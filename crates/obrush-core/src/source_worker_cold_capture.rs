@@ -114,10 +114,8 @@ impl SourceWorkerColdCapture {
         revision: u64,
     ) -> Result<(), String> {
         self.verify_live_owner(document, epoch, revision)?;
-        let current = document.to_json()?;
-        if current.len() != self.project.len()
-            || blake3::hash(current.as_bytes()) != self.project_digest
-        {
+        let (bytes, digest) = document.project_json_digest()?;
+        if bytes != self.project.len() || digest != self.project_digest {
             return Err("Source worker reply has a stale complete scene".into());
         }
         Ok(())
@@ -237,6 +235,20 @@ mod tests {
         mesh.mask_convention = MaskConvention::UnprotectedF32V1;
         mesh.masks.fill(1.0);
         Document::new(mesh)
+    }
+
+    #[test]
+    fn streamed_scene_digest_matches_exact_public_json_bytes() {
+        let mut plain = fixture();
+        let mut rich = Document::new(Mesh::sphere(2));
+        rich.name = "source witness · \"scene\"".into();
+        rich.duplicate_subtool(1).unwrap();
+        for document in [&mut plain, &mut rich] {
+            let json = document.to_json().unwrap();
+            let (bytes, digest) = document.project_json_digest().unwrap();
+            assert_eq!(bytes, json.len());
+            assert_eq!(digest, blake3::hash(json.as_bytes()));
+        }
     }
 
     #[test]

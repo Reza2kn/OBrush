@@ -247,6 +247,33 @@ struct LimitedJsonWriter {
     limit: usize,
 }
 
+/// Hash the exact public JSON serialization without retaining a second
+/// project-sized string at an off-thread publication boundary.
+struct BoundedJsonDigestWriter {
+    hash: blake3::Hasher,
+    bytes: usize,
+}
+
+impl std::io::Write for BoundedJsonDigestWriter {
+    fn write(&mut self, chunk: &[u8]) -> std::io::Result<usize> {
+        self.bytes = self
+            .bytes
+            .checked_add(chunk.len())
+            .ok_or_else(|| std::io::Error::other("Project output-size overflow"))?;
+        if self.bytes > MAX_INPUT_BYTES {
+            return Err(std::io::Error::other(
+                "Project exceeds the encoded project output limit",
+            ));
+        }
+        self.hash.update(chunk);
+        Ok(chunk.len())
+    }
+
+    fn flush(&mut self) -> std::io::Result<()> {
+        Ok(())
+    }
+}
+
 struct OutputCounter {
     bytes: usize,
 }
@@ -4080,6 +4107,30 @@ impl Document {
     }
 
     pub fn to_json(&self) -> Result<String, String> {
+        let output = LimitedJsonWriter {
+            bytes: Vec::new(),
+            limit: MAX_INPUT_BYTES,
+        };
+        let output = self.write_project_json(output)?;
+        String::from_utf8(output.bytes).map_err(|e| format!("Cannot serialize UTF-8 project: {e}"))
+    }
+
+    /// The digest has the same serializer, validation and size limit as a
+    /// normal public Save. Buffering only 64 KiB avoids full-scene allocation.
+    pub(crate) fn project_json_digest(&self) -> Result<(usize, blake3::Hash), String> {
+        let output = BoundedJsonDigestWriter {
+            hash: blake3::Hasher::new(),
+            bytes: 0,
+        };
+        let buffered = std::io::BufWriter::with_capacity(64 * 1024, output);
+        let buffered = self.write_project_json(buffered)?;
+        let output = buffered
+            .into_inner()
+            .map_err(|error| format!("Cannot serialize project: {error}"))?;
+        Ok((output.bytes, output.hash.finalize()))
+    }
+
+    fn write_project_json<W: std::io::Write>(&self, mut output: W) -> Result<W, String> {
         self.validate_complete_state()?;
         let mesh = self.mesh.as_ref();
         let stack = match mesh {
@@ -4124,13 +4175,9 @@ impl Document {
             scene: self.scene.as_ref().map(Scene::project_ref),
             scene_v7: metadata.as_ref(),
         };
-        let mut output = LimitedJsonWriter {
-            bytes: Vec::new(),
-            limit: MAX_INPUT_BYTES,
-        };
         serde_json::to_writer(&mut output, &project)
             .map_err(|e| format!("Cannot serialize project: {e}"))?;
-        String::from_utf8(output.bytes).map_err(|e| format!("Cannot serialize UTF-8 project: {e}"))
+        Ok(output)
     }
 
     pub fn from_json(source: &str) -> Result<Self, String> {
