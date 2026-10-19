@@ -62,6 +62,8 @@ const result = {side, negative, protocol_commit:'e09510c',
   requested_brush:{radius,intensity,accumulate,negative},
   browser_build:side === 'root' ? sha(await readFile(path.join(web,'pkg/obrush_app_bg.wasm'))) : pinned,
   browser_js:side === 'root' ? sha(await readFile(path.join(web,'pkg/obrush_app.js'))) : null,
+  browser_simd_build:side === 'root' ? sha(await readFile(path.join(web,'pkg-simd/obrush_app_bg.wasm'))) : null,
+  browser_simd_js:side === 'root' ? sha(await readFile(path.join(web,'pkg-simd/obrush_app.js'))) : null,
   requests:[], cdp_trace:[], ui_actions:[], input_trace:[], download_events:[], downloads:[],
   screenshots:[], dialogs:[], exceptions:[], console_errors:[], blocked_external_requests:[],
   viewport_measurements:[], notice_acknowledgments:[], acknowledgments:[], failed_acknowledgments:[],
@@ -86,7 +88,7 @@ try {
   const stage = path.join(shared, '.artifacts/sculptgl-large-sustained-c58-stage');
   const pointerObserver = `(()=>{const rows=[];window.__uiBrushDelivered=rows;for(const type of ['pointerdown','pointermove','pointerup','mousedown','mousemove','mouseup'])window.addEventListener(type,e=>{if(rows.length<2048)rows.push({type,x:e.clientX,y:e.clientY,buttons:e.buttons,trusted:e.isTrusted,at:performance.now()});},true);})();\n`;
   const gpuObserver = side === 'source' ? await readFile(path.join(root,'scripts/source-webgl1-active-words-observer.js'),'utf8') :
-    await readFile(path.join(root,'scripts/source-gpu-readback-observer.js'),'utf8');
+    await readFile(path.join(root,'scripts/brush-negative-gpu-readback-observer.js'),'utf8');
   result.gpu_observer_sha256=sha(Buffer.from(gpuObserver));
   const observer = pointerObserver + gpuObserver + '\n' + (side === 'source' ?
     (await readFile(path.join(stage, 'observer/focused-alpha-input-observer.js'),'utf8')) + '\n' +
