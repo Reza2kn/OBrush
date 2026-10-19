@@ -46,8 +46,8 @@ async function dispatch(event, arrived, backlog) {
       const started = performance.now();
       const delta = owner.apply(epoch, sequence, input);
       const timing = JSON.parse(owner.timing_json());
-      if (!(delta instanceof Uint8Array) || delta.byteLength < 88 ||
-          delta.byteLength > 32 * 1024 * 1024) throw Error('Invalid Source worker delta');
+      if (!(delta instanceof Uint8Array) || delta.byteLength < 72 ||
+          delta.byteLength > 64 * 1024 * 1024) throw Error('Invalid Source worker preview');
       nextSequence++;
       self.postMessage({ id, kind, success: true, strokeEpoch, sequence, delta,
                          timing: { ...timing, queued_before: backlog,

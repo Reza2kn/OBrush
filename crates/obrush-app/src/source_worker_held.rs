@@ -3,12 +3,11 @@
 use super::*;
 use crate::source_geometry_host::{self as geometry, SourceGeometryMode};
 use crate::source_paint_host::RawPaintInput;
-use obrush_core::{Mesh, SourceGeometryTool};
+use obrush_core::SourceGeometryTool;
 
 pub(super) struct HeldSourceWorker {
     pub epoch: u64,
     pub revision: u64,
-    pub preview: Option<Arc<Mesh>>,
     last_screen: [f64; 2],
     radius: f64,
     radius_factor: f64,
@@ -72,6 +71,20 @@ fn wire_input(
 }
 
 impl OBrushApp {
+    fn source_worker_sparse_style_eligible(&self) -> bool {
+        self.document.active_object_metadata().is_none()
+            && self
+                .rendered_scene
+                .iter()
+                .all(|object| object.metadata.is_none())
+            && self.viewport_style.shading == crate::renderer::ShadingMode::Studio
+            && !self.viewport_style.wireframe
+            && !self.viewport_style.wire_only
+            && !self.viewport_style.flat_shading
+            && self.viewport_style.uv_texture.is_none()
+            && self.transform_drag.is_none()
+    }
+
     pub fn source_worker_held_pointer_in_viewport(&self, x: f64, y: f64) -> bool {
         x.is_finite()
             && y.is_finite()
@@ -96,6 +109,9 @@ impl OBrushApp {
             return Err(
                 "Worker trial accepts unmodified Source Draw with no background operation".into(),
             );
+        }
+        if !self.source_worker_sparse_style_eligible() {
+            return Err("Worker sparse preview requires plain Studio rendering".into());
         }
         let prefs = self
             .effective_source_geometry_preferences(BrushKind::Draw)
@@ -123,10 +139,33 @@ impl OBrushApp {
             return Err("Source Worker pointer has no surface hit".into());
         }
         let (epoch, revision, project, options) = self.source_worker_cold_begin()?;
+        self.refresh_rendered_scene();
+        if !self.source_worker_sparse_style_eligible() {
+            self.source_worker_cold.cancel(epoch);
+            return Err("Worker sparse preview scene changed before capture".into());
+        }
+        let Some(active) = self.rendered_scene.iter().find(|object| object.active) else {
+            self.source_worker_cold.cancel(epoch);
+            return Err("Source Worker has no active rendered object".into());
+        };
+        if Some(active.id) != self.document.active_subtool_id() {
+            self.source_worker_cold.cancel(epoch);
+            return Err("Source Worker rendered object differs from active document".into());
+        }
+        if let Err(error) = self
+            .renderer
+            .lock()
+            .map_err(|_| "Source Worker renderer is locked".to_string())
+            .and_then(|mut renderer| {
+                renderer.begin_source_worker_preview(epoch, active.id, Arc::clone(&active.mesh))
+            })
+        {
+            self.source_worker_cold.cancel(epoch);
+            return Err(error.to_string());
+        }
         self.source_worker_held = Some(HeldSourceWorker {
             epoch,
             revision,
-            preview: None,
             last_screen: input.screen,
             radius: prefs.radius,
             radius_factor: prefs.radius_factor,
@@ -163,6 +202,7 @@ impl OBrushApp {
             || settings.invert
             || self.preferences.tool(BrushKind::Draw).lock_position
             || self.preferences.global().continuous
+            || !self.source_worker_sparse_style_eligible()
         {
             return Err("Source Worker static brush controls changed during the gesture".into());
         }
@@ -218,6 +258,9 @@ impl OBrushApp {
         revision: u64,
         delta: &[u8],
     ) -> Result<(), String> {
+        if !self.source_worker_sparse_style_eligible() {
+            return Err("Source Worker render style changed during sparse preview".into());
+        }
         let held = self
             .source_worker_held
             .as_mut()
@@ -225,9 +268,13 @@ impl OBrushApp {
         if held.epoch != epoch || held.revision != revision || self.revision != revision {
             return Err("Source Worker preview has a stale owner or revision".into());
         }
-        held.preview = self
+        let rows = self
             .source_worker_cold
             .preview(&self.document, epoch, revision, delta)?;
+        self.renderer
+            .lock()
+            .map_err(|_| "Source Worker renderer is locked")?
+            .queue_source_worker_preview_rows(epoch, &rows)?;
         self.egui_ctx.request_repaint();
         Ok(())
     }
@@ -245,7 +292,20 @@ impl OBrushApp {
             .ok_or("No held Source Worker gesture")?;
         if held.epoch != epoch || held.revision != revision {
             self.source_worker_cold.cancel(held.epoch);
+            let _ = self
+                .renderer
+                .lock()
+                .map(|mut renderer| renderer.end_source_worker_preview(held.epoch));
             return Err("Source Worker finish has a stale gesture identity".into());
+        }
+        if !self
+            .renderer
+            .lock()
+            .ok()
+            .is_some_and(|renderer| renderer.source_worker_preview_active(epoch))
+        {
+            self.source_worker_cold.cancel(epoch);
+            return Err("Source Worker sparse GPU preview lost its render owner".into());
         }
         let prefs = self.effective_source_geometry_preferences(BrushKind::Draw);
         let settings = self.source_geometry_settings(BrushKind::Draw).ok();
@@ -266,11 +326,20 @@ impl OBrushApp {
             })
             || self.preferences.tool(BrushKind::Draw).lock_position
             || self.preferences.global().continuous
+            || !self.source_worker_sparse_style_eligible()
         {
             self.source_worker_cold.cancel(epoch);
+            let _ = self
+                .renderer
+                .lock()
+                .map(|mut renderer| renderer.end_source_worker_preview(epoch));
             return Err("Source Worker controls changed before release publication".into());
         }
         let result = self.source_worker_cold_commit(epoch, revision, delta, retained);
+        let _ = self
+            .renderer
+            .lock()
+            .map(|mut renderer| renderer.end_source_worker_preview(epoch));
         self.egui_ctx.request_repaint();
         result
     }
@@ -282,6 +351,10 @@ impl OBrushApp {
             .is_some_and(|held| held.epoch == epoch)
         {
             self.source_worker_held = None;
+            let _ = self
+                .renderer
+                .lock()
+                .map(|mut renderer| renderer.end_source_worker_preview(epoch));
             self.egui_ctx.request_repaint();
             self.source_worker_cold.cancel(epoch)
         } else {

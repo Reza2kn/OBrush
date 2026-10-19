@@ -2,15 +2,16 @@
 //! The Worker cannot mutate the public document, renderer or history directly.
 
 use obrush_core::{
-    Document, Mesh, SourceGeometryOptions, SourceWorkerColdCapture, decode_source_worker_mesh_delta,
+    Document, Mesh, SourceGeometryOptions, SourceWorkerColdCapture, SourceWorkerPreviewRow,
+    SourceWorkerSparsePreviewOverlay,
 };
-use std::sync::Arc;
+use std::collections::HashMap;
 
 struct Pending {
     epoch: u64,
     revision: u64,
     capture: SourceWorkerColdCapture,
-    preview: Option<Arc<Mesh>>,
+    preview: SourceWorkerSparsePreviewOverlay,
 }
 
 #[derive(Default)]
@@ -45,6 +46,14 @@ impl ColdSourceWorkerBridge {
             .checked_add(1)
             .ok_or("Source worker epochs exhausted")?;
         let capture = SourceWorkerColdCapture::capture(document, options, epoch, revision)?;
+        let mesh = document
+            .active_mesh()
+            .ok_or("Source Worker has no active preview mesh")?;
+        let preview = SourceWorkerSparsePreviewOverlay::new(
+            mesh.positions.len(),
+            capture.active_subtool_id(),
+            epoch,
+        )?;
         let mut project_bytes = Vec::new();
         project_bytes
             .try_reserve_exact(capture.project_bytes().len())
@@ -58,7 +67,7 @@ impl ColdSourceWorkerBridge {
             epoch,
             revision,
             capture,
-            preview: None,
+            preview,
         });
         Ok((epoch, project, options))
     }
@@ -81,14 +90,14 @@ impl ColdSourceWorkerBridge {
         let final_mesh = pending
             .capture
             .decode_candidate(document, epoch, revision, delta)?;
-        match (&pending.preview, final_mesh.as_ref()) {
-            (None, None) => {}
-            (Some(preview), Some(final_mesh)) if same_geometry_words(preview, final_mesh) => {}
-            _ => {
-                return Err(
-                    "Source worker final geometry differs from the last checked preview".into(),
-                );
-            }
+        if !final_matches_preview(
+            document
+                .active_mesh()
+                .ok_or("Source Worker lost its baseline mesh")?,
+            final_mesh.as_ref(),
+            &pending.preview,
+        )? {
+            return Err("Source worker final geometry differs from checked sparse previews".into());
         }
         pending
             .capture
@@ -101,23 +110,20 @@ impl ColdSourceWorkerBridge {
         epoch: u64,
         revision: u64,
         delta: &[u8],
-    ) -> Result<Option<Arc<Mesh>>, String> {
+    ) -> Result<Vec<SourceWorkerPreviewRow>, String> {
         let pending = self
             .pending
             .as_mut()
             .ok_or("No Source worker gesture is pending")?;
-        pending.capture.verify_scene(document, epoch, revision)?;
-        let before = pending
-            .preview
-            .as_deref()
-            .or_else(|| document.active_mesh())
+        pending
+            .capture
+            .verify_live_owner(document, epoch, revision)?;
+        let baseline = document
+            .active_mesh()
             .ok_or("Source worker preview has no active mesh")?;
-        let candidate =
-            decode_source_worker_mesh_delta(before, pending.capture.active_subtool_id(), delta)?;
-        if let Some(candidate) = candidate {
-            pending.preview = Some(Arc::new(candidate));
-        }
-        Ok(pending.preview.clone())
+        pending
+            .preview
+            .apply(&baseline.positions, &baseline.normals, delta)
     }
 
     pub fn cancel(&mut self, epoch: u64) -> bool {
@@ -134,17 +140,38 @@ impl ColdSourceWorkerBridge {
     }
 }
 
-fn same_geometry_words(a: &Mesh, b: &Mesh) -> bool {
-    a.positions.len() == b.positions.len()
-        && a.normals.len() == b.normals.len()
-        && a.positions
-            .iter()
-            .zip(&b.positions)
-            .all(|(a, b)| a.to_array().map(f32::to_bits) == b.to_array().map(f32::to_bits))
-        && a.normals
-            .iter()
-            .zip(&b.normals)
-            .all(|(a, b)| a.to_array().map(f32::to_bits) == b.to_array().map(f32::to_bits))
+fn final_matches_preview(
+    baseline: &Mesh,
+    final_mesh: Option<&Mesh>,
+    preview: &SourceWorkerSparsePreviewOverlay,
+) -> Result<bool, String> {
+    let mut changed = HashMap::new();
+    changed
+        .try_reserve(preview.changed_row_count())
+        .map_err(|_| "Cannot reserve final Source Worker preview comparison")?;
+    for (index, point, normal) in preview.iter_changed() {
+        changed.insert(index as usize, (point, normal));
+    }
+    let final_mesh = final_mesh.unwrap_or(baseline);
+    if baseline.positions.len() != final_mesh.positions.len()
+        || baseline.normals.len() != final_mesh.normals.len()
+    {
+        return Ok(false);
+    }
+    for index in 0..baseline.positions.len() {
+        let (point, normal) = changed.get(&index).copied().unwrap_or_else(|| {
+            (
+                baseline.positions[index].to_array(),
+                baseline.normals[index].to_array(),
+            )
+        });
+        if point.map(f32::to_bits) != final_mesh.positions[index].to_array().map(f32::to_bits)
+            || normal.map(f32::to_bits) != final_mesh.normals[index].to_array().map(f32::to_bits)
+        {
+            return Ok(false);
+        }
+    }
+    Ok(true)
 }
 
 #[cfg(test)]
@@ -153,7 +180,7 @@ mod tests {
     use obrush_core::{
         MaskConvention, SourceGeometryAlphaTracks, SourceGeometryControls, SourceGeometryPass,
         SourceWorkerTransaction, encode_source_worker_mesh_delta,
-        encode_source_worker_retained_warm,
+        encode_source_worker_retained_warm, encode_source_worker_sparse_preview_rows,
     };
 
     #[test]
@@ -191,16 +218,32 @@ mod tests {
             SourceGeometryAlphaTracks::default(),
         )
         .unwrap();
-        let preview_delta = encode_source_worker_mesh_delta(
-            main.active_mesh().unwrap(),
-            tx.document().active_mesh().unwrap(),
-            1,
-        )
-        .unwrap();
-        let preview = bridge
-            .preview(&main, epoch, 7, &preview_delta)
-            .unwrap()
-            .unwrap();
+        let before = main.active_mesh().unwrap();
+        let after = tx.document().active_mesh().unwrap();
+        let rows: Vec<_> = (0..before.positions.len())
+            .filter_map(|index| {
+                let bp = before.positions[index].to_array();
+                let bn = before.normals[index].to_array();
+                let ap = after.positions[index].to_array();
+                let an = after.normals[index].to_array();
+                if bp.map(f32::to_bits) == ap.map(f32::to_bits)
+                    && bn.map(f32::to_bits) == an.map(f32::to_bits)
+                {
+                    return None;
+                }
+                Some(SourceWorkerPreviewRow {
+                    index: index as u32,
+                    before_position: bp,
+                    before_normal: bn,
+                    after_position: ap,
+                    after_normal: an,
+                })
+            })
+            .collect();
+        let preview_delta =
+            encode_source_worker_sparse_preview_rows(epoch, 1, 1, before.positions.len(), &rows)
+                .unwrap();
+        let preview = bridge.preview(&main, epoch, 7, &preview_delta).unwrap();
         assert_eq!(main.to_json().unwrap(), original);
         assert_eq!(main.history_depths(), (0, 0));
         let done = tx.finish(epoch, 2).unwrap();
@@ -213,7 +256,18 @@ mod tests {
             1,
         )
         .unwrap();
-        assert!(same_geometry_words(&preview, done.active_mesh().unwrap()));
+        assert_eq!(preview.len(), rows.len());
+        for (actual, expected) in preview.iter().zip(&rows) {
+            assert_eq!(actual.index, expected.index);
+            assert_eq!(
+                actual.after_position.map(f32::to_bits),
+                expected.after_position.map(f32::to_bits)
+            );
+            assert_eq!(
+                actual.after_normal.map(f32::to_bits),
+                expected.after_normal.map(f32::to_bits)
+            );
+        }
         assert!(
             bridge
                 .commit(&mut main, epoch, 7, &final_delta, &retained)
@@ -221,5 +275,46 @@ mod tests {
         );
         assert_eq!(main.history_depths(), (1, 0));
         assert!(main.source_geometry_state(1).is_some());
+    }
+
+    #[test]
+    fn sparse_preview_cannot_commit_a_different_final_mesh() {
+        let mut mesh = Mesh::import_obj(b"v 0 0 0\nv 4 0 0\nv 0 4 0\nf 1 2 3\n")
+            .unwrap()
+            .mesh;
+        mesh.mask_convention = MaskConvention::UnprotectedF32V1;
+        mesh.masks.fill(1.0);
+        let mut document = Document::new(mesh);
+        let original = document.to_json().unwrap();
+        let mut bridge = ColdSourceWorkerBridge::default();
+        let (epoch, _, _) = bridge
+            .begin(&document, SourceGeometryOptions::inflate(), 7)
+            .unwrap();
+        let baseline = document.active_mesh().unwrap();
+        let old = baseline.positions[0].to_array();
+        let mut new = old;
+        new[2] += 0.25;
+        let row = SourceWorkerPreviewRow {
+            index: 0,
+            before_position: old,
+            before_normal: baseline.normals[0].to_array(),
+            after_position: new,
+            after_normal: baseline.normals[0].to_array(),
+        };
+        let packet =
+            encode_source_worker_sparse_preview_rows(epoch, 1, 1, baseline.positions.len(), &[row])
+                .unwrap();
+        assert_eq!(
+            bridge.preview(&document, epoch, 7, &packet).unwrap().len(),
+            1
+        );
+        let final_delta = encode_source_worker_mesh_delta(baseline, baseline, 1).unwrap();
+        assert!(
+            bridge
+                .commit(&mut document, epoch, 7, &final_delta, &[])
+                .is_err()
+        );
+        assert_eq!(document.to_json().unwrap(), original);
+        assert_eq!(document.history_depths(), (0, 0));
     }
 }

@@ -20,6 +20,7 @@ pub struct SourceWorkerColdCapture {
     history_depths: (usize, usize),
     project: Vec<u8>,
     project_digest: blake3::Hash,
+    active_mesh_addr: usize,
     retained: Option<Arc<crate::SourceGeometryNormalState>>,
     retained_packet: Vec<u8>,
 }
@@ -58,6 +59,10 @@ impl SourceWorkerColdCapture {
             )?,
             None => Vec::new(),
         };
+        let active_mesh_addr = document
+            .active_mesh()
+            .ok_or("Source worker has no active mesh")?
+            as *const Mesh as usize;
         let project = document.to_json()?.into_bytes();
         if project.len() > MAX_PROJECT_BYTES {
             return Err("Source worker project exceeds the file limit".into());
@@ -69,6 +74,7 @@ impl SourceWorkerColdCapture {
             level: document.current_level(),
             history_depths: document.history_depths(),
             project_digest: blake3::hash(&project),
+            active_mesh_addr,
             project,
             retained,
             retained_packet,
@@ -99,9 +105,27 @@ impl SourceWorkerColdCapture {
         self.active_subtool_id
     }
 
-    /// Validate the complete public scene and transient producer before a
-    /// preview packet may reach the renderer.
+    /// Validate the complete public scene and transient producer at the final
+    /// publication boundary. Preview uses only the cheap live-owner witness.
     pub fn verify_scene(
+        &self,
+        document: &Document,
+        epoch: u64,
+        revision: u64,
+    ) -> Result<(), String> {
+        self.verify_live_owner(document, epoch, revision)?;
+        let current = document.to_json()?;
+        if current.len() != self.project.len()
+            || blake3::hash(current.as_bytes()) != self.project_digest
+        {
+            return Err("Source worker reply has a stale complete scene".into());
+        }
+        Ok(())
+    }
+
+    /// Check immutable capture identity and the host's document revision
+    /// without serializing the million-vertex scene for every Worker reply.
+    pub fn verify_live_owner(
         &self,
         document: &Document,
         epoch: u64,
@@ -120,16 +144,14 @@ impl SourceWorkerColdCapture {
                 _ => true,
             }
             || document.active_subtool_id() != Some(self.active_subtool_id)
+            || document
+                .active_mesh()
+                .map(|mesh| mesh as *const Mesh as usize)
+                != Some(self.active_mesh_addr)
             || document.current_level() != self.level
             || document.history_depths() != self.history_depths
         {
             return Err("Source worker reply has a stale owner or document revision".into());
-        }
-        let current = document.to_json()?;
-        if current.len() != self.project.len()
-            || blake3::hash(current.as_bytes()) != self.project_digest
-        {
-            return Err("Source worker reply has a stale complete scene".into());
         }
         Ok(())
     }
@@ -237,6 +259,20 @@ mod tests {
         let mut changed = fixture();
         changed.name.push_str(" changed");
         assert!(capture.decode_candidate(&changed, 8, 10, &delta).is_err());
+    }
+
+    #[test]
+    fn in_place_mutation_can_pass_preview_owner_but_final_digest_rejects() {
+        let mut doc = fixture();
+        let capture =
+            SourceWorkerColdCapture::capture(&doc, SourceGeometryOptions::inflate(), 8, 10)
+                .unwrap();
+        let baseline = doc.active_mesh().unwrap().snapshot();
+        let delta = encode_source_worker_mesh_delta(&baseline, &baseline, 1).unwrap();
+        doc.active_mesh_mut().unwrap().positions[0].z = 0.25;
+        // The cheap pointer/revision check is intentionally provisional.
+        assert!(capture.verify_live_owner(&doc, 8, 10).is_ok());
+        assert!(capture.decode_candidate(&doc, 8, 10, &delta).is_err());
     }
 
     #[test]

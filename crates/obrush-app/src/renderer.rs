@@ -1008,6 +1008,7 @@ pub struct Renderer {
     // including when the visible scene is empty.
     vertex_array: glow::VertexArray,
     meshes: HashMap<u32, GpuMesh>,
+    source_worker_preview: Option<SourceWorkerGpuPreview>,
     source_guide_bounds: Option<SourceGuideBoundsCache>,
     selected_certificates: SelectedNormalCertificates,
     uv_texture: Option<GpuViewTexture>,
@@ -1551,6 +1552,17 @@ struct GpuMesh {
     source_mask_snapshot: Option<SourceMaskSnapshot>,
     source_mask_buffer_reuses: u64,
     source_mask_buffer_uploads: u64,
+}
+
+/// Private display overlay for one checked Worker gesture. The public scene
+/// and cached upload identity continue to point at the immutable baseline.
+struct SourceWorkerGpuPreview {
+    epoch: u64,
+    subtool_id: u32,
+    baseline: Arc<Mesh>,
+    pending: HashMap<u32, [f32; 10]>,
+    current: HashMap<u32, [f32; 10]>,
+    restoring: bool,
 }
 
 struct GpuUvMesh {
@@ -2235,6 +2247,7 @@ impl Renderer {
                     .min(gl.get_parameter_i32(glow::MAX_TEXTURE_SIZE)),
                 vertex_array,
                 meshes: HashMap::new(),
+                source_worker_preview: None,
                 source_guide_bounds: None,
                 selected_certificates: SelectedNormalCertificates::default(),
                 uv_texture: None,
@@ -2248,6 +2261,147 @@ impl Renderer {
                 destroyed: false,
             })
         }
+    }
+
+    pub fn begin_source_worker_preview(
+        &mut self,
+        epoch: u64,
+        subtool_id: u32,
+        baseline: Arc<Mesh>,
+    ) -> Result<(), String> {
+        if self
+            .source_worker_preview
+            .as_ref()
+            .is_some_and(|preview| preview.restoring)
+        {
+            self.reset_source_worker_preview_upload();
+        }
+        if epoch == 0 || subtool_id == 0 || self.source_worker_preview.is_some() {
+            return Err("Source Worker GPU preview already has an owner".into());
+        }
+        self.source_worker_preview = Some(SourceWorkerGpuPreview {
+            epoch,
+            subtool_id,
+            baseline,
+            pending: HashMap::new(),
+            current: HashMap::new(),
+            restoring: false,
+        });
+        Ok(())
+    }
+
+    pub fn queue_source_worker_preview_rows(
+        &mut self,
+        epoch: u64,
+        rows: &[obrush_core::SourceWorkerPreviewRow],
+    ) -> Result<(), String> {
+        let preview = self
+            .source_worker_preview
+            .as_mut()
+            .filter(|preview| preview.epoch == epoch && !preview.restoring)
+            .ok_or("Source Worker GPU preview has a stale owner")?;
+        let new_pending = rows
+            .iter()
+            .filter(|row| !preview.pending.contains_key(&row.index))
+            .count();
+        let new_current = rows
+            .iter()
+            .filter(|row| !preview.current.contains_key(&row.index))
+            .count();
+        preview
+            .pending
+            .try_reserve(new_pending)
+            .map_err(|_| "Cannot reserve Worker GPU preview rows")?;
+        preview
+            .current
+            .try_reserve(new_current)
+            .map_err(|_| "Cannot reserve Worker GPU preview identities")?;
+        for row in rows {
+            let index = row.index as usize;
+            if index >= preview.baseline.positions.len() {
+                return Err("Worker GPU preview row is out of range".into());
+            }
+            let base = &preview.baseline;
+            let mask = base
+                .masks
+                .get(index)
+                .map_or(0.0, |&raw| base.mask_convention.protection_for_display(raw));
+            let color = base.colors.get(index).copied().unwrap_or([1.0; 3]);
+            let words = [
+                row.after_position[0],
+                row.after_position[1],
+                row.after_position[2],
+                row.after_normal[0],
+                row.after_normal[1],
+                row.after_normal[2],
+                mask,
+                color[0],
+                color[1],
+                color[2],
+            ];
+            preview.pending.insert(row.index, words);
+            preview.current.insert(row.index, words);
+        }
+        Ok(())
+    }
+
+    /// Restore touched baseline rows if this mesh remains displayed. A changed
+    /// public Document causes a normal full upload instead of this restoration.
+    pub fn end_source_worker_preview(&mut self, epoch: u64) -> Result<(), String> {
+        let result = (|| {
+            let preview = self
+                .source_worker_preview
+                .as_mut()
+                .filter(|preview| preview.epoch == epoch)
+                .ok_or("Source Worker GPU preview has a stale ending owner")?;
+            let new_pending = preview
+                .current
+                .iter()
+                .filter(|(row, _)| !preview.pending.contains_key(row))
+                .count();
+            preview
+                .pending
+                .try_reserve(new_pending)
+                .map_err(|_| "Cannot reserve Worker GPU restore rows")?;
+            for &row in preview.current.keys() {
+                let index = row as usize;
+                let base = &preview.baseline;
+                let position = base.positions[index];
+                let normal = base.normals[index];
+                let mask = base
+                    .masks
+                    .get(index)
+                    .map_or(0.0, |&raw| base.mask_convention.protection_for_display(raw));
+                let color = base.colors.get(index).copied().unwrap_or([1.0; 3]);
+                preview.pending.insert(
+                    row,
+                    [
+                        position.x, position.y, position.z, normal.x, normal.y, normal.z, mask,
+                        color[0], color[1], color[2],
+                    ],
+                );
+            }
+            preview.restoring = true;
+            Ok(())
+        })();
+        if result.is_err() {
+            self.reset_source_worker_preview_upload();
+        }
+        result
+    }
+
+    fn reset_source_worker_preview_upload(&mut self) {
+        if let Some(preview) = self.source_worker_preview.take()
+            && let Some(gpu) = self.meshes.get_mut(&preview.subtool_id)
+        {
+            gpu.identity = UploadIdentity::default();
+        }
+    }
+
+    pub fn source_worker_preview_active(&self, epoch: u64) -> bool {
+        self.source_worker_preview
+            .as_ref()
+            .is_some_and(|preview| preview.epoch == epoch && !preview.restoring)
     }
 
     #[allow(clippy::too_many_arguments)]
@@ -2633,12 +2787,57 @@ impl Renderer {
                 {
                     upload = gpu.upload_edges(gl, object.mesh, object.metadata.is_some());
                 }
+                let mut clear_worker_preview = false;
+                if upload.is_ok()
+                    && let Some(preview) = self.source_worker_preview.as_mut()
+                    && preview.subtool_id == object.id
+                {
+                    if object_style.shading != ShadingMode::Studio
+                        || object_style.wireframe
+                        || object_style.wire_only
+                        || object_style.flat_shading
+                        || object_style.uv_texture.is_some()
+                        || object.metadata.is_some()
+                        || gpu.selected_normals.is_some()
+                        || gpu.source_normals.is_some()
+                    {
+                        upload = Err("Source Worker GPU preview render style changed".into());
+                        clear_worker_preview = true;
+                    } else if !std::ptr::eq(object.mesh, preview.baseline.as_ref()) {
+                        if preview.restoring {
+                            clear_worker_preview = true;
+                        } else {
+                            upload = Err("Source Worker GPU preview baseline changed".into());
+                            clear_worker_preview = true;
+                        }
+                    } else {
+                        upload = gpu.apply_source_worker_preview_rows(
+                            gl,
+                            &mut preview.pending,
+                            &preview.current,
+                            &preview.baseline,
+                        );
+                        if upload.is_ok() && preview.restoring {
+                            clear_worker_preview = true;
+                        }
+                    }
+                }
+                if clear_worker_preview {
+                    self.reset_source_worker_preview_upload();
+                }
                 if let Err(error) = upload {
                     self.scene_error = Some(format!("Object {}: {error}", object.id));
                     // Never mark a failed upload as current or draw partial
                     // old/new buffers. The document remains untouched.
                     if let Some(gpu) = self.meshes.remove(&object.id) {
                         gpu.destroy(gl);
+                    }
+                    if self
+                        .source_worker_preview
+                        .as_ref()
+                        .is_some_and(|preview| preview.subtool_id == object.id)
+                    {
+                        self.reset_source_worker_preview_upload();
                     }
                 }
             }
@@ -3942,6 +4141,103 @@ impl Renderer {
 }
 
 impl GpuMesh {
+    unsafe fn apply_source_worker_preview_rows(
+        &mut self,
+        gl: &glow::Context,
+        pending: &mut HashMap<u32, [f32; 10]>,
+        current: &HashMap<u32, [f32; 10]>,
+        baseline: &Mesh,
+    ) -> Result<(), String> {
+        if pending.is_empty() {
+            return Ok(());
+        }
+        let mut indices: Vec<_> = pending.keys().copied().collect();
+        indices.sort_unstable();
+        // A bounded dense span can absorb a few unchanged gaps using exact
+        // sparse-shadow or baseline words. Choose the least overdraw that
+        // stays below the WebGL call and byte budgets. Reject before GL if
+        // fragmentation still exceeds them.
+        const MAX_CALLS: usize = 16;
+        const MAX_ROWS: usize = 262_144;
+        const MAX_RUN_ROWS: u32 = 8_192;
+        let mut selected = None;
+        for gap in [0_u32, 8, 32, 128, 512, 2_048] {
+            let mut groups = Vec::new();
+            groups
+                .try_reserve_exact(MAX_CALLS + 1)
+                .map_err(|_| "Cannot reserve Worker GPU upload ranges")?;
+            let mut first = indices[0];
+            let mut last = first;
+            let mut total = 0_usize;
+            for &index in &indices[1..] {
+                if index - last <= gap + 1 && index - first < MAX_RUN_ROWS {
+                    last = index;
+                } else {
+                    total += (last - first + 1) as usize;
+                    groups.push((first, last));
+                    first = index;
+                    last = index;
+                }
+                if groups.len() > MAX_CALLS || total > MAX_ROWS {
+                    break;
+                }
+            }
+            if groups.len() > MAX_CALLS || total > MAX_ROWS {
+                continue;
+            }
+            total += (last - first + 1) as usize;
+            groups.push((first, last));
+            if groups.len() <= MAX_CALLS && total <= MAX_ROWS {
+                selected = Some(groups);
+                break;
+            }
+        }
+        let groups =
+            selected.ok_or("Source Worker sparse GPU packet exceeds call or row budget")?;
+        unsafe {
+            gl.bind_buffer(glow::ARRAY_BUFFER, Some(self.vertices));
+        }
+        for (start, end) in groups {
+            let mut words = Vec::new();
+            words
+                .try_reserve_exact((end - start + 1) as usize * 10)
+                .map_err(|_| "Cannot reserve Source Worker GPU row upload")?;
+            for index in start..=end {
+                if let Some(row) = pending.get(&index).or_else(|| current.get(&index)) {
+                    words.extend_from_slice(row);
+                } else {
+                    let position = baseline.positions[index as usize];
+                    let normal = baseline.normals[index as usize];
+                    let mask = baseline.masks.get(index as usize).map_or(0.0, |&raw| {
+                        baseline.mask_convention.protection_for_display(raw)
+                    });
+                    let color = baseline
+                        .colors
+                        .get(index as usize)
+                        .copied()
+                        .unwrap_or([1.0; 3]);
+                    words.extend_from_slice(&[
+                        position.x, position.y, position.z, normal.x, normal.y, normal.z, mask,
+                        color[0], color[1], color[2],
+                    ]);
+                }
+            }
+            let offset = i32::try_from(u64::from(start) * 40)
+                .map_err(|_| "Source Worker GPU row offset exceeds WebGL range")?;
+            unsafe {
+                gl.buffer_sub_data_u8_slice(
+                    glow::ARRAY_BUFFER,
+                    offset,
+                    bytemuck::cast_slice(&words),
+                );
+            }
+        }
+        unsafe {
+            geometry_gl_result(gl, "Source Worker sparse row upload")?;
+        }
+        pending.clear();
+        Ok(())
+    }
     fn normal_cache_matches(
         &self,
         object: &RenderObject<'_>,

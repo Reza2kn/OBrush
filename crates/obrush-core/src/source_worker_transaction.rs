@@ -255,6 +255,21 @@ mod tests {
     }
 
     #[test]
+    fn first_cold_controlled_dab_exposes_selected_chunk_envelope() {
+        let document = fixture();
+        assert!(document.source_geometry_state(1).is_none());
+        let mut tx = SourceWorkerTransaction::begin(document, options(), 93).unwrap();
+        let report = dab(&mut tx, 93, 1, 0.5).unwrap();
+        assert!(report.combined.changed_vertices > 0);
+        let state = tx.document().source_geometry_state(1).unwrap();
+        let chunks = state
+            .render_selected_chunks_after_new_worker_state()
+            .unwrap();
+        assert_ne!(chunks, [0; 8]);
+        assert_ne!(chunks[0] & 1, 0);
+    }
+
+    #[test]
     fn ordered_owner_preserves_one_history_event_and_rejects_stale_messages() {
         let document = fixture();
         let original = document.to_json().unwrap();

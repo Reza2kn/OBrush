@@ -38,6 +38,32 @@ pub const SOURCE_CLAY_SINGLE_LEAF_FACES: usize = 100;
 pub const SOURCE_GEOMETRY_CHUNK_ROWS: usize = 2048;
 const SOURCE_GEOMETRY_CHUNK_WORDS: usize = 8;
 
+/// A selected position can change the normals at every corner of its incident
+/// faces, including a corner in a different 2,048-row render chunk. The
+/// normal refresh already built incidence for a changed dab; use that same
+/// topology closure instead of scanning all vertices or guessing neighbors.
+fn mark_render_chunks_for_selection(
+    mesh: &Mesh,
+    selected: &[usize],
+    include_normal_neighbors: bool,
+    chunks: &mut [u64; SOURCE_GEOMETRY_CHUNK_WORDS],
+) {
+    let mut mark = |vertex: usize| {
+        let chunk = vertex / SOURCE_GEOMETRY_CHUNK_ROWS;
+        chunks[chunk / 64] |= 1_u64 << (chunk % 64);
+    };
+    for &vertex in selected {
+        mark(vertex);
+    }
+    if include_normal_neighbors {
+        for face in mesh.cached_faces_for_vertices(selected) {
+            for vertex in mesh.triangles[face] {
+                mark(vertex as usize);
+            }
+        }
+    }
+}
+
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub enum SourceGeometryTool {
     Brush { clay: bool, accumulate: bool },
@@ -408,6 +434,17 @@ impl SourceGeometryNormalState {
         self.render_predecessor
             .as_ref()
             .filter(|owner| owner.as_ptr() == Arc::as_ptr(previous))
+            .map(|_| self.render_selected_chunks)
+    }
+    /// A Worker with no pre-dab retained state can use the first controlled
+    /// operation's envelope against its private immutable seed mesh. This
+    /// accessor alone is not an identity certificate: the caller must prove
+    /// that the Document had no prior state and just returned this new state.
+    pub fn render_selected_chunks_after_new_worker_state(
+        &self,
+    ) -> Option<[u64; SOURCE_GEOMETRY_CHUNK_WORDS]> {
+        self.render_predecessor
+            .as_ref()
             .map(|_| self.render_selected_chunks)
     }
     /// Exact retained topology allocation identity. States derived from one
@@ -2737,15 +2774,18 @@ impl SourceGeometryStroke {
             let mut next = (!Arc::ptr_eq(&current, state)).then_some(current);
             if let Some(private) = next.as_mut().and_then(Arc::get_mut) {
                 // Both Source passes select against the captured pre-dab mesh.
-                // Their union covers every position/normal row this checked
-                // operation may publish. A later renderer must also prove the
-                // exact predecessor Arc before using this small envelope.
+                // Position changes stay in that union, while local normal
+                // refresh may alter all corners of their incident faces.
+                // Include that one-ring closure before a renderer may trust
+                // this envelope against the exact predecessor Arc.
                 let mut chunks = [0_u64; SOURCE_GEOMETRY_CHUNK_WORDS];
                 for selected in prepared.iter().flatten() {
-                    for &vertex in &selected.selected {
-                        let chunk = vertex / SOURCE_GEOMETRY_CHUNK_ROWS;
-                        chunks[chunk / 64] |= 1_u64 << (chunk % 64);
-                    }
+                    mark_render_chunks_for_selection(
+                        mesh,
+                        &selected.selected,
+                        report.combined.changed_vertices > 0,
+                        &mut chunks,
+                    );
                 }
                 private.render_predecessor = Some(Arc::downgrade(state));
                 private.render_selected_chunks = chunks;
@@ -2782,6 +2822,43 @@ impl DomainWords {
                     .saturating_mul(8)
                     .saturating_add(b.capacity().saturating_mul(16))
             }))
+    }
+}
+
+#[cfg(test)]
+mod render_normal_chunk_closure_tests {
+    use super::*;
+
+    #[test]
+    fn selected_vertex_covers_neighbor_normal_across_chunk_boundary() {
+        let mut positions = vec![Vec3::ZERO; SOURCE_GEOMETRY_CHUNK_ROWS + 1];
+        positions[0] = Vec3::Y;
+        positions[SOURCE_GEOMETRY_CHUNK_ROWS] = Vec3::X;
+        let mut mesh = Mesh::new(
+            positions,
+            vec![[
+                (SOURCE_GEOMETRY_CHUNK_ROWS - 1) as u32,
+                SOURCE_GEOMETRY_CHUNK_ROWS as u32,
+                0,
+            ]],
+        );
+        let neighboring_normal = mesh.normals[SOURCE_GEOMETRY_CHUNK_ROWS];
+        mesh.positions[SOURCE_GEOMETRY_CHUNK_ROWS - 1].z = 0.25;
+        mesh.recompute_normals_near_vertices(&[SOURCE_GEOMETRY_CHUNK_ROWS - 1]);
+        assert_ne!(
+            mesh.normals[SOURCE_GEOMETRY_CHUNK_ROWS]
+                .to_array()
+                .map(f32::to_bits),
+            neighboring_normal.to_array().map(f32::to_bits)
+        );
+        let mut chunks = [0_u64; SOURCE_GEOMETRY_CHUNK_WORDS];
+        mark_render_chunks_for_selection(
+            &mesh,
+            &[SOURCE_GEOMETRY_CHUNK_ROWS - 1],
+            true,
+            &mut chunks,
+        );
+        assert_eq!(chunks[0] & 0b11, 0b11);
     }
 }
 

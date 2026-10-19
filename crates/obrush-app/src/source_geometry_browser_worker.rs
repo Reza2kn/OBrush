@@ -4,9 +4,10 @@
 //! construct an eframe runner, GPU device or second browser document UI.
 
 use obrush_core::{
-    Document, Mesh, PaintPreparationInput, PaintViewCapture, SourceGeometryAlphaTracks,
-    SourceGeometryControls, SourceGeometryOptions, SourceWorkerTransaction,
-    encode_source_worker_mesh_delta,
+    Document, Mesh, PaintPreparationInput, PaintViewCapture, SOURCE_GEOMETRY_CHUNK_ROWS,
+    SourceGeometryAlphaTracks, SourceGeometryControls, SourceGeometryOptions,
+    SourceWorkerPreviewRow, SourceWorkerTransaction, encode_source_worker_mesh_delta,
+    encode_source_worker_sparse_preview_rows,
 };
 use serde_json::Value;
 use wasm_bindgen::prelude::*;
@@ -80,6 +81,8 @@ fn fail(error: impl std::fmt::Display) -> JsValue {
 pub struct BrowserSourceWorkerStroke {
     transaction: Option<SourceWorkerTransaction>,
     initial_mesh: Mesh,
+    // One constructor snapshot is updated only inside certified selected
+    // chunks. A held dab never clones or validates the complete mesh.
     last_mesh: Mesh,
     subtool_id: u32,
     failed: bool,
@@ -152,8 +155,11 @@ impl BrowserSourceWorkerStroke {
             .transaction
             .as_mut()
             .ok_or_else(|| JsValue::from_str("Source worker stroke is closed"))?;
+        let predecessor = transaction
+            .document()
+            .source_geometry_state(self.subtool_id);
         let started = web_time::Instant::now();
-        if let Err(error) = transaction.apply_input(
+        let report = match transaction.apply_input(
             epoch,
             sequence,
             input,
@@ -162,26 +168,91 @@ impl BrowserSourceWorkerStroke {
             &SourceGeometryControls::default(),
             SourceGeometryAlphaTracks::default(),
         ) {
-            self.failed = true;
-            return Err(fail(format!("{error:?}")));
-        }
+            Ok(report) => report,
+            Err(error) => {
+                self.failed = true;
+                return Err(fail(format!("{error:?}")));
+            }
+        };
         self.last_geometry_ms = started.elapsed().as_secs_f64() * 1_000.0;
+        let current_state = transaction
+            .document()
+            .source_geometry_state(self.subtool_id);
+        let chunks = match (predecessor.as_ref(), current_state.as_ref()) {
+            (Some(before), Some(after)) => after.render_selected_chunks_from(before),
+            (None, Some(after)) => after.render_selected_chunks_after_new_worker_state(),
+            _ => None,
+        };
+        if chunks.is_none() && report.combined.changed_vertices > 0 {
+            self.failed = true;
+            return Err(JsValue::from_str(
+                "Source worker changed geometry without a certified sparse row envelope",
+            ));
+        }
         let current = transaction
             .document()
             .active_mesh()
             .ok_or_else(|| JsValue::from_str("Source worker active mesh disappeared"))?;
+        if current.positions.len() != self.last_mesh.positions.len()
+            || current.normals.len() != self.last_mesh.normals.len()
+        {
+            self.failed = true;
+            return Err(JsValue::from_str(
+                "Source worker mesh shape changed during a dab",
+            ));
+        }
         let started = web_time::Instant::now();
-        let delta = encode_source_worker_mesh_delta(&self.last_mesh, current, self.subtool_id)
-            .map_err(|error| {
-                self.failed = true;
-                fail(error)
-            })?;
-        self.last_delta_encode_ms = started.elapsed().as_secs_f64() * 1_000.0;
-        let started = web_time::Instant::now();
-        self.last_mesh = current.try_snapshot().map_err(|error| {
+        let mut rows = Vec::new();
+        if let Some(chunks) = chunks {
+            for (word_index, word) in chunks.into_iter().enumerate() {
+                for bit in 0..64 {
+                    if word & (1_u64 << bit) == 0 {
+                        continue;
+                    }
+                    let start = (word_index * 64 + bit) * SOURCE_GEOMETRY_CHUNK_ROWS;
+                    let end = (start + SOURCE_GEOMETRY_CHUNK_ROWS).min(current.positions.len());
+                    rows.try_reserve(end - start).map_err(|_| {
+                        self.failed = true;
+                        JsValue::from_str("Cannot reserve Source worker sparse preview rows")
+                    })?;
+                    for index in start..end {
+                        let old_position = self.last_mesh.positions[index].to_array();
+                        let old_normal = self.last_mesh.normals[index].to_array();
+                        let new_position = current.positions[index].to_array();
+                        let new_normal = current.normals[index].to_array();
+                        if old_position.map(f32::to_bits) != new_position.map(f32::to_bits)
+                            || old_normal.map(f32::to_bits) != new_normal.map(f32::to_bits)
+                        {
+                            rows.push(SourceWorkerPreviewRow {
+                                index: index as u32,
+                                before_position: old_position,
+                                before_normal: old_normal,
+                                after_position: new_position,
+                                after_normal: new_normal,
+                            });
+                        }
+                    }
+                }
+            }
+        }
+        let delta = encode_source_worker_sparse_preview_rows(
+            epoch,
+            sequence,
+            self.subtool_id,
+            current.positions.len(),
+            &rows,
+        )
+        .map_err(|error| {
             self.failed = true;
             fail(error)
         })?;
+        self.last_delta_encode_ms = started.elapsed().as_secs_f64() * 1_000.0;
+        let started = web_time::Instant::now();
+        for row in &rows {
+            let index = row.index as usize;
+            self.last_mesh.positions[index] = row.after_position.into();
+            self.last_mesh.normals[index] = row.after_normal.into();
+        }
         self.last_snapshot_copy_ms = started.elapsed().as_secs_f64() * 1_000.0;
         self.accepted_dabs += 1;
         Ok(delta)

@@ -2941,6 +2941,15 @@ impl OBrushApp {
     }
 
     fn changed(&mut self) {
+        // Any ordinary UI publication invalidates the provisional Worker
+        // preview immediately. A final Worker commit takes its held owner
+        // before calling this method, so its one history event stays intact.
+        if let Some(held) = self.source_worker_held.take() {
+            self.source_worker_cold.cancel(held.epoch);
+            if let Ok(mut renderer) = self.renderer.lock() {
+                let _ = renderer.end_source_worker_preview(held.epoch);
+            }
+        }
         self.resident_studio.invalidate();
         self.modal_invalidate_publication("document publication changed");
         self.cancel_startup_model();
@@ -10609,14 +10618,7 @@ impl OBrushApp {
                     }
                 }
                 let renderer = Arc::clone(&self.renderer);
-                let mut scene = self.rendered_scene.clone();
-                if let Some(held) = self.source_worker_held.as_ref()
-                    && held.revision == self.revision
-                    && let Some(preview) = held.preview.as_ref()
-                    && let Some(active) = scene.iter_mut().find(|object| object.active)
-                {
-                    active.mesh = Arc::clone(preview);
-                }
+                let scene = self.rendered_scene.clone();
                 use crate::source_geometry_host::SourceNormalRenderOwner;
                 let normal_owner = if self.source_worker_held.is_some() {
                     SourceNormalRenderOwner::Legacy

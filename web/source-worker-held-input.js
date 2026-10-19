@@ -8,6 +8,7 @@ export function createHeldSourceWorkerInput(handle, canvas, notice, wasmBackend)
   const totals = { pointerMoves: 0, coalescedMoves: 0, sentDabs: 0,
                    acknowledgedDabs: 0, previewBytes: 0, finishBytes: 0,
                    commits: 0, noOps: 0, rejections: 0, discardedAtRelease: 0,
+                   lastDiscardedAtRelease: 0, lastEndpointDropped: false,
                    lastBeginMs: null, lastFirstPreviewMs: null,
                    lastReleaseToCommitMs: null, maxPreviewMainMs: 0,
                    maxWorkerCallMs: 0 };
@@ -51,7 +52,10 @@ export function createHeldSourceWorkerInput(handle, canvas, notice, wasmBackend)
       // Release is a hard input boundary: never drain an accumulated pointer
       // path after the button is up. A very quick click retains its down dab.
       if (session.released && session.nextSequence > 1) {
-        totals.discardedAtRelease += session.samples.length + Number(Boolean(session.latest));
+        const dropped = session.samples.length + Number(Boolean(session.latest));
+        totals.discardedAtRelease += dropped;
+        session.discardedAtRelease += dropped;
+        session.endpointDropped ||= Boolean(session.latest);
         session.samples = [];
         session.latest = null;
       }
@@ -121,6 +125,8 @@ export function createHeldSourceWorkerInput(handle, canvas, notice, wasmBackend)
           message.delta, message.retained);
         if (typeof changed !== 'boolean') throw Error('Source Worker publication outcome was invalid');
         if (changed) totals.commits++; else totals.noOps++;
+        totals.lastDiscardedAtRelease = session.discardedAtRelease;
+        totals.lastEndpointDropped = session.endpointDropped;
         totals.lastReleaseToCommitMs = performance.now() - session.releasedAt;
         active = null;
         session.worker.terminate();
@@ -159,6 +165,7 @@ export function createHeldSourceWorkerInput(handle, canvas, notice, wasmBackend)
           pointerId: event.pointerId, nextId: 0, nextSequence: 1,
           outstanding: null, latest: null,
           samples: [JSON.stringify(seed.initial_input)], released: false,
+          discardedAtRelease: 0, endpointDropped: false,
           startedAt, firstPreviewAt: null, releasedAt: null };
         active = session;
         worker.onmessage = reply => response(session, reply.data);
