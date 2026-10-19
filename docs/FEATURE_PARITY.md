@@ -1,5 +1,13 @@
 # OBrush feature parity contract
 
+**C257 combined Source primitives:** [The integrated browser and macOS receipt](SCULPTGL_COMBINED_C257.md)
+records passing workspace tests, strict native/WASM Clippy, fresh web/macOS
+builds, all four pinned default primitive counts in the normal browser,
+the sphere's full normalized vertex/normal comparison, dense-cube project
+round trip and the imported Source mirror-guide check. Retained Source
+levels, exact scene placement, cylinder/torus shape, mirrored sculpt response
+and million-vertex sustained brush responsiveness remain open.
+
 **C252 combined local build:** [The integrated browser and macOS receipt](SCULPTGL_COMBINED_C252.md)
 records passing workspace tests, strict native/WASM Clippy, fresh web/macOS
 builds, paired primitive/clear browser controls, and an opt-in WebGPU sparse

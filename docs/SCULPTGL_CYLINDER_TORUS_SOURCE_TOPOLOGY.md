@@ -44,10 +44,12 @@ worktree. The generated browser app WASM SHA-256 is
 The first isolated web build failed because a shared cross-worktree Cargo
 artifact for `obrush-core` was stale: app compilation reported missing new
 constructor methods while those methods existed in current source. Its log
-is retained at `/tmp/obrush-cylinder-torus-web-build.log`. Cleaning only the
+is retained at `.artifacts/cylinder-torus-build/obrush-cylinder-torus-web-build.log`
+(SHA-256 `18c99aeef868a38504c272badcd0fcbfa39376c85748868370f06f35f1cd5699`). Cleaning only the
 `obrush-core` `wasm32-unknown-unknown` `web-release` package removed 86.2 MiB;
 the immediately repeated build passed and its log is retained at
-`/tmp/obrush-cylinder-torus-web-build-retry.log`. This is build-cache evidence,
+`.artifacts/cylinder-torus-build/obrush-cylinder-torus-web-build-retry.log`
+(SHA-256 `62122b96bc10a0962b5ea4360316edf10d5b7b719b35ec31554c292524b0e99b`). This is build-cache evidence,
 not a source regression.
 
 **Limitations:** Matching face counts and connectivity does not establish
