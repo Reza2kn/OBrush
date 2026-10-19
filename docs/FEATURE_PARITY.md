@@ -1,5 +1,11 @@
 # OBrush feature parity contract
 
+**C263 integrated checkpoint:** [The combined Source/browser/macOS receipt](SCULPTGL_COMBINED_C263.md)
+records passing workspace tests, strict native/WASM Clippy, fresh local builds,
+Source Move and viewport Shift-click fixes, scoped Continuous/culling evidence,
+and a measured 100k renderer diagnostic. Ordinary Worker sculpting,
+million-vertex responsiveness, and every full SculptGL/ZBrush gate remain open.
+
 **Scoped Source Brush culling:** [The C262 fixture and normal-browser report](SCULPTGL_BRUSH_CULLING_C262.md)
 confirms the existing Source Brush/Clay checkbox and inclusive front-vertex
 predicate on an opposed-sheet/zero-normal fixture, with exact core Undo/Redo.

@@ -101,12 +101,12 @@ def render() -> str:
         "transport and records why an ordinary held-pointer candidate has "
         "not yet been integrated; it changes none of those failures.",
         "",
-        "The [C260 combined receipt](SCULPTGL_COMBINED_C260.md) validates "
-        "scoped primitive levels/placement and Source Paint All on the "
-        "integrated build. Its [sparse Worker codec]"
-        "(SOURCE_WORKER_SPARSE_CODEC_SEAM.md) returns a checked mesh candidate "
-        "only: there is still no ordinary Worker publication or held-pointer "
-        "performance result, so all responsiveness gates remain open.",
+        "The [C263 combined receipt](SCULPTGL_COMBINED_C263.md) validates "
+        "scoped Source Move and viewport Shift-click behavior, reconciles "
+        "Continuous/culling evidence, and records a 100k renderer diagnostic. "
+        "Its Worker seams remain non-publishing: there is still no ordinary "
+        "Worker sculpt or passing million-vertex held-pointer result, so all "
+        "full responsiveness gates remain open.",
         "",
         "| ID | Pinned reference scope | Current row-level evidence | Parity gate |",
         "| --- | --- | --- | --- |",
