@@ -920,6 +920,9 @@ pub struct OBrushApp {
     snapshot_revision: u64,
     render_snapshot_timing: DabTiming,
     render_certified_handoffs: u64,
+    app_update_timing: DabTiming,
+    app_panel_timing: DabTiming,
+    app_viewport_timing: DabTiming,
     stroke: Option<ActiveStroke>,
     background_mask_gesture: Option<BackgroundMaskGesture>,
     pending_dabs: DabQueue,
@@ -1142,6 +1145,9 @@ impl OBrushApp {
             snapshot_revision: 1,
             render_snapshot_timing: DabTiming::default(),
             render_certified_handoffs: 0,
+            app_update_timing: DabTiming::default(),
+            app_panel_timing: DabTiming::default(),
+            app_viewport_timing: DabTiming::default(),
             stroke: None,
             background_mask_gesture: None,
             pending_dabs: DabQueue::default(),
@@ -1275,6 +1281,12 @@ impl OBrushApp {
         let mut metrics = self.pending_dabs.metrics();
         metrics["render_snapshot_timing"] = self.render_snapshot_timing.metrics();
         metrics["render_certified_handoffs"] = self.render_certified_handoffs.into();
+        metrics["app_update_timing"] = serde_json::json!({
+            "total": self.app_update_timing.metrics(),
+            "before_viewport": self.app_panel_timing.metrics(),
+            "viewport": self.app_viewport_timing.metrics(),
+            "scope": "CPU wall time inside eframe App::update; excludes host paint and browser RAF overhead",
+        });
         metrics["paint_timing"] = self
             .renderer
             .lock()
@@ -10643,6 +10655,7 @@ impl eframe::App for OBrushApp {
         crate::ui_fonts::bound_raw_input(input);
     }
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+        let update_started = web_time::Instant::now();
         self.ui_fonts.update(ctx, self.app_preferences.locale);
         crate::ui_text::install_admitted(self.ui_fonts.capability(), &self.shortcut_resolver);
         self.region_suppressed_frame = false;
@@ -10844,11 +10857,15 @@ impl eframe::App for OBrushApp {
         {
             self.cancel_mask_region("A setting changed; pending mask selection cancelled.", true);
         }
+        self.app_panel_timing.record(update_started.elapsed());
+        let viewport_started = web_time::Instant::now();
         self.viewport(ctx);
+        self.app_viewport_timing.record(viewport_started.elapsed());
         self.help(ctx);
         self.preferences_window(ctx);
         self.ui_fonts.observe_end_update(ctx);
         self.modal_observe_end_update();
+        self.app_update_timing.record(update_started.elapsed());
     }
 
     fn on_exit(&mut self, gl: Option<&eframe::glow::Context>) {

@@ -1,5 +1,11 @@
 # OBrush feature parity contract
 
+**C233 app-frame profile:** [The complete million-vertex browser report](SCULPTGL_APP_FRAME_PROFILE_C233.md)
+records 50.13 ms per update inside the viewport during a frozen long stroke,
+versus 1.09 ms before it. Source geometry averages 22.41 ms per dab in that
+run; all public-file/history/shape checks pass, but all four responsiveness
+gates fail. This diagnoses the main-thread work and changes no parity status.
+
 **C232 held-stroke pressure ramp:** [The four-case normal-browser report](SCULPTGL_PRESSURE_RAMP_BROWSER_C232.md)
 shows a trusted synthetic pen move from pressure 0.25 to 0.75 changes Draw
 geometry with intensity factor 1, while factor 0 stays exact. The first GPU
