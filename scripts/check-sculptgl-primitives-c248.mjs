@@ -11,6 +11,8 @@ const obrush = path.resolve(process.argv[2] || 'web/dist');
 const reference = path.resolve('.tools/sculptgl-reference/host-mirror');
 const out = path.resolve('.artifacts/sculptgl-primitives-browser/' + randomUUID());
 await mkdir(out, { recursive: true });
+const downloads = path.join(out, 'downloads');
+await mkdir(downloads, { recursive: true });
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 const fixture = Buffer.from('o Independent_mixed\nv 0 0 0\nv 1 0 0\nv 1 1 0\nv 0 1 0\nv 2 0 0\nv 2 1 0\nf 1 2 3 4\nf 2 5 6\n');
@@ -27,6 +29,7 @@ const result = {
   cases: [], screenshots: [], errors: [], status: 'running',
 };
 let server, chrome, socket, session, next = 0;
+const downloadEvents = [];
 const waiting = new Map();
 async function send(method, params = {}, selected = session) {
   const id = ++next;
@@ -81,7 +84,7 @@ async function action(key) {
   await pause(150);
   return evalRead(obrushInfo);
 }
-async function chord(key) {
+async function chord(key, useMeta = false) {
   // A button click can retain inspector focus. Match the normal sculpt tests:
   // move focus to empty viewport background before sending the shortcut.
   const viewport = (await evalRead(obrushInfo))?.viewport;
@@ -96,11 +99,14 @@ async function chord(key) {
   const code = `Key${key.toUpperCase()}`;
   // The selected SculptGL shortcut profile uses Ctrl+Z/Ctrl+Y, as the pinned
   // source does, including on macOS. Meta+Z belongs to OBrush's legacy profile.
-  const modifiers = 2;
-  await send('Input.dispatchKeyEvent', { type: 'rawKeyDown', key: 'Control', code: 'ControlLeft', windowsVirtualKeyCode: 17, modifiers });
+  const modifiers = useMeta ? 4 : 2;
+  const modifierKey = useMeta ? 'Meta' : 'Control';
+  const modifierCode = useMeta ? 'MetaLeft' : 'ControlLeft';
+  const modifierVkey = useMeta ? 91 : 17;
+  await send('Input.dispatchKeyEvent', { type: 'rawKeyDown', key: modifierKey, code: modifierCode, windowsVirtualKeyCode: modifierVkey, modifiers });
   await send('Input.dispatchKeyEvent', { type: 'rawKeyDown', key, code, windowsVirtualKeyCode: key.toUpperCase().charCodeAt(0), modifiers });
   await send('Input.dispatchKeyEvent', { type: 'keyUp', key, code, windowsVirtualKeyCode: key.toUpperCase().charCodeAt(0), modifiers });
-  await send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Control', code: 'ControlLeft', windowsVirtualKeyCode: 17, modifiers: 0 });
+  await send('Input.dispatchKeyEvent', { type: 'keyUp', key: modifierKey, code: modifierCode, windowsVirtualKeyCode: modifierVkey, modifiers: 0 });
   await pause(150);
 }
 async function screenshot(name) {
@@ -110,7 +116,7 @@ async function screenshot(name) {
   result.screenshots.push({ name, file, sha256: sha(bytes) });
 }
 const referenceInfo = `(()=>{const app=window.__sculptglReferenceInstance,mesh=app?.getMesh(),gui=app?.getGui()?._ctrlMesh;return app&&gui?{vertices:mesh?.getNbVertices()??0,faces:mesh?.getNbFaces()??0,triangles:mesh?.getNbTriangles()??0,active_id:mesh?.getID()??null,ui_vertices:gui.domVerts.textContent.trim(),ui_faces:gui.domFaces.textContent.trim(),meshes:app.getMeshes().length,parts:app.getMeshes().map(m=>({id:m.getID(),vertices:m.getNbVertices(),faces:m.getNbFaces(),triangles:m.getNbTriangles(),levels:m._meshes?.length??1})),history:{undo:app.getStateManager()._undos.length,redo:app.getStateManager()._redos.length}}:null})()`;
-const obrushInfo = `(()=>{if(typeof window.obrushBrushMetrics!=='function')return null;const m=window.obrushBrushMetrics();return {vertices:m.vertices,faces:m.faces,triangles:m.triangles,active_subtool_id:m.active_subtool_id,scene_controls:m.scene_controls,layer_controls:m.layer_controls,subtools:m.subtools?.length,parts:m.subtools?.map(s=>({id:s.id,name:s.name,vertices:s.vertices,faces:s.faces,triangles:s.triangles})),history:m.history,viewport:m.camera?.viewport}})()`;
+const obrushInfo = `(()=>{if(typeof window.obrushBrushMetrics!=='function')return null;const m=window.obrushBrushMetrics();return {vertices:m.vertices,faces:m.faces,triangles:m.triangles,active_subtool_id:m.active_subtool_id,scene_controls:m.scene_controls,layer_controls:m.layer_controls,subtools:m.subtools?.length,parts:m.subtools?.map(s=>({id:s.id,name:s.name,vertices:s.vertices,faces:s.faces,triangles:s.triangles})),history:m.history,viewport:m.camera?.viewport,message:m.message}})()`;
 try {
   server = createServer(async (request, response) => {
     try {
@@ -140,11 +146,13 @@ try {
       waiting.delete(message.id); clearTimeout(pending.timer);
       message.error ? pending.reject(Error(JSON.stringify(message.error))) : pending.resolve(message.result);
     } else if (message.method === 'Runtime.exceptionThrown') result.errors.push(message.params.exceptionDetails.text);
+    else if (message.method === 'Browser.downloadWillBegin' || message.method === 'Browser.downloadProgress') downloadEvents.push({ method: message.method, ...message.params });
   });
   const target = await send('Target.createTarget', { url: 'about:blank' }, null);
   session = (await send('Target.attachToTarget', { targetId: target.targetId, flatten: true }, null)).sessionId;
   for (const domain of ['Page', 'Runtime', 'DOM']) await send(`${domain}.enable`);
   await send('Emulation.setDeviceMetricsOverride', { width: 1600, height: 1000, deviceScaleFactor: 1, mobile: false });
+  await send('Browser.setDownloadBehavior', { behavior: 'allowAndName', downloadPath: downloads, eventsEnabled: true }, null);
   const base = `http://127.0.0.1:${server.address().port}`;
 
   await send('Page.navigate', { url: `${base}/reference/` });
@@ -204,6 +212,45 @@ try {
   const empty = await until(async () => { const info = await evalRead(obrushInfo); return info?.subtools === 0 ? info : null; }, 'OBRush empty scene');
   result.cases.push({ name: 'obrush-clear', ...empty });
   await screenshot('obrush-empty');
+  await action('scene.add_cube');
+  const denseCube = await until(async () => { const info = await evalRead(obrushInfo); return info?.subtools === 1 && info.vertices === 98306 ? info : null; }, 'OBRush direct dense cube');
+  result.cases.push({ name: 'obrush-direct-cube', ...denseCube });
+  await chord('z');
+  const cubeUndo = await until(async () => { const info = await evalRead(obrushInfo); return info?.subtools === 0 ? info : null; }, 'OBRush direct dense cube undo');
+  result.cases.push({ name: 'obrush-direct-cube-undo', ...cubeUndo });
+  await chord('y');
+  const cubeRedo = await until(async () => { const info = await evalRead(obrushInfo); return info?.subtools === 1 && info.vertices === 98306 ? info : null; }, 'OBRush direct dense cube redo');
+  result.cases.push({ name: 'obrush-direct-cube-redo', ...cubeRedo });
+  // Normal top-bar Save project control at the fixed 1600x1000 test viewport.
+  // The reference shortcut profile does not bind Cmd+S; use the visible UI.
+  await clickRect([303, 13, 387, 39]);
+  result.after_save = await evalRead(obrushInfo);
+  const savedFile = await until(async () => {
+    const completed = downloadEvents.find(e => e.method === 'Browser.downloadProgress' && e.state === 'completed');
+    if (!completed) return null;
+    const file = path.join(downloads, completed.guid);
+    const bytes = await readFile(file);
+    if (!bytes.length) return null;
+    try { return { file, bytes, project: JSON.parse(bytes.toString('utf8')) }; } catch { return null; }
+  }, 'OBRush dense cube project download');
+  result.saved_cube = { file: savedFile.file, bytes: savedFile.bytes.length, sha256: sha(savedFile.bytes), vertices: savedFile.project.mesh.positions.length, triangles: savedFile.project.mesh.triangles.length, original_faces: savedFile.project.mesh.surface?.faces?.length ?? null };
+  await action('scene.clear');
+  const beforeReload = await until(async () => { const info = await evalRead(obrushInfo); return info?.subtools === 0 ? info : null; }, 'OBRush clear before dense cube reload');
+  result.cases.push({ name: 'obrush-direct-cube-clear-for-reload', ...beforeReload });
+  const input = (await send('DOM.getDocument')).root;
+  const node = (await send('DOM.querySelector', { nodeId: input.nodeId, selector: '#import-file' })).nodeId;
+  if (!node) throw Error('Missing OBrush project input');
+  await send('DOM.setFileInputFiles', { nodeId: node, files: [savedFile.file] });
+  const cubeReload = await until(async () => { const info = await evalRead(obrushInfo); return info?.subtools === 1 && info.vertices === 98306 && info.message?.startsWith('Loaded ') ? info : null; }, 'OBRush dense cube project reload');
+  result.cases.push({ name: 'obrush-direct-cube-reload', ...cubeReload });
+  await clickRect([303, 13, 387, 39]);
+  const reSavedFile = await until(async () => {
+    const completed = downloadEvents.find(e => e.method === 'Browser.downloadProgress' && e.state === 'completed' && e.guid !== downloadEvents.find(first => first.method === 'Browser.downloadProgress' && first.state === 'completed')?.guid);
+    if (!completed) return null;
+    const bytes = await readFile(path.join(downloads, completed.guid));
+    try { return { bytes, project: JSON.parse(bytes.toString('utf8')) }; } catch { return null; }
+  }, 'OBRush re-saved dense cube project');
+  result.resaved_cube = { bytes: reSavedFile.bytes.length, sha256: sha(reSavedFile.bytes), exact_json: JSON.stringify(reSavedFile.project) === JSON.stringify(savedFile.project) };
   const referenceCases = result.cases.filter(c => c.name.startsWith('reference-add-'));
   const ownCases = result.cases.filter(c => c.name.startsWith('obrush-add-'));
   if (ref.faces !== 2 || own.faces !== 2 || referenceCases.length !== 4 || ownCases.length !== 4
@@ -217,13 +264,19 @@ try {
     || referenceRedo.parts.at(-1).id !== referenceCases.at(-1).parts.at(-1).id
     || ownUndo.parts.at(-1).id !== ownCases.at(-2).parts.at(-1).id
     || ownRedo.parts.at(-1).id !== ownCases.at(-1).parts.at(-1).id
-    || referenceEmpty.meshes !== 0 || referenceEmpty.history.undo !== 0 || empty.subtools !== 0 || empty.faces !== 0)
+    || referenceEmpty.meshes !== 0 || referenceEmpty.history.undo !== 0 || empty.subtools !== 0 || empty.faces !== 0
+    || denseCube.faces !== 98304 || denseCube.triangles !== 196608
+    || cubeUndo.faces !== 0 || cubeRedo.faces !== denseCube.faces
+    || result.saved_cube.vertices !== denseCube.vertices || result.saved_cube.triangles !== denseCube.triangles
+    || result.saved_cube.original_faces !== denseCube.faces || cubeReload.faces !== denseCube.faces
+    || beforeReload.faces !== 0 || !result.resaved_cube.exact_json)
     throw Error('Additive primitive or clear-scene gate failed');
-  result.status = 'passed scoped additive controls, retained imported part, primitive undo/redo and empty-scene checks; reference shape remains open';
+  result.status = 'passed scoped additive controls, retained imported part, primitive undo/redo, empty scene, and direct dense cube undo/save/reload; reference shape remains open';
 } catch (error) {
   result.status = 'failed';
   result.errors.push(String(error.stack || error));
 } finally {
+  result.download_events = downloadEvents;
   await writeFile(path.join(out, 'result.json'), JSON.stringify(result, null, 2) + '\n');
   try { if (socket?.readyState === WebSocket.OPEN) await send('Browser.close', {}, null); } catch {}
   socket?.close();
