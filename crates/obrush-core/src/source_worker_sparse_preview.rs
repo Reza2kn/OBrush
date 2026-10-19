@@ -326,11 +326,9 @@ mod tests {
         assert_eq!(changed, vec![(1, [2.0, 0.0, 0.0], [0.0, 0.0, 1.0])]);
         overlay.cancel();
         assert_eq!(overlay.changed_row_count(), 0);
-        assert!(
-            overlay
-                .apply(&positions, &normals, &packet(3, &[]))
-                .is_err()
-        );
+        assert!(overlay
+            .apply(&positions, &normals, &packet(3, &[]))
+            .is_err());
     }
 
     #[test]
@@ -347,11 +345,9 @@ mod tests {
         reseal(&mut bad);
         assert!(overlay.apply(&positions, &normals, &bad).is_err());
         assert_eq!(overlay.changed_row_count(), 0);
-        assert!(
-            overlay
-                .apply(&positions, &normals, &packet(2, &[]))
-                .is_err()
-        );
+        assert!(overlay
+            .apply(&positions, &normals, &packet(2, &[]))
+            .is_err());
     }
 
     #[test]
@@ -361,94 +357,76 @@ mod tests {
         let mut wrong = original.clone();
         wrong[12..20].copy_from_slice(&10_u64.to_le_bytes());
         reseal(&mut wrong);
-        assert!(
-            SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
-                .unwrap()
-                .apply(&positions, &normals, &wrong)
-                .is_err()
-        );
+        assert!(SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
+            .unwrap()
+            .apply(&positions, &normals, &wrong)
+            .is_err());
         let mut wrong = original.clone();
         wrong[28..32].copy_from_slice(&8_u32.to_le_bytes());
         reseal(&mut wrong);
-        assert!(
-            SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
-                .unwrap()
-                .apply(&positions, &normals, &wrong)
-                .is_err()
-        );
+        assert!(SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
+            .unwrap()
+            .apply(&positions, &normals, &wrong)
+            .is_err());
         let mut wrong = original.clone();
         wrong[HEADER_BYTES + 8] ^= 1;
-        assert!(
-            SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
-                .unwrap()
-                .apply(&positions, &normals, &wrong)
-                .is_err()
-        );
+        assert!(SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
+            .unwrap()
+            .apply(&positions, &normals, &wrong)
+            .is_err());
         let mut overlay = SourceWorkerSparsePreviewOverlay::new(3, 7, 9).unwrap();
         overlay.apply(&positions, &normals, &original).unwrap();
         assert!(overlay.apply(&positions, &normals, &original).is_err());
-        assert!(
-            SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
-                .unwrap()
-                .apply(&positions[..2], &normals, &original)
-                .is_err()
-        );
+        assert!(SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
+            .unwrap()
+            .apply(&positions[..2], &normals, &original)
+            .is_err());
     }
 
     #[test]
     fn rejects_duplicate_unsorted_nonfinite_and_signed_zero_previous_words() {
         let (positions, normals) = baseline();
-        assert!(
-            encode_source_worker_sparse_preview_rows(
-                9,
-                1,
-                7,
-                3,
-                &[row(1, 1.0, 2.0), row(1, 1.0, 3.0)]
-            )
-            .is_err()
-        );
-        assert!(
-            encode_source_worker_sparse_preview_rows(
-                9,
-                1,
-                7,
-                3,
-                &[row(1, 1.0, 2.0), row(0, 0.0, 1.0)]
-            )
-            .is_err()
-        );
+        assert!(encode_source_worker_sparse_preview_rows(
+            9,
+            1,
+            7,
+            3,
+            &[row(1, 1.0, 2.0), row(1, 1.0, 3.0)]
+        )
+        .is_err());
+        assert!(encode_source_worker_sparse_preview_rows(
+            9,
+            1,
+            7,
+            3,
+            &[row(1, 1.0, 2.0), row(0, 0.0, 1.0)]
+        )
+        .is_err());
         let mut duplicate = packet(1, &[row(0, 0.0, 0.25), row(1, 1.0, 1.5)]);
         duplicate[HEADER_BYTES + ROW_BYTES..HEADER_BYTES + ROW_BYTES + 4]
             .copy_from_slice(&0_u32.to_le_bytes());
         reseal(&mut duplicate);
-        assert!(
-            SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
-                .unwrap()
-                .apply(&positions, &normals, &duplicate)
-                .is_err()
-        );
+        assert!(SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
+            .unwrap()
+            .apply(&positions, &normals, &duplicate)
+            .is_err());
         let mut nonfinite = packet(1, &[row(0, 0.0, 0.25)]);
         nonfinite[HEADER_BYTES + 28..HEADER_BYTES + 32]
             .copy_from_slice(&f32::NAN.to_bits().to_le_bytes());
         reseal(&mut nonfinite);
-        assert!(
-            SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
-                .unwrap()
-                .apply(&positions, &normals, &nonfinite)
-                .is_err()
-        );
+        assert!(SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
+            .unwrap()
+            .apply(&positions, &normals, &nonfinite)
+            .is_err());
         // The baseline is +0.0; a claimed -0.0 predecessor is stale even
         // though floating point equality would say they match.
         let mut signed_zero = packet(1, &[row(0, 0.0, 0.25)]);
         signed_zero[HEADER_BYTES + 4..HEADER_BYTES + 8]
             .copy_from_slice(&(-0.0_f32).to_bits().to_le_bytes());
         reseal(&mut signed_zero);
-        assert!(
-            SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
-                .unwrap()
-                .apply(&positions, &normals, &signed_zero)
-                .is_err()
-        );
+        assert!(SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
+            .unwrap()
+            .apply(&positions, &normals, &signed_zero)
+            .is_err());
     }
 }
