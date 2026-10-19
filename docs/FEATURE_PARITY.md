@@ -1,5 +1,10 @@
 # OBrush feature parity contract
 
+**C239 rendering inventory reconciliation:** [The grid/contour evidence audit](SCULPTGL_RENDER_INVENTORY_RECONCILIATION_C239.md)
+links three existing rendering reports into the 317-ID crosswalk. Thirty-nine
+active rows now have scoped evidence; all active acceptance gates remain open.
+This is documentation reconciliation, not a behavior change.
+
 **C237 scene inventory reconciliation:** [The selected-scene evidence audit](SCULPTGL_SCENE_INVENTORY_RECONCILIATION_C237.md)
 links seven existing paired scene-action reports into the 317-ID crosswalk.
 Thirty-six active rows now have scoped evidence, while every active acceptance
