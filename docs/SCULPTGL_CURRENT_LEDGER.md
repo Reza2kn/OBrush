@@ -8,6 +8,13 @@ A scoped report may cover one fixture or option and never closes its full accept
 
 The [C263 combined receipt](SCULPTGL_COMBINED_C263.md) validates scoped Source Move and viewport Shift-click behavior, reconciles Continuous/culling evidence, and records a 100k renderer diagnostic. Its Worker seams remain non-publishing: there is still no ordinary Worker sculpt or passing million-vertex held-pointer result, so all full responsiveness gates remain open.
 
+The [C264 current million-vertex run](SCULPTGL_MILLION_CURRENT_C264.md) again
+passes its scoped public-file/shape audit and fails all four responsiveness
+gates. [Warm state transfer](SOURCE_WORKER_RETAINED_WARM_SEAM.md) and [a real
+Chrome Worker realm diagnostic](SOURCE_WORKER_CROSS_REALM_DIAGNOSTIC.md) are
+core/transport prerequisites only; ordinary held-pointer Worker operation and
+the full 317-ID acceptance matrix remain open.
+
 | ID | Pinned reference scope | Current row-level evidence | Parity gate |
 | --- | --- | --- | --- |
 | SGL-BRUSH-BRUSH | Active | [SCULPTGL_UI_BRUSH_SETTINGS_C173](SCULPTGL_UI_BRUSH_SETTINGS_C173.md), [SCULPTGL_MILLION_PAIRED_C226](SCULPTGL_MILLION_PAIRED_C226.md) | Open |
