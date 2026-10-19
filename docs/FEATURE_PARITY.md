@@ -20,7 +20,11 @@ release took `292.5/305.6 ms` and the 100k/million-vertex sustained gate is open
 [The SPW01 sustained diagnostic](SOURCE_WORKER_SPW01_100K_DIAGNOSTIC.md)
 passes the 100k ordinary shape/history check but records a Worker admission
 failure on the frozen imported Source model: its metadata is unsupported by
-the sparse preview renderer. The 1m Worker run remains unmeasured.
+the original sparse preview renderer. [The metadata-aware follow-up](SOURCE_WORKER_METADATA_PREVIEW_RESULT.md)
+admits a scoped identity-affine shader-0 Source object behind the trial switch:
+its 100k run applied 1,287 dabs with exact public history and GPU positions,
+but failed worst-case pacing, queue-tail and all-state GPU-normal gates. The
+1m Worker run remains unmeasured.
 [The independent display-normal audit](SOURCE_GPU_DISPLAY_NORMAL_ORACLE_PREREG.md)
 matches fresh Source face normals to active GPU rows before sculpting and after
 Undo. Edited After and Redo states have byte-identical public meshes but
