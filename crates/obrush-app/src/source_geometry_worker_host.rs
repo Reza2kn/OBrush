@@ -12,6 +12,7 @@ struct Pending {
     revision: u64,
     capture: SourceWorkerColdCapture,
     preview: SourceWorkerSparsePreviewOverlay,
+    preview_packets: u64,
 }
 
 #[derive(Default)]
@@ -68,6 +69,7 @@ impl ColdSourceWorkerBridge {
             revision,
             capture,
             preview,
+            preview_packets: 0,
         });
         Ok((epoch, project, options))
     }
@@ -121,9 +123,38 @@ impl ColdSourceWorkerBridge {
         let baseline = document
             .active_mesh()
             .ok_or("Source worker preview has no active mesh")?;
-        pending
+        let rows = pending
             .preview
-            .apply(&baseline.positions, &baseline.normals, delta)
+            .apply(&baseline.positions, &baseline.normals, delta)?;
+        pending.preview_packets = pending
+            .preview_packets
+            .checked_add(1)
+            .ok_or("Source worker preview sequence exhausted")?;
+        Ok(rows)
+    }
+
+    /// The older debug-only cross-realm diagnostic has no live V2 previews.
+    /// Its final V1 packet still receives the full scene/mesh/retained checks;
+    /// never use this path for an ordinary held-pointer gesture.
+    #[cfg(debug_assertions)]
+    pub fn commit_diagnostic_without_preview(
+        &mut self,
+        document: &mut Document,
+        epoch: u64,
+        revision: u64,
+        delta: &[u8],
+        retained: &[u8],
+    ) -> Result<bool, String> {
+        let pending = self
+            .pending
+            .take()
+            .ok_or("No Source worker gesture is pending")?;
+        if pending.epoch != epoch || pending.revision != revision || pending.preview_packets != 0 {
+            return Err("Source worker diagnostic has a stale or previewed owner".into());
+        }
+        pending
+            .capture
+            .commit_candidate(document, epoch, revision, delta, retained)
     }
 
     pub fn cancel(&mut self, epoch: u64) -> bool {
@@ -275,6 +306,28 @@ mod tests {
         );
         assert_eq!(main.history_depths(), (1, 0));
         assert!(main.source_geometry_state(1).is_some());
+
+        // The preexisting debug transport intentionally has no per-dab V2
+        // preview; keep its fully checked final V1 publication working.
+        let mut diagnostic = Document::from_json(&original).unwrap();
+        let mut diagnostic_bridge = ColdSourceWorkerBridge::default();
+        let (diagnostic_epoch, _, _) = diagnostic_bridge
+            .begin(&diagnostic, SourceGeometryOptions::inflate(), 7)
+            .unwrap();
+        assert_eq!(diagnostic_epoch, epoch);
+        assert!(
+            diagnostic_bridge
+                .commit_diagnostic_without_preview(
+                    &mut diagnostic,
+                    diagnostic_epoch,
+                    7,
+                    &final_delta,
+                    &retained,
+                )
+                .unwrap()
+        );
+        assert_eq!(diagnostic.to_json().unwrap(), main.to_json().unwrap());
+        assert_eq!(diagnostic.history_depths(), (1, 0));
     }
 
     #[test]

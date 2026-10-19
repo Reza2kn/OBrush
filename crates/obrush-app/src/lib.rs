@@ -185,9 +185,8 @@ impl WebHandle {
         Ok(serde_json::json!({"id":id.to_string(),"project":project}).to_string())
     }
 
-    /// Checked, cold Source Worker transport. The ordinary input route does
-    /// not call this yet; browser diagnostics can verify cross-realm messages
-    /// without gaining permission to edit an unvalidated studio Document.
+    /// Checked, debug-only cold Source Worker transport without live preview.
+    /// Its final result still receives full scene and retained-state checks.
     #[cfg(debug_assertions)]
     pub fn source_worker_cold_begin(&self) -> Result<String, JsValue> {
         let (epoch, revision, project, options) = self
@@ -220,7 +219,7 @@ impl WebHandle {
         self.runner
             .app_mut::<OBrushApp>()
             .ok_or_else(|| JsValue::from_str("OBrush is not running"))?
-            .source_worker_cold_commit(epoch, revision, delta, retained)
+            .source_worker_cold_commit_diagnostic(epoch, revision, delta, retained)
             .map_err(|error| JsValue::from_str(&error))
     }
 

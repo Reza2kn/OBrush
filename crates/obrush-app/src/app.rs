@@ -6132,6 +6132,33 @@ impl OBrushApp {
         Ok(changed)
     }
 
+    #[cfg(debug_assertions)]
+    pub fn source_worker_cold_commit_diagnostic(
+        &mut self,
+        epoch: u64,
+        revision: u64,
+        delta: &[u8],
+        retained: &[u8],
+    ) -> Result<bool, String> {
+        self.resident_studio_idle()?;
+        if self.revision != revision {
+            self.source_worker_cold.cancel(epoch);
+            return Err("Source worker studio revision changed before publication".into());
+        }
+        let changed = self.source_worker_cold.commit_diagnostic_without_preview(
+            &mut self.document,
+            epoch,
+            revision,
+            delta,
+            retained,
+        )?;
+        if changed {
+            self.changed();
+            self.egui_ctx.request_repaint();
+        }
+        Ok(changed)
+    }
+
     pub fn source_worker_cold_cancel(&mut self, epoch: u64) -> bool {
         self.source_worker_cold.cancel(epoch)
     }
