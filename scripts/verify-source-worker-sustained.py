@@ -138,19 +138,31 @@ def summarize(result_path, audit_path=None, gpu_path=None, worker_path=None, mod
         check(report, "recorder_no_errors", False)
     tail = result.get("tail", [])
     end_queue = tail[-1].get("queue", {}) if tail else {}
+    # The opt-in Worker is the geometry producer; the ordinary app queue is
+    # bypassed. Read its independently reported trial status, never relabel
+    # the main-thread queue's zero as a completed Worker gesture.
+    if mode == "worker":
+        end_queue = tail[-1].get("worker", {}) if tail else {}
+        queue_empty = lambda row: row.get("worker", {}).get("active") is False and row.get("worker", {}).get("pending") is None and row.get("worker", {}).get("queuedSamples") == 0
+        applied = lambda row: row.get("worker", {}).get("acknowledgedDabs")
+        check(report, "worker_one_public_commit", end_queue.get("commits") == 1
+              and end_queue.get("rejections") == 0)
+    else:
+        queue_empty = lambda row: row.get("queue", {}).get("pending_dabs") == 0
+        applied = lambda row: row.get("queue", {}).get("applied_dabs")
     check(report, "tail_complete", len(tail) == protocol["bounds"]["tail_samples"])
-    check(report, "queue_empty_after_tail", end_queue.get("pending_dabs") == 0)
+    check(report, "queue_empty_after_tail", bool(tail) and queue_empty(tail[-1]))
     within_100 = [row for row in tail if 0 <= row.get("node", math.inf) - release.get("requested", 0)
                   <= protocol["gates"]["released_queue_zero_ms"]]
     check(report, "queue_empty_by_100ms", bool(within_100) and
-          any(row.get("queue", {}).get("pending_dabs") == 0 for row in within_100),
+          any(queue_empty(row) for row in within_100),
           "A late first tail probe cannot prove the 100 ms gate")
-    after_100 = [row.get("queue", {}).get("applied_dabs") for row in tail
+    after_100 = [applied(row) for row in tail
                  if row.get("node", 0) - release.get("requested", 0) >= 100]
     check(report, "no_late_applied_dabs", bool(after_100) and len(set(after_100)) == 1)
-    report["metrics"]["applied_dabs"] = end_queue.get("applied_dabs")
-    check(report, "actual_dabs", isinstance(end_queue.get("applied_dabs"), int)
-          and end_queue["applied_dabs"] > 0)
+    final_applied = applied(tail[-1]) if tail else None
+    report["metrics"]["applied_dabs"] = final_applied
+    check(report, "actual_dabs", isinstance(final_applied, int) and final_applied > 0)
     check(report, "delivered_dom_trace", bool(att.get("trusted_dom_trace_sha256"))
           and att.get("delivered_dom_events", 0) > 0)
 
@@ -202,7 +214,7 @@ def summarize(result_path, audit_path=None, gpu_path=None, worker_path=None, mod
                            and {"init", "dab", "publish"}.issubset({x.get("kind") for x in messages})
                            and all(0 < x.get("bytes", 0) <= protocol["bounds"]["worker_transfer_max_bytes_per_message"]
                                    and x.get("transfer_or_clone") in ("transfer", "clone") for x in messages)
-                           and worker.get("accepted_dabs") == end_queue.get("applied_dabs")
+                           and worker.get("accepted_dabs") == final_applied
                            and all(isinstance(worker.get(name), (int, float)) and worker[name] >= 0
                                    for name in ("main_serialize_cpu_ms", "main_validate_cpu_ms",
                                                 "main_publish_cpu_ms", "worker_geometry_cpu_ms")))

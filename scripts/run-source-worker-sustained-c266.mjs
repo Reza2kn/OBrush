@@ -55,7 +55,9 @@ const source = `(${installPerfExport.toString()})(window);\n` +
   `(${installPerfMemory.toString()})(window);\n` +
   `(${installPerfRecorder.toString()})(window,${JSON.stringify(frozen.recorder_limits)});\n` +
   await readFile(path.join(root, 'scripts/source-gpu-readback-observer.js'), 'utf8') + '\n' +
-  `(()=>{const trace={messages:[],main:{},errors:[],overflow:false};window.__workerSustained=trace;
+  `(()=>{const trace={messages:[],main:{},files:[],errors:[],overflow:false};window.__workerSustained=trace;
+    document.addEventListener('change',e=>{if(e.target?.type==='file')trace.files.push({at:performance.now(),trusted:e.isTrusted,
+      id:e.target.id,names:Array.from(e.target.files||[],f=>f.name)});},true);
     const Original=window.Worker;window.Worker=class extends Original{
       constructor(...a){super(...a);if(!String(a[0]).includes('source-geometry-worker'))return;
         const post=this.postMessage.bind(this);this.postMessage=(m,t)=>{if(trace.messages.length>=100000){trace.overflow=true;return post(m,t)}
@@ -109,7 +111,11 @@ try {
   page=await owner.page('root',url,source);Object.setPrototypeOf(page,LargePerfDriver.prototype);
   await page.send('Page.bringToFront');
   await page.prepareFixture(result.fixture);
+  const fileEvents=await page.evaluate('window.__workerSustained.files');
+  requireGate(fileEvents.some(row=>row.trusted&&row.names.length===1&&row.names[0]===path.basename(fixture)),
+    'normal trusted file import event missing');
   result.worker_sustained_attestation.ordinary_ui_file_import=true;
+  result.worker_sustained_attestation.file_events=fileEvents;
   result.setup=(await page.live()).state;
   const p=result.setup.source_geometry?.per_tool?.[0];
   requireGate(p?.mode==='SourceOrdinary'&&p.radius===64&&p.options.intensity===.25&&
@@ -155,6 +161,9 @@ try {
   await writeFile(result.recorder.path,transferred.bytes);
   result.worker_trace=await page.evaluate('window.__workerSustained');
   result.worker_trial=await workerStatus();
+  if(mode==='worker')requireGate(result.worker_trial.enabled&&!result.worker_trial.active&&
+    result.worker_trial.commits===1&&result.worker_trial.rejections===0,
+    'worker held gesture did not make one complete normal publication');
   const delivered=transferred.record.events.filter(row=>row[2]>=1&&row[2]<=3);
   result.worker_sustained_attestation.delivered_dom_events=delivered.length;
   result.worker_sustained_attestation.trusted_dom_trace_sha256=hash(Buffer.from(JSON.stringify(delivered)));
@@ -169,6 +178,7 @@ try {
 } catch(error) {
   result.status='FAILED actual sustained cohort; preserve raw receipt';result.failure=String(error.stack||error);process.exitCode=1;
   try{result.failure_state=await page?.state()}catch(e){result.failure_state_error=String(e)}
+  try{result.worker_trial=await workerStatus();result.worker_trace=await page.evaluate('window.__workerSustained')}catch(e){result.failure_worker_error=String(e)}
   try{if(recording){await page.evaluate('window.__obrushPerf.end()');recording=false;
     const transferred=await readScalarRecording(page);result.failure_recorder={path:path.join(out,'failed-scalar-recording.json'),bytes:transferred.bytes.length,sha256:hash(transferred.bytes)};
     await writeFile(result.failure_recorder.path,transferred.bytes)}}catch(e){result.failure_recorder_error=String(e)}
@@ -178,5 +188,25 @@ try {
   try{await owner.close()}catch(e){result.cleanup_errors.push(String(e));process.exitCode=1}
   const resultBytes=Buffer.from(JSON.stringify(result,null,2)+'\n');await writeFile(path.join(out,'result.json'),resultBytes);
   await writeFile(path.join(out,'gpu-browser.json'),JSON.stringify(gpu,null,2)+'\n');
+  if(mode==='worker'&&result.worker_trace){
+    const main=result.worker_trace.main||{},rows=result.worker_trace.messages||[];
+    const names=['source_worker_held_begin','source_worker_held_seed_packet','source_worker_held_samples',
+      'source_worker_held_preview','source_worker_held_commit'];
+    const mainMs=name=>Number(main[name]?.total_ms)||0;
+    const messages=rows.filter(row=>row.bytes>0).map(row=>({
+      kind:row.kind==='begin'?'init':row.kind==='finish'?'publish':'dab',
+      direction:row.direction,bytes:row.bytes,transfer_or_clone:row.transfer_or_clone,
+      id:row.id,at:row.at,timing:row.timing||null}));
+    const transport={result_sha256:hash(resultBytes),messages,
+      accepted_dabs:result.worker_trial?.acknowledgedDabs??null,
+      main_serialize_cpu_ms:mainMs(names[0])+mainMs(names[1])+mainMs(names[2]),
+      main_validate_cpu_ms:mainMs(names[3]),main_publish_cpu_ms:mainMs(names[4]),
+      worker_geometry_cpu_ms:rows.filter(row=>row.direction==='worker-to-main'&&row.kind==='apply')
+        .reduce((sum,row)=>sum+(Number(row.timing?.worker_call_ms)||0),0),
+      main_method_calls:main,trace_errors:result.worker_trace.errors||[],
+      trace_overflow:result.worker_trace.overflow===true,
+      scope:'Worker geometry CPU sums reported apply calls; begin/finish CPU omitted and is a remaining admission gap. Incoming transfer classification is unknown unless independently attested.'};
+    await writeFile(path.join(out,'worker-transport.json'),JSON.stringify(transport,null,2)+'\n');
+  }
   console.log(JSON.stringify({out,status:result.status,failure:result.failure||null,result_sha256:hash(resultBytes),cleanup_errors:result.cleanup_errors}));
 }
