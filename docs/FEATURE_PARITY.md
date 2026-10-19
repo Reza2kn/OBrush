@@ -1,5 +1,12 @@
 # OBrush feature parity contract
 
+**C247 viewport resolution:** [The pinned-source and paired browser report](SCULPTGL_RESOLUTION_C247.md)
+adds a 0.5–2× Source resolution slider with bounded scene rendering. Two
+independent fixtures show measured pixel-target changes, exact unchanged
+OBRush project saves/history and no WebGL errors at 0.5/1/2×. SculptGL scales
+its whole canvas backing while OBrush scales the scene target; DPR, native GUI,
+brush input and full resolution-family parity remain open.
+
 **C245 same-frame browser pen samples:** [The normal-browser diagnostic](SCULPTGL_PEN_BURST_C245.md)
 shows that two trusted held pen moves arriving before one app frame previously
 lost the first move's pressure and position. A bounded ordered browser queue

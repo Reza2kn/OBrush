@@ -9,8 +9,10 @@ import path from 'node:path';
 const web = path.resolve(process.argv[2] || 'web/dist');
 const reference = path.resolve(process.argv[3] || '.tools/sculptgl-reference/host-mirror');
 const out = path.resolve('.artifacts/sculptgl-resolution-browser', randomUUID());
-const fixture = await readFile('crates/obrush-core/tests/fixtures/independent-affine-two-mesh.sgl');
-const fixturePath = path.join(out, 'independent-affine-two-mesh.sgl');
+const sphere = process.argv.includes('--sphere');
+const fixtureName = sphere ? 'independent-reference-sphere.obj' : 'independent-affine-two-mesh.sgl';
+const fixture = await readFile(`crates/obrush-core/tests/fixtures/${fixtureName}`);
+const fixturePath = path.join(out, fixtureName);
 await mkdir(out, { recursive: true });
 await writeFile(fixturePath, fixture);
 const sha = b => createHash('sha256').update(b).digest('hex');
@@ -23,7 +25,7 @@ const result = {
   scope: '0.5/1/2 viewport resolution; actual backing/target pixels, GL allocation, visible controls, project and history',
   source: { commit: '8e45dafc0f7906e5238dfffc1a2df742bd25f29d', bundle_sha256: sha(bundle), wrapper_sha256: sha(await readFile(path.join(reference, 'index.html'))) },
   build: { commit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), wasm_sha256: sha(await readFile(path.join(web, 'pkg/obrush_app_bg.wasm'))) },
-  fixture: { bytes: fixture.length, sha256: sha(fixture) },
+  fixture: { name:fixtureName, bytes: fixture.length, sha256: sha(fixture) },
   cases: [], screenshots: [], errors: [], status: 'running',
 };
 let server, chrome, socket, session, nextId = 0;
@@ -95,7 +97,7 @@ async function ownResolutionRect() {
     const rect = (await evaluate(ownInfo))?.controls?.['viewport.resolution'];
     if (rect && rect[1] > 80 && rect[3] < 990) return rect;
     await send('Input.dispatchMouseEvent', { type:'mouseMoved', x:1450, y:750, button:'none' });
-    await send('Input.dispatchMouseEvent', { type:'mouseWheel', x:1450, y:750, deltaX:0, deltaY:rect?.[1]>990?350:-350 });
+    await send('Input.dispatchMouseEvent', { type:'mouseWheel', x:1450, y:750, deltaX:0, deltaY:rect?.[3]>990?350:-350 });
     await pause(100);
   }
   throw Error(`Resolution control offscreen or absent: ${JSON.stringify((await evaluate(ownInfo))?.controls?.['viewport.resolution'])}`);
@@ -148,7 +150,7 @@ try {
   await send('Page.navigate', { url:`${base}/reference/` });
   await until(async () => (await evaluate(refInfo))?.meshes, 'reference startup');
   await fileInput('#fileopen');
-  await until(async () => (await evaluate(refInfo))?.meshes===3, 'reference fixture import');
+  await until(async () => (await evaluate(refInfo))?.meshes===(sphere?2:3), 'reference fixture import');
   const referenceDefault = await sample('reference-1', refInfo);
   await evaluate('window.__sculptglReferenceInstance.getGui().onPixelRatio(0.5)');
   const referenceHalf = await sample('reference-0.5', refInfo);
@@ -165,17 +167,19 @@ try {
   await evaluate("document.getElementById('obrush_canvas').focus()");
   const chooserCount=choosers.length;await key('o',2);await until(async()=>choosers.length>chooserCount,'OBRush Add chooser');
   await fileInput('#source-sgl-file');
-  await until(async () => (await evaluate(ownInfo))?.subtools===3, 'OBRush fixture import');
+  await until(async () => (await evaluate(ownInfo))?.subtools===(sphere?2:3), 'OBRush fixture import');
   const ownDefault = await sample('obrush-1', ownInfo);
   const projectDefault = await save('default');
   const rect = await ownResolutionRect();
   await click(rect[0]+4,(rect[1]+rect[3])/2);
   const ownHalf = await sample('obrush-0.5', ownInfo);
   const projectHalf = await save('half');
-  await click(rect[2]-4,(rect[1]+rect[3])/2);
+  const secondRect = await ownResolutionRect();
+  await click(secondRect[2]-4,(secondRect[1]+secondRect[3])/2);
   const ownDouble = await sample('obrush-2', ownInfo);
   const projectDouble = await save('double');
   result.control_rect = rect;
+  result.control_rect_after_save = secondRect;
   assert(ownDefault.ratio===1, 'OBRush default ratio differs');
   assert(ownHalf.ratio>=.5&&ownHalf.ratio<=.54, `OBRush half control selected ${ownHalf.ratio}`);
   assert(ownDouble.ratio>=1.96&&ownDouble.ratio<=2, `OBRush double control selected ${ownDouble.ratio}`);
