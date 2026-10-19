@@ -10,7 +10,8 @@ use crate::{Mesh, SceneObjectMetadata, SglSceneOrigin};
 #[path = "source_geometry_document.rs"]
 mod source_geometry_document;
 pub use source_geometry_document::{
-    PreparedSourceGeometryDab, SourceGeometryPreparationTime, SourceGeometryReleaseTiming,
+    CertifiedSourceRenderSnapshot, PreparedSourceGeometryDab, SourceGeometryPreparationTime,
+    SourceGeometryReleaseTiming,
 };
 pub(crate) use source_geometry_document::{ValidatedControlledSourceDab, ValidatedSourceDab};
 #[path = "source_history.rs"]

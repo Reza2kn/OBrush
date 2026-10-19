@@ -1994,6 +1994,12 @@ fn finite_unit_range(value: f32, minimum: f32, maximum: f32, fallback: f32) -> f
 }
 
 impl Renderer {
+    pub(crate) fn adopt_checked_source_snapshot(
+        &mut self,
+        proof: &obrush_core::CertifiedSourceRenderSnapshot,
+    ) {
+        self.selected_certificates.adopt_checked_dab(proof);
+    }
     pub fn new(gl: &glow::Context) -> Result<Self, String> {
         let version = gl.version();
         if version.major < 3 || (!version.is_embedded && version.major == 3 && version.minor == 0) {

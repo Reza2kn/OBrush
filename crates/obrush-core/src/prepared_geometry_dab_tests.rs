@@ -151,7 +151,19 @@ fn prepared_and_split_routes_match_all_tools_mirror_alpha_guard_and_history() {
                                 ta,
                             )
                             .unwrap();
-                        let rb = prepared.apply(0.625, true, &controls, tb).unwrap();
+                        let (rb, certified) = prepared
+                            .apply_with_render_snapshot(0.625, true, &controls, tb)
+                            .unwrap();
+                        assert_eq!(certified.is_some(), rb.combined.changed_vertices > 0);
+                        if let Some(certified) = certified {
+                            assert_eq!(certified.snapshot().id, b.active_subtool_id().unwrap());
+                            assert!(certified.snapshot().active);
+                            assert!(certified.state().matches_mesh(&certified.snapshot().mesh));
+                            assert_eq!(
+                                certified.snapshot().mesh.positions,
+                                b.active_mesh().unwrap().positions
+                            );
+                        }
                         assert_eq!(
                             serde_json::to_vec(&ra).unwrap(),
                             serde_json::to_vec(&rb).unwrap()

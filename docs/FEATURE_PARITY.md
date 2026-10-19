@@ -1,5 +1,11 @@
 # OBrush feature parity contract
 
+**C228 certified Source render handoff:** [The shared-core and million-vertex browser report](SCULPTGL_CERTIFIED_RENDER_HANDOFF_C228.md)
+records 947 exact-pair handoffs, a passing public-file/history/shape audit
+and roughly 4.1 ms observed renderer admission versus 8.0 ms in the separate
+C225 baseline. Active RAF P95 is 66.7 ms, but all four responsiveness gates
+still fail; release latency is variable and parity is not promoted.
+
 **C227 rejected private-state witness trial:** [The million-vertex browser report](SCULPTGL_PRIVATE_WITNESS_TRIAL_C227.md)
 records exact file/history/shape checks but no responsiveness gain. The trial
 was removed; all four active-recorder gates remain failed.

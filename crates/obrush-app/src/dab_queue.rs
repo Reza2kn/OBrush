@@ -106,6 +106,7 @@ pub(crate) struct Progress {
     pub derived_cache_changed: bool,
     pub dabs: usize,
     pub error: Option<String>,
+    pub render_snapshot: Option<obrush_core::CertifiedSourceRenderSnapshot>,
 }
 
 impl DabQueue {
@@ -149,7 +150,7 @@ impl DabQueue {
             return;
         }
         let started = Instant::now();
-        let (result, stages) =
+        let (result, stages, render_snapshot) =
             crate::source_geometry_host::apply_shared_with_timing(document, &session, input);
         let elapsed = started.elapsed();
         self.source_geometry_timing.record(elapsed);
@@ -183,6 +184,9 @@ impl DabQueue {
                 self.applied += u64::from(changed);
                 progress.changed |= changed;
                 progress.derived_cache_changed |= r.derived_cache_changed;
+                if changed {
+                    progress.render_snapshot = render_snapshot;
+                }
             }
             Err(e) => {
                 progress.error.get_or_insert(e.to_string());
@@ -227,6 +231,9 @@ impl DabQueue {
         input: crate::source_paint_host::SourcePaintInput,
         progress: &mut Progress,
     ) {
+        // A later paint operation can change the mesh after an earlier
+        // geometry proof was captured in the same queue drain.
+        progress.render_snapshot = None;
         self.pending -= 1;
         self.processed += 1;
         progress.dabs += 1;
@@ -342,6 +349,7 @@ impl DabQueue {
         footprint: Option<ScreenFootprint>,
         progress: &mut Progress,
     ) {
+        progress.render_snapshot = None;
         let started = Instant::now();
         self.apply(document, ray, settings, delta, footprint, progress);
         self.ordinary_timing.record(started.elapsed());

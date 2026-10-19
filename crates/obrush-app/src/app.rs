@@ -893,6 +893,7 @@ pub struct OBrushApp {
     revision: u64,
     snapshot_revision: u64,
     render_snapshot_timing: DabTiming,
+    render_certified_handoffs: u64,
     stroke: Option<ActiveStroke>,
     background_mask_gesture: Option<BackgroundMaskGesture>,
     pending_dabs: DabQueue,
@@ -1113,6 +1114,7 @@ impl OBrushApp {
             revision: 1,
             snapshot_revision: 1,
             render_snapshot_timing: DabTiming::default(),
+            render_certified_handoffs: 0,
             stroke: None,
             background_mask_gesture: None,
             pending_dabs: DabQueue::default(),
@@ -1244,6 +1246,7 @@ impl OBrushApp {
     pub fn sculpt_metrics(&self) -> String {
         let mut metrics = self.pending_dabs.metrics();
         metrics["render_snapshot_timing"] = self.render_snapshot_timing.metrics();
+        metrics["render_certified_handoffs"] = self.render_certified_handoffs.into();
         metrics["paint_timing"] = self
             .renderer
             .lock()
@@ -2916,11 +2919,31 @@ impl OBrushApp {
     }
 
     fn handle_dab_progress(&mut self, result: crate::dab_queue::Progress) {
+        let prior_revision = self.revision;
+        let prior_snapshot_current = self.snapshot_revision == prior_revision;
         if result.derived_cache_changed {
             self.egui_ctx.request_repaint();
         }
         if result.changed {
             self.changed();
+        }
+        if result.changed
+            && result.error.is_none()
+            && prior_snapshot_current
+            && let Some(proof) = result.render_snapshot.as_ref()
+            && let Some(active) = self
+                .rendered_scene
+                .iter_mut()
+                .find(|snapshot| snapshot.active && snapshot.id == proof.snapshot().id)
+        {
+            // The core captured this immutable pair inside the successful
+            // controlled dab. Other scene objects were not edited by it.
+            *active = proof.snapshot().clone();
+            self.snapshot_revision = self.revision;
+            self.render_certified_handoffs = self.render_certified_handoffs.saturating_add(1);
+            if let Ok(mut renderer) = self.renderer.lock() {
+                renderer.adopt_checked_source_snapshot(proof);
+            }
         }
         if result.painted {
             self.viewport_style.use_vertex_color = true;

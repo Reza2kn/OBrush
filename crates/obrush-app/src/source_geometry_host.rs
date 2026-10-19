@@ -383,6 +383,7 @@ pub struct SourceGeometrySession {
     pub last_mirror_plane: Option<obrush_core::SourceMirrorPlane>,
     dab_observations: DabObservations,
     last_stage_time: Option<SourceGeometryStageTime>,
+    last_render_snapshot: Option<obrush_core::CertifiedSourceRenderSnapshot>,
     last_release_timing: Option<obrush_core::SourceGeometryReleaseTiming>,
 }
 impl SourceGeometrySession {
@@ -458,6 +459,7 @@ impl SourceGeometrySession {
             last_mirror_plane: None,
             dab_observations: DabObservations::default(),
             last_stage_time: None,
+            last_render_snapshot: None,
             last_release_timing: None,
         })))
     }
@@ -688,13 +690,18 @@ pub(crate) fn apply_shared_with_timing(
 ) -> (
     Result<SourceGeometryReport, SourceGeometryError>,
     Option<SourceGeometryStageTime>,
+    Option<obrush_core::CertifiedSourceRenderSnapshot>,
 ) {
     match session.lock() {
         Ok(mut session) => {
             let result = session.apply(doc, input);
-            (result, session.last_stage_time)
+            (
+                result,
+                session.last_stage_time,
+                session.last_render_snapshot.take(),
+            )
         }
-        Err(_) => (Err(SourceGeometryError::StrokeBindingChanged), None),
+        Err(_) => (Err(SourceGeometryError::StrokeBindingChanged), None, None),
     }
 }
 
@@ -855,6 +862,7 @@ impl SourceGeometrySession {
         input: SourceGeometryInput,
     ) -> Result<SourceGeometryReport, SourceGeometryError> {
         self.last_stage_time = None;
+        self.last_render_snapshot = None;
         let mut stage = SourceGeometryStageTime::default();
         if doc.source_geometry_active_claim() != Some(self.stroke.claim_id()) {
             return Err(SourceGeometryError::NoOpenStroke);
@@ -926,9 +934,14 @@ impl SourceGeometrySession {
             // no alpha or mirror. The old narrow constructor retains its own
             // single-pass API and snapshot-history contract.
             let deformation_started = Instant::now();
-            let report =
-                prepared.apply(input.raw.pressure, true, &capture.options, global.tracks)?;
+            let (report, render_snapshot) = prepared.apply_with_render_snapshot(
+                input.raw.pressure,
+                true,
+                &capture.options,
+                global.tracks,
+            )?;
             stage.deformation = deformation_started.elapsed();
+            self.last_render_snapshot = render_snapshot;
             global.tracks = report.tracks;
             drop(global);
             self.controls
@@ -1041,7 +1054,7 @@ mod tests {
             Arc::new(Mutex::new(SourceGeometryAlphaState::default())),
         )
         .unwrap();
-        let (measured_report, stage) = apply_shared_with_timing(&mut measured, &first, input());
+        let (measured_report, stage, _) = apply_shared_with_timing(&mut measured, &first, input());
         assert!(stage.is_some());
         assert_eq!(
             measured_report.unwrap().changed_vertices,

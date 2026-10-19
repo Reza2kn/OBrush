@@ -1,5 +1,11 @@
 # SculptGL parity checkpoint
 
+[The C228 checked Source render handoff](SCULPTGL_CERTIFIED_RENDER_HANDOFF_C228.md)
+uses a private core-issued proof for the exact new immutable mesh/state pair.
+Two million-vertex browser runs pass file/history/shape audits and observe
+about 4.1 ms renderer admission, but all four active responsiveness gates
+still fail. This is an implementation improvement, not a parity promotion.
+
 [The C227 private-state witness trial](SCULPTGL_PRIVATE_WITNESS_TRIAL_C227.md)
 passed the million-vertex file/history/shape audit but did not improve active
 RAF P95 or release latency. It was removed; all four responsiveness gates

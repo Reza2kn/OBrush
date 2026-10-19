@@ -36,6 +36,20 @@ impl Default for SelectedNormalCertificates {
     }
 }
 impl SelectedNormalCertificates {
+    pub(super) fn adopt_checked_dab(&mut self, proof: &obrush_core::CertifiedSourceRenderSnapshot) {
+        let snapshot = proof.snapshot();
+        if !snapshot.active {
+            return;
+        }
+        self.remove(snapshot.id);
+        if let Some(slot) = self.rows.iter_mut().find(|row| row.is_none()) {
+            *slot = Some(Pair {
+                id: snapshot.id,
+                mesh: Arc::downgrade(&snapshot.mesh),
+                state: Arc::downgrade(proof.state()),
+            });
+        }
+    }
     // Weak owners keep control allocations, not a mesh's vectors/tree buffers.
     // Charge a conservative maximum even when GPU caches share those owners.
     pub(super) fn storage_bytes() -> usize {
@@ -138,6 +152,70 @@ std::thread_local! { static VALIDATIONS: std::cell::Cell<usize> = const { std::c
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::source_geometry_host::{
+        SourceGeometryAlphaState, SourceGeometryInput, SourceGeometryMode,
+        SourceGeometryPreferences, SourceGeometrySession, apply_shared_with_timing,
+    };
+    use crate::source_paint_host::RawPressureSample;
+    use obrush_core::{BrushKind, BrushSettings, Document, MaskConvention, PaintViewCapture};
+    use std::sync::Mutex;
+
+    #[test]
+    fn checked_core_dab_adopts_exact_immutable_pair_and_rejects_a_changed_mesh() {
+        let mut mesh = Mesh::from_obj("v -0.5 -0.5 0\nv 0.5 -0.5 0\nv 0 0.5 0\nf 1 2 3\n").unwrap();
+        mesh.mask_convention = MaskConvention::UnprotectedF32V1;
+        mesh.masks.fill(1.);
+        let mut document = Document::new(mesh);
+        let input = SourceGeometryInput {
+            view: PaintViewCapture {
+                world_to_clip: glam::DMat4::IDENTITY.to_cols_array(),
+                viewport: [0., 0., 100., 100.],
+            },
+            screen: [50., 50.],
+            raw: RawPressureSample::default(),
+            in_contact: true,
+        };
+        let settings = BrushSettings {
+            kind: BrushKind::Inflate,
+            symmetry_x: false,
+            adaptive_detail: false,
+            ..Default::default()
+        };
+        let prefs = SourceGeometryPreferences {
+            mode: SourceGeometryMode::SourceOrdinary,
+            radius: 75.,
+            radius_factor: 0.,
+            ..SourceGeometryPreferences::inflate()
+        };
+        let session = SourceGeometrySession::begin_with_controls(
+            &mut document,
+            &settings,
+            false,
+            prefs,
+            input,
+            Arc::new(Mutex::new(SourceGeometryAlphaState::default())),
+        )
+        .unwrap();
+        let (report, _, proof) = apply_shared_with_timing(&mut document, &session, input);
+        assert!(report.unwrap().changed_vertices > 0);
+        let proof = proof.unwrap();
+        let mut cache = SelectedNormalCertificates::default();
+        cache.adopt_checked_dab(&proof);
+        VALIDATIONS.with(|n| n.set(0));
+        let exact = object(&proof.snapshot().mesh, proof.state());
+        assert!(cache.certify(&exact).is_ok());
+        assert_eq!(VALIDATIONS.with(|n| n.get()), 0);
+        let mut changed = proof.snapshot().mesh.as_ref().clone();
+        changed.positions[0].x += 0.125;
+        let stale = RenderObject {
+            mesh: &changed,
+            source: UploadSource::Revision(0),
+            ..exact
+        };
+        assert!(cache.certify(&stale).is_err());
+        assert_eq!(VALIDATIONS.with(|n| n.get()), 1);
+        session.lock().unwrap().finish(&mut document).unwrap();
+    }
     fn fixture() -> (Arc<Mesh>, Arc<SourceGeometryNormalState>) {
         let mut mesh = Mesh::sphere(2);
         mesh.mask_convention = obrush_core::MaskConvention::UnprotectedF32V1;

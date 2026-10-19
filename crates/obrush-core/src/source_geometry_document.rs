@@ -168,6 +168,22 @@ pub struct PreparedSourceGeometryDab<'a> {
     exact_domain_verified: bool,
     preparation_time: SourceGeometryPreparationTime,
 }
+/// An immutable render pair captured immediately after a checked controlled
+/// dab. Its private constructor prevents an arbitrary mesh/state pair from
+/// bypassing the renderer's ordinary stale-state validation.
+#[derive(Clone)]
+pub struct CertifiedSourceRenderSnapshot {
+    snapshot: crate::SubtoolRenderSnapshot,
+    state: Arc<SourceGeometryNormalState>,
+}
+impl CertifiedSourceRenderSnapshot {
+    pub fn snapshot(&self) -> &crate::SubtoolRenderSnapshot {
+        &self.snapshot
+    }
+    pub fn state(&self) -> &Arc<SourceGeometryNormalState> {
+        &self.state
+    }
+}
 #[derive(Clone, Copy, Debug, Default)]
 pub struct SourceGeometryPreparationTime {
     pub retained_match: std::time::Duration,
@@ -187,6 +203,38 @@ impl PreparedSourceGeometryDab<'_> {
         controls: &crate::SourceGeometryControls,
         tracks: crate::SourceGeometryAlphaTracks,
     ) -> Result<crate::SourceGeometryControlledReport, SourceGeometryError> {
+        self.apply_inner(pressure, in_contact, controls, tracks, false)
+            .map(|(report, _)| report)
+    }
+    pub fn apply_with_render_snapshot(
+        self,
+        pressure: f64,
+        in_contact: bool,
+        controls: &crate::SourceGeometryControls,
+        tracks: crate::SourceGeometryAlphaTracks,
+    ) -> Result<
+        (
+            crate::SourceGeometryControlledReport,
+            Option<CertifiedSourceRenderSnapshot>,
+        ),
+        SourceGeometryError,
+    > {
+        self.apply_inner(pressure, in_contact, controls, tracks, true)
+    }
+    fn apply_inner(
+        self,
+        pressure: f64,
+        in_contact: bool,
+        controls: &crate::SourceGeometryControls,
+        tracks: crate::SourceGeometryAlphaTracks,
+        capture_render_snapshot: bool,
+    ) -> Result<
+        (
+            crate::SourceGeometryControlledReport,
+            Option<CertifiedSourceRenderSnapshot>,
+        ),
+        SourceGeometryError,
+    > {
         let doc = self.document;
         doc.validate_source_geometry_stroke_binding(self.stroke)?;
         let mesh = doc.source_geometry_domain(self.stroke.options())?;
@@ -200,7 +248,7 @@ impl PreparedSourceGeometryDab<'_> {
             self.stroke.options(),
             self.retained_state_verified,
         )?;
-        doc.apply_source_geometry_controlled_admitted(
+        let report = doc.apply_source_geometry_controlled_admitted(
             self.stroke,
             self.contacts.passes,
             pressure,
@@ -208,7 +256,24 @@ impl PreparedSourceGeometryDab<'_> {
             controls,
             tracks,
             self.exact_domain_verified,
-        )
+        )?;
+        let certified = if capture_render_snapshot && report.combined.changed_vertices > 0 {
+            let id = doc
+                .active_subtool_id()
+                .ok_or(SourceGeometryError::UnsupportedDomain)?;
+            let state = doc
+                .source_geometry_state(id)
+                .ok_or(SourceGeometryError::StaleNormalState)?;
+            let snapshot = doc
+                .subtool_render_snapshots()
+                .into_iter()
+                .find(|snapshot| snapshot.id == id && snapshot.active)
+                .ok_or(SourceGeometryError::UnsupportedDomain)?;
+            Some(CertifiedSourceRenderSnapshot { snapshot, state })
+        } else {
+            None
+        };
+        Ok((report, certified))
     }
 }
 

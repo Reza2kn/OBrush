@@ -63,12 +63,13 @@ pub use brush::{
 };
 pub use decimate::{DecimatePhase, DecimateProgress, DecimateReport, DecimateSettings};
 pub use document::{
+    CertifiedSourceRenderSnapshot, PreparedSourceGeometryDab, SourceGeometryPreparationTime,
+    SourceGeometryReleaseTiming,
+};
+pub use document::{
     Document, ImportedSubtool, MorphTargetDeletionDisposition, SglAppendReport,
     SourcePaintLockedAction, SourcePaintLockedMode, SourcePaintLockedReport,
     SourcePaintLockedSample, SourcePaintLockedStroke, SubdivisionDeletionReport,
-};
-pub use document::{
-    PreparedSourceGeometryDab, SourceGeometryPreparationTime, SourceGeometryReleaseTiming,
 };
 pub use extract::{MaskExtractReport, MaskExtractSelection, MaskExtractSettings};
 pub use glam::Vec3;
