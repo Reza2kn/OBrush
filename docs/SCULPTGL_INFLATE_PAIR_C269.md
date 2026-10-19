@@ -38,6 +38,20 @@ maximum/RMS differences therefore remain unreported. This report retains that
 verification gap rather than treating a shared analytic oracle as an observed
 paired numerical result.
 
+**Subsequent verification (C270):** On the independent C270 browser-checkout
+build (web WASM SHA-256
+`cb343fca19408fe9ed69cc065f31ea491aae8d18ff75f3b498ac4ebbb8d588d7`),
+`cargo test --locked -p obrush-core --test source_inflate_pair` passed `1/1`.
+The focused test executable was SHA-256
+`5368eb98e48a5e44d612450ad28d2e9935d247b54d99f5e35ff5d8055c12fd25`.
+That test includes the previously unrun explicit pinned-reference-word
+assertion for positive and negative cases, at the frozen `3e-8` tolerance,
+plus the zero control and exact public core history. This later pass
+supersedes the historical *unrun assertion* statement above; it does not
+retroactively give the direct-method test a measured max/RMS delta. The
+separate [normal-browser diamond pair](SCULPTGL_INFLATE_DIAMOND_UI_C270.md)
+records actual paired max/RMS output differences for its own gesture.
+
 The reference probe did not exercise normal SculptGL UI input or public Save,
 Undo, Redo; the OBrush test used shared core and public JSON/history methods,
 not the browser UI or GPU. The preregistered normal-browser cohort, broader

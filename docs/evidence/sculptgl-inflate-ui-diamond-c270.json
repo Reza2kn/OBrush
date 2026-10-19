@@ -1,0 +1,361 @@
+{
+  "scope": "C270 scoped normal UI independent diamond Inflate; failed and useful receipts retained",
+  "raw_root": "/Users/Ajab/.codex/worktrees/inflate-ui-pair/OBrush/.artifacts/sculptgl-inflate-ui-diamond",
+  "fixture_sha256": "9f1d457957a63a832cb229e66692e573da3e398d3ec256ce57272a3028a0cd35",
+  "pinned_bundle_sha256": "79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600",
+  "obrush_wasm_sha256": "cb343fca19408fe9ed69cc065f31ea491aae8d18ff75f3b498ac4ebbb8d588d7",
+  "build_product_source_head": "f9169a2",
+  "preregistered_protocol_commits": [
+    "a7d3f5a",
+    "206db8f",
+    "5e4a14b"
+  ],
+  "result_receipts": [
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/root-off-4cd37d13-ab7d-432e-9640-f26b285d9343/result.json",
+      "sha256": "5edb42fbf68fae55ce1f1ff3d068f3f6d69e027cb8c950f967b1b0a06a5bb6d1",
+      "status": "FAILED normal UI or public save capture; evidence retained",
+      "cohort": "C270-preinstrumentation",
+      "side": "root",
+      "negative": false,
+      "failure": "AssertionError [ERR_ASSERTION]: Exact mask conversion unavailable after visible preview\n+ actual - expected\n\n+ undefined\n- true\n\n    at prepareRootDiamond (file:///Users/Ajab/.codex/worktrees/inflate-ui-pair/OBrush/scripts/check-sculptgl-inflate-ui-diamond.mjs:89:10)\n    at async file:///Users/Ajab/.codex/worktrees/inflate-ui-pair/OBrush/scripts/check-sculptgl-inflate-ui-diamond.mjs:118:98",
+      "before_sha256": null,
+      "after_sha256": null,
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/root-off-4cd37d13-ab7d-432e-9640-f26b285d9343/result.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/root-off-7ed5b05c-d22e-4878-9b2b-91a757712129/result.json",
+      "sha256": "179c5eb02fc20e53ac68f7c573283fa6e033d5efdbff7f64177395986ae8ce9a",
+      "status": "FAILED normal UI or public save capture; evidence retained",
+      "cohort": "C270-preinstrumentation",
+      "side": "root",
+      "negative": false,
+      "failure": "Error: Normal control offscreen source_geometry.mode.source\n    at PageDriver.rootControl (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-large-sustained-c58-stage/workspace/perf-driver.mjs:51:9)\n    at async PageDriver.prepareFixture (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-large-sustained-c58-stage/workspace/perf-driver.mjs:63:244)\n    at async file:///Users/Ajab/.codex/worktrees/inflate-ui-pair/OBrush/scripts/check-sculptgl-inflate-ui-diamond.mjs:80:18",
+      "before_sha256": null,
+      "after_sha256": null,
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/root-off-7ed5b05c-d22e-4878-9b2b-91a757712129/result.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/root-off-b0c0cdcb-5e2d-4c4d-81ff-2ae9968376da/result.json",
+      "sha256": "5ffba27e3c342d11bf68a6adaab33a7ed140c4ffcefa751ae38ce39b2e995679",
+      "status": "captured normal UI and public Save/Undo/Redo; independent audit pending",
+      "cohort": "C270-preinstrumentation",
+      "side": "root",
+      "negative": false,
+      "failure": null,
+      "before_sha256": "24a3b95a7f2f7aa3edcf3bfbab376e81788d6796c60c961054fa9cfb82afa786",
+      "after_sha256": "24a3b95a7f2f7aa3edcf3bfbab376e81788d6796c60c961054fa9cfb82afa786",
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/root-off-b0c0cdcb-5e2d-4c4d-81ff-2ae9968376da/result.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/root-off-interior-9599ed63-e94d-4cd3-9c4d-9ee6e67d68ed/result.json",
+      "sha256": "13ca2e116e602cf173f29cebc9610a37a2831c407891430941426a0d2e44592d",
+      "status": "captured normal UI and public Save/Undo/Redo; independent audit pending",
+      "cohort": "C270B-interior",
+      "side": "root",
+      "negative": false,
+      "failure": null,
+      "before_sha256": "24a3b95a7f2f7aa3edcf3bfbab376e81788d6796c60c961054fa9cfb82afa786",
+      "after_sha256": "24a3b95a7f2f7aa3edcf3bfbab376e81788d6796c60c961054fa9cfb82afa786",
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/root-off-interior-9599ed63-e94d-4cd3-9c4d-9ee6e67d68ed/result.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/root-off-long-interior-7d21450d-2ee3-483e-ba66-c1416fd2bd88/result.json",
+      "sha256": "18c67d3018f553e6c9570f37e05a25b029b758b7f83395b730264251ee70dd5b",
+      "status": "captured normal UI and public Save/Undo/Redo; independent audit pending",
+      "cohort": "C270C-long-interior",
+      "side": "root",
+      "negative": false,
+      "failure": null,
+      "before_sha256": "24a3b95a7f2f7aa3edcf3bfbab376e81788d6796c60c961054fa9cfb82afa786",
+      "after_sha256": "75056b3fbca7d0ecce9193f89c5bc483931736e6bdbe94225bfd3215105eee25",
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/root-off-long-interior-7d21450d-2ee3-483e-ba66-c1416fd2bd88/result.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/root-on-2faa8812-d303-4637-9727-5667aaa77e2e/result.json",
+      "sha256": "e0f96a0838c0e7484776714302f4f258f8705bf1c033d2d8e75e8a1ca0f7a546",
+      "status": "captured normal UI and public Save/Undo/Redo; independent audit pending",
+      "cohort": "C270-preinstrumentation",
+      "side": "root",
+      "negative": true,
+      "failure": null,
+      "before_sha256": "24a3b95a7f2f7aa3edcf3bfbab376e81788d6796c60c961054fa9cfb82afa786",
+      "after_sha256": "24a3b95a7f2f7aa3edcf3bfbab376e81788d6796c60c961054fa9cfb82afa786",
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/root-on-2faa8812-d303-4637-9727-5667aaa77e2e/result.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/root-on-interior-f742bbd2-02a6-42a5-b4cb-563c0a0b1936/result.json",
+      "sha256": "7f2a7d1074d9fcf814c41190f5f7853c8c7052e1842c4e9a3b7bdf69cc64d901",
+      "status": "captured normal UI and public Save/Undo/Redo; independent audit pending",
+      "cohort": "C270B-interior",
+      "side": "root",
+      "negative": true,
+      "failure": null,
+      "before_sha256": "24a3b95a7f2f7aa3edcf3bfbab376e81788d6796c60c961054fa9cfb82afa786",
+      "after_sha256": "24a3b95a7f2f7aa3edcf3bfbab376e81788d6796c60c961054fa9cfb82afa786",
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/root-on-interior-f742bbd2-02a6-42a5-b4cb-563c0a0b1936/result.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/root-on-long-interior-8fc71142-f116-4a44-a60c-da2a760e56c8/result.json",
+      "sha256": "d3f8ea2054579931940ee1a503629adbcd2719428bc6a9c8bc82207f8e566f36",
+      "status": "captured normal UI and public Save/Undo/Redo; independent audit pending",
+      "cohort": "C270C-long-interior",
+      "side": "root",
+      "negative": true,
+      "failure": null,
+      "before_sha256": "24a3b95a7f2f7aa3edcf3bfbab376e81788d6796c60c961054fa9cfb82afa786",
+      "after_sha256": "d4fc4055bb83609e4c05d67a42f400c82fd21134e611a62bebdc3271e6879fbf",
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/root-on-long-interior-8fc71142-f116-4a44-a60c-da2a760e56c8/result.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/source-off-614c7e26-f723-4aac-9226-a2798ffc92b3/result.json",
+      "sha256": "f0e2c934c7246e8b4f8b04d339bb00bc7f70ca3ba13ca57f83fe6872e5733e3f",
+      "status": "FAILED normal UI or public save capture; evidence retained",
+      "cohort": "C270-preinstrumentation",
+      "side": "source",
+      "negative": false,
+      "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n0 !== 'None'\n\n    at file:///Users/Ajab/.codex/worktrees/inflate-ui-pair/OBrush/scripts/check-sculptgl-inflate-ui-diamond.mjs:104:49",
+      "before_sha256": null,
+      "after_sha256": null,
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/source-off-614c7e26-f723-4aac-9226-a2798ffc92b3/result.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/source-off-cc20e7c1-29dd-4e2a-9a3a-c75a1f912be3/result.json",
+      "sha256": "13ed5849d828d1a5989653dfe6c6686bfe8921edb36e652bc1417843c1e1850b",
+      "status": "FAILED normal UI or public save capture; evidence retained",
+      "cohort": "C270-preinstrumentation",
+      "side": "source",
+      "negative": false,
+      "failure": "Error: {\"exceptionId\":1,\"text\":\"Uncaught\",\"lineNumber\":0,\"columnNumber\":7,\"scriptId\":\"73\",\"stackTrace\":{\"callFrames\":[{\"functionName\":\"\",\"scriptId\":\"73\",\"url\":\"\",\"lineNumber\":0,\"columnNumber\":7}]},\"exception\":{\"type\":\"object\",\"subtype\":\"error\",\"className\":\"TypeError\",\"description\":\"TypeError: window.__readFocusedAlphaHit is not a function\\n    at <anonymous>:1:8\",\"objectId\":\"-5340855113409923139.2.2\"}}\n    at PageDriver.evaluate (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-large-sustained-c58-stage/workspace/paired-driver.mjs:24:151)\n    at async alphaPacket (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-large-sustained-c58-stage/workspace/perf-driver.mjs:14:102)\n    at async PageDriver.sourceNativeAlpha (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-large-sustained-c58-stage/workspace/perf-driver.mjs:17:63)\n    at async PageDriver.prepareFixture (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-large-sustained-c58-stage/workspace/perf-driver.mjs:73:299)\n    at async file:///Users/Ajab/.codex/worktrees/inflate-ui-pair/OBrush/scripts/check-sculptgl-inflate-ui-diamond.mjs:78:18",
+      "before_sha256": null,
+      "after_sha256": null,
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/source-off-cc20e7c1-29dd-4e2a-9a3a-c75a1f912be3/result.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/source-off-fbeefb15-5812-4253-a9a9-5ca1bbe760a6/result.json",
+      "sha256": "1628bcb6a02c2f7e7fe2710cd9d755295e2953a379244051556f751ae50532a0",
+      "status": "captured normal UI and public Save/Undo/Redo; independent audit pending",
+      "cohort": "C270-preinstrumentation",
+      "side": "source",
+      "negative": false,
+      "failure": null,
+      "before_sha256": "ecb34cc2ca23127e7fb8ab0539344763e6736bfebd007e594f9b3510ce8ad7ad",
+      "after_sha256": "ecb34cc2ca23127e7fb8ab0539344763e6736bfebd007e594f9b3510ce8ad7ad",
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/source-off-fbeefb15-5812-4253-a9a9-5ca1bbe760a6/result.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/source-off-interior-b83d89f5-c3f4-4f15-8c12-73df1f1235ef/result.json",
+      "sha256": "af711028b73e9657fa0f9422bd0e09b0380fef57ab8807e874e6a0f4b87b9add",
+      "status": "captured normal UI and public Save/Undo/Redo; independent audit pending",
+      "cohort": "C270B-interior",
+      "side": "source",
+      "negative": false,
+      "failure": null,
+      "before_sha256": "ecb34cc2ca23127e7fb8ab0539344763e6736bfebd007e594f9b3510ce8ad7ad",
+      "after_sha256": "ecb34cc2ca23127e7fb8ab0539344763e6736bfebd007e594f9b3510ce8ad7ad",
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/source-off-interior-b83d89f5-c3f4-4f15-8c12-73df1f1235ef/result.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/source-off-interior-d58f86ba-6d20-4860-8377-fc65b87689d5/result.json",
+      "sha256": "3417168f8ffd6e90214d582b7f1206a9005e90ca8da8f5d96c78a71b0622efef",
+      "status": "captured normal UI and public Save/Undo/Redo; independent audit pending",
+      "cohort": "C270B-interior",
+      "side": "source",
+      "negative": false,
+      "failure": null,
+      "before_sha256": "ecb34cc2ca23127e7fb8ab0539344763e6736bfebd007e594f9b3510ce8ad7ad",
+      "after_sha256": "ecb34cc2ca23127e7fb8ab0539344763e6736bfebd007e594f9b3510ce8ad7ad",
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/source-off-interior-d58f86ba-6d20-4860-8377-fc65b87689d5/result.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/source-off-long-interior-a10e39ea-f9d8-4ee3-b947-0dc8a4fb85be/result.json",
+      "sha256": "aa4e5d9d6888cf0daadcb5eb1df8f85069599b1a4460ac5f75796aaa8c50f880",
+      "status": "captured normal UI and public Save/Undo/Redo; independent audit pending",
+      "cohort": "C270C-long-interior",
+      "side": "source",
+      "negative": false,
+      "failure": null,
+      "before_sha256": "ecb34cc2ca23127e7fb8ab0539344763e6736bfebd007e594f9b3510ce8ad7ad",
+      "after_sha256": "5d5eae67614b0bad61323acafa0e258c9b69ed495a996111d475d7c01566cdce",
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/source-off-long-interior-a10e39ea-f9d8-4ee3-b947-0dc8a4fb85be/result.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/source-on-3d7bbc7b-bf35-4d67-bcce-0e9fadeba421/result.json",
+      "sha256": "549cd8e34a7dcf3ddf9e117cbcfe0737ca39c9467f7a259098fe2c6d6086fa99",
+      "status": "FAILED normal UI or public save capture; evidence retained",
+      "cohort": "C270-preinstrumentation",
+      "side": "source",
+      "negative": true,
+      "failure": "Error: Source control hidden/disabled (Array.from(window.__sculptglReferenceInstance.getGui()._ctrlSculpting._menu.domUl.querySelectorAll('input[type=checkbox]')).find(e=>e.parentElement.textContent.includes(\"Negative\"))).parentElement\n    at requireGate (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-large-sustained-c58-stage/workspace/paired-oracle.mjs:8:46)\n    at PageDriver.sourceClick (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-large-sustained-c58-stage/workspace/paired-driver.mjs:105:99)\n    at async PageDriver.sourceCheckbox (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-large-sustained-c58-stage/workspace/paired-driver.mjs:110:184)\n    at async file:///Users/Ajab/.codex/worktrees/inflate-ui-pair/OBrush/scripts/check-sculptgl-inflate-ui-diamond.mjs:87:5",
+      "before_sha256": null,
+      "after_sha256": null,
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/source-on-3d7bbc7b-bf35-4d67-bcce-0e9fadeba421/result.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/source-on-70039cde-7605-4dc1-bb5c-69dd887aa1c8/result.json",
+      "sha256": "3497406d3fc99ab8d347f15f7d494e442a13951e00ccc65db5932ecce1a7b285",
+      "status": "captured normal UI and public Save/Undo/Redo; independent audit pending",
+      "cohort": "C270-preinstrumentation",
+      "side": "source",
+      "negative": true,
+      "failure": null,
+      "before_sha256": "ecb34cc2ca23127e7fb8ab0539344763e6736bfebd007e594f9b3510ce8ad7ad",
+      "after_sha256": "ecb34cc2ca23127e7fb8ab0539344763e6736bfebd007e594f9b3510ce8ad7ad",
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/source-on-70039cde-7605-4dc1-bb5c-69dd887aa1c8/result.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/source-on-d6634f70-d617-4df5-907b-7d87f64c46f3/result.json",
+      "sha256": "084fc2dc1806e57fcfb4432cfcdbfbc2dbf781004549a80698237d8241a63a39",
+      "status": "FAILED normal UI or public save capture; evidence retained",
+      "cohort": "C270-preinstrumentation",
+      "side": "source",
+      "negative": true,
+      "failure": "Error: Source control hidden/disabled (Array.from(window.__sculptglReferenceInstance.getGui()._ctrlSculpting._menu.domUl.querySelectorAll('input[type=checkbox]')).find(e=>e.parentElement.textContent.includes(\"Negative\"))).parentElement\n    at requireGate (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-large-sustained-c58-stage/workspace/paired-oracle.mjs:8:46)\n    at PageDriver.sourceClick (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-large-sustained-c58-stage/workspace/paired-driver.mjs:105:99)\n    at async PageDriver.sourceCheckbox (file:///Users/Ajab/AI/OBrush/.artifacts/sculptgl-large-sustained-c58-stage/workspace/paired-driver.mjs:110:184)\n    at async file:///Users/Ajab/.codex/worktrees/inflate-ui-pair/OBrush/scripts/check-sculptgl-inflate-ui-diamond.mjs:89:5",
+      "before_sha256": null,
+      "after_sha256": null,
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/source-on-d6634f70-d617-4df5-907b-7d87f64c46f3/result.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/source-on-interior-f91aade2-284f-4ead-a883-398f6538e085/result.json",
+      "sha256": "22fc32e586676176de240e9577d11b3184229dd584abeb7b24176748e2263164",
+      "status": "captured normal UI and public Save/Undo/Redo; independent audit pending",
+      "cohort": "C270B-interior",
+      "side": "source",
+      "negative": true,
+      "failure": null,
+      "before_sha256": "ecb34cc2ca23127e7fb8ab0539344763e6736bfebd007e594f9b3510ce8ad7ad",
+      "after_sha256": "ecb34cc2ca23127e7fb8ab0539344763e6736bfebd007e594f9b3510ce8ad7ad",
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/source-on-interior-f91aade2-284f-4ead-a883-398f6538e085/result.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/source-on-long-interior-70cbed2e-53dc-452d-b63d-6937e16a49e6/result.json",
+      "sha256": "62b278f73de95434db8425551462395e2a6a729e2c0fc4d9e988d71463a11c73",
+      "status": "captured normal UI and public Save/Undo/Redo; independent audit pending",
+      "cohort": "C270C-long-interior",
+      "side": "source",
+      "negative": true,
+      "failure": null,
+      "before_sha256": "ecb34cc2ca23127e7fb8ab0539344763e6736bfebd007e594f9b3510ce8ad7ad",
+      "after_sha256": "fc793e84401bd8141d498a8c064e7c2ca372766acb9c0a6b36dad6a2dcd8e1b8",
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/source-on-long-interior-70cbed2e-53dc-452d-b63d-6937e16a49e6/result.json"
+    }
+  ],
+  "paired_audits": [
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/source-off-fbeefb15-5812-4253-a9a9-5ca1bbe760a6/diamond-audit-root-off-b0c0cdcb-5e2d-4c4d-81ff-2ae9968376da.json",
+      "sha256": "81f6e781d014ac64e8a22a46af51dce98e9703527d952f76291c1ab24c0b62bb",
+      "cohort": "C270-edge",
+      "negative": false,
+      "admitted": false,
+      "numerical_gate": false,
+      "source_changed_ids": [],
+      "root_changed_ids": [],
+      "max_abs_component": 0,
+      "rms_component": 0,
+      "gpu_after": true,
+      "gpu_redo": true,
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/source-off-fbeefb15-5812-4253-a9a9-5ca1bbe760a6/diamond-audit-root-off-b0c0cdcb-5e2d-4c4d-81ff-2ae9968376da.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/source-off-interior-d58f86ba-6d20-4860-8377-fc65b87689d5/diamond-audit-root-off-interior-9599ed63-e94d-4cd3-9c4d-9ee6e67d68ed.json",
+      "sha256": "e1313fe1d2a6c921daab5404a55daea346b1794d43f4be0044a3cb6566c6af2a",
+      "cohort": "C270B-interior",
+      "negative": false,
+      "admitted": false,
+      "numerical_gate": false,
+      "source_changed_ids": [],
+      "root_changed_ids": [],
+      "max_abs_component": 0,
+      "rms_component": 0,
+      "gpu_after": true,
+      "gpu_redo": true,
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/source-off-interior-d58f86ba-6d20-4860-8377-fc65b87689d5/diamond-audit-root-off-interior-9599ed63-e94d-4cd3-9c4d-9ee6e67d68ed.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/source-off-long-interior-a10e39ea-f9d8-4ee3-b947-0dc8a4fb85be/diamond-audit-root-off-long-interior-7d21450d-2ee3-483e-ba66-c1416fd2bd88.json",
+      "sha256": "9fd25b97d3e63632bdf28a0f40b398ead996209fed5578eb5b15ec94acfa1f9a",
+      "cohort": "C270C-long-interior",
+      "negative": false,
+      "admitted": true,
+      "numerical_gate": true,
+      "source_changed_ids": [
+        1,
+        2,
+        3
+      ],
+      "root_changed_ids": [
+        1,
+        2,
+        3
+      ],
+      "max_abs_component": 3.725290298461914e-09,
+      "rms_component": 1.1132631250611199e-09,
+      "gpu_after": true,
+      "gpu_redo": true,
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/source-off-long-interior-a10e39ea-f9d8-4ee3-b947-0dc8a4fb85be/diamond-audit-root-off-long-interior-7d21450d-2ee3-483e-ba66-c1416fd2bd88.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/source-on-70039cde-7605-4dc1-bb5c-69dd887aa1c8/diamond-audit-root-on-2faa8812-d303-4637-9727-5667aaa77e2e.json",
+      "sha256": "c40928b39a898dd1bd82c05054c47a47faf98b2c462dd7e1ef5d7a0fe0e300f6",
+      "cohort": "C270-edge",
+      "negative": true,
+      "admitted": false,
+      "numerical_gate": false,
+      "source_changed_ids": [],
+      "root_changed_ids": [],
+      "max_abs_component": 0,
+      "rms_component": 0,
+      "gpu_after": true,
+      "gpu_redo": true,
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/source-on-70039cde-7605-4dc1-bb5c-69dd887aa1c8/diamond-audit-root-on-2faa8812-d303-4637-9727-5667aaa77e2e.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/source-on-interior-f91aade2-284f-4ead-a883-398f6538e085/diamond-audit-root-on-interior-f742bbd2-02a6-42a5-b4cb-563c0a0b1936.json",
+      "sha256": "1b9f44c0ab94d2dadf49e33f717a4f09771314524e3be9a4637262884b817c75",
+      "cohort": "C270B-interior",
+      "negative": true,
+      "admitted": false,
+      "numerical_gate": false,
+      "source_changed_ids": [],
+      "root_changed_ids": [],
+      "max_abs_component": 0,
+      "rms_component": 0,
+      "gpu_after": true,
+      "gpu_redo": true,
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/source-on-interior-f91aade2-284f-4ead-a883-398f6538e085/diamond-audit-root-on-interior-f742bbd2-02a6-42a5-b4cb-563c0a0b1936.json"
+    },
+    {
+      "path": ".artifacts/sculptgl-inflate-ui-diamond/source-on-long-interior-70cbed2e-53dc-452d-b63d-6937e16a49e6/diamond-audit-root-on-long-interior-8fc71142-f116-4a44-a60c-da2a760e56c8.json",
+      "sha256": "0bcd659753142522de974ddc28cb245a0f4ee50be444f95e3bf2120bf24faacb",
+      "cohort": "C270C-long-interior",
+      "negative": true,
+      "admitted": true,
+      "numerical_gate": true,
+      "source_changed_ids": [
+        1,
+        2,
+        3
+      ],
+      "root_changed_ids": [
+        1,
+        2,
+        3
+      ],
+      "max_abs_component": 3.725290298461914e-09,
+      "rms_component": 1.1132631250611199e-09,
+      "gpu_after": true,
+      "gpu_redo": true,
+      "backup_path": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270/source-on-long-interior-70cbed2e-53dc-452d-b63d-6937e16a49e6/diamond-audit-root-on-long-interior-8fc71142-f116-4a44-a60c-da2a760e56c8.json"
+    }
+  ],
+  "limitations": [
+    "One flat four-vertex all-unmasked OBJ",
+    "No comparable source public dab counter",
+    "Reference/default non-position import attributes differ",
+    "No dense, native or sustained performance parity claim"
+  ],
+  "raw_backup_root": "/Users/Ajab/AI/OBrush/.artifacts/sculptgl-inflate-ui-diamond-c270",
+  "raw_backup_excludes": [
+    "isolated-profile/"
+  ]
+}
