@@ -16,6 +16,11 @@ const CHECKSUM_BYTES: usize = 32;
 // Match Mesh's public coordinate bound without a whole-mesh validation walk.
 const MAX_PREVIEW_COORDINATE: f32 = 1_000_000.0;
 pub const MAX_SOURCE_WORKER_PREVIEW_BYTES: usize = 64 * 1024 * 1024;
+/// At most the project's one-million vertex ceiling can remain in the sparse
+/// overlay, even across an unbounded number of small packets. Each retained
+/// entry stores one u32 index plus six u32 words; HashMap bucket overhead is
+/// implementation-dependent, so allocation is also fallibly reserved.
+pub const MAX_SOURCE_WORKER_PREVIEW_OVERLAY_ROWS: usize = MAX_VERTICES;
 
 /// The old and new display words of one vertex. Both normals and positions
 /// are transported because a neighboring face can change an unmoved normal.
@@ -266,6 +271,14 @@ impl SourceWorkerSparsePreviewOverlay {
                 after_position: [new[0], new[1], new[2]].map(f32::from_bits),
                 after_normal: [new[3], new[4], new[5]].map(f32::from_bits),
             });
+        }
+        if self
+            .changed
+            .len()
+            .checked_add(additional)
+            .is_none_or(|rows| rows > MAX_SOURCE_WORKER_PREVIEW_OVERLAY_ROWS)
+        {
+            return Err("Source preview overlay exceeds row limit".into());
         }
         self.changed
             .try_reserve(additional)

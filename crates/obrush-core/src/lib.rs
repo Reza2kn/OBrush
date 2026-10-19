@@ -170,6 +170,7 @@ pub use source_worker_retained_warm::{
 pub use source_worker_sparse_preview::{
     encode_source_worker_sparse_preview_rows, SourceWorkerPreviewRow,
     SourceWorkerSparsePreviewOverlay, MAX_SOURCE_WORKER_PREVIEW_BYTES,
+    MAX_SOURCE_WORKER_PREVIEW_OVERLAY_ROWS,
 };
 pub use source_worker_transaction::{SourceWorkerTransaction, SourceWorkerTransactionError};
 pub use static_subdivision::{
