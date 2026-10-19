@@ -190,42 +190,11 @@ impl OBrushApp {
         pressure: f64,
         pen: bool,
     ) -> Result<String, String> {
-        let input = input_at(self, x, y, pressure, pen)?;
-        let prefs = self
-            .effective_source_geometry_preferences(BrushKind::Draw)
-            .ok_or("Source Draw preferences disappeared")?;
-        let settings = self
-            .source_geometry_settings(BrushKind::Draw)
-            .map_err(|error| error.to_string())?;
-        if settings.alpha.is_some()
-            || settings.symmetry_x
-            || settings.invert
-            || self.preferences.tool(BrushKind::Draw).lock_position
-            || self.preferences.global().continuous
-            || !self.source_worker_sparse_style_eligible()
-        {
-            return Err("Source Worker static brush controls changed during the gesture".into());
-        }
+        let input = self.source_worker_held_checked_input(epoch, x, y, pressure, pen)?;
         let held = self
             .source_worker_held
             .as_mut()
             .ok_or("No held Source Worker gesture")?;
-        if held.epoch != epoch
-            || held.revision != self.revision
-            || held.viewport != self.last_viewport
-            || !same_view(held.view, input.view)
-        {
-            return Err("Held Source Worker pointer has a stale owner or viewport".into());
-        }
-        if self.brush.kind != BrushKind::Draw
-            || prefs.mode != SourceGeometryMode::SourceOrdinary
-            || prefs.mirror_offset != 0.0
-            || prefs.options != held.options
-            || prefs.radius.to_bits() != held.radius.to_bits()
-            || prefs.radius_factor.to_bits() != held.radius_factor.to_bits()
-        {
-            return Err("Source Worker brush controls changed during the gesture".into());
-        }
         let dx = input.screen[0] - held.last_screen[0];
         let dy = input.screen[1] - held.last_screen[1];
         let distance = (dx * dx + dy * dy).sqrt();
@@ -250,6 +219,73 @@ impl OBrushApp {
         }
         held.last_screen = input.screen;
         serde_json::to_string(&values).map_err(|error| error.to_string())
+    }
+
+    // Release bypasses path spacing and the 32-sample interpolation batch.
+    // The final trusted location therefore has one bounded Worker apply even
+    // when the last movement was shorter than the ordinary dab spacing.
+    pub fn source_worker_held_endpoint(
+        &mut self,
+        epoch: u64,
+        x: f64,
+        y: f64,
+        pressure: f64,
+        pen: bool,
+    ) -> Result<String, String> {
+        let input = self.source_worker_held_checked_input(epoch, x, y, pressure, pen)?;
+        let held = self
+            .source_worker_held
+            .as_ref()
+            .ok_or("No held Source Worker gesture")?;
+        serde_json::to_string(&wire_input(input, held.radius, held.radius_factor))
+            .map_err(|error| error.to_string())
+    }
+
+    fn source_worker_held_checked_input(
+        &mut self,
+        epoch: u64,
+        x: f64,
+        y: f64,
+        pressure: f64,
+        pen: bool,
+    ) -> Result<geometry::SourceGeometryInput, String> {
+        let input = input_at(self, x, y, pressure, pen)?;
+        let prefs = self
+            .effective_source_geometry_preferences(BrushKind::Draw)
+            .ok_or("Source Draw preferences disappeared")?;
+        let settings = self
+            .source_geometry_settings(BrushKind::Draw)
+            .map_err(|error| error.to_string())?;
+        if settings.alpha.is_some()
+            || settings.symmetry_x
+            || settings.invert
+            || self.preferences.tool(BrushKind::Draw).lock_position
+            || self.preferences.global().continuous
+            || !self.source_worker_sparse_style_eligible()
+        {
+            return Err("Source Worker static brush controls changed during the gesture".into());
+        }
+        let held = self
+            .source_worker_held
+            .as_ref()
+            .ok_or("No held Source Worker gesture")?;
+        if held.epoch != epoch
+            || held.revision != self.revision
+            || held.viewport != self.last_viewport
+            || !same_view(held.view, input.view)
+        {
+            return Err("Held Source Worker pointer has a stale owner or viewport".into());
+        }
+        if self.brush.kind != BrushKind::Draw
+            || prefs.mode != SourceGeometryMode::SourceOrdinary
+            || prefs.mirror_offset != 0.0
+            || prefs.options != held.options
+            || prefs.radius.to_bits() != held.radius.to_bits()
+            || prefs.radius_factor.to_bits() != held.radius_factor.to_bits()
+        {
+            return Err("Source Worker brush controls changed during the gesture".into());
+        }
+        Ok(input)
     }
 
     pub fn source_worker_held_preview(

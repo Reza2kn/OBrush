@@ -298,6 +298,24 @@ impl WebHandle {
             .map_err(|error| JsValue::from_str(&error))
     }
 
+    pub fn source_worker_held_endpoint(
+        &self,
+        epoch: &str,
+        x: f64,
+        y: f64,
+        pressure: f64,
+        pen: bool,
+    ) -> Result<String, JsValue> {
+        let epoch = epoch
+            .parse::<u64>()
+            .map_err(|error| JsValue::from_str(&error.to_string()))?;
+        self.runner
+            .app_mut::<OBrushApp>()
+            .ok_or_else(|| JsValue::from_str("OBrush is not running"))?
+            .source_worker_held_endpoint(epoch, x, y, pressure, pen)
+            .map_err(|error| JsValue::from_str(&error))
+    }
+
     pub fn source_worker_held_preview(
         &self,
         epoch: &str,

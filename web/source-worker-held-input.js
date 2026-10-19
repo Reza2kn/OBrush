@@ -8,7 +8,12 @@ export function createHeldSourceWorkerInput(handle, canvas, notice, wasmBackend)
   const totals = { pointerMoves: 0, coalescedMoves: 0, sentDabs: 0,
                    acknowledgedDabs: 0, previewBytes: 0, finishBytes: 0,
                    commits: 0, noOps: 0, rejections: 0, discardedAtRelease: 0,
-                   lastDiscardedAtRelease: 0, lastEndpointDropped: false,
+                   lastDiscardedAtRelease: 0, skippedQueuedDabs: 0,
+                   skippedPendingMoves: 0, lastSkippedQueuedDabs: 0,
+                   lastSkippedPendingMove: false, lastEndpointDropped: false,
+                   lastEndpointApplied: false, lastEndpointAlreadyCovered: false,
+                   lastEndpointPressureSource: null, lastEndpointScreen: null,
+                   lastEndpointPressure: null, lastSeedWarm: null,
                    lastBeginMs: null, lastFirstPreviewMs: null,
                    lastReleaseToCommitMs: null, maxPreviewMainMs: 0,
                    maxWorkerCallMs: 0 };
@@ -40,30 +45,42 @@ export function createHeldSourceWorkerInput(handle, canvas, notice, wasmBackend)
     if (inform) notice(`Source Worker gesture rejected: ${String(reason).slice(0, 350)}`);
   };
   const post = (session, kind, fields = {}) => {
-    if (session !== active || session.outstanding) return;
+    if (session !== active || session.outstanding) return false;
     const id = ++session.nextId;
-    session.outstanding = { id, kind, sequence: fields.sequence };
+    session.outstanding = { id, kind, sequence: fields.sequence,
+      endpoint: Boolean(fields.endpoint) };
     session.worker.postMessage({ id, kind, strokeEpoch: session.epoch, ...fields },
       fields.warmSeed ? [fields.warmSeed.buffer] : []);
+    return true;
+  };
+  const sendApply = (session, input, endpoint = false) => {
+    const sequence = String(session.nextSequence++);
+    if (!post(session, 'apply', { sequence, input, endpoint })) return;
+    session.lastSentInput = input;
+    totals.sentDabs++;
+    if (endpoint) session.endpointSent = true;
   };
   const pump = session => {
     if (session !== active || session.outstanding) return;
     try {
-      // Release is a hard input boundary: never drain an accumulated pointer
-      // path after the button is up. A very quick click retains its down dab.
-      if (session.released && session.nextSequence > 1) {
-        const dropped = session.samples.length + Number(Boolean(session.latest));
-        totals.discardedAtRelease += dropped;
-        session.discardedAtRelease += dropped;
-        session.endpointDropped ||= Boolean(session.latest);
-        session.samples = [];
-        session.latest = null;
+      // At release, wait for at most the already outstanding dab, then one
+      // exact endpoint dab and finish. Never drain the intermediate queue.
+      if (session.released) {
+        if (!session.endpointSettled) {
+          if (session.endpointInput === session.lastSentInput) {
+            session.endpointAlreadyCovered = true;
+            session.endpointSettled = true;
+          } else {
+            sendApply(session, session.endpointInput, true);
+            return;
+          }
+        }
+        post(session, 'finish', { sequence: String(session.nextSequence++) });
+        return;
       }
       if (session.samples.length) {
         const input = session.samples.shift();
-        const sequence = String(session.nextSequence++);
-        totals.sentDabs++;
-        post(session, 'apply', { sequence, input });
+        sendApply(session, input);
         return;
       }
       if (session.latest) {
@@ -77,9 +94,6 @@ export function createHeldSourceWorkerInput(handle, canvas, notice, wasmBackend)
         session.samples = samples.map(input => JSON.stringify(input));
         pump(session);
         return;
-      }
-      if (session.released) {
-        post(session, 'finish', { sequence: String(session.nextSequence++) });
       }
     } catch (error) { stop(error); }
   };
@@ -113,6 +127,10 @@ export function createHeldSourceWorkerInput(handle, canvas, notice, wasmBackend)
           Number(message.timing?.worker_call_ms) || 0);
         totals.acknowledgedDabs++;
         totals.previewBytes += message.delta.byteLength;
+        if (expected.endpoint) {
+          session.endpointApplied = true;
+          session.endpointSettled = true;
+        }
         pump(session);
       } else if (expected.kind === 'finish') {
         if (message.strokeEpoch !== session.epoch || message.sequence !== expected.sequence ||
@@ -126,7 +144,15 @@ export function createHeldSourceWorkerInput(handle, canvas, notice, wasmBackend)
         if (typeof changed !== 'boolean') throw Error('Source Worker publication outcome was invalid');
         if (changed) totals.commits++; else totals.noOps++;
         totals.lastDiscardedAtRelease = session.discardedAtRelease;
-        totals.lastEndpointDropped = session.endpointDropped;
+        totals.lastSkippedQueuedDabs = session.skippedQueuedDabs;
+        totals.lastSkippedPendingMove = session.skippedPendingMove;
+        totals.lastEndpointDropped = false;
+        totals.lastEndpointApplied = session.endpointApplied;
+        totals.lastEndpointAlreadyCovered = session.endpointAlreadyCovered;
+        totals.lastEndpointPressureSource = session.endpointPressureSource;
+        totals.lastEndpointScreen = session.endpointScreen;
+        totals.lastEndpointPressure = session.endpointPressure;
+        totals.lastSeedWarm = session.seedWarm;
         totals.lastReleaseToCommitMs = performance.now() - session.releasedAt;
         active = null;
         session.worker.terminate();
@@ -165,7 +191,14 @@ export function createHeldSourceWorkerInput(handle, canvas, notice, wasmBackend)
           pointerId: event.pointerId, nextId: 0, nextSequence: 1,
           outstanding: null, latest: null,
           samples: [JSON.stringify(seed.initial_input)], released: false,
-          discardedAtRelease: 0, endpointDropped: false,
+          discardedAtRelease: 0, skippedQueuedDabs: 0,
+          skippedPendingMove: false, lastSentInput: null,
+          endpointInput: null, endpointSent: false,
+          endpointSettled: false, endpointApplied: false,
+          endpointAlreadyCovered: false, endpointPressureSource: null,
+          endpointScreen: null, endpointPressure: null,
+          seedWarm: seed.warm === true,
+          lastContactPressure: event.pointerType === 'pen' ? event.pressure : 0.5,
           startedAt, firstPreviewAt: null, releasedAt: null };
         active = session;
         worker.onmessage = reply => response(session, reply.data);
@@ -205,12 +238,37 @@ export function createHeldSourceWorkerInput(handle, canvas, notice, wasmBackend)
       if (!handle.source_worker_held_pointer_in_viewport(x, y)) {
         stop('Pointer left the prepared viewport'); return;
       }
-      if (session.latest) totals.coalescedMoves++;
-      session.latest = { x, y,
-        pressure: event.pointerType === 'pen' ? event.pressure : 0.5,
-        pen: event.pointerType === 'pen' };
-      if (type === 'pointermove') totals.pointerMoves++;
+      const pen = event.pointerType === 'pen';
+      if (type === 'pointermove') {
+        if (session.latest) totals.coalescedMoves++;
+        session.latest = { x, y, pressure: pen ? event.pressure : 0.5, pen };
+        if (pen) session.lastContactPressure = event.pressure;
+        totals.pointerMoves++;
+      }
       if (type === 'pointerup') {
+        // Pen pointer-up commonly reports zero after contact has ended. Use
+        // its positive value when present, otherwise the last held pressure.
+        const useContact = pen && event.pressure === 0;
+        const pressure = pen ? (useContact ? session.lastContactPressure : event.pressure) : 0.5;
+        session.endpointInput = handle.source_worker_held_endpoint(
+          session.epoch, x, y, pressure, pen);
+        if (typeof session.endpointInput !== 'string' ||
+            session.endpointInput.length > 8 * 1024) {
+          throw Error('Source Worker endpoint input was invalid');
+        }
+        session.endpointPressureSource = pen ?
+          (useContact ? 'last-contact' : 'pointer-up') : 'mouse-fixed';
+        session.endpointScreen = [x, y];
+        session.endpointPressure = pressure;
+        session.skippedQueuedDabs = session.samples.length;
+        session.skippedPendingMove = Boolean(session.latest);
+        session.discardedAtRelease = session.skippedQueuedDabs +
+          Number(session.skippedPendingMove);
+        totals.skippedQueuedDabs += session.skippedQueuedDabs;
+        totals.skippedPendingMoves += Number(session.skippedPendingMove);
+        totals.discardedAtRelease += session.discardedAtRelease;
+        session.samples = [];
+        session.latest = null;
         session.released = true;
         session.releasedAt = performance.now();
       }
@@ -229,7 +287,9 @@ export function createHeldSourceWorkerInput(handle, canvas, notice, wasmBackend)
   };
   const status = () => ({ enabled, active: Boolean(active),
     epoch: active?.epoch || null, pending: active?.outstanding?.kind || null,
-    queuedSamples: active?.samples.length || 0, ...totals });
+    queuedSamples: active?.samples.length || 0,
+    releaseEndpointPending: Boolean(active?.released && !active?.endpointSettled),
+    ...totals });
   const mountTrialButton = () => {
     button = document.createElement('button');
     button.style.cssText = 'position:fixed;right:16px;top:54px;z-index:12;background:#292d35;color:#ffb483;border:1px solid #a86745;padding:8px 11px;border-radius:4px;cursor:pointer';
