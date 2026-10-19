@@ -131,6 +131,13 @@ impl Hit {
 }
 
 impl Mesh {
+    /// Number of editable polygon faces. Retained source quads count once,
+    /// while meshes without original face topology count rendered triangles.
+    pub fn face_count(&self) -> usize {
+        self.surface
+            .as_ref()
+            .map_or(self.triangles.len(), |surface| surface.faces.len())
+    }
     pub(crate) fn from_resident_upload_parts(
         positions: Vec<Vec3>,
         normals: Vec<Vec3>,

@@ -1,5 +1,111 @@
 use crate::*;
 
+#[test]
+fn selected_mesh_info_counts_original_quads_and_tracks_editable_document() {
+    // Independently authored OBJ: one quad and one triangle, both canonical.
+    let mixed = Mesh::import_obj(
+        b"v 0 0 0\nv 1 0 0\nv 1 1 0\nv 0 1 0\nv 2 0 0\nv 2 1 0\nf 1 2 3 4\nf 2 5 6\n",
+    )
+    .unwrap()
+    .mesh;
+    assert_eq!(
+        (
+            mixed.positions.len(),
+            mixed.face_count(),
+            mixed.triangles.len()
+        ),
+        (6, 2, 3)
+    );
+
+    let mut document = Document::empty();
+    assert!(document.active_mesh().is_none());
+    let mixed_id = document.add_subtool(mixed, "Mixed faces").unwrap();
+    let triangle_id = document
+        .add_subtool(Mesh::sphere(0), "Triangle mesh")
+        .unwrap();
+    let triangle = document.active_mesh().unwrap();
+    assert_eq!(triangle.face_count(), triangle.triangles.len());
+    document.select_subtool(mixed_id).unwrap();
+    assert_eq!(document.active_mesh().unwrap().face_count(), 2);
+
+    document
+        .add_source_static_subdivision_level(&StaticSubdivisionSettings::default())
+        .unwrap();
+    let subdivided = document.active_mesh().unwrap();
+    assert_eq!(subdivided.face_count(), 8);
+    document.select_level(0).unwrap();
+    assert_eq!(document.active_mesh().unwrap().face_count(), 2);
+    document.select_level(1).unwrap();
+    assert_eq!(document.active_mesh().unwrap().face_count(), 8);
+    assert!(document.undo());
+    assert_eq!(document.active_mesh().unwrap().face_count(), 2);
+    document.select_subtool(triangle_id).unwrap();
+    let before = document.active_mesh().unwrap().face_count();
+    document.subdivide().unwrap();
+    assert_eq!(document.active_mesh().unwrap().face_count(), before * 4);
+
+    // An ordinary scene merge may have to detach mixed face metadata. The
+    // displayed count must follow the resulting editable mesh and its save.
+    let mut merged = Document::empty();
+    let first = merged
+        .add_subtool(
+            Mesh::import_obj(b"v 0 0 0\nv 1 0 0\nv 1 1 0\nv 0 1 0\nf 1 2 3 4\n")
+                .unwrap()
+                .mesh,
+            "Quad",
+        )
+        .unwrap();
+    let second = merged.add_subtool(Mesh::sphere(0), "Sphere").unwrap();
+    merged
+        .merge_subtools(&SubtoolMergeSettings {
+            ids: vec![first, second],
+            name: "Merged".into(),
+            policy: SubtoolMergePolicy::RequirePlain,
+            allow_source_pose_loss: false,
+            allow_mask_precision_loss: false,
+            allow_uv_loss: false,
+        })
+        .unwrap();
+    let current = merged.active_mesh().unwrap();
+    let counts = (
+        current.positions.len(),
+        current.face_count(),
+        current.triangles.len(),
+    );
+    assert_eq!(counts, (16, 21, 22));
+    let saved = merged.to_json().unwrap();
+    let restored = Document::from_json(&saved).unwrap();
+    let after = restored.active_mesh().unwrap();
+    assert_eq!(
+        counts,
+        (
+            after.positions.len(),
+            after.face_count(),
+            after.triangles.len()
+        )
+    );
+    assert!(merged.undo());
+    assert_eq!(merged.active_mesh().unwrap().face_count(), 20);
+    assert!(merged.redo());
+    assert_eq!(merged.active_mesh().unwrap().face_count(), counts.1);
+
+    // A versioned scene can also have no original SurfaceTopology at all.
+    let mut plain_scene = Document::empty();
+    plain_scene.add_subtool(Mesh::sphere(0), "Plain").unwrap();
+    let plain_json = plain_scene.to_json().unwrap();
+    let mut plain_project: serde_json::Value = serde_json::from_str(&plain_json).unwrap();
+    assert_eq!(plain_project["version"], 5);
+    // Version 7 also accepts an unchanged plain scene with no SurfaceTopology;
+    // a version field alone cannot be used to infer quad faces.
+    plain_project["version"] = 7.into();
+    for encoded in [&plain_json, &plain_project.to_string()] {
+        let plain_reloaded = Document::from_json(encoded).unwrap();
+        let plain_mesh = plain_reloaded.active_mesh().unwrap();
+        assert!(plain_mesh.surface.is_none());
+        assert_eq!(plain_mesh.face_count(), plain_mesh.triangles.len());
+    }
+}
+
 fn brush(kind: BrushKind) -> BrushSettings {
     BrushSettings {
         kind,

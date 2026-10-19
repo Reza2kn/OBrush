@@ -1388,6 +1388,13 @@ impl OBrushApp {
         if let Some(metrics) = metrics.as_object_mut() {
             metrics.insert("pressure_profile".into(), pressure_profile);
             metrics.insert("input_is_pen".into(), self.last_input_pen.into());
+            metrics.insert(
+                "faces".into(),
+                self.document
+                    .active_mesh()
+                    .map_or(0, Mesh::face_count)
+                    .into(),
+            );
         }
         // Keep diagnostic values unchanged without pushing the combined json!
         // invocation above its compiler macro-recursion bound.
@@ -6586,6 +6593,17 @@ impl OBrushApp {
                         self.finish_stroke();
                         self.show_help = !self.show_help;
                     }
+                    let mesh = self.document.active_mesh();
+                    ui.label(
+                        RichText::new(format!(
+                            "{}: {}  ·  Faces: {}",
+                            crate::ui_text::caption(crate::ui_text::CaptionKey::C4E87CE4CDFEB),
+                            number(mesh.map_or(0, |mesh| mesh.positions.len())),
+                            number(mesh.map_or(0, Mesh::face_count)),
+                        ))
+                        .size(10.0)
+                        .color(preferences_host::muted(ui)),
+                    );
                     if ctx.content_rect().width() >= 1100.0 {
                         ui.add_space(12.0);
                         ui.label(
@@ -7568,6 +7586,11 @@ impl OBrushApp {
             ui,
             &crate::ui_text::caption(crate::ui_text::CaptionKey::C4E87CE4CDFEB),
             &number(self.document.active_mesh().map_or(0, |m| m.positions.len())),
+        );
+        label_value(
+            ui,
+            "Faces",
+            &number(self.document.active_mesh().map_or(0, Mesh::face_count)),
         );
         label_value(
             ui,
