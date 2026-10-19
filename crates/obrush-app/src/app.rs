@@ -172,20 +172,45 @@ fn paint_fill_after_barrier(
     settings: &BrushSettings,
     stroke_rejected: bool,
 ) -> Result<PaintFillReport, String> {
+    paint_fill_transaction(
+        document,
+        stroke_rejected,
+        settings.paint_roughness || settings.paint_metallic,
+        |mesh| mesh.fill_paint_channels(settings),
+    )
+}
+
+fn source_paint_all_after_barrier(
+    document: &mut Document,
+    options: &obrush_core::PaintResponseOptions,
+    stroke_rejected: bool,
+) -> Result<PaintFillReport, String> {
+    paint_fill_transaction(
+        document,
+        stroke_rejected,
+        options.write_roughness || options.write_metallic,
+        |mesh| mesh.fill_paint_channels_source(options),
+    )
+}
+
+fn paint_fill_transaction(
+    document: &mut Document,
+    stroke_rejected: bool,
+    material_channels: bool,
+    fill: impl FnOnce(&mut Mesh) -> Result<PaintFillReport, String>,
+) -> Result<PaintFillReport, String> {
     if stroke_rejected {
         return Err("The preceding shape edit was rejected; retry on the restored part.".into());
     }
     if !document.active_subtool_visible() {
         return Err("Show the active part before filling paint.".into());
     }
-    if settings.paint_roughness || settings.paint_metallic {
+    if material_channels {
         document.begin_material_paint_stroke();
     } else {
         document.begin_stroke();
     }
-    let result = document
-        .require_active_mesh_mut()
-        .and_then(|mesh| mesh.fill_paint_channels(settings));
+    let result = document.require_active_mesh_mut().and_then(fill);
     document.end_stroke();
     if let Some(error) = document.take_layer_error() {
         return Err(error);
@@ -7502,9 +7527,22 @@ impl OBrushApp {
         self.paint_pick_armed = false;
         self.paint_pick_dragging = false;
         self.cancel_topology();
-        let mut settings = self.brush.clone();
-        settings.kind = BrushKind::Paint;
-        match paint_fill_after_barrier(&mut self.document, &settings, false) {
+        let result = if self.source_paint_preferences.mode
+            == crate::source_paint_host::PaintMode::SourceOrdinary
+        {
+            self.source_paint_preferences.validate().and_then(|()| {
+                source_paint_all_after_barrier(
+                    &mut self.document,
+                    &self.source_paint_preferences.options,
+                    false,
+                )
+            })
+        } else {
+            let mut settings = self.brush.clone();
+            settings.kind = BrushKind::Paint;
+            paint_fill_after_barrier(&mut self.document, &settings, false)
+        };
+        match result {
             Ok(report) if report.changed_vertices > 0 => {
                 self.changed();
                 self.last_paint_fill = Some(HostPaintFillReport {
@@ -12313,6 +12351,127 @@ mod paint_fill_host_tests {
         assert!(paint_fill_after_barrier(&mut d, &invalid, false).is_err());
         assert_eq!(d.to_json().unwrap(), before);
         assert!(!d.can_undo());
+    }
+
+    #[test]
+    fn source_paint_all_blends_soft_masks_selected_channels_and_only_active_part() {
+        let mut active = Mesh::sphere(0);
+        active.mask_convention = obrush_core::MaskConvention::UnprotectedF32V1;
+        active.masks.fill(0.0);
+        active.masks[..4].copy_from_slice(&[1.0, 0.5, 0.25, 0.0]);
+        active.colors[..4].copy_from_slice(&[
+            [0.0, 0.0, 0.0],
+            [0.0, 0.25, 0.5],
+            [0.5, 0.5, 0.5],
+            [0.75, 0.75, 0.75],
+        ]);
+        let mut materials = vec![[0.25, 0.5]; active.positions.len()];
+        materials[..4].copy_from_slice(&[[0.25, 0.0], [0.5, 0.25], [0.75, 0.5], [1.0, 0.75]]);
+        active.materials = Some(materials);
+        active.validate().unwrap();
+        let original_geometry = (
+            active.positions.clone(),
+            active.normals.clone(),
+            active.triangles.clone(),
+            active.masks.clone(),
+        );
+        let mut document = Document::empty();
+        let active_id = document
+            .add_subtool(active, "Active paint fixture")
+            .unwrap();
+        let untouched_id = document.add_subtool(Mesh::sphere(0), "Untouched").unwrap();
+        document.select_subtool(active_id).unwrap();
+        let before = document.to_json().unwrap();
+        document.select_subtool(untouched_id).unwrap();
+        let untouched = document.require_active_mesh().unwrap().clone();
+        document.select_subtool(active_id).unwrap();
+
+        let options = obrush_core::PaintResponseOptions {
+            color: [1.0, 0.5, 0.25],
+            roughness: 0.75,
+            metallic: 1.0,
+            write_rgb: true,
+            write_roughness: true,
+            write_metallic: false,
+            intensity: 0.0,
+            ..Default::default()
+        };
+        let report = source_paint_all_after_barrier(&mut document, &options, false).unwrap();
+        assert_eq!(report.changed_vertices, 3);
+        assert_eq!(report.changed_rgb_vertices, 3);
+        assert_eq!(report.changed_material_vertices, 2);
+        assert!(!report.materialized);
+        let after = document.to_json().unwrap();
+        let mesh = document.require_active_mesh().unwrap();
+        assert_eq!(
+            mesh.colors[..4],
+            [
+                [1.0, 0.5, 0.25],
+                [0.5, 0.375, 0.375],
+                [0.625, 0.5, 0.4375],
+                [0.75, 0.75, 0.75],
+            ]
+        );
+        assert_eq!(
+            mesh.materials.as_ref().unwrap()[..4],
+            [[0.75, 0.0], [0.625, 0.25], [0.75, 0.5], [1.0, 0.75],]
+        );
+        assert_eq!(
+            (&mesh.positions, &mesh.normals, &mesh.triangles, &mesh.masks),
+            (
+                &original_geometry.0,
+                &original_geometry.1,
+                &original_geometry.2,
+                &original_geometry.3
+            )
+        );
+        document.select_subtool(untouched_id).unwrap();
+        assert_eq!(
+            document.require_active_mesh().unwrap().positions,
+            untouched.positions
+        );
+        assert_eq!(
+            document.require_active_mesh().unwrap().colors,
+            untouched.colors
+        );
+        assert_eq!(
+            document.require_active_mesh().unwrap().materials,
+            untouched.materials
+        );
+        document.select_subtool(active_id).unwrap();
+        assert_eq!(
+            Document::from_json(&after).unwrap().to_json().unwrap(),
+            after
+        );
+        assert!(document.undo());
+        assert_eq!(document.to_json().unwrap(), before);
+        assert!(document.redo());
+        assert_eq!(document.to_json().unwrap(), after);
+    }
+
+    #[test]
+    fn source_paint_all_all_off_or_rejected_keeps_prior_redo() {
+        let mut document = Document::new(Mesh::sphere(0));
+        let mut options = obrush_core::PaintResponseOptions::default();
+        source_paint_all_after_barrier(&mut document, &options, false).unwrap();
+        let painted = document.to_json().unwrap();
+        assert!(document.undo());
+        let before = document.to_json().unwrap();
+        options.write_rgb = false;
+        options.write_roughness = false;
+        options.write_metallic = false;
+        assert_eq!(
+            source_paint_all_after_barrier(&mut document, &options, false)
+                .unwrap()
+                .changed_vertices,
+            0
+        );
+        assert!(source_paint_all_after_barrier(&mut document, &options, true).is_err());
+        options.color[0] = f32::NAN;
+        assert!(source_paint_all_after_barrier(&mut document, &options, false).is_err());
+        assert_eq!(document.to_json().unwrap(), before);
+        assert!(document.redo());
+        assert_eq!(document.to_json().unwrap(), painted);
     }
 }
 

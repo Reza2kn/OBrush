@@ -1,7 +1,10 @@
 //! Explicit whole-mesh channel fill and read-only paint sampling. Fill uses
 //! mask weight only. Picker modes are actual distinct interpolation policies;
 //! numerical source/runtime equivalence is not established by these APIs.
-use crate::{BrushKind, BrushSettings, Hit, Mesh, DEFAULT_VERTEX_MATERIAL, TRIANGLE_CORNER};
+use crate::{
+    BrushKind, BrushSettings, Hit, Mesh, PaintResponseOptions, DEFAULT_VERTEX_MATERIAL,
+    TRIANGLE_CORNER,
+};
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct PaintFillReport {
@@ -39,7 +42,6 @@ impl Mesh {
         &mut self,
         settings: &BrushSettings,
     ) -> Result<PaintFillReport, String> {
-        self.validate()?;
         if settings.kind != BrushKind::Paint
             || !settings.paint_targets_are_valid()
             || settings.color.iter().any(|value| !value.is_finite())
@@ -47,9 +49,6 @@ impl Mesh {
             return Err(
                 "Fill requires Paint with finite RGB and normalized material targets".into(),
             );
-        }
-        if !settings.paint_rgb && !settings.paint_roughness && !settings.paint_metallic {
-            return Ok(PaintFillReport::default());
         }
         let rgb_target = if settings.invert {
             [0.65, 0.69, 0.74]
@@ -61,11 +60,58 @@ impl Mesh {
         } else {
             [settings.roughness, settings.metallic]
         };
-        let material_flags = [settings.paint_roughness, settings.paint_metallic];
+        self.fill_paint_targets(
+            rgb_target,
+            material_target,
+            [
+                settings.paint_rgb,
+                settings.paint_roughness,
+                settings.paint_metallic,
+            ],
+        )
+    }
+
+    /// Source Paint All uses the active Source Paint targets and channel flags.
+    /// It blends once by each vertex's unmasked fraction; brush intensity,
+    /// radius, alpha, culling, tablet pressure and symmetry do not participate.
+    pub fn fill_paint_channels_source(
+        &mut self,
+        options: &PaintResponseOptions,
+    ) -> Result<PaintFillReport, String> {
+        if options
+            .color
+            .iter()
+            .chain([&options.roughness, &options.metallic])
+            .any(|value| !value.is_finite() || !(0.0..=1.0).contains(value))
+        {
+            return Err("Source Paint All targets must be finite and normalized".into());
+        }
+        self.fill_paint_targets(
+            options.color,
+            [options.roughness, options.metallic],
+            [
+                options.write_rgb,
+                options.write_roughness,
+                options.write_metallic,
+            ],
+        )
+    }
+
+    fn fill_paint_targets(
+        &mut self,
+        rgb_target: [f32; 3],
+        material_target: [f32; 2],
+        channels: [bool; 3],
+    ) -> Result<PaintFillReport, String> {
+        self.validate()?;
+        if !channels.iter().any(|enabled| *enabled) {
+            return Ok(PaintFillReport::default());
+        }
+        let material_flags = [channels[1], channels[2]];
         let mut report = PaintFillReport::default();
         for vertex in 0..self.positions.len() {
             let weight = self.mask_influence_f64(vertex);
-            let rgb_changed = settings.paint_rgb
+            let rgb_changed = channels[0]
                 && self.colors[vertex]
                     .iter()
                     .zip(rgb_target)
@@ -108,7 +154,7 @@ impl Mesh {
         }
         for vertex in 0..self.positions.len() {
             let weight = self.mask_influence_f64(vertex);
-            if settings.paint_rgb {
+            if channels[0] {
                 for (value, target) in self.colors[vertex].iter_mut().zip(rgb_target) {
                     *value = fill_scalar(*value, target, weight);
                 }
