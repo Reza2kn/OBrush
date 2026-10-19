@@ -1,5 +1,10 @@
 # OBrush feature parity contract
 
+**C237 scene inventory reconciliation:** [The selected-scene evidence audit](SCULPTGL_SCENE_INVENTORY_RECONCILIATION_C237.md)
+links seven existing paired scene-action reports into the 317-ID crosswalk.
+Thirty-six active rows now have scoped evidence, while every active acceptance
+gate remains open. This is documentation reconciliation, not a behavior change.
+
 **C236 admitted pen gesture:** [The pinned-source diagnosis and paired browser report](SCULPTGL_PEN_GESTURE_C236.md)
 shows that SculptGL consumes the first held synthetic pen move as Hammer
 `panstart`; later `panmove` events produce sculpt changes. On the same imported
