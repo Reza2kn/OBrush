@@ -75,6 +75,7 @@ pub struct ResidentViewport {
     destroyed: bool,
     position_readbacks: u64,
     sparse_readbacks: u64,
+    sparse_one_map_readbacks: u64,
     sparse_payload_bytes: u64,
     pixel_readbacks: u64,
     draws: u64,
@@ -464,6 +465,7 @@ impl ResidentViewport {
             destroyed: false,
             position_readbacks: 0,
             sparse_readbacks: 0,
+            sparse_one_map_readbacks: 0,
             sparse_payload_bytes: 0,
             pixel_readbacks: 0,
             draws: 0,
@@ -952,6 +954,53 @@ impl ResidentViewport {
         }
         Ok(output)
     }
+    /// Read a local sparse result and its post-collection count through one
+    /// bounded map. The count remains an independent GPU-side consistency
+    /// check; larger results retain the reusable chunked readback path.
+    async fn read_sparse_output_with_count(
+        &self,
+        source: &wgpu::Buffer,
+        size: u64,
+    ) -> Result<(Vec<u8>, u32), String> {
+        self.ready()?;
+        if size == 0 || size > surface::READBACK_CHUNK || !size.is_multiple_of(4) {
+            return Err("Sparse readback size is outside the one-map limit".into());
+        }
+        let split = size as usize;
+        let mut rows = Vec::new();
+        rows.try_reserve_exact(split)
+            .map_err(|_| "Cannot reserve sparse GPU readback rows")?;
+        let buffer = self.device.create_buffer(&wgpu::BufferDescriptor {
+            label: Some("resident sparse rows and count readback"),
+            size: size + 4,
+            usage: wgpu::BufferUsages::COPY_DST | wgpu::BufferUsages::MAP_READ,
+            mapped_at_creation: false,
+        });
+        let mut encoder = self.device.create_command_encoder(&Default::default());
+        encoder.copy_buffer_to_buffer(source, 0, &buffer, 0, size);
+        encoder.copy_buffer_to_buffer(&self.sparse.counter, 0, &buffer, size, 4);
+        self.queue.submit([encoder.finish()]);
+        let (sender, receiver) = futures_channel::oneshot::channel();
+        buffer.map_async(wgpu::MapMode::Read, ..size + 4, move |result| {
+            let _ = sender.send(result.map_err(|e| e.to_string()));
+        });
+        #[cfg(not(target_arch = "wasm32"))]
+        self.device
+            .poll(wgpu::PollType::Wait {
+                submission_index: None,
+                timeout: Some(std::time::Duration::from_secs(10)),
+            })
+            .map_err(|e| e.to_string())?;
+        receiver.await.map_err(|_| "GPU mapping callback lost")??;
+        let mapped = buffer.get_mapped_range(..size + 4);
+        let count = u32::from_le_bytes(mapped[split..split + 4].try_into().unwrap());
+        rows.extend_from_slice(&mapped[..split]);
+        drop(mapped);
+        buffer.unmap();
+        buffer.destroy();
+        self.ready()?;
+        Ok((rows, count))
+    }
     async fn map(&self, buffer: &wgpu::Buffer) -> Result<Vec<u8>, String> {
         let (sender, receiver) = futures_channel::oneshot::channel();
         buffer.map_async(wgpu::MapMode::Read, .., move |result| {
@@ -1005,7 +1054,7 @@ impl ResidentViewport {
         if self
             .resident_bytes
             .checked_add(payload_bytes)
-            .and_then(|n| n.checked_add(surface::READBACK_CHUNK))
+            .and_then(|n| n.checked_add(surface::READBACK_CHUNK + 4))
             .is_none_or(|n| n > MAX_GPU_BYTES)
             || payload_bytes > u64::from(self.device.limits().max_storage_buffer_binding_size)
         {
@@ -1024,9 +1073,17 @@ impl ResidentViewport {
             .encode_collect(&self.device, &mut encoder, &output, self.vertices);
         self.queue.submit([encoder.finish()]);
         let result: Result<Vec<u8>, String> = async {
-            let bytes = self.read_buffer(&output, payload_bytes).await?;
-            let actual_bytes = self.read_buffer(&self.sparse.counter, 4).await?;
-            let actual = u32::from_le_bytes(actual_bytes[..4].try_into().unwrap());
+            let (bytes, actual) = if payload_bytes <= surface::READBACK_CHUNK {
+                self.read_sparse_output_with_count(&output, payload_bytes)
+                    .await?
+            } else {
+                let bytes = self.read_buffer(&output, payload_bytes).await?;
+                let actual_bytes = self.read_buffer(&self.sparse.counter, 4).await?;
+                (
+                    bytes,
+                    u32::from_le_bytes(actual_bytes[..4].try_into().unwrap()),
+                )
+            };
             if actual != count {
                 return Err("Sparse GPU count changed during collection".into());
             }
@@ -1057,6 +1114,9 @@ impl ResidentViewport {
         output.destroy();
         let sorted = result?;
         self.sparse_readbacks += 1;
+        if payload_bytes <= surface::READBACK_CHUNK {
+            self.sparse_one_map_readbacks += 1;
+        }
         self.sparse_payload_bytes += payload_bytes;
         Ok(sorted)
     }
@@ -1125,7 +1185,7 @@ impl ResidentViewport {
         Ok(bytes)
     }
     pub fn report(&self) -> serde_json::Value {
-        serde_json::json!({"adapter":format!("{:?}",self.adapter),"vertices":self.vertices,"triangles":self.index_count/3,"resident_bytes":self.resident_bytes,"surface":self.surface.as_ref().map(|s|s.report()),"camera_active":self.camera_active,"position_readbacks":self.position_readbacks,"sparse_readbacks":self.sparse_readbacks,"sparse_payload_bytes":self.sparse_payload_bytes,"normal_state_readbacks":self.normal_readbacks,"pick_readbacks":self.pick_readbacks,"pick_hits":self.pick_hits,"original_faces":self.normals.face_count,"pixel_readbacks":self.pixel_readbacks,"draws_enqueued":self.draws,"point_passes_enqueued":self.point_passes,"checkpoint_enqueued":self.checkpoint_valid,"destroyed":self.destroyed,"device_lost":self.device_lost.lock().map(|x|x.clone()).unwrap_or_else(|_|Some("poisoned".into())),"errors":self.errors.lock().map(|e|e.clone()).unwrap_or_else(|_|vec!["poisoned".into()]),"scope":"Enqueued work counters only; actual mapped outputs establish completion. Retained selected normals and GPU ray pick; point selection is not production Source brush/contact/proxy/history ownership."})
+        serde_json::json!({"adapter":format!("{:?}",self.adapter),"vertices":self.vertices,"triangles":self.index_count/3,"resident_bytes":self.resident_bytes,"surface":self.surface.as_ref().map(|s|s.report()),"camera_active":self.camera_active,"position_readbacks":self.position_readbacks,"sparse_readbacks":self.sparse_readbacks,"sparse_one_map_readbacks":self.sparse_one_map_readbacks,"sparse_payload_bytes":self.sparse_payload_bytes,"normal_state_readbacks":self.normal_readbacks,"pick_readbacks":self.pick_readbacks,"pick_hits":self.pick_hits,"original_faces":self.normals.face_count,"pixel_readbacks":self.pixel_readbacks,"draws_enqueued":self.draws,"point_passes_enqueued":self.point_passes,"checkpoint_enqueued":self.checkpoint_valid,"destroyed":self.destroyed,"device_lost":self.device_lost.lock().map(|x|x.clone()).unwrap_or_else(|_|Some("poisoned".into())),"errors":self.errors.lock().map(|e|e.clone()).unwrap_or_else(|_|vec!["poisoned".into()]),"scope":"Enqueued work counters only; actual mapped outputs establish completion. Retained selected normals and GPU ray pick; point selection is not production Source brush/contact/proxy/history ownership."})
     }
     pub fn destroy(&mut self) {
         if !self.destroyed {

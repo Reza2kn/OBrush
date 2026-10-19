@@ -108,6 +108,9 @@ export function createResidentPointerStudio(handle, studioCanvas, notice, option
       gpuWaitMs: 0, maximumGpuWaitMs: 0,
       profilePickMs: 0, profileSculptMs: 0, profileDrawMs: 0,
       profilePresentCpuMs: 0,
+      failureReadbackMs: null, sparseReadbackMs: null,
+      coreCommitMs: null, sparseBytes: null,
+      gpuReport: null,
       release_at: null, stroke_at: null, commit_ms: null,
       core_timing: null,
       startup: { captureMs, moduleMs, uploadMs, presentMs, totalMs: performance.now() - startupAt },
@@ -125,6 +128,11 @@ export function createResidentPointerStudio(handle, studioCanvas, notice, option
         profileSculptMs: session.profileSculptMs,
         profileDrawMs: session.profileDrawMs,
         profilePresentCpuMs: session.profilePresentCpuMs,
+        failureReadbackMs: session.failureReadbackMs,
+        sparseReadbackMs: session.sparseReadbackMs,
+        coreCommitMs: session.coreCommitMs,
+        sparseBytes: session.sparseBytes,
+        gpuReport: session.gpuReport,
         pick_ms: session.pick_ms,
         maximum_pick_ms: session.maximum_pick_ms,
         release_ms: session.release_at === null ? null : performance.now() - session.release_at,
@@ -154,10 +162,18 @@ export function createResidentPointerStudio(handle, studioCanvas, notice, option
           handle.resident_studio_cancel(id);
         } else {
           const started = performance.now();
+          const failureStarted = performance.now();
           const failure = await probe.failure_vertex();
+          session.failureReadbackMs = performance.now() - failureStarted;
           if (failure !== null) throw new Error(`GPU candidate rejected at vertex ${failure}`);
+          const sparseStarted = performance.now();
           const sparse = await probe.sparse_positions();
+          session.sparseReadbackMs = performance.now() - sparseStarted;
+          session.sparseBytes = sparse.byteLength;
+          try { session.gpuReport = JSON.parse(probe.report()); } catch { /* diagnostic only */ }
+          const coreStarted = performance.now();
           handle.resident_studio_commit(id, sparse);
+          session.coreCommitMs = performance.now() - coreStarted;
           session.core_timing = JSON.parse(handle.resident_studio_commit_timing());
           session.commit_ms = performance.now() - started;
         }
