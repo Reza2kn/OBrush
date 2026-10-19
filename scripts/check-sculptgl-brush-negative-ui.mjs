@@ -142,9 +142,17 @@ try {
     const negativeControl = `Array.from(${menu}.querySelectorAll('input[type=checkbox]')).find(e=>e.parentElement.textContent.includes('Negative')&&e.parentElement.getBoundingClientRect().width>0)`;
     const negativeBefore = await page.evaluate(`(()=>{const e=${negativeControl},r=e?.parentElement.getBoundingClientRect();return {checked:e?.checked,disabled:e?.disabled,rect:r?[r.left,r.top,r.right,r.bottom]:null};})()`);
     if (!negativeBefore.rect || negativeBefore.disabled) throw Error('Visible Source Negative checkbox unavailable');
-    if (negativeBefore.checked !== negative) await page.sourceClick(`(${negativeControl}).parentElement`);
-    const negativeAfter = await page.evaluate(`(${negativeControl}).checked`);
-    result.ui_actions.push({side:'source',checkbox:'Negative',negativeBefore,negativeAfter});
+    let hit;
+    for(let i=0;i<120;i++){
+      hit=await page.evaluate(`(()=>{const e=${negativeControl},r=e.getBoundingClientRect(),x=(r.left+r.right)/2,y=(r.top+r.bottom)/2,h=document.elementFromPoint(x,y);return {rect:[r.left,r.top,r.right,r.bottom],hit:h?.outerHTML?.slice(0,256),ready:h===e||e.contains(h)};})()`);
+      if(hit.ready)break;
+      await page.raf();
+    }
+    result.ui_actions.push({side:'source',checkbox:'Negative',negativeBefore,hit});
+    if(!hit?.ready)throw Error('Visible Source Negative checkbox not actual hit target');
+    if (negativeBefore.checked !== negative) await page.sourceClick(negativeControl);
+    const negativeAfter = await page.wait(()=>page.evaluate(`(${negativeControl}).checked`),v=>v===negative,'Visible Source Negative published');
+    result.ui_actions.push({side:'source',checkbox:'Negative',negativeAfter});
     if (negativeAfter !== negative) throw Error('Source Negative did not publish');
   } else if (!matchSourcePath) {
     if (radius !== 64) await page.rootNumber('source_geometry.radius.value',radius);
