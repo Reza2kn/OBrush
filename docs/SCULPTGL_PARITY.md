@@ -1,5 +1,10 @@
 # SculptGL parity checkpoint
 
+[The C227 private-state witness trial](SCULPTGL_PRIVATE_WITNESS_TRIAL_C227.md)
+passed the million-vertex file/history/shape audit but did not improve active
+RAF P95 or release latency. It was removed; all four responsiveness gates
+remain failed.
+
 [The C226 pinned million-vertex browser comparison](SCULPTGL_MILLION_PAIRED_C226.md)
 shows 83.3 ms RAF P95 and 161.2 ms release in OBrush versus 16.8 ms and
 8.0 ms in separate SculptGL runs of the same 1M/60s protocol. Both public

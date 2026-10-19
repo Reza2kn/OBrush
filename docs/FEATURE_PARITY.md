@@ -1,5 +1,9 @@
 # OBrush feature parity contract
 
+**C227 rejected private-state witness trial:** [The million-vertex browser report](SCULPTGL_PRIVATE_WITNESS_TRIAL_C227.md)
+records exact file/history/shape checks but no responsiveness gain. The trial
+was removed; all four active-recorder gates remain failed.
+
 **C226 paired million-vertex browser cohort:** [The pinned SculptGL comparison](SCULPTGL_MILLION_PAIRED_C226.md)
 uses the same 1M/60s fixture and protocol in separate owned browsers. OBrush
 observes 83.3 ms RAF P95 and 161.2 ms release; pinned SculptGL observes
