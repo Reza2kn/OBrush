@@ -105,7 +105,9 @@ const audit={source_result:sourcePath,root_result:rootPath,source_result_sha256:
   history,faces,attributes,before_pair:beforePair,after_pair:afterPair,source_change:sourceChange,root_change:rootChange,changed_membership_equal:membershipEqual,numerical_gate:numericalGate,gpu,
   public_words:{source_before:meshes.source_before.positionWords,root_before:meshes.root_before.positionWords,source_after:meshes.source_after.positionWords,root_after:meshes.root_after.positionWords},
   limitations:['Four-vertex flat unmasked OBJ only','Equal requested rays do not establish equal delivered dabs or later picked contacts','No physical pen/native GUI or sustained performance claim']};
-audit.admitted=sourceChange.changed_ids.length>0&&rootChange.changed_ids.length>0&&Object.values(history).every(Boolean)&&Object.values(faces).every(Boolean)&&Object.values(attributes).every(Boolean)&&gpu.after.pass&&gpu.redo.pass;
+audit.admitted=sourceChange.changed_ids.length>0&&rootChange.changed_ids.length>0&&beforePair.different_components===0&&
+  Object.values(history).every(Boolean)&&Object.values(faces).every(Boolean)&&
+  attributes.source_stable&&attributes.root_stable&&gpu.after.pass&&gpu.redo.pass;
 audit.status=audit.admitted?'complete scoped UI pair; inspect numerical_gate separately':'FAILED scoped UI admission; retained';
 const out=path.join(path.dirname(sourcePath),`diamond-audit-${path.basename(path.dirname(rootPath))}.json`);
 await writeFile(out,JSON.stringify(audit,null,2)+'\n');
