@@ -50,6 +50,22 @@ setting, not all brush effects. Native GUI, other modifiers/tools, physical
 pen and touch, selected-operation scope from this exact gesture, and the full
 SculptGL/ZBrush gates remain open.
 
+## C260 baseline drag comparison
+
+The unchanged C260 web bundle (portable WASM SHA-256
+`66f80111dd6c871f557050037cdbba9068828220f5da430c4c501d323d15fb90`,
+as recorded in `SCULPTGL_COMBINED_C260.md`) was run through the same three-box
+browser harness without rebuilding. Its Shift-click membership predictably
+collapsed to one object (`[1]`, `[2]`, `[1]`), so that run's overall
+membership status is FAIL. Its later near-corner 12-point Shift-drag at
+`[310,594]` changed no per-ID saved mesh and left Undo at 1, exactly as the
+new build did on this coarse fixture. The baseline receipt is
+`.artifacts/sculptgl-scene-shift-c261/7d9357ac-4843-4152-bc48-3d93661e435e/result.json`
+(SHA-256 `1dd5cdfa60f3cd1b060fa89fd020b08c3ac1952cd5ffc859adb2f512d0b47cb7`).
+Its `build.commit` field names the harness checkout; the WASM hash above
+identifies the tested C260 product. This fixture demonstrates no Shift-drag
+regression, but it cannot establish that either build actually smoothed.
+
 `cargo fmt --all`, all 2,583 workspace tests, strict native/WASM Clippy,
 and `scripts/build-web.sh` passed. Logs are under
 `.artifacts/sculptgl-scene-shift-c261/validation/`. The first focused compile
