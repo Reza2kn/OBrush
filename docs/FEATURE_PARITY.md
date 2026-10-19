@@ -1,5 +1,13 @@
 # OBrush feature parity contract
 
+**C259 Source Brush radius audit:** [The pinned normal-browser pair](SCULPTGL_BRUSH_RADIUS_SCREEN_C259.md)
+confirms that current Source ordinary Brush already converts a 5–500
+viewport-point radius at the picked depth; the frozen 0.1.14 world-radius
+gap is historical. One aligned 64-pixel pair changes the same 87 of 10,114
+vertices in both apps, with exact public Undo/Redo and a maximum paired
+After component difference of `2.98e-8`. Zoom, DPR, render resolution,
+pressure, displayed footprint and other Source tools keep the full gate open.
+
 **C258 Source primitive levels:** [The paired browser and core receipt](SCULPTGL_PRIMITIVE_RETAINED_LEVELS_C258.md)
 records default Sphere/Cube/Cylinder/Torus retained-level counts matching the
 pinned SculptGL runtime at `4/4/3/3`, with a dense Cube
