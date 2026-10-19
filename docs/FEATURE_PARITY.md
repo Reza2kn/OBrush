@@ -1,5 +1,12 @@
 # OBrush feature parity contract
 
+**C243 selected-part transparency:** [The pinned-source and paired browser report](SCULPTGL_TRANSPARENCY_C243.md)
+maps the Rendering percentage to selected Source-part opacity. An independent
+overlapping SGL pair saves exact 0/50/100% values in both applications and
+uses the expected opaque/transparent WebGL states, front/back faces and
+wireframe draws. OBrush's Source appearance remains undoable; viewport pixel
+matching, broader scene/depth cases and the full acceptance gate remain open.
+
 **C242 selected-part wireframe:** [The pinned-source and browser report](SCULPTGL_WIREFRAME_C242.md)
 tracks the Rendering checkbox and W on imported quad/triangle parts. A
 shared-core selected-part Source edit now keeps one OBrush undo step and
