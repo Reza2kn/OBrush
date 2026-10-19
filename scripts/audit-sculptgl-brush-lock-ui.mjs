@@ -179,6 +179,16 @@ for(const [side,receipt] of [['source',source],['root',root]]){
   };
 }
 audit.held_preview=previewGate;
+const rootReports=root.held_previews.map(p=>p.live?.state?.locked_stamp_report?.report);
+audit.root_lock_reports=rootReports.map(r=>r??null);
+const rootReportGate=rootReports.length===3&&rootReports.every(r=>r&&r.action==='preview'&&
+  r.dab_changed_vertices>0&&r.at_origin===false)&&
+  rootReports.every(r=>JSON.stringify(r.center)===JSON.stringify(rootReports[0].center))&&
+  Math.abs(rootReports[0].radius-rootReports[1].radius)<=1e-6&&
+  Math.abs(rootReports[0].radius-rootReports[2].radius)<=1e-6&&
+  Math.abs(Math.abs(rootReports[1].alpha_rotation-rootReports[0].alpha_rotation)-Math.PI/2)<=2e-6&&
+  Object.is(rootReports[0].alpha_rotation,rootReports[2].alpha_rotation);
+audit.root_lock_report_gate=rootReportGate;
 function compareHeldWords(stage,field){
   const streams={};
   for(const [side,receipt] of [['source',source],['root',root]]){
@@ -211,6 +221,7 @@ audit.status=Object.values(audit.history).every(Boolean)&&Object.values(audit.fa
   Object.values(gpuStages).every(x=>x.position_words_exact&&x.object_identity_exact)&&
   Object.values(previewGate).every(x=>x.no_press_dab&&x.useful_first&&x.rotated_distinct&&
     x.repeated_endpoint_exact&&x.release_matches_last_preview&&x.quiet_stable)&&
+  rootReportGate&&
   audit.source_change.different_vertices>0&&audit.root_change.different_vertices>0&&
   audit.after_pair.max_abs_component<=1e-6?'COMPLETE scoped paired geometry and active GPU observation':'FAILED paired admission; output retained';
 audit.changed_vertex_membership_equal=JSON.stringify(audit.source_change.changed_ids)===JSON.stringify(audit.root_change.changed_ids);
