@@ -77,7 +77,8 @@ const expectedGpu = stage => {
   const d=JSON.parse(files[`root_${stage}`]),m=d.mesh;
   const bytes=Buffer.alloc(m.positions.length*40);
   for(let i=0;i<m.positions.length;i++) {
-    const values=[...m.positions[i],...m.normals[i],m.masks[i],...m.colors[i]];
+    const displayMask=m.mask_convention==='unprotected_f32_v1'?Math.fround(1-Math.fround(m.masks[i])):m.masks[i];
+    const values=[...m.positions[i],...m.normals[i],displayMask,...m.colors[i]];
     assert.equal(values.length,10);
     values.forEach((v,c)=>bytes.writeFloatLE(v,i*40+c*4));
   }
