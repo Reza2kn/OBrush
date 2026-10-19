@@ -1,5 +1,12 @@
 # OBrush feature parity contract
 
+**Scoped Source Paint All:** [The method-level and normal-browser report](SCULPTGL_SOURCE_PAINT_ALL.md)
+checks soft-mask RGB/material channel blending, a reachable Source-mode Fill
+control, unchanged geometry/inactive part, public Save and exact core
+Undo/Redo on an independent fixture. The pinned SculptGL method matches the
+analytic fixture, but a paired reference-browser UI run and broader mesh,
+default material and native cases remain open; the active gate is not closed.
+
 **C259 Source primitive placement:** [The paired normal-browser check](SCULPTGL_PRIMITIVE_PLACEMENT_C259.md)
 matches first-Add world bounds for Sphere/Cube/Cylinder/Torus within
 `9e-7`, retains four centered parts, undoes one Add and round-trips the posed

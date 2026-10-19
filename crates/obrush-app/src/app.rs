@@ -13459,6 +13459,16 @@ impl OBrushApp {
                 crate::source_paint_ui::PreferenceCommit::Unchanged => {}
             }
         }
+        let paint_all = ui.add_enabled(
+            self.document.active_subtool_visible() && self.topology_job.is_none(),
+            egui::Button::new(crate::ui_text::caption(
+                crate::ui_text::CaptionKey::C729B2CEA87BC,
+            )),
+        );
+        self.track_morph_control("source_paint.paint_all", &paint_all);
+        if paint_all.clicked() {
+            self.fill_paint();
+        }
     }
 
     fn source_paint_continuous_frame(
