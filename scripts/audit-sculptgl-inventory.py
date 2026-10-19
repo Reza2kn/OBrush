@@ -134,7 +134,9 @@ def render() -> str:
         "[C270 Inflate UI](SCULPTGL_INFLATE_DIAMOND_UI_C270.md) is one "
         "scoped positive/negative fixture, and "
         "[C272 Brush Negative](SCULPTGL_BRUSH_NEGATIVE_UI_C272.md) is one "
-        "scoped normal-UI checkbox gesture; neither closes a full brush gate.",
+        "scoped normal-UI checkbox gesture; neither closes a full brush gate. "
+        "[C273 Brush Lock](SCULPTGL_BRUSH_LOCK_UI_C273.md) found a current "
+        "Source-mode control/kernel gap and rejected the legacy stamp route.",
         "",
         "| ID | Pinned reference scope | Current row-level evidence | Parity gate |",
         "| --- | --- | --- | --- |",

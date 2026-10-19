@@ -1,5 +1,12 @@
 # OBrush feature parity contract
 
+**Brush Lock gap:** [The C273 pinned normal-UI trial](SCULPTGL_BRUSH_LOCK_UI_C273.md)
+shows that Source mode currently rejects Lock Position. An isolated route
+through the older `LockedStamp` changed 87 vertices where the reference
+changed 26, exceeding the frozen geometry tolerance, so it was rejected.
+[The shared-core design note](SCULPTGL_BRUSH_LOCK_KERNEL_DESIGN.md) records
+the reference state transitions needed for a genuine Source locked stroke.
+
 **Scoped Brush Negative witness:** [The C272 pinned normal-UI pair](SCULPTGL_BRUSH_NEGATIVE_UI_C272.md)
 matches the reference's visible Negative-off and Negative-on Brush gestures
 on the independent 10,114-vertex sphere. Both polarities change the same 87
