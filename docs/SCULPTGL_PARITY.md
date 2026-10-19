@@ -1,5 +1,10 @@
 # SculptGL parity checkpoint
 
+[The C229 retained-topology scan](SCULPTGL_RETAINED_TOPOLOGY_WALK_C229.md)
+keeps full stale-mesh validation and observes a lower retained-match mean in
+two million-vertex browser runs. Exact file/history/shape audits pass, but
+RAF P95 stays 66.7 ms and all four responsiveness gates fail.
+
 [The C228 checked Source render handoff](SCULPTGL_CERTIFIED_RENDER_HANDOFF_C228.md)
 uses a private core-issued proof for the exact new immutable mesh/state pair.
 Two million-vertex browser runs pass file/history/shape audits and observe

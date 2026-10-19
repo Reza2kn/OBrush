@@ -455,22 +455,47 @@ impl SourceGeometryNormalState {
         {
             return false;
         }
-        let mut triangle = 0;
-        for (index, &face) in self.faces.iter().enumerate() {
-            if face_at(mesh, index) != Some(face)
-                || mesh.triangles.get(triangle) != Some(&[face[0], face[1], face[2]])
-            {
+        let expected_triangles = self.face_triangle_rows.last().map_or(0, |&start| {
+            start as usize
+                + 1
+                + usize::from(
+                    self.faces
+                        .last()
+                        .is_some_and(|face| face[3] != TRIANGLE_CORNER),
+                )
+        });
+        if mesh.triangles.len() != expected_triangles {
+            return false;
+        }
+        if let Some(surface) = &mesh.surface {
+            if surface.faces.len() != self.faces.len() {
                 return false;
             }
-            triangle += 1;
-            if face[3] != TRIANGLE_CORNER {
-                if mesh.triangles.get(triangle) != Some(&[face[0], face[2], face[3]]) {
+            let mut triangle = 0;
+            for (&actual, &face) in surface.faces.iter().zip(self.faces.iter()) {
+                if actual != face || mesh.triangles[triangle] != [face[0], face[1], face[2]] {
                     return false;
                 }
                 triangle += 1;
+                if face[3] != TRIANGLE_CORNER {
+                    if mesh.triangles[triangle] != [face[0], face[2], face[3]] {
+                        return false;
+                    }
+                    triangle += 1;
+                }
             }
+            true
+        } else {
+            if self.faces.len() != mesh.triangles.len() {
+                return false;
+            }
+            mesh.triangles
+                .iter()
+                .zip(self.faces.iter())
+                .all(|(&tri, &face)| {
+                    face[3] == TRIANGLE_CORNER && tri == [face[0], face[1], face[2]]
+                })
         }
-        face_count(mesh) == self.faces.len() && triangle == mesh.triangles.len()
     }
     pub fn clay_admitted(&self) -> bool {
         self.faces.len() <= SOURCE_CLAY_SINGLE_LEAF_FACES
@@ -3009,6 +3034,11 @@ mod normal_seed_ownership_regressions {
         assert!(triangle_state.matches_mesh(&triangle_mesh));
         triangle_mesh.triangles.push(triangle_mesh.triangles[0]);
         assert!(!triangle_state.matches_mesh(&triangle_mesh));
+        triangle_mesh.triangles.pop();
+        triangle_mesh.surface = None;
+        let triangle_only_state = SourceGeometryNormalState::seed(&triangle_mesh).unwrap();
+        triangle_mesh.triangles.pop();
+        assert!(!triangle_only_state.matches_mesh(&triangle_mesh));
 
         let mut quad_mesh = Mesh::import_obj(b"v 0 0 0\nv 1 0 0\nv 1 1 0\nv 0 1 0\nf 1 2 3 4\n")
             .unwrap()
@@ -3025,6 +3055,11 @@ mod normal_seed_ownership_regressions {
         assert!(!quad_state.matches_mesh(&quad_mesh));
         quad_mesh.surface.as_mut().unwrap().faces[0][0] = 0;
         assert!(quad_state.matches_mesh(&quad_mesh));
+        quad_mesh.triangles.pop();
+        assert!(!quad_state.matches_mesh(&quad_mesh));
+        quad_mesh.triangles.push(original);
+        quad_mesh.surface.as_mut().unwrap().faces.push([0, 1, 2, 3]);
+        assert!(!quad_state.matches_mesh(&quad_mesh));
     }
     #[test]
     fn moved_seed_preserves_all_rows_and_still_detects_public_mesh_edits() {

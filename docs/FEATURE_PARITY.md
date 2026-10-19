@@ -1,5 +1,11 @@
 # OBrush feature parity contract
 
+**C229 retained topology scan:** [The two-run million-vertex report](SCULPTGL_RETAINED_TOPOLOGY_WALK_C229.md)
+records a full public-mesh validation with a faster observed face/triangle
+walk and exact file/history/shape audits. Retained match mean is 6.47/6.57 ms
+versus 7.19/7.35 ms in two separate C228 runs. RAF P95 remains 66.7 ms and
+all four responsiveness gates still fail; no parity status changes.
+
 **C228 certified Source render handoff:** [The shared-core and million-vertex browser report](SCULPTGL_CERTIFIED_RENDER_HANDOFF_C228.md)
 records 947 exact-pair handoffs, a passing public-file/history/shape audit
 and roughly 4.1 ms observed renderer admission versus 8.0 ms in the separate
