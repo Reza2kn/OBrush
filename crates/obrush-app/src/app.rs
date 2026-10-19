@@ -696,11 +696,14 @@ impl PrimitiveKind {
     }
 
     fn create_for_scene(self, detail: u32, source_profile: bool) -> Result<Mesh, String> {
-        if matches!(self, Self::Cube) && source_profile && detail == 6 {
-            Mesh::cube_quad_grid(7)
-        } else {
-            self.create(detail)
+        if source_profile && detail == 6 {
+            match self {
+                Self::Sphere => return Mesh::sphere_quad_smooth(7),
+                Self::Cube => return Mesh::cube_quad_grid(7),
+                Self::Cylinder | Self::Torus => {}
+            }
         }
+        self.create(detail)
     }
 }
 
@@ -10789,6 +10792,21 @@ mod primitive_readiness_tests {
         assert!(ordinary.surface.is_none());
         let manual = PrimitiveKind::Cube.create_for_scene(5, true).unwrap();
         assert_eq!(manual.triangles.len(), 12 * 4_usize.pow(5));
+    }
+
+    #[test]
+    fn source_default_sphere_uses_quad_surface_without_changing_manual_detail() {
+        let source = PrimitiveKind::Sphere.create_for_scene(6, true).unwrap();
+        assert_eq!(source.positions.len(), 98_306);
+        assert_eq!(source.surface.as_ref().unwrap().faces.len(), 98_304);
+        assert_eq!(source.triangles.len(), 196_608);
+
+        let ordinary = PrimitiveKind::Sphere.create_for_scene(6, false).unwrap();
+        assert_eq!(ordinary.positions.len(), 40_962);
+        assert!(ordinary.surface.is_none());
+        let manual = PrimitiveKind::Sphere.create_for_scene(5, true).unwrap();
+        assert_eq!(manual.triangles.len(), 20 * 4_usize.pow(5));
+        assert!(manual.surface.is_none());
     }
 
     #[test]

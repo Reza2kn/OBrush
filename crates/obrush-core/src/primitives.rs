@@ -9,6 +9,24 @@ pub const MIN_PRIMITIVE_DIMENSION: f32 = 0.000_001;
 pub const MAX_PRIMITIVE_DIMENSION: f32 = 1_000_000.0;
 
 impl Mesh {
+    /// Smooth the six-quad closed cube as an original-quad surface. Seven
+    /// four-way levels give the pinned SculptGL Add Sphere face density;
+    /// unlike an icosphere, its limit shape remains a rounded cube.
+    pub fn sphere_quad_smooth(levels: u32) -> Result<Self, String> {
+        if levels > 7 {
+            return Err("Quad sphere supports at most seven refinement levels".into());
+        }
+        let mut mesh = Self::cube_quad_grid(0)?;
+        for _ in 0..levels {
+            mesh = mesh
+                .subdivided_static(&crate::StaticSubdivisionSettings {
+                    linear_edges: false,
+                })?
+                .mesh;
+        }
+        Ok(mesh)
+    }
+
     /// Cube with a shared, uniformly sampled vertex grid and retained quad
     /// faces. Seven levels yield SculptGL's default linear cube density:
     /// 98,306 vertices, 98,304 quads, and 196,608 render triangles.
