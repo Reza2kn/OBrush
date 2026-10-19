@@ -3,8 +3,10 @@
 **Scoped Inflate witness:** [The C269 direct pinned-method report](SCULPTGL_INFLATE_PAIR_C269.md)
 records the reference's positive, negative and zero Float32 response on one
 independent masked diamond, alongside a passing shared-core arithmetic,
-paired-word assertion and public-history test. Its normal UI comparison
-remains unrun; the Inflate and full parity gates stay open.
+paired-word assertion and public-history test. [The C270 normal-UI diamond
+pair](SCULPTGL_INFLATE_DIAMOND_UI_C270.md) matches positive and negative
+strokes on the mapped vertices within `3.73e-9`, with public Undo/Redo and
+OBRush GPU row checks. The wider Inflate and full parity gates stay open.
 
 **Current million-vertex browser baseline:** [The C264 frozen Source Brush run](SCULPTGL_MILLION_CURRENT_C264.md)
 passes independent complete Save/Undo/Redo and affected-face shape checks, but
@@ -12,7 +14,9 @@ fails all four responsiveness gates (RAF P95 66.7 ms, release 159.0 ms).
 [The sparse held-pointer Worker trial](SOURCE_WORKER_SPARSE_HELD_TRIAL.md) checks two
 ordinary viewport strokes, warm state, sparse GPU words, public Save/Undo/Redo
 and cancellation on a 40k sphere. It remains query-gated and unpromoted:
-release still drops the endpoint and its 100k/million-vertex sustained gate is open.
+[the release-endpoint follow-up](SOURCE_WORKER_RELEASE_ENDPOINT_TRIAL.md)
+now delivers the final pointer sample on two scoped Chrome strokes, but its
+release took `292.5/305.6 ms` and the 100k/million-vertex sustained gate is open.
 [The warm retained-state codec](SOURCE_WORKER_RETAINED_WARM_SEAM.md) preserves
 later-dab geometry across a simulated realm transfer, and [the Chrome Worker
 diagnostic](SOURCE_WORKER_CROSS_REALM_DIAGNOSTIC.md) checks a small cold stroke
