@@ -142,7 +142,12 @@ def render() -> str:
         "[C272 Brush Negative](SCULPTGL_BRUSH_NEGATIVE_UI_C272.md) is one "
         "scoped normal-UI checkbox gesture; neither closes a full brush gate. "
         "[C273 Brush Lock](SCULPTGL_BRUSH_LOCK_UI_C273.md) found a current "
-        "Source-mode control/kernel gap and rejected the legacy stamp route.",
+        "Source-mode control/kernel gap and rejected the legacy stamp route. "
+        "[C274 Brush Lock](SCULPTGL_BRUSH_LOCK_C274_FAILED.md) failed its "
+        "fractional-coordinate radius gate, while [C276]"
+        "(SCULPTGL_BRUSH_LOCK_C276.md) passes one integer-coordinate "
+        "normal-UI pair with the shared-core Lock route; the full gate "
+        "remains open.",
         "",
         "| ID | Pinned reference scope | Current row-level evidence | Parity gate |",
         "| --- | --- | --- | --- |",
