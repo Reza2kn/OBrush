@@ -188,7 +188,8 @@ function compareHeldWords(stage,field){
     const mapped=Array(mesh.positions.length);
     mesh.colors.forEach((c,i)=>{const id=Math.round(c[0]*255)|(Math.round(c[1]*255)<<8)|(Math.round(c[2]*255)<<16);
       mapped[id]=bytes.subarray(i*12,i*12+12);});
-    if(mapped.some(x=>!x))throw Error(`${side} held ${stage}: missing ${field} RGB ID`);
+    for(let id=0;id<mapped.length;id++)if(!mapped[id])
+      throw Error(`${side} held ${stage}: missing ${field} RGB ID ${id}`);
     streams[side]=mapped;
   }
   let differing=0,components=0,max=0,sum=0;
