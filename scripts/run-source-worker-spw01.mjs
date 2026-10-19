@@ -129,7 +129,8 @@ const gpuStage=async stage=>{
       retained_normal_state:state.source_paint?.retained_normal_state??null,
       source_geometry_active:state.source_geometry?.active??null};
   }
-  if(observation.active_vbo_candidates!==1 || observation.gl_error!==0) throw Error(`GPU ${stage}: ${JSON.stringify(observation)}`);
+  if(observation.active_vbo_candidates!==1 || observation.gl_error!==0)
+    throw Error(`GPU ${stage}: active VBO candidates=${observation.active_vbo_candidates}, GL error=${observation.gl_error}, failure=${observation.failure||'none'}`);
 };
 const workerStatus=()=>page.evaluate('window.obrushSourceWorkerTrialStatus()');
 try {
