@@ -7,6 +7,13 @@ uses the expected opaque/transparent WebGL states, front/back faces and
 wireframe draws. OBrush's Source appearance remains undoable; viewport pixel
 matching, broader scene/depth cases and the full acceptance gate remain open.
 
+**C244 selected-part flat shading:** [The pinned-source and paired browser
+report](SCULPTGL_FLAT_C244.md) confirms the Source checkbox now applies one
+flat-shading value to selected parts in one checked shared-core edit. A
+two-part SGL fixture shows the selected triangle's flat shader flag toggling
+in both normal browsers. Analytic appearance, reference multi-selection UI,
+history semantics and the full active acceptance gate remain open.
+
 **C242 selected-part wireframe:** [The pinned-source and browser report](SCULPTGL_WIREFRAME_C242.md)
 tracks the Rendering checkbox and W on imported quad/triangle parts. A
 shared-core selected-part Source edit now keeps one OBrush undo step and

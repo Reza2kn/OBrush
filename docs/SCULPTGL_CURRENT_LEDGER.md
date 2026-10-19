@@ -171,7 +171,7 @@ A scoped report may cover one fixture or option and never closes its full accept
 | SGL-RENDER-IMPORT-MATCAP | Active | Unreconciled | Open |
 | SGL-RENDER-IMPORT-UV | Active | Unreconciled | Open |
 | SGL-RENDER-TRANSPARENCY | Active | [SCULPTGL_TRANSPARENCY_C243](SCULPTGL_TRANSPARENCY_C243.md) | Open |
-| SGL-RENDER-FLAT | Active | Unreconciled | Open |
+| SGL-RENDER-FLAT | Active | [SCULPTGL_FLAT_C244](SCULPTGL_FLAT_C244.md) | Open |
 | SGL-RENDER-WIREFRAME | Active | [SCULPTGL_WIREFRAME_C242](SCULPTGL_WIREFRAME_C242.md) | Open |
 | SGL-RENDER-GRID | Active | [SCULPTGL_GRID_C122](SCULPTGL_GRID_C122.md) | Open |
 | SGL-RENDER-DARKEN | Active | Unreconciled | Open |
