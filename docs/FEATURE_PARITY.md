@@ -1,5 +1,11 @@
 # OBrush feature parity contract
 
+**C259 Source primitive placement:** [The paired normal-browser check](SCULPTGL_PRIMITIVE_PLACEMENT_C259.md)
+matches first-Add world bounds for Sphere/Cube/Cylinder/Torus within
+`9e-7`, retains four centered parts, undoes one Add and round-trips the posed
+scene through public Save/Open byte-exactly. Camera pixels, picked brush
+response, edited levels, native GUI and sustained performance remain open.
+
 **C259 Source Brush radius audit:** [The pinned normal-browser pair](SCULPTGL_BRUSH_RADIUS_SCREEN_C259.md)
 confirms that current Source ordinary Brush already converts a 5–500
 viewport-point radius at the picked depth; the frozen 0.1.14 world-radius
