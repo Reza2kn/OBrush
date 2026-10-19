@@ -1,11 +1,20 @@
 # OBrush feature parity contract
 
+**C236 admitted pen gesture:** [The pinned-source diagnosis and paired browser report](SCULPTGL_PEN_GESTURE_C236.md)
+shows that SculptGL consumes the first held synthetic pen move as Hammer
+`panstart`; later `panmove` events produce sculpt changes. On the same imported
+10,114-vertex mesh, both apps show the expected radius and intensity factor
+direction with exact public Undo/Redo. OBrush's multi-dab intensity response
+and final shape differ, and physical pen behavior remains unverified; pressure
+and full SculptGL/ZBrush parity remain open.
+
 **C234 paired pressure input:** [The common-fixture browser report](SCULPTGL_PRESSURE_PAIR_C234.md)
 finds exact imported positions across 10,114 vertices and OBrush Source-mode
 response to radius and intensity factors. Pinned SculptGL's synthetic pen
 gestures leave saved geometry unchanged even at full pressure, despite trusted
 move delivery; its mouse gesture changes geometry. The reference pen input
-path remains unresolved, so this is not pressure geometry parity.
+path was subsequently resolved for synthetic three-move gestures in C236; the
+C234 one-move run alone is not pressure geometry parity.
 
 **C233 app-frame profile:** [The complete million-vertex browser report](SCULPTGL_APP_FRAME_PROFILE_C233.md)
 records 50.13 ms per update inside the viewport during a frozen long stroke,

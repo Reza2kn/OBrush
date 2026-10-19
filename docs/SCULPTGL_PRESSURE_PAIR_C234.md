@@ -1,5 +1,10 @@
 # C234: paired pressure-factor input and saved-shape check
 
+**Follow-up:** [C236](SCULPTGL_PEN_GESTURE_C236.md) identifies the one-move
+synthetic pen gesture admission problem below. Three held moves produce changed
+SculptGL geometry and permit a scoped factor-direction comparison; the C234
+results remain the preserved one-move observation.
+
 The pinned SculptGL source at commit `8e45dafc0f7906e5238dfffc1a2df742bd25f29d`
 defines both pressure multipliers as `1 + factor * (2 * pressure - 1)` in
 `src/misc/Tablet.js` (SHA-256
