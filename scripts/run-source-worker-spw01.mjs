@@ -59,7 +59,7 @@ const { installPerfMemory } = await import(pathToFileURL(path.join(bench, 'obser
 const { readScalarRecording } = await import(pathToFileURL(path.join(bench, 'workspace/perf-recording-transfer.mjs')));
 const { sampleMemory, startMemorySamples } = await import(pathToFileURL(path.join(bench, 'workspace/perf-memory-sampler.mjs')));
 const frozen = JSON.parse(originalProtocolBytes);
-const out = path.join(root, '.artifacts/source-worker-sustained-c266', `${label}-${mode}-${randomUUID()}`);
+const out = path.join(root, '.artifacts/source-worker-sustained-spw01', `${label}-${mode}-${randomUUID()}`);
 await mkdir(out, { recursive: true });
 const source = `(${installPerfExport.toString()})(window);\n` +
   `(${installPerfMemory.toString()})(window);\n` +

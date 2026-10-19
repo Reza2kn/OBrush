@@ -1,4 +1,4 @@
-# C266: sparse Source Worker sustained held-pointer admission
+# SPW01: sparse Source Worker sustained held-pointer admission
 
 Status: **preregistered; no run or parity claim**. This freezes the measurement
 before a browser build or trial. The product change is the opt-in
@@ -48,7 +48,7 @@ unmatched diagnostics. Even if all worker gates pass, comparing sculpt shape
 or speed causally requires matched delivered dabs; broader SculptGL parity
 still depends on the separate feature inventory.
 
-The benchmark driver is `scripts/run-source-worker-sustained-c266.mjs`. It
+The benchmark driver is `scripts/run-source-worker-sustained-spw01.mjs`. It
 uses the previously frozen C58/C209 owned-CDP harness via an explicitly
 hashed `--bench-stage` path, and records those helper hashes in each result.
 No browser/build run is authorized in this isolated worktree until the root
