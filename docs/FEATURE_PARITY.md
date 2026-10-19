@@ -1,5 +1,12 @@
 # OBrush feature parity contract
 
+**Scoped Brush Negative witness:** [The C272 pinned normal-UI pair](SCULPTGL_BRUSH_NEGATIVE_UI_C272.md)
+matches the reference's visible Negative-off and Negative-on Brush gestures
+on the independent 10,114-vertex sphere. Both polarities change the same 87
+IDs within `2.98e-8` per position component, restore exact public Undo/Redo,
+and pass active GPU position and paired display-normal checks. The single
+unmasked gesture does not close the complete Negative row.
+
 **Scoped Inflate witness:** [The C269 direct pinned-method report](SCULPTGL_INFLATE_PAIR_C269.md)
 records the reference's positive, negative and zero Float32 response on one
 independent masked diamond, alongside a passing shared-core arithmetic,
@@ -28,6 +35,11 @@ admits a scoped identity-affine shader-0 Source object behind the trial switch:
 its 100k run applied 1,287 dabs with exact public history and GPU positions,
 but failed worst-case pacing, queue-tail and all-state GPU-normal gates. The
 1m Worker run remains unmeasured.
+[The one-pass Worker publication trial](SOURCE_WORKER_TAIL_RESULT.md) reduced
+the measured 100k main-thread finish callback from 931.5 to 565.9 ms with
+passing public Save/Undo/Redo, shape and GPU-position checks. The frozen
+queue-tail, RAF-max, pacing-max and edited display-normal gates still fail;
+the held Worker remains query-gated and off by default.
 [The independent display-normal audit](SOURCE_GPU_DISPLAY_NORMAL_ORACLE_PREREG.md)
 matches fresh Source face normals to active GPU rows before sculpting and after
 Undo. Edited After and Redo states have byte-identical public meshes but

@@ -116,9 +116,14 @@ def render() -> str:
         "[metadata-aware Worker trial](SOURCE_WORKER_METADATA_PREVIEW_RESULT.md) "
         "passes a 100k public-history and GPU-position check but fails "
         "worst-case pacing, queue-tail and all-state GPU-normal gates; its "
-        "million-vertex run remains unmeasured. "
+        "million-vertex run remains unmeasured. The "
+        "[one-pass Worker tail trial](SOURCE_WORKER_TAIL_RESULT.md) reduces "
+        "the measured main publication callback but still fails the frozen "
+        "release-tail and RAF-max gates. "
         "[C270 Inflate UI](SCULPTGL_INFLATE_DIAMOND_UI_C270.md) is one "
-        "scoped positive/negative fixture, not a full brush gate.",
+        "scoped positive/negative fixture, and "
+        "[C272 Brush Negative](SCULPTGL_BRUSH_NEGATIVE_UI_C272.md) is one "
+        "scoped normal-UI checkbox gesture; neither closes a full brush gate.",
         "",
         "| ID | Pinned reference scope | Current row-level evidence | Parity gate |",
         "| --- | --- | --- | --- |",
