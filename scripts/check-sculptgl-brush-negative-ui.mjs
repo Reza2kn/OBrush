@@ -211,6 +211,7 @@ try {
     Math.abs(p.radius-(result.ray_alignment?.radius_requested??radius))>1e-6 ||
     Math.abs(p.options.intensity-(result.ray_alignment?.source_published_intensity??intensity))>1e-6) throw Error('Requested Brush radius/intensity did not publish');
   result.before = (await page.save('before')).record;
+  if(side==='root')result.before_object_identity=await page.evaluate('(()=>{const s=window.obrushBrushMetrics();return {active_subtool_id:s.active_subtool_id,selected_subtool_ids:s.selected_subtool_ids,subtools:s.subtools.map(x=>({id:x.id,vertices:x.vertices,triangles:x.triangles,visible:x.visible})),vertices:s.vertices};})()');
   result.before_gpu = await page.evaluate(side === 'source' ?
     `window.__sourceActiveWords.capture(${expected.vertices})` :
     `window.__sourceGpuReadback.capture(${expected.vertices}, true)`);
@@ -234,14 +235,17 @@ try {
   result.release_state = side === 'root' ? await page.evaluate('window.obrushSculptMetrics()') :
     await page.evaluate('({timer:window.__sculptglReferenceInstance.getSculptManager()._sculptTimer,action:window.__sculptglReferenceInstance._action})');
   result.after = (await page.save('after')).record;
+  if(side==='root')result.after_object_identity=await page.evaluate('(()=>{const s=window.obrushBrushMetrics();return {active_subtool_id:s.active_subtool_id,selected_subtool_ids:s.selected_subtool_ids,subtools:s.subtools.map(x=>({id:x.id,vertices:x.vertices,triangles:x.triangles,visible:x.visible})),vertices:s.vertices};})()');
   result.after_gpu = await page.evaluate(side === 'source' ?
     `window.__sourceActiveWords.capture(${expected.vertices})` :
     `window.__sourceGpuReadback.capture(${expected.vertices}, true)`);
   await page.chord('z'); result.undo = (await page.save('undo')).record;
+  if(side==='root')result.undo_object_identity=await page.evaluate('(()=>{const s=window.obrushBrushMetrics();return {active_subtool_id:s.active_subtool_id,selected_subtool_ids:s.selected_subtool_ids,subtools:s.subtools.map(x=>({id:x.id,vertices:x.vertices,triangles:x.triangles,visible:x.visible})),vertices:s.vertices};})()');
   result.undo_gpu = await page.evaluate(side === 'source' ?
     `window.__sourceActiveWords.capture(${expected.vertices})` :
     `window.__sourceGpuReadback.capture(${expected.vertices}, true)`);
   await page.chord('z',true); result.redo = (await page.save('redo')).record;
+  if(side==='root')result.redo_object_identity=await page.evaluate('(()=>{const s=window.obrushBrushMetrics();return {active_subtool_id:s.active_subtool_id,selected_subtool_ids:s.selected_subtool_ids,subtools:s.subtools.map(x=>({id:x.id,vertices:x.vertices,triangles:x.triangles,visible:x.visible})),vertices:s.vertices};})()');
   result.redo_gpu = await page.evaluate(side === 'source' ?
     `window.__sourceActiveWords.capture(${expected.vertices})` :
     `window.__sourceGpuReadback.capture(${expected.vertices}, true)`);

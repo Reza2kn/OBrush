@@ -3,13 +3,16 @@
 // current bytes when no later frame is drawn. No app state is changed.
 (() => {
   const contexts = [];
+  const bufferTokens = new WeakMap();
+  let nextBufferToken = 0;
   const originalGetContext = HTMLCanvasElement.prototype.getContext;
   HTMLCanvasElement.prototype.getContext = function (kind, ...args) {
     const gl = originalGetContext.call(this, kind, ...args);
     if (kind !== 'webgl2' || !gl || contexts.some(row => row.gl === gl)) return gl;
     const sizes = new Map();
     const state = { gl, sizes, wantedBytes: 0, drawBuffers: new Set(),
-      retainedDrawBuffers: new Set(), drawCount: 0, retainedDrawCount: 0 };
+      retainedDrawBuffers: new Set(), lastDrawSequence: new Map(),
+      drawCount: 0, retainedDrawCount: 0 };
     contexts.push(state);
     const bind = gl.bindBuffer;
     gl.bindBuffer = function (target, buffer) {
@@ -32,7 +35,9 @@
         if (!gl.getVertexAttrib(index, gl.VERTEX_ATTRIB_ARRAY_ENABLED)) continue;
         const buffer = gl.getVertexAttrib(index, gl.VERTEX_ATTRIB_ARRAY_BUFFER_BINDING);
         if (buffer) {
+          if (!bufferTokens.has(buffer)) bufferTokens.set(buffer, ++nextBufferToken);
           state.retainedDrawBuffers.add(buffer);
+          state.lastDrawSequence.set(buffer, state.retainedDrawCount);
           if (sizes.get(buffer) === state.wantedBytes) state.drawBuffers.add(buffer);
         }
       }
@@ -45,6 +50,7 @@
     gl.deleteBuffer = function (buffer) {
       state.retainedDrawBuffers.delete(buffer);
       state.drawBuffers.delete(buffer);
+      state.lastDrawSequence.delete(buffer);
       sizes.delete(buffer);
       return deleteBuffer.call(this, buffer);
     };
@@ -104,6 +110,8 @@
       }
       return { active_vbo_candidates: 1, observation, draw_count: state.drawCount,
         retained_draw_count: state.retainedDrawCount,
+        buffer_token: bufferTokens.get(buffer),
+        last_draw_sequence: state.lastDrawSequence.get(buffer),
         readback_bytes: raw.byteLength, actual_readback_sha256: await hex(raw),
         position_words_sha256: await hex(positions), normal_words_sha256: await hex(normals),
         ...(includeNormalWords ? { normal_words_base64: base64(normals) } : {}),

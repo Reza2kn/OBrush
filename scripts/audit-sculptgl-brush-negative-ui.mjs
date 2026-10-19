@@ -61,8 +61,19 @@ for(const side of ['source','root'])for(const stage of ['before','after','undo',
     if(actualPosition.length!==packed.length || sha(actualPosition)!==actual)
       throw Error(`${side} ${stage}: invalid forwarded active position stream`);
   }
+  const identity=side==='root'?receipt[`${stage}_object_identity`]:null;
+  const objectIdentityExact=side==='source'?true:!!identity&&
+    identity.active_subtool_id===1&&identity.vertices===receipt.fixture.vertices&&
+    JSON.stringify(identity.selected_subtool_ids)==='[1]'&&
+    identity.subtools?.length===1&&identity.subtools[0].id===1&&
+    identity.subtools[0].vertices===receipt.fixture.vertices&&identity.subtools[0].visible===true&&
+    Number.isInteger(observed.buffer_token)&&observed.buffer_token>0&&
+    Number.isInteger(observed.last_draw_sequence)&&observed.last_draw_sequence>0;
   gpuStages[`${side}_${stage}`]={expected_position_sha256:expected,actual_position_sha256:actual,
     position_words_exact:expected===actual,normal_words_sha256:observed.normal_words_sha256,
+    object_identity_exact:objectIdentityExact,object_identity:identity,
+    buffer_token:observed.buffer_token??null,observation:observed.observation??null,
+    last_draw_sequence:observed.last_draw_sequence??null,
     source_kind:side==='source'?'WebGL1 active-draw forwarded uploads':'WebGL2 active-draw readback'};
 }
 const displayNormalComparison={};
@@ -141,7 +152,7 @@ const audit={source_result:sourcePath,root_result:rootPath,fixture_sha256:source
   active_gpu:gpuStages,display_normal_pair:displayNormalComparison,
   limitations:['Same requested pixel offsets are not proof of same 3D contacts or same delivered dabs','One normal UI gesture and checkbox state only; mid-stroke Alt/N and physical pen are untested','Source WebGL1 upload shadow differs from WebGL2 readback provenance','Display-normal differences do not imply saved mesh-normal differences']};
 audit.status=Object.values(audit.history).every(Boolean)&&Object.values(audit.faces).every(Boolean)&&
-  Object.values(gpuStages).every(x=>x.position_words_exact)&&
+  Object.values(gpuStages).every(x=>x.position_words_exact&&x.object_identity_exact)&&
   audit.source_change.different_vertices>0&&audit.root_change.different_vertices>0&&
   Math.sign(audit.radial_effect.source.mean)===(source.negative?-1:1)&&
   Math.sign(audit.radial_effect.root.mean)===(source.negative?-1:1)&&
