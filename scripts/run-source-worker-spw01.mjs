@@ -87,7 +87,7 @@ const source = `(${installPerfExport.toString()})(window);\n` +
       for(const name of ['source_worker_held_begin','source_worker_held_seed_packet','source_worker_held_samples',
         'source_worker_held_endpoint','source_worker_held_preview','source_worker_held_commit']){
         const original=p[name];if(typeof original!=='function')throw Error('Missing '+name);
-        p[name]=function(...a){const start=performance.now();try{return original.apply(this,a)}finally{const v=trace.main[name]||{count:0,total_ms:0,max_ms:0};
+        p[name]=function(...a){const start=performance.now();try{return original.apply(this,a)}catch(error){trace.errors.push(name+': '+String(error));throw error}finally{const v=trace.main[name]||{count:0,total_ms:0,max_ms:0};
           const ms=performance.now()-start;v.count++;v.total_ms+=ms;v.max_ms=Math.max(v.max_ms,ms);trace.main[name]=v;}};}
       return true;}catch(error){trace.errors.push(String(error));return false;}};
   })();`;
@@ -165,6 +165,14 @@ try {
   await page.pointer('mouseMoved',...first);await page.evaluate(`window.__obrushPerf.begin({vertices:${cohort.vertices}})`);recording=true;
   sampler=startMemorySamples(owner,page,result.memory_samples);
   await page.pointer('mousePressed',...first,'left',1);pressed=true;await page.raf();
+  if(mode==='worker'){
+    const started=await workerStatus();
+    if(!started.active){
+      result.worker_begin_diagnostic={status:started,notice:await page.evaluate('document.getElementById("notice")?.textContent||null'),
+        trace:await page.evaluate('window.__workerSustained')};
+      throw Error('Worker trial did not start on the trusted held pointer');
+    }
+  }
   const start=performance.now(),pending=[];
   for(let i=1;i<=cohort.requested_moves;i++){
     const due=start+i*1000/protocol.input.motion_hz,remain=due-performance.now();if(remain>0)await pause(remain);
