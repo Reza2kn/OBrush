@@ -24,6 +24,9 @@ mod source_flatten;
 #[path = "source_crease.rs"]
 mod source_crease;
 
+#[path = "source_geometry_warm.rs"]
+mod warm;
+
 pub const MAX_SOURCE_GEOMETRY_SCRATCH_BYTES: usize =
     crate::resource_limits::MAX_GEOMETRY_SCRATCH_BYTES;
 pub const MAX_SOURCE_GEOMETRY_STATE_BYTES: usize = crate::resource_limits::MAX_GEOMETRY_STATE_BYTES;

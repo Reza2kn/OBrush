@@ -11,7 +11,7 @@ const STATE_DIGEST_AT: usize = MESH_DIGEST_AT + 32;
 const PAYLOAD_BYTES: usize = STATE_DIGEST_AT + 32;
 const PACKET_BYTES: usize = PAYLOAD_BYTES + 32;
 
-fn seed_mesh_digest(mesh: &Mesh) -> [u8; 32] {
+pub(crate) fn seed_mesh_digest(mesh: &Mesh) -> [u8; 32] {
     let mut hash = blake3::Hasher::new();
     hash.update(b"OBR-SOURCE-RETAINED-SEED-MESH-1");
     hash.update(&(mesh.positions.len() as u64).to_le_bytes());

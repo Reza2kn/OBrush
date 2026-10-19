@@ -52,7 +52,9 @@ pub mod source_ring;
 mod source_worker_cold_capture;
 mod source_worker_delta;
 mod source_worker_retained_seed;
+mod source_worker_retained_warm;
 mod source_worker_transaction;
+mod source_worker_warm_io;
 mod static_subdivision;
 mod subtools;
 mod topology;
@@ -159,6 +161,10 @@ pub use source_worker_delta::{
 };
 pub use source_worker_retained_seed::{
     decode_source_worker_retained_seed, encode_source_worker_retained_seed,
+};
+pub use source_worker_retained_warm::{
+    decode_source_worker_retained_warm, encode_source_worker_retained_warm,
+    MAX_SOURCE_WORKER_WARM_PACKET_BYTES,
 };
 pub use source_worker_transaction::{SourceWorkerTransaction, SourceWorkerTransactionError};
 pub use static_subdivision::{

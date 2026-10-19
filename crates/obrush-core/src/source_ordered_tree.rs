@@ -6,6 +6,9 @@ use glam::DVec3;
 use serde::Serialize;
 use std::sync::Arc;
 
+#[path = "source_ordered_tree_warm.rs"]
+mod warm;
+
 pub const MAX_SOURCE_ORDERED_TREE_BYTES: usize = crate::resource_limits::MAX_ORDERED_TREE_BYTES;
 // The fixed preflight bounds face/corner counts, and bytes() bounds live cell
 // slots and leaf-vector lengths. Even one byte per entry fits u32 under this
