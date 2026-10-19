@@ -42,7 +42,9 @@ if (!expected || fixtureBytes.length !== expected.bytes || sha(fixtureBytes) !==
 }
 if (sha(fixtureBytes) !== '39ddfd1559fde94aa5f6d2602beffc6cf9f77fb7f934989ee9f8677739f47c1b')
   throw Error('Preregistered fixture SHA-256 changed');
-const web = path.join(root, 'web/dist');
+const web = path.resolve(process.env.OBRUSH_WEB_DIST ?? path.join(root, 'web/dist'));
+const webUrl = process.env.OBRUSH_WEB_URL ?? null;
+const webRepositoryRoot = path.resolve(web, '../..');
 const mirror = path.join(shared, '.tools/sculptgl-reference/host-mirror');
 const pinned = sha(await readFile(path.join(mirror, 'sculptgl.js')));
 if (pinned !== '79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600') {
@@ -52,6 +54,8 @@ const out = path.join(root, '.artifacts/sculptgl-brush-negative-ui', `${side}-${
 await mkdir(out, { recursive: true });
 const result = {side, negative, protocol_commit:'e09510c',
   obrush_source_commit:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),
+  served_web_repository_head:side==='root'?execFileSync('git',['rev-parse','HEAD'],{cwd:webRepositoryRoot,encoding:'utf8'}).trim():null,
+  served_web_dist:web,served_web_url:side==='root'?webUrl:null,
   harness_sha256:sha(await readFile(new URL(import.meta.url))),
   reference_commit:'8e45dafc0f7906e5238dfffc1a2df742bd25f29d',
   stroke_mode:pressOnly?'one-press':oneMove?'one-move':retraceMoves?`retrace-${retraceMoves}`:'three-point-drag', status:'running', fixture:{path:fixture, bytes:fixtureBytes.length, sha256:sha(fixtureBytes), vertices:expected.vertices, triangles:expected.triangles},
@@ -65,7 +69,19 @@ const result = {side, negative, protocol_commit:'e09510c',
 const owner = new OwnedCdp(out, result);
 let page, pressed = false;
 try {
-  const url = await owner.serve(side === 'source' ? mirror : web, side);
+  if (side==='root' && webUrl) {
+    result.served_http_hashes={};
+    for(const [name,localFile] of [['pkg/obrush_app_bg.wasm','pkg/obrush_app_bg.wasm'],
+      ['pkg/obrush_app.js','pkg/obrush_app.js']]){
+      const response=await fetch(new URL(name,webUrl),{cache:'no-store'});
+      if(!response.ok)throw Error(`Existing OBrush web server returned ${response.status} for ${name}`);
+      const actual=sha(Buffer.from(await response.arrayBuffer()));
+      const expected=sha(await readFile(path.join(web,localFile)));
+      result.served_http_hashes[name]={actual,expected,exact:actual===expected};
+      if(actual!==expected)throw Error(`Existing OBrush web server serves stale ${name}`);
+    }
+  }
+  const url = side==='root' && webUrl ? webUrl : await owner.serve(side === 'source' ? mirror : web, side);
   await owner.start();
   const stage = path.join(shared, '.artifacts/sculptgl-large-sustained-c58-stage');
   const pointerObserver = `(()=>{const rows=[];window.__uiBrushDelivered=rows;for(const type of ['pointerdown','pointermove','pointerup','mousedown','mousemove','mouseup'])window.addEventListener(type,e=>{if(rows.length<2048)rows.push({type,x:e.clientX,y:e.clientY,buttons:e.buttons,trusted:e.isTrusted,at:performance.now()});},true);})();\n`;
