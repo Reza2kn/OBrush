@@ -11,6 +11,9 @@ OBRush GPU row checks. The wider Inflate and full parity gates stay open.
 **Current million-vertex browser baseline:** [The C264 frozen Source Brush run](SCULPTGL_MILLION_CURRENT_C264.md)
 passes independent complete Save/Undo/Redo and affected-face shape checks, but
 fails all four responsiveness gates (RAF P95 66.7 ms, release 159.0 ms).
+[The C271 exact-row normal-witness trial](SCULPTGL_MILLION_NORMAL_WITNESS_C271.md)
+reduced one publication substage but still failed all four gates on a fresh
+million-vertex run; its product code was rejected and the failed receipt kept.
 [The sparse held-pointer Worker trial](SOURCE_WORKER_SPARSE_HELD_TRIAL.md) checks two
 ordinary viewport strokes, warm state, sparse GPU words, public Save/Undo/Redo
 and cancellation on a 40k sphere. It remains query-gated and unpromoted:
