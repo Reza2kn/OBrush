@@ -101,6 +101,13 @@ def render() -> str:
         "transport and records why an ordinary held-pointer candidate has "
         "not yet been integrated; it changes none of those failures.",
         "",
+        "The [C260 combined receipt](SCULPTGL_COMBINED_C260.md) validates "
+        "scoped primitive levels/placement and Source Paint All on the "
+        "integrated build. Its [sparse Worker codec]"
+        "(SOURCE_WORKER_SPARSE_CODEC_SEAM.md) returns a checked mesh candidate "
+        "only: there is still no ordinary Worker publication or held-pointer "
+        "performance result, so all responsiveness gates remain open.",
+        "",
         "| ID | Pinned reference scope | Current row-level evidence | Parity gate |",
         "| --- | --- | --- | --- |",
     ]

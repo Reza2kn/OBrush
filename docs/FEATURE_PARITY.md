@@ -1,5 +1,13 @@
 # OBrush feature parity contract
 
+**C260 integrated build:** [The combined Source/browser/macOS receipt](SCULPTGL_COMBINED_C260.md)
+records 2,582 passing workspace tests, strict native/WASM Clippy, fresh
+signed macOS and browser builds, and scoped browser checks for default
+primitive levels and placement, Source Paint All, full Sphere shape,
+Cylinder/Torus posed bounds and the mirror guide. The sparse Worker codec is
+non-publishing; sustained brush responsiveness and every full SculptGL and
+ZBrush acceptance gate remain open.
+
 **Scoped Source Paint All:** [The method-level and normal-browser report](SCULPTGL_SOURCE_PAINT_ALL.md)
 checks soft-mask RGB/material channel blending, a reachable Source-mode Fill
 control, unchanged geometry/inactive part, public Save and exact core
