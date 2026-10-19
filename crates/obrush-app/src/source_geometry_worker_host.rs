@@ -118,21 +118,20 @@ impl ColdSourceWorkerBridge {
         if pending.epoch != epoch || pending.revision != revision {
             return Err("Source worker reply has stale epoch or revision".into());
         }
-        let final_mesh = pending
-            .capture
-            .decode_candidate(document, epoch, revision, delta)?;
-        if !final_matches_preview(
-            document
-                .active_mesh()
-                .ok_or("Source Worker lost its baseline mesh")?,
-            final_mesh.as_ref(),
-            &pending.preview,
-        )? {
-            return Err("Source worker final geometry differs from checked sparse previews".into());
-        }
-        pending
-            .capture
-            .commit_candidate(document, epoch, revision, delta, retained)
+        pending.capture.commit_candidate_checked(
+            document,
+            epoch,
+            revision,
+            delta,
+            retained,
+            |baseline, final_mesh| {
+                if final_matches_preview(baseline, final_mesh, &pending.preview)? {
+                    Ok(())
+                } else {
+                    Err("Source worker final geometry differs from checked sparse previews".into())
+                }
+            },
+        )
     }
 
     pub fn preview(

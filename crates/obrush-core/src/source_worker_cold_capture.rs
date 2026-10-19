@@ -186,14 +186,34 @@ impl SourceWorkerColdCapture {
         delta: &[u8],
         retained_packet: &[u8],
     ) -> Result<bool, String> {
+        self.commit_candidate_checked(document, epoch, revision, delta, retained_packet, |_, _| {
+            Ok(())
+        })
+    }
+
+    /// Check the decoded candidate against an additional host witness before
+    /// adopting it. The complete scene and packet are each checked exactly
+    /// once; the callback never receives a mutable document or an unchecked
+    /// mesh. This keeps preview comparison inside the same one-use commit.
+    pub fn commit_candidate_checked(
+        self,
+        document: &mut Document,
+        epoch: u64,
+        revision: u64,
+        delta: &[u8],
+        retained_packet: &[u8],
+        check: impl FnOnce(&Mesh, Option<&Mesh>) -> Result<(), String>,
+    ) -> Result<bool, String> {
         let id = self.active_subtool_id;
-        let candidate = match self.decode_candidate(document, epoch, revision, delta)? {
+        let decoded = self.decode_candidate(document, epoch, revision, delta)?;
+        let baseline = document
+            .active_mesh()
+            .ok_or("Source worker reply has no active mesh")?;
+        check(baseline, decoded.as_ref())?;
+        let candidate = match decoded {
             Some(mesh) => mesh,
             None if retained_packet.is_empty() => return Ok(false),
-            None => document
-                .active_mesh()
-                .ok_or("Source worker no-op has no active mesh")?
-                .try_snapshot()?,
+            None => baseline.try_snapshot()?,
         };
         let retained = crate::decode_source_worker_retained_warm(&candidate, id, retained_packet)?;
         document.publish_cold_source_worker_result(candidate, Arc::new(retained))
@@ -208,6 +228,7 @@ mod tests {
         SourceGeometryAlphaTracks, SourceGeometryControls, SourceGeometryPass,
         SourceWorkerTransaction,
     };
+    use std::cell::Cell;
 
     fn fixture() -> Document {
         let mut mesh = Mesh::import_obj(b"v 0 0 0\nv 4 0 0\nv 0 4 0\nf 1 2 3\n")
@@ -448,6 +469,62 @@ mod tests {
         assert_eq!(main.to_json().unwrap(), before);
         assert_eq!(main.history_depths(), depths);
         assert!(main.redo());
+    }
+
+    #[test]
+    fn final_candidate_check_runs_once_and_failure_is_atomic() {
+        let mut main = fixture();
+        let before = main.to_json().unwrap();
+        let depths = main.history_depths();
+        let empty = encode_source_worker_mesh_delta(
+            main.active_mesh().unwrap(),
+            main.active_mesh().unwrap(),
+            1,
+        )
+        .unwrap();
+        let calls = Cell::new(0);
+        let capture =
+            SourceWorkerColdCapture::capture(&main, SourceGeometryOptions::inflate(), 74, 9)
+                .unwrap();
+        assert!(capture
+            .commit_candidate_checked(&mut main, 74, 9, &empty, &[], |baseline, candidate| {
+                calls.set(calls.get() + 1);
+                assert_eq!(baseline.positions.len(), 3);
+                assert!(candidate.is_none());
+                Err("Final preview mismatch".into())
+            })
+            .is_err());
+        assert_eq!(calls.get(), 1);
+        assert_eq!(main.to_json().unwrap(), before);
+        assert_eq!(main.history_depths(), depths);
+
+        let capture =
+            SourceWorkerColdCapture::capture(&main, SourceGeometryOptions::inflate(), 75, 9)
+                .unwrap();
+        let calls = Cell::new(0);
+        assert!(capture
+            .commit_candidate_checked(&mut main, 75, 10, &empty, &[], |_, _| {
+                calls.set(calls.get() + 1);
+                Ok(())
+            })
+            .is_err());
+        assert_eq!(calls.get(), 0);
+        assert_eq!(main.to_json().unwrap(), before);
+        assert_eq!(main.history_depths(), depths);
+
+        let capture =
+            SourceWorkerColdCapture::capture(&main, SourceGeometryOptions::inflate(), 76, 9)
+                .unwrap();
+        let calls = Cell::new(0);
+        assert!(capture
+            .commit_candidate_checked(&mut main, 76, 9, &empty[..empty.len() - 1], &[], |_, _| {
+                calls.set(calls.get() + 1);
+                Ok(())
+            })
+            .is_err());
+        assert_eq!(calls.get(), 0);
+        assert_eq!(main.to_json().unwrap(), before);
+        assert_eq!(main.history_depths(), depths);
     }
 
     #[test]
