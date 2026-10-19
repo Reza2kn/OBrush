@@ -24,7 +24,7 @@ The focused GPU attempt was **failed evidence**, retained at `SP-LONG00-1m-60s-r
 
 `cargo fmt --all -- --check`, the focused bitwise original-algorithm normal regression, and `scripts/build-web.sh` passed for the candidate. A full workspace test run was interrupted after several passing groups to prioritize the frozen browser decision; its exit was 130 and the partial log is retained at `.artifacts/c264-workspace-tests.log`. Full workspace tests, strict native/WASM Clippy, and a valid GPU-word audit remain required. The candidate is not admitted or committed as a product change at this point.
 
-## Corrected focused GPU check: actual mismatch, candidate still unpromoted
+## Corrected focused GPU check: normal-oracle limit, candidate still unpromoted
 
 The corrected ignored diagnostic held the normal Source Brush for 800 requested moves over two seconds, with a 500 ms press dwell and one-second pre-release dwell. It used the same 999,002-vertex fixture and candidate build, but **was not** the frozen 60-second performance protocol. The observer was injected before navigation, and concurrent ordinary cursor movement provoked a draw after each public Save without changing geometry. Runner SHA-256 `291077c96ee78b269c4ae87ebce3af0cae4fb6774a2c8fe03c9b3947ea3f92d1`; diagnostic observer SHA-256 `09d31ddbdf2acd4fde63ba6506bf461d5bbcafd24c525e43d6e95da98239463f`.
 

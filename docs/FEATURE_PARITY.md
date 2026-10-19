@@ -7,6 +7,11 @@ fails all four responsiveness gates (RAF P95 66.7 ms, release 159.0 ms).
 later-dab geometry across a simulated realm transfer, and [the Chrome Worker
 diagnostic](SOURCE_WORKER_CROSS_REALM_DIAGNOSTIC.md) checks a small cold stroke
 and atomic publication. Neither activates the ordinary browser brush Worker.
+[The normal-scratch trial](SCULPTGL_NORMAL_SCRATCH_TRIAL_C264.md) remains
+unpromoted after all responsiveness gates failed and its GPU-normal check used
+an invalid public-normal oracle. [The C265](SCULPTGL_RENDER_ROW_RANGES_C265.md)
+and [C266](SCULPTGL_RENDER_ROW_RANGES_C266.md) renderer trials also failed to
+establish a responsiveness improvement; their code was rejected.
 
 **C263 integrated checkpoint:** [The combined Source/browser/macOS receipt](SCULPTGL_COMBINED_C263.md)
 records passing workspace tests, strict native/WASM Clippy, fresh local builds,
