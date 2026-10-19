@@ -96,7 +96,10 @@ def render() -> str:
         "(SCULPTGL_MILLION_PAIRED_C226.md) and later [C228]"
         "(SCULPTGL_CERTIFIED_RENDER_HANDOFF_C228.md)/[C229]"
         "(SCULPTGL_RETAINED_TOPOLOGY_WALK_C229.md) results still fail all "
-        "four responsiveness gates.",
+        "four responsiveness gates. [C253]"
+        "(SOURCE_ORDINARY_WORKER_SPIKE_C253.md) measures raw browser Worker "
+        "transport and records why an ordinary held-pointer candidate has "
+        "not yet been integrated; it changes none of those failures.",
         "",
         "| ID | Pinned reference scope | Current row-level evidence | Parity gate |",
         "| --- | --- | --- | --- |",
