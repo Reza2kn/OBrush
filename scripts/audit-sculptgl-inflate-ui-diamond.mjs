@@ -91,8 +91,10 @@ for (const stage of ['after','redo']) {
   gpu[stage]={expected,observed,exact_candidate_count:matches.length,pass:matches.length===1&&observed.gl_error===0};
 }
 const history={source_before_undo:files.source_before.equals(files.source_undo),source_after_redo:files.source_after.equals(files.source_redo),root_before_undo:files.root_before.equals(files.root_undo),root_after_redo:files.root_after.equals(files.root_redo)};
-const faces={source_stable:exact(meshes.source_before.oriented,meshes.source_after.oriented),root_stable:exact(meshes.root_before.oriented,meshes.root_after.oriented),paired_before:exact(meshes.source_before.oriented,meshes.root_before.oriented),paired_after:exact(meshes.source_after.oriented,meshes.root_after.oriented)};
+const expectedFaces=['0,1,2','0,2,3'];
+const faces={source_input:exact(meshes.source_before.oriented,expectedFaces),root_input:exact(meshes.root_before.oriented,expectedFaces),source_stable:exact(meshes.source_before.oriented,meshes.source_after.oriented),root_stable:exact(meshes.root_before.oriented,meshes.root_after.oriented),paired_before:exact(meshes.source_before.oriented,meshes.root_before.oriented),paired_after:exact(meshes.source_after.oriented,meshes.root_after.oriented)};
 const attributes={source_stable:exact(meshes.source_before.attrs,meshes.source_after.attrs),root_stable:exact(meshes.root_before.attrs,meshes.root_after.attrs),paired_before:exact(meshes.source_before.attrs,meshes.root_before.attrs),paired_after:exact(meshes.source_after.attrs,meshes.root_after.attrs)};
+attributes.all_unmasked_before=['source','root'].every(side=>meshes[`${side}_before`].attrs.every(row=>row.unprotected===word(1)));
 const alignment=root.ray_alignment;
 const sourceProjectionX=source.setup.state.camera.projection[0],rootProjectionX=root.setup.state.camera.projection[0];
 const sourceWidth=source.setup.viewport.screen[2]-source.setup.viewport.screen[0],rootWidth=root.setup.viewport.screen[2]-root.setup.viewport.screen[0];
@@ -108,7 +110,7 @@ const audit={source_result:sourcePath,root_result:rootPath,source_result_sha256:
   limitations:['Four-vertex flat unmasked OBJ only','Equal requested rays do not establish equal delivered dabs or later picked contacts','No physical pen/native GUI or sustained performance claim']};
 audit.admitted=sourceChange.changed_ids.length>0&&rootChange.changed_ids.length>0&&beforePair.different_components===0&&
   Object.values(history).every(Boolean)&&Object.values(faces).every(Boolean)&&
-  attributes.source_stable&&attributes.root_stable&&gpu.after.pass&&gpu.redo.pass;
+  attributes.all_unmasked_before&&attributes.source_stable&&attributes.root_stable&&gpu.after.pass&&gpu.redo.pass;
 audit.status=audit.admitted?'complete scoped UI pair; inspect numerical_gate separately':'FAILED scoped UI admission; retained';
 const out=path.join(path.dirname(sourcePath),`diamond-audit-${path.basename(path.dirname(rootPath))}.json`);
 await writeFile(out,JSON.stringify(audit,null,2)+'\n');
