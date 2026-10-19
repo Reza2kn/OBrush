@@ -21,6 +21,11 @@ const mode = args.mode, label = args.cohort;
 requireGate(['ordinary', 'worker'].includes(mode), 'mode must be ordinary or worker');
 const cohort = protocol.cohorts.find(row => row.label === label);
 requireGate(cohort, 'cohort must be 100k or 1m');
+const rawNormalRows = args['raw-normal-rows'] === 'true';
+requireGate(args['raw-normal-rows'] === undefined || ['true', 'false'].includes(args['raw-normal-rows']),
+  'raw-normal-rows must be true or false');
+requireGate(!rawNormalRows || cohort.vertices <= 100_000,
+  'raw normal row diagnostic is bounded to 100k vertices');
 const bench = path.resolve(args['bench-stage'] || '');
 requireGate(args['bench-stage'] && (await stat(path.join(bench, 'workspace/large-perf-driver-c203.mjs'))).isFile(), 'explicit C58/C209 bench stage required');
 const fixtureManifestBytes=await readFile(path.join(bench,'FIXTURE_MANIFEST.json'));
@@ -93,6 +98,7 @@ const source = `(${installPerfExport.toString()})(window);\n` +
   })();`;
 
 const result = { status:'running', out, mode, protocol_sha256:hash(protocolBytes),
+  raw_normal_rows_diagnostic:rawNormalRows,
   source_protocol_sha256:hash(originalProtocolBytes),fixture_manifest_sha256:hash(fixtureManifestBytes),
   product_commit:(await import('node:child_process')).execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),
   helper_hashes:helperHashes, fixture:{label,vertices:cohort.vertices,triangles:cohort.triangles,
@@ -109,11 +115,20 @@ let page, pressed=false, recording=false, sampler;
 const gpu={stages:{}};
 const gpuStage=async stage=>{
   const v=await page.viewport(),x=(v.screen[0]+v.screen[2])/2+80,y=(v.screen[1]+v.screen[3])/2;
-  const capture=page.evaluate(`window.__sourceGpuReadback.capture(${cohort.vertices})`);
+  const capture=page.evaluate(`window.__sourceGpuReadback.capture(${cohort.vertices},${rawNormalRows})`);
   await pause(10);
   await page.pointer('mouseMoved',x+(stage.length%3),y,'none',0);
   const observation=await capture;
   gpu.stages[stage]=observation;
+  if(rawNormalRows){
+    const state=(await page.live()).state;
+    result.gpu_policy_observations??={};
+    result.gpu_policy_observations[stage]={
+      viewport_shading:state.viewport_shading,
+      active_subtool_id:state.active_subtool_id,
+      retained_normal_state:state.source_paint?.retained_normal_state??null,
+      source_geometry_active:state.source_geometry?.active??null};
+  }
   if(observation.active_vbo_candidates!==1 || observation.gl_error!==0) throw Error(`GPU ${stage}: ${JSON.stringify(observation)}`);
 };
 const workerStatus=()=>page.evaluate('window.obrushSourceWorkerTrialStatus()');

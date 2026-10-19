@@ -43,10 +43,19 @@
     const digest = await crypto.subtle.digest('SHA-256', bytes);
     return Array.from(new Uint8Array(digest), x => x.toString(16).padStart(2, '0')).join('');
   }
+  function base64(bytes) {
+    // Bounded diagnostic transfer. Avoid spreading 1.2 MB of byte arguments.
+    let encoded = '';
+    for (let i = 0; i < bytes.length; i += 0x8000)
+      encoded += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+    return btoa(encoded);
+  }
   window.__sourceGpuReadback = {
-    async capture(vertexCount) {
+    async capture(vertexCount, includeNormalWords = false) {
       if (!Number.isSafeInteger(vertexCount) || vertexCount < 3 || vertexCount > 1_000_000)
         throw Error('GPU audit vertex count exceeds frozen bound');
+      if (includeNormalWords && vertexCount > 100_000)
+        throw Error('Raw normal-word diagnostic exceeds 100k-vertex bound');
       const wantedBytes = vertexCount * 40;
       if (wantedBytes > 64 * 1024 * 1024) throw Error('GPU audit byte cap');
       for (const state of contexts) {
@@ -82,6 +91,7 @@
       return { active_vbo_candidates: 1, draw_count: state.drawCount,
         readback_bytes: raw.byteLength, actual_readback_sha256: await hex(raw),
         position_words_sha256: await hex(positions), normal_words_sha256: await hex(normals),
+        ...(includeNormalWords ? { normal_words_base64: base64(normals) } : {}),
         gl_error: gl.getError() };
     }
   };
