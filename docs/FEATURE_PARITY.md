@@ -1,5 +1,14 @@
 # OBrush feature parity contract
 
+**C246 global darken-unselected audit:** [The pinned-source and paired browser
+report](SCULPTGL_DARKEN_C246.md) confirms the existing OBrush Source shader
+selects the same unselected-part `0.3` linear-color factor on one independent
+two-part SGL fixture. Both controls leave mesh opacity/shader and history
+unchanged; OBrush's saved project bytes are exact before/after. The reference
+controller was invoked directly because its mirrored checkbox had no usable
+hit target, and the fixture was too small in OBrush for a matched visual test.
+The full active acceptance gate remains open.
+
 **C243 selected-part transparency:** [The pinned-source and paired browser report](SCULPTGL_TRANSPARENCY_C243.md)
 maps the Rendering percentage to selected Source-part opacity. An independent
 overlapping SGL pair saves exact 0/50/100% values in both applications and
