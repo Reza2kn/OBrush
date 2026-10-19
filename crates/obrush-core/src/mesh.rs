@@ -415,31 +415,22 @@ impl Mesh {
     /// topology and has only changed positions since then. A topology-changing
     /// candidate must use the fingerprinted wrapper above instead.
     pub(crate) fn recompute_normals_near_vertices_cached(&mut self, dirty: &[usize]) {
-        self.recompute_normals_near_vertices_cached_rows(dirty);
-    }
-
-    /// Return exactly the normal rows written. A caller maintaining an exact
-    /// witness can update only these rows after the checked geometry edit.
-    pub(crate) fn recompute_normals_near_vertices_cached_rows(
-        &mut self,
-        dirty: &[usize],
-    ) -> Vec<usize> {
         if self.positions.len() > MAX_VERTICES || self.triangles.len() > MAX_TRIANGLES {
-            return Vec::new();
+            return;
         }
         if self.normals.len() != self.positions.len() {
             self.recompute_normals();
-            return (0..self.normals.len()).collect();
+            return;
         }
         if dirty.is_empty() {
-            return Vec::new();
+            return;
         }
         if self.adjacency.is_none() {
             self.ensure_normal_incidence();
         }
         if self.cached_invalid_indices() {
             self.recompute_normals();
-            return (0..self.normals.len()).collect();
+            return;
         }
         let changed_faces = self.cached_faces_for_vertices(dirty);
         let mut affected_vertices: Vec<_> = dirty
@@ -482,10 +473,9 @@ impl Mesh {
                 }
             }
         }
-        for &vertex in &affected_vertices {
+        for vertex in affected_vertices {
             self.normals[vertex] = averages[vertex].normalize_or_zero().as_vec3();
         }
-        affected_vertices
     }
 
     /// Four-way midpoint subdivision preserves masks and vertex color by interpolation.
@@ -1760,71 +1750,6 @@ mod incidence_regressions {
         mesh.recompute_normals_near_vertices_cached(&dirty);
         assert_eq!(mesh.normals, reference.normals);
         assert_eq!(*mesh.normals.last().unwrap(), Vec3::ZERO);
-    }
-
-    #[test]
-    fn local_normal_rows_are_an_exact_witness_update_set() {
-        let mut mesh = Mesh::sphere(4);
-        mesh.ensure_adjacency();
-        let dirty = [0, 19, 71, 607];
-        for &vertex in &dirty {
-            mesh.positions[vertex] += Vec3::new(0.006, -0.008, 0.01);
-        }
-        let mut witness: Vec<_> = mesh
-            .normals
-            .iter()
-            .map(|normal| normal.to_array().map(f32::to_bits))
-            .collect();
-        let mut full = mesh.snapshot();
-        full.recompute_normals();
-        let rows = mesh.recompute_normals_near_vertices_cached_rows(&dirty);
-        assert!(rows.windows(2).all(|pair| pair[0] < pair[1]));
-        assert!(rows.len() < mesh.normals.len() / 4);
-        for &vertex in &rows {
-            witness[vertex] = mesh.normals[vertex].to_array().map(f32::to_bits);
-        }
-        let full_words: Vec<_> = full
-            .normals
-            .iter()
-            .map(|normal| normal.to_array().map(f32::to_bits))
-            .collect();
-        assert_eq!(witness, full_words);
-        assert!(mesh
-            .recompute_normals_near_vertices_cached_rows(&[])
-            .is_empty());
-    }
-
-    #[test]
-    #[ignore = "diagnostic: million-row witness copy versus exact local writes"]
-    fn million_normal_witness_copy_vs_local_rows() {
-        let count = 999_002;
-        let source = vec![[0x3f80_0000_u32, 0, 0]; count];
-        let mut full = source.clone();
-        let mut local = source.clone();
-        let rounds = 100;
-        for affected in [1_000, 10_000, 40_000] {
-            let rows: Vec<_> = (0..affected).map(|i| (i * 977) % count).collect();
-            let started = web_time::Instant::now();
-            for _ in 0..rounds {
-                for (out, normal) in full.iter_mut().zip(&source) {
-                    *out = *normal;
-                }
-                std::hint::black_box(&full);
-            }
-            let full_ms = started.elapsed().as_secs_f64() * 1_000.;
-            let started = web_time::Instant::now();
-            for _ in 0..rounds {
-                for &row in &rows {
-                    local[row] = source[row];
-                }
-                std::hint::black_box(&local);
-            }
-            let local_ms = started.elapsed().as_secs_f64() * 1_000.;
-            assert_eq!(local, full);
-            eprintln!(
-                "normal witness rows={affected} rounds={rounds} full_ms={full_ms:.3} local_ms={local_ms:.3}"
-            );
-        }
     }
 
     #[test]

@@ -1613,11 +1613,9 @@ impl SourceGeometryStroke {
             let cache_changed = advance.cache_changed;
             let refreshed = advance.next.as_ref().unwrap_or(&state);
             let normals_started = Instant::now();
-            let normal_rows = if changed > 0 {
-                mesh.recompute_normals_near_vertices_cached_rows(&dirty)
-            } else {
-                Vec::new()
-            };
+            if changed > 0 {
+                mesh.recompute_normals_near_vertices_cached(&dirty);
+            }
             let normal_time = normals_started.elapsed();
             let publish_started = Instant::now();
             report.changed_vertices = changed;
@@ -1634,8 +1632,8 @@ impl SourceGeometryStroke {
                 self.domain = Some(domain);
             }
             let domain = self.domain.as_mut().expect("preflight expected domain");
-            for &vertex in &normal_rows {
-                domain.normals[vertex] = mesh.normals[vertex].to_array().map(f32::to_bits);
+            for (out, n) in domain.normals.iter_mut().zip(&mesh.normals) {
+                *out = n.to_array().map(f32::to_bits);
             }
             report.phase_time = Some(SourceGeometryPhaseTime {
                 selection: selection_time,
