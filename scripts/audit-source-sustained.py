@@ -78,6 +78,8 @@ def main(result_path):
     )
     changed = np.any(old_positions.view(np.uint32) != new_positions.view(np.uint32), axis=1)
     changed_ids = np.flatnonzero(changed)
+    delta = new_positions[changed].astype(np.float64) - old_positions[changed].astype(np.float64)
+    displacement = np.linalg.norm(delta, axis=1)
     checks["useful_edit"] = bool(changed_ids.size)
     touched_faces = np.any(changed[faces], axis=1)
     ids = faces[touched_faces]
@@ -106,6 +108,8 @@ def main(result_path):
         "shape": {"min_changed_face_area_before": float(np.min(old_area)) if old_area.size else None,
                   "min_changed_face_area_after": float(np.min(new_area)) if new_area.size else None,
                   "maximum_changed_edge_stretch": stretch,
+                  "maximum_displacement": float(np.max(displacement)) if displacement.size else 0.0,
+                  "rms_displacement_on_changed": float(np.sqrt(np.mean(displacement ** 2))) if displacement.size else 0.0,
                   "new_degenerate": degenerates, "orientation_reversals": reversals},
     }
     print(json.dumps(output, indent=2, allow_nan=False))

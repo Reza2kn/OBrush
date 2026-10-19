@@ -59,7 +59,7 @@ The reusable `scripts/summarize-source-sustained.py` checks the recorder hash
 and calculates the original active-recorder gates and the explicit stroke-only
 diagnostic interval. Its C225
 two-run output is `.artifacts/c225-timed-summary.json` (SHA-256
-`ee5c1322fbd43010cb4b9ed1d435bdad3c5cbaea10c94e1faed21efbe61096dd`).
+`c534ae0d73776b7cd29187d2dec2273de29e2bfc73462e0539ad356660526afc`).
 As a historical cross-check, the summarizer reproduces C219's documented
 66.8 ms active RAF P95, 583.3 ms active RAF maximum and 69.6 ms app CPU P95.
 After removing the trial, `scripts/build-web.sh` restored the portable WASM

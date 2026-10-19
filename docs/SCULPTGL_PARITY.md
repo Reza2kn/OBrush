@@ -1,5 +1,11 @@
 # SculptGL parity checkpoint
 
+[The C226 pinned million-vertex browser comparison](SCULPTGL_MILLION_PAIRED_C226.md)
+shows 83.3 ms RAF P95 and 161.2 ms release in OBrush versus 16.8 ms and
+8.0 ms in separate SculptGL runs of the same 1M/60s protocol. Both public
+file/history/shape audits pass; the delivered dabs differ, and no numerical
+brush or performance parity is claimed.
+
 [The C225 million-vertex performance report](SCULPTGL_ATTRIBUTE_WALK_TRIAL_C225.md)
 reruns the current browser build under the frozen 60-second protocol and
 preserves a rejected renderer attribute-walk trial. The full file/history/

@@ -48,28 +48,19 @@ def summarize(path):
         raise ValueError(f"{path}: invalid RAF interval")
     if any(value < 0 or not math.isfinite(value) for value in active_intervals):
         raise ValueError(f"{path}: invalid active RAF interval")
-    queue = result["tail"][-1]["queue"]
-    paint = queue["paint_timing"]
-    dab = queue["cpu_dab_timing"]
     release_ms = result["release"]["acknowledged"] - end
-    return {
+    output = {
+        "side": result["side"],
         "result_path": str(source),
         "result_sha256": hashlib.sha256(raw).hexdigest(),
         "recorder_sha256": result["recorder"]["sha256"],
         "protocol_sha256": result["protocol_sha256"],
         "fixture_sha256": result["fixture"]["sha256"],
-        "wasm_sha256": result["product_binding"]["wasm_sha256"],
+        "product_wasm_sha256": result["product_binding"]["wasm_sha256"] if result["side"] == "root" else None,
         "timed_start_ms": start,
         "timed_end_ms": end,
         "timed_frames": len(frames),
         "active_recorded_frames": len(active_frames),
-        "applied_dabs": queue["applied_dabs"],
-        "coalesced_dabs": queue["coalesced_dabs"],
-        "source_geometry_mean_ms": dab["source_geometry"]["mean_ms"],
-        "source_retained_match_mean_ms": dab["source_geometry_retained_match"]["mean_ms"],
-        "renderer_admission_mean_ms": paint["scene_admission"]["mean_ms"],
-        "renderer_upload_mean_ms": paint["mesh_upload"]["mean_ms"],
-        "renderer_callback_mean_ms": paint["paint"]["mean_ms"],
         "active_raf_interval_p95_ms": percentile95(active_intervals),
         "active_raf_interval_max_ms": max(active_intervals),
         "active_app_frame_cpu_p95_ms": percentile95([row[1] for row in active_frames]),
@@ -84,6 +75,29 @@ def summarize(path):
             "release_acknowledgment": release_ms <= 100,
         },
     }
+    if result["side"] == "root":
+        queue = result["tail"][-1]["queue"]
+        paint = queue["paint_timing"]
+        dab = queue["cpu_dab_timing"]
+        output.update({
+            "applied_dabs": queue["applied_dabs"],
+            "coalesced_dabs": queue["coalesced_dabs"],
+            "source_geometry_mean_ms": dab["source_geometry"]["mean_ms"],
+            "source_retained_match_mean_ms": dab["source_geometry_retained_match"]["mean_ms"],
+            "renderer_admission_mean_ms": paint["scene_admission"]["mean_ms"],
+            "renderer_upload_mean_ms": paint["mesh_upload"]["mean_ms"],
+            "renderer_callback_mean_ms": paint["paint"]["mean_ms"],
+        })
+    elif result["side"] == "source":
+        source_dabs = recording["sourceDabs"]
+        output.update({
+            "source_callback_dabs": len(source_dabs),
+            "source_callback_mean_ms": sum(row[1] for row in source_dabs) / len(source_dabs) if source_dabs else None,
+            "source_callback_scope": "Pinned SculptGL recorded brush callback; not identical to OBrush's queued geometry timer",
+        })
+    else:
+        raise ValueError(f"{path}: unknown benchmark side")
+    return output
 
 
 if __name__ == "__main__":

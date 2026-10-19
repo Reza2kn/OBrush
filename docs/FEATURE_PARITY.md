@@ -1,5 +1,11 @@
 # OBrush feature parity contract
 
+**C226 paired million-vertex browser cohort:** [The pinned SculptGL comparison](SCULPTGL_MILLION_PAIRED_C226.md)
+uses the same 1M/60s fixture and protocol in separate owned browsers. OBrush
+observes 83.3 ms RAF P95 and 161.2 ms release; pinned SculptGL observes
+16.8 ms and 8.0 ms. Independent public-file/history/shape audits pass both;
+different delivered dabs prevent a matched-response or causal speed claim.
+
 **C225 rejected million-vertex attribute-walk trial:** [The two-run report](SCULPTGL_ATTRIBUTE_WALK_TRIAL_C225.md)
 records a new C224 baseline with a passing full file/history/shape audit and a
 trial with slightly lower upload mean but unchanged 83.3 ms RAF P95 and worse
