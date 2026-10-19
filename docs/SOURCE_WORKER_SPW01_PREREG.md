@@ -43,6 +43,15 @@ five public states from the unique active WebGL VBO. Hash actual served
 WASM/JS bytes and capture console/GL errors, recorder caps, physical memory
 at 1 Hz, and owned-process closure. Save every failed raw receipt.
 
+**Normal oracle limitation discovered before execution:** the earlier sparse
+Worker browser report established that retained display normals can differ
+from saved mesh normals, and the C264 trial rejected a public-normal GPU
+oracle. SP-WORKER-01 currently specifies equality to saved normal words.
+Capture the measured hashes, but do not interpret an inequality alone as a
+Worker defect or a valid parity verdict. Qualification must remain open until
+an independent displayed-normal oracle is specified and validated on the
+ordinary path; the frozen verifier is deliberately fail-closed meanwhile.
+
 Run the 100k cohort before attempting 1m. An early 100k failure may stop the
 matrix as a diagnostic, but it cannot support a throughput or parity claim.
 The prior 40,962-vertex two-stroke trial and earlier million ordinary runs are
