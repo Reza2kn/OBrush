@@ -1,5 +1,12 @@
 # OBrush feature parity contract
 
+**C231 browser factor response:** [The four-case normal-browser report](SCULPTGL_PRESSURE_FACTOR_BROWSER_C231.md)
+verifies visible factor controls, trusted synthetic pen/mouse events, saved
+geometry and GPU readback. Radius factor 1 narrows the changed original-vertex
+set from 427 to 129; intensity factor 1 halves displacement within `7.0e-8`
+maximum position-component error on one fresh sphere. Pressure ramps,
+physical tablets and paired SculptGL UI response remain open.
+
 **C230 pressure factors:** [The scoped control and input report](SCULPTGL_PRESSURE_CONTROLS_C230.md)
 exposes SculptGL-style 0..1 intensity/radius factors for ordinary OBrush
 brushes and resamples them for every pen dab while keeping mouse input neutral.

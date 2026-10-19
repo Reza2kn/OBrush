@@ -13,6 +13,8 @@ import { deflateSync } from 'node:zlib';
 const web = path.resolve(process.argv[2] || 'web/dist');
 const label = process.argv[3] || 'brush-inputs';
 const pressureOnly = process.argv.includes('--pressure-only');
+const factorOnly = process.argv.includes('--factors-only');
+const viewportHeight = factorOnly ? 720 : 1000;
 const out = path.resolve(`.artifacts/brush-inputs-0.1.6/${label}-${randomUUID()}`);
 const profile = path.join(out, 'isolated-profile');
 await mkdir(profile, { recursive: true });
@@ -159,6 +161,15 @@ const screenshot = async name => {
   return { path: file, sha256: hash(bytes), bytes: bytes.length };
 };
 const loadAlpha = async name => {
+  await pointer('mouseMoved', 110, 430);
+  await send('Input.synthesizeScrollGesture', { x: 110, y: 430, xDistance: 0, yDistance: -1450, gestureSourceType: 'mouse', speed: 500 });
+  await pause(500);
+  await pointer('mouseMoved', 60, 382);
+  await pointer('mousePressed', 60, 382, 'mouse', 0.5, true);
+  await pointer('mouseReleased', 60, 382);
+  await pause(100);
+  const request = await evaluate('window.obrushBrushMetrics().preferences.alpha_import_request');
+  if (!request?.id) throw new Error(`Visible Import alpha did not open a request: ${JSON.stringify(request)}`);
   const root = (await send('DOM.getDocument')).root;
   const nodeId = (await send('DOM.querySelector', { nodeId: root.nodeId, selector: '#alpha-file, #import-alpha, input[accept*="png"]' })).nodeId;
   if (!nodeId) throw new Error('No public alpha file input');
@@ -171,6 +182,34 @@ const loadAlpha = async name => {
     await pause(50);
   }
   throw new Error(`Public alpha import timed out: ${name}`);
+};
+const setFactorControls = async (intensity, radius) => {
+  // This path deliberately uses the real egui inspector in the ordinary
+  // browser, then confirms the host captured the requested values.
+  await pointer('mouseMoved', 110, 430);
+  await pause(100);
+  await send('Input.synthesizeScrollGesture', { x: 110, y: 430, xDistance: 0, yDistance: -850, gestureSourceType: 'mouse', speed: 400 });
+  await pause(500);
+  const before = await screenshot('factor-controls-before');
+  await pointer('mouseMoved', 21, 473);
+  await pointer('mousePressed', 21, 473, 'mouse', 0.5, true);
+  await pointer('mouseReleased', 21, 473);
+  await pause(150);
+  let actual = await evaluate('window.obrushBrushMetrics().pressure_profile');
+  if (actual.kind !== 'sculptgl_factors') throw new Error(`Factor toggle did not switch profile: ${JSON.stringify({before,actual})}`);
+  for (const [factor, y] of [[intensity, 523], [radius, 573]]) {
+    const x = 20 + 160 * factor;
+    await pointer('mouseMoved', x, y);
+    await pointer('mousePressed', x, y, 'mouse', 0.5, true);
+    await pointer('mouseReleased', x, y);
+    await pause(90);
+  }
+  actual = await evaluate('window.obrushBrushMetrics().pressure_profile');
+  if (Math.abs(actual.intensity - intensity) > 0.03 || Math.abs(actual.radius - radius) > 0.03) {
+    const after = await screenshot('factor-controls-mismatch');
+    throw new Error(`Factor sliders did not capture requested values: ${JSON.stringify({intensity,radius,actual,before,after})}`);
+  }
+  return actual;
 };
 const fresh = async () => {
   await send('Page.navigate', { url });
@@ -222,7 +261,7 @@ try {
   session = (await send('Target.attachToTarget', { targetId: target.targetId, flatten: true }, null)).sessionId;
   for (const domain of ['Page', 'Runtime', 'Network']) await send(`${domain}.enable`);
   await send('Fetch.enable', { patterns: [{ urlPattern: '*', requestStage: 'Request' }] });
-  await send('Emulation.setDeviceMetricsOverride', { width: 1600, height: 1000, deviceScaleFactor: 1, mobile: false });
+  await send('Emulation.setDeviceMetricsOverride', { width: factorOnly ? 1280 : 1600, height: viewportHeight, deviceScaleFactor: 1, mobile: false });
   await send('Emulation.setFocusEmulationEnabled', { enabled: true });
   await send('Target.activateTarget', { targetId: target.targetId }, null);
   await send('Page.addScriptToEvaluateOnNewDocument', { source: instrument });
@@ -232,21 +271,32 @@ try {
   if (hash(wasm) !== hash(served)) throw new Error('Served WASM differs from local build');
 
   const documents = {};
-  const cases = [
+  const cases = factorOnly ? [
+    ['factor-base-quarter', 'pen', 0.25, null, null, [0, 0]],
+    ['factor-radius-quarter', 'pen', 0.25, null, null, [0, 1]],
+    ['factor-intensity-quarter', 'pen', 0.25, null, null, [1, 0]],
+    ['factor-mouse-neutral', 'mouse', 0.5, null, null, [1, 1]],
+  ] : [
     ['pen-zero', 'pen', 0, null], ['pen-quarter', 'pen', 0.25, null], ['pen-full', 'pen', 1, null],
     ['mouse-default', 'mouse', 0.5, null], ['alpha-black', 'pen', 1, 'black'], ['alpha-white', 'pen', 1, 'white'], ['alpha-asymmetric', 'pen', 1, 'asymmetric'],
     ['pen-radius-half', 'pen', 0.5, null, 'pressure-radius'], ['alpha-rotated', 'pen', 1, 'asymmetric', 'rotation'],
   ];
-  for (const [name, pointerType, pressure, alpha, uiControl] of pressureOnly ? cases.slice(0, 4) : cases) {
+  for (const [name, pointerType, pressure, alpha, uiControl, factors] of pressureOnly ? cases.slice(0, 4) : cases) {
     await fresh();
     const trial = { name, pointer_type: pointerType, force: pressure, alpha, snapshots: [] }; result.cases.push(trial);
     trial.initial_settings = await evaluate('window.obrushBrushMetrics()');
     const initial = await save(`${name}-initial`); trial.snapshots.push(metadata(initial));
+    if (factors) trial.factor_control = await setFactorControls(...factors);
     if (alpha) trial.alpha_import_settings = await loadAlpha(alpha);
     if (uiControl) {
-      // These points are the actual controls inspected in the owned 1600x1000
-      // screenshot, with the fixed left panel and standalone rotation row.
-      const [controlX, controlY] = uiControl === 'pressure-radius' ? [22, 653] : [106, 762];
+      // The inspector is scrollable; use the visible control in the same
+      // viewport as the owned Chrome screenshot instead of a stale position.
+      if (uiControl === 'pressure-radius') {
+        await pointer('mouseMoved', 110, 430);
+        await send('Input.synthesizeScrollGesture', { x: 110, y: 430, xDistance: 0, yDistance: -850, gestureSourceType: 'mouse', speed: 400 });
+        await pause(500);
+      }
+      const [controlX, controlY] = uiControl === 'pressure-radius' ? [22, 523] : [106, 470];
       await pointer('mouseMoved', controlX, controlY); await pause(40);
       await pointer('mousePressed', controlX, controlY, 'mouse', 0.5, true); await pause(60);
       await pointer('mouseReleased', controlX, controlY); await pause(200);
@@ -258,7 +308,7 @@ try {
     const viewport = Object.keys(runtime.viewports).map(value => value.split(',').map(Number)).filter(([x, y, width, height]) => x > 0 && width > 400 && height > 300).at(-1);
     if (!viewport || !runtime.allocations.some(allocation => allocation.actual_samples === 4)) throw new Error('Missing actual sculpt viewport or 4x MSAA');
     const [left, bottom, width, height] = viewport;
-    const x = left + width / 2 - 85, y = 1000 - bottom - height / 2 - 30;
+    const x = left + width / 2 - 85, y = viewportHeight - bottom - height / 2 - 30;
     trial.viewport = { left, bottom, width, height, pointer: [x, y] };
     await pointer('mouseMoved', x, y, pointerType, pressure, false); await pause(60);
     await pointer('mousePressed', x, y, pointerType, pressure, true); await pause(120);
@@ -283,6 +333,11 @@ try {
       await chord('z', true); const redo = await save(`${name}-redo`); trial.snapshots.push(metadata(redo));
       trial.history = { undo_exact_initial: meshHash(undo.document) === meshHash(initial.document), redo_exact_final: meshHash(redo.document) === meshHash(final.document) };
       if (!Object.values(trial.history).every(Boolean)) throw new Error('Alpha undo/redo does not restore every mesh field');
+      await pointer('mouseMoved', 60, 382);
+      await pointer('mousePressed', 60, 382, 'mouse', 0.5, true);
+      await pointer('mouseReleased', 60, 382);
+      await pause(100);
+      if (!(await evaluate('window.obrushBrushMetrics().preferences.alpha_import_request?.id'))) throw new Error('Oversized alpha test did not start a new public import request');
       const root = (await send('DOM.getDocument')).root;
       const nodeId = (await send('DOM.querySelector', { nodeId: root.nodeId, selector: '#alpha-file, #import-alpha, input[accept*="png"]' })).nodeId;
       await send('DOM.setFileInputFiles', { nodeId, files: [fixtures.oversized.path] });
@@ -299,7 +354,43 @@ try {
     }
     await writeFile(path.join(out, `${name}.json`), JSON.stringify(trial, null, 2) + '\n');
   }
-  if (pressureOnly) {
+  if (factorOnly) {
+    const initial = documents['factor-base-quarter'].initial.mesh.positions;
+    const base = documents['factor-base-quarter'].final.mesh.positions;
+    const narrow = documents['factor-radius-quarter'].final.mesh.positions;
+    const half = documents['factor-intensity-quarter'].final.mesh.positions;
+    const changed = positions => initial.flatMap((point, index) => point.some((value, channel) => value !== positions[index][channel]) ? [index] : []);
+    const baseIds = new Set(changed(base));
+    const narrowIds = changed(narrow);
+    const halfIds = changed(half);
+    let maxIntensityError = 0;
+    for (let index = 0; index < initial.length; index++) {
+      for (let channel = 0; channel < 3; channel++) {
+        const expected = (base[index][channel] - initial[index][channel]) * 0.5;
+        const measured = half[index][channel] - initial[index][channel];
+        maxIntensityError = Math.max(maxIntensityError, Math.abs(measured - expected));
+      }
+    }
+    result.factor_response = {
+      base_changed_original_vertices: baseIds.size,
+      narrowed_changed_original_vertices: narrowIds.length,
+      half_intensity_changed_original_vertices: halfIds.length,
+      max_half_intensity_position_error: maxIntensityError,
+      allowed_position_error: 3e-7,
+    };
+    result.comparisons = {
+      default_factors_ignore_quarter_pressure: meshHash(documents['factor-base-quarter'].final) === meshHash(documents['factor-mouse-neutral'].final),
+      radius_factor_one_halves_footprint: narrowIds.length > 0 && narrowIds.length < baseIds.size / 2 && narrowIds.every(index => baseIds.has(index)),
+      intensity_factor_one_halves_displacement: halfIds.length === baseIds.size && halfIds.every(index => baseIds.has(index)) && maxIntensityError <= 3e-7,
+      all_cases_start_from_same_mesh: Object.values(documents).every(pair => meshHash(pair.initial) === meshHash(documents['factor-base-quarter'].initial)),
+    };
+    result.factor_cases = Object.fromEntries(Object.entries(documents).map(([name, pair]) => [name, {
+      initial: meshHash(pair.initial), final: meshHash(pair.final),
+    }]));
+    if (!Object.values(result.comparisons).every(Boolean) || result.exceptions.length || result.console_errors.length) throw new Error('Factor browser comparison gate failed');
+    result.status = 'passed factor browser checks';
+    result.limitations = ['Four stationary synthetic CDP contacts on fresh spheres verify the visible factor controls, saved geometry, and neutral mouse response; physical tablets, pressure ramps, broad brush and mesh coverage, and a pinned SculptGL UI pair remain open.'];
+  } else if (pressureOnly) {
     const same = (a, b) => meshHash(a) === meshHash(b);
     const base = documents['pen-full'].initial.mesh.positions;
     const full = documents['pen-full'].final.mesh.positions;
@@ -387,4 +478,5 @@ try {
   result.cleanup = { owned_chrome_exit_code: child.exitCode, owned_chrome_signal: child.signalCode, owned_server_closed: true };
   await writeFile(path.join(out, 'result.json'), JSON.stringify(result, null, 2) + '\n');
   console.log(JSON.stringify({ status: result.status, failure: result.failure, result: path.join(out, 'result.json'), wasm: result.wasm, comparisons: result.comparisons, quarter_pressure_response: result.quarter_pressure_response, cases: result.cases.map(trial => ({ name: trial.name, changed_original_vertices: trial.changed_original_vertices, history: trial.history })) }));
+  process.exit(process.exitCode ?? 0);
 }

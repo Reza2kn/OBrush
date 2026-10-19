@@ -1,5 +1,10 @@
 # SculptGL parity checkpoint
 
+[The C231 normal-browser factor test](SCULPTGL_PRESSURE_FACTOR_BROWSER_C231.md)
+passes a four-case saved-mesh and GPU comparison for visible pressure controls
+on one fresh sphere. Physical pen, pressure-ramp and paired reference checks
+remain open.
+
 [The C230 pressure-factor controls](SCULPTGL_PRESSURE_CONTROLS_C230.md)
 expose the pinned intensity/radius formula in ordinary OBrush brushing and
 resample it per pen dab. The normal browser UI displays the factor values;
