@@ -140,17 +140,18 @@ try {
     }
     await page.sourceMenu('_ctrlSculpting');
     const negativeControl = `Array.from(${menu}.querySelectorAll('input[type=checkbox]')).find(e=>e.parentElement.textContent.includes('Negative')&&e.parentElement.getBoundingClientRect().width>0)`;
+    const negativeLabel = `(${negativeControl}).nextElementSibling`;
     const negativeBefore = await page.evaluate(`(()=>{const e=${negativeControl},r=e?.parentElement.getBoundingClientRect();return {checked:e?.checked,disabled:e?.disabled,rect:r?[r.left,r.top,r.right,r.bottom]:null};})()`);
     if (!negativeBefore.rect || negativeBefore.disabled) throw Error('Visible Source Negative checkbox unavailable');
     let hit;
     for(let i=0;i<120;i++){
-      hit=await page.evaluate(`(()=>{const e=${negativeControl},r=e.getBoundingClientRect(),x=(r.left+r.right)/2,y=(r.top+r.bottom)/2,h=document.elementFromPoint(x,y);return {rect:[r.left,r.top,r.right,r.bottom],hit:h?.outerHTML?.slice(0,256),ready:h===e||e.contains(h)};})()`);
+      hit=await page.evaluate(`(()=>{const e=${negativeLabel},r=e?.getBoundingClientRect(),x=r&&(r.left+r.right)/2,y=r&&(r.top+r.bottom)/2,h=r&&document.elementFromPoint(x,y);return {tag:e?.tagName,rect:r?[r.left,r.top,r.right,r.bottom]:null,hit:h?.outerHTML?.slice(0,256),ready:!!r&&(h===e||e.contains(h))};})()`);
       if(hit.ready)break;
       await page.raf();
     }
     result.ui_actions.push({side:'source',checkbox:'Negative',negativeBefore,hit});
-    if(!hit?.ready)throw Error('Visible Source Negative checkbox not actual hit target');
-    if (negativeBefore.checked !== negative) await page.sourceClick(negativeControl);
+    if(!hit?.ready || hit.tag!=='LABEL')throw Error('Visible Source Negative label not actual hit target');
+    if (negativeBefore.checked !== negative) await page.sourceClick(negativeLabel);
     const negativeAfter = await page.wait(()=>page.evaluate(`(${negativeControl}).checked`),v=>v===negative,'Visible Source Negative published');
     result.ui_actions.push({side:'source',checkbox:'Negative',negativeAfter});
     if (negativeAfter !== negative) throw Error('Source Negative did not publish');
