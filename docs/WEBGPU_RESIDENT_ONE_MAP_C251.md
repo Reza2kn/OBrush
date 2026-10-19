@@ -1,4 +1,4 @@
-# C249: one-map local sparse release for the opt-in WebGPU preview
+# C251: one-map local sparse release for the opt-in WebGPU preview
 
 The current `web/resident-pointer.js` preview already keeps the held-stroke
 mesh in WebGPU memory. Its dabs transfer no mesh rows to the CPU. On release,
@@ -76,4 +76,4 @@ across the actual held-pointer stream and publishes bounded changed position
 and normal rows to the main WebGL viewport. It needs the unchanged
 [SP-WORKER-01](SCULPTGL_WORKER_SUSTAINED_ADMISSION.md) serial 100k/1m matrix,
 including public Save/Undo/Redo and independent exact GPU position/normal
-word checks. No worker candidate is implemented by C249.
+word checks. No worker candidate is implemented by C251.
