@@ -128,6 +128,11 @@ try {
   await page.send('Page.bringToFront');
   result.setup = side==='source' ? await prepareSourceBrushFixture(page) :
     await page.prepareFixture({path:fixture, vertices:expected.vertices});
+  if(side==='root') {
+    await page.rootControl('alpha.import');
+    await page.wait(()=>page.state(),s=>Number.isInteger(s.preferences?.alpha_import_request?.id),
+      'OBRush normal alpha chooser request armed');
+  }
   await page.file(side==='source'?'#alphaopen':'#alpha-file',alphaFixture);
   if(side==='source') {
     await page.wait(()=>page.evaluate('window.__sculptglReferenceInstance.getSculptManager().getCurrentTool()._idAlpha'),
