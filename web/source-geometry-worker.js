@@ -1,8 +1,13 @@
 // Display-free Source geometry owner. Only the ordinary studio may seed this
 // module worker; all geometry and retained state remain in shared Rust/WASM.
-import init, { BrowserSourceWorkerStroke } from './pkg/obrush_app.js';
-
-const ready = init();
+let BrowserSourceWorkerStroke;
+const ready = (async () => {
+  const backend = new URL(self.location.href).searchParams.has('simd')
+    ? './pkg-simd/obrush_app.js' : './pkg/obrush_app.js';
+  const module = await import(backend);
+  await module.default();
+  BrowserSourceWorkerStroke = module.BrowserSourceWorkerStroke;
+})();
 let owner;
 let epoch;
 let nextSequence = 1;
@@ -18,15 +23,16 @@ function reject(id, error) {
 }
 
 async function dispatch(event, arrived, backlog) {
-  const { id, kind, project, options, input, strokeEpoch, sequence } = event.data || {};
+  const { id, kind, project, options, input, strokeEpoch, sequence, warmSeed } = event.data || {};
   if (!Number.isSafeInteger(id) || id < 1 || failed) return;
   try {
     await ready;
     if (kind === 'begin') {
       if (owner || typeof project !== 'string' || typeof options !== 'string' ||
           typeof strokeEpoch !== 'string' || project.length > 512 * 1024 * 1024 ||
-          options.length > 2048) throw Error('Invalid Source worker seed');
-      owner = new BrowserSourceWorkerStroke(project, options, strokeEpoch);
+          options.length > 2048 || !(warmSeed instanceof Uint8Array) ||
+          warmSeed.byteLength > 256 * 1024 * 1024) throw Error('Invalid Source worker seed');
+      owner = new BrowserSourceWorkerStroke(project, options, strokeEpoch, warmSeed);
       epoch = strokeEpoch;
       self.postMessage({ id, kind, success: true });
       return;

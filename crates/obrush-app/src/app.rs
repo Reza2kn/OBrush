@@ -46,6 +46,8 @@ mod source_geometry_ui;
 mod source_modal_host;
 #[path = "source_sgl_add_host.rs"]
 mod source_sgl_add_host;
+#[path = "source_worker_held.rs"]
+mod source_worker_held;
 #[path = "ui_hit_rect.rs"]
 mod ui_hit_rect;
 #[path = "uv_bake_host.rs"]
@@ -1052,6 +1054,7 @@ pub struct OBrushApp {
     source_paint_preferences: crate::source_paint_host::SourcePaintPreferences,
     source_geometry_preferences: source_geometry_app::GeometryPreferenceStore,
     source_worker_cold: crate::source_geometry_worker_host::ColdSourceWorkerBridge,
+    source_worker_held: Option<source_worker_held::HeldSourceWorker>,
     source_geometry_alpha_tracks: crate::source_geometry_host::SharedSourceGeometryAlphaTracks,
     source_geometry_editor_drafts: [source_geometry_ui::GeometryEditorDrafts; 7],
     source_geometry_controls_hit_rect: ui_hit_rect::HitRectDiagnostics,
@@ -1282,6 +1285,7 @@ impl OBrushApp {
             source_paint_preferences: Default::default(),
             source_geometry_preferences: Default::default(),
             source_worker_cold: Default::default(),
+            source_worker_held: None,
             source_geometry_alpha_tracks: Arc::new(Mutex::new(Default::default())),
             source_geometry_editor_drafts: std::array::from_fn(|_| Default::default()),
             source_geometry_controls_hit_rect: Default::default(),
@@ -6123,6 +6127,10 @@ impl OBrushApp {
         self.source_worker_cold.cancel(epoch)
     }
 
+    pub fn source_worker_seed_packet(&mut self, epoch: u64) -> Result<Vec<u8>, String> {
+        self.source_worker_cold.take_seed_packet(epoch)
+    }
+
     pub fn load_document(&mut self, name: &str, contents: &str) -> Result<(), String> {
         self.load_document_bytes(name, contents.as_bytes())
     }
@@ -9592,6 +9600,9 @@ impl OBrushApp {
         consumed
     }
     fn sculpt_input(&mut self, ctx: &egui::Context, response: &egui::Response) {
+        if self.source_worker_held.is_some() {
+            return;
+        }
         if self.pending_sgl_export.is_some() {
             self.pending_scene_selection = None;
             return;
@@ -10598,26 +10609,37 @@ impl OBrushApp {
                     }
                 }
                 let renderer = Arc::clone(&self.renderer);
-                let scene = self.rendered_scene.clone();
+                let mut scene = self.rendered_scene.clone();
+                if let Some(held) = self.source_worker_held.as_ref()
+                    && held.revision == self.revision
+                    && let Some(preview) = held.preview.as_ref()
+                    && let Some(active) = scene.iter_mut().find(|object| object.active)
+                {
+                    active.mesh = Arc::clone(preview);
+                }
                 use crate::source_geometry_host::SourceNormalRenderOwner;
-                let normal_owner = match self.stroke.as_ref() {
-                    None => SourceNormalRenderOwner::Idle,
-                    Some(stroke) if stroke.source_geometry.is_some() => {
-                        SourceNormalRenderOwner::Geometry
+                let normal_owner = if self.source_worker_held.is_some() {
+                    SourceNormalRenderOwner::Legacy
+                } else {
+                    match self.stroke.as_ref() {
+                        None => SourceNormalRenderOwner::Idle,
+                        Some(stroke) if stroke.source_geometry.is_some() => {
+                            SourceNormalRenderOwner::Geometry
+                        }
+                        Some(stroke) if stroke.source_paint.is_some() => {
+                            let captured = stroke
+                                .source_paint
+                                .as_ref()
+                                .and_then(|session| session.lock().ok())
+                                .and_then(|session| {
+                                    session
+                                        .retained_normal_state()
+                                        .map(|state| (session.subtool, state))
+                                });
+                            SourceNormalRenderOwner::CapturedPaint(captured)
+                        }
+                        Some(_) => SourceNormalRenderOwner::Legacy,
                     }
-                    Some(stroke) if stroke.source_paint.is_some() => {
-                        let captured = stroke
-                            .source_paint
-                            .as_ref()
-                            .and_then(|session| session.lock().ok())
-                            .and_then(|session| {
-                                session
-                                    .retained_normal_state()
-                                    .map(|state| (session.subtool, state))
-                            });
-                        SourceNormalRenderOwner::CapturedPaint(captured)
-                    }
-                    Some(_) => SourceNormalRenderOwner::Legacy,
                 };
                 let geometry_normals = crate::source_geometry_host::normal_render_states(
                     &self.document,

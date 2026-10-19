@@ -47,7 +47,7 @@ window.runSourceWorkerRealm=async(project,options,input)=>{
     worker.postMessage({id:current,kind,...data});
   });
   try{
-    await call('begin',{project,options,strokeEpoch:'91'});
+    await call('begin',{project,options,strokeEpoch:'91',warmSeed:new Uint8Array()});
     const applied=await call('apply',{strokeEpoch:'91',sequence:'1',input});
     const finished=await call('finish',{strokeEpoch:'91',sequence:'2'});
     const rows=packet=>new DataView(packet.buffer,packet.byteOffset,packet.byteLength).getUint32(16,true);

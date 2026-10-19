@@ -291,6 +291,43 @@ pub(super) fn retained_bytes(
 }
 
 impl Document {
+    pub(crate) fn source_geometry_state_count(&self) -> usize {
+        self.source_geometry_states.len()
+    }
+
+    /// Install a checked private warm producer into a freshly imported worker
+    /// seed. This is never a public edit or history event.
+    pub fn install_source_worker_warm_seed(&mut self, packet: &[u8]) -> Result<(), String> {
+        if packet.is_empty() {
+            if self.has_source_geometry_normal_state() {
+                return Err("Cold Source worker seed has unexpected retained state".into());
+            }
+            return Ok(());
+        }
+        if self.has_source_geometry_normal_state()
+            || self.stroke_start.is_some()
+            || self.source_geometry_active.is_some()
+            || self.material_paint_stroke
+        {
+            return Err("Source worker seed requires an idle imported document".into());
+        }
+        let id = self
+            .active_subtool_id()
+            .ok_or("Source worker seed has no active part")?;
+        let mesh = self
+            .active_mesh()
+            .ok_or("Source worker seed has no active mesh")?;
+        let state = crate::decode_source_worker_retained_warm(mesh, id, packet)?;
+        if state.approximate_bytes() > crate::MAX_SOURCE_GEOMETRY_STATE_BYTES {
+            return Err("Source worker seed exceeds retained-state budget".into());
+        }
+        self.source_geometry_states
+            .try_reserve_exact(1)
+            .map_err(|_| "Cannot reserve Source worker seed state")?;
+        self.source_geometry_states.push((id, Arc::new(state)));
+        Ok(())
+    }
+
     /// Publish a completed off-thread Source gesture as one public history
     /// event. The caller must first prove a one-use scene/epoch witness and
     /// decode the checked mesh and retained-state packets. No fallible work
@@ -303,11 +340,15 @@ impl Document {
         if self.stroke_start.is_some()
             || self.source_geometry_active.is_some()
             || self.material_paint_stroke
-            || self.has_source_geometry_normal_state()
         {
-            return Err("Source worker publication requires an idle cold document".into());
+            return Err("Source worker publication requires an idle document".into());
         }
         let id = self.active_subtool_id().ok_or("No active Source part")?;
+        if self.source_geometry_state_count()
+            != usize::from(self.source_geometry_state(id).is_some())
+        {
+            return Err("Source worker publication has other-part retained state".into());
+        }
         let before = self.active_mesh().ok_or("No active Source mesh")?;
         // The delta decoder already checks these fields. Keep a second check
         // here so future callers cannot publish a changed mask, topology or
@@ -347,11 +388,21 @@ impl Document {
                 .all(|(a, b)| a.to_array().map(f32::to_bits) == b.to_array().map(f32::to_bits));
         // A no-op Source gesture can still establish transient retained state,
         // but must not erase the existing redo branch.
-        self.source_geometry_states
-            .try_reserve_exact(1)
-            .map_err(|_| "Cannot reserve Source worker retained state")?;
+        if self.source_geometry_state(id).is_none() {
+            self.source_geometry_states
+                .try_reserve_exact(1)
+                .map_err(|_| "Cannot reserve Source worker retained state")?;
+        }
         self.mesh = Some(candidate);
-        self.source_geometry_states.push((id, retained));
+        if let Some((_, current)) = self
+            .source_geometry_states
+            .iter_mut()
+            .find(|(key, _)| *key == id)
+        {
+            *current = retained;
+        } else {
+            self.source_geometry_states.push((id, retained));
+        }
         if changed {
             self.commit_previous(previous);
         }

@@ -26,6 +26,7 @@ mkdir -p web/dist/gpu-pkg
 cp web/index.html web/dist/index.html
 cp web/topology-worker.js web/dist/topology-worker.js
 cp web/source-geometry-worker.js web/dist/source-geometry-worker.js
+cp web/source-worker-held-input.js web/dist/source-worker-held-input.js
 cp web/uv-bake-worker.js web/dist/uv-bake-worker.js
 cp web/uv-bake-input.js web/dist/uv-bake-input.js
 cp web/viewport-texture-input.js web/dist/viewport-texture-input.js

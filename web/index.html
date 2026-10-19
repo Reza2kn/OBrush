@@ -27,6 +27,7 @@
     import { createUVBakeWorkers } from './uv-bake-input.js';
     import { createStartupModelInput } from './startup-model-input.js';
     import { createResidentPointerStudio } from './resident-pointer.js';
+    import { createHeldSourceWorkerInput } from './source-worker-held-input.js';
     const canvas=document.getElementById('obrush_canvas');
     const input=document.getElementById('import-file');
     let handle;
@@ -53,6 +54,8 @@
     const notice=message=>{ const el=document.getElementById('notice'); el.textContent=message; el.style.display='block'; clearTimeout(noticeTimer); noticeTimer=setTimeout(()=>el.style.display='none',8000); };
     const startupModels=createStartupModelInput(()=>handle,canvas,notice);
     let residentPointer;
+    let sourceWorkerTrial;
+    window.obrushSourceWorkerTrialStatus=()=>sourceWorkerTrial?.status()||{enabled:false,active:false};
     window.obrushResidentPointerStart=()=>residentPointer.start();
     window.obrushResidentPointerStop=()=>residentPointer.stop();
     window.obrushResidentPointerStatus=()=>residentPointer?.status()||{phase:'idle'};
@@ -219,6 +222,10 @@
       const depthPick=!brushPreview&&new URLSearchParams(window.location.search).has('webgpu-depth-pick');
       const profileStages=new URLSearchParams(window.location.search).has('webgpu-profile-stages');
       residentPointer=createResidentPointerStudio(handle,canvas,notice,{gpuPick,depthPick,brush:brushPreview,profileStages});
+      sourceWorkerTrial=createHeldSourceWorkerInput(handle,canvas,notice,wasmBackend);
+      if(new URLSearchParams(window.location.search).has('source-worker-held')){
+        sourceWorkerTrial.mountTrialButton();
+      }
       document.getElementById('loading').remove(); canvas.focus();
       if(new URLSearchParams(window.location.search).has('webgpu-preview')||brushPreview){
         const button=document.createElement('button');

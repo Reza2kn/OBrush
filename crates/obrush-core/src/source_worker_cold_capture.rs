@@ -1,10 +1,8 @@
-//! Fail-closed cross-realm seed for a *cold* Source worker experiment.
+//! Fail-closed cross-realm seed for an ordinary Source worker gesture.
 //!
 //! A public project does not contain the retained Source normal/tree state or
-//! live history claim. Consequently this boundary refuses any retained state
-//! and only returns a validated mesh candidate; it never publishes to a
-//! Document. The normal browser host still needs a retained-state wire format
-//! and an atomic history/render commit before using a worker for sculpting.
+//! live history claim. The active producer is transferred separately through
+//! the bounded warm packet and remains witnessed by this one-use capture.
 
 use crate::{
     decode_source_worker_mesh_delta, resource_limits::MAX_PROJECT_BYTES, Document, Mesh,
@@ -22,6 +20,8 @@ pub struct SourceWorkerColdCapture {
     history_depths: (usize, usize),
     project: Vec<u8>,
     project_digest: blake3::Hash,
+    retained: Option<Arc<crate::SourceGeometryNormalState>>,
+    retained_packet: Vec<u8>,
 }
 
 impl SourceWorkerColdCapture {
@@ -39,14 +39,25 @@ impl SourceWorkerColdCapture {
         document
             .source_geometry_blocker(options)
             .map_err(|error| error.to_string())?;
-        // A public .obrush snapshot cannot reproduce this transient producer.
-        // Reject *all* retained SubTool states, including an idle non-active one.
-        if document.has_source_geometry_normal_state() {
-            return Err("Source worker capture cannot transfer retained normal state".into());
-        }
         let active_subtool_id = document
             .active_subtool_id()
             .ok_or("Source worker capture has no active SubTool")?;
+        let retained = document.source_geometry_state(active_subtool_id);
+        // The public seed has no representation for idle other-part producers.
+        // Do not silently drop one while copying the scene into the worker.
+        if document.source_geometry_state_count() != usize::from(retained.is_some()) {
+            return Err("Source worker capture has an untransferred other-part state".into());
+        }
+        let retained_packet = match retained.as_ref() {
+            Some(state) => crate::encode_source_worker_retained_warm(
+                state,
+                document
+                    .active_mesh()
+                    .ok_or("Source worker has no active mesh")?,
+                active_subtool_id,
+            )?,
+            None => Vec::new(),
+        };
         let project = document.to_json()?.into_bytes();
         if project.len() > MAX_PROJECT_BYTES {
             return Err("Source worker project exceeds the file limit".into());
@@ -59,11 +70,21 @@ impl SourceWorkerColdCapture {
             history_depths: document.history_depths(),
             project_digest: blake3::hash(&project),
             project,
+            retained,
+            retained_packet,
         })
     }
 
     pub fn project_bytes(&self) -> &[u8] {
         &self.project
+    }
+
+    pub fn retained_packet(&self) -> &[u8] {
+        &self.retained_packet
+    }
+
+    pub fn take_retained_packet(&mut self) -> Vec<u8> {
+        std::mem::take(&mut self.retained_packet)
     }
 
     pub fn epoch(&self) -> u64 {
@@ -74,19 +95,30 @@ impl SourceWorkerColdCapture {
         self.revision
     }
 
-    /// Consumes the one-use witness. A successful result is still only a
-    /// candidate: adopting Source normal state and undo are separate steps.
-    pub fn decode_candidate(
-        self,
+    pub fn active_subtool_id(&self) -> u32 {
+        self.active_subtool_id
+    }
+
+    /// Validate the complete public scene and transient producer before a
+    /// preview packet may reach the renderer.
+    pub fn verify_scene(
+        &self,
         document: &Document,
         epoch: u64,
         revision: u64,
-        delta: &[u8],
-    ) -> Result<Option<Mesh>, String> {
+    ) -> Result<(), String> {
         if epoch != self.epoch
             || revision != self.revision
             || document.source_geometry_active_claim().is_some()
-            || document.has_source_geometry_normal_state()
+            || document.source_geometry_state_count() != usize::from(self.retained.is_some())
+            || match (
+                &self.retained,
+                document.source_geometry_state(self.active_subtool_id),
+            ) {
+                (None, None) => false,
+                (Some(expected), Some(current)) => !Arc::ptr_eq(expected, &current),
+                _ => true,
+            }
             || document.active_subtool_id() != Some(self.active_subtool_id)
             || document.current_level() != self.level
             || document.history_depths() != self.history_depths
@@ -99,6 +131,19 @@ impl SourceWorkerColdCapture {
         {
             return Err("Source worker reply has a stale complete scene".into());
         }
+        Ok(())
+    }
+
+    /// Decode a packet against the original mesh. A successful result is
+    /// still only a candidate: adoption and undo are separate steps.
+    pub fn decode_candidate(
+        &self,
+        document: &Document,
+        epoch: u64,
+        revision: u64,
+        delta: &[u8],
+    ) -> Result<Option<Mesh>, String> {
+        self.verify_scene(document, epoch, revision)?;
         let mesh = document
             .active_mesh()
             .ok_or("Source worker reply has no active mesh")?;
@@ -123,7 +168,10 @@ impl SourceWorkerColdCapture {
         let candidate = match self.decode_candidate(document, epoch, revision, delta)? {
             Some(mesh) => mesh,
             None if retained_packet.is_empty() => return Ok(false),
-            None => return Err("Source worker no-op unexpectedly included retained state".into()),
+            None => document
+                .active_mesh()
+                .ok_or("Source worker no-op has no active mesh")?
+                .try_snapshot()?,
         };
         let retained = crate::decode_source_worker_retained_warm(&candidate, id, retained_packet)?;
         document.publish_cold_source_worker_result(candidate, Arc::new(retained))
@@ -192,7 +240,7 @@ mod tests {
     }
 
     #[test]
-    fn warm_retained_state_is_never_seeded_from_public_json() {
+    fn warm_retained_state_uses_separate_checked_seed() {
         let mut doc = fixture();
         let options = SourceGeometryOptions::inflate();
         let mut stroke = doc.begin_source_geometry_stroke(options).unwrap();
@@ -210,7 +258,160 @@ mod tests {
         .unwrap();
         doc.end_source_geometry_stroke(&stroke).unwrap();
         assert!(doc.has_source_geometry_normal_state());
+        let mut capture = SourceWorkerColdCapture::capture(&doc, options, 2, 3).unwrap();
+        let packet = capture.take_retained_packet();
+        assert!(!packet.is_empty());
+        assert!(capture.retained_packet().is_empty());
+        let mut worker = Document::from_json(&doc.to_json().unwrap()).unwrap();
+        assert!(!worker.has_source_geometry_normal_state());
+        worker.install_source_worker_warm_seed(&packet).unwrap();
+        let expected = doc.source_geometry_state(1).unwrap();
+        let actual = worker.source_geometry_state(1).unwrap();
+        assert_eq!(expected.seed_fingerprint(), actual.seed_fingerprint());
+        let before = doc.active_mesh().unwrap();
+        let delta = encode_source_worker_mesh_delta(before, before, 1).unwrap();
+        assert!(capture.decode_candidate(&doc, 2, 3, &delta).is_ok());
+        doc.reset_source_geometry_normal_state().unwrap();
+        assert!(capture.decode_candidate(&doc, 2, 3, &delta).is_err());
+    }
+
+    #[test]
+    fn other_part_retained_state_is_not_dropped_from_worker_seed() {
+        let mut doc = fixture();
+        let other = doc.duplicate_subtool(1).unwrap();
+        doc.select_subtool(other).unwrap();
+        let options = SourceGeometryOptions::inflate();
+        let mut stroke = doc.begin_source_geometry_stroke(options).unwrap();
+        doc.apply_source_geometry_dab(
+            &mut stroke,
+            SourceGeometryPass {
+                center: [0.0; 3],
+                eye_direction: [0.0, 0.0, -1.0],
+                local_radius_squared: 4.0,
+                original_face_index: 0,
+            },
+            0.5,
+            true,
+        )
+        .unwrap();
+        doc.end_source_geometry_stroke(&stroke).unwrap();
+        assert!(doc.source_geometry_state(other).is_some());
+        doc.select_subtool(1).unwrap();
         assert!(SourceWorkerColdCapture::capture(&doc, options, 2, 3).is_err());
+    }
+
+    #[test]
+    fn second_worker_stroke_uses_warm_state_and_one_new_history_step() {
+        let mut main = fixture();
+        let options = SourceGeometryOptions::inflate();
+        let pass = SourceGeometryPass {
+            center: [0.0; 3],
+            eye_direction: [0.0, 0.0, -1.0],
+            local_radius_squared: 4.0,
+            original_face_index: 0,
+        };
+        let mut first = SourceWorkerTransaction::begin(
+            Document::from_json(&main.to_json().unwrap()).unwrap(),
+            options,
+            61,
+        )
+        .unwrap();
+        first
+            .apply_controlled(
+                61,
+                1,
+                [Some(pass), None],
+                0.5,
+                true,
+                &SourceGeometryControls::default(),
+                SourceGeometryAlphaTracks::default(),
+            )
+            .unwrap();
+        let first = first.finish(61, 2).unwrap();
+        let first_delta = encode_source_worker_mesh_delta(
+            main.active_mesh().unwrap(),
+            first.active_mesh().unwrap(),
+            1,
+        )
+        .unwrap();
+        let first_retained = encode_source_worker_retained_warm(
+            &first.source_geometry_state(1).unwrap(),
+            first.active_mesh().unwrap(),
+            1,
+        )
+        .unwrap();
+        let capture = SourceWorkerColdCapture::capture(&main, options, 61, 4).unwrap();
+        assert!(capture
+            .commit_candidate(&mut main, 61, 4, &first_delta, &first_retained)
+            .unwrap());
+        assert_eq!(main.history_depths(), (1, 0));
+
+        let mut capture = SourceWorkerColdCapture::capture(&main, options, 62, 5).unwrap();
+        let warm_seed = capture.take_retained_packet();
+        assert!(!warm_seed.is_empty());
+        let mut second = Document::from_json(&main.to_json().unwrap()).unwrap();
+        second.install_source_worker_warm_seed(&warm_seed).unwrap();
+        let mut second = SourceWorkerTransaction::begin(second, options, 62).unwrap();
+        second
+            .apply_controlled(
+                62,
+                1,
+                [Some(pass), None],
+                0.5,
+                true,
+                &SourceGeometryControls::default(),
+                SourceGeometryAlphaTracks::default(),
+            )
+            .unwrap();
+        let second = second.finish(62, 2).unwrap();
+        let second_delta = encode_source_worker_mesh_delta(
+            main.active_mesh().unwrap(),
+            second.active_mesh().unwrap(),
+            1,
+        )
+        .unwrap();
+        let second_retained = encode_source_worker_retained_warm(
+            &second.source_geometry_state(1).unwrap(),
+            second.active_mesh().unwrap(),
+            1,
+        )
+        .unwrap();
+        assert!(capture
+            .commit_candidate(&mut main, 62, 5, &second_delta, &second_retained)
+            .unwrap());
+        assert_eq!(main.history_depths(), (2, 0));
+        assert_eq!(main.to_json().unwrap(), second.to_json().unwrap());
+        assert_eq!(
+            main.source_geometry_state(1).unwrap().seed_fingerprint(),
+            second.source_geometry_state(1).unwrap().seed_fingerprint(),
+        );
+    }
+
+    #[test]
+    fn empty_worker_release_preserves_redo_branch() {
+        let mut main = fixture();
+        main.begin_stroke();
+        main.active_mesh_mut().unwrap().positions[0].z = 0.25;
+        main.end_stroke();
+        assert!(main.undo());
+        let depths = main.history_depths();
+        assert_eq!(depths, (0, 1));
+        let before = main.to_json().unwrap();
+        let capture =
+            SourceWorkerColdCapture::capture(&main, SourceGeometryOptions::inflate(), 73, 8)
+                .unwrap();
+        let empty = encode_source_worker_mesh_delta(
+            main.active_mesh().unwrap(),
+            main.active_mesh().unwrap(),
+            1,
+        )
+        .unwrap();
+        assert!(!capture
+            .commit_candidate(&mut main, 73, 8, &empty, &[])
+            .unwrap());
+        assert_eq!(main.to_json().unwrap(), before);
+        assert_eq!(main.history_depths(), depths);
+        assert!(main.redo());
     }
 
     #[test]

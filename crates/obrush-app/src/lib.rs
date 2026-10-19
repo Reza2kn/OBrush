@@ -234,6 +234,119 @@ impl WebHandle {
             .is_some_and(|mut app| app.source_worker_cold_cancel(epoch))
     }
 
+    #[cfg(debug_assertions)]
+    pub fn source_worker_seed_packet(&self, epoch: &str) -> Result<Vec<u8>, JsValue> {
+        let epoch = epoch
+            .parse::<u64>()
+            .map_err(|error| JsValue::from_str(&error.to_string()))?;
+        self.runner
+            .app_mut::<OBrushApp>()
+            .ok_or_else(|| JsValue::from_str("OBrush is not running"))?
+            .source_worker_seed_packet(epoch)
+            .map_err(|error| JsValue::from_str(&error))
+    }
+
+    /// The experimental browser held-pointer route. Every message is bound to
+    /// the Rust studio's captured epoch/revision before any renderer or public
+    /// document publication.
+    pub fn source_worker_held_begin(
+        &self,
+        x: f64,
+        y: f64,
+        pressure: f64,
+        pen: bool,
+        modifiers: bool,
+    ) -> Result<String, JsValue> {
+        self.runner
+            .app_mut::<OBrushApp>()
+            .ok_or_else(|| JsValue::from_str("OBrush is not running"))?
+            .source_worker_held_begin(x, y, pressure, pen, modifiers)
+            .map_err(|error| JsValue::from_str(&error))
+    }
+
+    pub fn source_worker_held_pointer_in_viewport(&self, x: f64, y: f64) -> bool {
+        self.runner
+            .app_mut::<OBrushApp>()
+            .is_some_and(|app| app.source_worker_held_pointer_in_viewport(x, y))
+    }
+
+    pub fn source_worker_held_seed_packet(&self, epoch: &str) -> Result<Vec<u8>, JsValue> {
+        let epoch = epoch
+            .parse::<u64>()
+            .map_err(|error| JsValue::from_str(&error.to_string()))?;
+        self.runner
+            .app_mut::<OBrushApp>()
+            .ok_or_else(|| JsValue::from_str("OBrush is not running"))?
+            .source_worker_seed_packet(epoch)
+            .map_err(|error| JsValue::from_str(&error))
+    }
+
+    pub fn source_worker_held_samples(
+        &self,
+        epoch: &str,
+        x: f64,
+        y: f64,
+        pressure: f64,
+        pen: bool,
+    ) -> Result<String, JsValue> {
+        let epoch = epoch
+            .parse::<u64>()
+            .map_err(|error| JsValue::from_str(&error.to_string()))?;
+        self.runner
+            .app_mut::<OBrushApp>()
+            .ok_or_else(|| JsValue::from_str("OBrush is not running"))?
+            .source_worker_held_samples(epoch, x, y, pressure, pen)
+            .map_err(|error| JsValue::from_str(&error))
+    }
+
+    pub fn source_worker_held_preview(
+        &self,
+        epoch: &str,
+        revision: &str,
+        delta: &[u8],
+    ) -> Result<(), JsValue> {
+        let epoch = epoch
+            .parse::<u64>()
+            .map_err(|error| JsValue::from_str(&error.to_string()))?;
+        let revision = revision
+            .parse::<u64>()
+            .map_err(|error| JsValue::from_str(&error.to_string()))?;
+        self.runner
+            .app_mut::<OBrushApp>()
+            .ok_or_else(|| JsValue::from_str("OBrush is not running"))?
+            .source_worker_held_preview(epoch, revision, delta)
+            .map_err(|error| JsValue::from_str(&error))
+    }
+
+    pub fn source_worker_held_commit(
+        &self,
+        epoch: &str,
+        revision: &str,
+        delta: &[u8],
+        retained: &[u8],
+    ) -> Result<bool, JsValue> {
+        let epoch = epoch
+            .parse::<u64>()
+            .map_err(|error| JsValue::from_str(&error.to_string()))?;
+        let revision = revision
+            .parse::<u64>()
+            .map_err(|error| JsValue::from_str(&error.to_string()))?;
+        self.runner
+            .app_mut::<OBrushApp>()
+            .ok_or_else(|| JsValue::from_str("OBrush is not running"))?
+            .source_worker_held_commit(epoch, revision, delta, retained)
+            .map_err(|error| JsValue::from_str(&error))
+    }
+
+    pub fn source_worker_held_cancel(&self, epoch: &str) -> bool {
+        let Ok(epoch) = epoch.parse::<u64>() else {
+            return false;
+        };
+        self.runner
+            .app_mut::<OBrushApp>()
+            .is_some_and(|mut app| app.source_worker_held_cancel(epoch))
+    }
+
     /// Eight little-endian token bytes followed by the versioned, checked
     /// GPU upload. The token is passed back as a decimal string at commit.
     pub fn resident_studio_begin_upload(&self) -> Result<Vec<u8>, JsValue> {

@@ -92,7 +92,12 @@ pub struct BrowserSourceWorkerStroke {
 #[wasm_bindgen]
 impl BrowserSourceWorkerStroke {
     #[wasm_bindgen(constructor)]
-    pub fn new(project: &str, options_json: &str, epoch: &str) -> Result<Self, JsValue> {
+    pub fn new(
+        project: &str,
+        options_json: &str,
+        epoch: &str,
+        warm_seed: &[u8],
+    ) -> Result<Self, JsValue> {
         if project.len() > MAX_WORKER_PROJECT_BYTES || options_json.len() > 2048 {
             return Err(JsValue::from_str(
                 "Source worker seed exceeds its input limit",
@@ -101,10 +106,10 @@ impl BrowserSourceWorkerStroke {
         let epoch = parse_counter(epoch)?;
         let options: SourceGeometryOptions = serde_json::from_str(options_json).map_err(fail)?;
         options.validate().map_err(fail)?;
-        let document = Document::from_json(project).map_err(fail)?;
-        if document.has_source_geometry_normal_state() {
-            return Err(JsValue::from_str("Source worker seed is not cold"));
-        }
+        let mut document = Document::from_json(project).map_err(fail)?;
+        document
+            .install_source_worker_warm_seed(warm_seed)
+            .map_err(fail)?;
         let subtool_id = document
             .active_subtool_id()
             .ok_or_else(|| JsValue::from_str("Source worker seed has no active part"))?;
