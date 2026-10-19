@@ -135,9 +135,9 @@ try {
   result.requested_path = points;
   const baseline = await page.evaluate('window.__inflateUiEvents.length');
   await page.pointer('mouseMoved', ...points[0]);
-  await page.pointer('mousePressed', ...points[0], 'left', 1); pressed = true;
+  await page.pointer('mousePressed', ...points[0], 'left', 1, { force: 1 }); pressed = true;
   await page.raf();
-  await page.pointer('mouseMoved', ...points[1], 'left', 1);
+  await page.pointer('mouseMoved', ...points[1], 'left', 1, { force: 1 });
   await page.raf();
   await page.pointer('mouseReleased', ...points[1], 'left', 0); pressed = false;
   for (let i = 0; i < 12; i++) await page.raf();
