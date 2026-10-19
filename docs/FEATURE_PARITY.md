@@ -44,6 +44,10 @@ the measured 100k main-thread finish callback from 931.5 to 565.9 ms with
 passing public Save/Undo/Redo, shape and GPU-position checks. The frozen
 queue-tail, RAF-max, pacing-max and edited display-normal gates still fail;
 the held Worker remains query-gated and off by default.
+[The read-only publication profile](SOURCE_WORKER_PUBLICATION_STAGES_RESULT.md)
+attributes 373.6 ms to complete-scene witness/delta decode and 171.0 ms to
+retained warm decode in a separate 100k run. It leaves the product algorithm
+unchanged and retains the frozen queue-tail, RAF-max and GPU-normal failures.
 [The independent display-normal audit](SOURCE_GPU_DISPLAY_NORMAL_ORACLE_PREREG.md)
 matches fresh Source face normals to active GPU rows before sculpting and after
 Undo. Edited After and Redo states have byte-identical public meshes but
