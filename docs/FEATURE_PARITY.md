@@ -1,5 +1,11 @@
 # OBrush feature parity contract
 
+**C241 selected mesh counters:** [The paired browser and shared-core report](SCULPTGL_MESH_INFO_C241.md)
+adds top-bar vertex/face counts and a quad-aware face count in the inspector.
+An independent mixed OBJ shows 6 vertices, 2 original faces and 3 render
+triangles in both browsers. OBrush's higher/lower level and empty-scene counts
+also track the editable mesh; broader reference sequences remain open.
+
 **C238 corrected pen admission:** [The multi-dab comparison](SCULPTGL_PRESSURE_MULTIDAB_ADMISSION_C238.md)
 matches three geometry-bearing moves per browser on the same 10,114-vertex
 fixture. Both pinned SculptGL and OBrush show roughly `1e-4` deviation from
