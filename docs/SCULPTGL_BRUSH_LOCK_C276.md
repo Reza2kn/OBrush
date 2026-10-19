@@ -102,3 +102,20 @@ position maximum `7.450580596923828e-9`, held display-normal maximum
 and exact public Save/Undo/Redo and active GPU position agreement. The
 source-matched rerun does not resolve the fractional-coordinate C274 failure
 or establish the broader Brush Lock row.
+
+## Integrated root verification
+
+After cherry-picking the scoped implementation and reconciling the parity
+ledger, the root branch at `fd882293b0bb51b34108dfb0e3eb9d837fbfcdbf`
+passed `cargo fmt --all -- --check`, `cargo test --workspace --locked
+--quiet`, strict native all-target and wasm32 workspace Clippy, and fresh
+`scripts/build-web.sh` and `scripts/package-macos.sh` builds. The signed local
+app passed `codesign --verify --deep --strict`. The root portable browser
+WASM SHA-256 is the same source-matched passing value above,
+`913ed5f6ac0fd3f3e0e55788d40d7421d844820bf92f664a4c8a6b7858bd8f99`;
+its JS SHA-256 is
+`03d74bea813d209f42f0aecbabcf7a4f85d39d509ed8b65f742def4ec3d4b440`.
+The running local server on port 8792 served the same portable WASM bytes.
+The macOS app executable SHA-256 is
+`f1b7f6b019cddb862745d6b1f41603cfdfd4899a315d977ebec5818bbf351fde`.
+The 317-ID current ledger check passed; the full Brush Lock row remains open.
