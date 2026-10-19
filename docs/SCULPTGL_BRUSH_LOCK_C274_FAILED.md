@@ -36,10 +36,13 @@ repeated endpoint, release/last-preview equality, and quiet frames passed.
 `76.6925048828125` screen pixels, while the second was
 `76.69247436523438`. Their difference is `3.0517578125e-5`, exceeding the
 preregistered equal-radius limit of `1e-6`. The Source held moves used equal
-80-pixel distances. The OBrush browser delivered screen coordinates through
-`egui::Pos2` (`f32`); this is the observed precision boundary, not proof of
-the complete cause. The frozen tolerance is unchanged. A subsequent f64
-input-path attempt must have its own preregistration and separate receipts.
+80-pixel distances. The OBrush trusted DOM `pointermove` events already
+contained the unequal `813.6925048828125` X and `364.3075256347656` Y
+coordinates before the JS-to-Rust bridge; the requested CDP coordinates were
+`813.6924775457785` and `364.30751877074897`. The subsequent C275 audit
+located this precision loss upstream of `egui::Pos2`: the existing
+`RawPaintInput` stores and forwards the delivered value as `f64`. The frozen
+tolerance is unchanged.
 
 Focused core replacement/rollback tests and the host stale-alpha-lease test
 passed after correcting the new tests' assumptions. The full workspace test
