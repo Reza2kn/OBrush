@@ -9,9 +9,12 @@ use glam::Vec3;
 use std::collections::HashMap;
 
 const MAGIC: &[u8; 8] = b"OBRSPRV1";
+const DISPLAY_MAGIC: &[u8; 8] = b"OBRSPRV2";
 const VERSION: u32 = 1;
+const DISPLAY_VERSION: u32 = 2;
 const HEADER_BYTES: usize = 40;
 const ROW_BYTES: usize = 52;
+const DISPLAY_ROW_BYTES: usize = ROW_BYTES + 24;
 const CHECKSUM_BYTES: usize = 32;
 // Match Mesh's public coordinate bound without a whole-mesh validation walk.
 const MAX_PREVIEW_COORDINATE: f32 = 1_000_000.0;
@@ -31,6 +34,9 @@ pub struct SourceWorkerPreviewRow {
     pub before_normal: [f32; 3],
     pub after_position: [f32; 3],
     pub after_normal: [f32; 3],
+    /// V2-only retained Source display normals. Public Mesh normals above
+    /// remain the independent final publication witness.
+    pub display_normals: Option<([f32; 3], [f32; 3])>,
 }
 
 impl SourceWorkerPreviewRow {
@@ -80,6 +86,24 @@ pub fn encode_source_worker_sparse_preview_rows(
     vertex_count: usize,
     rows: &[SourceWorkerPreviewRow],
 ) -> Result<Vec<u8>, String> {
+    encode_source_worker_sparse_preview_rows_mode(
+        epoch,
+        sequence,
+        active_subtool_id,
+        vertex_count,
+        rows,
+        false,
+    )
+}
+
+pub fn encode_source_worker_sparse_preview_rows_mode(
+    epoch: u64,
+    sequence: u64,
+    active_subtool_id: u32,
+    vertex_count: usize,
+    rows: &[SourceWorkerPreviewRow],
+    display: bool,
+) -> Result<Vec<u8>, String> {
     if epoch == 0
         || sequence == 0
         || active_subtool_id == 0
@@ -89,9 +113,20 @@ pub fn encode_source_worker_sparse_preview_rows(
     {
         return Err("Source preview identity or row count is invalid".into());
     }
+    if rows
+        .iter()
+        .any(|row| row.display_normals.is_some() != display)
+    {
+        return Err("Source preview mixes public and display row versions".into());
+    }
+    let row_bytes = if display {
+        DISPLAY_ROW_BYTES
+    } else {
+        ROW_BYTES
+    };
     let total = rows
         .len()
-        .checked_mul(ROW_BYTES)
+        .checked_mul(row_bytes)
         .and_then(|size| size.checked_add(HEADER_BYTES + CHECKSUM_BYTES))
         .ok_or("Source preview packet size overflow")?;
     if total > MAX_SOURCE_WORKER_PREVIEW_BYTES {
@@ -101,8 +136,8 @@ pub fn encode_source_worker_sparse_preview_rows(
     packet
         .try_reserve_exact(total)
         .map_err(|_| "Cannot reserve Source preview packet")?;
-    packet.extend_from_slice(MAGIC);
-    packet.extend_from_slice(&VERSION.to_le_bytes());
+    packet.extend_from_slice(if display { DISPLAY_MAGIC } else { MAGIC });
+    packet.extend_from_slice(&(if display { DISPLAY_VERSION } else { VERSION }).to_le_bytes());
     packet.extend_from_slice(&epoch.to_le_bytes());
     packet.extend_from_slice(&sequence.to_le_bytes());
     packet.extend_from_slice(&active_subtool_id.to_le_bytes());
@@ -116,14 +151,30 @@ pub fn encode_source_worker_sparse_preview_rows(
             || previous.is_some_and(|index| row.index <= index)
             || !valid_geometry_words(&old)
             || !valid_geometry_words(&new)
-            || old == new
+            || (old == new
+                && row.display_normals.is_none_or(|(before, after)| {
+                    before.map(f32::to_bits) == after.map(f32::to_bits)
+                }))
         {
             return Err("Source preview row is invalid, unordered or unchanged".into());
+        }
+        if let Some((before, after)) = row.display_normals {
+            for normal in [before, after] {
+                let vector = Vec3::from_array(normal);
+                if !vector.is_finite() || !vector.length_squared().is_finite() {
+                    return Err("Source preview display normal is invalid".into());
+                }
+            }
         }
         previous = Some(row.index);
         packet.extend_from_slice(&row.index.to_le_bytes());
         for word in old.into_iter().chain(new) {
             packet.extend_from_slice(&word.to_le_bytes());
+        }
+        if let Some((before, after)) = row.display_normals {
+            for word in before.into_iter().chain(after).map(f32::to_bits) {
+                packet.extend_from_slice(&word.to_le_bytes());
+            }
         }
     }
     let checksum = blake3::hash(&packet);
@@ -139,6 +190,7 @@ pub struct SourceWorkerSparsePreviewOverlay {
     active_subtool_id: u32,
     vertex_count: usize,
     changed: HashMap<u32, [u32; 6]>,
+    display_changed: HashMap<u32, [u32; 3]>,
     closed: bool,
 }
 
@@ -154,6 +206,7 @@ impl SourceWorkerSparsePreviewOverlay {
             active_subtool_id,
             vertex_count,
             changed: HashMap::new(),
+            display_changed: HashMap::new(),
             closed: false,
         })
     }
@@ -165,12 +218,18 @@ impl SourceWorkerSparsePreviewOverlay {
         &mut self,
         baseline_positions: &[Vec3],
         baseline_normals: &[Vec3],
+        baseline_display_normals: Option<&[Vec3]>,
         packet: &[u8],
     ) -> Result<Vec<SourceWorkerPreviewRow>, String> {
         if self.closed {
             return Err("Source preview is closed".into());
         }
-        let result = self.decode_and_check(baseline_positions, baseline_normals, packet);
+        let result = self.decode_and_check(
+            baseline_positions,
+            baseline_normals,
+            baseline_display_normals,
+            packet,
+        );
         match result {
             Ok(rows) => {
                 self.next_sequence = self.next_sequence.checked_add(1).unwrap_or(0);
@@ -185,6 +244,20 @@ impl SourceWorkerSparsePreviewOverlay {
                         self.changed.remove(&row.index);
                     } else {
                         self.changed.insert(row.index, words);
+                    }
+                    if let (Some(display_baseline), Some((_, after))) =
+                        (baseline_display_normals, row.display_normals)
+                    {
+                        let words = after.map(f32::to_bits);
+                        if words
+                            == display_baseline[row.index as usize]
+                                .to_array()
+                                .map(f32::to_bits)
+                        {
+                            self.display_changed.remove(&row.index);
+                        } else {
+                            self.display_changed.insert(row.index, words);
+                        }
                     }
                 }
                 if self.next_sequence == 0 {
@@ -203,6 +276,7 @@ impl SourceWorkerSparsePreviewOverlay {
         &mut self,
         positions: &[Vec3],
         normals: &[Vec3],
+        display_normals: Option<&[Vec3]>,
         packet: &[u8],
     ) -> Result<Vec<SourceWorkerPreviewRow>, String> {
         if positions.len() != self.vertex_count || normals.len() != self.vertex_count {
@@ -210,11 +284,25 @@ impl SourceWorkerSparsePreviewOverlay {
         }
         if packet.len() < HEADER_BYTES + CHECKSUM_BYTES
             || packet.len() > MAX_SOURCE_WORKER_PREVIEW_BYTES
-            || &packet[..8] != MAGIC
-            || u32::from_le_bytes(packet[8..12].try_into().unwrap()) != VERSION
         {
             return Err("Source preview packet header or size is invalid".into());
         }
+        let version = u32::from_le_bytes(packet[8..12].try_into().unwrap());
+        let display = match (&packet[..8], version) {
+            (magic, VERSION) if magic == MAGIC => false,
+            (magic, DISPLAY_VERSION) if magic == DISPLAY_MAGIC => true,
+            _ => return Err("Source preview packet header or size is invalid".into()),
+        };
+        if display && display_normals.is_none_or(|normals| normals.len() != self.vertex_count)
+            || !display && display_normals.is_some()
+        {
+            return Err("Source preview display baseline/version mismatch".into());
+        }
+        let row_bytes = if display {
+            DISPLAY_ROW_BYTES
+        } else {
+            ROW_BYTES
+        };
         let epoch = u64::from_le_bytes(packet[12..20].try_into().unwrap());
         let sequence = u64::from_le_bytes(packet[20..28].try_into().unwrap());
         let target = u32::from_le_bytes(packet[28..32].try_into().unwrap());
@@ -226,7 +314,7 @@ impl SourceWorkerSparsePreviewOverlay {
             || count != self.vertex_count
             || row_count > count
             || row_count
-                .checked_mul(ROW_BYTES)
+                .checked_mul(row_bytes)
                 .and_then(|size| size.checked_add(HEADER_BYTES + CHECKSUM_BYTES))
                 != Some(packet.len())
         {
@@ -241,25 +329,69 @@ impl SourceWorkerSparsePreviewOverlay {
             .map_err(|_| "Cannot reserve Source preview rows")?;
         let mut previous = None;
         let mut additional = 0_usize;
-        for bytes in packet[HEADER_BYTES..checksum_at].chunks_exact(ROW_BYTES) {
+        let mut additional_display = 0_usize;
+        for bytes in packet[HEADER_BYTES..checksum_at].chunks_exact(row_bytes) {
             let index = u32::from_le_bytes(bytes[..4].try_into().unwrap());
             if index as usize >= count || previous.is_some_and(|prev| index <= prev) {
                 return Err("Source preview rows are out of range, duplicate or unordered".into());
             }
             previous = Some(index);
             let mut words = [0_u32; 12];
-            for (out, source) in words.iter_mut().zip(bytes[4..].chunks_exact(4)) {
+            for (out, source) in words.iter_mut().zip(bytes[4..ROW_BYTES].chunks_exact(4)) {
                 *out = u32::from_le_bytes(source.try_into().unwrap());
             }
             let old: [u32; 6] = words[..6].try_into().unwrap();
             let new: [u32; 6] = words[6..].try_into().unwrap();
-            if !valid_geometry_words(&old) || !valid_geometry_words(&new) || old == new {
+            if !valid_geometry_words(&old) || !valid_geometry_words(&new) {
                 return Err("Source preview row geometry is invalid or unchanged".into());
             }
             let baseline = words_from_baseline(positions, normals, index as usize);
             let current = self.changed.get(&index).copied().unwrap_or(baseline);
             if current != old {
                 return Err("Source preview previous row words differ".into());
+            }
+            let display_pair = if display {
+                let mut display_words = [0_u32; 6];
+                for (out, source) in display_words
+                    .iter_mut()
+                    .zip(bytes[ROW_BYTES..].chunks_exact(4))
+                {
+                    *out = u32::from_le_bytes(source.try_into().unwrap());
+                }
+                let before: [u32; 3] = display_words[..3].try_into().unwrap();
+                let after: [u32; 3] = display_words[3..].try_into().unwrap();
+                let valid = |words: [u32; 3]| {
+                    let value = Vec3::from_array(words.map(f32::from_bits));
+                    value.is_finite() && value.length_squared().is_finite()
+                };
+                if !valid(before) || !valid(after) {
+                    return Err("Source preview display normal is invalid".into());
+                }
+                let baseline = display_normals.unwrap()[index as usize]
+                    .to_array()
+                    .map(f32::to_bits);
+                if self
+                    .display_changed
+                    .get(&index)
+                    .copied()
+                    .unwrap_or(baseline)
+                    != before
+                {
+                    return Err("Source preview previous display normal differs".into());
+                }
+                if !self.display_changed.contains_key(&index) && after != baseline {
+                    additional_display += 1;
+                }
+                Some((before.map(f32::from_bits), after.map(f32::from_bits)))
+            } else {
+                None
+            };
+            if old == new
+                && display_pair.is_none_or(|(before, after)| {
+                    before.map(f32::to_bits) == after.map(f32::to_bits)
+                })
+            {
+                return Err("Source preview row geometry is unchanged".into());
             }
             if !self.changed.contains_key(&index) && new != baseline {
                 additional += 1;
@@ -270,6 +402,7 @@ impl SourceWorkerSparsePreviewOverlay {
                 before_normal: [old[3], old[4], old[5]].map(f32::from_bits),
                 after_position: [new[0], new[1], new[2]].map(f32::from_bits),
                 after_normal: [new[3], new[4], new[5]].map(f32::from_bits),
+                display_normals: display_pair,
             });
         }
         if self
@@ -277,12 +410,20 @@ impl SourceWorkerSparsePreviewOverlay {
             .len()
             .checked_add(additional)
             .is_none_or(|rows| rows > MAX_SOURCE_WORKER_PREVIEW_OVERLAY_ROWS)
+            || self
+                .display_changed
+                .len()
+                .checked_add(additional_display)
+                .is_none_or(|rows| rows > MAX_SOURCE_WORKER_PREVIEW_OVERLAY_ROWS)
         {
             return Err("Source preview overlay exceeds row limit".into());
         }
         self.changed
             .try_reserve(additional)
             .map_err(|_| "Cannot reserve Source preview overlay")?;
+        self.display_changed
+            .try_reserve(additional_display)
+            .map_err(|_| "Cannot reserve Source display preview overlay")?;
         Ok(rows)
     }
 
@@ -300,6 +441,7 @@ impl SourceWorkerSparsePreviewOverlay {
 
     pub fn cancel(&mut self) {
         self.changed.clear();
+        self.display_changed.clear();
         self.closed = true;
     }
 
@@ -326,6 +468,7 @@ mod tests {
             before_normal: [0.0, 0.0, 1.0],
             after_position: [after, 0.0, 0.0],
             after_normal: [0.0, 0.0, 1.0],
+            display_normals: None,
         }
     }
 
@@ -340,22 +483,73 @@ mod tests {
     }
 
     #[test]
+    fn display_v2_chains_retained_words_without_weakening_public_normal_witness() {
+        let (positions, normals) = baseline();
+        let display = vec![Vec3::new(0.0, 0.0, 2.0); 3];
+        let mut overlay = SourceWorkerSparsePreviewOverlay::new(3, 7, 9).unwrap();
+        let mut first = row(0, 0.0, 0.0);
+        first.display_normals = Some(([0.0, 0.0, 2.0], [0.0, 0.0, 3.0]));
+        let packet =
+            encode_source_worker_sparse_preview_rows_mode(9, 1, 7, 3, &[first], true).unwrap();
+        assert_eq!(&packet[..8], DISPLAY_MAGIC);
+        assert!(SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
+            .unwrap()
+            .apply(&positions, &normals, None, &packet)
+            .is_err());
+        let rows = overlay
+            .apply(&positions, &normals, Some(&display), &packet)
+            .unwrap();
+        assert_eq!(rows[0].after_normal, [0.0, 0.0, 1.0]);
+        assert_eq!(rows[0].display_normals.unwrap().1, [0.0, 0.0, 3.0]);
+        assert_eq!(overlay.changed_row_count(), 0);
+        let mut next = first;
+        next.display_normals = Some(([0.0, 0.0, 3.0], [0.0, 0.0, 4.0]));
+        let packet =
+            encode_source_worker_sparse_preview_rows_mode(9, 2, 7, 3, &[next], true).unwrap();
+        overlay
+            .apply(&positions, &normals, Some(&display), &packet)
+            .unwrap();
+        let mut stale = next;
+        stale.display_normals = Some(([0.0, 0.0, 3.0], [0.0, 0.0, 5.0]));
+        let packet =
+            encode_source_worker_sparse_preview_rows_mode(9, 3, 7, 3, &[stale], true).unwrap();
+        assert!(overlay
+            .apply(&positions, &normals, Some(&display), &packet)
+            .is_err());
+        assert_eq!(overlay.changed_row_count(), 0);
+    }
+
+    #[test]
+    fn display_v2_zero_row_packet_keeps_the_captured_normal_policy() {
+        let (positions, normals) = baseline();
+        let display = vec![Vec3::new(0.0, 0.0, 2.0); 3];
+        let packet = encode_source_worker_sparse_preview_rows_mode(9, 1, 7, 3, &[], true).unwrap();
+        assert_eq!(&packet[..8], DISPLAY_MAGIC);
+        let mut overlay = SourceWorkerSparsePreviewOverlay::new(3, 7, 9).unwrap();
+        assert!(overlay
+            .apply(&positions, &normals, Some(&display), &packet)
+            .unwrap()
+            .is_empty());
+        assert_eq!(overlay.changed_row_count(), 0);
+    }
+
+    #[test]
     fn exact_multi_dab_overlay_reverts_to_baseline_without_full_mesh() {
         let (positions, normals) = baseline();
         let mut overlay = SourceWorkerSparsePreviewOverlay::new(3, 7, 9).unwrap();
         let first = packet(1, &[row(0, 0.0, 0.25), row(1, 1.0, 1.5)]);
-        let applied = overlay.apply(&positions, &normals, &first).unwrap();
+        let applied = overlay.apply(&positions, &normals, None, &first).unwrap();
         assert_eq!(applied.len(), 2);
         assert_eq!(overlay.changed_row_count(), 2);
         let second = packet(2, &[row(0, 0.25, 0.0), row(1, 1.5, 2.0)]);
-        overlay.apply(&positions, &normals, &second).unwrap();
+        overlay.apply(&positions, &normals, None, &second).unwrap();
         assert_eq!(overlay.changed_row_count(), 1);
         let changed: Vec<_> = overlay.iter_changed().collect();
         assert_eq!(changed, vec![(1, [2.0, 0.0, 0.0], [0.0, 0.0, 1.0])]);
         overlay.cancel();
         assert_eq!(overlay.changed_row_count(), 0);
         assert!(overlay
-            .apply(&positions, &normals, &packet(3, &[]))
+            .apply(&positions, &normals, None, &packet(3, &[]))
             .is_err());
     }
 
@@ -364,17 +558,17 @@ mod tests {
         let (positions, normals) = baseline();
         let mut overlay = SourceWorkerSparsePreviewOverlay::new(3, 7, 9).unwrap();
         overlay
-            .apply(&positions, &normals, &packet(1, &[row(0, 0.0, 0.25)]))
+            .apply(&positions, &normals, None, &packet(1, &[row(0, 0.0, 0.25)]))
             .unwrap();
         let mut bad = packet(2, &[row(0, 0.25, 0.5), row(1, 1.0, 1.5)]);
         // Second row has a stale previous word; the first valid row must not land.
         let second_old_x = HEADER_BYTES + ROW_BYTES + 4;
         bad[second_old_x..second_old_x + 4].copy_from_slice(&0.0_f32.to_bits().to_le_bytes());
         reseal(&mut bad);
-        assert!(overlay.apply(&positions, &normals, &bad).is_err());
+        assert!(overlay.apply(&positions, &normals, None, &bad).is_err());
         assert_eq!(overlay.changed_row_count(), 0);
         assert!(overlay
-            .apply(&positions, &normals, &packet(2, &[]))
+            .apply(&positions, &normals, None, &packet(2, &[]))
             .is_err());
     }
 
@@ -387,27 +581,31 @@ mod tests {
         reseal(&mut wrong);
         assert!(SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
             .unwrap()
-            .apply(&positions, &normals, &wrong)
+            .apply(&positions, &normals, None, &wrong)
             .is_err());
         let mut wrong = original.clone();
         wrong[28..32].copy_from_slice(&8_u32.to_le_bytes());
         reseal(&mut wrong);
         assert!(SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
             .unwrap()
-            .apply(&positions, &normals, &wrong)
+            .apply(&positions, &normals, None, &wrong)
             .is_err());
         let mut wrong = original.clone();
         wrong[HEADER_BYTES + 8] ^= 1;
         assert!(SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
             .unwrap()
-            .apply(&positions, &normals, &wrong)
+            .apply(&positions, &normals, None, &wrong)
             .is_err());
         let mut overlay = SourceWorkerSparsePreviewOverlay::new(3, 7, 9).unwrap();
-        overlay.apply(&positions, &normals, &original).unwrap();
-        assert!(overlay.apply(&positions, &normals, &original).is_err());
+        overlay
+            .apply(&positions, &normals, None, &original)
+            .unwrap();
+        assert!(overlay
+            .apply(&positions, &normals, None, &original)
+            .is_err());
         assert!(SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
             .unwrap()
-            .apply(&positions[..2], &normals, &original)
+            .apply(&positions[..2], &normals, None, &original)
             .is_err());
     }
 
@@ -436,7 +634,7 @@ mod tests {
         reseal(&mut duplicate);
         assert!(SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
             .unwrap()
-            .apply(&positions, &normals, &duplicate)
+            .apply(&positions, &normals, None, &duplicate)
             .is_err());
         let mut nonfinite = packet(1, &[row(0, 0.0, 0.25)]);
         nonfinite[HEADER_BYTES + 28..HEADER_BYTES + 32]
@@ -444,7 +642,7 @@ mod tests {
         reseal(&mut nonfinite);
         assert!(SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
             .unwrap()
-            .apply(&positions, &normals, &nonfinite)
+            .apply(&positions, &normals, None, &nonfinite)
             .is_err());
         assert!(
             encode_source_worker_sparse_preview_rows(9, 1, 7, 3, &[row(0, 0.0, 1_000_001.0)])
@@ -458,7 +656,7 @@ mod tests {
         reseal(&mut signed_zero);
         assert!(SourceWorkerSparsePreviewOverlay::new(3, 7, 9)
             .unwrap()
-            .apply(&positions, &normals, &signed_zero)
+            .apply(&positions, &normals, None, &signed_zero)
             .is_err());
     }
 }

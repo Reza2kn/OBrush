@@ -5,15 +5,23 @@
 
 use obrush_core::{
     Document, Mesh, PaintPreparationInput, PaintViewCapture, SOURCE_GEOMETRY_CHUNK_ROWS,
-    SourceGeometryAlphaTracks, SourceGeometryControls, SourceGeometryOptions,
-    SourceWorkerPreviewRow, SourceWorkerTransaction, encode_source_worker_mesh_delta,
-    encode_source_worker_sparse_preview_rows,
+    SourceGeometryAlphaTracks, SourceGeometryControls, SourceGeometryOptions, SourceNormalField,
+    SourceNormalPolicy, SourceWorkerPreviewRow, SourceWorkerTransaction,
+    encode_source_worker_mesh_delta, encode_source_worker_sparse_preview_rows_mode,
 };
 use serde_json::Value;
 use wasm_bindgen::prelude::*;
 
 const MAX_WORKER_INPUT_BYTES: usize = 8 * 1024;
 const MAX_WORKER_PROJECT_BYTES: usize = 512 * 1024 * 1024;
+
+fn copy_display_normals(source: &[glam::Vec3]) -> Result<Vec<glam::Vec3>, JsValue> {
+    let mut copy = Vec::new();
+    copy.try_reserve_exact(source.len())
+        .map_err(|_| JsValue::from_str("Cannot reserve Source worker display normals"))?;
+    copy.extend_from_slice(source);
+    Ok(copy)
+}
 
 fn field_array<const N: usize>(value: &Value, key: &str) -> Result<[f64; N], String> {
     let words = value
@@ -84,6 +92,7 @@ pub struct BrowserSourceWorkerStroke {
     // One constructor snapshot is updated only inside certified selected
     // chunks. A held dab never clones or validates the complete mesh.
     last_mesh: Mesh,
+    last_display_normals: Option<Vec<glam::Vec3>>,
     subtool_id: u32,
     failed: bool,
     accepted_dabs: u64,
@@ -122,12 +131,33 @@ impl BrowserSourceWorkerStroke {
             .try_snapshot()
             .map_err(fail)?;
         let last_mesh = initial_mesh.try_snapshot().map_err(fail)?;
+        let last_display_normals = if document.active_object_metadata().is_some() {
+            Some(match document.source_geometry_state(subtool_id) {
+                Some(state) => {
+                    if !state.matches_mesh(&initial_mesh) {
+                        return Err(JsValue::from_str(
+                            "Source worker display-normal seed is stale",
+                        ));
+                    }
+                    copy_display_normals(state.vertex_normals())?
+                }
+                None => SourceNormalField::compute(
+                    &initial_mesh,
+                    SourceNormalPolicy::StaticOriginalFaces,
+                )
+                .map_err(fail)
+                .and_then(|field| copy_display_normals(field.vertex_normals()))?,
+            })
+        } else {
+            None
+        };
         let transaction = SourceWorkerTransaction::begin(document, options, epoch)
             .map_err(|(_, error)| fail(format!("{error:?}")))?;
         Ok(Self {
             transaction: Some(transaction),
             initial_mesh,
             last_mesh,
+            last_display_normals,
             subtool_id,
             failed: false,
             accepted_dabs: 0,
@@ -178,6 +208,15 @@ impl BrowserSourceWorkerStroke {
         let current_state = transaction
             .document()
             .source_geometry_state(self.subtool_id);
+        if self.last_display_normals.is_some()
+            && current_state.is_none()
+            && report.combined.changed_vertices > 0
+        {
+            self.failed = true;
+            return Err(JsValue::from_str(
+                "Source worker display normals disappeared",
+            ));
+        }
         let chunks = match (predecessor.as_ref(), current_state.as_ref()) {
             (Some(before), Some(after)) => after.render_selected_chunks_from(before),
             (None, Some(after)) => after.render_selected_chunks_after_new_worker_state(),
@@ -220,8 +259,20 @@ impl BrowserSourceWorkerStroke {
                         let old_normal = self.last_mesh.normals[index].to_array();
                         let new_position = current.positions[index].to_array();
                         let new_normal = current.normals[index].to_array();
+                        let display_normals = self.last_display_normals.as_ref().map(|last| {
+                            (
+                                last[index].to_array(),
+                                current_state
+                                    .as_ref()
+                                    .map_or(last[index], |state| state.vertex_normals()[index])
+                                    .to_array(),
+                            )
+                        });
                         if old_position.map(f32::to_bits) != new_position.map(f32::to_bits)
                             || old_normal.map(f32::to_bits) != new_normal.map(f32::to_bits)
+                            || display_normals.is_some_and(|(before, after)| {
+                                before.map(f32::to_bits) != after.map(f32::to_bits)
+                            })
                         {
                             rows.push(SourceWorkerPreviewRow {
                                 index: index as u32,
@@ -229,18 +280,20 @@ impl BrowserSourceWorkerStroke {
                                 before_normal: old_normal,
                                 after_position: new_position,
                                 after_normal: new_normal,
+                                display_normals,
                             });
                         }
                     }
                 }
             }
         }
-        let delta = encode_source_worker_sparse_preview_rows(
+        let delta = encode_source_worker_sparse_preview_rows_mode(
             epoch,
             sequence,
             self.subtool_id,
             current.positions.len(),
             &rows,
+            self.last_display_normals.is_some(),
         )
         .map_err(|error| {
             self.failed = true;
@@ -252,6 +305,11 @@ impl BrowserSourceWorkerStroke {
             let index = row.index as usize;
             self.last_mesh.positions[index] = row.after_position.into();
             self.last_mesh.normals[index] = row.after_normal.into();
+            if let (Some(display), Some((_, after))) =
+                (&mut self.last_display_normals, row.display_normals)
+            {
+                display[index] = after.into();
+            }
         }
         self.last_snapshot_copy_ms = started.elapsed().as_secs_f64() * 1_000.0;
         self.accepted_dabs += 1;

@@ -1560,6 +1560,7 @@ struct SourceWorkerGpuPreview {
     epoch: u64,
     subtool_id: u32,
     baseline: Arc<Mesh>,
+    source_display: bool,
     pending: HashMap<u32, [f32; 10]>,
     current: HashMap<u32, [f32; 10]>,
     restoring: bool,
@@ -1609,6 +1610,33 @@ fn source_normal_policy(
     // Plain Studio keeps its legacy recipe even inside a mixed linear FBO.
     (metadata.is_some() || effective_style.shading != ShadingMode::Studio)
         .then_some(obrush_core::SourceNormalPolicy::StaticOriginalFaces)
+}
+
+/// Narrow, explicit admission for the transient sparse GPU overlay. Imported
+/// Source shader 0 uses retained normals, not public Mesh normals.
+pub(crate) fn source_worker_preview_style_eligible(
+    metadata: Option<&SceneObjectMetadata>,
+    style: &ViewportStyle,
+) -> bool {
+    if style.wireframe || style.wire_only || style.flat_shading || style.uv_texture.is_some() {
+        return false;
+    }
+    let Some(metadata) = metadata else {
+        return style.shading == ShadingMode::Studio;
+    };
+    let identity = [
+        1.0_f32, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0,
+    ];
+    metadata.affine.local_to_world.map(f32::to_bits) == identity.map(f32::to_bits)
+        && metadata.render.as_ref().is_some_and(|render| {
+            render.shader == 0
+                && render.matcap == 0
+                && !render.show_wireframe
+                && !render.flat_shading
+                && render.opacity.to_bits() == 1.0_f32.to_bits()
+        })
+        && style.shading == ShadingMode::Pbr
+        && style.opacity.to_bits() == 1.0_f32.to_bits()
 }
 fn normal_cache_matches_policy(
     field: Option<&obrush_core::SourceNormalField>,
@@ -2268,6 +2296,7 @@ impl Renderer {
         epoch: u64,
         subtool_id: u32,
         baseline: Arc<Mesh>,
+        source_display: bool,
     ) -> Result<(), String> {
         if self
             .source_worker_preview
@@ -2283,6 +2312,7 @@ impl Renderer {
             epoch,
             subtool_id,
             baseline,
+            source_display,
             pending: HashMap::new(),
             current: HashMap::new(),
             restoring: false,
@@ -2300,6 +2330,14 @@ impl Renderer {
             .as_mut()
             .filter(|preview| preview.epoch == epoch && !preview.restoring)
             .ok_or("Source Worker GPU preview has a stale owner")?;
+        if rows.iter().any(|row| {
+            row.index as usize >= preview.baseline.positions.len()
+                || row.display_normals.is_some() != preview.source_display
+        }) {
+            return Err(
+                "Source Worker GPU preview row identity or normal policy is invalid".into(),
+            );
+        }
         let new_pending = rows
             .iter()
             .filter(|row| !preview.pending.contains_key(&row.index))
@@ -2322,6 +2360,16 @@ impl Renderer {
                 return Err("Worker GPU preview row is out of range".into());
             }
             let base = &preview.baseline;
+            let normal = if preview.source_display {
+                row.display_normals
+                    .ok_or("Source Worker display-normal row is missing")?
+                    .1
+            } else {
+                if row.display_normals.is_some() {
+                    return Err("Source Worker unexpected display-normal row".into());
+                }
+                row.after_normal
+            };
             let mask = base
                 .masks
                 .get(index)
@@ -2331,9 +2379,9 @@ impl Renderer {
                 row.after_position[0],
                 row.after_position[1],
                 row.after_position[2],
-                row.after_normal[0],
-                row.after_normal[1],
-                row.after_normal[2],
+                normal[0],
+                normal[1],
+                normal[2],
                 mask,
                 color[0],
                 color[1],
@@ -2363,11 +2411,18 @@ impl Renderer {
                 .pending
                 .try_reserve(new_pending)
                 .map_err(|_| "Cannot reserve Worker GPU restore rows")?;
+            let base = &preview.baseline;
+            let baseline_normals = self
+                .meshes
+                .get(&preview.subtool_id)
+                .ok_or("Source Worker GPU baseline object disappeared")?
+                .source_worker_baseline_normals(base, preview.source_display)?;
             for &row in preview.current.keys() {
                 let index = row as usize;
-                let base = &preview.baseline;
                 let position = base.positions[index];
-                let normal = base.normals[index];
+                let normal = *baseline_normals
+                    .get(index)
+                    .ok_or("Worker baseline display normal missing")?;
                 let mask = base
                     .masks
                     .get(index)
@@ -2792,14 +2847,17 @@ impl Renderer {
                     && let Some(preview) = self.source_worker_preview.as_mut()
                     && preview.subtool_id == object.id
                 {
-                    if object_style.shading != ShadingMode::Studio
+                    if !source_worker_preview_style_eligible(object.metadata, &object_style)
+                        || preview.source_display != object.metadata.is_some()
                         || object_style.wireframe
                         || object_style.wire_only
                         || object_style.flat_shading
                         || object_style.uv_texture.is_some()
-                        || object.metadata.is_some()
-                        || gpu.selected_normals.is_some()
-                        || gpu.source_normals.is_some()
+                        || (!preview.source_display
+                            && (gpu.selected_normals.is_some() || gpu.source_normals.is_some()))
+                        || (preview.source_display
+                            && gpu.selected_normals.is_none()
+                            && gpu.source_normals.is_none())
                     {
                         upload = Err("Source Worker GPU preview render style changed".into());
                         clear_worker_preview = true;
@@ -2816,6 +2874,7 @@ impl Renderer {
                             &mut preview.pending,
                             &preview.current,
                             &preview.baseline,
+                            preview.source_display,
                         );
                         if upload.is_ok() && preview.restoring {
                             clear_worker_preview = true;
@@ -4147,6 +4206,7 @@ impl GpuMesh {
         pending: &mut HashMap<u32, [f32; 10]>,
         current: &HashMap<u32, [f32; 10]>,
         baseline: &Mesh,
+        source_display: bool,
     ) -> Result<(), String> {
         if pending.is_empty() {
             return Ok(());
@@ -4194,6 +4254,7 @@ impl GpuMesh {
         }
         let groups =
             selected.ok_or("Source Worker sparse GPU packet exceeds call or row budget")?;
+        let baseline_normals = self.source_worker_baseline_normals(baseline, source_display)?;
         unsafe {
             gl.bind_buffer(glow::ARRAY_BUFFER, Some(self.vertices));
         }
@@ -4207,7 +4268,9 @@ impl GpuMesh {
                     words.extend_from_slice(row);
                 } else {
                     let position = baseline.positions[index as usize];
-                    let normal = baseline.normals[index as usize];
+                    let normal = *baseline_normals
+                        .get(index as usize)
+                        .ok_or("Worker baseline display normal missing")?;
                     let mask = baseline.masks.get(index as usize).map_or(0.0, |&raw| {
                         baseline.mask_convention.protection_for_display(raw)
                     });
@@ -4237,6 +4300,26 @@ impl GpuMesh {
         }
         pending.clear();
         Ok(())
+    }
+    fn source_worker_baseline_normals<'a>(
+        &'a self,
+        baseline: &'a Mesh,
+        source_display: bool,
+    ) -> Result<&'a [Vec3], String> {
+        if !source_display {
+            return Ok(&baseline.normals);
+        }
+        if let Some(selected) = &self.selected_normals
+            && selected.matches_mesh(baseline)
+        {
+            return Ok(selected.vertex_normals());
+        }
+        if let Some(static_field) = &self.source_normals
+            && static_field.matches_mesh(baseline)
+        {
+            return Ok(static_field.vertex_normals());
+        }
+        Err("Source Worker GPU baseline display normals are unavailable".into())
     }
     fn normal_cache_matches(
         &self,
@@ -6426,6 +6509,55 @@ mod source_normal_consumer_tests {
         );
         assert_eq!(source_normal_policy(None, &studio), None);
         assert!(normal_cache_matches_policy(None, &ordinary, &studio));
+    }
+    #[test]
+    fn sparse_worker_metadata_admits_only_identity_shader_zero_without_effects() {
+        let mesh = quad();
+        let mut metadata = SceneObjectMetadata {
+            source_center_initialized: false,
+            symmetry_offset: 0.0,
+            affine: obrush_core::ObjectAffineF32V1::from_local_points(
+                Mat4::IDENTITY.to_cols_array(),
+                &mesh.positions,
+            )
+            .unwrap(),
+            render: Some(obrush_core::SglRenderSettings {
+                shader: 0,
+                matcap: 0,
+                show_wireframe: false,
+                flat_shading: false,
+                opacity: 1.0,
+            }),
+            picking_policy: obrush_core::SglPickingPolicy::SourceScaleRowV1,
+            origin: None,
+        };
+        let studio = ViewportStyle::default();
+        let effective = consumer_style_for_mesh(Some(&metadata), &mesh, &studio).unwrap();
+        assert!(source_worker_preview_style_eligible(
+            Some(&metadata),
+            &effective
+        ));
+        assert_eq!(
+            source_normal_policy(Some(&metadata), &effective),
+            Some(obrush_core::SourceNormalPolicy::StaticOriginalFaces)
+        );
+        metadata.affine.local_to_world[12] = 0.25;
+        assert!(!source_worker_preview_style_eligible(
+            Some(&metadata),
+            &effective
+        ));
+        metadata.affine.local_to_world[12] = 0.0;
+        metadata.render.as_mut().unwrap().opacity = 0.5;
+        assert!(!source_worker_preview_style_eligible(
+            Some(&metadata),
+            &effective
+        ));
+        metadata.render.as_mut().unwrap().opacity = 1.0;
+        metadata.render.as_mut().unwrap().shader = 5;
+        assert!(!source_worker_preview_style_eligible(
+            Some(&metadata),
+            &effective
+        ));
     }
     #[test]
     fn stale_source_upload_field_rejects_instead_of_packing_legacy_fallback() {

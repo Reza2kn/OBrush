@@ -1,17 +1,27 @@
 //! One-use ordinary-studio witness for a cold Source Worker result.
 //! The Worker cannot mutate the public document, renderer or history directly.
 
+use glam::Vec3;
 use obrush_core::{
-    Document, Mesh, SourceGeometryOptions, SourceWorkerColdCapture, SourceWorkerPreviewRow,
-    SourceWorkerSparsePreviewOverlay,
+    Document, Mesh, SourceGeometryOptions, SourceNormalField, SourceNormalPolicy,
+    SourceWorkerColdCapture, SourceWorkerPreviewRow, SourceWorkerSparsePreviewOverlay,
 };
 use std::collections::HashMap;
+
+fn copy_display_normals(source: &[Vec3]) -> Result<Vec<Vec3>, String> {
+    let mut copy = Vec::new();
+    copy.try_reserve_exact(source.len())
+        .map_err(|_| "Cannot reserve Source Worker display-normal baseline")?;
+    copy.extend_from_slice(source);
+    Ok(copy)
+}
 
 struct Pending {
     epoch: u64,
     revision: u64,
     capture: SourceWorkerColdCapture,
     preview: SourceWorkerSparsePreviewOverlay,
+    baseline_display_normals: Option<Vec<Vec3>>,
     preview_packets: u64,
 }
 
@@ -55,6 +65,24 @@ impl ColdSourceWorkerBridge {
             capture.active_subtool_id(),
             epoch,
         )?;
+        let baseline_display_normals = if document.active_object_metadata().is_some() {
+            Some(
+                match document.source_geometry_state(capture.active_subtool_id()) {
+                    Some(state) => {
+                        if !state.matches_mesh(mesh) {
+                            return Err("Source Worker display-normal baseline is stale".into());
+                        }
+                        copy_display_normals(state.vertex_normals())?
+                    }
+                    None => copy_display_normals(
+                        SourceNormalField::compute(mesh, SourceNormalPolicy::StaticOriginalFaces)?
+                            .vertex_normals(),
+                    )?,
+                },
+            )
+        } else {
+            None
+        };
         let mut project_bytes = Vec::new();
         project_bytes
             .try_reserve_exact(capture.project_bytes().len())
@@ -69,6 +97,7 @@ impl ColdSourceWorkerBridge {
             revision,
             capture,
             preview,
+            baseline_display_normals,
             preview_packets: 0,
         });
         Ok((epoch, project, options))
@@ -123,9 +152,12 @@ impl ColdSourceWorkerBridge {
         let baseline = document
             .active_mesh()
             .ok_or("Source worker preview has no active mesh")?;
-        let rows = pending
-            .preview
-            .apply(&baseline.positions, &baseline.normals, delta)?;
+        let rows = pending.preview.apply(
+            &baseline.positions,
+            &baseline.normals,
+            pending.baseline_display_normals.as_deref(),
+            delta,
+        )?;
         pending.preview_packets = pending
             .preview_packets
             .checked_add(1)
@@ -212,7 +244,75 @@ mod tests {
         MaskConvention, SourceGeometryAlphaTracks, SourceGeometryControls, SourceGeometryPass,
         SourceWorkerTransaction, encode_source_worker_mesh_delta,
         encode_source_worker_retained_warm, encode_source_worker_sparse_preview_rows,
+        encode_source_worker_sparse_preview_rows_mode,
     };
+
+    #[test]
+    fn imported_identity_scene_checks_display_normals_separately_from_public_mesh() {
+        let mut mesh = Mesh::import_obj(b"v 0 0 0\nv 4 0 0\nv 0 4 0\nf 1 2 3\n")
+            .unwrap()
+            .mesh;
+        mesh.mask_convention = MaskConvention::UnprotectedF32V1;
+        mesh.masks.fill(1.0);
+        let metadata = obrush_core::SceneObjectMetadata {
+            source_center_initialized: false,
+            symmetry_offset: 0.0,
+            affine: obrush_core::ObjectAffineF32V1::from_local_points(
+                glam::Mat4::IDENTITY.to_cols_array(),
+                &mesh.positions,
+            )
+            .unwrap(),
+            render: Some(obrush_core::SglRenderSettings {
+                shader: 0,
+                matcap: 0,
+                show_wireframe: false,
+                flat_shading: false,
+                opacity: 1.0,
+            }),
+            picking_policy: obrush_core::SglPickingPolicy::SourceScaleRowV1,
+            origin: None,
+        };
+        let mut document = Document::empty();
+        document
+            .add_subtool_with_metadata(mesh, "source", true, metadata)
+            .unwrap();
+        let original = document.to_json().unwrap();
+        let mut bridge = ColdSourceWorkerBridge::default();
+        let (epoch, _, _) = bridge
+            .begin(&document, SourceGeometryOptions::inflate(), 7)
+            .unwrap();
+        let mesh = document.active_mesh().unwrap();
+        let display = SourceNormalField::compute(mesh, SourceNormalPolicy::StaticOriginalFaces)
+            .unwrap()
+            .vertex_normals()[0]
+            .to_array();
+        let after_display = [display[0], display[1], display[2] + 1.0];
+        let row = SourceWorkerPreviewRow {
+            index: 0,
+            before_position: mesh.positions[0].to_array(),
+            after_position: mesh.positions[0].to_array(),
+            before_normal: mesh.normals[0].to_array(),
+            after_normal: mesh.normals[0].to_array(),
+            display_normals: Some((display, after_display)),
+        };
+        let packet = encode_source_worker_sparse_preview_rows_mode(
+            epoch,
+            1,
+            document.active_subtool_id().unwrap(),
+            mesh.positions.len(),
+            &[row],
+            true,
+        )
+        .unwrap();
+        let rows = bridge.preview(&document, epoch, 7, &packet).unwrap();
+        assert_eq!(
+            rows[0].display_normals.unwrap().1.map(f32::to_bits),
+            after_display.map(f32::to_bits)
+        );
+        assert_eq!(document.to_json().unwrap(), original);
+        assert!(bridge.cancel(epoch));
+        assert_eq!(document.to_json().unwrap(), original);
+    }
 
     #[test]
     fn preview_is_not_public_and_final_must_match_last_checked_preview() {
@@ -268,6 +368,7 @@ mod tests {
                     before_normal: bn,
                     after_position: ap,
                     after_normal: an,
+                    display_normals: None,
                 })
             })
             .collect();
@@ -353,6 +454,7 @@ mod tests {
             before_normal: baseline.normals[0].to_array(),
             after_position: new,
             after_normal: baseline.normals[0].to_array(),
+            display_normals: None,
         };
         let packet =
             encode_source_worker_sparse_preview_rows(epoch, 1, 1, baseline.positions.len(), &[row])

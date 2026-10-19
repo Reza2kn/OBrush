@@ -72,17 +72,20 @@ fn wire_input(
 
 impl OBrushApp {
     fn source_worker_sparse_style_eligible(&self) -> bool {
-        self.document.active_object_metadata().is_none()
+        let Some(mesh) = self.document.active_mesh() else {
+            return false;
+        };
+        let metadata = self.document.active_object_metadata();
+        self.transform_drag.is_none()
+            && self.viewport_style.uv_texture.is_none()
             && self
                 .rendered_scene
                 .iter()
-                .all(|object| object.metadata.is_none())
-            && self.viewport_style.shading == crate::renderer::ShadingMode::Studio
-            && !self.viewport_style.wireframe
-            && !self.viewport_style.wire_only
-            && !self.viewport_style.flat_shading
-            && self.viewport_style.uv_texture.is_none()
-            && self.transform_drag.is_none()
+                .all(|object| object.active || object.metadata.is_none())
+            && crate::renderer::consumer_style_for_mesh(metadata, mesh, &self.viewport_style)
+                .is_ok_and(|style| {
+                    crate::renderer::source_worker_preview_style_eligible(metadata, &style)
+                })
     }
 
     pub fn source_worker_held_pointer_in_viewport(&self, x: f64, y: f64) -> bool {
@@ -111,7 +114,10 @@ impl OBrushApp {
             );
         }
         if !self.source_worker_sparse_style_eligible() {
-            return Err("Worker sparse preview requires plain Studio rendering".into());
+            return Err(
+                "Worker sparse preview requires plain Studio or identity Source shader 0 rendering"
+                    .into(),
+            );
         }
         let prefs = self
             .effective_source_geometry_preferences(BrushKind::Draw)
@@ -157,7 +163,12 @@ impl OBrushApp {
             .lock()
             .map_err(|_| "Source Worker renderer is locked".to_string())
             .and_then(|mut renderer| {
-                renderer.begin_source_worker_preview(epoch, active.id, Arc::clone(&active.mesh))
+                renderer.begin_source_worker_preview(
+                    epoch,
+                    active.id,
+                    Arc::clone(&active.mesh),
+                    active.metadata.is_some(),
+                )
             })
         {
             self.source_worker_cold.cancel(epoch);
