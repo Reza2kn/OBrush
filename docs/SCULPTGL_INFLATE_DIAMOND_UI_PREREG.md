@@ -56,3 +56,22 @@ browser console/GL errors. This one flat four-vertex gesture does not cover
 the earlier unmasked 10K sphere UI protocol, repeated normals, alpha,
 nontrivial masks, pen pressure, native GUI, dense quality, sustained latency
 or the full `SGL-BRUSH-INFLATE` gate.
+
+## Prospective C270B interior-face rescue
+
+The completed C270 edge-path captures changed zero vertices in both browsers.
+The original `+8 → +24` horizontal path has Y exactly at viewport center,
+which projects onto the diamond's shared face edge from vertex 0 to 2. Its
+failed receipts remain part of the report. Before any C270B run, this
+additional cohort freezes all controls, fixture, source/build identity rules,
+public save/history/GPU/whole-word checks and `3.0e-8` numerical tolerance
+above. The only new requested gesture is a press at viewport center plus
+`(+8,+64)` CSS pixels, one move to `(+24,+64)`, then release. This should
+land strictly inside the lower oriented triangle. Calibrate OBrush X and Y
+offsets and the brush radius separately from the two apps' measured
+orthographic projection coefficients and drawing viewport dimensions. The
+source-side requested Y offset is +64 pixels downward; do not infer that
+equal CSS offsets in unequal projections are equal world rays. Require
+at least one changed vertex per app. If this cohort also misses or diverges,
+retain that result; do not continue moving the stroke or widening tolerance
+within C270B.
