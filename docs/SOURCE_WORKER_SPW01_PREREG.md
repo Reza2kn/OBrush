@@ -48,8 +48,18 @@ unmatched diagnostics. Even if all worker gates pass, comparing sculpt shape
 or speed causally requires matched delivered dabs; broader SculptGL parity
 still depends on the separate feature inventory.
 
-The benchmark driver is `scripts/run-source-worker-sustained-spw01.mjs`. It
+The benchmark driver is `scripts/run-source-worker-spw01.mjs`. It
 uses the previously frozen C58/C209 owned-CDP harness via an explicitly
 hashed `--bench-stage` path, and records those helper hashes in each result.
 No browser/build run is authorized in this isolated worktree until the root
 agent grants exclusive ownership of that lane.
+
+For each completed browser result, preserve the exit status and JSON output
+from `scripts/audit-source-sustained.py RESULT`, then from
+`scripts/audit-source-gpu-words.py RESULT GPU_BROWSER`, and finally from
+`scripts/verify-source-worker-sustained.py RESULT --mode MODE --audit AUDIT
+--gpu-audit GPU_AUDIT --worker-trace WORKER_TRANSPORT` (omit the last argument
+for ordinary mode). A failed browser result stays in the cohort and is not
+replaced silently by a later successful run. The machine-readable verifier is
+fail-closed on missing GPU words, stages, transport classification or release
+queue evidence.
