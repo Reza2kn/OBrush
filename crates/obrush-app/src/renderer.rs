@@ -1008,6 +1008,7 @@ pub struct Renderer {
     // including when the visible scene is empty.
     vertex_array: glow::VertexArray,
     meshes: HashMap<u32, GpuMesh>,
+    source_guide_bounds: Option<SourceGuideBoundsCache>,
     selected_certificates: SelectedNormalCertificates,
     uv_texture: Option<GpuViewTexture>,
     matcaps: HashMap<u32, GpuViewTexture>,
@@ -1222,6 +1223,57 @@ struct RenderObject<'a> {
     metadata: Option<&'a SceneObjectMetadata>,
     source: UploadSource<'a>,
     selected_normals: Option<&'a Arc<obrush_core::SourceGeometryNormalState>>,
+}
+
+struct SourceGuideBoundsCache {
+    mesh: Weak<Mesh>,
+    normals: Option<Weak<obrush_core::SourceGeometryNormalState>>,
+    bounds: [f64; 6],
+}
+
+/// The Source octree's loose root can outlive the current vertex AABB after a
+/// stroke, so the guide must use its retained producer when one is available.
+/// Imported objects without a retained producer are seeded once per immutable
+/// mesh snapshot instead of rebuilding a large tree on every paint callback.
+fn source_guide_root_loose(
+    object: &RenderObject<'_>,
+    cache: &mut Option<SourceGuideBoundsCache>,
+) -> Result<Option<[f64; 6]>, String> {
+    if object.metadata.is_none() {
+        return Ok(None);
+    }
+    if let UploadSource::Shared(mesh) = &object.source
+        && let Some(cached) = cache
+    {
+        let same_mesh = cached
+            .mesh
+            .upgrade()
+            .is_some_and(|previous| Arc::ptr_eq(&previous, mesh));
+        let same_normals = match (&cached.normals, object.selected_normals) {
+            (None, None) => true,
+            (Some(weak), Some(current)) => weak
+                .upgrade()
+                .is_some_and(|previous| Arc::ptr_eq(&previous, current)),
+            _ => false,
+        };
+        if same_mesh && same_normals {
+            return Ok(Some(cached.bounds));
+        }
+    }
+    let bounds = match object.selected_normals {
+        Some(state) if state.matches_mesh(object.mesh) => state.root_loose(),
+        _ => obrush_core::SourceGeometryNormalState::seed(object.mesh)
+            .map_err(|error| format!("Cannot prepare Source mirror guide: {error:?}"))?
+            .root_loose(),
+    };
+    if let UploadSource::Shared(mesh) = &object.source {
+        *cache = Some(SourceGuideBoundsCache {
+            mesh: Arc::downgrade(mesh),
+            normals: object.selected_normals.map(Arc::downgrade),
+            bounds,
+        });
+    }
+    Ok(Some(bounds))
 }
 
 #[derive(Default)]
@@ -2126,6 +2178,7 @@ impl Renderer {
                     .min(gl.get_parameter_i32(glow::MAX_TEXTURE_SIZE)),
                 vertex_array,
                 meshes: HashMap::new(),
+                source_guide_bounds: None,
                 selected_certificates: SelectedNormalCertificates::default(),
                 uv_texture: None,
                 matcaps: HashMap::new(),
@@ -2943,13 +2996,23 @@ impl Renderer {
                     i32::from(style.source_display.selected(object.id, object.active)),
                 );
                 let guide = if style.source_display.guide_enabled(object.active) {
-                    match crate::source_display::guide_plane_uniforms(
-                        &style.source_display,
-                        object.mesh,
-                        object.metadata,
-                        &mv,
-                        &normal,
-                    ) {
+                    let root_loose = if style.source_display.guide_profile
+                        == crate::source_display::GuidePlaneProfile::ActiveSourceObject
+                    {
+                        source_guide_root_loose(object, &mut self.source_guide_bounds)
+                    } else {
+                        Ok(None)
+                    };
+                    match root_loose.and_then(|bounds| {
+                        crate::source_display::guide_plane_uniforms(
+                            &style.source_display,
+                            object.mesh,
+                            object.metadata,
+                            bounds,
+                            &mv,
+                            &normal,
+                        )
+                    }) {
                         Ok(plane) => Some(plane),
                         Err(error) => {
                             self.scene_error = Some(error);
@@ -5235,6 +5298,62 @@ void main() {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn source_guide_cache_tracks_immutable_mesh_and_retained_tree_identity() {
+        let mut source = Mesh::from_obj("v 0 0 0\nv 2 0 0\nv 0 4 0\nf 1 2 3\n").unwrap();
+        source.mask_convention = obrush_core::MaskConvention::UnprotectedF32V1;
+        let mesh = Arc::new(source);
+        let metadata = SceneObjectMetadata {
+            source_center_initialized: true,
+            symmetry_offset: 0.25,
+            affine: obrush_core::ObjectAffineF32V1 {
+                interaction_center: [1., 2., 0.],
+                local_to_world: glam::Mat4::IDENTITY.to_cols_array(),
+            },
+            render: None,
+            picking_policy: obrush_core::SglPickingPolicy::SourceScaleRowV1,
+            origin: None,
+        };
+        let mut cache = None;
+        let object = RenderObject {
+            id: 1,
+            active: true,
+            mesh: &mesh,
+            metadata: Some(&metadata),
+            source: UploadSource::Shared(&mesh),
+            selected_normals: None,
+        };
+        let first = source_guide_root_loose(&object, &mut cache)
+            .unwrap()
+            .unwrap();
+        assert_eq!(
+            source_guide_root_loose(&object, &mut cache).unwrap(),
+            Some(first)
+        );
+        let mut changed = (*mesh).clone();
+        changed.positions[0].x = -2.;
+        let changed = Arc::new(changed);
+        let changed_object = RenderObject {
+            mesh: &changed,
+            source: UploadSource::Shared(&changed),
+            ..object
+        };
+        let second = source_guide_root_loose(&changed_object, &mut cache)
+            .unwrap()
+            .unwrap();
+        assert!(second[0] < first[0]);
+        assert_eq!(second[3], first[3]);
+        let retained = Arc::new(obrush_core::SourceGeometryNormalState::seed(&changed).unwrap());
+        let retained_object = RenderObject {
+            selected_normals: Some(&retained),
+            ..changed_object
+        };
+        assert_eq!(
+            source_guide_root_loose(&retained_object, &mut cache).unwrap(),
+            Some(retained.root_loose())
+        );
+    }
 
     fn render_object(mesh: &Arc<Mesh>, active: bool) -> RenderObject<'_> {
         RenderObject {

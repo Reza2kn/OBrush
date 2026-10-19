@@ -1,18 +1,22 @@
 //! View-only guide and selection uniforms. No brush geometry or stored channels change.
-//! Reference-center preview is explicitly offset zero; source brush offset parity
-//! and non-X symmetry normals remain outside this display implementation.
+//! The active Source-object guide uses its normalized per-object mirror plane.
+//! Legacy brush offsets and non-X symmetry normals remain separate.
 use glam::{DMat3, DMat4, DVec3};
-use obrush_core::{BrushSettings, Document, Mesh, SceneObjectMetadata, SglDisplaySettings};
+use obrush_core::{
+    BrushSettings, Document, Mesh, SceneObjectMetadata, SglDisplaySettings, SourceMirrorPlane,
+};
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub(crate) enum GuidePlaneProfile {
     #[default]
+    ActiveSourceObject,
     CurrentBrush,
     ReferenceCenterPreview,
 }
 impl GuidePlaneProfile {
     pub(crate) fn name(self) -> &'static str {
         match self {
+            Self::ActiveSourceObject => "Active object plane",
             Self::CurrentBrush => "Current brush plane",
             Self::ReferenceCenterPreview => "Reference center preview",
         }
@@ -94,6 +98,7 @@ pub(crate) fn guide_plane_uniforms(
     display: &SourceDisplayStyle,
     mesh: &Mesh,
     metadata: Option<&SceneObjectMetadata>,
+    source_root_loose: Option<[f64; 6]>,
     model_view: &[f32; 16],
     normal_matrix: &[f32; 9],
 ) -> Result<GuidePlaneUniforms, String> {
@@ -106,6 +111,20 @@ pub(crate) fn guide_plane_uniforms(
         return Err("Symmetry guide is outside its finite display range".into());
     }
     let local_origin = match display.guide_profile {
+        GuidePlaneProfile::ActiveSourceObject => match metadata {
+            Some(metadata) => {
+                let bounds = source_root_loose.ok_or("Source mirror guide has no root bounds")?;
+                let plane = SourceMirrorPlane::from_relative_offset(
+                    metadata.affine.interaction_center,
+                    [1.0, 0.0, 0.0],
+                    metadata.symmetry_offset,
+                    bounds,
+                )
+                .map_err(|error| format!("Source mirror guide: {error:?}"))?;
+                DVec3::from_array(plane.origin.map(f64::from))
+            }
+            None => DVec3::new(f64::from(display.brush_offset), 0.0, 0.0),
+        },
         // The actual legacy host converts positions into object-local space,
         // but leaves this offset unchanged before core reflects local X.
         GuidePlaneProfile::CurrentBrush => DVec3::new(f64::from(display.brush_offset), 0.0, 0.0),
@@ -299,7 +318,7 @@ mod tests {
             brush_offset: 1.5,
             ..Default::default()
         };
-        let plane = guide_plane_uniforms(&display, &triangle(), None, &mv, &normal).unwrap();
+        let plane = guide_plane_uniforms(&display, &triangle(), None, None, &mv, &normal).unwrap();
         assert_eq!(plane.origin, [13., 20., 30.]);
         let expected = [
             (3.0f64 / 10.0f64.sqrt()) as f32,
@@ -330,10 +349,99 @@ mod tests {
             ..Default::default()
         };
         let mesh = Mesh::from_obj("v 3 -3 1\nv 5 -3 1\nv 3 -1 1\nf 1 2 3\n").unwrap();
-        let plane = guide_plane_uniforms(&display, &mesh, Some(&metadata), &mv, &normal).unwrap();
+        let plane =
+            guide_plane_uniforms(&display, &mesh, Some(&metadata), None, &mv, &normal).unwrap();
         assert_eq!(plane.origin, [16., 14., 26.]);
         // The existing brush offset is not silently treated as normalized source offset.
         assert_eq!(display.brush_offset, 0.75);
+    }
+    #[test]
+    fn active_source_guide_matches_core_per_object_plane_through_affine_view() {
+        let mut mesh =
+            Mesh::from_obj("v 0 0 0\nv 2 0 0\nv 0 4 0\nv 0 0 6\nf 1 2 3\nf 1 3 4\n").unwrap();
+        mesh.mask_convention = obrush_core::MaskConvention::UnprotectedF32V1;
+        let loose = obrush_core::SourceGeometryNormalState::seed(&mesh)
+            .unwrap()
+            .root_loose();
+        let mut document = Document::empty();
+        for (name, offset) in [("Zero", 0.0), ("Offset", 0.5)] {
+            let metadata = SceneObjectMetadata {
+                source_center_initialized: true,
+                symmetry_offset: offset,
+                affine: ObjectAffineF32V1 {
+                    interaction_center: [1., 2., 3.],
+                    local_to_world: glam::Mat4::IDENTITY.to_cols_array(),
+                },
+                render: None,
+                picking_policy: obrush_core::SglPickingPolicy::SourceScaleRowV1,
+                origin: None,
+            };
+            document
+                .add_subtool_with_metadata(mesh.snapshot(), name, false, metadata)
+                .unwrap();
+        }
+        let (mv, normal) = affine_matrices();
+        let display = SourceDisplayStyle {
+            show_symmetry_line: true,
+            brush_symmetry_enabled: true,
+            brush_offset: -10.,
+            ..Default::default()
+        };
+        assert_eq!(display.guide_profile, GuidePlaneProfile::ActiveSourceObject);
+        let ids: Vec<_> = document
+            .subtool_summaries()
+            .iter()
+            .map(|summary| summary.id)
+            .collect();
+        for (id, offset) in ids.into_iter().zip([0.0, 0.5]) {
+            document.select_subtools(&[id], Some(id)).unwrap();
+            let before = document.to_json().unwrap();
+            let core = document
+                .source_geometry_mirror_plane([1., 2., 3.], offset, [1., 0., 0.])
+                .unwrap();
+            let guide = guide_plane_uniforms(
+                &display,
+                &mesh,
+                document.active_object_metadata(),
+                Some(loose),
+                &mv,
+                &normal,
+            )
+            .unwrap();
+            let expected = DMat4::from_cols_array(&mv.map(f64::from))
+                .transform_point3(DVec3::from_array(core.origin.map(f64::from)))
+                .as_vec3()
+                .to_array();
+            assert_eq!(guide.origin, expected);
+            assert_eq!(document.to_json().unwrap(), before);
+        }
+    }
+    #[test]
+    fn source_guide_rejects_missing_root_bounds_instead_of_drawing_wrong_plane() {
+        let mesh = triangle();
+        let metadata = SceneObjectMetadata {
+            source_center_initialized: true,
+            symmetry_offset: 0.5,
+            affine: ObjectAffineF32V1 {
+                interaction_center: [0.5, 0.5, 0.],
+                local_to_world: glam::Mat4::IDENTITY.to_cols_array(),
+            },
+            render: None,
+            picking_policy: obrush_core::SglPickingPolicy::SourceScaleRowV1,
+            origin: None,
+        };
+        let (mv, normal) = affine_matrices();
+        assert!(
+            guide_plane_uniforms(
+                &SourceDisplayStyle::default(),
+                &mesh,
+                Some(&metadata),
+                None,
+                &mv,
+                &normal,
+            )
+            .is_err()
+        );
     }
     #[test]
     fn nonfinite_or_zero_normal_rejects_without_mutating_geometry() {
@@ -342,13 +450,27 @@ mod tests {
         let (mut mv, normal) = affine_matrices();
         mv[12] = f32::NAN;
         assert!(
-            guide_plane_uniforms(&SourceDisplayStyle::default(), &mesh, None, &mv, &normal)
-                .is_err()
+            guide_plane_uniforms(
+                &SourceDisplayStyle::default(),
+                &mesh,
+                None,
+                None,
+                &mv,
+                &normal
+            )
+            .is_err()
         );
         let (mv, _) = affine_matrices();
         assert!(
-            guide_plane_uniforms(&SourceDisplayStyle::default(), &mesh, None, &mv, &[0.; 9])
-                .is_err()
+            guide_plane_uniforms(
+                &SourceDisplayStyle::default(),
+                &mesh,
+                None,
+                None,
+                &mv,
+                &[0.; 9]
+            )
+            .is_err()
         );
         assert_eq!(serde_json::to_vec(&mesh).unwrap(), before);
     }

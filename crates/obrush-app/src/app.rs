@@ -1622,7 +1622,7 @@ impl OBrushApp {
             })
         });
         let environment_metrics = serde_json::json!({
-            "display_flags":{"show_grid":self.viewport_style.source_display.show_grid,"show_contour":self.viewport_style.source_display.show_contour,"contour_color":self.viewport_style.source_display.contour_color,"show_symmetry_line":self.viewport_style.source_display.show_symmetry_line,"guide_profile":self.viewport_style.source_display.guide_profile.name(),"brush_symmetry_enabled":self.brush.symmetry_x,"brush_offset":self.brush.symmetry_offset,"selected_ids":self.document.selected_subtool_ids(),"guide_scope":"View only; reference-center preview is offset zero, camera and brush parity remain separate"},
+            "display_flags":{"show_grid":self.viewport_style.source_display.show_grid,"show_contour":self.viewport_style.source_display.show_contour,"contour_color":self.viewport_style.source_display.contour_color,"show_symmetry_line":self.viewport_style.source_display.show_symmetry_line,"guide_profile":self.viewport_style.source_display.guide_profile.name(),"brush_symmetry_enabled":self.brush.symmetry_x,"brush_offset":self.brush.symmetry_offset,"selected_ids":self.document.selected_subtool_ids(),"guide_scope":"View only; active Source-object plane uses normalized per-object offset and retained loose tree bounds where available; camera and brush parity remain separate"},
             "environment":{"preset":self.viewport_style.environment.preset,"filmic":self.viewport_style.environment.filmic,"darken_unselected":self.viewport_style.environment.darken_unselected,"custom_background":self.viewport_style.environment.custom_background,"background_mode":self.viewport_style.environment.background_mode.name(),"background_fill":self.viewport_style.environment.background_fill,"background_blur":self.viewport_style.environment.background_blur,"image":self.viewport_style.environment.background_image.as_ref().map(|t|serde_json::json!({"name":t.name,"width":t.width,"height":t.height,"bytes":t.pixels_bottom_up.len()})),"pending_request":self.background_requests.pending(),"gpu":self.renderer.lock().ok().map(|r|r.environment_diagnostics())},
         });
         if let (Some(target), serde_json::Value::Object(environment)) =
@@ -2434,6 +2434,10 @@ impl OBrushApp {
                 .selected_text(self.viewport_style.source_display.guide_profile.name())
                 .show_ui(ui, |ui| {
                     for (value, id) in [
+                        (
+                            crate::source_display::GuidePlaneProfile::ActiveSourceObject,
+                            "active_object",
+                        ),
                         (
                             crate::source_display::GuidePlaneProfile::CurrentBrush,
                             "brush",
