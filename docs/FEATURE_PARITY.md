@@ -1,5 +1,11 @@
 # OBrush feature parity contract
 
+**C225 rejected million-vertex attribute-walk trial:** [The two-run report](SCULPTGL_ATTRIBUTE_WALK_TRIAL_C225.md)
+records a new C224 baseline with a passing full file/history/shape audit and a
+trial with slightly lower upload mean but unchanged 83.3 ms RAF P95 and worse
+release acknowledgment. The trial was removed; all four preregistered
+active-recorder responsiveness gates fail in the new baseline.
+
 **C224 SculptGL-profile binary STL:** [The paired browser report](SCULPTGL_BINARY_STL_C224.md)
 records a shared-Rust writer and zero differing bytes across two imported
 object facets in pinned SculptGL versus OBrush normal-browser downloads.

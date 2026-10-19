@@ -1,5 +1,12 @@
 # SculptGL parity checkpoint
 
+[The C225 million-vertex performance report](SCULPTGL_ATTRIBUTE_WALK_TRIAL_C225.md)
+reruns the current browser build under the frozen 60-second protocol and
+preserves a rejected renderer attribute-walk trial. The full file/history/
+shape audits pass, but RAF P95 remains 83.3 ms and release acknowledgment
+remains above 160 ms in both separate runs. All four preregistered
+active-recorder responsiveness gates fail; stroke-only RAF maximum passes.
+
 [The C224 binary STL report](SCULPTGL_BINARY_STL_C224.md) adds a separate
 SculptGL-profile shared-Rust writer. Two imported-object facets match the
 pinned SculptGL browser export byte-for-byte on one independent fixture;
