@@ -255,8 +255,11 @@ confirms one ~295 ms press-alpha normal-state seed and one ~222 ms first-dab
 seed on the pinned million-vertex fixture, dominated by ordered-tree builds.
 Its matched normal-browser cohorts pass independent 17/17 file/history/shape
 audits but still fail all four responsiveness gates. A seed-reuse
-microbenchmark and exact state/memory contract are pending; no product
-candidate or parity claim follows.
+microbenchmark was admitted, but [MRP05](SCULPTGL_MILLION_SEED_REUSE_MRP05_RESULT.md)
+failed its frozen browser peak-memory rule despite exact state words and
+187/254 ms median native/WASM first-dab timing gains. The separate
+[MRP06 memory repeat](SCULPTGL_MILLION_MEMORY_MRP06_PREREG.md) is pending;
+no product candidate or parity claim follows.
 [The sparse held-pointer Worker trial](SOURCE_WORKER_SPARSE_HELD_TRIAL.md) checks two
 ordinary viewport strokes, warm state, sparse GPU words, public Save/Undo/Redo
 and cancellation on a 40k sphere. It remains query-gated and unpromoted:
