@@ -378,7 +378,11 @@ fn ply_with_source_colors(
     for (_, mesh) in parts {
         for (position, color) in mesh.positions.iter().zip(&mesh.colors) {
             let [x, y, z] = position.to_array();
-            let coordinates = if sketchfab_axes { [x, -z, y] } else { [x, y, z] };
+            let coordinates = if sketchfab_axes {
+                [x, -z, y]
+            } else {
+                [x, y, z]
+            };
             for component in coordinates {
                 output.extend_from_slice(&component.to_le_bytes());
             }
@@ -619,12 +623,8 @@ impl Document {
                 obj_with_source_colors(&parts, options, &mut report)?
             }
             SceneGeometryFormat::Ply(encoding) => joined_mesh(&parts)?.to_ply(encoding)?,
-            SceneGeometryFormat::PlySculptGl => {
-                ply_with_source_colors(&parts, &mut report, false)?
-            }
-            SceneGeometryFormat::PlySketchfab => {
-                ply_with_source_colors(&parts, &mut report, true)?
-            }
+            SceneGeometryFormat::PlySculptGl => ply_with_source_colors(&parts, &mut report, false)?,
+            SceneGeometryFormat::PlySketchfab => ply_with_source_colors(&parts, &mut report, true)?,
             SceneGeometryFormat::Stl(encoding) => joined_mesh(&parts)?.to_stl(encoding)?,
             SceneGeometryFormat::StlSculptGl => joined_mesh(&parts)?.to_stl_sculptgl()?,
         };
@@ -678,13 +678,9 @@ mod tests {
             + b"end_header\n".len();
         assert_eq!(&sketchfab.bytes[..header_end], &normal.bytes[..header_end]);
         let body = &sketchfab.bytes[header_end..];
-        for (vertex, expected) in [
-            [1.0_f32, -3.0, 2.0],
-            [-4.0, 6.0, 5.0],
-            [7.0, -9.0, -8.0],
-        ]
-        .into_iter()
-        .enumerate()
+        for (vertex, expected) in [[1.0_f32, -3.0, 2.0], [-4.0, 6.0, 5.0], [7.0, -9.0, -8.0]]
+            .into_iter()
+            .enumerate()
         {
             let row = &body[vertex * 15..vertex * 15 + 12];
             let actual = std::array::from_fn::<_, 3, _>(|axis| {
@@ -696,7 +692,10 @@ mod tests {
         assert_eq!(&body[27..30], &[0, 255, 0]);
         assert_eq!(&body[42..45], &[0, 0, 255]);
         assert_eq!(&body[..45], &body[45..90]);
-        assert_eq!(&sketchfab.bytes[header_end + 90..], &normal.bytes[header_end + 90..]);
+        assert_eq!(
+            &sketchfab.bytes[header_end + 90..],
+            &normal.bytes[header_end + 90..]
+        );
         assert_eq!(document.to_json().unwrap(), before);
     }
 
