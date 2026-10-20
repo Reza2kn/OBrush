@@ -17,8 +17,9 @@ const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const fixture = path.resolve(".artifacts/user-long-stroke-0.1.4/user.obrush");
-const fixtureBytes = await readFile(fixture);
-if(hash(fixtureBytes)!=="4adc8aa9333903ab0684c1f2e54a995dc6a4e7a3b85fc6e911df9d7deb0c4786") throw Error("Immutable user fixture changed");
+const selectedCases = process.env.OBRUSH_MOVE_CASES?.split(',');
+const fixtureBytes = !selectedCases || selectedCases.includes('user-crossing') ? await readFile(fixture) : null;
+if(fixtureBytes && hash(fixtureBytes)!=="4adc8aa9333903ab0684c1f2e54a995dc6a4e7a3b85fc6e911df9d7deb0c4786") throw Error("Immutable user fixture changed");
 const server = createServer(async (request, response) => {
   try {
     const file = path.resolve(web, '.' + new URL(request.url, 'http://127.0.0.1').pathname.replace(/\/$/, '/index.html'));
@@ -39,7 +40,7 @@ let socket, sequence = 0, session;
 const pending = new Map();
 const result = {
   label, status: 'running', method: 'Isolated CLI headless Chrome/CDP; no desktop, CUA, accessibility, user-tab, or physical device control',
-  out, url, web, profile, owned_pid: child.pid, fixture: {path:fixture,sha256:hash(fixtureBytes),bytes:fixtureBytes.length},
+  out, url, web, profile, owned_pid: child.pid, fixture: fixtureBytes ? {path:fixture,sha256:hash(fixtureBytes),bytes:fixtureBytes.length} : null,
   harness_sha256: hash(await readFile(new URL(import.meta.url))),
   preregistered_contract: {radius:0.037,strength:0.79,symmetry_x:true,spacing_ms:30,release_probe_incremental_delays_ms:[0,200,800],outbound_min_useful_original_displacement:.001,geometry:'Measure quality and folds without asserting reference equivalence; baseline failures are retained',history:'Exact mesh fields and topology',gpu:'Exact rendered VBO versus saved mesh float32'},
   protocol_reference: 'https://chromedevtools.github.io/devtools-protocol/tot/Input/#method-dispatchMouseEvent',
@@ -184,7 +185,7 @@ const dot=(a,b)=>a.reduce((sum,value,axis)=>sum+value*b[axis],0);
 const norm=a=>Math.hypot(...a);
 const percentile=(array,p)=>array.length?array[Math.min(array.length-1,Math.floor((array.length-1)*p))]:0;
 const quality = mesh => {
-  const edges=new Map(),normals=[],qualities=[],bounds=[[],[]];let zero=0,nonfinite=0,volume=0;
+  const edges=new Map(),normals=[],qualities=[],bounds=[[],[]];let zero=0,nonfinite=0,volume=0,minRadialCosine=1;
   for(let axis=0;axis<3;axis++){bounds[0][axis]=Infinity;bounds[1][axis]=-Infinity;}
   for(const point of mesh.positions)for(let axis=0;axis<3;axis++){bounds[0][axis]=Math.min(bounds[0][axis],point[axis]);bounds[1][axis]=Math.max(bounds[1][axis],point[axis]);}
   for(const point of mesh.positions)for(const value of point)if(!Number.isFinite(value))nonfinite++;
@@ -192,6 +193,8 @@ const quality = mesh => {
     const ids=mesh.triangles[face],p=ids.map(index=>mesh.positions[index]);
     const n=cross(sub(p[1],p[0]),sub(p[2],p[0])),area=norm(n),maxEdge=Math.max(norm(sub(p[1],p[0])),norm(sub(p[2],p[1])),norm(sub(p[0],p[2])));
     if(!area)zero++;normals.push(area?n.map(x=>x/area):[0,0,0]);qualities.push(maxEdge?area/(maxEdge*maxEdge):0);volume+=dot(p[0],cross(p[1],p[2]))/6;
+    const centroid=p[0].map((value,axis)=>(value+p[1][axis]+p[2][axis])/3);
+    if(area&&norm(centroid))minRadialCosine=Math.min(minRadialCosine,dot(n,centroid)/(area*norm(centroid)));
     for(let k=0;k<3;k++){const a=ids[k],b=ids[(k+1)%3],key=a<b?`${a},${b}`:`${b},${a}`;const edge=edges.get(key)||{a,b,faces:[],orientations:[]};edge.faces.push(face);edge.orientations.push(a<b?1:-1);edges.set(key,edge);}
   }
   let boundary=0,nonmanifold=0,winding=0,maxAngle=0,over60=0,over90=0,length60=0,length90=0;const lengths=[];
@@ -204,7 +207,7 @@ const quality = mesh => {
     }
   }
   qualities.sort((a,b)=>a-b);lengths.sort((a,b)=>a-b);
-  return {vertices:mesh.positions.length,triangles:mesh.triangles.length,nonfinite_positions:nonfinite,degenerate_triangles:zero,boundary_edges:boundary,nonmanifold_edges:nonmanifold,inconsistent_winding_edges:winding,min_cross_over_max_edge_squared:qualities[0],quality_p01:percentile(qualities,.01),quality_median:percentile(qualities,.5),edge_p95:percentile(lengths,.95),max_edge: lengths.at(-1),max_adjacent_fold_deg:maxAngle,fold_edges_over_60:over60,fold_edges_over_90:over90,fold_edge_length_over_60:length60,fold_edge_length_over_90:length90,signed_volume:volume,bounds};
+  return {vertices:mesh.positions.length,triangles:mesh.triangles.length,nonfinite_positions:nonfinite,degenerate_triangles:zero,boundary_edges:boundary,nonmanifold_edges:nonmanifold,inconsistent_winding_edges:winding,min_cross_over_max_edge_squared:qualities[0],min_radial_face_cosine:minRadialCosine,quality_p01:percentile(qualities,.01),quality_median:percentile(qualities,.5),edge_p95:percentile(lengths,.95),max_edge: lengths.at(-1),max_adjacent_fold_deg:maxAngle,fold_edges_over_60:over60,fold_edges_over_90:over90,fold_edge_length_over_60:length60,fold_edge_length_over_90:length90,signed_volume:volume,bounds};
 };
 const differences = (base,final) => {
   let changed=0,max=0,sum=0,maskedMoved=0,maxMasked=0,mirrored=0,maxMirror=0;
@@ -320,9 +323,10 @@ try {
     {name:'sphere-contact-half-radius',source:'fresh',origin:[-85,-30],waypoints:[[0,0],[90,-35]],steps:40,kind:'pressure-half-radius',pressureRadius:true},
     {name:'sphere-contact-full-radius',source:'fresh',origin:[-85,-30],waypoints:[[0,0],[90,-35]],steps:40,kind:'pressure-full-radius',pressureRadius:true},
     {name:'sphere-eight-repeated-grabs',source:'fresh',contacts:[[-85,-30,30,-10],[-90,-25,25,15],[-80,-35,-30,10],[-75,-25,25,-15],[-95,-20,30,5],[-85,-40,-25,-10],[-75,-40,30,15],[-95,-40,25,-5]],steps:12},
+    {name:'sphere-twelve-repeated-q02',source:'fresh',contacts:[[-85,-30,30,-10],[-90,-25,25,15],[-80,-35,-30,10],[-75,-25,25,-15],[-95,-20,30,5],[-85,-40,-25,-10],[-75,-40,30,15],[-95,-40,25,-5],[-85,-30,35,-10],[-90,-28,30,12],[-78,-35,-25,10],[-80,-22,30,-12]],steps:12},
     {name:'sphere-exit-reentry-outside-release',source:'fresh',origin:[-85,-30],waypoints:[[0,0],[3,-2]],steps:3,kind:'boundary'},
   ];
-  const chosen=process.env.OBRUSH_MOVE_CASES?.split(',');
+  const chosen=selectedCases;
   const documents={};
   for(const plan of result.plan.filter(plan=>!chosen||chosen.includes(plan.name))){
     await fresh();
@@ -345,7 +349,17 @@ try {
     let origin;
     if(plan.contacts){
       trial.input={contacts:[],spacing_ms:30};trial.strokes=[];
-      for(const [x,y,dx,dy]of plan.contacts){origin=[trial.viewport.cx+x,trial.viewport.cy+y];const points=interpolate([[0,0],[dx,dy]],plan.steps).map(p=>[origin[0]+p[0],origin[1]+p[1]]);trial.input.contacts.push({origin,points});trial.strokes.push(await drag(origin,points));}
+      if(plan.name==='sphere-twelve-repeated-q02')trial.contact_snapshots=[];
+      for(const [index,[x,y,dx,dy]]of plan.contacts.entries()){
+        origin=[trial.viewport.cx+x,trial.viewport.cy+y];const points=interpolate([[0,0],[dx,dy]],plan.steps).map(p=>[origin[0]+p[0],origin[1]+p[1]]);
+        trial.input.contacts.push({origin,points});trial.strokes.push(await drag(origin,points));
+        if(plan.name==='sphere-twelve-repeated-q02'){
+          const state=await save(`q02-after-${index+1}`);
+          const image=[4,8,12].includes(index+1)?await screenshot(`q02-after-${index+1}`):null;
+          trial.contact_snapshots.push({index:index+1,project:metadata(state),mesh_sha256:meshHash(state.document),quality:quality(state.document.mesh),screenshot:image});
+          await writeFile(path.join(out,'result.json'),JSON.stringify(result,null,2)+'\n');
+        }
+      }
       trial.stroke={quiet:trial.strokes.every(s=>s.quiet),phases:[],runtime:{frames:trial.strokes.flatMap(s=>s.runtime.frames),events:trial.strokes.flatMap(s=>s.runtime.events),uploads:trial.strokes.flatMap(s=>s.runtime.uploads),longtasks:trial.strokes.flatMap(s=>s.runtime.longtasks)}};
     }else{
       origin=[trial.viewport.cx+plan.origin[0],trial.viewport.cy+plan.origin[1]];
@@ -355,6 +369,10 @@ try {
     trial.release_quiet=trial.stroke.quiet;
     trial.gpu_before_save=await gpuDigest();trial.final_screenshot=await screenshot(plan.name+'-final');
     const final=await save(plan.name+'-final');trial.snapshots.push(metadata(final));
+    if(plan.name==='sphere-twelve-repeated-q02'){
+      await pause(800);const idle=await save('q02-idle');
+      trial.idle_save={...metadata(idle),mesh_sha256:meshHash(idle.document),exact_final:meshHash(idle.document)===meshHash(final.document)};
+    }
     documents[plan.name]=final.document;
     trial.gpu_matches_saved_mesh=trial.gpu_before_save.sha256===packedHash(final.document.mesh);
     trial.final_quality=quality(final.document.mesh);trial.delta=differences(initial.document.mesh,final.document.mesh);
@@ -367,6 +385,12 @@ try {
       }
       let redo;for(let step=0;step<undoChain.length;step++){await chord('z',true);redo=await save(plan.name+'-redo-'+step);trial.snapshots.push(metadata(redo));}
       trial.history={undo_steps:undoChain.length,undo_chain:undoChain,undo_exact_initial:meshHash(undo.document)===meshHash(initial.document),redo_exact_final:meshHash(redo.document)===meshHash(final.document),modifier_phase_states_in_undo:trial.stroke.phases.map(phase=>({before_index:phase.before_index,found:undoChain.some(state=>state.packed_sha256===phase.gpu.sha256)}))};
+      if(plan.name==='sphere-twelve-repeated-q02'){
+        const commits=[meshHash(initial.document)];
+        for(const snapshot of trial.contact_snapshots)if(snapshot.mesh_sha256!==commits.at(-1))commits.push(snapshot.mesh_sha256);
+        trial.history.effective_contacts=commits.length-1;
+        trial.history.matches_effective_sequence=undoChain.length===commits.length-1&&undoChain.every((state,index)=>state.mesh_sha256===commits[commits.length-2-index]);
+      }
       if(plan.name==='sphere-outbound'){
         await click(origin);const clickResult=await save(plan.name+'-no-motion-click');trial.snapshots.push(metadata(clickResult));
         await chord('z');const clickUndo=await save(plan.name+'-no-motion-undo');trial.snapshots.push(metadata(clickUndo));
@@ -382,6 +406,20 @@ try {
     trial.interaction_gates.move_does_not_paint_mask_or_color=Object.values(trial.attributes).every(Boolean);
     if(plan.name==='sphere-outbound')trial.interaction_gates.outbound_has_useful_displacement=trial.delta.max_original_displacement>=.001;
     if(plan.contacts){trial.interaction_gates.repeated_grabs_have_useful_displacement=trial.delta.max_original_displacement>=.001;trial.interaction_gates.repeated_grabs_no_fold_above_90_deg=trial.final_quality.max_adjacent_fold_deg<=90.001;trial.fold_tolerance_deg=.001;}
+    if(plan.name==='sphere-twelve-repeated-q02'){
+      const qualities=trial.contact_snapshots.map(snapshot=>snapshot.quality);
+      trial.visual_gate='pending_offline_original_pixel_review';
+      trial.interaction_gates.q02_fresh_sphere=initial.document.mesh.positions.length===40962&&initial.document.mesh.triangles.length===81920;
+      trial.interaction_gates.q02_backface_culling=trial.settings.backface_culling===true;
+      trial.interaction_gates.q02_four_effective_contacts=trial.history?.effective_contacts>=4;
+      trial.interaction_gates.q02_eight_original_vertices=trial.delta.changed_original_vertices>=8;
+      trial.interaction_gates.q02_finite_closed_noninverted=qualities.every(q=>q.nonfinite_positions===0&&q.degenerate_triangles===0&&q.boundary_edges===0&&q.nonmanifold_edges===0&&q.inconsistent_winding_edges===0&&q.min_radial_face_cosine>0);
+      trial.interaction_gates.q02_quality_floor=qualities.every(q=>q.min_cross_over_max_edge_squared>=.09);
+      trial.interaction_gates.q02_no_fold_over_90=qualities.every(q=>q.fold_edges_over_90===0);
+      trial.interaction_gates.q02_exact_one_undo_per_effective_contact=trial.history?.matches_effective_sequence===true;
+      trial.interaction_gates.q02_trusted_pointer_events=trial.stroke.runtime.events.filter(event=>event.type.startsWith('pointer')).every(event=>event.trusted);
+      trial.interaction_gates.q02_idle_project_exact=trial.idle_save.exact_final;
+    }
     if(plan.kind==='boundary'){trial.interaction_gates.outside_drops_travel=trial.stroke.boundary.outside_exact&&trial.stroke.boundary.reentry_first_point_exact;trial.interaction_gates.reentry_resumes_useful_inside_movement=trial.stroke.boundary.resumed_inside_movement_useful;trial.interaction_gates.outside_release_preserves_displayed_state=trial.stroke.boundary.outside_release_preserves_displayed_state;trial.interaction_gates.outside_release_one_history_step=trial.history?.undo_steps===1;}
     await writeFile(path.join(out,plan.name+'.json'),JSON.stringify(trial,null,2)+'\n');
     await writeFile(path.join(out,'result.json'),JSON.stringify(result,null,2)+'\n');
