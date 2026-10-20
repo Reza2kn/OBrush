@@ -47,3 +47,29 @@ The current sidecar alone lacks the result-bound JSON translator, full
 Before/After/Stable/Undo/Redo harness binding, and runtime checks. The old
 100k `SP-WORKER-01` failure remains unchanged. Until all checks above pass,
 classification is `missing_replay_evidence`.
+
+## C330 static rebase audit, 2026-10-19
+
+Root `0d8af64` adds `SourceGeometryNormalState::refreshed_for_twist` in
+`source_geometry.rs` and `Document::begin_source_twist_stroke` /
+`refresh_source_twist_normals` in `source_geometry_document.rs`; its app
+changes are in `app.rs` and `brush.rs`. A three-way `git merge-tree` over base
+`2156e290`, root `0d8af64`, and sidecar `3c1e9f8` reports both branches
+touching `source_geometry.rs` but **no conflict markers**. C330 inserts its
+method beside `refreshed_after_selected_write`; the sidecar edits
+`SourceGeometryReport`, `SourceGeometryStroke`, and the two existing ordinary
+refresh paths (`apply_access_math` and `refresh_only`). It does not trace,
+alter, or intercept Twist, and C330 does not change Worker transaction/host
+or the ordinary Source Draw normal-refresh call sites.
+
+There is one semantic boundary to guard: C330 can leave a valid retained
+selected-normal producer after a prior Twist. A Worker Draw beginning from
+that edited document must replay from the actual retained baseline, whereas
+the current independent offline oracle seeds static original-face normals
+from the public Before mesh. That oracle is therefore admissible only for a
+fresh fixture with no prior Twist or other edited retained normal state, or
+after a separately validated retained-baseline witness is added. The frozen
+small fixture must start fresh and assert the baseline VBO exactly matches the
+independent static-face seed before the first dab. Do not treat a clean textual
+merge as proof of that semantic condition. No Cargo/browser validation or
+root checkout edit was performed in this audit.
