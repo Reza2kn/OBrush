@@ -55,3 +55,39 @@ The first pinned Source browser attempt failed because the visible checkbox
 label is `Picking pivot`, not the presumed `Pivot`. The second failed its
 frozen viewport gate: after using the normal camera menu the canvas measured
 1024×808, not 1024×768. Neither failed run is counted as a parity result.
+
+The paired normal-browser run then used a bounded visible-window resize to
+reach an **actual measured** 1024×768 scene viewport and performed Source Fit
+before picking, as the frozen protocol requested. The fractional projected
+pixel was rounded to the integer delivered browser pixel; a separate
+Gauss-Jordan inverse view-projection and authored-triangle ray/face
+intersection supplies the expected picked point. This corrects the failed
+setup/oracle, retaining the original `0.005` world-unit tolerance. An earlier
+Source setup at default Reset zoom had 1024×768 but produced a picked center
+roughly `0.055` world units from the chosen sample because the fractional
+pixel represented a large world-space interval. That result is retained as a
+failed protocol setup, not a product failure.
+
+Final bounded receipts:
+
+- Pinned Source: `.artifacts/camera-picked-pivot-c334-source-ui/5447f332-14a1-4d4e-b8c3-d3617ae43a40/result.json`.
+  The integer pixel `(662,499)` picked within `1.27e-6` world units of the
+  independent ray hit; Pivot-on stationary view delta was `0`; Pivot-off
+  center stayed unchanged. Its 40-pixel orbit changed a view component by
+  `0.155615`.
+- OBrush: `.artifacts/camera-picked-pivot-c334-root-ui/d55119cb-d0c9-40a0-a864-ac8845ed817a/result.json`.
+  Pivot-on integer-ray error was at most `1.56e-8` at `(879,510)` and the
+  stationary perspective view delta was `4.44e-16`. Pivot-off center and view
+  stayed unchanged. Orthographic projected XY delta was `0` pixels with
+  independent ray error `1.96e-8`; a second perspective point had ray error
+  `3.44e-8`. All four 40-pixel gestures changed the view; Undo/Redo counts
+  stayed `(2,0)`. Normal Fit and Reset both cleared the picked offset to
+  `[0,0,0]`.
+
+The paired view matrices are not equal: the two browsers reached different
+camera orientation/zoom states through their separate ordinary Fit controls,
+and their 40-pixel orbit deltas differ. This is a picked-pivot candidate
+check, not a full camera-parity result. The frozen rapid single-frame gesture,
+public OBJ byte comparison, DPR-2 case, and browser-backed native package
+remain open. No additional build or package was run after these browser-only
+gate changes.

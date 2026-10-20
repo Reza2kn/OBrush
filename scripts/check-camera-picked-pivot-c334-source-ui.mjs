@@ -3,6 +3,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createHash, randomUUID } from 'node:crypto';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { projectWorld, integerPixelRayHit } from './camera-picked-pivot-c334-ray.mjs';
 
 const root=path.resolve(path.dirname(new URL(import.meta.url).pathname),'..');
 const shared=path.resolve(process.env.OBRUSH_SHARED_ROOT??root);
@@ -22,24 +23,47 @@ const result={status:'running',reference_commit:'8e45dafc0f7906e5238dfffc1a2df74
 const owner=new OwnedCdp(out,result);
 let page;
 const world=[0.4,-0.2,0.052941176];
-const mul=(m,p)=>[m[0]*p[0]+m[4]*p[1]+m[8]*p[2]+m[12]*p[3],m[1]*p[0]+m[5]*p[1]+m[9]*p[2]+m[13]*p[3],m[2]*p[0]+m[6]*p[1]+m[10]*p[2]+m[14]*p[3],m[3]*p[0]+m[7]*p[1]+m[11]*p[2]+m[15]*p[3]];
 const delta=(a,b)=>Math.max(...a.map((v,i)=>Math.abs(v-b[i])));
-async function camera(){return page.evaluate('(()=>{const c=window.__sculptglReferenceInstance.getCamera();return {center:Array.from(c._center),offset:Array.from(c._offset),trans:Array.from(c._trans),view:Array.from(c.getView()),projection:Array.from(c.getProjection()),use_pivot:c.getUsePivot(),projection_type:c.getProjectionType(),fov:c.getFov(),timers:Object.values(c._timers)};})()');}
+async function camera(){return page.evaluate('(()=>{const c=window.__sculptglReferenceInstance.getCamera();return {width:c._width,height:c._height,center:Array.from(c._center),offset:Array.from(c._offset),trans:Array.from(c._trans),view:Array.from(c.getView()),projection:Array.from(c.getProjection()),use_pivot:c.getUsePivot(),projection_type:c.getProjectionType(),fov:c.getFov(),timers:Object.values(c._timers)};})()');}
+async function exactViewport(){
+  const observations=[];
+  for(let i=0;i<6;i++){
+    await page.raf();const v=await page.viewport();observations.push({rect:v.rect,logical_size:v.logical_size,window:v.window});
+    if(v.logical_size?.join(',')==='1024,768'){result.exact_viewport=observations;return v;}
+    const current=(await owner.send('Browser.getWindowBounds',{windowId:page.windowId})).bounds;
+    const width=current.width+1024-v.logical_size[0],height=current.height+768-v.logical_size[1];
+    assert(width>=900&&width<=2300&&height>=600&&height<=1800,'Source bounded viewport resize limits');
+    await owner.send('Browser.setWindowBounds',{windowId:page.windowId,bounds:{width,height,windowState:'normal'}});
+  }
+  result.exact_viewport=observations;throw Error('Exact Source 1024x768 unavailable after bounded window resizes');
+}
 async function run(name,pivot){
   result.camera_controls=await page.evaluate(`Array.from(${page.controller('_ctrlCamera')}._menu.domUl.querySelectorAll('input[type=checkbox]')).map(e=>({text:e.parentElement.textContent,checked:e.checked}))`);
   await page.sourceCheckbox('_ctrlCamera','Picking pivot',pivot);
   await page.sourceButton('_ctrlCamera','Reset (bar)');
   await page.closeMenus();
   for(let i=0;i<20;i++)await page.raf();
-  const before=await camera(),viewport=await page.viewport(),mesh=(await page.state(false)).meshes[0];
+  await exactViewport();
+  await page.sourceButton('_ctrlCamera','Reset (bar)');await page.closeMenus();
+  for(let i=0;i<20;i++)await page.raf();
+  const viewport=await exactViewport();
+  const fit=[viewport.screen[0]+16,viewport.screen[3]-16];
+  await page.pointer('mouseMoved',...fit);
+  for(let tap=0;tap<2;tap++){await page.pointer('mousePressed',...fit,'left',1,{clickCount:tap+1});await page.pointer('mouseReleased',...fit,'left',0,{clickCount:tap+1});}
+  await page.wait(()=>camera(),c=>c.timers.every(v=>v===0||v===-1||v===null),'Source fit timer settled');
+  for(let i=0;i<20;i++)await page.raf();
+  const before=await camera(),mesh=(await page.state(false)).meshes[0];
   assert(viewport.logical_size?.join(',')==='1024,768','Measured 1024x768 reference setup failed');
-  const q=mul(mesh.matrix,[...world,1]),v=mul(before.view,q),clip=mul(before.projection,v),x=viewport.screen[0]+(clip[0]/clip[3]+1)*512,y=viewport.screen[1]+(1-clip[1]/clip[3])*384;
+  assert(mesh.matrix.every((v,i)=>Math.abs(v-(i%5===0?1:0))<1e-8),'Authored reference mesh matrix changed');
+  const projected=projectWorld(before.view,before.projection,world,viewport.screen),[x,y]=projected.map(Math.round);
   assert(x>viewport.screen[0]&&x<viewport.screen[2]&&y>viewport.screen[1]&&y<viewport.screen[3],'Reference projected point outside viewport');
+  const ray=integerPixelRayHit(before.view,before.projection,[x,y],viewport.screen);
   await page.pointer('mouseMoved',x,y);await page.pointer('mousePressed',x,y,'right',2);await page.raf();await page.raf();
   const held=await camera();await page.pointer('mouseReleased',x,y,'right',0);for(let i=0;i<4;i++)await page.raf();const after=await camera();
-  const row={name,pivot,screen:[x,y],before,held,after,mesh_matrix:mesh.matrix,held_view_delta:delta(before.view,held.view),after_view_delta:delta(before.view,after.view)};
+  const row={name,pivot,projected,screen:[x,y],ray,before,held,after,mesh_matrix:mesh.matrix,held_view_delta:delta(before.view,held.view),after_view_delta:delta(before.view,after.view)};
   result.cases.push(row);
   assert(pivot?delta(before.center,held.center)>1e-3:delta(before.center,held.center)===0,name+' center toggle');
+  if(pivot)assert(delta(ray.point,held.center)<=.005,name+' missed independent integer-pixel ray hit');
   assert(row.held_view_delta<=2e-5,name+' view jumped before drag');
   await page.pointer('mouseMoved',x,y);await page.pointer('mousePressed',x,y,'right',2);await page.pointer('mouseMoved',x+40,y,'right',2);await page.pointer('mouseReleased',x+40,y,'right',0);for(let i=0;i<4;i++)await page.raf();
   row.dragged=await camera();row.drag_view_delta=delta(after.view,row.dragged.view);assert(row.drag_view_delta>=1e-4,name+' no 40px orbit');
