@@ -18,6 +18,10 @@ the focused host gate passed exact deformation and Undo/Redo at radius
 browser Move gesture also passed public Save/Undo/Redo, but its fast-event
 burst crossed 11 frames. An actual one-frame consumer witness and visual
 tearing comparison remain open.
+[M03's packaged native attempt](NATIVE_MOVE_M03_NATIVE_REPORT.md) reached
+the visible Move settings and saved an untouched sphere, but computer-control
+coordinate input failed before a stroke. It is inconclusive for native Move
+deformation and rendered tearing.
 
 **Resolution-stroke R02:** [The paired browser report](SCULPTGL_RESOLUTION_STROKE_R02_RESULT.md)
 preserves a failed pinned-reference press/release gate, then measures one
