@@ -8695,7 +8695,7 @@ impl OBrushApp {
                 .and_then(|surface| surface.uv.as_ref())
                 .map_or(0, |uv| uv.coordinates.len());
             ui.add_space(8.0);
-            ui.collapsing("Adaptive topology", |ui| {
+            let adaptive = ui.collapsing("Adaptive topology", |ui| {
                 ui.label(format!(
                     "Converting the visible mesh removes {removed_levels} retained levels, {removed_faces} original face records and {removed_uvs} UV coordinates. Undo restores them."
                 ));
@@ -8718,6 +8718,7 @@ impl OBrushApp {
                     ui.label("Delete or restore the Morph Target before conversion.");
                 }
             });
+            self.track_layer_control("object.dynamic.header", &adaptive.header_response);
         }
         ui.add_space(12.0);
         let rebuild = ui.collapsing(
