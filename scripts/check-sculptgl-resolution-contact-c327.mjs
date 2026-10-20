@@ -83,7 +83,8 @@ const instrument = `(()=>{
     return gl;
   };
 })();`;
-const refInfo = `(()=>{const a=window.__sculptglReferenceInstance;if(!a)return null;const v=a.getViewport(),c=a.getCanvas(),r=c.getBoundingClientRect(),mesh=a.getMesh(),tool=a.getSculptManager().getCurrentTool();return {dpr:devicePixelRatio,ratio:a._pixelRatio,css:[v.clientWidth,v.clientHeight],canvas:[c.width,c.height],rect:[r.left,r.top,r.width,r.height],history:a.getStateManager()._undos.length,meshes:a.getMeshes().length,selected_id:mesh?.getID(),brush:{radius:tool?._radius,intensity:tool?._intensity},vertices:mesh?Array.from(mesh.getVertices()):null,gl_error:window.__resolutionCheck.gl?.getError()??null}})()`;
+const refInfo = `(()=>{const a=window.__sculptglReferenceInstance;if(!a)return null;const v=a.getViewport(),c=a.getCanvas(),r=c.getBoundingClientRect(),mesh=a.getMesh(),tool=a.getSculptManager().getCurrentTool();return {dpr:devicePixelRatio,ratio:a._pixelRatio,css:[v.clientWidth,v.clientHeight],canvas:[c.width,c.height],rect:[r.left,r.top,r.width,r.height],history:a.getStateManager()._undos.length,meshes:a.getMeshes().length,selected_id:mesh?.getID(),brush:{radius:tool?._radius,intensity:tool?._intensity},gl_error:window.__resolutionCheck.gl?.getError()??null}})()`;
+const refVertices = `(()=>{const mesh=window.__sculptglReferenceInstance?.getMesh();return mesh?Array.from(mesh.getVertices()):null})()`;
 const ownInfo = `(()=>{const m=window.obrushBrushMetrics?.(),c=document.getElementById('obrush_canvas');return m?{dpr:devicePixelRatio,ratio:m.viewport_resolution_scale,render:m.viewport_resolution,canvas:[c.width,c.height],canvas_css:[c.clientWidth,c.clientHeight],camera:m.camera,brush:m.brush,history:m.history,selected:m.selected_subtool_ids,active_id:m.active_subtool_id,kind:m.kind,radius:m.radius,strength:m.strength,subtools:m.subtools.length,controls:m.layer_controls,sculpt:window.obrushSculptMetrics?.(),background_cursor:m.background_cursor,scene_error:m.scene_error,gl_error:window.__resolutionCheck.gl?.getError()??null,allocations:window.__resolutionCheck.allocations.slice(-20)}:null})()`;
 async function sample(name, info) {
   await pause(350);
@@ -124,7 +125,7 @@ async function ownResolutionRect() {
 }
 async function save(name) {
   const before = downloadsSeen.length;
-  await click(345/dpr, 26/dpr);
+  await click(345, 26);
   const event = await until(async () => downloadsSeen.slice(before).find(x => x.state === 'completed'), `project save ${name}`);
   const bytes = await readFile(path.join(downloads, event.guid));
   const record = { name, bytes: bytes.length, sha256: sha(bytes), guid:event.guid };
@@ -177,14 +178,17 @@ try {
     const before=await sample(`reference-${ratio}-before`,refInfo);
     const pointer=[Math.round(before.rect[0]+before.rect[2]/2),Math.round(before.rect[1]+before.rect[3]/2)];
     assert(before.dpr===dpr&&before.ratio===ratio&&before.canvas.every((x,i)=>Math.abs(x-Math.round(before.css[i]*ratio))<=1),`reference ${ratio} dimensions`);
-    assert(before.meshes===2&&before.vertices?.length>0&&before.gl_error===0,`reference ${ratio} preflight`);
+    assert(before.meshes===2&&before.selected_id!==undefined&&before.gl_error===0,`reference ${ratio} preflight`);
+    const positionsBefore=await evaluate(refVertices);
+    assert(positionsBefore?.length>0,`reference ${ratio} vertices missing`);
     await contact(pointer);
     const after=await sample(`reference-${ratio}-after`,refInfo);
-    const row={app:'reference',ratio,dpr,pointer,history_before:before.history,history_after:after.history,selected_before:before.selected_id,selected_after:after.selected_id,brush:before.brush,before:before.vertices,after:after.vertices};
+    const positionsAfter=await evaluate(refVertices);
+    const row={app:'reference',ratio,dpr,pointer,history_before:before.history,history_after:after.history,selected_before:before.selected_id,selected_after:after.selected_id,brush:before.brush,before:positionsBefore,after:positionsAfter};
     result.cases.push({contact:{...row,before:undefined,after:undefined,changed_words:row.before.filter((x,i)=>Math.abs(x-row.after[i])>1e-10).length}});
     if(rows.reference.length)assert(JSON.stringify(pointer)===JSON.stringify(rows.reference[0].pointer),'Reference CSS contact changed between ratios');
     rows.reference.push(row);
-    assert(after.history===before.history+1&&after.selected_id===before.selected_id&&after.vertices.length===before.vertices.length&&row.before.some((x,i)=>Math.abs(x-row.after[i])>1e-10),`reference ${ratio} stroke missing`);
+    assert(after.history===before.history+1&&after.selected_id===before.selected_id&&positionsAfter.length===positionsBefore.length&&row.before.some((x,i)=>Math.abs(x-row.after[i])>1e-10),`reference ${ratio} stroke missing`);
   }
   for(const ratio of [1,.5,2]){
     await send('Page.navigate', { url:`${base}/?obrushprofile=sculptgl` });
