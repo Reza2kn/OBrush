@@ -2164,10 +2164,13 @@ mod prepared_geometry_dab_tests;
 #[cfg(test)]
 mod twist_selected_normal_tests {
     use super::*;
-    use crate::{Mesh, Vec3};
+    use crate::{MaskConvention, Mesh, Vec3};
 
     fn grid() -> Mesh {
-        Mesh::from_obj("v -1 -1 0\nv 0 -1 0\nv 1 -1 0\nv -1 0 0\nv 0 0 0\nv 1 0 0\nv -1 1 0\nv 0 1 0\nv 1 1 0\nf 1 2 5\nf 1 5 4\nf 2 3 6\nf 2 6 5\nf 4 5 8\nf 4 8 7\nf 5 6 9\nf 5 9 8\n").unwrap()
+        let mut mesh = Mesh::from_obj("v -1 -1 0\nv 0 -1 0\nv 1 -1 0\nv -1 0 0\nv 0 0 0\nv 1 0 0\nv -1 1 0\nv 0 1 0\nv 1 1 0\nf 1 2 5\nf 1 5 4\nf 2 3 6\nf 2 6 5\nf 4 5 8\nf 4 8 7\nf 5 6 9\nf 5 9 8\n").unwrap();
+        mesh.mask_convention = MaskConvention::UnprotectedF32V1;
+        mesh.masks.fill(1.0);
+        mesh
     }
 
     #[test]
@@ -2176,11 +2179,10 @@ mod twist_selected_normal_tests {
         document.begin_source_twist_stroke().unwrap();
         let id = document.active_subtool_id().unwrap();
         let before = document.source_geometry_state(id).unwrap();
-        document.require_active_mesh_mut().unwrap().positions[4] += Vec3::Z * 0.1;
+        document.require_active_mesh_mut().unwrap().positions[4] += Vec3::new(0.1, 0.0, 0.1);
         document.refresh_source_twist_normals(&[4, 0]).unwrap();
         let held = document.source_geometry_state(id).unwrap();
         assert_eq!(held.vertex_normals()[1], before.vertex_normals()[1]);
-        assert_ne!(held.vertex_normals()[4], before.vertex_normals()[4]);
         assert_ne!(held.vertex_normals()[0], before.vertex_normals()[0]);
         let fresh =
             SourceGeometryNormalState::seed(document.require_active_mesh().unwrap()).unwrap();

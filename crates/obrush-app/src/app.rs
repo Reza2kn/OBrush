@@ -10896,14 +10896,14 @@ impl OBrushApp {
             match outcome {
                 Ok(result) => {
                     if result.changed_vertices > 0 {
-                        if let Some(selected) = normal_selection.as_deref() {
-                            if let Err(error) = self.document.refresh_source_twist_normals(selected)
-                            {
-                                self.document.cancel_stroke();
-                                self.stroke_rejected = true;
-                                self.message = format!("Twist normal refresh rejected: {error}");
-                                return;
-                            }
+                        if let Some(selected) = normal_selection.as_deref()
+                            && let Err(error) = self.document.refresh_source_twist_normals(selected)
+                        {
+                            self.document.cancel_stroke();
+                            self.stroke_rejected = true;
+                            self.message = format!("Twist normal refresh rejected: {error}");
+                            self.finish_stroke_deferred();
+                            return;
                         }
                         self.changed();
                     }
