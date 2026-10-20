@@ -1,5 +1,18 @@
 # OBrush feature parity contract
 
+**Default Smooth remains open:** [C309](SCULPTGL_DEFAULT_SMOOTH_C309_RESULT.md)
+matched the pinned SculptGL positions and active GPU normals exactly for the
+ten vertices touched in its normal-browser off/on comparison, but its frozen
+gate failed because the authored raised control lay outside the brush
+footprint. That fixture failure is retained; a new independent in-footprint
+control and complete rerun are required.
+
+**DPR resolution remains open:** [C307](SCULPTGL_RESOLUTION_DPR_C307_RESULT.md)
+falsified a proposed browser scene-scaling correction: at DPR 2 the existing
+Source scene already targeted its CSS-pixel dimensions. The candidate was
+rejected. DPR 2 Save/round-trip and brush-circle checks did not complete, and
+whole-canvas high-DPI behavior still differs from the reference.
+
 **Scoped Source UV appearance correction:** [C299](SCULPTGL_UV_TINT_C299_RESULT.md)
 removes unintended default-clay multiplication from imported UV images while
 retaining the explicit vertex-color toggle. In the same normal OBrush browser
