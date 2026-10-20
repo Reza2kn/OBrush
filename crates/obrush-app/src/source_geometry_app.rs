@@ -381,7 +381,7 @@ impl OBrushApp {
             }
         }
         if candidate.options.tool == SourceGeometryTool::Drag {
-            ui.label("Source Drag currently supports Alpha None and symmetry off; it moves live vertices under a traveling brush center.");
+            ui.label("Source Drag supports Alpha None and X mirror symmetry; it moves live vertices under a traveling brush center.");
         }
         if let SourceGeometryTool::Brush {
             ref mut clay,
