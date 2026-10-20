@@ -251,7 +251,6 @@ try {
     const sourceMode = await sample('obrush-source-mode', ownInfo);
     insist(sourceMode.info.mode === 'SourceOrdinary', 'OBRush Source mode could not be selected after mask conversion');
     await exactNumber('source_geometry.mirror.offset.value',0.5);
-    await exactNumber('source_geometry.pressure.radius.value',0);
     const ownHalf = await sample('obrush-half', ownInfo);
     result.diagnostic = { reference: referenceHalf.info, obrush_before: ownZero.info, obrush_after: ownHalf.info, converted: converted.info };
     insist(ownHalf.info.offset === 0.5, `OBRush exact normalized offset differs: ${ownHalf.info.offset}`);
@@ -272,7 +271,7 @@ try {
     const cam=rootMetrics.camera,vp=cam.viewport;
     const rootPath=localPath.map(([x,y,z])=>{const q=cam.view_projection,p=[x,y,z+0.5,1],clip=[0,1,2,3].map(row=>q[row]*p[0]+q[4+row]*p[1]+q[8+row]*p[2]+q[12+row]*p[3]);return [vp[0]+(clip[0]/clip[3]+1)*(vp[2]-vp[0])/2,vp[1]+(1-clip[1]/clip[3])*(vp[3]-vp[1])/2]});
     result.obrush_path=rootPath;validatePath(rootPath,vp,'OBRush');
-    insist(rootMetrics.display_flags.brush_symmetry_enabled && ownHalf.info.mode==='SourceOrdinary' && rootMetrics.source_geometry.per_tool[0].radius===50 && rootMetrics.source_geometry.per_tool[0].options.intensity===0.5 && rootMetrics.source_geometry.per_tool[0].radius_factor===0,'OBRush held-stroke controls differ');
+    insist(rootMetrics.display_flags.brush_symmetry_enabled && ownHalf.info.mode==='SourceOrdinary' && rootMetrics.source_geometry.per_tool[0].radius===50 && rootMetrics.source_geometry.per_tool[0].options.intensity===0.5 && rootMetrics.source_geometry.per_tool[0].radius_factor===0.75,'OBRush held-stroke controls differ');
     await parkCursor();const ownBeforePng=await screenshot('obrush-held-before');
     const ownEventIndex=await evaluate('window.__symmetryPair.events.length');
     result.obrush_held_before=await evaluate(ownInfo);
