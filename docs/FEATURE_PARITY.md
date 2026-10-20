@@ -33,6 +33,13 @@ Offline analysis of the Q02 saved mesh found a sharp-looking region with
 minimum local face quality about 0.1 and folds up to 50.26°, both allowed by
 the current Move guard. This is a numerical diagnosis, not a matched visual
 pass.
+[B02's tangential Move guard](NATIVE_MOVE_GUARD_B02_RESULT.md) keeps a
+30° local fold limit for mostly sideways small-radius pulls while retaining
+broader outward-pull behavior. Twelve repeated browser contacts on one fresh
+sphere stayed below 30.01° with useful displacement and exact saved/GPU
+geometry and Undo/Redo. The original user-scale tearing complaint remains
+open: this narrow fixture and camera view cannot prove broad visual quality
+or repair an already folded mesh.
 [CR01's repeated Crease browser comparison](SCULPTGL_CREASE_OVERLAP_CR01_REPORT.md)
 preserves a failed paired protocol because OBrush's actual default pressure
 setting differed from the frozen pressure-off precondition. On one independent
