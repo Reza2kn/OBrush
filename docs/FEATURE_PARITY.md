@@ -235,6 +235,13 @@ the same steady-stroke viewport frames, plus 520.6 ms initial-press input
 and a 367.8 ms early Source dab. Its matched control and diagnostic both
 pass complete file/history/shape checks and fail all four responsiveness
 gates; no product optimization or reference-parity claim follows.
+[The read-only MRP04 cold-path split](SCULPTGL_MILLION_COLD_HOT_MRP04_RESULT.md)
+confirms one ~295 ms press-alpha normal-state seed and one ~222 ms first-dab
+seed on the pinned million-vertex fixture, dominated by ordered-tree builds.
+Its matched normal-browser cohorts pass independent 17/17 file/history/shape
+audits but still fail all four responsiveness gates. A seed-reuse
+microbenchmark and exact state/memory contract are pending; no product
+candidate or parity claim follows.
 [The sparse held-pointer Worker trial](SOURCE_WORKER_SPARSE_HELD_TRIAL.md) checks two
 ordinary viewport strokes, warm state, sparse GPU words, public Save/Undo/Redo
 and cancellation on a 40k sphere. It remains query-gated and unpromoted:
