@@ -246,6 +246,7 @@ try {
     assert(sourceBeforeGrid.visual?.grid===true,`reference ${ratio} initial Show grid was not on`);
     await clickVisibleText('Show grid');
     const sourceAfterGrid=await evaluate(refInfo);
+    result.cases.push({normal_ui_reference_grid_probe:{ratio,before:{selected_id:sourceBeforeGrid.selected_id,vertices:sourceBeforeGrid.vertices,history:sourceBeforeGrid.history,camera_pose:sourceBeforeGrid.camera_pose,brush:sourceBeforeGrid.brush,ratio:sourceBeforeGrid.ratio,grid:sourceBeforeGrid.visual?.grid},after:{selected_id:sourceAfterGrid.selected_id,vertices:sourceAfterGrid.vertices,history:sourceAfterGrid.history,camera_pose:sourceAfterGrid.camera_pose,brush:sourceAfterGrid.brush,ratio:sourceAfterGrid.ratio,grid:sourceAfterGrid.visual?.grid}}});
     assert(sourceAfterGrid.visual?.grid===false,`reference ${ratio} visible Show grid off failed`);
     assert(sourceBeforeGrid.selected_id===sourceAfterGrid.selected_id&&sourceBeforeGrid.vertices===sourceAfterGrid.vertices&&sourceBeforeGrid.history===sourceAfterGrid.history&&JSON.stringify(sourceBeforeGrid.camera_pose)===JSON.stringify(sourceAfterGrid.camera_pose)&&JSON.stringify(sourceBeforeGrid.brush)===JSON.stringify(sourceAfterGrid.brush)&&sourceBeforeGrid.ratio===sourceAfterGrid.ratio,`reference ${ratio} grid UI changed model/camera/brush/ratio`);
     result.cases.push({normal_ui_reference_grid_off:{ratio,selected_id:sourceAfterGrid.selected_id,history:sourceAfterGrid.history,grid:sourceAfterGrid.visual.grid}});
