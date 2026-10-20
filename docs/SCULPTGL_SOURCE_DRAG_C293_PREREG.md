@@ -14,6 +14,19 @@ Record exact OBrush HEAD, WASM/JS hashes and harness/audit SHA-256s before
 any run. C291/C292 hold the Cargo/browser lane until their explicit release;
 all C293 work stays static until then.
 
+The frozen read-only preflight harness is
+`scripts/check-sculptgl-source-drag-c293-settled.mjs` (SHA-256
+`e23767b67d8f8b73ae7559ada388d44267ec668658a7ced81a02302fca17e5c3`)
+and its independent paired scorer is
+`scripts/audit-sculptgl-source-drag-c293-settled.mjs` (SHA-256
+`5feb9b56b1f8c5b04af03ade73aa3749bb0852db9bce9746e5670b5f3a60b51c`).
+The harness uses owned ports, preserves per-side raw results and captures
+public Before/after-hover Save, history and active GPU position/normal words.
+The scorer maps every RGB ID, checks full attributes and triangle topology,
+compares each active GPU position buffer with its own public Save, and uses
+an independent front-orthographic ray/triangle query for the two controlled
+hover positions. Do not treat the preflight as a Drag stroke result.
+
 ## Frozen UI sequence and camera gate
 
 Open fresh documents through each normal browser UI at 1024×808 logical
