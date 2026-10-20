@@ -39,9 +39,9 @@ coordinates, as real repeated brushing does; record actual delivered dabs.
 There is no adaptive recentering after a stroke.
 
 Capture a normal OBrush `.obrush` Save and parked-cursor 1600×1000 screenshot
-at baseline and after each stroke, then after six Undo and six Redo steps to
-verify the first six individual history entries, followed by the remaining
-two Undo/Redo steps and exact baseline/final restoration. In the reference,
+at baseline and after each stroke, then after eight sequential Undo steps and eight sequential Redo steps.
+Compare every intermediate state against the saved checkpoint after the
+corresponding stroke, including exact baseline/final restoration. In the reference,
 read the active mesh's ordered XYZ arrays at the same checkpoints and record
 screenshots. Require OBrush's undo depth to rise by one per stroke; exact
 within-app XYZ restoration for every stage. OBrush Save hashes for the
