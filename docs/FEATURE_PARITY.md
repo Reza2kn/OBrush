@@ -5,6 +5,12 @@ verified one visible Draw gesture with 834 changed vertices, byte-exact
 public Undo/Redo saves, and byte-exact project reopen/save. This does not
 establish the native brush family, pressure, performance, SculptGL, or ZBrush
 gates.
+[M01's native input regression](NATIVE_MOVE_MULTIFRAME_M01_REPORT.md)
+shows a multi-frame Move at radius 0.037/79% with X symmetry changes both
+sides of a fresh sphere with valid faces and exact Undo/Redo. A compressed
+one-frame press/move/release remains a no-op; the earlier automated native
+gesture did not record enough input timing to diagnose its cause or prove
+visual tearing fixed.
 
 **Resolution-stroke R02:** [The paired browser report](SCULPTGL_RESOLUTION_STROKE_R02_RESULT.md)
 preserves a failed pinned-reference press/release gate, then measures one
