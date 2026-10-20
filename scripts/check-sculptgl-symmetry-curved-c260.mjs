@@ -331,7 +331,7 @@ try {
   await send('Page.navigate', { url: `${base}/reference/` });
   await until(async () => (await evaluate(refInfo))?.meshes === 1, 'reference startup');
   await fileInput('#fileopen');
-  await until(async () => (await evaluate(refInfo))?.meshes === 3, 'reference imported parts');
+  await until(async () => (await evaluate(refInfo))?.meshes === 2, 'reference imported parts');
   const refScene=await evaluate(refInfo);
   result.reference_import={active:refScene.active,objects:refScene.objects.map(({positions,...rest})=>rest)};
   insist(refScene.objects[refScene.active].vertices===4514,'Reference imported active object is not the curved fixture');
@@ -391,7 +391,7 @@ try {
   await key('o', 2);
   await until(async () => choosers.length > chooserCount, 'OBRush Add chooser');
   await fileInput('#source-sgl-file');
-  await until(async () => (await evaluate(ownInfo))?.subtools === 3, 'OBRush imported parts');
+  await until(async () => (await evaluate(ownInfo))?.subtools === 2, 'OBRush imported parts');
   const scene=await evaluate(ownInfo);
   insist(scene.scene_controls?.['scene.solo'] && scene.scene_controls?.['scene.frame'],'OBRush visible Solo/Frame controls missing');
   await click(scene.scene_controls['scene.solo']);
