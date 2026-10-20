@@ -27,7 +27,7 @@ use crate::dab_queue::{DabQueue, DabTiming};
 use crate::environment_assets::PRESETS as ENVIRONMENT_PRESETS;
 use crate::environment_gl::BackgroundMode;
 use crate::footprint::ScreenFootprint;
-use crate::move_drag::MoveDrag;
+use crate::move_drag::{MoveDrag, same_frame_move_path};
 use crate::navigation::{NavigationButton, NavigationCapture};
 use crate::renderer::{Camera, CameraMode, Renderer, ShadingMode, ViewportStyle};
 use crate::stroke::StrokeSampler;
@@ -10271,6 +10271,18 @@ impl OBrushApp {
                 i.focused,
             )
         });
+        let same_frame_move = if pressed
+            && released
+            && !down
+            && self.brush.kind == BrushKind::Move
+            && !modifiers.ctrl
+            && !modifiers.shift
+            && !self.last_input_pen
+        {
+            ctx.input(|input| same_frame_move_path(&input.events, rect))
+        } else {
+            None
+        };
         if released {
             self.continuous_clock.stop(StopReason::Released);
             self.brush.pressure = self.contact_pressure.endpoint();
@@ -10322,6 +10334,7 @@ impl OBrushApp {
                     })
                 })
         });
+        let pos = same_frame_move.as_ref().map(|path| path.press).or(pos);
         let Some(pos) = pos.filter(|p| p.is_finite() && (rect.contains(*p) || locked_drag)) else {
             self.pending_scene_selection = None;
             if self.interrupt_source_paint_tail("Source Paint left its viewport") {
@@ -10422,6 +10435,10 @@ impl OBrushApp {
         } else {
             self.brush.kind
         };
+        let press_hovered = same_frame_move.as_ref().map_or_else(
+            || response.hovered(),
+            |path| ctx.layer_id_at(path.press) == Some(response.layer_id),
+        );
         let source_geometry_requested = self.source_geometry_requested(kind);
         let source_requested = kind == BrushKind::Paint
             && self.source_paint_preferences.mode
@@ -10447,7 +10464,7 @@ impl OBrushApp {
             // with the frozen surface from the earlier Move gesture.
             self.finish_stroke();
         }
-        if pressed && response.hovered() && !source_requested {
+        if pressed && press_hovered && !source_requested {
             self.finish_stroke();
             if self.stroke_rejected {
                 return;
@@ -10478,7 +10495,7 @@ impl OBrushApp {
             return;
         }
         if (pressed || restarting)
-            && response.hovered()
+            && press_hovered
             && let Some(hit) = self.pick(pos, rect)
         {
             self.finish_stroke_deferred();
@@ -10737,6 +10754,14 @@ impl OBrushApp {
             });
             if queued && kind != BrushKind::Drag && continuous.is_none() {
                 self.stamp(pos, rect, kind, modifiers.alt, Vec3::ZERO);
+            }
+            if let Some(path) = same_frame_move.as_ref() {
+                for &sample in &path.samples {
+                    if self.stroke.is_none() {
+                        break;
+                    }
+                    self.sample_stroke_to(sample, rect, kind, modifiers.alt);
+                }
             }
         } else if (down || released) && self.stroke.is_some() {
             let (sample_kind, invert) = if released {

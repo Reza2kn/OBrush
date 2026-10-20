@@ -1,6 +1,72 @@
 //! A Move gesture uses the camera plane and depth captured at pointer-down.
-use eframe::egui::Pos2;
+use eframe::egui::{Event, PointerButton, Pos2, Rect};
 use glam::{DVec2, Vec3};
+
+const MAX_SAME_FRAME_MOVE_SAMPLES: usize = 64;
+
+pub(crate) struct SameFrameMovePath {
+    pub press: Pos2,
+    pub samples: Vec<Pos2>,
+}
+
+/// Reconstruct the fast mouse contact that egui's summary reduces to its
+/// release position. Ambiguous or unbounded raw streams retain the old path.
+pub(crate) fn same_frame_move_path(events: &[Event], viewport: Rect) -> Option<SameFrameMovePath> {
+    let mut press = None;
+    let mut samples = Vec::new();
+    let mut moved = false;
+    let mut released = false;
+    for event in events {
+        match event {
+            Event::PointerButton {
+                pos,
+                button: PointerButton::Primary,
+                pressed: true,
+                ..
+            } if press.is_none() && !released && pos.is_finite() && viewport.contains(*pos) => {
+                press = Some(*pos);
+            }
+            Event::PointerMoved(pos) if press.is_some() && !released => {
+                if !pos.is_finite() || !viewport.contains(*pos) {
+                    return None;
+                }
+                let previous = samples.last().copied().or(press).unwrap();
+                if *pos != previous {
+                    moved = true;
+                    if samples.len() == MAX_SAME_FRAME_MOVE_SAMPLES {
+                        return None;
+                    }
+                    samples.push(*pos);
+                }
+            }
+            Event::PointerButton {
+                pos,
+                button: PointerButton::Primary,
+                pressed: false,
+                ..
+            } if press.is_some() && !released && pos.is_finite() && viewport.contains(*pos) => {
+                released = true;
+                if samples.last().copied().or(press) != Some(*pos) {
+                    if samples.len() == MAX_SAME_FRAME_MOVE_SAMPLES {
+                        return None;
+                    }
+                    samples.push(*pos);
+                }
+            }
+            Event::PointerButton { .. } | Event::PointerGone => return None,
+            Event::PointerMoved(_) if released => return None,
+            _ => {}
+        }
+    }
+    if moved && released {
+        Some(SameFrameMovePath {
+            press: press?,
+            samples,
+        })
+    } else {
+        None
+    }
+}
 
 pub(crate) struct MoveDrag {
     right: Vec3,
@@ -83,6 +149,7 @@ mod tests {
         time: f64,
         accepted_moves: usize,
         last_pointer: Option<(bool, bool, bool, Pos2)>,
+        recover_same_frame: bool,
     }
 
     impl NativeMoveFrames {
@@ -105,12 +172,14 @@ mod tests {
                 time: 0.0,
                 accepted_moves: 0,
                 last_pointer: None,
+                recover_same_frame: true,
             }
         }
 
         fn frame(&mut self, events: Vec<Event>, center: Vec3) {
             self.time += 1.0 / 60.0;
-            let _ = self.ctx.run(
+            let ctx = self.ctx.clone();
+            let _ = ctx.run(
                 egui::RawInput {
                     screen_rect: Some(Rect::from_min_size(Pos2::ZERO, Vec2::new(900.0, 700.0))),
                     time: Some(self.time),
@@ -133,7 +202,18 @@ mod tests {
                         });
                         let Some(pos) = pos else { return };
                         self.last_pointer = Some((pressed, down, released, pos));
-                        if pressed && response.hovered() {
+                        let same_frame = if self.recover_same_frame && pressed && released && !down
+                        {
+                            ctx.input(|input| same_frame_move_path(&input.events, rect))
+                        } else {
+                            None
+                        };
+                        let press_hovered = same_frame.as_ref().map_or_else(
+                            || response.hovered(),
+                            |path| ctx.layer_id_at(path.press) == Some(response.layer_id),
+                        );
+                        let pos = same_frame.as_ref().map_or(pos, |path| path.press);
+                        if pressed && press_hovered {
                             self.document.begin_stroke();
                             let stroke = self
                                 .document
@@ -143,17 +223,13 @@ mod tests {
                                 .unwrap();
                             self.gesture =
                                 Some((stroke, MoveDrag::new(Vec3::X, Vec3::Y, 0.0004), pos));
-                        } else if (down || released)
-                            && let Some((stroke, drag, previous)) = self.gesture.as_mut()
-                        {
-                            let total = drag.advance(*previous, pos);
-                            let result = stroke.apply(
-                                self.document.require_active_mesh_mut().unwrap(),
-                                total,
-                                &self.settings,
-                            );
-                            self.accepted_moves += usize::from(result.changed_vertices > 0);
-                            *previous = pos;
+                            if let Some(path) = same_frame.as_ref() {
+                                for &sample in &path.samples {
+                                    self.sample_move(sample);
+                                }
+                            }
+                        } else if (down || released) && self.gesture.is_some() {
+                            self.sample_move(pos);
                         }
                         if released && self.gesture.take().is_some() {
                             self.document.end_stroke();
@@ -161,6 +237,23 @@ mod tests {
                     });
                 },
             );
+        }
+
+        fn sample_move(&mut self, pos: Pos2) {
+            let (stroke, drag, previous) = self.gesture.as_mut().unwrap();
+            let total = drag.advance(*previous, pos);
+            let result = stroke.apply(
+                self.document.require_active_mesh_mut().unwrap(),
+                total,
+                &self.settings,
+            );
+            self.accepted_moves += usize::from(result.changed_vertices > 0);
+            *previous = pos;
+            self.document
+                .require_active_mesh()
+                .unwrap()
+                .validate()
+                .unwrap();
         }
     }
 
@@ -246,6 +339,7 @@ mod tests {
     #[test]
     fn compressed_native_press_move_release_observes_no_held_move_frame() {
         let mut host = NativeMoveFrames::new();
+        host.recover_same_frame = false;
         let center = front_off_axis_point(host.document.require_active_mesh().unwrap());
         let before = host.document.to_json().unwrap();
         let start = Pos2::new(450.0, 350.0);
@@ -264,5 +358,238 @@ mod tests {
         assert_eq!(host.accepted_moves, 0);
         assert_eq!(host.document.to_json().unwrap(), before);
         assert_eq!(host.document.history_depths(), (0, 0));
+    }
+
+    #[test]
+    fn same_frame_move_path_accepts_only_one_bounded_ordered_contact() {
+        let rect = Rect::from_min_size(Pos2::new(100.0, 100.0), Vec2::new(700.0, 500.0));
+        let start = Pos2::new(450.0, 350.0);
+        let end = Pos2::new(490.0, 334.0);
+        let valid = vec![
+            pointer(start, true),
+            Event::PointerMoved(end),
+            pointer(end, false),
+        ];
+        let path = same_frame_move_path(&valid, rect).unwrap();
+        assert_eq!(path.press, start);
+        assert_eq!(path.samples, vec![end]);
+        let cases = [
+            vec![pointer(start, true), pointer(start, false)],
+            vec![
+                pointer(Pos2::new(99.0, 350.0), true),
+                Event::PointerMoved(end),
+                pointer(end, false),
+            ],
+            vec![
+                pointer(start, true),
+                Event::PointerMoved(end),
+                pointer(Pos2::new(801.0, 334.0), false),
+            ],
+            vec![
+                pointer(start, true),
+                Event::PointerGone,
+                Event::PointerMoved(end),
+                pointer(end, false),
+            ],
+            vec![
+                pointer(start, false),
+                pointer(start, true),
+                Event::PointerMoved(end),
+            ],
+            vec![
+                pointer(start, true),
+                pointer(start, true),
+                Event::PointerMoved(end),
+                pointer(end, false),
+            ],
+            vec![
+                pointer(start, true),
+                pointer(start, false),
+                Event::PointerMoved(end),
+            ],
+            vec![
+                pointer(start, true),
+                Event::PointerButton {
+                    pos: start,
+                    button: PointerButton::Secondary,
+                    pressed: true,
+                    modifiers: Modifiers::NONE,
+                },
+                Event::PointerMoved(end),
+                pointer(end, false),
+            ],
+        ];
+        for events in cases {
+            assert!(same_frame_move_path(&events, rect).is_none());
+        }
+        let mut overflowing = vec![pointer(start, true)];
+        for i in 1..=65 {
+            overflowing.push(Event::PointerMoved(start + Vec2::new(i as f32, 0.0)));
+        }
+        overflowing.push(pointer(end, false));
+        assert!(same_frame_move_path(&overflowing, rect).is_none());
+    }
+
+    #[test]
+    fn same_frame_native_egui_move_deforms_and_has_one_exact_undo_step() {
+        let mut host = NativeMoveFrames::new();
+        let center = front_off_axis_point(host.document.require_active_mesh().unwrap());
+        let before = host.document.to_json().unwrap();
+        let original = host.document.require_active_mesh().unwrap().snapshot();
+        let start = Pos2::new(450.0, 350.0);
+        let mut events = vec![pointer(start, true)];
+        for step in 1..=8 {
+            events.push(Event::PointerMoved(
+                start + Vec2::new(step as f32 * 5.0, -step as f32 * 2.0),
+            ));
+        }
+        events.push(pointer(start + Vec2::new(40.0, -16.0), false));
+        host.frame(events, center);
+        assert!(host.accepted_moves >= 1);
+        assert!(host.gesture.is_none());
+        let mesh = host.document.require_active_mesh().unwrap();
+        let changed: Vec<_> = original
+            .positions
+            .iter()
+            .zip(&mesh.positions)
+            .filter(|(before, after)| before.distance(**after) > 1e-7)
+            .collect();
+        assert!(changed.len() >= 8);
+        assert!(changed.iter().any(|(before, _)| before.x > 0.01));
+        assert!(changed.iter().any(|(before, _)| before.x < -0.01));
+        for triangle in &mesh.triangles {
+            let [a, b, c] = triangle.map(|index| mesh.positions[index as usize]);
+            let cross = (b - a).cross(c - a);
+            assert!(cross.length() > 1e-10);
+            assert!(cross.dot((a + b + c) / 3.0) > 0.0);
+        }
+        let after = host.document.to_json().unwrap();
+        assert_ne!(after, before);
+        assert_eq!(host.document.history_depths(), (1, 0));
+        assert!(host.document.undo());
+        assert_eq!(host.document.to_json().unwrap(), before);
+        assert!(host.document.redo());
+        assert_eq!(host.document.to_json().unwrap(), after);
+    }
+
+    #[test]
+    fn stationary_and_rejected_same_frame_contacts_do_not_edit_or_spend_history() {
+        let start = Pos2::new(450.0, 350.0);
+        let end = Pos2::new(490.0, 334.0);
+        let mut overflowing = vec![pointer(start, true)];
+        for i in 1..=65 {
+            overflowing.push(Event::PointerMoved(start + Vec2::new(i as f32, 0.0)));
+        }
+        overflowing.push(pointer(end, false));
+        let cases = [
+            vec![pointer(start, true), pointer(start, false)],
+            vec![
+                pointer(Pos2::new(99.0, 350.0), true),
+                Event::PointerMoved(end),
+                pointer(end, false),
+            ],
+            vec![
+                pointer(start, true),
+                Event::PointerMoved(end),
+                pointer(Pos2::new(801.0, 334.0), false),
+            ],
+            vec![
+                pointer(start, true),
+                Event::PointerGone,
+                Event::PointerMoved(end),
+                pointer(end, false),
+            ],
+            vec![
+                pointer(start, true),
+                Event::PointerButton {
+                    pos: start,
+                    button: PointerButton::Secondary,
+                    pressed: true,
+                    modifiers: Modifiers::NONE,
+                },
+                Event::PointerMoved(end),
+                pointer(end, false),
+            ],
+            overflowing,
+        ];
+        for events in cases {
+            let mut host = NativeMoveFrames::new();
+            let center = front_off_axis_point(host.document.require_active_mesh().unwrap());
+            let before = host.document.to_json().unwrap();
+            host.frame(events, center);
+            assert_eq!(host.accepted_moves, 0);
+            assert_eq!(host.document.to_json().unwrap(), before);
+            assert_eq!(host.document.history_depths(), (0, 0));
+        }
+    }
+
+    #[test]
+    fn repeated_small_radius_move_pulls_record_face_quality_without_folds() {
+        let mut document = Document::new(Mesh::sphere(6));
+        let before = document.to_json().unwrap();
+        let settings = BrushSettings {
+            kind: BrushKind::Move,
+            radius: 0.037,
+            strength: 0.79,
+            symmetry_x: true,
+            backface_culling: true,
+            culling_axis: Some(Vec3::Z),
+            adaptive_detail: true,
+            ..BrushSettings::default()
+        };
+        eprintln!("pull,changed_vertices,min_quality,min_radial_cosine");
+        for pull in 1..=12 {
+            let original = document.require_active_mesh().unwrap().snapshot();
+            let center = front_off_axis_point(document.require_active_mesh().unwrap());
+            let mut stroke = document
+                .require_active_mesh()
+                .unwrap()
+                .prepare_move_stroke(center, center, &settings)
+                .unwrap();
+            let mut drag = MoveDrag::new(Vec3::X, Vec3::Y, 0.0004);
+            let mut previous = Pos2::new(450.0, 350.0);
+            document.begin_stroke();
+            for step in 1..=8 {
+                let pos = Pos2::new(450.0 + step as f32 * 5.0, 350.0 - step as f32 * 2.0);
+                let total = drag.advance(previous, pos);
+                stroke.apply(
+                    document.require_active_mesh_mut().unwrap(),
+                    total,
+                    &settings,
+                );
+                document.require_active_mesh().unwrap().validate().unwrap();
+                previous = pos;
+            }
+            document.end_stroke();
+            let mesh = document.require_active_mesh().unwrap();
+            let changed = original
+                .positions
+                .iter()
+                .zip(&mesh.positions)
+                .filter(|(a, b)| a.distance(**b) > 1e-7)
+                .count();
+            let mut min_quality = f32::INFINITY;
+            let mut min_radial_cosine = f32::INFINITY;
+            for triangle in &mesh.triangles {
+                let [a, b, c] = triangle.map(|index| mesh.positions[index as usize]);
+                let ab = b - a;
+                let bc = c - b;
+                let ca = a - c;
+                let cross = ab.cross(c - a);
+                assert!(cross.length() > 1e-10);
+                let quality = 2.0 * 3.0_f32.sqrt() * cross.length()
+                    / (ab.length_squared() + bc.length_squared() + ca.length_squared());
+                let radial_cosine = cross.normalize().dot(((a + b + c) / 3.0).normalize());
+                min_quality = min_quality.min(quality);
+                min_radial_cosine = min_radial_cosine.min(radial_cosine);
+            }
+            eprintln!("{pull},{changed},{min_quality:.8},{min_radial_cosine:.8}");
+            assert!(min_radial_cosine > 0.0, "pull {pull} folded a face");
+            assert_eq!(document.history_depths(), (pull, 0));
+        }
+        for _ in 0..12 {
+            assert!(document.undo());
+        }
+        assert_eq!(document.to_json().unwrap(), before);
     }
 }
