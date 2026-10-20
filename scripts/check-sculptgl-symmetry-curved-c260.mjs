@@ -211,6 +211,11 @@ async function sourceSceneControl(name){
   insist(control,`Reference visible ${name} input missing: ${JSON.stringify(controls)}`);
   return control.rect;
 }
+async function openReferenceScene(){
+  const x=197,y=20; // Captured visible Scene menu at 1600x1000 DPR1.
+  for(const type of ['mousePressed','mouseReleased'])await send('Input.dispatchMouseEvent',{type,x,y,button:'left',clickCount:1});
+  await pause(160);
+}
 
 const instrument = `(()=>{
   const original=HTMLCanvasElement.prototype.getContext;
@@ -335,8 +340,12 @@ try {
   const refScene=await evaluate(refInfo);
   result.reference_import={active:refScene.active,selected:refScene.selected,objects:refScene.objects.map(({positions,...rest})=>rest)};
   insist(refScene.objects[refScene.active].vertices===4514,'Reference imported active object is not the curved fixture');
+  await screenshot('reference-visible-before-solo');
+  await openReferenceScene();
+  await screenshot('reference-scene-menu');
   await click(await sourceSceneControl('_ctrlIsolate'));
   const isolatedReference=await evaluate(refInfo);
+  await screenshot('reference-visible-after-solo');
   result.reference_isolation_attempt={active:isolatedReference.active,selected:isolatedReference.selected,visible:isolatedReference.objects.map(m=>m.visible),checkbox:await evaluate("window.__sculptglReferenceInstance.getGui()._ctrlScene._ctrlIsolate.getValue()")};
   insist(isolatedReference.objects.filter(m=>m.visible).length===1&&isolatedReference.objects[isolatedReference.active].visible,'Reference active curved mesh was not isolated');
   result.reference_isolation={active:isolatedReference.active,visible:isolatedReference.objects.map(m=>m.visible)};
@@ -399,6 +408,7 @@ try {
   const isolatedOwn=await evaluate(ownInfo);insist(isolatedOwn.solo===true,'OBRush active-part solo did not enable');
   await click(isolatedOwn.scene_controls['scene.frame']);
   await pause(350);result.obrush_isolation={solo:(await evaluate(ownInfo)).solo,active:(await evaluate(ownInfo)).active};
+  await click(await visibleLayerControl('display.symmetry_line'));
   const ownZero = await sample('obrush-zero', ownInfo);
   insist(ownZero.info.scene_error === null, `OBRush imported Source guide error: ${ownZero.info.scene_error}`);
   insist(ownZero.gpu.draws.some(draw => draw.count > 1000 && draw.obrush_enabled === 1 && draw.obrush_origin), 'OBRush imported active part has no guide GPU plane');
@@ -448,10 +458,10 @@ try {
     for(let attempt=0;attempt<3;attempt++){
       const relative=Math.abs(span(rootPath)/targetSpan-1);
       if(relative<=result.frozen.camera_span_relative_tolerance)break;
-      const oldZoom=rootMetrics.camera.source_framing?.projection_zoom;
-      insist(Number.isFinite(oldZoom)&&oldZoom>0,'Source camera zoom unavailable');
+      const oldZoom=rootMetrics.camera.orthographic?2/rootMetrics.camera.projection[5]:rootMetrics.camera.source_framing?.projection_zoom;
+      insist(Number.isFinite(oldZoom)&&oldZoom>0,'Source camera visible scale unavailable');
       const nextZoom=Number((oldZoom*span(rootPath)/targetSpan).toPrecision(12));
-      const rect=await visibleLayerControl('camera.projection_zoom');
+      const rect=await visibleLayerControl(rootMetrics.camera.orthographic?'camera.view_height':'camera.projection_zoom');
       await enterNumber(rect,nextZoom);await frame();await pause(150);
       rootMetrics=await evaluate('window.obrushBrushMetrics()');rootPath=projectRoot(rootMetrics.camera);
       result.camera_match.typed.push({attempt:attempt+1,old_zoom:oldZoom,typed_zoom:nextZoom,reported_zoom:rootMetrics.camera.source_framing?.projection_zoom,span_css:span(rootPath),camera:rootMetrics.camera});
