@@ -381,7 +381,7 @@ impl OBrushApp {
             }
         }
         if candidate.options.tool == SourceGeometryTool::Drag {
-            ui.label("Source Drag currently supports Alpha None and symmetry off; it moves live vertices under a traveling brush center.");
+            ui.label("Source Drag supports Alpha None and X mirror symmetry; it moves live vertices under a traveling brush center.");
         }
         if let SourceGeometryTool::Brush {
             ref mut clay,
@@ -410,6 +410,8 @@ impl OBrushApp {
             && candidate.options.tool != SourceGeometryTool::Drag
         {
             self.source_geometry_alpha_panel(ui);
+        } else if current.mode == SourceGeometryMode::SourceOrdinary {
+            self.source_geometry_mirror_control(ui);
         }
         let mut continuous = self.preferences.global().continuous;
         let r = ui.checkbox(
@@ -909,7 +911,7 @@ impl OBrushApp {
 }
 
 impl OBrushApp {
-    fn source_geometry_alpha_panel(&mut self, ui: &mut egui::Ui) {
+    fn source_geometry_mirror_control(&mut self, ui: &mut egui::Ui) {
         let mut mirror = self.brush.symmetry_x;
         let r = ui.checkbox(&mut mirror, "X mirror symmetry");
         self.track_source_geometry_control("source_geometry.mirror", &r);
@@ -918,6 +920,10 @@ impl OBrushApp {
             self.brush.symmetry_x = mirror;
             self.commit_brush_view();
         }
+    }
+
+    fn source_geometry_alpha_panel(&mut self, ui: &mut egui::Ui) {
+        self.source_geometry_mirror_control(ui);
         let mut selection = self.preferences.tool(self.preferences.selected()).alpha;
         let label = alpha_selection_name(&self.preferences, selection).unwrap_or("None".into());
         let label = crate::ui_text::alpha_selected_name(selection, &label);

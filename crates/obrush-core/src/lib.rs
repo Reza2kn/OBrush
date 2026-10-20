@@ -212,12 +212,12 @@ pub use paint_response::{
 };
 
 pub use source_geometry::{
-    project_source_drag_center, ProjectedSourceDragCenter, SourceClayOrderPolicy,
-    SourceFlattenPlane, SourceGeometryError, SourceGeometryNoop, SourceGeometryNormalState,
-    SourceGeometryOptions, SourceGeometryPass, SourceGeometryPhaseTime, SourceGeometryReport,
-    SourceGeometryStroke, SourceGeometryTool, MAX_SOURCE_GEOMETRY_OPERATION_BYTES,
-    MAX_SOURCE_GEOMETRY_SCRATCH_BYTES, MAX_SOURCE_GEOMETRY_STATE_BYTES,
-    SOURCE_CLAY_SINGLE_LEAF_FACES, SOURCE_GEOMETRY_CHUNK_ROWS,
+    project_source_drag_center, project_source_drag_center_mirrored, ProjectedSourceDragCenter,
+    SourceClayOrderPolicy, SourceFlattenPlane, SourceGeometryError, SourceGeometryNoop,
+    SourceGeometryNormalState, SourceGeometryOptions, SourceGeometryPass, SourceGeometryPhaseTime,
+    SourceGeometryReport, SourceGeometryStroke, SourceGeometryTool,
+    MAX_SOURCE_GEOMETRY_OPERATION_BYTES, MAX_SOURCE_GEOMETRY_SCRATCH_BYTES,
+    MAX_SOURCE_GEOMETRY_STATE_BYTES, SOURCE_CLAY_SINGLE_LEAF_FACES, SOURCE_GEOMETRY_CHUNK_ROWS,
 };
 pub use source_ordered_tree::{
     SourceLeafHandle, SourceOrderedCell, SourceOrderedSelection, SourceOrderedTreeSnapshot,
