@@ -103,3 +103,16 @@ plus formatter, workspace tests, strict native/WASM Clippy, WASM check, web
 build and a fresh ordinary-browser check. Even a passing C308 fixture leaves
 radius zoom/DPR, intensity matrix, held Alt/N, Culling, Lock, alpha, dynamic
 topology, physical pen, sustained performance and all ZBrush parity open.
+
+## Static harness freeze
+
+These scripts were completed and passed `node --check` before browser use;
+their SHA-256 values are part of the admission contract. The capture is run
+with `--one-move --side=source|root --negative=off|on`; each root run also
+requires `--match-source` pointing to its same-polarity Source receipt.
+
+| Script | SHA-256 |
+| --- | --- |
+| `scripts/check-sculptgl-source-pinch-c308-ui.mjs` | `aeae1ad85ed77bbb4f5c704cd5370ed4dc11862a2f0fffad63411e0fc4c6f691` |
+| `scripts/audit-sculptgl-source-pinch-c308-ui.mjs` | `36062902b05af06f9f3b775e088aaefe158989fc8e71ded37083c14ce8d73b4e` |
+| `scripts/audit-sculptgl-source-pinch-c308-matrix.mjs` | `8a7d75549830d89f9ee4e6c5b70d065c7dd4bc673a5aef9f682ec73fbd284022` |
