@@ -1,4 +1,4 @@
-# C334 static preflight receipt — candidate not promoted
+# C334 picked pivot receipt — scoped candidate integrated, parity open
 
 Run on 2026-10-20 in the isolated `codex/camera-picked-pivot` worktree, before
 Cargo or browser validation:
@@ -38,8 +38,9 @@ the native command passed on rerun. `cargo fmt --all -- --check`, strict
 `wasm32-unknown-unknown` workspace/lib Clippy, and the official
 `scripts/build-web.sh` also passed. The built portable browser WASM SHA-256 is
 `769f8aa9544e7e5c1ea39c23e9e92184743734d5a4d02cb3d8bad3cb0b90bb6a`.
-The normal browser protocol and macOS package gate are still pending; this is
-not a completed camera parity result.
+At that stage the normal browser protocol and macOS package gate were still
+pending; the later sections record the browser run. This is not a completed
+camera parity result.
 
 The first owned OBrush normal-browser run imported the authored four-vertex
 OBJ through the visible file route at 1024×768 and passed the stationary
@@ -91,3 +92,12 @@ check, not a full camera-parity result. The frozen rapid single-frame gesture,
 public OBJ byte comparison, DPR-2 case, and browser-backed native package
 remain open. No additional build or package was run after these browser-only
 gate changes.
+
+After the candidate was merged with the topology and File export changes, the
+root workspace test suite, strict native/WASM Clippy, official web build and
+local macOS package passed. That combined build has portable WASM SHA-256
+`d61ca3e060dad45fd769afc6fa460f50d1d2ebd432ab121b7a86b09b5558e6d2`
+and ad-hoc-signed macOS executable SHA-256
+`61421c5c1102d7102e1fc25f065fd4189de45d454cee90753b0d21d1995bbcc2`.
+The native package was built and signature-verified, but its picked-pivot
+interaction has not been exercised in a native window.

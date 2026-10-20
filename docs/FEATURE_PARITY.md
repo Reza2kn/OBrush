@@ -1,5 +1,22 @@
 # OBrush feature parity contract
 
+**Current scoped additions, full rows open:** [C334](SCULPTGL_CAMERA_PICKED_PIVOT_C334_STATIC_RESULT.md)
+adds picked orbit pivots in Source framing. Authored-mesh normal-browser checks
+in OBrush and pinned SculptGL matched independent integer-pixel ray hits within
+`1.27e-6` world units and kept the view fixed on press; the paired final camera
+pose, rapid input, DPR-2, public OBJ and browser-backed native package gates
+remain open.
+[T01/T02](SCULPTGL_DYNAMIC_CONVERSION_T02_UI_RESULT.md) add an explicit,
+undoable conversion from retained/UV geometry to adaptive triangles with a
+visible loss acknowledgement. The shared-core fixture, full workspace tests,
+and the frozen integrated normal-browser gate passed, including rendered loss
+counts, repeat-conversion guard, File Open/Save/Undo/Redo and reload. Pinned
+SculptGL conversion and deactivation remain unpaired.
+[C338](SCULPTGL_SKETCHFAB_PLY_C338_RESULT.md) adds an offline, all-part PLY
+export with SculptGL's Sketchfab axis orientation. An ordinary OBrush browser
+gate passed exact XYZ/RGB/face bytes and unchanged project history; pinned
+payload comparison, account upload and the full File workflow remain open.
+
 **Pinch and Twist remain open:** [C329's Pinch pair](SCULPTGL_SOURCE_PINCH_C329_RESULT.md)
 matched both Negative settings within `7.45e-9` XYZ and `8.73e-11` displayed
 normal difference on 45 changed vertices, with equal admitted dab counts. Its
