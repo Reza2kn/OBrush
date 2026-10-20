@@ -75,8 +75,13 @@ but the paired final-pick gate failed because OBrush's new camera transition
 had not settled. No Drag product correction was admitted.
 [C293's settled-camera preflight](SCULPTGL_SOURCE_DRAG_C293_PREFLIGHT_RESULT.md)
 passes paired projection, all four rays, radius, independent picks and
-read-only Save/GPU/history checks; a held-stroke geometry and Redo-normal
-comparison is still required before a Drag candidate can be admitted.
+read-only Save/GPU/history checks. Its first candidate browser run stopped at
+an [unrelated harness setup error](SCULPTGL_SOURCE_DRAG_C293_CANDIDATE_SETUP_FAILURE.md).
+[The separately frozen C295 normal-UI pair](SCULPTGL_SOURCE_DRAG_C295_RESULT.md)
+then passed held geometry, GPU display normals, public Save/Undo/Redo and
+selected-union Redo-normal checks on that fixture (maximum paired XYZ
+`4.80e-8`). The opt-in Source Drag route is integrated; other settings,
+topology and sustained performance leave the full row open.
 
 **Scoped Inflate witness:** [The C269 direct pinned-method report](SCULPTGL_INFLATE_PAIR_C269.md)
 records the reference's positive, negative and zero Float32 response on one
