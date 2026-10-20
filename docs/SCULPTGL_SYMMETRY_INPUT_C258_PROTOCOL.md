@@ -33,7 +33,8 @@ the receipt and do not infer SculptGL behavior. In particular, do not replace
 host events with synthetic DOM events or assign `Tablet.pressure` directly.
 
 Before each stroke, install observation-only wrappers around the **original**
-SculptGL instance's `onDeviceDown`, `onDeviceMove`, `onDeviceUp`, the active
+SculptGL instance's `onDeviceDown`, `onDeviceMove`, `onDeviceUp` and
+`onPanUpdateNbPointers`, the active
 tool's `start`, `sculptStroke`, `makeStroke` and `stroke`, and the primary and
 symmetry pickers' `pickVerticesInSphere`. Each wrapper must invoke its
 original exactly once with the same receiver, arguments and return value.

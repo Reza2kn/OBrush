@@ -32,7 +32,7 @@ function assertHeldEvents(events, pointerType) {
 }
 function summarizeTrace(trace) {
   const count = kind => trace.filter(row => row.kind === kind).length;
-  return { device_down: count('deviceDown'), device_move: count('deviceMove'),
+  return { pan_update: count('panUpdate'), device_down: count('deviceDown'), device_move: count('deviceMove'),
     device_up: count('deviceUp'), tool_start: count('toolStart'),
     sculpt_stroke: count('sculptStroke'), make_stroke: count('makeStroke'),
     brush_stroke: count('brushStroke'), primary_pick: count('pickPrimary'),
@@ -122,6 +122,7 @@ const traceInstall = `(() => {
   wrap(a, 'onDeviceDown', 'deviceDown');
   wrap(a, 'onDeviceMove', 'deviceMove');
   wrap(a, 'onDeviceUp', 'deviceUp');
+  wrap(a, 'onPanUpdateNbPointers', 'panUpdate', args => ({ nb_pointers: args[0] }));
   wrap(tool, 'start', 'toolStart');
   wrap(tool, 'sculptStroke', 'sculptStroke', (_, before) => {
     const dx = before.mouse[0] - before.last[0], dy = before.mouse[1] - before.last[1];
