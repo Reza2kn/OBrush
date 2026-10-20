@@ -1,0 +1,15 @@
+# Independently authored UV export comparison fixture.
+# One two-triangle square, an inset UV island, four different RGB/material rows.
+o Independent_UV_Gradient
+v -1 -1 0
+v 1 -1 0
+v 1 1 0
+v -1 1 0
+vt 0.125 0.125
+vt 0.875 0.125
+vt 0.875 0.875
+vt 0.125 0.875
+#MRGB ff21436bffb73052ff62cb29ffd895e2
+#MAT 163acc7f21ffda9340a0c8ff
+f 1/1 2/2 3/3
+f 1/1 3/3 4/4

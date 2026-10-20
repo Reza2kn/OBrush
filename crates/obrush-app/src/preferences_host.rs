@@ -156,7 +156,8 @@ fn source_metrics(
         "mirror_line":s.mirror_line,"darken_unselected":s.darken_unselected,"projection":s.projection,
         "camera_mode":s.camera_mode,"pivot":s.pivot,"fov":s.fov,"flat_shading":s.flat_shading,
         "wireframe":s.wireframe,"curvature":s.curvature,"exposure":s.exposure,"environment":s.environment,
-        "matcap":s.matcap,"shader":s.shader,"filmic":s.filmic,"model_url":s.model_url,
+        "matcap":s.matcap,"shader":s.shader,"filmic":s.filmic,
+        "model_url":s.model_url.as_ref().map(|_| "[redacted]"),
         "language":locale.stable_id(),"shortcuts":{"profile":profile_name(resolver.profile()),"bindings_debug":format!("{resolver:?}")}})
 }
 fn keycode(key: egui::Key) -> Option<u16> {
@@ -1165,6 +1166,23 @@ mod tests {
         assert_eq!(value["grid"], true);
         assert_eq!(value["shader"], 5);
         assert!(value["model_url"].is_null());
+    }
+    #[test]
+    fn model_url_request_metrics_redact_query_and_userinfo() {
+        let secret = "unique_source_secret_5749";
+        let settings = SourceStartupSettings {
+            model_url: Some(format!(
+                "https://user:{secret}@fixture.invalid/tetra.obj?token={secret}"
+            )),
+            ..Default::default()
+        };
+        let value = source_metrics(
+            &settings,
+            Locale::English,
+            &crate::shortcut_profile::ShortcutResolver::new(PreferenceProfile::SculptGl),
+        );
+        assert_eq!(value["model_url"], "[redacted]");
+        assert!(!value.to_string().contains(secret));
     }
 }
 

@@ -79,7 +79,7 @@ impl ModelRequests {
     }
     pub fn metrics(&self) -> serde_json::Value {
         serde_json::json!({"pending": self.pending.as_ref().map(|p|serde_json::json!({"id":p.id,
-            "revision":p.revision,"url":p.url,"filename":p.filename,"native_order":p.native_order,
+            "revision":p.revision,"url":"[redacted]","filename":p.filename,"native_order":p.native_order,
             "scale_center":p.options.scale_center,"sgl_request_id":p.sgl_request_id})),
             "last_result":self.last_result,"byte_limit":MAX_MODEL_BYTES})
     }
@@ -236,25 +236,24 @@ mod native {
             .map_err(|e| format!("Native URL reads require the system curl executable: {e}"))?;
         let output = process.stdout.take().ok_or("CURL output unavailable")?;
         let error = process.stderr.take().ok_or("CURL error pipe unavailable")?;
-        // Drain stderr concurrently; keep at most16KiB. stdout must not block on
-        // a filled diagnostic pipe, and cancellation must not wait for a read lock.
+        // Drain stderr concurrently. stdout must not block on a filled pipe,
+        // and cancellation must not wait for a read lock. Curl diagnostics may
+        // echo a URL containing user credentials, so retain only the bounded
+        // status trailer for the HTTP 200 check and never publish raw stderr.
         let error_thread = std::thread::spawn(move || {
             let mut error = error;
-            let mut kept = Vec::new();
             let mut tail = Vec::new();
             let mut chunk = [0u8; 4096];
             while let Ok(n) = error.read(&mut chunk) {
                 if n == 0 {
                     break;
                 }
-                let room = (16 * 1024usize).saturating_sub(kept.len());
-                kept.extend_from_slice(&chunk[..n.min(room)]);
                 tail.extend_from_slice(&chunk[..n]);
                 if tail.len() > 256 {
                     tail.drain(..tail.len() - 256);
                 }
             }
-            (kept, tail)
+            tail
         });
         {
             let mut shared = child.lock().map_err(|_| "Model process lock poisoned")?;
@@ -292,16 +291,13 @@ mod native {
             .lock()
             .map_err(|_| "Model process lock poisoned")?
             .take();
-        let (diagnostic, status_tail) = error_thread.join().unwrap_or_default();
+        let status_tail = error_thread.join().unwrap_or_default();
         let bytes = read?;
         if cancelled.load(Ordering::SeqCst) {
             return Err("Model read cancelled".into());
         }
         if !status.success() {
-            return Err(format!(
-                "Model GET failed: {}",
-                String::from_utf8_lossy(&diagnostic)
-            ));
+            return Err(format!("Model GET failed (curl exit {status})"));
         }
         if !String::from_utf8_lossy(&status_tail)
             .trim_end()
@@ -399,5 +395,19 @@ mod tests {
     fn missing_extension_and_overlong_url_rejected() {
         assert!(model_filename("https://fixture.invalid/").is_err());
         assert!(model_filename(&format!("{}.obj", "x".repeat(4097))).is_err());
+    }
+    #[test]
+    fn request_metrics_never_publish_url_credentials() {
+        let mut state = ModelRequests::default();
+        let secret = "unique_token_do_not_expose_5749";
+        let url = format!("https://user:{secret}@fixture.invalid/tetra.obj?token={secret}");
+        state
+            .begin(7, &url, Default::default(), SglByteOrder::LittleEndian)
+            .unwrap();
+        let metrics = state.metrics().to_string();
+        assert!(!metrics.contains(secret));
+        assert!(!metrics.contains("fixture.invalid"));
+        assert_eq!(state.pending().unwrap().url, url);
+        assert_eq!(state.metrics()["pending"]["filename"], "tetra.obj");
     }
 }
