@@ -1,0 +1,71 @@
+name: Bug report
+description: Report a reproducible sculpting, file, or interface problem.
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Thanks for testing OBrush. Please describe what happened using a current
+        build. Projects and screenshots can reveal private work; attach them
+        only if you choose to share them publicly.
+  - type: input
+    id: build
+    attributes:
+      label: OBrush version and build
+      description: Include the version and commit or download hash when available.
+      placeholder: "0.1.20, commit abc123 or package SHA-256"
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Platform
+      description: OS version, and browser version if using the browser build.
+      placeholder: "macOS 15 / native app, or Chrome 155 / browser"
+    validations:
+      required: true
+  - type: input
+    id: graphics
+    attributes:
+      label: Graphics device and input device
+      description: GPU and mouse or pen model, if known.
+      placeholder: "Apple M2, mouse"
+  - type: dropdown
+    id: mesh_origin
+    attributes:
+      label: Mesh used
+      options:
+        - Fresh OBrush primitive
+        - Previously sculpted OBrush project
+        - Imported mesh
+        - Other or unsure
+    validations:
+      required: true
+  - type: textarea
+    id: settings
+    attributes:
+      label: Tool and settings
+      description: Include radius, strength, pressure, symmetry, mesh density, and any recent remesh/subdivision steps.
+      placeholder: "Draw, radius 0.180, strength 35%, X symmetry on; repeated strokes at one point"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Give the shortest sequence that triggers the problem.
+      placeholder: "1. Add a sphere\n2. Select Draw\n3. ..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected_actual
+    attributes:
+      label: Expected and actual result
+      description: Say what you expected and what happened, including whether Undo or Save still worked.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Optional screenshot or project
+      description: Attach an image or `.obrush` project here if you are comfortable sharing it publicly. Mention whether the problem appears in a saved file.
