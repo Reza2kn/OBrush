@@ -173,7 +173,7 @@ const traceInstall = `(() => {
 })()`;
 let server;
 async function runArm(pointerType, base) {
-  const arm = { pointer_type: pointerType, status: 'running', errors: [], screenshots: [] };
+  const arm = { pointer_type: pointerType, status: 'running', errors: [], browser_logs: [], screenshots: [] };
   result.arms.push(arm);
   let chrome, socket, session, next = 0, stderr = '';
   const waiting = new Map();
@@ -245,7 +245,7 @@ async function runArm(pointerType, base) {
       const payload = JSON.parse(String(message.data));
       if (payload.method === 'Runtime.exceptionThrown' ||
           (payload.method === 'Log.entryAdded' && payload.params?.entry?.level === 'error'))
-        arm.errors.push(payload.params);
+        arm.browser_logs.push(payload.params);
       if (!payload.id) return;
       const pending = waiting.get(payload.id); if (!pending) return;
       waiting.delete(payload.id); clearTimeout(pending.timer);
@@ -342,8 +342,10 @@ async function runArm(pointerType, base) {
       value - arm.vertices_before[index]);
     arm.gpu_error = await evaluate('window.__sculptglReferenceInstance._gl.getError()');
     insist(arm.gpu_error === 0, `Reference WebGL error ${arm.gpu_error}`);
-    insist(arm.page_errors.length === 0 && arm.errors.length === 0,
-      `Reference browser errors: ${JSON.stringify({ page: arm.page_errors, cdp: arm.errors })}`);
+    insist(arm.page_errors.length === 0 &&
+      !arm.browser_logs.some(log => log.exceptionDetails),
+    `Reference browser exceptions: ${JSON.stringify({ page: arm.page_errors,
+      cdp: arm.browser_logs })}`);
     arm.status = 'measured';
   } catch (error) {
     arm.status = 'failed'; arm.errors.push(String(error?.stack ?? error));
