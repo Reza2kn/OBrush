@@ -26,6 +26,9 @@ if [[ "$end_tree_state" != "$source_tree_state" ]]; then
 fi
 obrush_version=$(cargo metadata --locked --no-deps --format-version 1 | python3 -c 'import json,sys; print(next(p["version"] for p in json.load(sys.stdin)["packages"] if p["name"] == "obrush-app"))')
 app='.artifacts/OBrush.app'
+external_info='.artifacts/OBrush-build-info.json'
+# An interrupted build must never leave a manifest that approves an older app.
+printf '{"status":"incomplete"}\n' > "$external_info"
 mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
 cp target/release/obrush "$app/Contents/MacOS/OBrush.next"
 mv -f "$app/Contents/MacOS/OBrush.next" "$app/Contents/MacOS/OBrush"
@@ -50,12 +53,12 @@ from pathlib import Path
 
 output, binary, version, commit, tree_state, lock_sha, arch = sys.argv[1:]
 info = {
-    'schema_version': 1,
+    'schema_version': 2,
     'version': version,
     'source_commit': commit,
     'source_tree_state': tree_state,
     'cargo_lock_sha256': lock_sha,
-    'app_binary_sha256': hashlib.sha256(Path(binary).read_bytes()).hexdigest(),
+    'pre_sign_binary_sha256': hashlib.sha256(Path(binary).read_bytes()).hexdigest(),
     'architecture': arch,
 }
 Path(output).write_text(json.dumps(info, indent=2, sort_keys=True) + '\n')
@@ -64,4 +67,15 @@ PY
 # or network notarization is required for the local development bundle.
 /usr/bin/codesign --force --sign - "$app"
 /usr/bin/codesign --verify --verbose=2 "$app"
+python3 - "$app/Contents/Resources/build-info.json" "$app/Contents/MacOS/OBrush" "$external_info" <<'PY'
+import hashlib
+import json
+import sys
+from pathlib import Path
+
+internal, binary, output = map(Path, sys.argv[1:])
+info = json.loads(internal.read_text())
+info['app_binary_sha256'] = hashlib.sha256(binary.read_bytes()).hexdigest()
+output.write_text(json.dumps(info, indent=2, sort_keys=True) + '\n')
+PY
 printf 'Local macOS app ready: %s\n' "$app"

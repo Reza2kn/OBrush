@@ -36,7 +36,8 @@ if ! git diff --quiet HEAD -- 2>/dev/null || [[ -n "$(git ls-files --others --ex
   exit 1
 fi
 lock_sha="$(shasum -a 256 Cargo.lock | awk '{print $1}')"
-python3 scripts/verify-alpha-macos-build.py "$app" "$package_version" "$source_commit" "$lock_sha"
+build_info="${OBRUSH_ALPHA_MANIFEST_PATH:-.artifacts/OBrush-build-info.json}"
+python3 scripts/verify-alpha-macos-build.py "$app" "$build_info" "$package_version" "$source_commit" "$lock_sha"
 /usr/bin/codesign --verify --verbose=2 "$app"
 for notice in \
   "$app/Contents/Resources/licenses/sculptgl" \
@@ -69,7 +70,8 @@ Save projects explicitly; browser and native autosave/recovery are unfinished.
 This alpha is not at SculptGL or ZBrush feature parity. Please report
 reproducible bugs and vote on feature requests in the public source repository.
 EOF
-cp "$app/Contents/Resources/build-info.json" "$stage/BUILD-INFO.json"
+cp "$build_info" "$stage/BUILD-INFO.json"
+cp "$app/Contents/Resources/build-info.json" "$stage/SIGNED-BUILD-INFO.json"
 printf 'tag=%s\nsignature=ad-hoc; not notarized\n' "$release_tag" > "$stage/RELEASE-INFO.txt"
 /usr/bin/codesign --verify --verbose=2 "$stage/OBrush.app"
 /usr/bin/ditto -c -k --sequesterRsrc --keepParent "$stage" "$archive"
