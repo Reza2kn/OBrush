@@ -1,5 +1,15 @@
 # OBrush feature parity contract
 
+**Scoped Source Paint pen input:** [C310b](SCULPTGL_SOURCE_PAINT_PEN_BURST_C310B_RESULT.md)
+passes 13 frozen normal-browser checks for two ordered same-frame pressure
+moves on an independent sphere, including useful color differences, factor-zero
+controls, GPU/save correspondence, exact Undo/Redo and atomic overflow rollback.
+The first [C310](SCULPTGL_SOURCE_PAINT_PEN_BURST_C310_PREREG.md) browser audit
+failed because its harness toggled persistent material-channel settings and
+used an internal SculptGL undo count as a user-visible step count; that receipt
+is retained. Physical stylus delivery, native pressure, other Paint settings
+and full reference color parity remain open.
+
 **Default Smooth remains open:** [C309](SCULPTGL_DEFAULT_SMOOTH_C309_RESULT.md)
 matched the pinned SculptGL positions and active GPU normals exactly for the
 ten vertices touched in its normal-browser off/on comparison, but its frozen
