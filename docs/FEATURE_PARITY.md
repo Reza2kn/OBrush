@@ -11,6 +11,13 @@ sides of a fresh sphere with valid faces and exact Undo/Redo. A compressed
 one-frame press/move/release remains a no-op; the earlier automated native
 gesture did not record enough input timing to diagnose its cause or prove
 visual tearing fixed.
+[M02's bounded ordered-event recovery](NATIVE_MOVE_SAME_FRAME_M02_REPORT.md)
+now handles a mouse Move press/move/release delivered in one egui frame;
+the focused host gate passed exact deformation and Undo/Redo at radius
+0.037/79%, and a twelve-pull numerical quality check stayed valid. A normal
+browser Move gesture also passed public Save/Undo/Redo, but its fast-event
+burst crossed 11 frames. An actual one-frame consumer witness and visual
+tearing comparison remain open.
 
 **Resolution-stroke R02:** [The paired browser report](SCULPTGL_RESOLUTION_STROKE_R02_RESULT.md)
 preserves a failed pinned-reference press/release gate, then measures one
