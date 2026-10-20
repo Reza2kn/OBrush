@@ -20,7 +20,9 @@ exclusive validation lane runs.
   SHA-256 `a4688247d60eed963730ff6d99a9768c08bcdd07c2c5a40e6d714a81db8e291b`.
   The file has four positions
   and two triangles, one raised corner, no external assets or source geometry.
-- Ordinary browser viewport: 1024×768 CSS pixels at DPR 1; repeat the OBrush
+- Ordinary browser sculpt viewport: **measured** 1024×768 CSS pixels at DPR 1;
+  size each browser's outer window separately to reach that scene rectangle,
+  and fail setup if either measured rectangle differs. Repeat the OBrush
   no-motion and one-motion checks at DPR 2. Perspective, 45° FOV, Orbit mode,
   speed 100%, source/static framing in OBrush. Set Pivot **on** through each
   visible camera panel after loading the OBJ and letting Fit settle 250 ms.
@@ -32,6 +34,19 @@ exclusive validation lane runs.
   event is a 40 CSS-pixel horizontal right-button drag and release. Record the
   actual delivered screen points, camera pose, projection/view matrices,
   point pick, public OBJ, and project history for both programs.
+
+Normal-UI event order is fixed: launch fresh owned browser profiles, clear the
+startup mesh, import the fixture through each visible file picker, fit and
+settle; configure the visible camera controls; save a public Before OBJ and
+camera snapshot; move the trusted mouse pointer over the projected interior
+point; right-button down; wait one animation frame without motion and take the
+held snapshot; right-button up at the same coordinate; wait 250 ms and take
+the stationary After snapshot. Reset to the identical settled starting state
+for Pivot off. Then repeat from a fresh settled state with one 40 CSS-pixel
+rightward move between press and release. Source camera internals may be read
+by passive instrumentation, but neither side's camera or geometry methods may
+be invoked to perform the gesture. File export and GUI controls use the normal
+visible routes. Keep raw browser traces and failed setup checks.
 
 ## Acceptance before any promotion
 
@@ -69,3 +84,9 @@ The candidate changes only Source-framed picked orbit semantics; its source
 translation/zoom response, Spherical/Plane modes, touch gestures, nondefault
 FOV and different topology remain outside this gate. In particular, an
 existing camera orbit-gain difference could still fail full pose parity.
+
+Read-only static preflight before the browser lane:
+`OBRUSH_SHARED_ROOT=/Users/Ajab/AI/OBrush node scripts/audit-sculptgl-camera-pivot-c334-static.mjs`.
+This checks pinned source/fixture hashes and the independent affine identity
+for two successive off-center pivots in perspective and orthographic views;
+it is not a product or browser result.
