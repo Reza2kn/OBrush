@@ -1,0 +1,13 @@
+{
+  "source": "Independent Python-authored SGL v3; no SculptGL or OBrush encoder",
+  "license": "CC0",
+  "fixture": "tests/fixtures/independent-source-pinch-c331.sgl",
+  "bytes": 72132,
+  "sha256": "12fc61da6ad54c03c456107a3edec82511fe6352b7da366eec9dc5a5f0c670bc",
+  "grid_side": 33,
+  "vertices": 1089,
+  "triangles": 2048,
+  "position_formula": "x=(ix-16)/64, y=(iy-16)/64, z=0",
+  "identity_transform": true,
+  "all_material_protection": 1.0
+}
