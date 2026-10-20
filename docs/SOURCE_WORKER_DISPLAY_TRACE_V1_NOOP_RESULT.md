@@ -1,0 +1,7 @@
+# Source Worker display trace V1: failed contact gate
+
+The isolated opt-in trace sidecar in `codex/worker-display-trace` is not a production candidate. Two normal-browser runs imported the independent six-vertex V1 fixture and enabled the Worker, but each acknowledged one dab, committed zero changes and produced no complete trace. The offset result SHA-256 is `ee28b2fc781cd78a068af01cf8cc163717964dde18730a9d5368d6272238bc94`; the center result SHA-256 is `47951f17f42e17983f5694cbf813de30ed0c9e2a658819a15f652e2888c78c91`. The ignored receipts are in the isolated worktree under `.artifacts/source-worker-display-trace-small/583fe200-52c8-4cb8-a91b-087963bce92f/` and `7aae93f0-0f9b-4a22-ae8b-570becb81d7e/`.
+
+The observed 1024×768 viewport projection scaled Y by 5.45247. V1's nearest rows at Y ±0.12 projected about 251 CSS pixels from the contact, outside the 64-pixel brush. A separately frozen V2 fixture narrows only those Y rows to ±0.012 (424-byte SGL SHA-256 `14127b0c4456a5419c1951baa1e7971c7491420873944388694b6ad470759a03`), predicting roughly 25 CSS pixels at the same scale. V2 has **not** been tested. It must obtain fresh camera, selected-ID, changed-position, history, GPU and complete trace evidence before any normal replay conclusion.
+
+Targeted Rust tests and an isolated portable WASM build passed, but the V1 browser failure blocks the frozen small-fixture gate. The existing `SP-WORKER-01` failure remains unchanged; no speedup, display-normal correctness or SculptGL parity claim follows.
