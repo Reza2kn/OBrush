@@ -77,3 +77,12 @@ because this isolated worktree did not have a local 0.2.129 wasm-bindgen CLI;
 the retry used the lockfile-matched 0.2.129 CLI from the primary checkout,
 then a custom feature package was built for the read-only browser probe.
 No product brush, document, render or history code was changed.
+After the final diagnostic adjustment, full `cargo test --workspace` and
+`cargo clippy --workspace --all-targets -- -D warnings` also exited 0.
+Their retained logs are respectively SHA-256
+`f54740171370d501177236b53eb12434b0d1e44c75f0577a227bb7050e77805f`
+and `b8d9ad601a291ad5225798083601802851f2d8756d8baeae69829a3ed56df9bd`
+under `.artifacts/mrp04-stage/mrp07-wasm/`. The test log includes macOS
+incremental-cache cleanup warnings about already absent object files; no test
+failed. Native Clippy reported only the existing future-compatibility note
+for the `block` dependency.
