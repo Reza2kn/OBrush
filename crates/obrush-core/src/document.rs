@@ -77,6 +77,19 @@ pub struct SubdivisionDeletionReport {
     pub morph_target: MorphTargetDeletionDisposition,
 }
 
+/// Explicit conversion to the plain triangle surface required by OBrush's
+/// local adaptive brush refinement. This does not enable SculptGL's dynamic
+/// decimation, subdivision-factor or linear/smooth controls.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize)]
+pub struct DynamicTopologyPreparationReport {
+    pub discarded_retained_levels: usize,
+    pub discarded_original_faces: usize,
+    pub discarded_uv_coordinates: usize,
+    pub discarded_uv_faces: usize,
+    pub vertices: usize,
+    pub triangles: usize,
+}
+
 /// One fully parsed Source File Add part. All parts are admitted together and
 /// become one document history event.
 pub struct ImportedSubtool {
@@ -1084,6 +1097,48 @@ impl Document {
                 .mesh
                 .as_ref()
                 .is_some_and(Mesh::supports_adaptive_detail)
+    }
+
+    /// Flatten the visible retained level and remove original face/UV metadata
+    /// so adaptive triangle splitting can operate on this part. All candidate
+    /// data is bounded and validated before the single undoable replacement.
+    /// Geometry, vertex colors, masks and materials remain on their vertex IDs.
+    pub fn prepare_dynamic_topology(&mut self) -> Result<DynamicTopologyPreparationReport, String> {
+        if self.stroke_start.is_some()
+            || self.material_paint_stroke
+            || self.source_geometry_active.is_some()
+        {
+            return Err("Finish the active stroke before dynamic topology conversion".into());
+        }
+        self.require_baked_layers()?;
+        if self.has_morph_target() {
+            return Err(
+                "Delete or restore the Morph Target before dynamic topology conversion".into(),
+            );
+        }
+        let visible = self.require_active_mesh()?;
+        let surface = visible.surface.as_ref();
+        let report = DynamicTopologyPreparationReport {
+            discarded_retained_levels: self.level_count().saturating_sub(1),
+            discarded_original_faces: surface.map_or(0, |s| s.faces.len()),
+            discarded_uv_coordinates: surface
+                .and_then(|s| s.uv.as_ref())
+                .map_or(0, |uv| uv.coordinates.len()),
+            discarded_uv_faces: surface
+                .and_then(|s| s.uv.as_ref())
+                .map_or(0, |uv| uv.face_indices.len()),
+            vertices: visible.positions.len(),
+            triangles: visible.triangles.len(),
+        };
+        if self.supports_adaptive_detail() {
+            return Ok(report);
+        }
+        let mut candidate = visible.try_snapshot()?;
+        candidate.surface = None;
+        candidate.validate()?;
+        self.replace_mesh(candidate)?;
+        debug_assert!(self.supports_adaptive_detail());
+        Ok(report)
     }
 
     pub fn delete_lower_subdivision_levels(&mut self) -> Result<SubdivisionDeletionReport, String> {

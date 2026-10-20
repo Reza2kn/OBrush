@@ -77,8 +77,8 @@ pub use document::{
     SourceGeometryPreparationTime, SourceGeometryReleaseTiming,
 };
 pub use document::{
-    Document, ImportedSubtool, MorphTargetDeletionDisposition, SglAppendReport,
-    SourcePaintLockedAction, SourcePaintLockedMode, SourcePaintLockedReport,
+    Document, DynamicTopologyPreparationReport, ImportedSubtool, MorphTargetDeletionDisposition,
+    SglAppendReport, SourcePaintLockedAction, SourcePaintLockedMode, SourcePaintLockedReport,
     SourcePaintLockedSample, SourcePaintLockedStroke, SubdivisionDeletionReport,
 };
 pub use extract::{MaskExtractReport, MaskExtractSelection, MaskExtractSettings};
