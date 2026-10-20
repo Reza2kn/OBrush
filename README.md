@@ -1,6 +1,6 @@
 # OBrush
 
-An open-source sculpting studio written in Rust for desktop and the browser, targeting **ZBrush desktop 2026.2.1**. The **0.1.20** source adds editable SGL scene interchange, explicit source framing and original-face normal policies, environment rendering, and opt-in ordinary Paint controls to the existing sculpting foundations. The [current verification checkpoint](docs/SCULPTGL_0_1_20_CHECKPOINT.md) distinguishes tested candidates, browser checks and remaining limitations. **SculptGL and ZBrush parity remain unfinished**; the [complete gate inventory](docs/SCULPTGL_REMAINING_GATES_0_1_16.md) defines the remaining work.
+An open-source sculpting studio written in Rust for desktop and the browser, targeting **ZBrush desktop 2026.2.1**. The **0.1.20** source adds editable SGL scene interchange, explicit source framing and original-face normal policies, environment rendering, and opt-in ordinary Paint controls to the existing sculpting foundations. The [current verification checkpoint](docs/SCULPTGL_0_1_20_CHECKPOINT.md) distinguishes tested candidates, browser checks and remaining limitations. **SculptGL and ZBrush parity remain unfinished**; the [current 317-ID ledger](docs/SCULPTGL_CURRENT_LEDGER.md) tracks scoped evidence and the remaining full gates.
 
 ## Run
 
