@@ -12,7 +12,7 @@ SHA-256 `61421c5c1102d7102e1fc25f065fd4189de45d454cee90753b0d21d1995bbcc2`;
 `codesign --verify --deep --strict` passed. Host macOS is 26.5.1 (25F80).
 
 Starting with the app's new 40,962-vertex sphere, Draw was selected. A native
-window drag from `(1430,950)` to `(1500,950)` at the shown default settings
+window drag from `(1430,950)` to `(1500,950)` with fresh-app default settings
 made one undoable edit. Saving through the visible **Save project** button to
 `.artifacts/native-smoke-after.obrush` produced SHA-256
 `63887d7d0d19ecfc132f23fbf48773a10fa11693146121abefd3da98d6c6b57c`.
