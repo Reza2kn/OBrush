@@ -104,6 +104,47 @@ fn selected(d: &Document) -> Vec<usize> {
 }
 
 #[test]
+fn source_drag_plain_dabs_retain_selected_union_for_derived_redo_normals() {
+    let mut d = six();
+    let before = d.to_json().unwrap();
+    let mut stroke = d
+        .begin_source_geometry_selection_history(SourceGeometryOptions::drag())
+        .unwrap();
+    let first = SourceGeometryPass {
+        center: [-1., 0., 0.25],
+        eye_direction: [0., 0., -1.],
+        local_radius_squared: 0.1,
+        original_face_index: 0,
+    };
+    stroke.set_drag_direction([0.05, 0., 0.]).unwrap();
+    assert!(
+        d.apply_source_geometry_dab(&mut stroke, first, 0.5, true)
+            .unwrap()
+            .changed_vertices
+            > 0
+    );
+    let second = SourceGeometryPass {
+        center: [1., 0., 0.25],
+        ..first
+    };
+    stroke.set_drag_direction([0.05, 0., 0.]).unwrap();
+    assert!(
+        d.apply_source_geometry_dab(&mut stroke, second, 0.5, true)
+            .unwrap()
+            .changed_vertices
+            > 0
+    );
+    d.end_source_geometry_stroke(&stroke).unwrap();
+    assert_eq!(selected(&d), [0, 1, 3, 4]);
+    let after = d.to_json().unwrap();
+    assert!(d.undo());
+    assert_eq!(d.to_json().unwrap(), before);
+    assert!(d.redo());
+    assert_eq!(d.to_json().unwrap(), after);
+    assert!(d.source_geometry_state(1).is_some());
+}
+
+#[test]
 fn generic_geometry_api_retains_original_normal_snapshot_history() {
     let mut d = six();
     stroke(&mut d, 1.5625, false);

@@ -118,7 +118,7 @@ mod tests {
             original_face_index: 0,
         };
         let mut stroke = doc
-            .begin_source_geometry_stroke(SourceGeometryOptions::drag())
+            .begin_source_geometry_selection_history(SourceGeometryOptions::drag())
             .unwrap();
         stroke.set_drag_direction([0.1, 0., 0.]).unwrap();
         assert!(
@@ -148,5 +148,41 @@ mod tests {
         assert_eq!(doc.to_json().unwrap(), before);
         assert_eq!(doc.history_depths(), before_depth);
         assert!(doc.end_source_geometry_stroke(&stroke).is_err());
+    }
+
+    #[test]
+    fn selected_history_zero_travel_does_not_commit_a_stroke() {
+        let mut mesh = Mesh::new(
+            vec![
+                Vec3::new(-0.2, -0.2, 0.),
+                Vec3::new(0.2, -0.2, 0.),
+                Vec3::new(0.0, 0.2, 0.),
+            ],
+            vec![[0, 1, 2]],
+        );
+        mesh.mask_convention = MaskConvention::UnprotectedF32V1;
+        mesh.masks.fill(1.0);
+        let mut doc = Document::new(mesh);
+        let before = doc.to_json().unwrap();
+        let depths = doc.history_depths();
+        let mut stroke = doc
+            .begin_source_geometry_selection_history(SourceGeometryOptions::drag())
+            .unwrap();
+        stroke.set_drag_direction([0., 0., 0.]).unwrap();
+        doc.apply_source_geometry_dab(
+            &mut stroke,
+            SourceGeometryPass {
+                center: [0., 0., 0.],
+                eye_direction: [0., 0., -1.],
+                local_radius_squared: 1.,
+                original_face_index: 0,
+            },
+            0.5,
+            true,
+        )
+        .unwrap();
+        doc.end_source_geometry_stroke(&stroke).unwrap();
+        assert_eq!(doc.to_json().unwrap(), before);
+        assert_eq!(doc.history_depths(), depths);
     }
 }

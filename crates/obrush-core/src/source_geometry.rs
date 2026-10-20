@@ -1160,7 +1160,10 @@ impl SourceGeometryStroke {
             return Err(SourceGeometryError::InvalidInput);
         }
         let original_rebuilds = state.ordered_tree.rebuilds();
-        if self.history_selected.is_some() && prepared.is_none() {
+        if self.history_selected.is_some()
+            && prepared.is_none()
+            && self.options.tool != SourceGeometryTool::Drag
+        {
             return Err(SourceGeometryError::UnsupportedDomain);
         }
         if !in_contact {
@@ -1216,6 +1219,36 @@ impl SourceGeometryStroke {
             (selection.selected_vertices, selection.visited_leaves)
         } else {
             (selected_vertices(mesh, &state.faces, pass)?, Vec::new())
+        };
+        // Drag's live moving-center path uses the ordinary dab boundary, not
+        // controlled contacts. Capture its pre-culling selected union before
+        // any geometry write, then publish only after the whole dab succeeds.
+        // Generic ordinary brushes retain their historical snapshot route.
+        let pending_drag_history = if self.options.tool == SourceGeometryTool::Drag {
+            match self.history_selected.as_ref() {
+                Some(prior) => {
+                    operation_budget_with_scratch(
+                        mesh,
+                        state.approximate_bytes(),
+                        mesh.positions.len(),
+                    )?;
+                    let mut union = if prior.is_empty() {
+                        filled(mesh.positions.len(), false)?
+                    } else {
+                        copied(prior.as_slice())?
+                    };
+                    if union.len() != mesh.positions.len() {
+                        return Err(SourceGeometryError::StrokeBindingChanged);
+                    }
+                    for &vertex in &selected {
+                        union[vertex] = true;
+                    }
+                    Some(Arc::new(union))
+                }
+                None => None,
+            }
+        } else {
+            None
         };
         // Reserve before any geometry mutation. Deduplicated visits produce the
         // same end-only schedule as the source flag pass, with a bounded list.
@@ -1716,6 +1749,9 @@ impl SourceGeometryStroke {
             }
         })();
         if let Ok((_, next)) = &result {
+            if let Some(history) = pending_drag_history {
+                self.history_selected = Some(history);
+            }
             if next
                 .as_ref()
                 .map_or(state.ordered_tree.rebuilds(), |n| n.ordered_tree.rebuilds())

@@ -921,7 +921,7 @@ impl SourceGeometrySession {
                 local_radius_squared: pass.local_radius_squared,
                 original_face_index: hit.original_face_index.unwrap_or(hit.triangle_index),
             };
-            let shared = Self::begin_admitted(doc, prefs, input, false)?;
+            let shared = Self::begin_admitted(doc, prefs, input, true)?;
             {
                 let mut session = shared
                     .lock()

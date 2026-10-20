@@ -849,7 +849,9 @@ impl Document {
         pressure: f64,
         in_contact: bool,
     ) -> Result<SourceGeometryReport, SourceGeometryError> {
-        if stroke.history_selected.is_some() {
+        if stroke.history_selected.is_some()
+            && stroke.options().tool != crate::SourceGeometryTool::Drag
+        {
             return Err(SourceGeometryError::UnsupportedDomain);
         }
         if self.stroke_start.is_none() || self.source_geometry_active != Some(stroke.document_token)
