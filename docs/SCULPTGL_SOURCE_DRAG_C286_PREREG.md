@@ -84,3 +84,14 @@ The explicit distinct-neighborhood RGB witnesses are IDs 541 and 548; both
 must move, while protected ID 544 stays fixed. Their grid coordinates are
 (13,16) and (20,16), respectively. These inputs and witnesses are frozen
 before the first C286 browser capture.
+
+The first Source setup receipt is retained at
+`.artifacts/sculptgl-source-drag-c286-ui/source-0617b178-9099-40c8-8ddc-6f62f96918e1/result.json`:
+the generic `PerfDriver.live()` snapshot omits `_lockPosition` on the Drag
+object, so a strict `===false` setup assertion rejected before Before Save.
+Pinned `Drag.js` evaluates its absent `_lockPosition` as false. The corrected
+setup assertion is `!==true`; it does not alter fixture, pointer path, geometry
+or numerical gates. Corrected harness SHA-256 is
+`4865f5a8a2e0f9fdc80dd2c2aecd9ef1df6810a17c76f347e6f0f30a296be5c4`,
+and audit SHA-256 is
+`ad3a8d46a672b8ccdc58f998f6c4dbc7ab3f081243eccef20d2415dd740512c4`.

@@ -224,7 +224,7 @@ try {
     throw Error('OBRush pressure factors are not zero');
   }
   if (side === 'source' ? !(result.config.state.tool_index===7 &&
-    p._lockPosition===false && [0,'None'].includes(p._idAlpha) &&
+    p._lockPosition!==true && [0,'None'].includes(p._idAlpha) &&
     !result.config.state.symmetry && !result.config.state.continuous) :
     !(result.config.state.kind==='Drag' && p.mode==='SourceOrdinary' &&
       p.options.tool==='Drag' && !p.options.negative &&
