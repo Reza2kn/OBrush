@@ -87,6 +87,11 @@ checks and remains off by default.
 passed full build checks but measured 149.2 ms retained decode against its
 fixed `<120 ms` target; active RAF maximum was 450.1 ms against 250 ms. Its
 product code was rejected and the failed browser receipt retained. A
+[read-only finish-phase profile](SOURCE_WORKER_FINISH_PACKET_PROFILE_RESULT.md)
+measured 164.2 ms in retained-state encoding within a 194.3 ms Worker
+finish interval on a fresh frozen 100k run. Buffer takes took 1.5 ms;
+packet-size/transfer causality remains unproved, and the 466.6 ms active
+RAF maximum and 100 ms queue-tail gates still fail. A
 [typed complete-scene witness design](SOURCE_WORKER_TYPED_SCENE_WITNESS_DESIGN.md)
 sets a proof gate for the larger witness stage. [The read-only phase
 profile](SOURCE_WORKER_TYPED_SCENE_WITNESS_GATE_RESULT.md) measured 251.1 ms
