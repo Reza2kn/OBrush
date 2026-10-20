@@ -301,6 +301,18 @@ impl MoveStroke {
         } else {
             total_delta
         };
+        // A tangential grab across a tiny footprint can turn neighboring
+        // faces into a sharp wedge even though the old 90-degree fold guard
+        // accepts it. Keep the lateral limit while the tangent component
+        // dominates. Blend continuously toward the established extrusion
+        // latitude only once the normal component dominates instead of
+        // mistaking a screen-space pull on a curved surface for extrusion.
+        let normal_fraction = total_delta.normalize_or_zero().dot(self.normal).abs();
+        let tangent_normal_boundary = std::f32::consts::FRAC_1_SQRT_2;
+        let extrusion_blend = ((normal_fraction - tangent_normal_boundary)
+            / (1.0 - tangent_normal_boundary))
+            .clamp(0.0, 1.0);
+        let fold_cosine = 0.866_025_403_784_438_6 * (1.0 - f64::from(extrusion_blend));
         self.prepared
             .positions
             .copy_from_slice(&self.rest_positions);
@@ -320,7 +332,7 @@ impl MoveStroke {
         let scale = self.prepared.accept_deformation_with_limits(
             &self.rest_positions,
             0.1,
-            0.0, // At most 90 degrees between adjacent faces, measured from rest.
+            fold_cosine,
             true,
         );
         if scale == 0.0 {
@@ -2408,5 +2420,65 @@ mod sparse_source_guard_tests {
             }
         }
         assert!(reduced_scale, "fixture must exercise guarded rescaling");
+    }
+}
+
+#[cfg(test)]
+mod small_radius_move_quality_tests {
+    use super::*;
+
+    fn maximum_adjacent_fold(mesh: &mut Mesh) -> f64 {
+        mesh.ensure_adjacency();
+        mesh.cached_face_pairs()
+            .iter()
+            .map(|&[a, b]| {
+                let first =
+                    face_cross(&mesh.positions, mesh.triangles[a as usize]).normalize_or_zero();
+                let second =
+                    face_cross(&mesh.positions, mesh.triangles[b as usize]).normalize_or_zero();
+                first.dot(second).clamp(-1.0, 1.0).acos().to_degrees()
+            })
+            .fold(0.0, f64::max)
+    }
+
+    #[test]
+    fn small_symmetric_move_keeps_visible_fold_bounded_and_still_moves() {
+        // Independently authored analogue of the reported .037/.79 symmetric
+        // pull on a level-six sphere. The rest surface is deliberately dense;
+        // the small selected footprint still needs local refinement.
+        let mut mesh = Mesh::sphere(6);
+        let original = mesh.snapshot();
+        let center = Vec3::new(-0.133, 0.245, 0.963).normalize();
+        let settings = BrushSettings {
+            kind: BrushKind::Move,
+            radius: 0.037,
+            strength: 0.79,
+            symmetry_x: true,
+            ..BrushSettings::default()
+        };
+        let mut stroke = mesh.prepare_move_stroke(center, center, &settings).unwrap();
+        let result = stroke.apply(&mut mesh, Vec3::new(-0.06, 0.021, -0.026), &settings);
+        assert!(result.changed_vertices > 0, "Move became an inert brush");
+        assert!(
+            result.refined_vertices > 0,
+            "small footprint was not resolved"
+        );
+        let maximum_displacement = mesh
+            .positions
+            .iter()
+            .zip(&original.positions)
+            .map(|(&after, &before)| after.distance(before))
+            .fold(0.0_f32, f32::max);
+        assert!(
+            maximum_displacement >= 0.002,
+            "Move was over-clipped: {maximum_displacement}"
+        );
+        let fold = maximum_adjacent_fold(&mut mesh);
+        eprintln!(
+            "small Move: changed={}, refined={}, scale={:.6}, displacement={maximum_displacement:.6}, max_fold={fold:.3}",
+            result.changed_vertices, result.refined_vertices, result.displacement_scale
+        );
+        assert!(fold <= 30.01, "Move made a visible sharp fold: {fold}");
+        mesh.validate().unwrap();
     }
 }

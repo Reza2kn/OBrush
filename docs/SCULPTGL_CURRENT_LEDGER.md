@@ -87,7 +87,7 @@ The [C264 current million-vertex run](SCULPTGL_MILLION_CURRENT_C264.md) passes s
 | SGL-BRUSH-PAINT-LOCK | Active | Unreconciled | Open |
 | SGL-BRUSH-PAINT-ALPHA | Active | Unreconciled | Open |
 | SGL-BRUSH-PAINT-IMPORT-ALPHA | Active | Unreconciled | Open |
-| SGL-BRUSH-MOVE | Active | Unreconciled | Open |
+| SGL-BRUSH-MOVE | Active | [NATIVE_MOVE_GUARD_B02_RESULT](NATIVE_MOVE_GUARD_B02_RESULT.md) | Open |
 | SGL-BRUSH-MOVE-RADIUS | Active | Unreconciled | Open |
 | SGL-BRUSH-MOVE-INTENSITY | Active | Unreconciled | Open |
 | SGL-BRUSH-MOVE-TOPOLOGICAL | Active | [SCULPTGL_MOVE_DEFAULT_C261](SCULPTGL_MOVE_DEFAULT_C261.md) | Open |
