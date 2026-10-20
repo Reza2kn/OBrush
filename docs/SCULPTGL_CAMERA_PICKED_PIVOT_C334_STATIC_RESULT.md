@@ -21,3 +21,22 @@ depth offset on a picked pivot.
 `git diff --check` also passed. Neither check compiles or runs the candidate
 product code, proves source Float32 rounding, or exercises the ordinary
 browser. The acceptance gates in the preregistration remain pending.
+
+The first focused Cargo compile failed with `E0425` at
+`source_camera_host.rs:314-315`: the offset had been placed in the
+`fit_bounds` temporary frame, where `candidate` is not in scope. The candidate
+was corrected so the fit calculation retains its original zero offset and
+the actual prepared view consumes the picked offset. The focused camera test
+then passed, as did all seven navigation tests and the complete workspace
+test command. This failed compile remains part of the receipt; browser and
+strict-check results must be reported separately.
+
+Strict native workspace/all-target Clippy initially failed on a candidate-local
+`unwrap` after `is_some` in `renderer.rs:408`. The branch now captures the
+immutable camera values before taking a mutable Source camera borrow, and
+the native command passed on rerun. `cargo fmt --all -- --check`, strict
+`wasm32-unknown-unknown` workspace/lib Clippy, and the official
+`scripts/build-web.sh` also passed. The built portable browser WASM SHA-256 is
+`769f8aa9544e7e5c1ea39c23e9e92184743734d5a4d02cb3d8bad3cb0b90bb6a`.
+The normal browser protocol and macOS package gate are still pending; this is
+not a completed camera parity result.

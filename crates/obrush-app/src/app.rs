@@ -9660,11 +9660,10 @@ impl OBrushApp {
         );
         let speed = ui.add(egui::Slider::new(&mut self.camera.speed, 0.05..=1.0).show_value(false));
         self.track_layer_control("camera.speed", &speed);
-        let pivot = ui
-            .add(egui::Checkbox::new(
-                &mut self.camera.use_pivot,
-                crate::ui_text::caption(crate::ui_text::CaptionKey::CB591FA407121),
-            ));
+        let pivot = ui.add(egui::Checkbox::new(
+            &mut self.camera.use_pivot,
+            crate::ui_text::caption(crate::ui_text::CaptionKey::CB591FA407121),
+        ));
         self.track_layer_control("camera.pivot", &pivot);
         if previous
             != (
@@ -9977,8 +9976,7 @@ impl OBrushApp {
                 let origin = Pos2::from(press.origin);
                 if rect.contains(origin)
                     && let Some(hit) = self.pick(origin, rect)
-                    && let Ok(point) =
-                        crate::scene_space::world_point(&self.document, hit.position)
+                    && let Ok(point) = crate::scene_space::world_point(&self.document, hit.position)
                 {
                     self.camera.set_pivot(point.as_vec3());
                 }

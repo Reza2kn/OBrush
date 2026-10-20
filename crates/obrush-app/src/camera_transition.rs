@@ -63,7 +63,9 @@ impl CameraTransitionPose {
             && self.distance.is_finite()
             && self.distance > 0.0
             && self.source_zoom.is_none_or(|z| z.is_finite() && z > 0.0)
-            && self.source_pivot_offset.is_none_or(|offset| offset.is_finite())
+            && self
+                .source_pivot_offset
+                .is_none_or(|offset| offset.is_finite())
             && self.source_zoom.is_some() == self.source_pivot_offset.is_some()
     }
 }

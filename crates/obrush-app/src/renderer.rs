@@ -405,14 +405,19 @@ impl Camera {
                 .precise_target
                 .unwrap_or_else(|| self.target.as_dvec3());
             let rotation = self.orientation().to_array().map(f64::from);
-            let source = self.source_camera.as_mut().unwrap();
+            let fov = self
+                .boot_source_fov
+                .unwrap_or_else(|| f64::from(self.fov_degrees));
+            let orthographic = self.orthographic;
+            let Some(source) = self.source_camera.as_mut() else {
+                return;
+            };
             match source.retarget_pivot(
                 center,
                 pivot.as_dvec3(),
                 glam::DQuat::from_array(rotation),
-                self.boot_source_fov
-                    .unwrap_or_else(|| f64::from(self.fov_degrees)),
-                self.orthographic,
+                fov,
+                orthographic,
             ) {
                 Ok(()) => {
                     self.target = pivot;

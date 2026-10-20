@@ -311,8 +311,8 @@ impl SourceCameraController {
             SourcePose {
                 rotation: WorldToView::from_camera_to_world(pose.camera_to_world)?,
                 center: pose.target,
-                plane_translation: -candidate.pivot_offset.truncate(),
-                offset_z: candidate.pivot_offset.z,
+                plane_translation: DVec2::ZERO,
+                offset_z: 0.0,
                 zoom: self.zoom,
             },
             if pose.orthographic {
@@ -383,8 +383,8 @@ impl SourceCameraController {
             SourcePose {
                 rotation: WorldToView::from_camera_to_world(pose.camera_to_world)?,
                 center: pose.target,
-                plane_translation: DVec2::ZERO,
-                offset_z: 0.0,
+                plane_translation: -candidate.pivot_offset.truncate(),
+                offset_z: candidate.pivot_offset.z,
                 zoom: candidate.zoom,
             },
             if pose.orthographic {
