@@ -253,6 +253,7 @@ try {
   for(const ratio of [1,.5,2]){
     await send('Page.navigate', { url:`${base}/?obrushprofile=sculptgl` });
     await until(async () => (await evaluate(ownInfo))?.subtools===1, `OBRush ${ratio} startup`);
+    await sample(`obrush-${ratio}-startup-open-target`,ownInfo);
     const count=choosers.length;await click(272,26);await until(async()=>choosers.length>count,`OBRush ${ratio} visible Open chooser`);
     await fileInput('#import-file');
     await until(async () => (await evaluate(ownInfo))?.subtools===1&&(await evaluate(ownInfo))?.vertices===18242, `OBRush ${ratio} whole-document OBJ open`);
@@ -291,7 +292,7 @@ try {
     const saved=await save(`obrush-${ratio}-after`);
     const projectAfter=JSON.parse(await readFile(path.join(downloads,saved.guid),'utf8'));
     const flat=positions=>positions.flat();
-    const otherBefore=projectBefore.scene.objects.filter(x=>x.id!==before.active_id),otherAfter=projectAfter.scene.objects.filter(x=>x.id!==before.active_id);
+    const otherBefore=(projectBefore.scene?.objects||[]).filter(x=>x.id!==before.active_id),otherAfter=(projectAfter.scene?.objects||[]).filter(x=>x.id!==before.active_id);
     const row={app:'obrush',ratio,dpr,pointer,history_before:before.history,history_after:after.history,selected_before:before.selected,selected_after:after.selected,visual_before:before.visual,camera_before:{position64:before.camera.position64,target:before.camera.precise_target,view64:before.camera.view64,fov:before.camera.fov_degrees},before:flat(projectBefore.mesh.positions),after:flat(projectAfter.mesh.positions),project_before_sha256:prior.sha256,project_after_sha256:saved.sha256,sculpt_before:before.sculpt,sculpt_after:after.sculpt,other_objects_equal:JSON.stringify(otherBefore)===JSON.stringify(otherAfter)};
     const change=displacement(row);const {ids,...summary}=change;
     result.cases.push({contact:{...row,before:undefined,after:undefined,geometry:summary}});
