@@ -21,7 +21,10 @@ The normal Command-Z action displayed “Edit undone”; its saved project,
 `2b88d59fc06ab6eed9ef25b51de267ff3791b00438e84a7d3247e1f651371fbb`.
 Between these public files, 834 of 40,962 position rows differ, with maximum
 Euclidean displacement `0.0082846564563052` world units. Normals changed;
-triangles, masks and colors did not.
+triangles, masks and colors did not. An independent double-precision check of
+all 81,920 saved triangles found no zero-area faces or original-face normal
+reversals; minimum `|cross| / longest_edge²` quality remained `0.68822982516944`
+before and after this small stroke.
 
 Command-Shift-Z displayed “Edit restored”. The normally saved Redo file was
 byte-identical to the first After project. Opening the Before file through
