@@ -1,6 +1,7 @@
 # C314 paired DPR candidate: exact slider return failed
 
 C314 ran the unchanged paired candidate `be07d4c` (portable WASM SHA-256 `3829630aa778066b789fc066657cad5027de23578c5aeedeae882bfcec9cadb0`) through the newly frozen visual-coordinate harness, SHA-256 `63f1c3cd1c7084ab5b7c64204b3e477f9990af6ba64e37a9abfbb1375a632bf9`. It remains unpromoted and C314 remains failed.
+This isolated candidate branch predates the integrated C310b Paint-pressure work; its observations are diagnostic only and cannot be treated as a pass of the combined product.
 
 Both DPR 1 and DPR 2 completed normal visible Save clicks at CSS (345,26), normal import and visible slider choices 0.5× and 2×. Canvas CSS was 1600×1000; backing was respectively 1600×1000 and 3200×2000. Source scene targets were identical across DPR: 1140×912 at 1×, 570×456 at 0.5×, 2280×1824 at 2×. Four completed `.obrush` downloads per DPR were all 5,318,809 bytes with SHA-256 `c759e9cfed1e06ec2f0aa523d2693cd7bbd2c9e3e04127d6b0c80672572d98aa`; history remained Undo=1/Redo=0. The return click at one-third of the visible slider selected `0.9800000190734863` at **both** DPR values; the exact 1× gate failed. No tolerance was applied.
 
