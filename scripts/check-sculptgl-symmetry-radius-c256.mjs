@@ -2,7 +2,7 @@
 // Usage: node scripts/check-sculptgl-symmetry-radius-c256.mjs WEB_DIST PINNED_HOST_MIRROR
 import { execFileSync, spawn } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import path from 'node:path';
 import { inflateSync } from 'node:zlib';
@@ -231,24 +231,33 @@ const installReferenceRadiusTrace = `(()=>{
   p.__c256RadiusWrapped=true;return true;
 })()`;
 async function visibleLayerControl(key){
+  const tried=[];
   for(let i=0;i<24;i++){
     const rect=await evaluate(`window.obrushBrushMetrics()?.layer_controls?.[${JSON.stringify(key)}]??null`);
+    tried.push(rect);
     if(rect&&rect[1]>72&&rect[3]<985)return rect;
-    await send('Input.dispatchMouseEvent',{type:'mouseWheel',x:145,y:760,deltaX:0,deltaY:360});await pause(110);
+    await send('Input.dispatchMouseEvent',{type:'mouseMoved',x:1500,y:760,buttons:0});
+    await send('Input.dispatchMouseEvent',{type:'mouseWheel',x:1500,y:760,deltaX:0,deltaY:360});await pause(110);
   }
-  throw Error(`Visible Source camera numeric control absent: ${key}`);
+  const m=await evaluate('window.obrushBrushMetrics()');
+  result.camera_control_debug={tried,layer_keys:Object.keys(m.layer_controls??{}),source_enabled:!!m.camera?.source_framing,viewport:m.camera?.viewport};
+  await screenshot('camera-control-missing');
+  throw Error(`Visible Source camera numeric control absent: ${key}; final rect ${JSON.stringify(tried.at(-1))}`);
 }
 async function saveRootVertices(label){
-  await evaluate("document.getElementById('obrush_canvas').focus()");
   const before=await evaluate('window.__symmetryPair.downloads.length');
-  await key('s',2);
-  const record=await until(async()=>{const d=await evaluate('window.__symmetryPair.downloads.at(-1)??null');return d&&d.sequence>before?d:null;},`OBRush normal ${label} .obrush Save`);
-  insist(record.name.endsWith('.obrush'),`OBRush normal Save returned ${record.name}`);
-  const bytes=Buffer.from(record.contents,'utf8');
-  await writeFile(path.join(out,`obrush-${label}.obrush`),bytes);
-  const doc=JSON.parse(record.contents),positions=doc.mesh?.positions;
+  result.save_trace??=[];result.save_trace.push({label,before});
+  for(const type of ['mousePressed','mouseReleased'])await send('Input.dispatchMouseEvent',{type,x:345,y:26,button:'left',clickCount:1});
+  const metadata=await until(async()=>{const d=await evaluate('(()=>{const q=window.__symmetryPair.downloads,d=q.at(-1);return d?{sequence:d.sequence,name:d.name,bytes:d.contents.length}:null})()');return d&&d.sequence>before?d:null;},`OBRush normal ${label} .obrush Save`);
+  result.save_trace.at(-1).after=metadata;
+  insist(metadata.name.endsWith('.obrush')&&!metadata.name.includes('/')&&!metadata.name.includes('\\'),`OBRush normal Save returned ${metadata.name}`);
+  const downloaded=path.join(out,metadata.name);
+  const bytes=await until(async()=>{try{return await readFile(downloaded);}catch{return null;}},`OBRush normal ${label} .obrush download`);
+  insist(bytes.length===metadata.bytes,`OBRush downloaded ${label} bytes differ from host text`);
+  await rename(downloaded,path.join(out,`obrush-${label}.obrush`));
+  const doc=JSON.parse(bytes.toString('utf8')),positions=doc.mesh?.positions;
   insist(Array.isArray(positions)&&positions.length===3,`OBRush ${label} active triangle is not three vertices`);
-  return {name:record.name,sha256:sha(bytes),bytes:bytes.length,positions};
+  return {name:metadata.name,sha256:sha(bytes),bytes:bytes.length,positions};
 }
 async function sample(name, info) {
   await pause(260);
@@ -289,6 +298,7 @@ try {
   const target = await send('Target.createTarget', { url: 'about:blank' }, null);
   session = (await send('Target.attachToTarget', { targetId: target.targetId, flatten: true }, null)).sessionId;
   for (const domain of ['Page', 'Runtime', 'DOM']) await send(`${domain}.enable`);
+  await send('Browser.setDownloadBehavior',{behavior:'allow',downloadPath:out,eventsEnabled:true},null);
   await send('Page.setInterceptFileChooserDialog', { enabled: true });
   await send('Emulation.setDeviceMetricsOverride', { width: 1600, height: 1000, deviceScaleFactor: 1, mobile: false });
   await send('Page.addScriptToEvaluateOnNewDocument', { source: instrument });
