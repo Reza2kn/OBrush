@@ -27,7 +27,7 @@ jobs:
         run: cargo install wasm-bindgen-cli --version 0.2.129 --locked --root .tools/wasm-bindgen
       - name: Build the static browser app
         run: scripts/build-web.sh
-      - name: Record served build identity
+      - name: Verify official build identity
         env:
           SOURCE_SHA: ${{ github.sha }}
         run: |
@@ -35,12 +35,24 @@ jobs:
           import hashlib, json, os
           from pathlib import Path
           root = Path('web/dist')
-          wasm = root / 'pkg/obrush_app_bg.wasm'
-          info = {
+          info = json.loads((root / 'build-info.json').read_text())
+          expected = {
+              'schema_version': 1,
               'source_commit': os.environ['SOURCE_SHA'],
-              'portable_wasm_sha256': hashlib.sha256(wasm.read_bytes()).hexdigest(),
+              'source_tree_state': 'clean',
+              'cargo_lock_sha256': hashlib.sha256(Path('Cargo.lock').read_bytes()).hexdigest(),
+              'wasm_bindgen_cli_version': '0.2.129',
           }
-          (root / 'build-info.json').write_text(json.dumps(info, indent=2) + '\n')
+          for key, value in expected.items():
+              if info.get(key) != value:
+                  raise SystemExit(f'Browser build identity mismatch: {key}')
+          for key, relative in (
+              ('portable_wasm_sha256', 'pkg/obrush_app_bg.wasm'),
+              ('simd_wasm_sha256', 'pkg-simd/obrush_app_bg.wasm'),
+              ('gpu_wasm_sha256', 'gpu-pkg/resident_bg.wasm'),
+          ):
+              if info.get(key) != hashlib.sha256((root / relative).read_bytes()).hexdigest():
+                  raise SystemExit(f'Browser artifact hash mismatch: {key}')
           PY
       - name: Upload reviewable browser bundle
         uses: actions/upload-artifact@v4
