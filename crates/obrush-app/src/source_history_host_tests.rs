@@ -34,6 +34,54 @@ fn input() -> host::SourceGeometryInput {
         in_contact: true,
     }
 }
+
+#[test]
+fn source_drag_invalid_held_input_cancels_preview_and_cannot_commit_on_release() {
+    let mut d = document();
+    let before = d.to_json().unwrap();
+    let history = d.history_depths();
+    let preferences = SourceGeometryPreferences {
+        mode: SourceGeometryMode::SourceOrdinary,
+        radius: 25.0,
+        radius_factor: 0.0,
+        options: SourceGeometryOptions::drag(),
+        ..SourceGeometryPreferences::drag()
+    };
+    let settings = BrushSettings {
+        kind: BrushKind::Drag,
+        adaptive_detail: false,
+        symmetry_x: false,
+        alpha: None,
+        ..Default::default()
+    };
+    let session = SourceGeometrySession::begin_with_controls(
+        &mut d,
+        &settings,
+        false,
+        preferences,
+        input(),
+        Arc::new(Mutex::new(Default::default())),
+    )
+    .unwrap();
+    let mut moved = input();
+    moved.screen[0] += 3.0;
+    let report = host::apply_shared(&mut d, &session, moved).unwrap();
+    assert!(report.changed_vertices > 0);
+    assert_ne!(d.to_json().unwrap(), before);
+    let mut invalid = moved;
+    invalid.screen[0] = f64::NAN;
+    assert_eq!(
+        host::apply_shared(&mut d, &session, invalid).unwrap_err(),
+        SourceGeometryError::InvalidInput
+    );
+    session.lock().unwrap().finish(&mut d).unwrap();
+    assert_eq!(d.to_json().unwrap(), before);
+    assert_eq!(d.history_depths(), history);
+    assert_eq!(
+        session.lock().unwrap().finish(&mut d).unwrap_err(),
+        SourceGeometryError::NoOpenStroke
+    );
+}
 fn apply(d: &mut Document, radius: f64, intensity: f64) {
     apply_controls(d, radius, intensity, true);
 }
