@@ -27,6 +27,12 @@ passed bounded mesh, GPU, release-idle and exact eight-step Undo/Redo gates
 at radius 0.037/79% with X symmetry. Four contacts were no-ops, and the
 full-sphere screenshots show marks too small to judge close-up triangular
 tearing, so the user's visual complaint remains open.
+[Q05 and Q06 close-up Move attempts](NATIVE_MOVE_CLOSEUP_Q06_RESULT.md)
+retained original-resolution images but failed their paired-camera gates.
+Offline analysis of the Q02 saved mesh found a sharp-looking region with
+minimum local face quality about 0.1 and folds up to 50.26°, both allowed by
+the current Move guard. This is a numerical diagnosis, not a matched visual
+pass.
 [CR01's repeated Crease browser comparison](SCULPTGL_CREASE_OVERLAP_CR01_REPORT.md)
 preserves a failed paired protocol because OBrush's actual default pressure
 setting differed from the frozen pressure-off precondition. On one independent
@@ -49,6 +55,11 @@ An opt-in constrained repair remains a proposed, unimplemented remedy.
 is isolated and query-gated. One Chrome Worker served two checked commits on a
 40,642-vertex sphere with exact public Save/Undo/Redo. Million-vertex pacing,
 memory, complete GPU words and the ordinary browser path remain unverified.
+[MRP11's fresh million-vertex ordinary control](SCULPTGL_MILLION_RELEASE_ORIGIN_MRP11_REPORT.md)
+passed 17 independent file/history/shape checks but failed all four browser
+responsiveness gates, including a 394.38 ms release acknowledgment. An
+immutable-origin validation cache was therefore not promoted; held-frame
+latency and the Source display-normal oracle remain open.
 
 **Resolution-stroke R02:** [The paired browser report](SCULPTGL_RESOLUTION_STROKE_R02_RESULT.md)
 preserves a failed pinned-reference press/release gate, then measures one
