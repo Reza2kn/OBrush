@@ -34,6 +34,12 @@ setting differed from the frozen pressure-off precondition. On one independent
 new tiny or folded faces and had exact eight-step Undo/Redo. This scoped safety
 observation does not resolve close-up tearing or Crease parity; CR02 freezes a
 closer default-pressure check.
+[CR02's closer Crease browser run](SCULPTGL_CREASE_OVERLAP_CR02_REPORT.md)
+observed continuous grooves, finite mesh, no new tiny or flipped faces, and
+exact eight-step Undo/Redo on the same sphere. Its frozen gate remains failed:
+the closer camera was set before the strokes, per-dab side traces were not
+retained on both hosts, and legacy mouse pressure differed from the matched
+DOM force premise. Close-up tearing on other sculpted meshes remains open.
 [MRP10's persistent Worker trial](SCULPTGL_MILLION_WORKER_RESIDENCY_MRP10_RESULT.md)
 is isolated and query-gated. One Chrome Worker served two checked commits on a
 40,642-vertex sphere with exact public Save/Undo/Redo. Million-vertex pacing,
