@@ -333,10 +333,11 @@ try {
   await fileInput('#fileopen');
   await until(async () => (await evaluate(refInfo))?.meshes === 2, 'reference imported parts');
   const refScene=await evaluate(refInfo);
-  result.reference_import={active:refScene.active,objects:refScene.objects.map(({positions,...rest})=>rest)};
+  result.reference_import={active:refScene.active,selected:refScene.selected,objects:refScene.objects.map(({positions,...rest})=>rest)};
   insist(refScene.objects[refScene.active].vertices===4514,'Reference imported active object is not the curved fixture');
   await click(await sourceSceneControl('_ctrlIsolate'));
   const isolatedReference=await evaluate(refInfo);
+  result.reference_isolation_attempt={active:isolatedReference.active,selected:isolatedReference.selected,visible:isolatedReference.objects.map(m=>m.visible),checkbox:await evaluate("window.__sculptglReferenceInstance.getGui()._ctrlScene._ctrlIsolate.getValue()")};
   insist(isolatedReference.objects.filter(m=>m.visible).length===1&&isolatedReference.objects[isolatedReference.active].visible,'Reference active curved mesh was not isolated');
   result.reference_isolation={active:isolatedReference.active,visible:isolatedReference.objects.map(m=>m.visible)};
   const referenceZero=await sample('reference-zero',refInfo);
