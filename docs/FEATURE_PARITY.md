@@ -306,6 +306,15 @@ produce distinct saved Draw meshes with exact GPU/save and Undo/Redo checks.
 Physical pens, native stylus input, transformed layouts, overflow behavior in
 the browser, matched SculptGL brush shape and full parity remain open.
 
+**C302 Source Brush pen burst:** [The pinned normal-browser pair](SCULPTGL_SOURCE_PEN_BURST_C302_RESULT.md)
+retains two same-frame Source Brush pen moves with separate pressure values.
+All 12 scoped audit checks pass: both dabs are admitted without a release
+duplicate, pressure changes the saved geometry in each app, factor-zero
+controls remain exact, OBrush GPU rows and Undo/Redo match its public files,
+and a 257-move overflow cancels with exact prior project bytes and history.
+The geometry is not an exact cross-app match. Synthetic browser input does not
+establish physical-tablet, native, other-brush, or full pressure parity.
+
 **C246 global darken-unselected audit:** [The pinned-source and paired browser
 report](SCULPTGL_DARKEN_C246.md) confirms the existing OBrush Source shader
 selects the same unselected-part `0.3` linear-color factor on one independent
