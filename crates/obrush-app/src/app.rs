@@ -6754,7 +6754,7 @@ impl OBrushApp {
                 let report = export.report;
                 self.last_export_report = Some(report.attributes.clone());
                 self.last_scene_geometry_report = Some(report.clone());
-                self.write_file_contents(export.bytes, "sketchfab.ply", false);
+                self.write_file_contents(export.bytes, "ply", false);
                 if cfg!(target_arch = "wasm32") {
                     self.message = format!(
                         "Exported Sketchfab-ready PLY: {} parts, {} reoriented vertices. Upload the downloaded file in your Sketchfab account.",
