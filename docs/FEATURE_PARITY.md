@@ -309,6 +309,10 @@ press time without additional WASM linear-memory pages. Exact allocation and
 malformed-state rejection parity remains unproved, so its code has not been
 merged into the ordinary press path and the four responsiveness gates remain
 failed.
+[MRP08's isolated face-bounds candidate](SCULPTGL_MILLION_FACE_BOUNDS_MRP08_RESULT.md)
+matched all 1,998,000 public face-bound words but saved only 0.392 ms median
+in the bounded native screen, far below its 20 ms admission target; it was
+not integrated or promoted to the browser gate.
 [The sparse held-pointer Worker trial](SOURCE_WORKER_SPARSE_HELD_TRIAL.md) checks two
 ordinary viewport strokes, warm state, sparse GPU words, public Save/Undo/Redo
 and cancellation on a 40k sphere. It remains query-gated and unpromoted:
