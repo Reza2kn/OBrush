@@ -4,9 +4,11 @@
 extends the visible session-only UV image chooser from PNG to bounded JPEG
 with a shared native/browser Rust decoder. An authored two-face UV OBJ and
 asymmetric JPEG loaded in OBrush's normal browser with correct quadrant order,
-GPU texture allocation and malformed-image retention. The pinned reference's
-normal UI could not be switched to UV mode under headless Chrome, so its
-matched-pixel gate and the complete UV import row remain open.
+GPU texture allocation and malformed-image retention. [C297's normal-UI
+reference run](SCULPTGL_UV_REFERENCE_C297_RESULT.md) confirmed the same
+quadrant order after reselecting UV shader following OBJ import. The reference
+appearance is much brighter; calibrated matched pixels, project persistence,
+and the complete UV import row remain open.
 
 **Scoped custom MatCap import:** [C291](SCULPTGL_MATCAP_IMPORT_C291_RESULT.md)
 adds session-only, bounded PNG/JPEG MatCap import to the ordinary viewport.
