@@ -17,7 +17,13 @@ if (source.side !== 'source' || root.side !== 'root' || source.fixture.sha256 !=
 const f32 = word => { const b = Buffer.allocUnsafe(4); b.writeUInt32LE(word); return b.readFloatLE(); };
 const decode = (side, bytes) => side === 'root'
   ? decodeRootF32Model(bytes)
-  : (() => { const m = decodeIndependent(bytes).meshes[0]; return { positions:m.positions.map(row=>row.map(f32)), colors:m.colors.map(row=>row.map(f32)), faces:m.faces }; })();
+  : (() => { const m = decodeIndependent(bytes).meshes[0]; return { positions:m.positions.map(row=>row.map(f32)), colors:m.colors.map(row=>row.map(f32)), materials:m.materials.map(row=>row.map(f32)), faces:m.faces }; })();
+const floatWords = rows => {
+  const values = rows.flat();
+  const bytes = Buffer.alloc(values.length*4);
+  values.forEach((value,index) => bytes.writeFloatLE(value,index*4));
+  return bytes;
+};
 const byId = mesh => {
   const rows = new Map();
   mesh.colors.forEach((color, index) => {
@@ -74,7 +80,10 @@ for (const [side, run] of [['source',source],['root',root]]) {
       saves:Object.fromEntries(['before','after','undo','redo'].map(stage => [stage,row[stage].sha256])),
       exactUndo:files.before.equals(files.undo), exactRedo:files.after.equals(files.redo),
       beforeToAfter:positionDiff(byId(before),byId(after)),
-      sameFaceCount:before.faces.length === after.faces.length,
+      exactNonPositionAttributes:JSON.stringify(before.faces) === JSON.stringify(after.faces) &&
+        floatWords(before.colors).equals(floatWords(after.colors)) &&
+        floatWords(before.materials).equals(floatWords(after.materials)) &&
+        (side === 'source' || floatWords([before.unprotected]).equals(floatWords([after.unprotected]))),
       gpu,
       burstDelivered:delivered.length === 2 && delivered[0].frame === delivered[1].frame &&
         delivered.every((event,index) => Math.abs(event.pressure-row.burstPressures[index]) <= 1e-6),
@@ -108,7 +117,7 @@ if (root.overflow) {
 const checks = {
   allTrustedSameFrameBurst:Object.values(records).every(side => Object.values(side).every(row => row.burstDelivered)),
   allOwnHistoryExact:Object.values(records).every(side => Object.values(side).every(row => row.exactUndo && row.exactRedo)),
-  unchangedFaceCounts:Object.values(records).every(side => Object.values(side).every(row => row.sameFaceCount)),
+  unchangedNonPositionAttributes:Object.values(records).every(side => Object.values(side).every(row => row.exactNonPositionAttributes)),
   activeGpuPositionsExact:Object.values(records).every(side => Object.values(side).every(row =>
     Object.values(row.gpu).every(stage => stage.active && stage.positionExact))),
   sameInitialGeometry:Object.values(comparisons).every(c => c.beforePair.changedOriginalVertices === 0),
