@@ -26,7 +26,7 @@ const result = {
   build: { base_commit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), wasm_sha256: sha(await readFile(path.join(web, 'pkg/obrush_app_bg.wasm'))) },
   fixture: { sha256: sha(fixture), bytes: fixture.length },
   harness_sha256: sha(await readFile(new URL(import.meta.url))),
-  frozen: { offset: 0.5, local_path: [[3.84,-1.70,0],[3.835,-1.71,0],[3.83,-1.72,0]], radius: 50, intensity: 0.5, pixel_channel_threshold: 4, pixel_roi_radius: 90, min_changed_pixels: 20 },
+  frozen: { offset: 0.5, local_path: [[3.93,-1.95,0],[3.92,-1.96,0],[3.91,-1.97,0]], radius: 50, intensity: 0.5, pixel_channel_threshold: 4, pixel_roi_radius: 90, min_changed_pixels: 20 },
   cases: [], screenshots: [], errors: [], status: 'running',
 };
 let server, chrome, socket, session, next = 0;
@@ -226,7 +226,7 @@ try {
   await heldStroke(refPath);
   result.reference_events=await evaluate(`window.__symmetryPair.events.slice(${refEventIndex})`);
   insist(result.reference_events.some(e=>e.type==='pointerdown'&&e.trusted) && result.reference_events.some(e=>e.type==='pointerup'&&e.trusted) && result.reference_events.some(e=>e.type==='pointermove'&&e.buttons===1&&e.trusted),'Reference trusted held pointer lifecycle missing');
-  result.reference_held_pick=await evaluate(`(()=>{const a=window.__sculptglReferenceInstance,p=a.getPickingSymmetry();return {face:p.getPickedFace(),point:Array.from(p.getIntersectionPoint()),mesh_index:a.getMeshes().indexOf(p.getMesh()),undo:a.getStateManager()._undos.length}})()`);
+  result.reference_held_pick=await evaluate(`(()=>{const a=window.__sculptglReferenceInstance,p=a.getPickingSymmetry();return {face:p.getPickedFace(),point:Array.from(p.getIntersectionPoint()),radius_squared:p.getLocalRadius2(),picked_vertices:p.getPickedVertices()?.length??null,mesh_index:a.getMeshes().indexOf(p.getMesh()),undo:a.getStateManager()._undos.length}})()`);
   await parkCursor();const refAfterPng=await screenshot('reference-held-after');
   result.reference_pixel_change=changedPixels(refBeforePng,refAfterPng,refPath[0],result.frozen.pixel_roi_radius,result.frozen.pixel_channel_threshold);
   result.reference_vertices_after=Array.from((await evaluate(refInfo)).objects[referenceHalf.info.active].small_positions);
