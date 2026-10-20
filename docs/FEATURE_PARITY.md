@@ -15,6 +15,13 @@ justify a product change; the mirrored reference ratio used its GUI
 controller and the harness needed manual cleanup after writing receipts.
 Broad stroke and full resolution-family parity remain open.
 
+**Symmetry-offset C255:** [The held-browser pair](SCULPTGL_SYMMETRY_HELD_C255_DIAGNOSIS.md)
+reached a mirrored edit in both apps after a recorded camera calibration,
+but the OBrush brush footprint was about four times wider on screen and its
+measured image region changed 2,340 pixels versus 34 in pinned SculptGL.
+Five earlier failed setup receipts remain retained. This does not establish
+offset, brush, camera or mirror-guide parity.
+
 **Current scoped additions, full rows open:** [C334](SCULPTGL_CAMERA_PICKED_PIVOT_C334_STATIC_RESULT.md)
 adds picked orbit pivots in Source framing. Authored-mesh normal-browser checks
 in OBrush and pinned SculptGL matched independent integer-pixel ray hits within
