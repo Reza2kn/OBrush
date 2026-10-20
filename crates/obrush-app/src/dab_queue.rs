@@ -699,12 +699,18 @@ mod tests {
         let history = document.history_depths();
         let mut queue = DabQueue::default();
         queue.begin();
+        let settings = BrushSettings {
+            kind: BrushKind::Draw,
+            symmetry_x: false,
+            adaptive_detail: false,
+            ..Default::default()
+        };
         queue.dab(
             Ray {
                 origin: Vec3::new(0.0, 0.0, 3.0),
                 direction: -Vec3::Z,
             },
-            BrushSettings::default(),
+            settings.clone(),
             Vec3::ZERO,
         );
         let applied = queue.process(&mut document, 1, None);
@@ -714,7 +720,7 @@ mod tests {
                 origin: Vec3::new(0.0, 0.0, 3.0),
                 direction: -Vec3::Z,
             },
-            BrushSettings::default(),
+            settings,
             Vec3::ZERO,
         );
         queue.discard_active_stroke();
