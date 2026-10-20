@@ -39,6 +39,10 @@ curved grid. The second normal-UI pair changed the same 95 vertices and
 passed own-file/history/GPU position checks, but exceeded its frozen `1e-6`
 paired position gate by `2.06e-6` and its Redo display-normal gate by
 `1.62e-4`. The candidate code was reverted and the full Drag row remains open.
+[A read-only replay](SCULPTGL_SOURCE_DRAG_C288_CAUSAL.md) attributes the
+position difference to captured camera/pick/radius inputs within f32 rounding;
+[C289](SCULPTGL_SOURCE_DRAG_C289_PREREG.md) freezes a separate causal repair
+gate for those inputs and Redo display normals.
 
 **Scoped Inflate witness:** [The C269 direct pinned-method report](SCULPTGL_INFLATE_PAIR_C269.md)
 records the reference's positive, negative and zero Float32 response on one

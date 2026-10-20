@@ -169,6 +169,8 @@ def render() -> str:
         "[C288 Source Drag](SCULPTGL_SOURCE_DRAG_C288_RESULT.md) changed "
         "the same 95 vertices but failed frozen position and Redo display-"
         "normal gates; its product code was reverted. "
+        "[The C288 replay](SCULPTGL_SOURCE_DRAG_C288_CAUSAL.md) attributes "
+        "its position error to camera/pick inputs within f32 rounding. "
         "[C270 Inflate UI](SCULPTGL_INFLATE_DIAMOND_UI_C270.md) is one "
         "scoped positive/negative fixture, and "
         "[C272 Brush Negative](SCULPTGL_BRUSH_NEGATIVE_UI_C272.md) is one "
