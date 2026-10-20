@@ -5,10 +5,11 @@ matched both Negative settings within `7.45e-9` XYZ and `8.73e-11` displayed
 normal difference on 45 changed vertices, with equal admitted dab counts. Its
 frozen pick-center calibration gate still failed by `2.98e-8` against a `1e-8`
 bound. The earlier [C328](SCULPTGL_SOURCE_PINCH_C328_RESULT.md) had mismatched
-dab counts and a less precise calibration. [C323's Twist guard
-analysis](SCULPTGL_SOURCE_TWIST_C323_CANDIDATE_PLAN.md) found a correctable
-first-held falloff difference, while the reference second-held result folds
-faces that OBrush's current guard protects. Neither full brush row is closed.
+dab counts and a less precise calibration. [C330's Twist pair](SCULPTGL_SOURCE_TWIST_C330_NORMAL_RESULT.md)
+matches first-held positions and active display normals within `1.5e-8` and
+`8.8e-11` on the independent fixture. Later held geometry still differs because
+the reference folds faces that OBrush's guard protects. Neither full brush row
+is closed.
 
 **Scoped Source Paint pen input:** [C310b](SCULPTGL_SOURCE_PAINT_PEN_BURST_C310B_RESULT.md)
 passes 13 frozen normal-browser checks for two ordered same-frame pressure

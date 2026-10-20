@@ -60,3 +60,19 @@ The unchanged harness then passed with its own server. The first audit attempt
 also used the root checkout for the pinned Source receipt, which resides in
 this isolated worktree, and the second omitted the shared helper root; those
 setup failures were corrected without changing captures, scorer or product.
+
+After integration on the main branch at `0d8af64`, the combined C326+C330
+official web build had portable WASM SHA-256
+`aa374ba02c4ccd6b26d0bd06e6c73e298efc579462ee6f0e2980614a5cc33437`.
+Its fresh owned-server normal-UI result SHA-256 was
+`8778eaa5d6a2836b583f6e130d603cb022f515411179f9cb5a4603f6de691d8a`;
+the unchanged C318 paired audit SHA-256 was
+`86dc5bfea0dc6f87dbace05e615a290f68f81a9399a83ab0b3b1d71b3f92e7eb`.
+The same scoped first-held position (`1.4901161193847656e-8`) and display
+normal (`8.731149137020111e-11`) maxima passed; the full scorer retained
+its held2/After/Redo and ID577/578 failures. Main-branch formatting, all-target
+workspace tests (log SHA-256
+`f7bc0736ab1a31ab682c22dd2e67730d96a5c1cfad1da81c024f5c92e5b`),
+strict native/WASM Clippy, official web build and signed official macOS package
+passed. The packaged executable SHA-256 was
+`d12395f9934a2a1c629f31c45645856633da07e3752f5df40881c024f5c92e5b`.
