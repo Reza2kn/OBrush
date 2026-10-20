@@ -4,7 +4,8 @@ This is a preregistration, not a result or a parity claim. The pinned reference
 is SculptGL commit `8e45dafc0f7906e5238dfffc1a2df742bd25f29d`, hosted
 bundle SHA-256 `79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600`.
 Reuse the independently authored RGB-ID 10,114-vertex, 20,224-triangle SGL
-sphere from C302, SHA-256
+sphere from C302, now retained as
+`tests/fixtures/independent-id-sphere-c310.sgl`, SHA-256
 `39ddfd1559fde94aa5f6d2602beffc6cf9f77fb7f934989ee9f8677739f47c1b`.
 It is a common imported fixture, not a copied commercial asset. Record its
 actual file path, bytes, hash, OBrush source/build hashes, harness hash and
