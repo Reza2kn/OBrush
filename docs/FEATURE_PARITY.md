@@ -214,6 +214,12 @@ from 62.4 to 35.1 ms on the frozen million-vertex browser test, but still
 failed all four global responsiveness gates. The candidate code was rejected,
 the 17/17 file/history/shape audit passed, and an independent active-GPU
 word oracle remains open.
+[The read-only MRP03 million-vertex trace](SCULPTGL_MILLION_MRP03_RESULT.md)
+finds 22.41 ms mean cursor/overlay and 21.68 ms mean Source geometry in
+the same steady-stroke viewport frames, plus 520.6 ms initial-press input
+and a 367.8 ms early Source dab. Its matched control and diagnostic both
+pass complete file/history/shape checks and fail all four responsiveness
+gates; no product optimization or reference-parity claim follows.
 [The sparse held-pointer Worker trial](SOURCE_WORKER_SPARSE_HELD_TRIAL.md) checks two
 ordinary viewport strokes, warm state, sparse GPU words, public Save/Undo/Redo
 and cancellation on a 40k sphere. It remains query-gated and unpromoted:
