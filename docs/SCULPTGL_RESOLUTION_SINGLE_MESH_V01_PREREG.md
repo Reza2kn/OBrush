@@ -29,12 +29,14 @@ tests visible pixels. It is a new gate, not a reinterpretation of R03.
   may set the resolution ratio, as in R03; record this non-visible setup
   limitation explicitly. If Reset or its dialog cannot be actuated as normal
   UI, V01 fails setup and stops rather than hiding a mesh in internal state.
-- OBrush normal UI: fresh `?obrushprofile=sculptgl` page, focus the canvas,
-  press Ctrl+O (File Open), select the OBJ in `#import-file`, and assert the
+- OBrush normal UI: fresh `?obrushprofile=sculptgl` page, click the visible
+  **Open** toolbar control, select the OBJ in `#import-file`, and assert the
   startup object was *replaced*: one scene object, one visible and selected
   subtool, and its public project matches the fixture vertex/triangle count.
   No Add, hidden startup object, Solo workaround, direct document API or
-  pre-mutated `.obrush` project is allowed.
+  pre-mutated `.obrush` project is allowed. Correction before execution:
+  SculptGL-profile Ctrl+O is **Add**, so the visible Open button is required
+  for whole-document replacement.
 
 ## Frozen browser and contact matrix
 
