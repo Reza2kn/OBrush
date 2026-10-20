@@ -33,6 +33,31 @@ fn sheet() -> Mesh {
     Mesh::from_obj(&obj).unwrap()
 }
 
+fn curved_twist_sheet() -> Mesh {
+    let mut obj = String::new();
+    for row in 0..SIDE {
+        for column in 0..SIDE {
+            let x = (column as f64 / (SIDE - 1) as f64 - 0.5) * 0.6;
+            let y = (row as f64 / (SIDE - 1) as f64 - 0.5) * 0.6;
+            let z = 0.02 + 0.009 * (6.0 * x - 1.3 * y).sin() + 0.003 * (9.0 * y).cos();
+            obj.push_str(&format!("v {x} {y} {z}\n"));
+        }
+    }
+    for row in 0..SIDE - 1 {
+        for column in 0..SIDE - 1 {
+            let a = row * SIDE + column + 1;
+            let b = a + 1;
+            let c = a + SIDE;
+            let d = c + 1;
+            obj.push_str(&format!("f {a} {b} {d}\nf {a} {d} {c}\n"));
+        }
+    }
+    let mut mesh = Mesh::from_obj(&obj).unwrap();
+    mesh.masks[543] = 1.0;
+    mesh.masks[577] = 0.5;
+    mesh
+}
+
 fn index(x: i32, y: i32) -> usize {
     ((y + 16) as usize) * SIDE + (x + 16) as usize
 }
@@ -114,6 +139,15 @@ fn weight(point: Vec3, radius: f32) -> f64 {
     (1.0 - distance_squared / f64::from(radius).powi(2))
         .max(0.0)
         .powi(2)
+}
+
+fn twist_weight(point: Vec3, radius: f32) -> f64 {
+    let distance = point.as_dvec3().length() / f64::from(radius);
+    if distance >= 1.0 {
+        0.0
+    } else {
+        1.0 - 4.0 * distance.powi(3) + 3.0 * distance.powi(4)
+    }
 }
 
 fn direct(mesh: &mut Mesh, kind: BrushKind, settings: &BrushSettings) -> obrush_core::BrushResult {
@@ -198,7 +232,7 @@ fn twist_has_known_angle_and_preserves_distance_to_captured_axis() {
     let point = index(4, 2);
     let before = original.positions[point].as_dvec3();
     let theta = f64::from(0.4_f32 * configured.strength)
-        * weight(original.positions[point], configured.radius);
+        * twist_weight(original.positions[point], configured.radius);
     close(
         mesh.positions[point],
         glam::DVec3::new(
@@ -209,7 +243,8 @@ fn twist_has_known_angle_and_preserves_distance_to_captured_axis() {
     );
     let maximum = analytic_sheet_error(&original, &mesh, |point| {
         let point64 = point.as_dvec3();
-        let theta = f64::from(gesture.accepted_parameter()) * weight(point, configured.radius);
+        let theta =
+            f64::from(gesture.accepted_parameter()) * twist_weight(point, configured.radius);
         glam::DVec3::new(
             point64.x * theta.cos() - point64.y * theta.sin(),
             point64.x * theta.sin() + point64.y * theta.cos(),
@@ -243,6 +278,32 @@ fn twist_inverse_reverses_rotation_and_accepts_a_distinct_camera_axis() {
         assert!((a.cross(axis).length() - b.cross(axis).length()).abs() < 5e-7);
         assert_eq!(b.z.is_sign_positive(), invert);
     }
+}
+
+#[test]
+fn twist_source_falloff_accepts_safe_first_arc_and_clips_folded_second_arc() {
+    let original = curved_twist_sheet();
+    let mut mesh = original.snapshot();
+    let center = Vec3::new(-0.042_785_567, 0.010_696_381, 0.020_572_03);
+    let mut configured = settings(BrushKind::Twist);
+    configured.radius = 0.004_469_251_4_f32.sqrt();
+    configured.strength = 1.0;
+    let mut gesture = mesh
+        .prepare_local_transform_stroke(center, Vec3::Z, Vec3::Z, &configured)
+        .unwrap();
+    let first = gesture.apply(&mut mesh, 0.737_815_1, &configured);
+    assert!(first.changed_vertices > 0);
+    assert_eq!(first.displacement_scale, 1.0);
+    assert_guard(&original, &mesh);
+    assert_eq!(mesh.positions[543], original.positions[543]);
+    let first_mesh = mesh.snapshot();
+    let second = gesture.apply(&mut mesh, 1.385_448_3, &configured);
+    assert!(second.changed_vertices > 0);
+    assert!(second.displacement_scale > 0.0 && second.displacement_scale < 1.0);
+    assert!(gesture.accepted_parameter() > 0.737_815_1);
+    assert_guard(&original, &mesh);
+    assert_eq!(mesh.positions[543], original.positions[543]);
+    assert_ne!(mesh.positions, first_mesh.positions);
 }
 
 #[test]
@@ -409,7 +470,11 @@ fn partial_masks_scale_twist_angle_and_local_scale_exponent() {
         direct(&mut mesh, kind, &configured);
         let p = original.positions[point].as_dvec3();
         let parameter = f64::from(0.2_f32 * configured.strength)
-            * weight(original.positions[point], configured.radius)
+            * if kind == BrushKind::Twist {
+                twist_weight(original.positions[point], configured.radius)
+            } else {
+                weight(original.positions[point], configured.radius)
+            }
             * 0.5;
         let expected = if kind == BrushKind::Twist {
             glam::DVec3::new(

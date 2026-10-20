@@ -2279,7 +2279,13 @@ fn radial_influence(
     settings: &BrushSettings,
     move_kernel: bool,
 ) -> f32 {
-    let kernel = if move_kernel {
+    let kernel = if settings.kind == BrushKind::Twist {
+        // SculptGL Twist uses a distinct smooth radial angle profile. Keep
+        // this scoped to Twist; Local Scale and ordinary stamps retain theirs.
+        let distance = (distance_squared / radius_squared).sqrt();
+        let distance_squared = distance * distance;
+        1.0 - 4.0 * distance_squared * distance + 3.0 * distance_squared * distance_squared
+    } else if move_kernel {
         let distance = (distance_squared / radius_squared).sqrt();
         (1.0 - distance).powi(4) * (1.0 + 4.0 * distance)
     } else {
