@@ -27,6 +27,12 @@ each side changes the same 98 IDs, with maximum paired final position error
 C277 test interrupted its own held stroke by clicking Save and remains a
 preserved failed receipt. The complete Clay row stays open.
 
+**Scoped Smooth Tangent witness:** [The C285 normal-UI on/off pair](SCULPTGL_SMOOTH_TANGENT_C285_RESULT.md)
+matches pinned SculptGL geometry and active GPU display-normal words exactly
+through Before, held preview, After, Undo and Redo on one independent curved
+441-vertex fixture. The corrected run preserves [C283's setup failure](SCULPTGL_SMOOTH_TANGENT_C283_RESULT.md)
+separately. The full Smooth Tangent row stays open.
+
 **Scoped Inflate witness:** [The C269 direct pinned-method report](SCULPTGL_INFLATE_PAIR_C269.md)
 records the reference's positive, negative and zero Float32 response on one
 independent masked diamond, alongside a passing shared-core arithmetic,
