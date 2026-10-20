@@ -49,6 +49,12 @@ OBRush's floor grid corrupted sphere silhouettes. Its geometry/history
 remained invariant; [V04](SCULPTGL_RESOLUTION_SINGLE_MESH_V04_PREREG.md)
 freezes visible guide-off and all-menu-hidden capture setup before another
 pixel check.
+[V04's paired browser gate](SCULPTGL_RESOLUTION_SINGLE_MESH_V04_RESULT.md)
+passed at DPR 1/2 with the grid off, one imported sphere, unchanged
+within-app geometry/history across 0.5/1/2× and full-scene color and
+silhouette bounds. Source Symmetry and render ratio still used non-visible
+controller setup; longer strokes, other scenes, cross-app image similarity
+and the complete resolution-family row remain open.
 
 **Current scoped additions, full rows open:** [C334](SCULPTGL_CAMERA_PICKED_PIVOT_C334_STATIC_RESULT.md)
 adds picked orbit pivots in Source framing. Authored-mesh normal-browser checks
