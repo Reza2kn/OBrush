@@ -1,0 +1,13 @@
+{
+  "source": "Independent Python-authored SGL v3; no SculptGL or OBrush encoder",
+  "license": "CC0",
+  "fixture": "tests/fixtures/independent-source-drag-c286.sgl",
+  "bytes": 72132,
+  "sha256": "fec6d8a1598f719e71f0af821a2462f7f70f4ffdb1740ca0bcdca768658f8a6e",
+  "grid_side": 33,
+  "vertices": 1089,
+  "triangles": 2048,
+  "protected_rgb_id": 544,
+  "half_unprotected_rgb_id": 545,
+  "z_formula": "0.025 + 0.012*sin(5*x+1.7*y) + 0.004*cos(8*y)"
+}
