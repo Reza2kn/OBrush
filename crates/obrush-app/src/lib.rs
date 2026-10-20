@@ -7,6 +7,7 @@ mod background_cursor_gl;
 mod background_cursor_tests;
 mod background_mask;
 pub mod brush_preferences;
+mod camera_transition;
 #[cfg(test)]
 mod continuous_clock_contract;
 mod continuous_dab;

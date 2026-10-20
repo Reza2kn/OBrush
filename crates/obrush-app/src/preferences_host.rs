@@ -667,6 +667,7 @@ impl OBrushApp {
             return;
         }
         if let Some((x, z)) = self.source_keyboard_camera.due(web_time::Instant::now()) {
+            self.camera_transition = None;
             self.camera.source_keyboard_step(x, z);
             ctx.request_repaint();
         }

@@ -18,6 +18,7 @@ use crate::brush_preferences::{
     AlphaConversion, AlphaSelection, BrushPreferenceStore, ContactInput,
     Modifiers as PreferenceModifiers, PressureProfile, ScreenRadiusPreferences, ToolPreferences,
 };
+use crate::camera_transition::{CameraTransition, CameraTransitionPose};
 use crate::continuous_dab::{ContinuousDab, apply_continuous_dab};
 use crate::continuous_host::{
     ClockPolicy, HostContinuousClock, Readiness, StopReason, StrokeKey, supports_continuous,
@@ -786,6 +787,13 @@ struct ActiveMove {
     units_per_pixel: f32,
 }
 
+struct ActiveCameraTransition {
+    curve: CameraTransition,
+    destination: Camera,
+    started: web_time::Instant,
+    revision: u64,
+}
+
 struct TopologyJob {
     id: u32,
     revision: u64,
@@ -998,6 +1006,7 @@ pub struct OBrushApp {
     brush_lock_position: bool,
     last_stamp_report: Option<HostLockedStampReport>,
     camera: Camera,
+    camera_transition: Option<ActiveCameraTransition>,
     viewport_style: ViewportStyle,
     background_cursor_pointer: crate::background_cursor::CursorPointer,
     uv_texture_requests: UvTextureRequests,
@@ -1354,6 +1363,7 @@ impl OBrushApp {
             last_export_report: None,
             last_scene_geometry_report: None,
             camera_navigation_active: false,
+            camera_transition: None,
             merge_selection: std::collections::BTreeSet::new(),
             merge_flatten: false,
             mask_region_controls: BTreeMap::new(),
@@ -1605,6 +1615,8 @@ impl OBrushApp {
         {
             metrics.extend(extra);
         }
+        metrics["camera"]["transition_active"] =
+            serde_json::json!(self.camera_transition.is_some());
         metrics["remesh_surface_nets_mode"] = serde_json::json!(self.remesh_surface_nets_mode);
         metrics["remesh_mc_relax"] = serde_json::json!(self.remesh_mc_relax);
         metrics["remesh_discard_uvs"] = serde_json::json!(self.remesh_discard_uvs);
@@ -5508,6 +5520,7 @@ impl OBrushApp {
     }
 
     fn frame_scene(&mut self) {
+        self.camera_transition = None;
         self.modal_cancel("camera framing");
         self.finish_stroke();
         if self.stroke_rejected {
@@ -5515,6 +5528,58 @@ impl OBrushApp {
         }
         self.camera
             .frame_scene(&self.document.subtool_render_snapshots());
+    }
+
+    fn animate_camera_to(&mut self, destination: Camera) {
+        let start = CameraTransitionPose::capture(&self.camera);
+        let end = CameraTransitionPose::capture(&destination);
+        match CameraTransition::new(start, end) {
+            Ok(curve) => {
+                self.camera_transition = Some(ActiveCameraTransition {
+                    curve,
+                    destination,
+                    started: web_time::Instant::now(),
+                    revision: self.revision,
+                });
+                self.egui_ctx.request_repaint();
+            }
+            Err(error) => self.message = format!("Camera transition rejected: {error}"),
+        }
+    }
+
+    fn advance_camera_transition(&mut self, ctx: &egui::Context) {
+        let Some(active) = self.camera_transition.as_ref() else {
+            return;
+        };
+        let contact =
+            ctx.input(|input| input.pointer.any_down() || input.raw_scroll_delta.y != 0.0);
+        if active.revision != self.revision || contact {
+            self.camera_transition = None;
+            return;
+        }
+        let elapsed_ms = active.started.elapsed().as_secs_f64() * 1000.0;
+        if CameraTransition::finished(elapsed_ms) {
+            self.camera = active.destination.clone();
+            self.camera_transition = None;
+            return;
+        }
+        if let Err(error) = active.curve.sample(elapsed_ms).apply(&mut self.camera) {
+            self.camera_transition = None;
+            self.message = format!("Camera transition stopped: {error}");
+            return;
+        }
+        ctx.request_repaint_after(std::time::Duration::from_micros(16_600));
+    }
+
+    fn animate_frame_scene(&mut self) {
+        self.modal_cancel("camera framing");
+        self.finish_stroke();
+        if self.stroke_rejected {
+            return;
+        }
+        let mut destination = self.camera.clone();
+        destination.frame_scene(&self.document.subtool_render_snapshots());
+        self.animate_camera_to(destination);
     }
 
     fn scene_action(
@@ -8858,6 +8923,7 @@ impl OBrushApp {
     }
 
     fn change_camera_framing(&mut self, enabled: bool) -> Result<(), String> {
+        self.camera_transition = None;
         self.finish_stroke();
         if self.stroke_rejected {
             return Err("Finish the restored stroke before changing camera framing".into());
@@ -9060,6 +9126,7 @@ impl OBrushApp {
                 self.finish_stroke();
                 self.cancel_transform_drag();
                 if !self.stroke_rejected {
+                    self.camera_transition = None;
                     self.source_scale_command = Some((orthographic, value));
                 }
                 self.egui_ctx.request_repaint();
@@ -9126,13 +9193,14 @@ impl OBrushApp {
             self.cancel_transform_drag();
             self.finish_stroke();
             self.camera_navigation_active = false;
+            self.camera_transition = None;
         }
         let [fit, front, left, top] = inspector_layout::camera_actions(ui);
         self.track_layer_control("camera.center", &fit);
         if fit.clicked() {
             self.finish_stroke();
             self.cancel_transform_drag();
-            self.frame_scene();
+            self.animate_frame_scene();
         }
         for (axis, key, view) in [
             (0, "camera.front", front),
@@ -9143,10 +9211,25 @@ impl OBrushApp {
             if view.clicked() {
                 self.finish_stroke();
                 self.cancel_transform_drag();
-                self.camera.axis_view(axis);
+                if !self.stroke_rejected {
+                    let mut destination = self.camera.clone();
+                    destination.axis_view(axis);
+                    self.animate_camera_to(destination);
+                }
             }
         }
         if self.camera.source_enabled() {
+            let snap = ui.button("Snap view");
+            self.track_layer_control("camera.snap", &snap);
+            if snap.clicked() {
+                self.finish_stroke();
+                self.cancel_transform_drag();
+                if !self.stroke_rejected {
+                    let mut destination = self.camera.clone();
+                    destination.snap_axis();
+                    self.animate_camera_to(destination);
+                }
+            }
             let reset = ui.button("Reset view");
             self.track_layer_control("camera.reset", &reset);
             if reset.clicked() {
@@ -9155,7 +9238,10 @@ impl OBrushApp {
                 self.cancel_transform_drag();
                 if !self.stroke_rejected {
                     self.camera_navigation_active = false;
-                    self.camera.reset_source_view();
+                    let mut destination = self.camera.clone();
+                    if destination.reset_source_view() {
+                        self.animate_camera_to(destination);
+                    }
                 }
             }
         }
@@ -9362,6 +9448,14 @@ impl OBrushApp {
         delta: Vec2,
         scroll: f32,
     ) {
+        if self.navigation_capture.pending()
+            || self.navigation_capture.held()
+            || self.browser_navigation.secondary_down()
+            || self.browser_navigation.middle_down()
+            || scroll != 0.0
+        {
+            self.camera_transition = None;
+        }
         if self.source_navigation_prepared {
             return;
         }
@@ -11386,6 +11480,7 @@ impl eframe::App for OBrushApp {
         self.modal_begin_frame(ctx);
         self.shortcuts(ctx);
         self.source_keyboard_camera_frame(ctx);
+        self.advance_camera_transition(ctx);
         self.trace_keyboard_route(ctx, "after_shortcuts");
         self.header(ctx);
         self.footer(ctx);
