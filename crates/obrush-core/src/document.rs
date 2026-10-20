@@ -1,6 +1,7 @@
 use crate::layers::{LayerStack, LayersProject, LayersProjectRef};
 use crate::morph::{MorphProject, MorphProjectRef, MorphTarget};
 use crate::multires::{MultiresProject, MultiresProjectRef, Multiresolution};
+use crate::project_assets::{ProjectAssets, ProjectImage};
 use crate::resource_limits::MAX_PROJECT_BYTES as MAX_INPUT_BYTES;
 use crate::scene_v7::SceneV7Project;
 use crate::subtools::{
@@ -14,6 +15,9 @@ pub use source_geometry_document::{
     SourceGeometryPreparationTime, SourceGeometryReleaseTiming,
 };
 pub(crate) use source_geometry_document::{ValidatedControlledSourceDab, ValidatedSourceDab};
+#[cfg(test)]
+#[path = "project_asset_tests.rs"]
+mod project_asset_tests;
 #[path = "source_history.rs"]
 mod source_history;
 #[path = "source_sgl_add.rs"]
@@ -40,6 +44,7 @@ const MORPH_PROJECT_VERSION: u32 = 4;
 const SCENE_PROJECT_VERSION: u32 = 5;
 const ATTRIBUTES_PROJECT_VERSION: u32 = 6;
 const MASK_CONVENTION_PROJECT_VERSION: u32 = 7;
+const IMAGE_ASSETS_PROJECT_VERSION: u32 = 8;
 const HISTORY_BUDGET_BYTES: usize = crate::resource_limits::MAX_HISTORY_BYTES;
 const MIN_HISTORY_ENTRIES: usize = 3;
 const MAX_HISTORY_ENTRIES: usize = 50;
@@ -92,6 +97,7 @@ pub struct Document {
     scene: Option<Scene>,
     active_metadata: Option<SceneObjectMetadata>,
     scene_origin: Option<SglSceneOrigin>,
+    project_assets: Option<Arc<ProjectAssets>>,
     layer_error: Option<String>,
     undo: VecDeque<DocumentState>,
     redo: VecDeque<DocumentState>,
@@ -115,6 +121,7 @@ struct DocumentState {
     scene: Option<Scene>,
     active_metadata: Option<SceneObjectMetadata>,
     scene_origin: Option<SglSceneOrigin>,
+    project_assets: Option<Arc<ProjectAssets>>,
     source_geometry_states: Vec<(u32, Arc<crate::SourceGeometryNormalState>)>,
     source_history: Option<source_history::SourceHistoryEvent>,
 }
@@ -149,6 +156,11 @@ impl DocumentState {
             (Some(a), Some(b)) => crate::scene_v7::header_bits_equal(a, b),
             _ => false,
         } && self.name == document.name
+            && match (&self.project_assets, &document.project_assets) {
+                (None, None) => true,
+                (Some(a), Some(b)) => Arc::ptr_eq(a, b) || a == b,
+                _ => false,
+            }
             && match (&self.layers, &document.layers) {
                 (None, None) => true,
                 (Some(a), Some(b)) => a.same_state(b),
@@ -179,6 +191,9 @@ impl DocumentState {
                 .as_ref()
                 .map_or(0, |_| std::mem::size_of::<SceneObjectMetadata>()),
             self.name.capacity(),
+            self.project_assets
+                .as_ref()
+                .map_or(0, |assets| assets.rgba_bytes()),
             self.multiresolution
                 .as_ref()
                 .map_or(0, Multiresolution::approximate_bytes),
@@ -220,6 +235,8 @@ struct Project {
     scene: Option<SceneProject>,
     #[serde(default)]
     scene_v7: Option<SceneV7Project>,
+    #[serde(default)]
+    assets: Option<ProjectAssets>,
 }
 
 #[derive(Serialize)]
@@ -238,6 +255,8 @@ struct ProjectRef<'a> {
     scene: Option<SceneProjectRef<'a>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     scene_v7: Option<&'a SceneV7Project>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    assets: Option<&'a ProjectAssets>,
 }
 
 /// Limit output while serializing rather than allocating an oversized JSON string
@@ -352,6 +371,7 @@ impl Document {
             scene: None,
             active_metadata: None,
             scene_origin: None,
+            project_assets: None,
             layer_error: None,
             undo: VecDeque::new(),
             redo: VecDeque::new(),
@@ -374,6 +394,7 @@ impl Document {
             scene: Some(Scene::empty()),
             active_metadata: None,
             scene_origin: None,
+            project_assets: None,
             layer_error: None,
             undo: VecDeque::new(),
             redo: VecDeque::new(),
@@ -385,6 +406,76 @@ impl Document {
             source_geometry_states: Vec::new(),
         }
     }
+
+    pub fn project_assets(&self) -> Option<&ProjectAssets> {
+        self.project_assets.as_deref()
+    }
+
+    fn commit_project_assets(&mut self, candidate: Option<ProjectAssets>) -> Result<(), String> {
+        if let Some(assets) = &candidate {
+            assets.validate()?;
+        }
+        self.finish_layer_stroke()?;
+        let previous = self.snapshot_state();
+        if previous.approximate_bytes() > HISTORY_BUDGET_BYTES {
+            return Err("Image change cannot retain the complete original scene in Undo".into());
+        }
+        self.project_assets = candidate.map(Arc::new);
+        self.commit_previous(previous);
+        Ok(())
+    }
+
+    /// Images remain exact decoded RGBA pixels across the native/WASM project
+    /// boundary; input PNG/JPEG codecs never become a project dependency.
+    pub fn install_project_uv_image(&mut self, image: ProjectImage) -> Result<(), String> {
+        image.validate()?;
+        let mut assets = self
+            .project_assets
+            .as_deref()
+            .cloned()
+            .unwrap_or_else(ProjectAssets::empty);
+        assets.uv = Some(image);
+        assets.shading = 3;
+        self.commit_project_assets(Some(assets))
+    }
+
+    pub fn clear_project_uv_image(&mut self) -> Result<(), String> {
+        let Some(current) = self.project_assets.as_deref() else {
+            return Ok(());
+        };
+        let mut assets = current.clone();
+        assets.uv = None;
+        self.commit_project_assets(Some(assets))
+    }
+
+    pub fn append_project_matcap(&mut self, image: ProjectImage) -> Result<u32, String> {
+        image.validate()?;
+        let mut assets = self
+            .project_assets
+            .as_deref()
+            .cloned()
+            .unwrap_or_else(ProjectAssets::empty);
+        let index = 9 + assets.matcaps.len() as u32;
+        assets.matcaps.push(image);
+        assets.shading = 4;
+        assets.matcap_index = index;
+        self.commit_project_assets(Some(assets))?;
+        Ok(index)
+    }
+
+    pub fn set_project_asset_view(&mut self, shading: u8, matcap_index: u32) -> Result<(), String> {
+        let Some(current) = self.project_assets.as_deref() else {
+            return Ok(());
+        };
+        if current.shading == shading && current.matcap_index == matcap_index {
+            return Ok(());
+        }
+        let mut assets = current.clone();
+        assets.shading = shading;
+        assets.matcap_index = matcap_index;
+        self.commit_project_assets(Some(assets))
+    }
+
     pub fn active_mesh(&self) -> Option<&Mesh> {
         self.mesh.as_ref()
     }
@@ -1253,6 +1344,7 @@ impl Document {
             scene: state.scene,
             active_metadata: state.active_metadata,
             scene_origin: state.scene_origin,
+            project_assets: state.project_assets,
             layer_error: self.layer_error.clone(),
             undo: VecDeque::new(),
             redo: VecDeque::new(),
@@ -3022,6 +3114,7 @@ impl Document {
             morph_target: target.map(MorphTarget::project_ref),
             scene: Some(scene.project_ref()),
             scene_v7: None,
+            assets: None,
         };
         let mut writer = OutputCounter { bytes: 0 };
         serde_json::to_writer(&mut writer, &project)
@@ -4150,11 +4243,14 @@ impl Document {
             None => None,
         };
         let metadata = self.scene_v7_project()?;
-        let version = if metadata.is_some()
+        let version = if self.project_assets.is_some() {
+            IMAGE_ASSETS_PROJECT_VERSION
+        } else if metadata.is_some()
             || mesh.is_none()
             || mesh.is_some_and(|mesh| {
                 state_has_source_masks(mesh, stack.as_ref(), self.scene.as_ref())
-            }) {
+            })
+        {
             MASK_CONVENTION_PROJECT_VERSION
         } else if mesh
             .is_some_and(|mesh| state_has_attributes(mesh, stack.as_ref(), self.scene.as_ref()))
@@ -4174,6 +4270,7 @@ impl Document {
             morph_target: self.morph_target.as_ref().map(MorphTarget::project_ref),
             scene: self.scene.as_ref().map(Scene::project_ref),
             scene_v7: metadata.as_ref(),
+            assets: self.project_assets.as_deref(),
         };
         serde_json::to_writer(&mut output, &project)
             .map_err(|e| format!("Cannot serialize project: {e}"))?;
@@ -4194,6 +4291,7 @@ impl Document {
             && project.version != SCENE_PROJECT_VERSION
             && project.version != ATTRIBUTES_PROJECT_VERSION
             && project.version != MASK_CONVENTION_PROJECT_VERSION
+            && project.version != IMAGE_ASSETS_PROJECT_VERSION
         {
             return Err(format!(
                 "Unsupported OBrush project version {}",
@@ -4202,6 +4300,15 @@ impl Document {
         }
         if project.name.len() > MAX_NAME_BYTES {
             return Err("Project name exceeds 4096 bytes".into());
+        }
+        if project.version < IMAGE_ASSETS_PROJECT_VERSION && project.assets.is_some() {
+            return Err("Image assets require OBrush project version 8".into());
+        }
+        if project.version == IMAGE_ASSETS_PROJECT_VERSION && project.assets.is_none() {
+            return Err("Version 8 projects require image assets".into());
+        }
+        if let Some(assets) = &project.assets {
+            assets.validate()?;
         }
         if project.version < MASK_CONVENTION_PROJECT_VERSION && project_has_source_masks(&project) {
             return Err(
@@ -4264,6 +4371,7 @@ impl Document {
             return Err("Empty project requires an explicit empty scene and no active level/layer/target state".into());
         }
         document.name = project.name;
+        document.project_assets = project.assets.map(Arc::new);
         document.multiresolution = project
             .multiresolution
             .map(|project| Multiresolution::from_project(project, document.require_active_mesh()?))
@@ -4936,6 +5044,9 @@ impl Document {
         Ok(())
     }
     fn validate_complete_state(&self) -> Result<(), String> {
+        if let Some(assets) = &self.project_assets {
+            assets.validate()?;
+        }
         if self.name.len() > MAX_NAME_BYTES {
             return Err("Project name exceeds4096 bytes".into());
         }
@@ -5007,6 +5118,7 @@ impl Document {
             scene: self.scene.clone(),
             active_metadata: self.active_metadata.clone(),
             scene_origin: self.scene_origin.clone(),
+            project_assets: self.project_assets.clone(),
             source_geometry_states: self.source_geometry_states.clone(),
             source_history: None,
         }
@@ -5026,6 +5138,7 @@ impl Document {
         std::mem::swap(&mut self.scene, &mut state.scene);
         std::mem::swap(&mut self.active_metadata, &mut state.active_metadata);
         std::mem::swap(&mut self.scene_origin, &mut state.scene_origin);
+        std::mem::swap(&mut self.project_assets, &mut state.project_assets);
         std::mem::swap(
             &mut self.source_geometry_states,
             &mut state.source_geometry_states,
@@ -5097,6 +5210,7 @@ impl Document {
             morph_target: morph_target.map(MorphTarget::project_ref),
             scene: None,
             scene_v7: None,
+            assets: None,
         };
         serde_json::to_writer(&mut Counter { bytes: 0 }, &project)
             .map_err(|error| format!("Cannot serialize project: {error}"))

@@ -236,6 +236,7 @@ fn binding_project<'a>(d: &'a Document, replacement: Option<&'a Mesh>) -> Projec
         morph_target: d.morph_target.as_ref().map(|s| s.project_ref()),
         scene: d.scene.as_ref().map(|s| s.project_ref()),
         scene_v7: None,
+        assets: None,
     }
 }
 fn binding(d: &Document, replacement: Option<&Mesh>, limit: usize) -> Result<Vec<u8>, String> {

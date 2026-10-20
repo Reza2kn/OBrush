@@ -1,7 +1,13 @@
 # OBrush feature parity contract
 
+**Scoped project image durability:** [C298](SCULPTGL_PROJECT_ASSETS_C298_RESULT.md)
+stores bounded custom MatCap and UV images in versioned `.obrush` JSON with
+undoable import, reset and project replacement. A normal browser Save/Open
+gate reopened authored image fixtures with pixel-identical viewport crops;
+native GUI Save/Open and full SculptGL/ZBrush project parity remain open.
+
 **Scoped UV JPEG import:** [C294](SCULPTGL_UV_JPEG_C294_RESULT.md)
-extends the visible session-only UV image chooser from PNG to bounded JPEG
+extended the visible UV image chooser from PNG to bounded JPEG
 with a shared native/browser Rust decoder. An authored two-face UV OBJ and
 asymmetric JPEG loaded in OBrush's normal browser with correct quadrant order,
 GPU texture allocation and malformed-image retention. [C297's normal-UI
@@ -11,11 +17,11 @@ appearance is much brighter; calibrated matched pixels, project persistence,
 and the complete UV import row remain open.
 
 **Scoped custom MatCap import:** [C291](SCULPTGL_MATCAP_IMPORT_C291_RESULT.md)
-adds session-only, bounded PNG/JPEG MatCap import to the ordinary viewport.
+added bounded PNG/JPEG MatCap import to the ordinary viewport.
 The pinned SculptGL and OBrush normal UIs both appended and selected the same
 authored asymmetric image with matching quadrant orientation; OBrush also
 passed built-in/custom reselect and malformed-file retention. Reference
-reselect, project persistence, exact appearance/GPU texels, resize, Source
+reselect, exact reference appearance/GPU texels, resize, Source
 objects and the rest of the file matrix remain open.
 
 **Scoped Brush Lock:** [The C273 pinned normal-UI trial](SCULPTGL_BRUSH_LOCK_UI_C273.md)
@@ -655,7 +661,7 @@ The prototype has a Rust sculpting core shared by native and WebAssembly applica
 | F12 | Picking and viewport | Locally verified foundation; 0.1.4 headless browser checks partial | Camera orbit/pan/zoom and ray picking align with the visible surface across resizing and HiDPI; rendering survives mesh edits, occlusion and wireframe switching. The 0.1.4 headless WebGL2 checks exercised Draw, orbit and actual 4× samples with timed input/redraw measurements; resize, HiDPI and wireframe coverage remain incomplete. |
 | F13 | Stroke history | Locally verified foundation | One completed stroke is one undo step; undo/redo restores geometry, color and mask exactly; a new edit invalidates redo; cancelled/no-op strokes create no entry. |
 | F14 | OBJ import/export | Compared / gaps remain — one fixture | Real OBrush browser OBJ imported into ZBrush 2026.2.1 and exported with 10,242 vertices, 20,480 faces and identical face indices; maximum position error `4.690415757354602e-8`, RMS `2.043570307341458e-8`. ZBrush emits PolyPaint in `#MRGB` rather than inline vertex RGB; corrected OBrush browser import/re-export now retains 10,242 RGB entries with measured first-record floating-point decode error `1.6470588226624727e-8`. MRGB masks, UVs, materials, negative-index/polygon reference cases and failure recovery remain separate parity gates; this exploratory comparison does not complete OBJ parity. |
-| F15 | OBrush project files | Locally verified foundation | Round-trip every field promised by the schema, validate version and mesh data before replacing the scene, and reject truncation or invalid input without data loss. This is an OBrush format, not ZPR/ZTL compatibility. |
+| F15 | OBrush project files | Locally verified foundation; C298 image assets | Round-trip every field promised by the schema, validate version and mesh data before replacing the scene, and reject truncation or invalid input without data loss. C298 adds bounded UV/MatCap images and selection with browser Save/Open pixel-exact crop evidence; native GUI Save/Open, full file matrix and reference formats remain open. This is an OBrush format, not ZPR/ZTL compatibility. |
 | F16 | Native and browser delivery | Locally verified foundation; 0.1.10 builds and scoped headless scene checks | Build and launch each target; perform a visible sculpt, undo, save/load and OBJ exchange in each; report tested OS, browser, GPU backend and available file APIs. Historical 0.1.4–0.1.8 receipts retain earlier host/Move/topology/layer/input checks on their runtime hashes. The 0.1.9 receipt covers eight Morph workflows, canonical project/history checks, 66 exact GPU vertex snapshots, 58 target binding checks, 15 layer compositions and eight quiet short releases. The 0.1.10 scene receipt additionally binds eight workflows, 71 complete visible GPU vertex/index comparisons and an inspector clipping gate. The native application is packaged and ad-hoc-signature verified; native GUI, physical devices, download filesystem persistence and the full host matrix remain unverified. |
 
 The [OBJ comparison record](evidence/obj-zbrush-roundtrip.json) pins the source, reference-export and corrected browser re-export hashes. The actual ZBrush export is [primary format evidence](evidence/obj-mrgb-format-observations.json): its header specifies eight hexadecimal digits per vertex in **`MMRRGGBB`** order, with at most 64 entries per `#MRGB` line. This fixture contains 10,242 records and every `MM` byte is `ff`. Reference RGB quantization differs from the source by at most `0.0037254901960783737` per channel, below one 8-bit step; numerical tolerances were not preregistered for this exploratory comparison. RGB byte order/count are established by that output; the mask byte's exact range/direction requires a controlled masked-state export. OBrush's color decoder validates the mask byte but does not currently import its semantics; masks default to unmasked. Do not confuse this OBJ mask byte with the Draw palette's **MRGB** material/color mode, or infer it from another interchange format. This reference fixture has uniform default color; nonuniform paint, full UV, material and masking interchange remain unverified against ZBrush.

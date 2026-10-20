@@ -18,6 +18,29 @@ pub struct ViewTexture {
 }
 
 impl ViewTexture {
+    pub(crate) fn to_project_image(
+        &self,
+    ) -> Result<obrush_core::project_assets::ProjectImage, String> {
+        obrush_core::project_assets::ProjectImage::new(
+            &self.name,
+            self.width,
+            self.height,
+            &self.pixels_bottom_up,
+        )
+    }
+
+    pub(crate) fn from_project_image(
+        image: &obrush_core::project_assets::ProjectImage,
+    ) -> Result<Self, String> {
+        image.validate()?;
+        Ok(Self {
+            name: image.name.clone(),
+            width: image.width,
+            height: image.height,
+            pixels_bottom_up: image.rgba_bottom_up.clone(),
+        })
+    }
+
     pub fn from_rgba(name: &str, width: u32, height: u32, rgba: &[u8]) -> Result<Self, String> {
         let bytes = texture_storage_bytes(width, height)
             .ok_or("Texture dimensions must be 1–2048 pixels within the 16 MiB limit")?;

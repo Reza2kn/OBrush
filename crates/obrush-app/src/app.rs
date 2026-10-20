@@ -845,6 +845,13 @@ struct AlphaImportRequest {
     conversion: AlphaConversion,
 }
 
+struct PreparedProjectView {
+    uv: Option<Arc<ViewTexture>>,
+    matcaps: crate::matcap::CustomMatcaps,
+    shading: ShadingMode,
+    matcap_index: u32,
+}
+
 fn keyboard_input_observation(
     ctx: &egui::Context,
     phase: &'static str,
@@ -1700,7 +1707,7 @@ impl OBrushApp {
             "custom_gpu_bytes":self.viewport_style.custom_matcaps.gpu_bytes(),
             "pending_request":self.matcap_requests.pending(),
             "gpu":self.renderer.lock().ok().map(|r|r.matcap_diagnostics()),
-            "scope":"session-only ordinary viewport; no Source-object metadata or project asset"
+            "scope":"ordinary viewport; custom RGBA and selection in version8 .obrush, no Source-object metadata"
         });
         let filters = serde_json::json!({
             "ui_zoom_factor":self.egui_ctx.zoom_factor(),
@@ -2290,6 +2297,8 @@ impl OBrushApp {
             );
         }
         self.cancel_mask_region("Texture command cancelled the pending selection.", true);
+        self.document
+            .install_project_uv_image(texture.to_project_image()?)?;
         self.message = format!("UV viewport texture loaded: {}", texture.name);
         self.viewport_style.uv_texture = Some(Arc::new(texture));
         self.egui_ctx.request_repaint();
@@ -2301,6 +2310,7 @@ impl OBrushApp {
         if self.stroke_rejected {
             return Err("Texture reset rejected after a failed stroke; previous asset kept".into());
         }
+        self.document.clear_project_uv_image()?;
         self.viewport_style.uv_texture = None;
         self.egui_ctx.request_repaint();
         Ok(())
@@ -2350,10 +2360,18 @@ impl OBrushApp {
                 return Err("MatCap import rejected after the preceding edit".into());
             }
             self.cancel_mask_region("MatCap command cancelled the pending selection.", true);
+            let stored = catalog
+                .get(index)
+                .ok_or("New MatCap is absent from the candidate catalog")?
+                .to_project_image()?;
+            let persisted_index = self.document.append_project_matcap(stored)?;
+            if persisted_index != index {
+                return Err("Custom MatCap catalog and project indices differ".into());
+            }
             self.viewport_style.custom_matcaps = catalog;
             self.viewport_style.matcap_index = index;
             self.viewport_style.shading = ShadingMode::Matcap;
-            self.message = format!("MatCap loaded for this session: {name}");
+            self.message = format!("MatCap loaded and saved with the project: {name}");
             self.egui_ctx.request_repaint();
             Ok(())
         })();
@@ -3557,6 +3575,10 @@ impl OBrushApp {
             self.document.undo()
         };
         if changed {
+            if let Err(error) = self.restore_project_view() {
+                self.message = format!("Project image history could not render: {error}");
+                return;
+            }
             self.changed();
             self.message = if redo {
                 "Edit restored."
@@ -6348,6 +6370,12 @@ impl OBrushApp {
     pub fn load_document_bytes(&mut self, name: &str, contents: &[u8]) -> Result<(), String> {
         let append = std::mem::take(&mut self.pending_append);
         let prepared = crate::scene_import::prepare(name, contents, append, &self.viewport_style)?;
+        let restored_view =
+            if let crate::scene_import::PreparedImport::Whole { document, .. } = &prepared {
+                Some(self.prepare_project_view(document)?)
+            } else {
+                None
+            };
         self.cancel_mask_region("File command cancelled the pending selection.", true);
         self.finish_stroke();
         if self.stroke_rejected {
@@ -6355,6 +6383,9 @@ impl OBrushApp {
         }
         self.modal_cancel("file installation");
         let report = crate::scene_import::install(&mut self.document, prepared)?;
+        if let Some(view) = restored_view {
+            self.install_prepared_project_view(view);
+        }
         if !append {
             self.source_sgl_import.reset_after_whole_open();
             self.source_boot_framing_pending = false;
@@ -6407,6 +6438,70 @@ impl OBrushApp {
         );
         self.egui_ctx.request_repaint();
         Ok(())
+    }
+
+    fn prepare_project_view(&self, document: &Document) -> Result<PreparedProjectView, String> {
+        let Some(assets) = document.project_assets() else {
+            return Ok(PreparedProjectView {
+                uv: None,
+                matcaps: Default::default(),
+                shading: ShadingMode::Studio,
+                matcap_index: 3,
+            });
+        };
+        let max_side = self
+            .renderer
+            .lock()
+            .map_err(|_| "Renderer unavailable; previous project kept")?
+            .max_view_texture_side();
+        let uv = assets
+            .uv
+            .as_ref()
+            .map(|image| {
+                if image.width > max_side || image.height > max_side {
+                    return Err("Project UV image exceeds this GPU's texture-size limit".into());
+                }
+                crate::uv_view::texture_gpu_storage_bytes(image.width, image.height)
+                    .ok_or("Project UV image exceeds the GPU storage limit")?;
+                ViewTexture::from_project_image(image).map(Arc::new)
+            })
+            .transpose()?;
+        let matcaps = crate::matcap::CustomMatcaps::from_project(&assets.matcaps, max_side)?;
+        let shading = match assets.shading {
+            0 => ShadingMode::Studio,
+            1 => ShadingMode::Pbr,
+            2 => ShadingMode::Normal,
+            3 => ShadingMode::Uv,
+            4 => ShadingMode::Matcap,
+            5 => ShadingMode::Flat,
+            _ => return Err("Unknown project shading mode".into()),
+        };
+        Ok(PreparedProjectView {
+            uv,
+            matcaps,
+            shading,
+            matcap_index: assets.matcap_index,
+        })
+    }
+
+    fn restore_project_view(&mut self) -> Result<(), String> {
+        let view = self.prepare_project_view(&self.document)?;
+        self.install_prepared_project_view(view);
+        Ok(())
+    }
+
+    fn install_prepared_project_view(&mut self, view: PreparedProjectView) {
+        self.viewport_style.uv_texture = view.uv;
+        self.viewport_style.custom_matcaps = view.matcaps;
+        self.viewport_style.shading = view.shading;
+        self.viewport_style.matcap_index = view.matcap_index;
+    }
+
+    fn sync_project_view_selection(&mut self) -> Result<(), String> {
+        self.document.set_project_asset_view(
+            self.viewport_style.shading as u8,
+            self.viewport_style.matcap_index,
+        )
     }
 
     fn import_file(&mut self) {
@@ -6466,6 +6561,10 @@ impl OBrushApp {
         }
         self.finish_stroke();
         if self.stroke_rejected {
+            return;
+        }
+        if let Err(error) = self.sync_project_view_selection() {
+            self.message = format!("Cannot save project image selection: {error}");
             return;
         }
         let contents = self.document.to_json();
@@ -8720,7 +8819,7 @@ impl OBrushApp {
                     self.import_matcap_image();
                 }
                 ui.small(format!(
-                    "Custom MatCaps are session-only ({} of {}).",
+                    "Custom MatCaps saved in .obrush ({} of {}).",
                     self.viewport_style.custom_matcaps.len(),
                     crate::matcap::MAX_CUSTOM_MATCAPS
                 ));
@@ -8789,7 +8888,7 @@ impl OBrushApp {
                     .map_or("UV checker", |t| t.name.as_str()),
             );
             if self.viewport_style.uv_texture.is_some() {
-                ui.small("UV image is session-only; not saved in .obrush.");
+                ui.small("UV image is saved in .obrush.");
             }
             let import = ui.button(crate::ui_text::caption(
                 crate::ui_text::CaptionKey::CF3F850B891AC,
@@ -11633,6 +11732,10 @@ impl eframe::App for OBrushApp {
         self.footer(ctx);
         self.tools(ctx);
         self.inspector(ctx);
+        if let Err(error) = self.sync_project_view_selection() {
+            self.message = format!("Image selection not saved: {error}");
+            let _ = self.restore_project_view();
+        }
         self.screen_radius_editor.finish_frame(
             ctx,
             self.brush.kind,

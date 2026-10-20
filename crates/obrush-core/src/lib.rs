@@ -26,6 +26,7 @@ mod paint_operations;
 mod paint_preparation;
 mod paint_response;
 mod primitives;
+pub mod project_assets;
 mod refinement;
 mod remesh;
 pub mod resource_limits;

@@ -18,3 +18,4 @@ libm = { version = "=0.2.16", default-features = false }
 sha2 = "=0.10.9"
 blake3 = "=1.8.7"
 web-time = "=1.1.0"
+base64 = "=0.22.1"

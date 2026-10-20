@@ -29,8 +29,8 @@ static DECODED: [OnceLock<Result<Arc<ViewTexture>, String>>; 9] = [const { OnceL
 pub(crate) const MAX_CUSTOM_MATCAPS: usize = 4;
 pub(crate) const MAX_CUSTOM_GPU_BYTES: usize = 32 * 1024 * 1024;
 
-/// A bounded, session-only viewport catalog. Source-object metadata and
-/// versioned project files continue to contain only stable built-in IDs.
+/// A bounded viewport catalog. Project version 8 stores its canonical pixels
+/// in the shared core; Source-object metadata retains stable built-in IDs.
 #[derive(Clone, Debug, Default)]
 pub(crate) struct CustomMatcaps {
     images: Vec<Arc<ViewTexture>>,
@@ -38,6 +38,17 @@ pub(crate) struct CustomMatcaps {
 }
 
 impl CustomMatcaps {
+    pub(crate) fn from_project(
+        images: &[obrush_core::project_assets::ProjectImage],
+        max_texture_side: u32,
+    ) -> Result<Self, String> {
+        let mut catalog = Self::default();
+        for image in images {
+            let texture = ViewTexture::from_project_image(image)?;
+            catalog.add(texture, max_texture_side)?;
+        }
+        Ok(catalog)
+    }
     pub(crate) fn len(&self) -> usize {
         self.images.len()
     }
