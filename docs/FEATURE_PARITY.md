@@ -1,5 +1,13 @@
 # OBrush feature parity contract
 
+**Scoped custom MatCap import:** [C291](SCULPTGL_MATCAP_IMPORT_C291_RESULT.md)
+adds session-only, bounded PNG/JPEG MatCap import to the ordinary viewport.
+The pinned SculptGL and OBrush normal UIs both appended and selected the same
+authored asymmetric image with matching quadrant orientation; OBrush also
+passed built-in/custom reselect and malformed-file retention. Reference
+reselect, project persistence, exact appearance/GPU texels, resize, Source
+objects and the rest of the file matrix remain open.
+
 **Scoped Brush Lock:** [The C273 pinned normal-UI trial](SCULPTGL_BRUSH_LOCK_UI_C273.md)
 found that Source mode rejected Lock Position. An isolated route through the
 older `LockedStamp` changed 87 vertices where the reference changed 26 and

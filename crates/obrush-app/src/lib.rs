@@ -616,6 +616,28 @@ impl WebHandle {
             .load_background_image_for_request(id, &name, bytes)
             .map_err(|e| JsValue::from_str(&e))
     }
+    pub fn matcap_request_is_current(&self, id: u32) -> bool {
+        self.runner
+            .app_mut::<OBrushApp>()
+            .is_some_and(|app| app.matcap_request_is_current(id))
+    }
+    pub fn cancel_matcap_request(&self, id: u32) {
+        if let Some(mut app) = self.runner.app_mut::<OBrushApp>() {
+            app.cancel_matcap_request(id);
+        }
+    }
+    pub fn load_matcap_image_for_request(
+        &self,
+        id: u32,
+        name: String,
+        bytes: &[u8],
+    ) -> Result<(), JsValue> {
+        self.runner
+            .app_mut::<OBrushApp>()
+            .ok_or_else(|| JsValue::from_str("OBrush is not running"))?
+            .load_matcap_image_for_request(id, &name, bytes)
+            .map_err(|e| JsValue::from_str(&e))
+    }
     /// Diagnostic render-only seam mapping; never changes the document.
     pub fn uv_render_metrics(&self) -> String {
         self.runner

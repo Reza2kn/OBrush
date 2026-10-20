@@ -924,6 +924,7 @@ pub struct ViewportStyle {
     pub use_vertex_color: bool,
     pub shading: ShadingMode,
     pub matcap_index: u32,
+    pub(crate) custom_matcaps: crate::matcap::CustomMatcaps,
     /// Wire-only source shader is distinct from an overlay.
     pub wire_only: bool,
     pub flat_shading: bool,
@@ -959,6 +960,7 @@ impl Default for ViewportStyle {
             use_vertex_color: false,
             shading: ShadingMode::Studio,
             matcap_index: 3,
+            custom_matcaps: Default::default(),
             wire_only: false,
             flat_shading: false,
             exposure: 2.5,
@@ -3466,7 +3468,11 @@ impl Renderer {
                 );
                 gl.active_texture(glow::TEXTURE0);
                 if object_style.shading == ShadingMode::Matcap {
-                    match self.ensure_matcap_texture(gl, object_style.matcap_index) {
+                    match self.ensure_matcap_texture(
+                        gl,
+                        object_style.matcap_index,
+                        &object_style.custom_matcaps,
+                    ) {
                         Ok(texture) => gl.bind_texture(glow::TEXTURE_2D, Some(texture)),
                         Err(error) => {
                             self.scene_error = Some(error);
@@ -3948,6 +3954,22 @@ impl Renderer {
             "scope":"UV VAO only; each row maps render -> original geometric/corner UV IDs; welded core and ordinary40+8 buffers stay separate"})
     }
 
+    pub(crate) fn max_view_texture_side(&self) -> u32 {
+        self.max_renderbuffer_size.max(0) as u32
+    }
+
+    pub(crate) fn matcap_diagnostics(&self) -> serde_json::Value {
+        let mut loaded: Vec<_> = self
+            .matcaps
+            .iter()
+            .map(|(&id, texture)| {
+                serde_json::json!({"id":id,"name":texture.name,"width":texture.size[0],"height":texture.size[1]})
+            })
+            .collect();
+        loaded.sort_by_key(|entry| entry["id"].as_u64());
+        serde_json::json!({"loaded":loaded,"scene_error":self.scene_error})
+    }
+
     unsafe fn ensure_view_texture(
         &mut self,
         gl: &glow::Context,
@@ -4042,13 +4064,21 @@ impl Renderer {
         &mut self,
         gl: &glow::Context,
         index: u32,
+        custom: &crate::matcap::CustomMatcaps,
     ) -> Result<glow::Texture, String> {
         if let Some(texture) = self.matcaps.get(&index) {
             return Ok(texture.texture);
         }
-        let image = crate::matcap::preset(index)?;
-        // At most the exact nine bounded catalog images can enter this cache.
-        if self.matcaps.len() >= 9 {
+        let image = if index < crate::matcap::MATCAP_NAMES.len() as u32 {
+            crate::matcap::preset(index)?
+        } else {
+            custom
+                .get(index)
+                .ok_or("Session MatCap is no longer available")?
+        };
+        if self.matcaps.len()
+            >= crate::matcap::MATCAP_NAMES.len() + crate::matcap::MAX_CUSTOM_MATCAPS
+        {
             return Err("Matcap catalog GPU cache limit reached".into());
         }
         let previous = self.uv_texture.take();

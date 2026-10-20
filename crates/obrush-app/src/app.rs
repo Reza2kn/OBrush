@@ -1011,6 +1011,7 @@ pub struct OBrushApp {
     background_cursor_pointer: crate::background_cursor::CursorPointer,
     uv_texture_requests: UvTextureRequests,
     background_requests: UvTextureRequests,
+    matcap_requests: UvTextureRequests,
     renderer: Arc<Mutex<Renderer>>,
     rendered_scene: Vec<SubtoolRenderSnapshot>,
     revision: u64,
@@ -1242,6 +1243,7 @@ impl OBrushApp {
             },
             uv_texture_requests: UvTextureRequests::default(),
             background_requests: UvTextureRequests::default(),
+            matcap_requests: UvTextureRequests::default(),
             renderer: Arc::new(Mutex::new(renderer)),
             revision: 1,
             snapshot_revision: 1,
@@ -1691,6 +1693,15 @@ impl OBrushApp {
         {
             target.extend(environment);
         }
+        metrics["matcap"] = serde_json::json!({
+            "shading":self.viewport_style.shading.name(),
+            "selected":self.viewport_style.matcap_index,
+            "custom":self.viewport_style.custom_matcaps.iter().map(|(id,image)|serde_json::json!({"id":id,"name":image.name,"width":image.width,"height":image.height})).collect::<Vec<_>>(),
+            "custom_gpu_bytes":self.viewport_style.custom_matcaps.gpu_bytes(),
+            "pending_request":self.matcap_requests.pending(),
+            "gpu":self.renderer.lock().ok().map(|r|r.matcap_diagnostics()),
+            "scope":"session-only ordinary viewport; no Source-object metadata or project asset"
+        });
         let filters = serde_json::json!({
             "ui_zoom_factor":self.egui_ctx.zoom_factor(),
             "viewport_resolution_scale":self.viewport_style.resolution_scale,
@@ -2284,6 +2295,89 @@ impl OBrushApp {
             .lock()
             .map(|r| r.uv_render_metrics(true).to_string())
             .unwrap_or_else(|_| "{}".into())
+    }
+    pub fn matcap_request_is_current(&self, id: u32) -> bool {
+        self.matcap_requests.is_current(id)
+    }
+    pub fn cancel_matcap_request(&mut self, id: u32) {
+        self.matcap_requests.cancel(id);
+    }
+    pub fn load_matcap_image_for_request(
+        &mut self,
+        id: u32,
+        name: &str,
+        bytes: &[u8],
+    ) -> Result<(), String> {
+        if !self.matcap_requests.is_current(id) {
+            return Err("MatCap response is stale; previous selection kept".into());
+        }
+        let result = (|| {
+            if self.document.active_mesh().is_none()
+                || self.document.active_object_metadata().is_some()
+            {
+                return Err("Custom MatCaps currently require an ordinary mesh".into());
+            }
+            let image = if bytes.starts_with(&[255, 216]) {
+                crate::uv_view::decode_jpeg(name, bytes)?
+            } else {
+                crate::uv_view::decode_png(name, bytes)?
+            };
+            let max_texture_side = self
+                .renderer
+                .lock()
+                .map_err(|_| "Renderer unavailable; previous MatCap kept")?
+                .max_view_texture_side();
+            // A candidate catalog is validated before replacing the live one.
+            let mut catalog = self.viewport_style.custom_matcaps.clone();
+            let index = catalog.add(image, max_texture_side)?;
+            self.finish_stroke();
+            if self.stroke_rejected {
+                return Err("MatCap import rejected after the preceding edit".into());
+            }
+            self.cancel_mask_region("MatCap command cancelled the pending selection.", true);
+            self.viewport_style.custom_matcaps = catalog;
+            self.viewport_style.matcap_index = index;
+            self.viewport_style.shading = ShadingMode::Matcap;
+            self.message = format!("MatCap loaded for this session: {name}");
+            self.egui_ctx.request_repaint();
+            Ok(())
+        })();
+        self.matcap_requests.cancel(id);
+        result
+    }
+    fn import_matcap_image(&mut self) {
+        let id = match self.matcap_requests.begin() {
+            Ok(id) => id,
+            Err(error) => {
+                self.message = error;
+                return;
+            }
+        };
+        #[cfg(target_arch = "wasm32")]
+        pick_matcap_image(id);
+        #[cfg(not(target_arch = "wasm32"))]
+        if let Some(path) = rfd::FileDialog::new()
+            .add_filter("MatCap image", &["png", "jpg", "jpeg"])
+            .pick_file()
+        {
+            let result = (|| {
+                if std::fs::metadata(&path).map_err(|e| e.to_string())?.len() > 16 * 1024 * 1024 {
+                    return Err("MatCap image exceeds the 16 MiB input limit".into());
+                }
+                let bytes = std::fs::read(&path).map_err(|e| e.to_string())?;
+                self.load_matcap_image_for_request(
+                    id,
+                    &path.file_name().unwrap_or_default().to_string_lossy(),
+                    &bytes,
+                )
+            })();
+            if let Err(error) = result {
+                self.matcap_requests.cancel(id);
+                self.message = format!("MatCap import failed; previous asset kept: {error}");
+            }
+        } else {
+            self.matcap_requests.cancel(id);
+        }
     }
     pub fn background_request_is_current(&self, id: u32) -> bool {
         self.background_requests.is_current(id)
@@ -8567,8 +8661,23 @@ impl OBrushApp {
             self.track_layer_control("viewport.shading", &shading);
             if self.viewport_style.shading == ShadingMode::Matcap {
                 let selected = self.viewport_style.matcap_index as usize;
-                egui::ComboBox::from_id_salt("viewport_matcap")
-                    .selected_text(crate::ui_text::matcap_name(selected))
+                let selected_name = if selected < crate::matcap::MATCAP_NAMES.len() {
+                    crate::ui_text::matcap_name(selected)
+                } else {
+                    self.viewport_style
+                        .custom_matcaps
+                        .get(self.viewport_style.matcap_index)
+                        .map(|image| image.name.clone())
+                        .unwrap_or_else(|| "Unavailable session MatCap".into())
+                };
+                let custom_options: Vec<_> = self
+                    .viewport_style
+                    .custom_matcaps
+                    .iter()
+                    .map(|(id, image)| (id, image.name.clone()))
+                    .collect();
+                let matcap_combo = egui::ComboBox::from_id_salt("viewport_matcap")
+                    .selected_text(selected_name)
                     .width(ui.available_width())
                     .show_ui(ui, |ui| {
                         for (index, _name) in crate::matcap::MATCAP_NAMES.iter().enumerate() {
@@ -8579,7 +8688,27 @@ impl OBrushApp {
                             );
                             self.track_layer_control(&format!("viewport.matcap.{index}"), &row);
                         }
-                    });
+                        for (id, name) in &custom_options {
+                            let row = ui.selectable_value(
+                                &mut self.viewport_style.matcap_index,
+                                *id,
+                                name,
+                            );
+                            self.track_layer_control(&format!("viewport.matcap.{id}"), &row);
+                        }
+                    })
+                    .response;
+                self.track_layer_control("viewport.matcap", &matcap_combo);
+                let import = ui.button("Import MatCap image…");
+                self.track_layer_control("viewport.matcap.import", &import);
+                if import.clicked() {
+                    self.import_matcap_image();
+                }
+                ui.small(format!(
+                    "Custom MatCaps are session-only ({} of {}).",
+                    self.viewport_style.custom_matcaps.len(),
+                    crate::matcap::MAX_CUSTOM_MATCAPS
+                ));
             }
             let flat = ui.checkbox(
                 &mut self.viewport_style.flat_shading,
@@ -11549,6 +11678,8 @@ extern "C" {
     fn pick_uv_texture(id: u32);
     #[wasm_bindgen::prelude::wasm_bindgen(js_namespace=window,js_name=obrushPickBackground)]
     fn pick_background_image(id: u32);
+    #[wasm_bindgen::prelude::wasm_bindgen(js_namespace=window,js_name=obrushPickMatcap)]
+    fn pick_matcap_image(id: u32);
     #[wasm_bindgen::prelude::wasm_bindgen(catch, js_namespace = window, js_name = obrushStartTopology)]
     fn start_topology_worker(
         id: u32,

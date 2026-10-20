@@ -72,8 +72,8 @@ pub(crate) fn decode_png(name: &str, bytes: &[u8]) -> Result<ViewTexture, String
     ViewTexture::from_rgba(name, width, height, rgba.as_raw())
 }
 
-/// Shared bounded JPEG decoding for the pinned Matcap catalog. Header dimensions
-/// are checked before pixel conversion and again against the actual decode.
+/// Shared bounded JPEG decoding for viewport images, including MatCaps. Header
+/// dimensions are checked before pixel conversion and against the actual decode.
 pub(crate) fn decode_jpeg(name: &str, bytes: &[u8]) -> Result<ViewTexture, String> {
     if bytes.len() > 16 * 1024 * 1024 || bytes.len() < 4 || bytes[..2] != [255, 216] {
         return Err("Matcap requires a JPEG within the 16 MiB input limit".into());

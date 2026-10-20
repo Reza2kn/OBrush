@@ -22,6 +22,7 @@
   <input id="alpha-file" type="file" accept="image/png,image/jpeg,.png,.jpg,.jpeg" hidden>
   <input id="uv-texture-file" type="file" accept="image/png,.png" hidden>
   <input id="background-file" type="file" accept="image/png,image/jpeg,.png,.jpg,.jpeg" hidden>
+  <input id="matcap-file" type="file" accept="image/png,image/jpeg,.png,.jpg,.jpeg" hidden>
   <script type="module">
     import { createViewportTextureInput } from './viewport-texture-input.js';
     import { createUVBakeWorkers } from './uv-bake-input.js';
@@ -137,6 +138,7 @@
     });
     window.obrushPickUVTexture=createViewportTextureInput(document.getElementById('uv-texture-file'),()=>handle,canvas,notice);
     window.obrushPickBackground=createViewportTextureInput(document.getElementById('background-file'),()=>handle,canvas,notice,{current:'background_request_is_current',cancel:'cancel_background_request',load:'load_background_image_for_request',label:'Background image'});
+    window.obrushPickMatcap=createViewportTextureInput(document.getElementById('matcap-file'),()=>handle,canvas,notice,{current:'matcap_request_is_current',cancel:'cancel_matcap_request',load:'load_matcap_image_for_request',label:'MatCap image'});
     for(const type of ['pointerdown','pointermove','pointerup','pointercancel']){
       // Mouse chords may be pointermove events, so eframe's pointerdown mapping
       // alone cannot cancel a region. Observe actual buttons before the runner.
