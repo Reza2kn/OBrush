@@ -18,6 +18,7 @@ const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const fixture = path.resolve(".artifacts/user-long-stroke-0.1.4/user.obrush");
 const selectedCases = process.env.OBRUSH_MOVE_CASES?.split(',');
+const guardCloseup = process.env.OBRUSH_MOVE_GUARD_CLOSEUP === '1';
 const fixtureBytes = !selectedCases || selectedCases.includes('user-crossing') ? await readFile(fixture) : null;
 if(fixtureBytes && hash(fixtureBytes)!=="4adc8aa9333903ab0684c1f2e54a995dc6a4e7a3b85fc6e911df9d7deb0c4786") throw Error("Immutable user fixture changed");
 const server = createServer(async (request, response) => {
@@ -45,6 +46,7 @@ const result = {
   preregistered_contract: {radius:0.037,strength:0.79,symmetry_x:true,spacing_ms:30,release_probe_incremental_delays_ms:[0,200,800],outbound_min_useful_original_displacement:.001,geometry:'Measure quality and folds without asserting reference equivalence; baseline failures are retained',history:'Exact mesh fields and topology',gpu:'Exact rendered VBO versus saved mesh float32'},
   protocol_reference: 'https://chromedevtools.github.io/devtools-protocol/tot/Input/#method-dispatchMouseEvent',
   cases: [], comparisons: {}, exceptions: [], console_errors: [], blocked_external_requests: [], input_trace: [],
+  guard_closeup_protocol: guardCloseup ? {wheel_count:3,wheel_delta_y:-120,wheel_point:[800,470],roi:[260,250,800,650],min_changed_pixels:100,rgb_channel_threshold:8} : null,
 };
 const send = (method, params = {}, target = session) => new Promise((resolve, reject) => {
   const id = ++sequence;
@@ -376,6 +378,18 @@ try {
     trial.release_quiet=trial.stroke.quiet;
     trial.gpu_before_save=await gpuDigest();trial.final_screenshot=await screenshot(plan.name+'-final');
     const final=await save(plan.name+'-final');trial.snapshots.push(metadata(final));
+    if(guardCloseup && plan.name==='sphere-twelve-repeated-q02'){
+      const beforeZoom=await evaluate('window.obrushBrushMetrics().camera');
+      await pointer('mouseMoved',800,470);await pause(70);
+      for(let step=0;step<3;step++){
+        await send('Input.dispatchMouseEvent',{type:'mouseWheel',x:800,y:470,deltaX:0,deltaY:-120,pointerType:'mouse'});
+        await evaluate('new Promise(resolve=>requestAnimationFrame(()=>resolve(true)))');await pause(70);
+      }
+      await pointer('mouseMoved',1000,30);await pause(300);
+      const zoomCamera=await evaluate('window.obrushBrushMetrics().camera');
+      const zoomFinal=await save('guard-b01-final-zoom');
+      trial.guard_closeup={before_zoom_distance:beforeZoom.distance,final_camera:zoomCamera,final_image:await screenshot('guard-b01-final-closeup'),final_project:metadata(zoomFinal),zoom_kept_mesh:meshHash(zoomFinal.document)===meshHash(final.document)};
+    }
     if(plan.name==='sphere-twelve-repeated-q02'){
       await pause(800);const idle=await save('q02-idle');
       trial.idle_save={...metadata(idle),mesh_sha256:meshHash(idle.document),exact_final:meshHash(idle.document)===meshHash(final.document)};
@@ -389,6 +403,15 @@ try {
       for(let step=0;step<(plan.contacts?plan.contacts.length:3);step++){
         await chord('z');undo=await save(plan.name+'-undo-'+step);trial.snapshots.push(metadata(undo));undoChain.push({step,mesh_sha256:meshHash(undo.document),packed_sha256:packedHash(undo.document.mesh)});
         if(meshHash(undo.document)===meshHash(initial.document))break;
+      }
+      if(guardCloseup && plan.name==='sphere-twelve-repeated-q02'){
+        trial.guard_closeup.initial_camera=await evaluate('window.obrushBrushMetrics().camera');
+        trial.guard_closeup.initial_image=await screenshot('guard-b01-initial-closeup');
+        trial.guard_closeup.initial_mesh_exact=meshHash(undo.document)===meshHash(initial.document);
+        const before=trial.guard_closeup.final_camera,after=trial.guard_closeup.initial_camera;
+        const maximum=(a,b)=>Math.max(...a.map((value,index)=>Math.abs(value-b[index])));
+        trial.guard_closeup.camera_error={distance:Math.abs(before.distance-after.distance),target:maximum(before.target,after.target),view_projection:maximum(before.view_projection,after.view_projection)};
+        trial.guard_closeup.camera_match=Object.values(trial.guard_closeup.camera_error).every(error=>error<=1e-5);
       }
       let redo;for(let step=0;step<undoChain.length;step++){await chord('z',true);redo=await save(plan.name+'-redo-'+step);trial.snapshots.push(metadata(redo));}
       trial.history={undo_steps:undoChain.length,undo_chain:undoChain,undo_exact_initial:meshHash(undo.document)===meshHash(initial.document),redo_exact_final:meshHash(redo.document)===meshHash(final.document),modifier_phase_states_in_undo:trial.stroke.phases.map(phase=>({before_index:phase.before_index,found:undoChain.some(state=>state.packed_sha256===phase.gpu.sha256)}))};
@@ -426,6 +449,11 @@ try {
       trial.interaction_gates.q02_exact_one_undo_per_effective_contact=trial.history?.matches_effective_sequence===true;
       trial.interaction_gates.q02_trusted_pointer_events=trial.stroke.runtime.events.filter(event=>event.type.startsWith('pointer')).every(event=>event.trusted);
       trial.interaction_gates.q02_idle_project_exact=trial.idle_save.exact_final;
+      if(guardCloseup){
+        trial.interaction_gates.guard_b01_displacement=trial.delta.max_original_displacement>=.005;
+        trial.interaction_gates.guard_b01_max_fold=qualities.every(q=>q.max_adjacent_fold_deg<=30.01);
+        trial.interaction_gates.guard_b01_closeup_camera=trial.guard_closeup.zoom_kept_mesh&&trial.guard_closeup.initial_mesh_exact&&trial.guard_closeup.camera_match&&trial.guard_closeup.final_camera.distance<trial.guard_closeup.before_zoom_distance;
+      }
     }
     if(plan.kind==='boundary'){trial.interaction_gates.outside_drops_travel=trial.stroke.boundary.outside_exact&&trial.stroke.boundary.reentry_first_point_exact;trial.interaction_gates.reentry_resumes_useful_inside_movement=trial.stroke.boundary.resumed_inside_movement_useful;trial.interaction_gates.outside_release_preserves_displayed_state=trial.stroke.boundary.outside_release_preserves_displayed_state;trial.interaction_gates.outside_release_one_history_step=trial.history?.undo_steps===1;}
     await writeFile(path.join(out,plan.name+'.json'),JSON.stringify(trial,null,2)+'\n');
