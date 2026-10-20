@@ -74,6 +74,10 @@ costs from MRP03 still require a separate combined path.
 The exact ignored receipt root is `.artifacts/mrp04-stage/bench/` in the
 isolated worktree; its parsed report SHA-256 is
 `045241f7d490e9ee161914eca046fdfc9244e8c0ffbfa0bd528a886e27488ad3`.
+The root checkout also retains the report, auditor source, traces, result JSON,
+audits, scalar recordings and screenshots at that relative path. The complete
+large public `.obrush` project snapshots remain in the isolated
+`core-perf-followup` worktree at the same relative paths.
 Control result/scalar/audit SHA-256 values:
 `a63d5d1c78421eea584ed5fcdc480a344492e67812f9a08c22cf17d2b3fc6ef4`,
 `e49fd555fc474c6e59cd00a96f8484098f81779aa7735f3edc21fe8d864c95e1`,
