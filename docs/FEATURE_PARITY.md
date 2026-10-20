@@ -22,6 +22,11 @@ tearing comparison remain open.
 the visible Move settings and saved an untouched sphere, but computer-control
 coordinate input failed before a stroke. It is inconclusive for native Move
 deformation and rendered tearing.
+[Q02's twelve-contact normal-browser Move run](NATIVE_MOVE_REPEATED_VISUAL_Q02_RESULT.md)
+passed bounded mesh, GPU, release-idle and exact eight-step Undo/Redo gates
+at radius 0.037/79% with X symmetry. Four contacts were no-ops, and the
+full-sphere screenshots show marks too small to judge close-up triangular
+tearing, so the user's visual complaint remains open.
 
 **Resolution-stroke R02:** [The paired browser report](SCULPTGL_RESOLUTION_STROKE_R02_RESULT.md)
 preserves a failed pinned-reference press/release gate, then measures one
