@@ -87,12 +87,16 @@ if(process.argv.includes('--self-check')){
     insist(rejected,'Duplicate/missing-coordinate negative control was accepted');
   }
   const press=mousePressureEvent('mousePressed',10,20,1,0.5),move=mousePressureEvent('mouseMoved',12,20,1,0.5),release=mousePressureEvent('mouseReleased',12,20,0,0);
-  insist([press,move].every(e=>e.pointerType==='mouse'&&e.force===0.5&&e.buttons===1)&&release.force===0&&release.buttons===0,'C261 mouse-event contract self-check failed');
-  insist(assertHeldMouseEvents([{type:'pointermove',buttons:1,pressure:0,pointerType:'mouse',trusted:true},{type:'pointerdown',buttons:1,pressure:0.5,pointerType:'mouse',trusted:true},{type:'pointermove',buttons:1,pressure:0.5,pointerType:'mouse',trusted:true}],'self-check').length===2,'C261 pre-contact hover was counted as a held event');
+  insist([press,move].every(e=>e.pointerType==='mouse'&&e.force===0.5&&e.buttons===1)&&release.force===0&&release.buttons===0,'CR01 mouse-event contract self-check failed');
+  insist(assertHeldMouseEvents([{type:'pointermove',buttons:1,pressure:0,pointerType:'mouse',trusted:true},{type:'pointerdown',buttons:1,pressure:0.5,pointerType:'mouse',trusted:true},{type:'pointermove',buttons:1,pressure:0.5,pointerType:'mouse',trusted:true}],'self-check').length===2,'CR01 pre-contact hover was counted as a held event');
   const m=[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],vp=[0,0,100,100],world=[0.1,-0.2,0.3],p=project64(m,vp,world),again=unproject64(inverse4(m),vp,p);
-  insist(world.every((v,i)=>close(v,again[i])),'C261 project/inverse self-check failed');
+  insist(world.every((v,i)=>close(v,again[i])),'CR01 project/inverse self-check failed');
   const moved=unproject64(inverse4(m),vp,[p[0]+20,p[1],p[2]]);
-  insist(close(moved[0]-world[0],0.4),'C261 X-offset self-check failed');
+  insist(close(moved[0]-world[0],0.4),'CR01 X-offset self-check failed');
+  const flat=[[0,0,0],[1,0,0],[0,1,0]],tri=[[0,1,2]];
+  const healthy=safety(flat,flat,tri),fold=safety(flat,[[0,0,0],[1,0,0],[0,-1,0]],tri),tiny=safety(flat,[[0,0,0],[1,0,0],[0,0,0]],tri),stretch=safety(flat,[[0,0,0],[5,0,0],[0,1,0]],tri);
+  insist(healthy.nonfinite===0&&healthy.flipped_faces===0&&healthy.new_tiny_faces===0&&healthy.max_edge_stretch===1,'CR01 healthy triangle negative control failed');
+  insist(fold.flipped_faces===1&&tiny.new_tiny_faces===1&&stretch.max_edge_stretch>4,'CR01 safety alarm controls failed');
   if(process.env.C261_C255_RECEIPT){
     const old=JSON.parse(await readFile(process.env.C261_C255_RECEIPT));
     const capture=old.obrush_held_after?.source_geometry?.last_completed?.capture;
@@ -103,7 +107,7 @@ if(process.argv.includes('--self-check')){
     insist(close(chain.offset_x,250),'C255 captured offset was not 250 CSS px');
     console.log('C261 C255 captured-matrix replay passed');
   }
-  console.log('C261 mouse, matrix and offset self-check passed');process.exit(0);
+  console.log('CR01 fixture, mouse, matrix and mesh-safety self-check passed');process.exit(0);
 }
 insist(['source','obrush'].includes(side),'CR01 requires --side=source or --side=obrush');
 insist(side==='source'||referenceReceiptPath,'OBRush CR01 requires --reference-receipt');
