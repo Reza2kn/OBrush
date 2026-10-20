@@ -41,9 +41,12 @@ and one each for the untouched OBrush Legacy Drag compatibility check and
 a zero-travel Source Drag check. Both paired documents use 1024×808 logical
 viewport, front orthographic fit, mouse, radius 96 pixels, pressure factors
 zero, Alpha None, symmetry off, no culling, no Continuous, no Lock. Start at
-integer viewport-center offset `(-48,-20)` and move while held to
-`(-24,-20)`, `(0,-20)`, `(24,-20)` in three separately observed deliveries,
-then release at `(24,-20)`. No public Save or UI interaction during hold.
+integer viewport-center offset `(-64,-20)` and move while held to
+`(-28,-20)`, `(8,-20)`, `(44,-20)` in three separately observed deliveries,
+then release at `(44,-20)`. Each 36-pixel segment yields two Source Drag
+substeps at the frozen 96-pixel radius (`floor(36 / 14.4) = 2`), so the
+second substep projects a distinct ray instead of a zero-travel first
+substep. No public Save or UI interaction during hold.
 The published Source and OBrush world brush radius and each requested ray
 may differ by at most `1e-6`; X/Y projection ratios may differ by at most
 `5e-6`. No adjusted pointer path or mesh is allowed after seeing output.
