@@ -63,6 +63,12 @@ three-vertex fixture with SymOffset +0.5. Its maximum active-position
 component difference was 5.48e-5 local units, inside the frozen 0.005
 candidate bound, and both had a mirrored edit. This narrow geometry result
 does not score cross-app appearance or close the full symmetry/Draw rows.
+[C260's signed-offset curved-mesh gate](SCULPTGL_SYMMETRY_CURVED_C260_REPORT.md)
+failed its frozen direct-vertex-ID comparison in both signs. The baseline
+coordinates themselves matched as a set, but SculptGL's import optimization
+renumbered nearly all vertices; a posthoc coordinate remap showed close
+geometry and is recorded only as a diagnosis. C261 freezes that mapping
+before a new stroke; C260 remains failed.
 
 **Dense resolution-stroke R03:** [The paired browser report](SCULPTGL_RESOLUTION_DENSE_R03_RESULT.md)
 passed the frozen 24-changed-vertex minimum on an independent 18,242-vertex
