@@ -33,6 +33,12 @@ through Before, held preview, After, Undo and Redo on one independent curved
 441-vertex fixture. The corrected run preserves [C283's setup failure](SCULPTGL_SMOOTH_TANGENT_C283_RESULT.md)
 separately. The full Smooth Tangent row stays open.
 
+**Camera transition slice:** [C287](SCULPTGL_CAMERA_TRANSITION_C287_REPORT.md)
+adds a 200 ms quartic animation for explicit Fit/axis/Snap/Reset actions.
+An authored pose-sampling fixture and normal-browser RAF trace verify
+intermediate motion and wheel interruption; full picked-focus, shortcut,
+camera-matrix and timer-cadence parity remain open.
+
 **Source Drag trial:** [C286/C288](SCULPTGL_SOURCE_DRAG_C288_RESULT.md)
 tested an opt-in shared-core moving-center Drag on an independently authored
 curved grid. The second normal-UI pair changed the same 95 vertices and
