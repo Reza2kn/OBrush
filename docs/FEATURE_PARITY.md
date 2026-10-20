@@ -107,6 +107,10 @@ measured 99.0 ms in semantic fingerprinting, including 55.9 ms in its tree
 walk, during a fresh 100k finish. It clears the preregistered investigation
 threshold but has no same-state prediction of a 40 ms net fusion gain; no
 codec code was promoted and the frozen RAF, queue and GPU-normal checks fail. A
+[same-state native/WASM encoder trial](SOURCE_WORKER_WARM_ENCODE_FUSION_RESULT.md)
+then preserved exact v1 packet bytes and two future dabs, but saved only
+1.85 ms median in nine paired browser Worker encodes against the frozen 40 ms
+gate (7/9 positive against 8/9). Its trial code was reverted. A
 [typed complete-scene witness design](SOURCE_WORKER_TYPED_SCENE_WITNESS_DESIGN.md)
 sets a proof gate for the larger witness stage. [The read-only phase
 profile](SOURCE_WORKER_TYPED_SCENE_WITNESS_GATE_RESULT.md) measured 251.1 ms
