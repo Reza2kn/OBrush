@@ -27,6 +27,17 @@ passed bounded mesh, GPU, release-idle and exact eight-step Undo/Redo gates
 at radius 0.037/79% with X symmetry. Four contacts were no-ops, and the
 full-sphere screenshots show marks too small to judge close-up triangular
 tearing, so the user's visual complaint remains open.
+[CR01's repeated Crease browser comparison](SCULPTGL_CREASE_OVERLAP_CR01_REPORT.md)
+preserves a failed paired protocol because OBrush's actual default pressure
+setting differed from the frozen pressure-off precondition. On one independent
+18,242-vertex sphere, eight Crease strokes changed both mirror sides without
+new tiny or folded faces and had exact eight-step Undo/Redo. This scoped safety
+observation does not resolve close-up tearing or Crease parity; CR02 freezes a
+closer default-pressure check.
+[MRP10's persistent Worker trial](SCULPTGL_MILLION_WORKER_RESIDENCY_MRP10_RESULT.md)
+is isolated and query-gated. One Chrome Worker served two checked commits on a
+40,642-vertex sphere with exact public Save/Undo/Redo. Million-vertex pacing,
+memory, complete GPU words and the ordinary browser path remain unverified.
 
 **Resolution-stroke R02:** [The paired browser report](SCULPTGL_RESOLUTION_STROKE_R02_RESULT.md)
 preserves a failed pinned-reference press/release gate, then measures one
