@@ -10587,6 +10587,13 @@ impl OBrushApp {
                 if kind == BrushKind::Paint && (settings.paint_roughness || settings.paint_metallic)
                 {
                     self.document.begin_material_paint_stroke();
+                } else if kind == BrushKind::Twist
+                    && self.document.active_object_metadata().is_some()
+                {
+                    if let Err(error) = self.document.begin_source_twist_stroke() {
+                        self.message = format!("Twist could not start: {error}");
+                        return;
+                    }
                 } else {
                     self.document.begin_stroke();
                 }
@@ -10877,9 +10884,27 @@ impl OBrushApp {
                     BrushResult::default()
                 })
             })();
+            let normal_selection =
+                if kind == BrushKind::Twist && self.document.active_object_metadata().is_some() {
+                    local
+                        .stroke
+                        .as_ref()
+                        .map(|stroke| stroke.normal_selection().to_vec())
+                } else {
+                    None
+                };
             match outcome {
                 Ok(result) => {
                     if result.changed_vertices > 0 {
+                        if let Some(selected) = normal_selection.as_deref() {
+                            if let Err(error) = self.document.refresh_source_twist_normals(selected)
+                            {
+                                self.document.cancel_stroke();
+                                self.stroke_rejected = true;
+                                self.message = format!("Twist normal refresh rejected: {error}");
+                                return;
+                            }
+                        }
                         self.changed();
                     }
                     if result.changed_vertices > 0 && result.displacement_scale < 1.0 {
@@ -11214,6 +11239,12 @@ impl OBrushApp {
                                         .map(|state| (session.subtool, state))
                                 });
                             SourceNormalRenderOwner::CapturedPaint(captured)
+                        }
+                        Some(stroke)
+                            if stroke.kind == BrushKind::Twist
+                                && stroke.local_transform.is_some() =>
+                        {
+                            SourceNormalRenderOwner::Geometry
                         }
                         Some(_) => SourceNormalRenderOwner::Legacy,
                     }

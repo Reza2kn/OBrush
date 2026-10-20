@@ -708,6 +708,46 @@ impl SourceGeometryNormalState {
         self.refreshed_with_position_scope(positions, selected, false)
     }
 
+    /// A guarded ordinary Twist has already written its candidate positions.
+    /// Only the original picked rows may differ from the retained witness;
+    /// neighbor vertex normals intentionally keep their previous words.
+    pub(crate) fn refreshed_for_twist(
+        &self,
+        mesh: &Mesh,
+        selected: &[usize],
+    ) -> Result<Self, SourceGeometryError> {
+        mesh.validate()
+            .map_err(|_| SourceGeometryError::InvalidMesh)?;
+        if !self.matches_history_topology(mesh) || self.position_words.len() != mesh.positions.len()
+        {
+            return Err(SourceGeometryError::StrokeBindingChanged);
+        }
+        let mut picked = Vec::new();
+        picked
+            .try_reserve_exact(mesh.positions.len())
+            .map_err(|_| SourceGeometryError::Allocation)?;
+        picked.resize(mesh.positions.len(), false);
+        for &id in selected {
+            let Some(row) = picked.get_mut(id) else {
+                return Err(SourceGeometryError::InvalidInput);
+            };
+            *row = true;
+        }
+        if self
+            .position_words
+            .iter()
+            .zip(&mesh.positions)
+            .enumerate()
+            .any(|(id, (before, after))| {
+                !picked[id] && *before != after.to_array().map(f32::to_bits)
+            })
+        {
+            return Err(SourceGeometryError::StrokeBindingChanged);
+        }
+        operation_budget_with_scratch(mesh, self.approximate_bytes(), picked.len())?;
+        self.refreshed_after_selected_write(&mesh.positions, selected)
+    }
+
     // A controlled dab has already checked the old mesh against this state
     // and writes positions only in `selected`. History restoration does not
     // have that guarantee and continues to rebuild every position witness.

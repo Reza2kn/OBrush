@@ -512,6 +512,9 @@ pub struct LocalTransformStroke {
     centers: [Vec3; 2],
     axes: [Vec3; 2],
     influences: Vec<LocalTransformInfluence>,
+    // Source Twist refreshes display normals for every picked vertex, even a
+    // fully protected vertex whose position did not move.
+    normal_selection: Vec<usize>,
     guard: Option<DeformationGuard>,
     seam_epsilon: Option<f32>,
     seam_offset: f32,
@@ -526,6 +529,9 @@ struct LocalTransformInfluence {
 }
 
 impl LocalTransformStroke {
+    pub fn normal_selection(&self) -> &[usize] {
+        &self.normal_selection
+    }
     /// The accepted effective angle or log-scale, after strength and invert but
     /// before each point's frozen falloff and mask. A rejected/no-contact sample
     /// leaves this value and the mesh unchanged.
@@ -827,13 +833,12 @@ impl Mesh {
         let alpha_frame =
             surface_alpha_frame(normal, settings.alpha_tangent, settings.alpha_rotation);
         let mut influences = Vec::new();
+        let mut normal_selection = Vec::new();
         for (vertex, &position) in self.positions.iter().enumerate() {
             let protection = self.mask_influence(vertex);
-            if protection == 0.0 {
-                continue;
-            }
             let vertex_normal = self.normals[vertex].normalize_or_zero();
             let mut weights = [0.0_f32; 2];
+            let mut picked = false;
             for (side, weight) in weights.iter_mut().enumerate() {
                 if side == 1 && !settings.symmetry_x {
                     continue;
@@ -852,6 +857,10 @@ impl Mesh {
                 {
                     continue;
                 }
+                picked = true;
+                if protection == 0.0 {
+                    continue;
+                }
                 *weight = radial_influence(distance_squared, radius_squared, settings, false);
                 if settings.backface_culling {
                     let front = (facing / 0.35).clamp(0.0, 1.0);
@@ -866,6 +875,9 @@ impl Mesh {
                         0.5 - offset.dot(mirror(bitangent)) / (2.0 * radius),
                     );
                 }
+            }
+            if picked {
+                normal_selection.push(vertex);
             }
             let maximum = weights[0].max(weights[1]) * protection;
             let sum = weights[0] + weights[1];
@@ -893,6 +905,7 @@ impl Mesh {
             // handedness, yielding exactly reflected Twist displacements.
             axes: [axis, -reflect(axis)],
             influences,
+            normal_selection,
             guard,
             seam_epsilon: settings.symmetry_x.then_some(radius * 1e-5),
             seam_offset: settings.symmetry_offset,

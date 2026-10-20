@@ -726,6 +726,85 @@ impl Document {
             .find(|(key, _)| *key == id)
             .map(|(_, s)| s.clone())
     }
+
+    /// Start an ordinary Twist history event with a render-only Source normal
+    /// producer. A stale producer left by an unrelated legacy edit is reseeded
+    /// from the current mesh before the snapshot; ordinary brushes never enter
+    /// this route.
+    pub fn begin_source_twist_stroke(&mut self) -> Result<(), SourceGeometryError> {
+        if self.stroke_start.is_some() || self.source_geometry_active.is_some() {
+            return Err(SourceGeometryError::StrokeAlreadyOpen);
+        }
+        let id = self
+            .active_subtool_id()
+            .ok_or(SourceGeometryError::UnsupportedDomain)?;
+        let mesh = self
+            .active_mesh()
+            .ok_or(SourceGeometryError::UnsupportedDomain)?;
+        let state = match self.source_geometry_state(id) {
+            Some(state) if state.matches_mesh(mesh) => state,
+            _ => Arc::new(SourceGeometryNormalState::seed(mesh)?),
+        };
+        if self.source_geometry_state(id).is_none()
+            && self.source_geometry_states.len() >= crate::MAX_SUBTOOLS
+        {
+            return Err(SourceGeometryError::StorageLimit);
+        }
+        if state.approximate_bytes() > crate::MAX_SOURCE_GEOMETRY_STATE_BYTES {
+            return Err(SourceGeometryError::StorageLimit);
+        }
+        if let Some((_, row)) = self
+            .source_geometry_states
+            .iter_mut()
+            .find(|(key, _)| *key == id)
+        {
+            *row = state;
+        } else {
+            self.source_geometry_states
+                .try_reserve(1)
+                .map_err(|_| SourceGeometryError::Allocation)?;
+            self.source_geometry_states.push((id, state));
+        }
+        self.begin_stroke();
+        Ok(())
+    }
+
+    /// Publish a selected-only GPU normal field after a successful guarded
+    /// Twist move. All fallible work precedes replacement of the retained row.
+    pub fn refresh_source_twist_normals(
+        &mut self,
+        selected: &[usize],
+    ) -> Result<(), SourceGeometryError> {
+        if self.stroke_start.is_none() {
+            return Err(SourceGeometryError::NoOpenStroke);
+        }
+        let id = self
+            .active_subtool_id()
+            .ok_or(SourceGeometryError::UnsupportedDomain)?;
+        let state = self
+            .source_geometry_state(id)
+            .ok_or(SourceGeometryError::StaleNormalState)?;
+        let mesh = self
+            .active_mesh()
+            .ok_or(SourceGeometryError::UnsupportedDomain)?;
+        let next = state.refreshed_for_twist(mesh, selected)?;
+        let other_bytes = self
+            .source_geometry_retained_bytes()
+            .saturating_sub(state.approximate_bytes());
+        if next.approximate_bytes() > crate::MAX_SOURCE_GEOMETRY_STATE_BYTES
+            || other_bytes
+                .checked_add(next.approximate_bytes())
+                .is_none_or(|bytes| bytes > HISTORY_BUDGET_BYTES)
+        {
+            return Err(SourceGeometryError::StorageLimit);
+        }
+        *self
+            .source_geometry_states
+            .iter_mut()
+            .find(|(key, _)| *key == id)
+            .expect("retained Twist state") = (id, Arc::new(next));
+        Ok(())
+    }
     pub fn source_geometry_retained_bytes(&self) -> usize {
         retained_bytes(
             &self.source_geometry_states,
@@ -2081,3 +2160,60 @@ fn controlled_noop(
 #[cfg(test)]
 #[path = "prepared_geometry_dab_tests.rs"]
 mod prepared_geometry_dab_tests;
+
+#[cfg(test)]
+mod twist_selected_normal_tests {
+    use super::*;
+    use crate::{Mesh, Vec3};
+
+    fn grid() -> Mesh {
+        Mesh::from_obj("v -1 -1 0\nv 0 -1 0\nv 1 -1 0\nv -1 0 0\nv 0 0 0\nv 1 0 0\nv -1 1 0\nv 0 1 0\nv 1 1 0\nf 1 2 5\nf 1 5 4\nf 2 3 6\nf 2 6 5\nf 4 5 8\nf 4 8 7\nf 5 6 9\nf 5 9 8\n").unwrap()
+    }
+
+    #[test]
+    fn twist_selected_normals_leave_neighbor_stale_and_follow_ordinary_history() {
+        let mut document = Document::new(grid());
+        document.begin_source_twist_stroke().unwrap();
+        let id = document.active_subtool_id().unwrap();
+        let before = document.source_geometry_state(id).unwrap();
+        document.require_active_mesh_mut().unwrap().positions[4] += Vec3::Z * 0.1;
+        document.refresh_source_twist_normals(&[4, 0]).unwrap();
+        let held = document.source_geometry_state(id).unwrap();
+        assert_eq!(held.vertex_normals()[1], before.vertex_normals()[1]);
+        assert_ne!(held.vertex_normals()[4], before.vertex_normals()[4]);
+        assert_ne!(held.vertex_normals()[0], before.vertex_normals()[0]);
+        let fresh =
+            SourceGeometryNormalState::seed(document.require_active_mesh().unwrap()).unwrap();
+        assert_ne!(fresh.vertex_normals()[1], held.vertex_normals()[1]);
+        assert!(held.matches_mesh(document.require_active_mesh().unwrap()));
+        document.end_stroke();
+        assert!(document.undo());
+        assert_eq!(
+            document.source_geometry_state(id).unwrap().vertex_normals(),
+            before.vertex_normals()
+        );
+        assert!(document.redo());
+        assert_eq!(
+            document.source_geometry_state(id).unwrap().vertex_normals(),
+            held.vertex_normals()
+        );
+    }
+
+    #[test]
+    fn twist_selected_refresh_rejects_unselected_position_without_replacing_state() {
+        let mut document = Document::new(grid());
+        document.begin_source_twist_stroke().unwrap();
+        let id = document.active_subtool_id().unwrap();
+        let before = document.source_geometry_state(id).unwrap();
+        document.require_active_mesh_mut().unwrap().positions[4] += Vec3::Z * 0.1;
+        assert_eq!(
+            document.refresh_source_twist_normals(&[0]),
+            Err(SourceGeometryError::StrokeBindingChanged)
+        );
+        assert!(Arc::ptr_eq(
+            &before,
+            &document.source_geometry_state(id).unwrap()
+        ));
+        assert!(document.cancel_stroke());
+    }
+}
