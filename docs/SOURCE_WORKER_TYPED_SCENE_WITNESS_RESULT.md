@@ -22,6 +22,9 @@ complete traversal at capture after generating the public Worker seed.
   `c134a0911ac5be97dae5d979b7433e792f1da30c8f884b884ecf9811fcebbfea`.
   All raw files and audit outputs are retained at
   `.artifacts/source-worker-sustained-spw01/100k-worker-4f7c564a-0901-4933-97da-ce800a483876/`.
+- The rejected candidate patch is retained locally at
+  `.artifacts/source-worker-sustained-spw01/typed-scene-witness-candidate.patch`,
+  SHA-256 `9dfa35fe670b713cb57c391119797fa18969b1a0f3ba55cbbb7a7f96c542ee81`.
 - Exact held-pointer protocol: 60 seconds, 24,000 requested moves, Source
   Draw radius 64 pixels, intensity 0.25, no symmetry. The browser delivered
   1,286 accepted dabs and published one final commit with its release endpoint.

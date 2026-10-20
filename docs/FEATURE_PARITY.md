@@ -91,8 +91,10 @@ product code was rejected and the failed browser receipt retained. A
 sets a proof gate for the larger witness stage. [The read-only phase
 profile](SOURCE_WORKER_TYPED_SCENE_WITNESS_GATE_RESULT.md) measured 251.1 ms
 in JSON serialization and hashing within a 265.9 ms witness, clearing its
-preregistered 150 ms investigation threshold. No typed serializer has been
-implemented, and the frozen RAF, queue-tail and normal checks still fail.
+preregistered 150 ms investigation threshold. [The typed-witness
+trial](SOURCE_WORKER_TYPED_SCENE_WITNESS_RESULT.md) then took 305.3 ms in
+the witness against a 200 ms target and 1000.3 ms at begin against 458 ms.
+Its code was rejected; the frozen RAF, queue-tail and normal checks still fail.
 [The independent display-normal audit](SOURCE_GPU_DISPLAY_NORMAL_ORACLE_PREREG.md)
 matches fresh Source face normals to active GPU rows before sculpting and after
 Undo. Edited After and Redo states have byte-identical public meshes but
