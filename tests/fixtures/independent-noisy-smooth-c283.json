@@ -1,0 +1,14 @@
+{
+  "source": "Independent Python-authored SGL v3; no SculptGL or OBrush encoder",
+  "license": "CC0",
+  "fixture": "tests/fixtures/independent-noisy-smooth-c283.sgl",
+  "bytes": 28836,
+  "sha256": "5cc5947599f58cbfc738035d64504e7763368631f70a93cbfe55c6263da5c777",
+  "grid_side": 21,
+  "vertices": 441,
+  "triangles": 800,
+  "protected_rgb_id": 219,
+  "half_unprotected_rgb_id": 221,
+  "spike_rgb_id": 220,
+  "z_formula": "0.02 + 0.003*sin(ix*0.9)*cos(iy*0.7) + center_spike_0.008"
+}
