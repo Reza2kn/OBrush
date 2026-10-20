@@ -74,6 +74,14 @@ SHA-256 of produced artifacts:
 - SIMD browser WASM: `aaab52885dd8a86820a693fb5068f7879eff4e2df7fe2c3780a4427fa568e488`
 - packaged macOS executable: `0b984f39509df2178184f272cfc61dfa84f357fc2f38bd28ebf17bbc47f3a79f`
 
+After integration on the primary branch, the full workspace tests, strict
+native/WASM Clippy, browser build, and macOS package/signature verification
+passed again. The primary checkout produced the same three artifact hashes
+listed above. The browser server at `127.0.0.1:8792` returned both WASM files
+byte-for-byte equal to the rebuilt local artifacts, so the open app URL serves
+this integrated camera build. This confirms delivery of the tested code, not
+additional reference-camera parity.
+
 ## Failed checks and limits
 
 The first compilation failed because adding a diagnostic field within an
