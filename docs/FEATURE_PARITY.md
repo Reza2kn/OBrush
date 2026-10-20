@@ -43,7 +43,12 @@ used a recorded non-visible controller step and confirmed one-mesh,
 0.5/1/2×. Its frozen pixel segmentation failed because the Source Scene
 dropdown and floor grid contaminated the images. No image-quality verdict
 or full resolution-family parity follows; [V03](SCULPTGL_RESOLUTION_SINGLE_MESH_V03_PREREG.md)
-is a separate frozen UI/mask follow-up.
+is a separate frozen UI/mask follow-up. [V03's normal-browser result](SCULPTGL_RESOLUTION_SINGLE_MESH_V03_RESULT.md)
+also failed: a fading Source dropdown obscured DPR-2 before images and
+OBRush's floor grid corrupted sphere silhouettes. Its geometry/history
+remained invariant; [V04](SCULPTGL_RESOLUTION_SINGLE_MESH_V04_PREREG.md)
+freezes visible guide-off and all-menu-hidden capture setup before another
+pixel check.
 
 **Current scoped additions, full rows open:** [C334](SCULPTGL_CAMERA_PICKED_PIVOT_C334_STATIC_RESULT.md)
 adds picked orbit pivots in Source framing. Authored-mesh normal-browser checks
