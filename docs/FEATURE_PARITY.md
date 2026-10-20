@@ -40,6 +40,11 @@ exact eight-step Undo/Redo on the same sphere. Its frozen gate remains failed:
 the closer camera was set before the strokes, per-dab side traces were not
 retained on both hosts, and legacy mouse pressure differed from the matched
 DOM force premise. Close-up tearing on other sculpted meshes remains open.
+[The supplied saved-sculpt audit](USER_SCULPT_FOLD_AUDIT.md) found 78 already
+present adjacent-face folds above 90° in the original version-1 project,
+despite a valid closed mesh. The current fixed-topology Crease guard does not
+repair that damage, and generic local smoothing worsened minimum face quality.
+An opt-in constrained repair remains a proposed, unimplemented remedy.
 [MRP10's persistent Worker trial](SCULPTGL_MILLION_WORKER_RESIDENCY_MRP10_RESULT.md)
 is isolated and query-gated. One Chrome Worker served two checked commits on a
 40,642-vertex sphere with exact public Save/Undo/Redo. Million-vertex pacing,
