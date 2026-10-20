@@ -92,6 +92,10 @@ measured 164.2 ms in retained-state encoding within a 194.3 ms Worker
 finish interval on a fresh frozen 100k run. Buffer takes took 1.5 ms;
 packet-size/transfer causality remains unproved, and the 466.6 ms active
 RAF maximum and 100 ms queue-tail gates still fail. A
+[read-only release timeline](SOURCE_WORKER_RELEASE_TIMELINE_RESULT.md)
+observed the Worker still active with finish pending at release+102.4 ms;
+its checked main commit occupied 475.3 ms and overlapped a 481.5 ms app-frame
+gap. A narrow encode/decoder change cannot satisfy both current gates. A
 [typed complete-scene witness design](SOURCE_WORKER_TYPED_SCENE_WITNESS_DESIGN.md)
 sets a proof gate for the larger witness stage. [The read-only phase
 profile](SOURCE_WORKER_TYPED_SCENE_WITNESS_GATE_RESULT.md) measured 251.1 ms
@@ -128,7 +132,10 @@ million-vertex responsiveness, and every full SculptGL/ZBrush gate remain open.
 **Scoped Source Brush culling:** [The C262 fixture and normal-browser report](SCULPTGL_BRUSH_CULLING_C262.md)
 confirms the existing Source Brush/Clay checkbox and inclusive front-vertex
 predicate on an opposed-sheet/zero-normal fixture, with exact core Undo/Redo.
-The paired full-browser stroke and wider option matrix remain open.
+[The C280 pinned opposed-sheet pair](SCULPTGL_BRUSH_CULLING_C280_RESULT.md)
+confirmed back-sheet protection with Culling on, but failed its frozen paired
+front-geometry gate by `3.12e-6` at a second held move on a shared triangle
+edge. Direct picked-face evidence is pending; the full gate remains open.
 
 **Seed-only Source Worker state seam:** [The retained seed witness](SOURCE_WORKER_RETAINED_SEED_SEAM.md)
 checks a fixed 112-byte cross-realm packet and exact later-dab reconstruction

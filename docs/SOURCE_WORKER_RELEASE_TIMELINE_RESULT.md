@@ -11,6 +11,8 @@ nonpublication scenario. That test script SHA-256 was
 `81b01f0e244949e93875a987ed5aa2bf0149c7d583f2b8ab30d974638b2b0ad9`;
 the diagnostic patch SHA-256 was
 `129b0c2eecdc19baa1d8d5c68a75bcc52b0381374d377ccd50643a15283dae85`.
+The unmerged patch is retained locally as
+`.artifacts/source-worker-sustained-spw01/release-timeline-probe.patch`.
 An initial Node harness failed because its data URL could not resolve the
 relative Worker URL; it was corrected to import test copies from files before
 the successful nonpublication check. No product behavior was changed by
