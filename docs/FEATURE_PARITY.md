@@ -286,6 +286,12 @@ failed its frozen browser peak-memory rule despite exact state words and
 [MRP06 memory repeat](SCULPTGL_MILLION_MEMORY_MRP06_RESULT.md) also
 failed its frozen individual peak-RSS cap despite identical state and WASM
 heap words; no Arc-reuse product candidate or parity claim follows.
+[MRP07's isolated sparse-normal probe](SCULPTGL_MILLION_SPARSE_PRESS_MRP07_RESULT.md)
+matches scoped alpha-track words and saves 173/297 ms median native/WASM
+press time without additional WASM linear-memory pages. Exact allocation and
+malformed-state rejection parity remains unproved, so its code has not been
+merged into the ordinary press path and the four responsiveness gates remain
+failed.
 [The sparse held-pointer Worker trial](SOURCE_WORKER_SPARSE_HELD_TRIAL.md) checks two
 ordinary viewport strokes, warm state, sparse GPU words, public Save/Undo/Redo
 and cancellation on a 40k sphere. It remains query-gated and unpromoted:
