@@ -234,7 +234,7 @@ async function visibleLayerControl(key){
   for(let i=0;i<24;i++){
     const rect=await evaluate(`window.obrushBrushMetrics()?.layer_controls?.[${JSON.stringify(key)}]??null`);
     if(rect&&rect[1]>72&&rect[3]<985)return rect;
-    await send('Input.dispatchMouseEvent',{type:'mouseWheel',x:1520,y:760,deltaX:0,deltaY:360});await pause(110);
+    await send('Input.dispatchMouseEvent',{type:'mouseWheel',x:145,y:760,deltaX:0,deltaY:360});await pause(110);
   }
   throw Error(`Visible Source camera numeric control absent: ${key}`);
 }
