@@ -27,6 +27,9 @@ pressure handling: both browser events reported zero, but pinned SculptGL
 used a 0.25 radius factor while OBrush normalized contact to 0.5 and used
 factor 1. Geometry and pixels still differed, so no brush correction or
 parity claim follows.
+[C257's matched-pressure pen attempt](SCULPTGL_SYMMETRY_PRESSURE_C257_REPORT.md)
+reached full radius in pinned SculptGL but made no reference vertex edit,
+so its frozen paired-deformation gate failed before an OBrush comparison.
 
 **Dense resolution-stroke R03:** [The paired browser report](SCULPTGL_RESOLUTION_DENSE_R03_RESULT.md)
 passed the frozen 24-changed-vertex minimum on an independent 18,242-vertex
