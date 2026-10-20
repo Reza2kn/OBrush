@@ -1,0 +1,68 @@
+name: Browser preview
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: browser-preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+      - name: Install lockfile-matched wasm-bindgen CLI
+        run: cargo install wasm-bindgen-cli --version 0.2.129 --locked --root .tools/wasm-bindgen
+      - name: Build the static browser app
+        run: scripts/build-web.sh
+      - name: Record served build identity
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          root = Path('web/dist')
+          wasm = root / 'pkg/obrush_app_bg.wasm'
+          info = {
+              'source_commit': os.environ['SOURCE_SHA'],
+              'portable_wasm_sha256': hashlib.sha256(wasm.read_bytes()).hexdigest(),
+          }
+          (root / 'build-info.json').write_text(json.dumps(info, indent=2) + '\n')
+          PY
+      - name: Upload reviewable browser bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: obrush-browser-${{ github.sha }}
+          path: web/dist/
+          retention-days: 14
+          if-no-files-found: error
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: web/dist/
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

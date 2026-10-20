@@ -3,6 +3,8 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 destination="${1:?Pass the distribution licenses directory}"
+mkdir -p "$destination"
+cp LICENSE-MIT LICENSE-APACHE "$destination/"
 asset_root='crates/obrush-app/assets/sculptgl'
 if [[ -d "$asset_root" ]]; then
   mkdir -p "$destination/sculptgl"

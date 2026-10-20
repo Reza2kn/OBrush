@@ -1,0 +1,43 @@
+name: Feature request and vote
+description: Propose a sculpting workflow improvement or vote on an existing request.
+title: "[Feature] "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Search existing feature requests first. If one already describes your
+        need, add a 👍 reaction to that issue and share your use case there.
+        A brush name or ZBrush/SculptGL resemblance alone does not establish
+        parity; describe the exact task you want to complete.
+  - type: textarea
+    id: workflow
+    attributes:
+      label: What are you trying to make?
+      description: Describe the sculpting workflow and where OBrush blocks you.
+      placeholder: "I need to carve a crease across a remeshed character face..."
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Desired behavior
+      description: Describe the controls, result, and file/history behavior you expect.
+    validations:
+      required: true
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where do you need it?
+      options:
+        - macOS app
+        - Browser preview
+        - Both
+        - File interchange or core engine
+    validations:
+      required: true
+  - type: textarea
+    id: reference
+    attributes:
+      label: Optional reference or workaround
+      description: Link a public example or explain your current workaround. Do not upload proprietary source or a private project.
