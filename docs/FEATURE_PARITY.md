@@ -6,6 +6,15 @@ public Undo/Redo saves, and byte-exact project reopen/save. This does not
 establish the native brush family, pressure, performance, SculptGL, or ZBrush
 gates.
 
+**Resolution-stroke R02:** [The paired browser report](SCULPTGL_RESOLUTION_STROKE_R02_RESULT.md)
+preserves a failed pinned-reference press/release gate, then measures one
+held 12-CSS-pixel Draw move at resolution 0.5/1/2× and DPR 1/2. Within
+each app, all six tiny strokes changed the same single position word with
+exact post-stroke geometry and one history step. This sparse result did not
+justify a product change; the mirrored reference ratio used its GUI
+controller and the harness needed manual cleanup after writing receipts.
+Broad stroke and full resolution-family parity remain open.
+
 **Current scoped additions, full rows open:** [C334](SCULPTGL_CAMERA_PICKED_PIVOT_C334_STATIC_RESULT.md)
 adds picked orbit pivots in Source framing. Authored-mesh normal-browser checks
 in OBrush and pinned SculptGL matched independent integer-pixel ray hits within
