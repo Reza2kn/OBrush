@@ -129,6 +129,14 @@ async function enterNumber(rect,value){
   await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});await pause(200);
 }
 
+
+async function exactNumber(key,value){await enterNumber(await visibleControl(key),value);}
+async function sourceRadius(value){
+  const expr="(()=>{const menu=window.__sculptglReferenceInstance.getGui()._ctrlSculpting._menu.domUl;const e=Array.from(menu.querySelectorAll('input[type=number]')).find(e=>e.getBoundingClientRect().width>0);const r=e?.getBoundingClientRect();return r?{value:Number(e.value),rect:[r.left,r.top,r.right,r.bottom]}:null})()";
+  const q=await evaluate(expr);insist(q?.rect,'Visible reference Draw radius input absent');await enterNumber(q.rect,value);
+  const actual=await evaluate(expr);insist(actual.value===value,`Reference Draw radius field differs: ${JSON.stringify(actual)}`);
+}
+
 const instrument = `(()=>{
   const original=HTMLCanvasElement.prototype.getContext;
   window.__symmetryPair={draws:[],gl:null,events:[]};
