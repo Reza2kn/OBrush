@@ -14,9 +14,12 @@ application supplied its encoder.
 
 The primary hypothesis is that the current OBrush Twist route differs from the
 reference because OBrush captures one original patch and applies an absolute
-rotation, whereas pinned `Twist.js` picks vertices at every held move, rotates
-the current surface around that move's intersection, and multiplies each
-incremental angle by the current falloff, mask and alpha. The reference uses
+rotation, whereas pinned `Twist.js` reselects vertices on the changing surface
+at each held move, rotates those current positions around the captured
+mouse-down intersection, and multiplies each incremental angle by the current
+falloff, mask and alpha. `SculptManager.canBeContinuous()` is false for Twist;
+`SculptBase.preUpdate()` therefore leaves the picking intersection fixed
+during the active stroke. The reference uses
 the negative picked eye direction as its view axis, skips moves inside a
 30-CSS-pixel radius around mouse-down, and does not expose an intensity
 slider. The initial baseline must run on unmodified OBrush code. Any later
