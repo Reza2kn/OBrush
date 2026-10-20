@@ -62,6 +62,17 @@ async function clickControl(key) {
   }
   throw Error('Control stayed outside viewport: ' + key);
 }
+async function scrollInspectorToBottom() {
+  const x = 1582;
+  await send('Input.dispatchMouseEvent', { type: 'mouseMoved', x, y: 150, button: 'none', buttons: 0 });
+  await send('Input.dispatchMouseEvent', { type: 'mousePressed', x, y: 150, button: 'left', buttons: 1, clickCount: 1 });
+  for (const y of [300, 500, 700, 875]) {
+    await send('Input.dispatchMouseEvent', { type: 'mouseMoved', x, y, button: 'none', buttons: 1 });
+    await pause(60);
+  }
+  await send('Input.dispatchMouseEvent', { type: 'mouseReleased', x, y: 875, button: 'left', buttons: 0, clickCount: 1 });
+  await pause(150);
+}
 async function key(letter, modifiers = 2) {
   const upper = letter.toUpperCase();
   const params = { key: letter.toLowerCase(), code: 'Key' + upper, windowsVirtualKeyCode: upper.charCodeAt(0), modifiers };
@@ -190,6 +201,7 @@ try {
   requireTrue(before.project.scene?.objects?.length === 2, 'Before Save does not contain two imported parts');
   const initialState = await state();
   requireTrue(initialState.source_sgl_import?.options?.scale_center === false, 'Scale-center option was not at pinned default');
+  await scrollInspectorToBottom();
   await clickControl('file.allow_attribute_loss');
   await clickControl('file.export_sgl.selected_only');
   const settings = await state();
