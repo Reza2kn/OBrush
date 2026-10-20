@@ -95,3 +95,13 @@ cursor/guide-state screenshots; preserve the C255 68.82× mismatch as evidence.
 
 Baseline receipt: `.artifacts/sculptgl-symmetry-held-c255/d1139ea4-b7a5-495b-9d43-366864370cdf/result.json`, SHA-256
 `7f8708374eca1d1a2cf4822b937c51c903cf67068b738efcc0b4b86653ce9c0c`.
+
+The runner is `scripts/check-sculptgl-symmetry-radius-c256.mjs`. Invoke it as
+`node scripts/check-sculptgl-symmetry-radius-c256.mjs web/dist .tools/sculptgl-reference/host-mirror`
+only while holding the shared browser lane. Before that, `node --check` and
+`node scripts/check-sculptgl-symmetry-radius-c256.mjs --self-check` exercise
+syntax and independent projection/inversion without Chrome. Setting
+`C256_C255_RECEIPT` to the baseline receipt path additionally replays its
+captured OBrush matrix and radius. Each browser attempt writes its full JSON,
+ordinary pre/post `.obrush` saves, and screenshots to a unique ignored
+`.artifacts/sculptgl-symmetry-radius-c256/` directory, including failures.
