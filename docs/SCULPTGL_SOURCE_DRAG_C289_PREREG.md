@@ -51,6 +51,23 @@ If it does not, stop without a camera/product edit. Keep the raw setup receipt
 and exact diagnostic harness SHA before running it. Do not calibrate a fixed
 constant from one projection pair.
 
+The frozen diagnostic is
+`scripts/check-sculptgl-source-drag-c289-bounds.mjs` (SHA-256
+`77dbde73227c46443f4b4f7d289a79d339b2f6e7e1e5422fe83da1be7988303a`).
+It reuses the C288 ordinary UI fixture import, 1024×808 viewport, front
+orthographic selection and off-mesh fit gesture, but ends after a public
+Before Save. It records Source local/world/visible-scene bounds directly from
+the active mesh and camera, Source timer entries before and after fit, and
+OBRush's public camera/source-framing snapshot and active object. Each receipt
+records its exact reference, fixture, harness and served WASM/JS hashes. Run
+Source and OBrush as separately owned browser processes using `--side=source`
+and `--side=root`; never run them concurrently. The normal UI setup must
+publish one 1,089-vertex active object, 1024×808, finite bounds, a settled
+Source timer set, and matching public Before mesh identity. This is a causal
+diagnostic, not a numerical parity pass. A missing witness, changed build or
+fixture, unresolved fit discrepancy, or ambiguous timer/pivot state is a
+**no-go for camera product changes**. Preserve raw failed receipts.
+
 ## Independent normal-UI acceptance fixture
 
 Reuse independently authored CC0 33×33 curved-grid SGL fixture SHA-256
