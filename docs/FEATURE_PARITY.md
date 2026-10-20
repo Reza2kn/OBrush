@@ -313,6 +313,9 @@ failed.
 matched all 1,998,000 public face-bound words but saved only 0.392 ms median
 in the bounded native screen, far below its 20 ms admission target; it was
 not integrated or promoted to the browser gate.
+[MRP09's cell-reserve probe](SCULPTGL_MILLION_CELL_CAPACITY_MRP09_RESULT.md)
+found only 3.531 ms median inside 94,280 ordered-tree reserve calls, so its
+frozen early stop rejected a capacity-growth product change.
 [The sparse held-pointer Worker trial](SOURCE_WORKER_SPARSE_HELD_TRIAL.md) checks two
 ordinary viewport strokes, warm state, sparse GPU words, public Save/Undo/Redo
 and cancellation on a 40k sphere. It remains query-gated and unpromoted:
