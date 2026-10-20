@@ -32,7 +32,7 @@ python3 scripts/serve-web.py
 
 Open **http://127.0.0.1:8787**. The server binds only to localhost and serves `web/dist`, not the repository. A modern browser with WebGL2 enabled is required. The glue generator must match the version of `wasm-bindgen` in `Cargo.lock`; update the script/tool together when upgrading dependencies. The build is static and can be hosted as the contents of `web/dist`.
 
-Use **Open** to import a local `.obj`, `.ply`, `.stl` or `.obrush` file; **Save project** and the active-mesh export controls download files. Browser downloads are user-managed saves. Reloading/closing the page loses unsaved work; autosave and recovery are planned.
+Use **Open** to import a local `.obj`, `.ply`, `.stl` or `.obrush` file; **Save project** and the active-mesh export controls download files. Browser downloads are user-managed saves. The browser warns before leaving an edited document, including after requesting a download: check that the file reached your Downloads before choosing to leave. Reloading/closing still discards the in-memory document; autosave and recovery are planned. The [public-alpha save-safety check](docs/PUBLIC_ALPHA_SAFETY_2026_10_20.md) records the tested scope and native UI limitation.
 
 ## Working features
 
