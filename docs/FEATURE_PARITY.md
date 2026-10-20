@@ -22,6 +22,14 @@ measured image region changed 2,340 pixels versus 34 in pinned SculptGL.
 Five earlier failed setup receipts remain retained. This does not establish
 offset, brush, camera or mirror-guide parity.
 
+**Dense resolution-stroke R03:** [The paired browser report](SCULPTGL_RESOLUTION_DENSE_R03_RESULT.md)
+passed the frozen 24-changed-vertex minimum on an independent 18,242-vertex
+sphere at DPR 1/2 and render resolution 0.5/1/2×. Each app retained exact
+within-app post-stroke geometry and one history step across resolutions; OBrush
+added 850 adaptive vertices per stroke. The mirrored reference ratio used a
+GUI controller, and overlapping OBrush scene objects make screenshot quality
+uninterpretable. The full row remains open.
+
 **Current scoped additions, full rows open:** [C334](SCULPTGL_CAMERA_PICKED_PIVOT_C334_STATIC_RESULT.md)
 adds picked orbit pivots in Source framing. Authored-mesh normal-browser checks
 in OBrush and pinned SculptGL matched independent integer-pixel ray hits within

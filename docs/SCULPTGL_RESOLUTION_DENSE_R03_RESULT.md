@@ -1,0 +1,25 @@
+# Resolution-stroke R03: dense paired browser audit
+
+**The preregistered scoped geometry/history gate passed; `SGL-RENDER-RESOLUTION` remains Open.** One short held Draw move on an independent dense sphere changed at least 24 original vertices at every 0.5×, 1× and 2× resolution in both apps, at DPR 1 and 2. Within each app, changing render resolution produced identical pre-contact geometry, changed-vertex IDs and complete post-stroke positions. This tests one contact route, mesh and browser/GPU; it does not establish equal brush shapes or visual quality across apps.
+
+The frozen [R03 protocol](SCULPTGL_RESOLUTION_DENSE_R03_PREREG.md) used pinned SculptGL commit `8e45dafc0f7906e5238dfffc1a2df742bd25f29d`, bundle SHA-256 `79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600`, and mirror wrapper SHA-256 `a87cc1246a6bc39cebf81b78dcf6d6c5c6201ef72710dab7f177d1fe4acd11f0`. The official OBrush `web/dist` represented product revision `ff81bbf7e837ebf5c50c7462cf7b7e421b732450`, portable WASM SHA-256 `d61ca3e060dad45fd769afc6fa460f50d1d2ebd432ab121b7a86b09b5558e6d2`. The independent OBJ had 18,242 vertices, 36,480 outward triangles, 1,383,168 bytes and SHA-256 `492dd0cfa56544bab0e816efa68a4b48b522ddaf5c70cbb2f95b6c92d167ec2e`; regeneration reproduced its bytes.
+
+Fresh pages imported and selected the OBJ at each ratio. One trusted held move ran from `(645,520)` to `(657,520)` CSS pixels in the reference (Brush radius 50 px, intensity 0.5), and `(795,513)` to `(807,513)` in OBrush (Draw radius 0.18, strength 0.35). Each moved after 60 ms, held another 120 ms, then released. OBrush used the visible Source slider; the reference ratio used its mirrored GUI controller because its topbar lacked a reliable visible hit target. That setup limitation prevents a full ordinary-UI claim.
+
+| DPR | Reference backing at 1 / 0.5 / 2× | OBrush host backing | OBrush scene and observed GL target at 1 / 0.5 / 2× |
+| --- | --- | --- | --- |
+| 1 | 1290×960 / 645×480 / 2580×1920 | 1600×1000 | 1140×912 / 570×456 / 2280×1824 |
+| 2 | 1290×960 / 645×480 / 2580×1920 | 3200×2000 | 1140×912 / 570×456 / 2280×1824 |
+
+No recorded GL or scene error occurred. OBrush's cursor-start physical-pixel error was `[0,0]` in all six cases. For each reference ratio/DPR, the imported sphere stayed at 18,242 vertices, 51 original vertices changed (changed-ID SHA-256 `4fbd274d005db46d533c65792c8b8eb533b420b76281da9b32afb74c3ab95151`), total displacement was `0.1441844652516397` model units, maximum was `0.00725472265789771`, and history advanced 2→3. The 0.5× and 2× changed IDs and post-stroke coordinates matched 1× exactly (maximum coordinate delta `0`).
+
+For each OBrush ratio/DPR, adaptive Draw grew the selected sphere from 18,242 to 19,092 vertices (850 added). Of the original vertices, 111 changed (changed-ID SHA-256 `928c0381f48043cd642653012d2247625c34ff56498b2ecb024c186f9d64dcfd`), total displacement was `0.3307797281596446` model units and maximum was `0.009197600039858866`. Undo advanced 1→2, selection and the other object were preserved. The pre-contact public project SHA-256 was identical across all six cases, `d5e25ada64ab6d2928c17cacabe691e760a789df15d84bdab292a92483517361`. Across ratios, the complete post-stroke geometry, including all 850 new vertices, had maximum coordinate delta `0`. Different brush units, cameras, shaders and topology prohibit a cross-app shape comparison.
+
+| DPR | Local receipt directory, 15 screenshots each | `result.json` SHA-256 |
+| --- | --- | --- |
+| 2 | `.artifacts/sculptgl-resolution-dense-r03/344889a9-4948-486a-82ea-ff6c56a664a8/` | `d03eacf576c23e7d4db26cd5162440168342f6f378461d4edb3a2360c1f28068` |
+| 1 | `.artifacts/sculptgl-resolution-dense-r03/4a71c3a5-d6b0-4465-afeb-ae27f0e70ea5/` | `d5c7fafa4a3946112d0630cbc9101122de898a7dbce9a304956c66172061d182` |
+
+An earlier DPR-2 run **failed due to the harness** after recording all six strokes: its comparator assumed OBrush's after-array would have the same length as its before-array, so adaptive growth yielded `NaN` deltas. Preserve `.artifacts/sculptgl-resolution-dense-r03/dbeb63e0-bc99-4251-871b-2a59a2767948/result.json` (SHA-256 `650940758ca01dbbfe293048e2496d466f81a8f1d467739bb1e1d981acc80a96`, command exit 1). The comparator now checks before and after lengths separately and counts changed *original* vertices; static growth self-check passed. Corrected harness commit `c3811d6d8605b8a57180775a280feedc5a55223b`, script SHA-256 `e3c8f34664b14126947d9a3fa46e5bbd0e6c5e0e541f301fb4fb6fe6352340a7`; `node --check`, `--self-check` and both browser commands exited 0. No Cargo or package build was run because no product code changed.
+
+The screenshots cannot establish surface appearance: OBrush's imported sphere overlaps its visible startup sphere, which plausibly causes the observed speckling. That is an inference, not a diagnosed product defect. A separate preregistered clear-scene or single-mesh visual gate should assess edge quality. Long strokes, pressure, symmetry, masks, native GUI, browser zoom, performance, other meshes/tools, full visible reference UI and SculptGL/ZBrush parity remain open.
