@@ -1,5 +1,13 @@
 # OBrush feature parity contract
 
+**Scoped Source UV appearance correction:** [C299](SCULPTGL_UV_TINT_C299_RESULT.md)
+removes unintended default-clay multiplication from imported UV images while
+retaining the explicit vertex-color toggle. In the same normal OBrush browser
+fixture, the four quadrant colors moved substantially closer to pinned
+SculptGL; the largest channel difference at representative interior samples
+fell from 162 to 7. The cameras were not calibrated, so exact reference
+rendering parity remains open.
+
 **Scoped project image durability:** [C298](SCULPTGL_PROJECT_ASSETS_C298_RESULT.md)
 stores bounded custom MatCap and UV images in versioned `.obrush` JSON with
 undoable import, reset and project replacement. A normal browser Save/Open
@@ -12,9 +20,10 @@ with a shared native/browser Rust decoder. An authored two-face UV OBJ and
 asymmetric JPEG loaded in OBrush's normal browser with correct quadrant order,
 GPU texture allocation and malformed-image retention. [C297's normal-UI
 reference run](SCULPTGL_UV_REFERENCE_C297_RESULT.md) confirmed the same
-quadrant order after reselecting UV shader following OBJ import. The reference
-appearance is much brighter; calibrated matched pixels, project persistence,
-and the complete UV import row remain open.
+quadrant order after reselecting UV shader following OBJ import. C299 improved
+the Source color response; calibrated matched pixels and the complete UV
+import row remain open. C298 separately verifies OBrush project persistence
+for authored UV images.
 
 **Scoped custom MatCap import:** [C291](SCULPTGL_MATCAP_IMPORT_C291_RESULT.md)
 added bounded PNG/JPEG MatCap import to the ordinary viewport.

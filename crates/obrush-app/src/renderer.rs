@@ -5693,7 +5693,12 @@ vec4 sourceSurfaceColor() {
     if(u_shading_mode==0) return preservedStudioInLinearTarget(normal,tint);
     vec3 linear;
     if(u_shading_mode==2) linear=displayToLinear(normal*0.5+0.5);
-    else if(u_shading_mode==3&&u_has_uv_data) linear=displayToLinear(texture(u_uv_texture,v_uv).rgb)*displayToLinear(tint);
+    else if(u_shading_mode==3&&u_has_uv_data) {
+        // Imported UV images are display colors. The Source clay color must
+        // not darken them unless vertex-color tint is explicitly enabled.
+        linear=displayToLinear(texture(u_uv_texture,v_uv).rgb)
+            *(u_use_vertex_color?displayToLinear(v_color):vec3(1.0));
+    }
     else if(u_shading_mode==4) {
         vec3 z=normalize(v_preserved_eye),x=vec3(-z.z,0.0,z.x),y=cross(x,z);
         vec2 uv=vec2(0.5)+0.5*vec2(dot(normal,x),dot(normal,y));
