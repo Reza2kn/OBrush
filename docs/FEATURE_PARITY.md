@@ -95,7 +95,12 @@ RAF maximum and 100 ms queue-tail gates still fail. A
 [read-only release timeline](SOURCE_WORKER_RELEASE_TIMELINE_RESULT.md)
 observed the Worker still active with finish pending at release+102.4 ms;
 its checked main commit occupied 475.3 ms and overlapped a 481.5 ms app-frame
-gap. A narrow encode/decoder change cannot satisfy both current gates. A
+gap. A narrow encode/decoder change cannot satisfy both current gates.
+[The read-only warm-encoder profile](SOURCE_WORKER_WARM_ENCODE_SUBPHASE_RESULT.md)
+measured 99.0 ms in semantic fingerprinting, including 55.9 ms in its tree
+walk, during a fresh 100k finish. It clears the preregistered investigation
+threshold but has no same-state prediction of a 40 ms net fusion gain; no
+codec code was promoted and the frozen RAF, queue and GPU-normal checks fail. A
 [typed complete-scene witness design](SOURCE_WORKER_TYPED_SCENE_WITNESS_DESIGN.md)
 sets a proof gate for the larger witness stage. [The read-only phase
 profile](SOURCE_WORKER_TYPED_SCENE_WITNESS_GATE_RESULT.md) measured 251.1 ms
