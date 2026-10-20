@@ -131,6 +131,13 @@ million-vertex run; its product code was rejected and the failed receipt kept.
 also passed exact public-file and shape checks but worsened the ordinary
 browser upload callback from 10.328 to 13.242 ms and failed all four
 responsiveness gates. Its renderer code was rejected and its raw receipt kept.
+[The MRP02 certified-hover trial](SCULPTGL_MILLION_CERTIFIED_HOVER_MRP02_RESULT.md)
+found an exact duplicate cursor pick costing 22.9 ms per active viewport
+callback. Its candidate reduced RAF P95 from 66.7 to 33.4 ms and app CPU P95
+from 62.4 to 35.1 ms on the frozen million-vertex browser test, but still
+failed all four global responsiveness gates. The candidate code was rejected,
+the 17/17 file/history/shape audit passed, and an independent active-GPU
+word oracle remains open.
 [The sparse held-pointer Worker trial](SOURCE_WORKER_SPARSE_HELD_TRIAL.md) checks two
 ordinary viewport strokes, warm state, sparse GPU words, public Save/Undo/Redo
 and cancellation on a 40k sphere. It remains query-gated and unpromoted:
