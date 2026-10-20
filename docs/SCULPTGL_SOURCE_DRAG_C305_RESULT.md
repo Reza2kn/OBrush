@@ -2,7 +2,7 @@
 
 **Outcome: the frozen C305 normal-browser off/on matrix passed its scoped
 SculptGL comparison.** The visible Source Drag mirror checkbox and shared-core
-mirrored stroke candidate remain isolated pending root integration. This
+mirrored stroke candidate were merged after the isolated comparison. This
 evidence does not close the full `SGL-BRUSH-DRAG`, SculptGL or ZBrush parity
 rows. C300/C301/C303 failed symmetry-on setup receipts and C304's one-pixel
 viewport setup failure remain unchanged and are reported separately.
