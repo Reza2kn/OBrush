@@ -79,7 +79,7 @@ for (const [side, run] of [['source',source],['root',root]]) {
       burstDelivered:delivered.length === 2 && delivered[0].frame === delivered[1].frame &&
         delivered.every((event,index) => Math.abs(event.pressure-row.burstPressures[index]) <= 1e-6),
       usefulPanmoves:side === 'source' ? row.hammer_events.filter(e => e.type === 'panmove' && e.pointerType === 'pen').length : null,
-      rootAppliedDabs:side === 'root' ? [row.state_after_first_useful_move?.applied_dabs,row.state_after_burst?.applied_dabs] : null,
+      rootAppliedDabs:side === 'root' ? [row.state_after_first_useful_move?.applied_dabs,row.state_after_burst?.applied_dabs,row.state_after_release?.applied_dabs] : null,
       _before:byId(before), _after:byId(after),
     };
   }
@@ -103,6 +103,7 @@ if (root.overflow) {
     event.type === 'pointermove' && event.pointerType === 'pen' && event.trusted && event.buttons === 1).length;
   overflow.reportedDrops = root.overflow.before_release_metrics?.browser_pen_moves_dropped ?? null;
   overflow.cancelledWholeStroke = before.equals(after);
+  overflow.historyExact = JSON.stringify(root.overflow.before_history) === JSON.stringify(root.overflow.after_history);
 }
 const checks = {
   allTrustedSameFrameBurst:Object.values(records).every(side => Object.values(side).every(row => row.burstDelivered)),
@@ -116,9 +117,11 @@ const checks = {
   sourceFactorZeroIgnoresPressure:comparisons.source.factorZeroTraceEffect.changedOriginalVertices === 0,
   rootFactorZeroIgnoresPressure:comparisons.root.factorZeroTraceEffect.changedOriginalVertices === 0,
   sourceAdmittedAtLeastThreeUsefulPanmoves:Object.values(records.source).every(row => row.usefulPanmoves >= 3),
-  rootBurstAddedAtLeastTwoDabs:Object.values(records.root).every(row => row.rootAppliedDabs?.[1] >= row.rootAppliedDabs?.[0] + 2),
+  rootBurstAddedExactlyTwoDabsWithoutReleaseDuplicate:Object.values(records.root).every(row =>
+    row.rootAppliedDabs?.[1] === row.rootAppliedDabs?.[0] + 2 && row.rootAppliedDabs?.[2] === row.rootAppliedDabs?.[1]),
   overflowBoundedAndCancelled:overflow.beforeHashExact && overflow.afterHashExact &&
-    overflow.deliveredHeldPenMoves >= 257 && overflow.reportedDrops >= 1 && overflow.cancelledWholeStroke,
+    overflow.deliveredHeldPenMoves >= 257 && overflow.reportedDrops >= 1 &&
+    overflow.cancelledWholeStroke && overflow.historyExact,
 };
 const result = {
   status:Object.values(checks).every(Boolean) ? 'passed scoped C302 paired pressure-burst gates' : 'FAILED scoped C302 paired pressure-burst gates',

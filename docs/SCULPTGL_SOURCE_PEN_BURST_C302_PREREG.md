@@ -38,14 +38,17 @@ exact before public files, first useful point, pressure and accepted dab count
 between low→high and near-high, with at least one changed original vertex and
 no unexpected color/mask/topology changes. Each case has exact own-format
 Before→After→Undo→Redo, active GPU positions matching the saved mesh and a
-quiet release tail (32 app frames). The reference side must show two admitted
+quiet release tail (32 app frames). The OBrush accepted-dab count must rise
+by exactly two during the burst and stay unchanged through release and the
+final egui endpoint sample. The reference side must show two admitted
 useful moves and a corresponding non-identical public geometry pair. Report
 changed ID sets, maximum per-component differences and all full-file hashes;
 do not assert matched Source/OBRush final geometry from this batching gate.
 
 Separate negative controls: factor intensity 0 makes each app's two pressure
 traces match its own final file exactly; a 257-sample burst must report a
-bounded overflow, split or cancel the path, and preserve history rather than
+bounded overflow, split or cancel the path, and preserve exact before public
+bytes and Undo/Redo depths on cancellation rather than
 silently merge all samples into one wrong-pressure dab. The overflow run may
 be scoped to OBrush. If the reference does not admit both useful moves,
 record the failed paired gate and keep the OBrush same-frame diagnostic as a

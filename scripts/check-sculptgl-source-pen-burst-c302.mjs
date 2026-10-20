@@ -114,6 +114,7 @@ try {
     row.state_after_burst=side==='source'?await page.evaluate('({action:window.__sculptglReferenceInstance._action,lastNbPointers:window.__sculptglReferenceInstance._lastNbPointers})'):await page.evaluate('window.obrushSculptMetrics()');
     await pen('mouseReleased',x+48,y,item.pointerType,0,false); pressed=false;
     for(let i=0;i<32;i++)await page.raf();
+    row.state_after_release=side==='root'?await page.evaluate('window.obrushSculptMetrics()'):null;
     row.dom_events=await page.evaluate(`window.__c302.rows.slice(${offset})`);
     if(side==='source')row.hammer_events=await page.evaluate(`window.__c236Hammer.slice(${hammerOffset})`);
     if (!row.dom_events.some(e=>e.type==='pointerdown'&&e.pointerType===item.pointerType&&e.trusted&&Math.abs(e.pressure-item.pressPressure)<1e-6)) throw Error('Trusted declared pointer pressure missing '+item.name);
@@ -130,6 +131,7 @@ try {
     await page.rootNumber('source_geometry.pressure.intensity.value',1);
     await page.closeMenus();
     row.before=(await page.save('overflow-before')).record;
+    row.before_history=(await page.state()).history;
     const v=await page.viewport(),x=(v.screen[0]+v.screen[2])/2+80,y=(v.screen[1]+v.screen[3])/2;
     const offset=await page.evaluate('window.__c302.rows.length');
     await pen('mouseMoved',x+12,y,'pen',.25,false);
@@ -149,6 +151,7 @@ try {
     row.dom_events=await page.evaluate(`window.__c302.rows.slice(${offset})`);
     row.after=(await page.save('overflow-after')).record;
     row.after_metrics=await page.evaluate('window.obrushSculptMetrics()');
+    row.after_history=(await page.state()).history;
     row.status='complete bounded overflow and public after-save capture';
   }
   result.status='complete four-case same-frame Source pen capture; independent public-file audit pending';
