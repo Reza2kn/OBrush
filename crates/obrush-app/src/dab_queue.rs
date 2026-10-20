@@ -608,6 +608,16 @@ impl DabQueue {
         self.work.is_empty()
     }
 
+    /// The document owner rolls its open snapshot back separately. Drop every
+    /// pending sample and marker from the cancelled active gesture first.
+    pub fn discard_active_stroke(&mut self) {
+        self.coalesced = self.coalesced.saturating_add(self.pending as u64);
+        self.work.clear();
+        self.pending = 0;
+        self.draw_proxy = None;
+        self.drag = None;
+    }
+
     /// A dab is atomic; the budget is checked between dabs. History markers
     /// remain ordered even when a mouse release precedes completion of its work.
     pub fn process(
@@ -681,6 +691,39 @@ impl DabQueue {
 mod tests {
     use super::*;
     use obrush_core::Mesh;
+
+    #[test]
+    fn discard_clears_pending_samples_without_committing_an_open_stroke() {
+        let mut document = Document::new(Mesh::sphere(1));
+        let before = document.to_json().unwrap();
+        let history = document.history_depths();
+        let mut queue = DabQueue::default();
+        queue.begin();
+        queue.dab(
+            Ray {
+                origin: Vec3::new(0.0, 0.0, 3.0),
+                direction: -Vec3::Z,
+            },
+            BrushSettings::default(),
+            Vec3::ZERO,
+        );
+        let applied = queue.process(&mut document, 1, None);
+        assert!(applied.changed);
+        queue.dab(
+            Ray {
+                origin: Vec3::new(0.0, 0.0, 3.0),
+                direction: -Vec3::Z,
+            },
+            BrushSettings::default(),
+            Vec3::ZERO,
+        );
+        queue.discard_active_stroke();
+        assert!(queue.is_empty());
+        assert_eq!(queue.metrics()["pending_dabs"], 0);
+        assert!(document.cancel_stroke());
+        assert_eq!(document.to_json().unwrap(), before);
+        assert_eq!(document.history_depths(), history);
+    }
 
     #[test]
     fn timing_observes_processed_dabs_and_release_without_changing_history() {

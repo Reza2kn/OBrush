@@ -533,6 +533,17 @@ fn browser_pen_source_geometry_stroke(stroke: &ActiveStroke, source_locked: bool
         && !source_locked
 }
 
+fn browser_pen_source_paint_stroke(stroke: &ActiveStroke, source_locked: bool) -> bool {
+    stroke.queued
+        && stroke.kind == BrushKind::Paint
+        && stroke
+            .source_paint
+            .as_ref()
+            .is_some_and(|session| session.lock().is_ok_and(|source| !source.is_locked()))
+        && stroke.continuous.is_none()
+        && !source_locked
+}
+
 fn camera_ray_at(camera: &Camera, screen: Pos2, rect: egui::Rect) -> Ray {
     let ndc = glam::Vec2::new(
         2.0 * (screen.x - rect.left()) / rect.width() - 1.0,
@@ -1903,6 +1914,97 @@ impl OBrushApp {
             source_raw: Some((pressure, [x, y])),
         });
         self.egui_ctx.request_repaint();
+    }
+
+    /// Preserve each ordinary Source Paint pen move before egui folds several
+    /// browser events into one frame. Locked and Continuous Paint keep their
+    /// established input paths.
+    pub fn queue_browser_source_paint_pen_move(&mut self, pressure: f64, x: f64, y: f64) {
+        if !self.stroke.as_ref().is_some_and(|stroke| {
+            browser_pen_source_paint_stroke(
+                stroke,
+                self.preferences.tool(BrushKind::Paint).lock_position,
+            )
+        }) || !pressure.is_finite()
+            || !(0.0..=1.0).contains(&pressure)
+            || !x.is_finite()
+            || !y.is_finite()
+            || x.abs() > 100_000.0
+            || y.abs() > 100_000.0
+        {
+            return;
+        }
+        self.browser_pen_samples.push(BrowserPenMove {
+            pos: Pos2::new(x as f32, y as f32),
+            pressure: pressure as f32,
+            source_raw: Some((pressure, [x, y])),
+        });
+        self.egui_ctx.request_repaint();
+    }
+
+    fn sample_source_paint_pen_move(
+        &mut self,
+        session: crate::source_paint_host::SharedSourcePaint,
+        pos: Pos2,
+        rect: egui::Rect,
+        pressure: f64,
+        screen: [f64; 2],
+    ) {
+        let mut raw = crate::source_paint_host::RawPaintInput::default();
+        raw.receive(pressure, true, false, true, Some(screen));
+        let prepared = crate::source_paint_host::capture_at_zoom(
+            &self.camera,
+            pos,
+            rect,
+            &raw,
+            self.egui_ctx.zoom_factor(),
+        )
+        .and_then(|input| {
+            session
+                .lock()
+                .map_err(|_| "Source Paint session lock failed".to_string())?
+                .path_samples(input)
+        });
+        match prepared {
+            Ok(samples) => {
+                for input in samples {
+                    self.pending_dabs.source_paint_dab(session.clone(), input);
+                }
+            }
+            Err(error) => {
+                if let Ok(mut source) = session.lock() {
+                    source.failed = Some(error.clone());
+                }
+                self.stop_continuous(StopReason::Command);
+                self.finish_stroke_deferred();
+                self.stroke_rejected = true;
+                self.message = format!("Source Paint path rejected: {error}");
+            }
+        }
+    }
+
+    fn cancel_overflowed_source_paint_pen_stroke(&mut self) {
+        let Some(stroke) = self.stroke.take() else {
+            return;
+        };
+        self.browser_pen_samples.clear();
+        self.pending_dabs.discard_active_stroke();
+        if let Some(session) = stroke.source_paint.as_ref()
+            && let Ok(mut source) = session.lock()
+        {
+            source.failed = Some("Source Paint pen sample limit exceeded".into());
+            source.finish_alpha(true);
+        }
+        self.document.cancel_stroke();
+        self.changed();
+        if let Some((dirty, painted)) = stroke.source_paint_display_before {
+            self.dirty = dirty;
+            self.viewport_style.use_vertex_color = painted;
+        }
+        self.unprocessed_release = None;
+        self.stroke_rejected = true;
+        self.message =
+            "Source Paint pen samples exceeded the per-frame limit; stroke cancelled.".into();
     }
 
     fn current_contact_input(&self) -> ContactInput {
@@ -10519,6 +10621,10 @@ impl OBrushApp {
                         stroke,
                         self.preferences.tool(stroke.kind).lock_position,
                     )
+                    || browser_pen_source_paint_stroke(
+                        stroke,
+                        self.preferences.tool(BrushKind::Paint).lock_position,
+                    )
             }) && self.last_input_pen
                 && !modifiers.shift
                 && !modifiers.ctrl
@@ -10527,6 +10633,15 @@ impl OBrushApp {
             if replay {
                 let (samples, overflowed) = self.browser_pen_samples.drain();
                 if overflowed {
+                    if self.stroke.as_ref().is_some_and(|stroke| {
+                        browser_pen_source_paint_stroke(
+                            stroke,
+                            self.preferences.tool(BrushKind::Paint).lock_position,
+                        )
+                    }) {
+                        self.cancel_overflowed_source_paint_pen_stroke();
+                        return;
+                    }
                     if let Some(session) = self
                         .stroke
                         .as_ref()
@@ -10560,6 +10675,14 @@ impl OBrushApp {
                                 .and_then(|stroke| stroke.source_geometry.clone())
                             {
                                 self.sample_source_geometry_pen_move(
+                                    session, sample.pos, rect, pressure, screen,
+                                );
+                            } else if let Some(session) = self
+                                .stroke
+                                .as_ref()
+                                .and_then(|stroke| stroke.source_paint.clone())
+                            {
+                                self.sample_source_paint_pen_move(
                                     session, sample.pos, rect, pressure, screen,
                                 );
                             }

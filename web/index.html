@@ -164,6 +164,7 @@
             if(Math.abs(bounds.width-canvas.clientWidth)<1 && Math.abs(bounds.height-canvas.clientHeight)<1){
               handle.queue_browser_pen_move(event.pressure,event.clientX-bounds.left,event.clientY-bounds.top);
               handle.queue_browser_source_pen_move(event.pressure,event.clientX-bounds.left,event.clientY-bounds.top);
+              handle.queue_browser_source_paint_pen_move(event.pressure,event.clientX-bounds.left,event.clientY-bounds.top);
             }
           }
         }else if(event.pointerType==='mouse')handle.set_input_pressure(1,false,false);

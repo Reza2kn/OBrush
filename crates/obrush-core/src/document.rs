@@ -522,6 +522,18 @@ impl Document {
         }
     }
 
+    /// Discard an unfinished ordinary stroke without changing Undo or Redo.
+    /// Hosts must discard their queued dabs before calling this; otherwise a
+    /// later queued sample could paint the restored surface again.
+    pub fn cancel_stroke(&mut self) -> bool {
+        let Some(previous) = self.stroke_start.take() else {
+            return false;
+        };
+        self.exchange_state(previous);
+        self.layer_error = None;
+        true
+    }
+
     /// Empty strokes do not consume history or discard an available redo.
     pub fn end_stroke(&mut self) {
         if self.prepare_retained_source_paint_end().is_err() {
@@ -3972,7 +3984,8 @@ impl Document {
         {
             return Err(format!(
                 "Whole-object mask conversion would lose {} f32 words across {} levels on roundtrip; inspect the precision report before explicitly allowing loss",
-                report.roundtrip_changed_words, report.levels.len()
+                report.roundtrip_changed_words,
+                report.levels.len()
             ));
         }
 
@@ -5392,6 +5405,24 @@ pub(crate) fn mesh_channels_equal_bits(a: &Mesh, b: &Mesh) -> bool {
 mod memory_tests {
     use super::*;
     use std::io::Write;
+
+    #[test]
+    fn cancelled_paint_stroke_restores_project_and_existing_redo() {
+        let mut doc = Document::new(Mesh::sphere(1));
+        doc.add_subtool(Mesh::sphere(0), "extra").unwrap();
+        assert!(doc.undo());
+        let before = doc.to_json().unwrap();
+        let history = doc.history_depths();
+        assert!(history.1 > 0);
+        doc.begin_material_paint_stroke();
+        doc.require_active_mesh_mut().unwrap().colors[0] = [0.125, 0.75, 0.375];
+        assert_ne!(doc.to_json().unwrap(), before);
+        assert!(doc.cancel_stroke());
+        assert_eq!(doc.to_json().unwrap(), before);
+        assert_eq!(doc.history_depths(), history);
+        assert!(!doc.cancel_stroke());
+        assert!(doc.redo());
+    }
 
     #[test]
     fn scene_stroke_end_reuses_one_active_mesh_validation_and_keeps_exact_history() {
