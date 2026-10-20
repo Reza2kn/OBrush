@@ -21,11 +21,14 @@ active GPU display normals matched exactly through held, Undo and Redo, and
 the raised and mask controls were exercised. Other settings, meshes and long
 sessions remain open.
 
-**DPR resolution remains open:** [C307](SCULPTGL_RESOLUTION_DPR_C307_RESULT.md)
-falsified a proposed browser scene-scaling correction: at DPR 2 the existing
-Source scene already targeted its CSS-pixel dimensions. The candidate was
-rejected. DPR 2 Save/round-trip and brush-circle checks did not complete, and
-whole-canvas high-DPI behavior still differs from the reference.
+**Scoped high-DPI browser input:** [C326](SCULPTGL_DPR_INPUT_C326_RESULT.md)
+passed a frozen DPR 1/2 normal-browser gate on an independent fixture. Canvas
+backing, scene target, Save and resolution round-trip, visible brush ring, and
+one mouse and pressure-0.5 pen Draw contact stayed aligned across both DPRs;
+the official main-branch web build has the same WASM hash. Earlier
+[C307](SCULPTGL_RESOLUTION_DPR_C307_RESULT.md) falsified a scene-only change,
+and its failed receipt remains. Other browsers, native input, multiple strokes
+and full resolution-family parity remain open.
 
 **Scoped Source UV appearance correction:** [C299](SCULPTGL_UV_TINT_C299_RESULT.md)
 removes unintended default-clay multiplication from imported UV images while
@@ -337,8 +340,9 @@ open; the 309 active SculptGL inventory gates are not complete.
 adds a 0.5–2× Source resolution slider with bounded scene rendering. Two
 independent fixtures show measured pixel-target changes, exact unchanged
 OBRush project saves/history and no WebGL errors at 0.5/1/2×. SculptGL scales
-its whole canvas backing while OBrush scales the scene target; DPR, native GUI,
-brush input and full resolution-family parity remain open.
+its whole canvas backing while OBrush scales the scene target; the later C326
+DPR/input fixture passes, while native GUI and full resolution-family parity
+remain open.
 
 **C245 same-frame browser pen samples:** [The normal-browser diagnostic](SCULPTGL_PEN_BURST_C245.md)
 shows that two trusted held pen moves arriving before one app frame previously
