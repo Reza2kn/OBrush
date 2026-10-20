@@ -1477,6 +1477,9 @@ impl OBrushApp {
             .and_then(|renderer| renderer.scene_error().map(str::to_owned));
         let continuous = self.continuous_clock.report();
         let source_paint = serde_json::json!({"mode":format!("{:?}",self.source_paint_preferences.mode),
+            "write_channels":{"rgb":self.source_paint_preferences.options.write_rgb,
+                "roughness":self.source_paint_preferences.options.write_roughness,
+                "metallic":self.source_paint_preferences.options.write_metallic},
             "scope":"active-part ordinary/timer; U; UIzoom1; alphaNone; staticLock preview/timer; no mirror/inverse/rotation; camera/DPR/pressure parity unverified",
             "camera_policy":"OBrush precise view64 with captured projection32",
             "raw_pressure":self.source_paint_raw.sample().ok().map(|raw|serde_json::json!({"value":raw.pressure,"pen":raw.pen,"browser_number":raw.browser_number,"absent":raw.absent})),
