@@ -40,3 +40,18 @@ the native command passed on rerun. `cargo fmt --all -- --check`, strict
 `769f8aa9544e7e5c1ea39c23e9e92184743734d5a4d02cb3d8bad3cb0b90bb6a`.
 The normal browser protocol and macOS package gate are still pending; this is
 not a completed camera parity result.
+
+The first owned OBrush normal-browser run imported the authored four-vertex
+OBJ through the visible file route at 1024×768 and passed the stationary
+perspective Pivot-on/off cases. The second run also passed the 40 CSS-pixel
+orbit and orthographic Pivot-on checks. Its retained result is
+`.artifacts/camera-picked-pivot-c334-root-ui/a855031e-eca4-4ce9-bdd5-12d1dc194c38/result.json`.
+Perspective held view deltas were `1.67e-16` (on) and `0` (off), and the
+orthographic projected point shifted `0` CSS pixels on press. The 40-pixel
+drag changed view components by `0.319`, `0.311`, and `0.307` respectively.
+These are OBrush-only observations, not paired equivalence.
+
+The first pinned Source browser attempt failed because the visible checkbox
+label is `Picking pivot`, not the presumed `Pivot`. The second failed its
+frozen viewport gate: after using the normal camera menu the canvas measured
+1024×808, not 1024×768. Neither failed run is counted as a parity result.
