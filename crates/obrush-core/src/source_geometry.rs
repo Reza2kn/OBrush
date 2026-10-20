@@ -24,6 +24,10 @@ mod source_flatten;
 #[path = "source_crease.rs"]
 mod source_crease;
 
+#[path = "source_drag.rs"]
+mod source_drag;
+pub use source_drag::{project_center as project_source_drag_center, ProjectedSourceDragCenter};
+
 #[path = "source_geometry_warm.rs"]
 mod warm;
 
@@ -72,6 +76,7 @@ pub enum SourceGeometryTool {
     Smooth { tangent: bool },
     Flatten,
     Crease,
+    Drag,
 }
 
 #[cfg(test)]
@@ -160,6 +165,16 @@ impl SourceGeometryOptions {
             ..Self::default()
         }
     }
+    pub fn drag() -> Self {
+        Self {
+            tool: SourceGeometryTool::Drag,
+            intensity: 1.0,
+            intensity_factor: 0.,
+            clay_order: SourceClayOrderPolicy::OrderedStaticOctree,
+            prevent_folds: false,
+            ..Self::default()
+        }
+    }
     pub fn validate(self) -> Result<(), SourceGeometryError> {
         if [self.intensity, self.intensity_factor]
             .iter()
@@ -184,6 +199,16 @@ impl SourceGeometryOptions {
             if self.clay_order != SourceClayOrderPolicy::OrderedStaticOctree {
                 return Err(SourceGeometryError::UnsupportedSmoothOrder);
             }
+        }
+        if self.tool == SourceGeometryTool::Drag
+            && (self.negative
+                || self.culling
+                || self.intensity != 1.
+                || self.intensity_factor != 0.
+                || self.clay_order != SourceClayOrderPolicy::OrderedStaticOctree
+                || self.prevent_folds)
+        {
+            return Err(SourceGeometryError::UnsupportedDomain);
         }
         Ok(())
     }
@@ -893,6 +918,9 @@ pub struct SourceGeometryStroke {
     /// Whether the current Source Lock preview changed geometry. Used only to
     /// request a full redraw when replacing it, without scanning the mesh.
     pub(crate) locked_preview_changed: bool,
+    /// One admitted Source Drag sample's projected live displacement.
+    /// Ordinary brushes never read this field.
+    drag_direction: Option<[f64; 3]>,
 }
 impl SourceGeometryStroke {
     pub fn new(options: SourceGeometryOptions) -> Result<Self, SourceGeometryError> {
@@ -908,6 +936,7 @@ impl SourceGeometryStroke {
             visited_leaves: Vec::new(),
             history_selected: None,
             locked_preview_changed: false,
+            drag_direction: None,
         })
     }
     /// Read-only transient globally unique claim; never project data.
@@ -916,6 +945,17 @@ impl SourceGeometryStroke {
     }
     pub fn options(&self) -> SourceGeometryOptions {
         self.options
+    }
+    pub fn set_drag_direction(&mut self, direction: [f64; 3]) -> Result<(), SourceGeometryError> {
+        if self.options.tool != SourceGeometryTool::Drag
+            || direction
+                .iter()
+                .any(|v| !v.is_finite() || v.abs() > 1_000_000.)
+        {
+            return Err(SourceGeometryError::InvalidInput);
+        }
+        self.drag_direction = Some(direction);
+        Ok(())
     }
     pub fn proxy_positions(&self) -> &[Vec3] {
         &self.proxy
@@ -1116,6 +1156,9 @@ impl SourceGeometryStroke {
     ) -> Result<(SourceGeometryReport, Option<SourceGeometryNormalState>), SourceGeometryError>
     {
         let original_generation = state.generation;
+        if self.options.tool == SourceGeometryTool::Drag && self.drag_direction.is_none() {
+            return Err(SourceGeometryError::InvalidInput);
+        }
         let original_rebuilds = state.ordered_tree.rebuilds();
         if self.history_selected.is_some() && prepared.is_none() {
             return Err(SourceGeometryError::UnsupportedDomain);
@@ -1363,7 +1406,8 @@ impl SourceGeometryStroke {
                 SourceGeometryTool::Inflate | SourceGeometryTool::Crease => true,
                 SourceGeometryTool::Pinch
                 | SourceGeometryTool::Smooth { .. }
-                | SourceGeometryTool::Flatten => false,
+                | SourceGeometryTool::Flatten
+                | SourceGeometryTool::Drag => false,
             };
             let proxy_plan = FirstTouchProxyPlan::prepare(self, mesh, &selected, use_proxy)?;
             report.proxy_captured_vertices = proxy_plan.captured_count();
@@ -1540,6 +1584,18 @@ impl SourceGeometryStroke {
                             weight *= deformation * u;
                         }
                         std::array::from_fn(|c| (pass.center[c] - live[c]) * weight)
+                    } else if self.options.tool == SourceGeometryTool::Drag {
+                        let direction = self
+                            .drag_direction
+                            .ok_or(SourceGeometryError::InvalidInput)?;
+                        let alpha_weight = if let Some(alpha) = alpha {
+                            let p = prepared.ok_or(SourceGeometryError::InvalidInput)?;
+                            p.track.sample(alpha, pass, p.mirrored, old[v])?
+                        } else {
+                            1.
+                        };
+                        weight *= u * alpha_weight;
+                        direction.map(|component| component * weight)
                     } else {
                         if let Some(alpha) = alpha {
                             let p = prepared.ok_or(SourceGeometryError::InvalidInput)?;
@@ -2363,6 +2419,7 @@ impl SourceGeometryStroke {
             visited_leaves: copied(&self.visited_leaves)?,
             history_selected: self.history_selected.clone(),
             locked_preview_changed: self.locked_preview_changed,
+            drag_direction: self.drag_direction,
         })
     }
     fn staged_bytes(&self) -> usize {

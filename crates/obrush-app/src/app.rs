@@ -1066,7 +1066,7 @@ pub struct OBrushApp {
     source_worker_cold: crate::source_geometry_worker_host::ColdSourceWorkerBridge,
     source_worker_held: Option<source_worker_held::HeldSourceWorker>,
     source_geometry_alpha_tracks: crate::source_geometry_host::SharedSourceGeometryAlphaTracks,
-    source_geometry_editor_drafts: [source_geometry_ui::GeometryEditorDrafts; 7],
+    source_geometry_editor_drafts: [source_geometry_ui::GeometryEditorDrafts; 8],
     source_geometry_controls_hit_rect: ui_hit_rect::HitRectDiagnostics,
     last_source_geometry_report: Option<serde_json::Value>,
     source_paint_editor_drafts: crate::source_paint_ui::SourcePaintEditorDrafts,

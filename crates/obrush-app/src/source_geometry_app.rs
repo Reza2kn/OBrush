@@ -14,7 +14,7 @@ pub(super) fn smooth_tangent_control(ui: &mut egui::Ui, tangent: &mut bool) -> e
 }
 
 pub(super) struct GeometryPreferenceStore {
-    rows: [SourceGeometryPreferences; 7],
+    rows: [SourceGeometryPreferences; 8],
 }
 impl Default for GeometryPreferenceStore {
     fn default() -> Self {
@@ -34,6 +34,7 @@ impl Default for GeometryPreferenceStore {
                 SourceGeometryPreferences::smooth(),
                 SourceGeometryPreferences::flatten(),
                 SourceGeometryPreferences::crease(),
+                SourceGeometryPreferences::drag(),
             ],
         }
     }
@@ -48,6 +49,7 @@ impl GeometryPreferenceStore {
             BrushKind::Smooth => Some(4),
             BrushKind::Flatten => Some(5),
             BrushKind::Crease => Some(6),
+            BrushKind::Drag => Some(7),
             _ => None,
         }
     }
@@ -189,6 +191,9 @@ impl OBrushApp {
         if self.egui_ctx.zoom_factor() != 1. {
             return Err("Source ordinary currently requires UI scale100%.".into());
         }
+        if kind == BrushKind::Drag && self.preferences.global().continuous {
+            return Err("Turn off Continuous before Source Drag.".into());
+        }
         let settings = self
             .source_geometry_settings(kind)
             .map_err(|e| e.to_string())?;
@@ -324,15 +329,17 @@ impl OBrushApp {
         if let Some(next) = offset.candidate {
             candidate = next;
         }
-        let response = ui
-            .checkbox(
-                &mut candidate.options.prevent_folds,
-                crate::ui_text::caption(crate::ui_text::CaptionKey::PreventFolds),
-            )
-            .on_hover_text(crate::ui_text::caption(
-                crate::ui_text::CaptionKey::PreventFoldsHelp,
-            ));
-        self.track_source_geometry_control("source_geometry.prevent_folds", &response);
+        if candidate.options.tool != SourceGeometryTool::Drag {
+            let response = ui
+                .checkbox(
+                    &mut candidate.options.prevent_folds,
+                    crate::ui_text::caption(crate::ui_text::CaptionKey::PreventFolds),
+                )
+                .on_hover_text(crate::ui_text::caption(
+                    crate::ui_text::CaptionKey::PreventFoldsHelp,
+                ));
+            self.track_source_geometry_control("source_geometry.prevent_folds", &response);
+        }
         if let SourceGeometryTool::Smooth { ref mut tangent } = candidate.options.tool {
             let r = smooth_tangent_control(ui, tangent);
             self.track_source_geometry_control("source_geometry.smooth.tangent", &r);
@@ -341,7 +348,7 @@ impl OBrushApp {
                 crate::ui_text::caption(crate::ui_text::CaptionKey::CB67CE0968F72),
             );
             self.track_source_geometry_control("source_geometry.culling", &r);
-        } else {
+        } else if candidate.options.tool != SourceGeometryTool::Drag {
             if !matches!(
                 candidate.options.tool,
                 SourceGeometryTool::Flatten | SourceGeometryTool::Crease
@@ -373,6 +380,9 @@ impl OBrushApp {
                 self.track_source_geometry_control(key, &r);
             }
         }
+        if candidate.options.tool == SourceGeometryTool::Drag {
+            ui.label("Source Drag currently supports Alpha None and symmetry off; it moves live vertices under a traveling brush center.");
+        }
         if let SourceGeometryTool::Brush {
             ref mut clay,
             ref mut accumulate,
@@ -396,7 +406,9 @@ impl OBrushApp {
             );
             self.track_source_geometry_control("source_geometry.lock_position", &locked);
         }
-        if current.mode == SourceGeometryMode::SourceOrdinary {
+        if current.mode == SourceGeometryMode::SourceOrdinary
+            && candidate.options.tool != SourceGeometryTool::Drag
+        {
             self.source_geometry_alpha_panel(ui);
         }
         let mut continuous = self.preferences.global().continuous;
@@ -440,6 +452,10 @@ impl OBrushApp {
         let Some(prefs) = self.effective_source_geometry_preferences(kind) else {
             return;
         };
+        if kind == BrushKind::Drag && self.preferences.global().continuous {
+            self.message = "Turn off Continuous before Source Drag.".into();
+            return;
+        }
         if self.preferences.tool(kind).lock_position && self.preferences.global().continuous {
             self.message = "Turn off Continuous before Source Brush Lock.".into();
             return;

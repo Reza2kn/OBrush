@@ -103,6 +103,9 @@ pub(crate) fn render(
         if draft.word.is_none() || (!draft.focused && draft.word != Some(value.to_bits())) {
             draft.reset(value);
         }
+        if current.options.tool == obrush_core::SourceGeometryTool::Drag && matches!(i, 1 | 3) {
+            continue;
+        }
         let label = match i {
             0 => crate::ui_text::caption(crate::ui_text::CaptionKey::CD2E97146E61C),
             1 => crate::ui_text::caption(crate::ui_text::CaptionKey::CA3BA7BB8E3A4),

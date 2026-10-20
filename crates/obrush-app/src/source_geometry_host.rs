@@ -78,6 +78,13 @@ impl SourceGeometryPreferences {
             ..Self::default()
         }
     }
+    pub fn drag() -> Self {
+        Self {
+            radius: 150.,
+            options: SourceGeometryOptions::drag(),
+            ..Self::default()
+        }
+    }
     pub fn validate(self) -> Result<(), SourceGeometryError> {
         self.options.validate()?;
         if !self.radius.is_finite()
@@ -388,6 +395,7 @@ pub struct SourceGeometrySession {
     locked_press: Option<SourceGeometryInput>,
     locked_press_tracks: Option<obrush_core::SourceGeometryAlphaTracks>,
     last_locked_preview: Option<[f64; 3]>,
+    drag_pass: Option<SourceGeometryPass>,
 }
 impl SourceGeometrySession {
     pub fn begin(
@@ -467,6 +475,7 @@ impl SourceGeometrySession {
             locked_press: None,
             locked_press_tracks: None,
             last_locked_preview: None,
+            drag_pass: None,
         })))
     }
     pub fn preferences(&self) -> SourceGeometryPreferences {
@@ -503,6 +512,25 @@ impl SourceGeometrySession {
             return Ok(Vec::new());
         }
         let count = (distance / spacing).floor() as usize;
+        if self.preferences.options.tool == SourceGeometryTool::Drag {
+            // Drag's Source loop starts at the old pointer, then advances
+            // `step=1/floor(distance/spacing)` while i<1. A bounded segment
+            // avoids silently dropping the earliest moving-center samples.
+            if count > 32 {
+                return Err(SourceGeometryError::InvalidInput);
+            }
+            let mut out = Vec::new();
+            out.try_reserve_exact(count)
+                .map_err(|_| SourceGeometryError::Allocation)?;
+            for i in 0..count {
+                let t = i as f64 / count as f64;
+                let mut sample = input;
+                sample.screen = [self.last_screen[0] + dx * t, self.last_screen[1] + dy * t];
+                out.push(sample);
+            }
+            self.last_screen = input.screen;
+            return Ok(out);
+        }
         let start = count.saturating_sub(32);
         let mut out = Vec::new();
         out.try_reserve_exact(count.min(32))
@@ -526,6 +554,14 @@ impl SourceGeometrySession {
         }
         if self.finished {
             return Err(SourceGeometryError::NoOpenStroke);
+        }
+        if self.preferences.options.tool == SourceGeometryTool::Drag {
+            let result = self.apply_drag(doc, input);
+            if let Err(error) = &result {
+                self.failed = Some(error.clone());
+            }
+            self.observe_dab(input, &result);
+            return result;
         }
         if self.controls.is_some() {
             let result = if self.locked_press.is_some() {
@@ -597,6 +633,50 @@ impl SourceGeometrySession {
         }
         self.observe_dab(input, &result);
         result
+    }
+    fn apply_drag(
+        &mut self,
+        doc: &mut Document,
+        input: SourceGeometryInput,
+    ) -> Result<SourceGeometryReport, SourceGeometryError> {
+        validate_input(input)?;
+        if Some(self.subtool) != doc.active_subtool_id()
+            || self.level != doc.current_level()
+            || !doc.active_subtool_visible()
+            || self.pose.map(|m| m.map(f32::to_bits))
+                != doc
+                    .active_object_metadata()
+                    .map(|m| m.affine.local_to_world.map(f32::to_bits))
+        {
+            return Err(SourceGeometryError::StrokeBindingChanged);
+        }
+        if !input.in_contact {
+            return Ok(self.record_noop(input, SourceGeometryNoop::NoContact));
+        }
+        let previous = self.drag_pass.ok_or(SourceGeometryError::InvalidInput)?;
+        let projected = obrush_core::project_source_drag_center(
+            previous.center,
+            input.view,
+            input.screen,
+            doc.active_object_metadata().map(|m| &m.affine),
+        )?;
+        let pass = SourceGeometryPass {
+            center: projected.center,
+            eye_direction: projected.eye_direction,
+            ..previous
+        };
+        self.stroke.set_drag_direction(projected.direction)?;
+        let report = doc.apply_source_geometry_dab(
+            &mut self.stroke,
+            pass,
+            input.raw.pressure,
+            input.in_contact,
+        )?;
+        self.drag_pass = Some(pass);
+        self.last_report = Some(report.clone());
+        self.last_input = Some(input);
+        self.last_pass = Some(pass);
+        Ok(report)
     }
     fn observe_dab(
         &mut self,
@@ -792,6 +872,12 @@ pub fn blocker_controls(
     plain.alpha = None;
     plain.symmetry_x = false;
     match (plain.kind, prefs.options.tool) {
+        (BrushKind::Drag, SourceGeometryTool::Drag) => {
+            if settings.alpha.is_some() || settings.symmetry_x || locked {
+                return Err(SourceGeometryError::UnsupportedDomain);
+            }
+            doc.source_geometry_blocker(prefs.options)
+        }
         (BrushKind::Pinch, SourceGeometryTool::Pinch)
         | (BrushKind::Flatten, SourceGeometryTool::Flatten)
         | (BrushKind::Crease, SourceGeometryTool::Crease) => {
@@ -811,6 +897,40 @@ impl SourceGeometrySession {
     ) -> Result<SharedSourceGeometry, SourceGeometryError> {
         blocker_controls(doc, settings, locked, prefs)?;
         validate_input(input)?;
+        if prefs.options.tool == SourceGeometryTool::Drag {
+            let mesh = doc
+                .active_mesh()
+                .ok_or(SourceGeometryError::UnsupportedDomain)?;
+            let prepared = obrush_core::prepare_source_paint_pass(
+                mesh,
+                doc.active_object_metadata().map(|m| &m.affine),
+                PaintPreparationInput {
+                    view: input.view,
+                    screen: input.screen,
+                    screen_radius: prefs.radius,
+                    pressure: input.raw.pressure,
+                    radius_factor: prefs.radius_factor,
+                },
+            )
+            .map_err(|_| SourceGeometryError::InvalidInput)?
+            .ok_or(SourceGeometryError::MissingOriginalFace)?;
+            let (pass, hit) = prepared;
+            let geometry = SourceGeometryPass {
+                center: pass.center,
+                eye_direction: pass.eye_direction,
+                local_radius_squared: pass.local_radius_squared,
+                original_face_index: hit.original_face_index.unwrap_or(hit.triangle_index),
+            };
+            let shared = Self::begin_admitted(doc, prefs, input, false)?;
+            {
+                let mut session = shared
+                    .lock()
+                    .map_err(|_| SourceGeometryError::StrokeBindingChanged)?;
+                session.drag_pass = Some(geometry);
+                session.last_triangle = Some(hit.triangle_index);
+            }
+            return Ok(shared);
+        }
         let center = doc.source_geometry_interaction_center()?;
         let before = {
             let current = tracks
@@ -1148,6 +1268,86 @@ mod tests {
             raw: RawPressureSample::default(),
             in_contact: true,
         }
+    }
+    #[test]
+    fn source_drag_moves_live_center_with_one_history_and_preserves_legacy_default() {
+        let mut d = doc();
+        let before = d.to_json().unwrap();
+        let mut brush = settings();
+        brush.kind = BrushKind::Drag;
+        let mut prefs = SourceGeometryPreferences::drag();
+        assert_eq!(prefs.mode, SourceGeometryMode::Legacy);
+        prefs.mode = SourceGeometryMode::SourceOrdinary;
+        prefs.radius = 40.;
+        prefs.radius_factor = 0.;
+        let session = SourceGeometrySession::begin_with_controls(
+            &mut d,
+            &brush,
+            false,
+            prefs,
+            input(),
+            Arc::new(Mutex::new(SourceGeometryAlphaState::default())),
+        )
+        .unwrap();
+        assert_eq!(d.to_json().unwrap(), before);
+        let mut moved = input();
+        moved.screen = [68., 50.];
+        let samples = session.lock().unwrap().path_samples(moved).unwrap();
+        assert_eq!(samples.len(), 3);
+        assert_eq!(samples[0].screen, [50., 50.]);
+        assert_eq!(samples[1].screen, [56., 50.]);
+        assert_eq!(samples[2].screen, [62., 50.]);
+        for sample in samples {
+            apply_shared(&mut d, &session, sample).unwrap();
+        }
+        assert_ne!(d.to_json().unwrap(), before);
+        assert_eq!(d.history_depths(), (0, 0));
+        session.lock().unwrap().finish(&mut d).unwrap();
+        let after = d.to_json().unwrap();
+        assert_eq!(d.history_depths(), (1, 0));
+        assert!(d.undo());
+        assert_eq!(d.to_json().unwrap(), before);
+        assert!(d.redo());
+        assert_eq!(d.to_json().unwrap(), after);
+    }
+    #[test]
+    fn rejected_source_drag_after_preview_cannot_commit_on_release() {
+        let mut d = doc();
+        let before = d.to_json().unwrap();
+        let mut brush = settings();
+        brush.kind = BrushKind::Drag;
+        let prefs = SourceGeometryPreferences {
+            mode: SourceGeometryMode::SourceOrdinary,
+            radius: 40.,
+            radius_factor: 0.,
+            ..SourceGeometryPreferences::drag()
+        };
+        let session = SourceGeometrySession::begin_with_controls(
+            &mut d,
+            &brush,
+            false,
+            prefs,
+            input(),
+            Arc::new(Mutex::new(SourceGeometryAlphaState::default())),
+        )
+        .unwrap();
+        let mut moved = input();
+        moved.screen = [68., 50.];
+        let samples = session.lock().unwrap().path_samples(moved).unwrap();
+        for sample in samples {
+            apply_shared(&mut d, &session, sample).unwrap();
+        }
+        assert_ne!(d.to_json().unwrap(), before);
+        let mut invalid = input();
+        invalid.screen = [f64::NAN, 50.];
+        assert_eq!(
+            apply_shared(&mut d, &session, invalid).unwrap_err(),
+            SourceGeometryError::InvalidInput
+        );
+        session.lock().unwrap().finish(&mut d).unwrap();
+        assert_eq!(d.to_json().unwrap(), before);
+        assert_eq!(d.history_depths(), (0, 0));
+        assert!(apply_shared(&mut d, &session, moved).is_err());
     }
     #[test]
     fn locked_preview_stale_alpha_lease_cancels_before_release() {
