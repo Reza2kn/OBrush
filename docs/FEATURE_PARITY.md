@@ -14,8 +14,12 @@ and full reference color parity remain open.
 matched the pinned SculptGL positions and active GPU normals exactly for the
 ten vertices touched in its normal-browser off/on comparison, but its frozen
 gate failed because the authored raised control lay outside the brush
-footprint. That fixture failure is retained; a new independent in-footprint
-control and complete rerun are required.
+footprint. That fixture failure is retained. The new independent in-footprint
+[C311 pair](SCULPTGL_DEFAULT_SMOOTH_C311_RESULT.md) passed all frozen scoped
+checks at default 50 px/75% with Relax-only off/on: affected positions and
+active GPU display normals matched exactly through held, Undo and Redo, and
+the raised and mask controls were exercised. Other settings, meshes and long
+sessions remain open.
 
 **DPR resolution remains open:** [C307](SCULPTGL_RESOLUTION_DPR_C307_RESULT.md)
 falsified a proposed browser scene-scaling correction: at DPR 2 the existing
