@@ -48,3 +48,8 @@ failures and the full Brush Culling parity row remain open regardless.
 Record exact harness/audit/served build hashes and any failed setup or
 numerical checks. Do not run C282 until the exclusive browser lane is
 released.
+
+Frozen C282 harness SHA-256:
+`38c9f3a391d45b31e27092c5469794a07e4c0bf18f87346295cd83f0e893fa71`.
+Frozen audit SHA-256:
+`d88dd0928a3a768f9e09f05ea6fc78daabce950ab783063fd23b3d4ee15ef8ab`.
