@@ -287,10 +287,21 @@ try {
     result.normalized_radius_pair.abs_difference = Math.abs(result.normalized_radius_pair.sculptgl - result.normalized_radius_pair.obrush);
     insist(result.normalized_radius_pair.abs_difference < 1e-5, `Paired loose-root normalized radius differs: ${JSON.stringify(result.normalized_radius_pair)}`);
     insist(result.cases.every(row => row.gpu.gl_error === 0), 'Nonzero WebGL error');
-    const rootMetrics=await evaluate('window.obrushBrushMetrics()');
-    const cam=rootMetrics.camera,vp=cam.viewport;
-    const rootPath=localPath.map(([x,y,z])=>{const q=cam.view_projection,p=[x,y,z+0.5,1],clip=[0,1,2,3].map(row=>q[row]*p[0]+q[4+row]*p[1]+q[8+row]*p[2]+q[12+row]*p[3]);return [vp[0]+(clip[0]/clip[3]+1)*(vp[2]-vp[0])/2,vp[1]+(1-clip[1]/clip[3])*(vp[3]-vp[1])/2]});
-    result.obrush_path=rootPath;validatePath(rootPath,vp,'OBRush');
+    const projectRoot=(cam)=>{const vp=cam.viewport,q=cam.view_projection;return localPath.map(([x,y,z])=>{const p=[x,y,z+0.5,1],clip=[0,1,2,3].map(row=>q[row]*p[0]+q[4+row]*p[1]+q[8+row]*p[2]+q[12+row]*p[3]);return [vp[0]+(clip[0]/clip[3]+1)*(vp[2]-vp[0])/2,vp[1]+(1-clip[1]/clip[3])*(vp[3]-vp[1])/2]})};
+    let rootMetrics=await evaluate('window.obrushBrushMetrics()');let rootPath=projectRoot(rootMetrics.camera);
+    const span=p=>Math.hypot(p.at(-1)[0]-p[0][0],p.at(-1)[1]-p[0][1]);
+    result.obrush_wheel_zoom={before:{span_css:span(rootPath),camera:rootMetrics.camera},events:[]};
+    for(let step=0;step<32&&span(rootPath)<50;step++){
+      const vp=rootMetrics.camera.viewport,x=(vp[0]+vp[2])/2,y=(vp[1]+vp[3])/2;
+      await send('Input.dispatchMouseEvent',{type:'mouseMoved',x,y,buttons:0});
+      await send('Input.dispatchMouseEvent',{type:'mouseWheel',x,y,deltaX:0,deltaY:-360});
+      await frame();await pause(30);
+      rootMetrics=await evaluate('window.obrushBrushMetrics()');rootPath=projectRoot(rootMetrics.camera);
+      result.obrush_wheel_zoom.events.push({step:step+1,deltaY:-360,span_css:span(rootPath),projection_zoom:rootMetrics.camera.source_framing?.projection_zoom,eye_z:rootMetrics.camera.position64?.[2]});
+    }
+    result.obrush_wheel_zoom.after={span_css:span(rootPath),camera:rootMetrics.camera};
+    insist(span(rootPath)>=50,`OBRush normal-wheel camera never reached held spacing: ${JSON.stringify(result.obrush_wheel_zoom)}`);
+    result.obrush_path=rootPath;validatePath(rootPath,rootMetrics.camera.viewport,'OBRush');
     insist(rootMetrics.display_flags.brush_symmetry_enabled && rootMetrics.kind==='Draw' && [null,'None'].includes(rootMetrics.alpha) && !rootMetrics.continuous?.requested && ownHalf.info.mode==='SourceOrdinary' && rootMetrics.source_geometry.per_tool[0].radius===result.frozen.radius && rootMetrics.source_geometry.per_tool[0].options.intensity===0.5 && rootMetrics.source_geometry.per_tool[0].radius_factor===0.75,'OBRush held-stroke controls differ');
     await parkCursor();const ownBeforePng=await screenshot('obrush-held-before');
     const ownEventIndex=await evaluate('window.__symmetryPair.events.length');
