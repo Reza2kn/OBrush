@@ -74,8 +74,12 @@ async function click(x, y) {
   await pause(300);
 }
 async function clickVisibleText(label) {
-  const matches=await evaluate(`(()=>Array.from(document.querySelectorAll('*')).filter(e=>{const r=e.getBoundingClientRect();return e.textContent?.trim()===${JSON.stringify(label)}&&r.width>4&&r.height>4&&r.x>=0&&r.y>=0&&r.right<=1600&&r.bottom<=1000}).map(e=>{const r=e.getBoundingClientRect();return {tag:e.tagName,x:r.x+r.width/2,y:r.y+r.height/2,area:r.width*r.height}}).sort((a,b)=>a.area-b.area).slice(0,6))()`);
-  assert(matches?.length,`Missing visible normal-UI text ${label}`);
+  const matches=await evaluate(`(()=>Array.from(document.querySelectorAll('*')).filter(e=>{const r=e.getBoundingClientRect();const exact=e.textContent?.trim()===${JSON.stringify(label)};const sceneMenu=${JSON.stringify(label)}==='Scene'&&e.tagName==='LI'&&e.textContent?.trim().startsWith('SceneClear scene');return (exact||sceneMenu)&&r.width>4&&r.height>4&&r.x>=0&&r.y>=0&&r.right<=1600&&r.bottom<=1000}).map(e=>{const r=e.getBoundingClientRect();return {tag:e.tagName,x:r.x+r.width/2,y:r.y+r.height/2,area:r.width*r.height}}).sort((a,b)=>a.area-b.area).slice(0,6))()`);
+  if(!matches?.length){
+    const diagnostic=await evaluate(`(()=>({ready:document.readyState,body:document.body.innerText.slice(0,500),candidates:Array.from(document.querySelectorAll('*')).filter(e=>e.textContent?.includes(${JSON.stringify(label)})).map(e=>{const r=e.getBoundingClientRect();return {tag:e.tagName,text:e.textContent?.trim().slice(0,60),rect:[r.x,r.y,r.right,r.bottom]}}).slice(0,20)}))()`);
+    result.cases.push({ui_text_failure:{label,diagnostic}});
+    throw Error(`Missing visible normal-UI text ${label}: ${JSON.stringify(diagnostic)}`);
+  }
   const target=matches[0];result.cases.push({ui_click:{label,target,matches}});
   await click(target.x,target.y);
 }
@@ -164,8 +168,11 @@ async function ownSymmetryRect() {
   throw Error('OBRush visible Symmetry checkbox unavailable');
 }
 async function refSymmetryRect() {
-  const rect=await evaluate("(()=>{const e=window.__sculptglReferenceInstance?.getGui()?._ctrlSculpting?._ctrlSymmetry?.domContainer;if(!e)return null;const r=e.getBoundingClientRect();return [r.left,r.top,r.right,r.bottom]})()");
+  const nodes=await evaluate("(()=>{const e=window.__sculptglReferenceInstance?.getGui()?._ctrlSculpting?._ctrlSymmetry?.domContainer;if(!e)return null;return [e,...e.querySelectorAll('*')].map(n=>{const r=n.getBoundingClientRect();return {tag:n.tagName,class_name:n.className,html:n.outerHTML.slice(0,350),rect:[r.left,r.top,r.right,r.bottom]}})})()");
+  result.cases.push({source_symmetry_dom:nodes});
+  const rect=nodes?.find(node=>node.tag==='LABEL'&&node.html.includes('Symmetry'))?.rect;
   assert(rect&&rect[0]>=0&&rect[1]>=40&&rect[2]<=1600&&rect[3]<=1000,'Source visible Symmetry checkbox unavailable');
+  result.cases.push({source_symmetry_hit_target:await evaluate(`document.elementFromPoint(${(rect[0]+rect[2])/2},${(rect[1]+rect[3])/2})?.outerHTML.slice(0,350)`) });
   return rect;
 }
 async function save(name) {
@@ -227,8 +234,13 @@ try {
     await fileInput('#fileopen');
     await until(async () => (await evaluate(refInfo))?.meshes===1, `reference ${ratio} import`);
     const sourceSymmetry=await refSymmetryRect();
-    await click(sourceSymmetry[2]-12,(sourceSymmetry[1]+sourceSymmetry[3])/2);
-    await until(async () => (await evaluate(refInfo))?.symmetry===false, `reference ${ratio} Symmetry off`);
+    const sx=(sourceSymmetry[0]+sourceSymmetry[2])/2,sy=(sourceSymmetry[1]+sourceSymmetry[3])/2;
+    await send('Input.dispatchMouseEvent',{type:'mouseMoved',x:sx,y:sy,button:'none',buttons:0});
+    await send('Input.dispatchMouseEvent',{type:'mousePressed',x:sx,y:sy,button:'left',buttons:1,clickCount:1});
+    result.cases.push({source_symmetry_on_press:(await evaluate(refInfo))?.symmetry});
+    await send('Input.dispatchMouseEvent',{type:'mouseReleased',x:sx,y:sy,button:'left',buttons:0,clickCount:1});
+    result.cases.push({source_symmetry_on_release:(await evaluate(refInfo))?.symmetry});
+    assert((await evaluate(refInfo))?.symmetry===false,`reference ${ratio} Symmetry off`);
     if(ratio!==1)await evaluate(`window.__sculptglReferenceInstance.getGui().onPixelRatio(${ratio})`);
     const before=await sample(`reference-${ratio}-before`,refInfo);
     const pointer=[Math.round(before.rect[0]+before.rect[2]/2),Math.round(before.rect[1]+before.rect[3]/2)];
