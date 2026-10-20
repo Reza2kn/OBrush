@@ -32,6 +32,39 @@
     const canvas=document.getElementById('obrush_canvas');
     const input=document.getElementById('import-file');
     let handle;
+    // eframe's ResizeObserver may report CSS pixels as device pixels in some
+    // browsers. Keep its drawing buffer physical so egui points and CSS input
+    // remain aligned. The scene's Source ratio is applied separately in Rust.
+    let backingSyncQueued=false;
+    let backingError='';
+    function syncCanvasBacking(){
+      backingSyncQueued=false;
+      const cssWidth=canvas.clientWidth,cssHeight=canvas.clientHeight;
+      const dpr=window.devicePixelRatio;
+      const width=Math.round(cssWidth*dpr),height=Math.round(cssHeight*dpr);
+      if(!Number.isFinite(dpr)||dpr<=0||width<1||height<1||width>8192||height>8192||width*height>16_000_000){
+        const error=`Canvas backing exceeds the 8192-side / 16M-pixel limit (${width}×${height}).`;
+        if(backingError!==error){backingError=error;notice(error);}
+        return;
+      }
+      backingError='';
+      if(canvas.width!==width||canvas.height!==height){
+        canvas.width=width;canvas.height=height;
+        handle?.request_browser_canvas_repaint();
+      }
+    }
+    function queueCanvasBackingSync(){
+      if(!backingSyncQueued){backingSyncQueued=true;requestAnimationFrame(syncCanvasBacking);}
+    }
+    new MutationObserver(queueCanvasBackingSync).observe(canvas,{attributes:true,attributeFilter:['width','height']});
+    new ResizeObserver(queueCanvasBackingSync).observe(canvas);
+    window.addEventListener('resize',queueCanvasBackingSync);
+    function watchDpr(){
+      const query=matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
+      query.addEventListener('change',()=>{queueCanvasBackingSync();watchDpr();},{once:true});
+    }
+    watchDpr();
+    window.obrushCanvasBackingStatus=()=>({css:[canvas.clientWidth,canvas.clientHeight],backing:[canvas.width,canvas.height],dpr:window.devicePixelRatio,error:backingError});
     // Stop browser chrome from consuming only the explicit Source fixed Ctrl
     // actions. This probe is read-only; shared Rust owns command resolution.
     window.addEventListener('keydown',event=>{
@@ -222,6 +255,7 @@
       if(!appModule){appModule=await import('./pkg/obrush_app.js');await appModule.default();}
       window.obrushWasmBackend=wasmBackend;
       handle=new appModule.WebHandle(); await handle.start_with_query(canvas,window.location.search,navigator.language||'');
+      queueCanvasBackingSync();
       const brushPreview=new URLSearchParams(window.location.search).has('webgpu-brush-preview');
       const gpuPick=!brushPreview&&new URLSearchParams(window.location.search).has('webgpu-gpu-pick');
       const depthPick=!brushPreview&&new URLSearchParams(window.location.search).has('webgpu-depth-pick');

@@ -489,6 +489,13 @@ impl WebHandle {
             .unwrap_or_else(|| "{}".into())
     }
 
+    /// Repaint after the browser host corrects a stale canvas backing size.
+    pub fn request_browser_canvas_repaint(&self) {
+        if let Some(app) = self.runner.app_mut::<OBrushApp>() {
+            app.request_browser_canvas_repaint();
+        }
+    }
+
     pub fn set_source_paint_input(
         &self,
         pressure: f64,

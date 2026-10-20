@@ -938,7 +938,8 @@ pub struct ViewportStyle {
     pub uv_texture: Option<Arc<ViewTexture>>,
     /// Multisample the real geometry; this never smooths or changes the mesh.
     pub antialias: bool,
-    /// Viewport render pixels per host pixel. Does not scale UI or edit geometry.
+    /// Source browser scene pixels per CSS viewport pixel; other hosts retain
+    /// pixels per host pixel. Does not scale UI or edit geometry.
     pub resolution_scale: f32,
     /// A host gesture preview only; vertex buffers and saved geometry stay put.
     pub active_preview_translation: Vec3,
@@ -2542,7 +2543,27 @@ impl Renderer {
             self.paint_objects(gl, destination, info, objects, camera, style, None);
             return;
         }
-        if (requested - 1.0).abs() < 0.0001 {
+        if host.width_px <= 0 || host.height_px <= 0 {
+            return;
+        }
+        // SculptGL's Source ratio multiplies the CSS viewport dimensions,
+        // independently of browser DPR. Only the browser Source scene target
+        // follows that convention; the host framebuffer, camera/picking and
+        // final composite continue to use physical host pixels.
+        let source_css_pixels = cfg!(target_arch = "wasm32") && camera.source_enabled();
+        let base = if source_css_pixels {
+            [
+                f64::from(info.viewport.width()),
+                f64::from(info.viewport.height()),
+            ]
+        } else {
+            [f64::from(host.width_px), f64::from(host.height_px)]
+        };
+        let scaled = [
+            (base[0] * f64::from(requested)).round() as i32,
+            (base[1] * f64::from(requested)).round() as i32,
+        ];
+        if scaled == [host.width_px, host.height_px] {
             self.resolution_error = None;
             if let Some(target) = self.resolution_target.take() {
                 // SAFETY: the callback's GL context is current and the target
@@ -2553,11 +2574,7 @@ impl Renderer {
             self.paint_objects(gl, destination, info, objects, camera, style, None);
             return;
         }
-        let scaled = [
-            (host.width_px as f64 * f64::from(requested)).round() as i32,
-            (host.height_px as f64 * f64::from(requested)).round() as i32,
-        ];
-        if host.width_px <= 0 || host.height_px <= 0 || scaled.contains(&0) {
+        if scaled.contains(&0) {
             return;
         }
         // This allocation is independent of the document and ordinary scene

@@ -1189,6 +1189,10 @@ pub struct OBrushApp {
 }
 
 impl OBrushApp {
+    #[cfg(target_arch = "wasm32")]
+    pub(crate) fn request_browser_canvas_repaint(&self) {
+        self.egui_ctx.request_repaint();
+    }
     pub fn new(
         cc: &eframe::CreationContext<'_>,
     ) -> Result<Self, Box<dyn std::error::Error + Send + Sync>> {
@@ -2698,6 +2702,11 @@ impl OBrushApp {
                 .step_by(0.02)
                 .show_value(false),
         );
+        // The central tick is important for a reversible 1→0.5→2→1
+        // round-trip. Pointer quantization can otherwise land on 0.98/1.02.
+        if resolution.changed() && (self.viewport_style.resolution_scale - 1.0).abs() <= 0.020_001 {
+            self.viewport_style.resolution_scale = 1.0;
+        }
         self.track_layer_control("viewport.resolution", &resolution);
         if let Some((pixels, Some(error))) = self.renderer.lock().ok().map(|renderer| {
             let (pixels, error) = renderer.resolution_status();
