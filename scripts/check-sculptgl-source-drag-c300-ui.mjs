@@ -1,4 +1,4 @@
-// C298 frozen Source Drag symmetry/mask normal-UI pair.
+// C300 frozen Source Drag symmetry/mask normal-UI pair.
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createHash, randomUUID } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -34,9 +34,9 @@ const pinned = sha(await readFile(path.join(mirror, 'sculptgl.js')));
 if (pinned !== '79b24bf6e1818cbb468c53cfe49783de419fd3e58f72b220aeb9308932e47600') {
   throw Error('Pinned SculptGL bundle changed');
 }
-const out = path.join(root, '.artifacts/sculptgl-source-drag-c298-ui', `${caseName}-${side}-${randomUUID()}`);
+const out = path.join(root, '.artifacts/sculptgl-source-drag-c300-ui', `${caseName}-${side}-${randomUUID()}`);
 await mkdir(out, { recursive: true });
-const result = {side, case_name:caseName, symmetry, lock_position:false, protocol_commit:'c298-source-drag-symmetry-mask-integer-viewport808',
+const result = {side, case_name:caseName, symmetry, lock_position:false, protocol_commit:'c300-source-drag-symmetry-mask-integer-viewport808',
   read_only_preflight_audit_sha256:'da28020451312241c1c4859e0050312f16b3683ff94c9a0b79eaf74157d6a57b',
   obrush_source_commit:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),
   served_web_repository_head:side==='root'?execFileSync('git',['rev-parse','HEAD'],{cwd:webRepositoryRoot,encoding:'utf8'}).trim():null,
@@ -81,7 +81,7 @@ async function stableCamera(label) {
     await page.raf(); await pause(25);
   }
   result.stability[label] = {first,latest,samples,frames,elapsed_ms:Date.now()-since,signature,terminal:false};
-  throw Error(`C298 ${label} camera failed 12-frame/250ms stability in 5s`);
+  throw Error(`C300 ${label} camera failed 12-frame/250ms stability in 5s`);
 }
 async function prepareSourceDragFixture(page) {
   await page.alignViewport();
@@ -148,7 +148,7 @@ try {
   if (side === 'root') page.alignViewport = async function() {
     const base=await PerfDriver.prototype.alignViewport.call(this);
     if (JSON.stringify(base.logical_size)!=='[1024,768]')
-      throw Error('C298 OBrush base logical viewport is not 1024x768');
+      throw Error('C300 OBrush base logical viewport is not 1024x768');
     const {bounds}=await this.owner.send('Browser.getWindowBounds',{windowId:this.windowId});
     await this.owner.send('Browser.setWindowBounds',{windowId:this.windowId,
       bounds:{...bounds,height:bounds.height+40}});
@@ -172,7 +172,7 @@ try {
     await page.rootControl('source_geometry.mode.source');
   }
   if (JSON.stringify(result.setup.viewport.logical_size)!=='[1024,808]')
-    throw Error('C298 frozen 1024x808 logical sculpt viewport was not reached');
+    throw Error('C300 frozen 1024x808 logical sculpt viewport was not reached');
   if (side === 'source') {
     const menu = 'window.__sculptglReferenceInstance.getGui()._ctrlSculpting._menu.domUl';
     const numbers = `Array.from(${menu}.querySelectorAll('input[type=number]')).filter(e=>e.getBoundingClientRect().width>0)`;
@@ -239,7 +239,7 @@ try {
     `window.__sourceGpuReadback.capture(${expected.vertices}, true)`);
   const viewport = await page.viewport();
   const center = [(viewport.screen[0]+viewport.screen[2])/2,(viewport.screen[1]+viewport.screen[3])/2];
-  if (!center.every(Number.isInteger)) throw Error('C298 viewport center is not integer CSS pixels');
+  if (!center.every(Number.isInteger)) throw Error('C300 viewport center is not integer CSS pixels');
   const pathPixels = pathOffsets.map(([x,y])=>[center[0]+x,center[1]+y]);
   result.requested_path = pathPixels;
   const deliveredAt = await page.evaluate('window.__uiBrushDelivered?.length??null');

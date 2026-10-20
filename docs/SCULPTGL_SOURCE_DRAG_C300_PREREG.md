@@ -1,10 +1,14 @@
-# C298 Source Drag symmetry and mask matrix preregistration
+# C300 Source Drag symmetry and mask matrix preregistration
 
-Frozen before C298 browser capture or product edit. This is an adjacent, scoped
-normal-UI SculptGL comparison, not a claim of full Drag, SculptGL, or ZBrush
-parity. C295's passed single-gesture receipt, the C288 failure, and every other
-failed check remain unchanged. The root checkout and its normal server are not
-used for experimental product edits.
+Frozen before C300 browser capture. The earlier C298 Drag draft at isolated
+commit `be20d73945cb136e96a0901e733bffb1649bd0a7` was superseded by this
+ID-only rename before any browser execution; C298 belongs to separate UV/MatCap
+persistence work. The Drag fixture, path, numerical gates and trial product code
+are unchanged. Candidate code was authored after the earlier prereg and remains
+unbuilt. This is an adjacent, scoped normal-UI SculptGL comparison, not a claim
+of full Drag, SculptGL, or ZBrush parity. C295's passed single-gesture receipt,
+the C288 failure, and every other failed check remain unchanged. The root
+checkout and its normal server are not used for experimental product edits.
 
 ## Source and independent fixture
 
@@ -61,9 +65,9 @@ Frozen scripts and SHA-256:
 
 | Script | SHA-256 |
 | --- | --- |
-| `scripts/check-sculptgl-source-drag-c298-ui.mjs` | `49e3119340c2d2faded8dc9899d252352220edd620bb821329187a4cc678434b` |
-| `scripts/audit-sculptgl-source-drag-c298-ui.mjs` | `2b3b08c879e752b4a1b9d616c13fad4fe606190a280cde7eda311bdf4e664292` |
-| `scripts/audit-sculptgl-source-drag-c298-matrix.mjs` | `0d4a71759df8d386443ca0db7a6851c8e3448600b64ded60cb51368833c67ee1` |
+| `scripts/check-sculptgl-source-drag-c300-ui.mjs` | `68d08a3bfcf487881e70e3039e04b9cd2f9dc89a375bfa58cc6afd867f79b354` |
+| `scripts/audit-sculptgl-source-drag-c300-ui.mjs` | `c023be7a3a7083629a15c66c327cfa16adbdb70a8aa455877c9cb6dcb8649094` |
+| `scripts/audit-sculptgl-source-drag-c300-matrix.mjs` | `aa8287a8ccb92ee538400b8bdf69883475f6b1f1cd1c59fd73d73af002983fff` |
 
 `node --check` passed for all three. Capture each side/case once on the
 unchanged product first; preserve any setup or numerical failure. The concrete
@@ -72,4 +76,4 @@ visible checkbox alone cannot pass. Only a shared-core/host implementation
 that passes this fixed matrix, C295 regression, rejection/undo tests, fmt,
 workspace tests, strict native/WASM Clippy, WASM check, web build and browser
 check may be proposed for integration. Do not relax these gates or repurpose a
-failed C298 result.
+failed C300 result.

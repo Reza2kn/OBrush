@@ -1,4 +1,4 @@
-// C298 frozen Source Drag symmetry/mask paired audit. Active GPU normals are the display oracle.
+// C300 frozen Source Drag symmetry/mask paired audit. Active GPU normals are the display oracle.
 import {readFile,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
@@ -48,7 +48,7 @@ function gpuRows(side,stage,field,heldIndex=0){
 }
 check(runs.source.status?.startsWith('normal browser')&&runs.root.status?.startsWith('normal browser'),'Both normal-UI captures completed');
 check(['off','on'].includes(runs.source.case_name)&&runs.source.case_name===runs.root.case_name&&runs.source.symmetry===runs.root.symmetry&&runs.source.symmetry===(runs.source.case_name==='on'),'Frozen symmetry case identity');
-check(runs.source.protocol_commit==='c298-source-drag-symmetry-mask-integer-viewport808'&&runs.root.protocol_commit===runs.source.protocol_commit&&runs.source.harness_sha256===runs.root.harness_sha256&&runs.source.fixture.sha256===runs.root.fixture.sha256&&exact(runs.source.requested_brush,runs.root.requested_brush),'Frozen protocol/input identity');
+check(runs.source.protocol_commit==='c300-source-drag-symmetry-mask-integer-viewport808'&&runs.root.protocol_commit===runs.source.protocol_commit&&runs.source.harness_sha256===runs.root.harness_sha256&&runs.source.fixture.sha256===runs.root.fixture.sha256&&exact(runs.source.requested_brush,runs.root.requested_brush),'Frozen protocol/input identity');
 check(runs.source.read_only_preflight_audit_sha256==='da28020451312241c1c4859e0050312f16b3683ff94c9a0b79eaf74157d6a57b'&&runs.root.read_only_preflight_audit_sha256===runs.source.read_only_preflight_audit_sha256,'Frozen passing C293 preflight linked');
 for(const side of ['source','root'])for(const label of ['after_reset','after_fit']){
   const stable=runs[side].stability?.[label];
@@ -105,5 +105,5 @@ for(const side of ['source','root']){
   redoNormalMembership[side]=compare(after,redo).changed_ids;
 }
 check(exact(redoNormalMembership.source,redoNormalMembership.root),'After-to-Redo active display-normal changed RGB membership differs');
-const audit={status:failures.length?'FAILED frozen C298 Source Drag gate; evidence retained':'COMPLETE scoped C298 Source Drag case',failures,paths:{source:sourcePath,root:rootPath},source_build_sha256:s.browser_build,obrush_wasm_sha256:r.browser_build,fixture_sha256:s.fixture.sha256,harness_sha256:s.harness_sha256,input,paired,changes,witnesses,history,preview,gpu,redoNormalMembership,limitations:['One 1089-vertex settled-camera curved-grid Drag symmetry case; full row open','Source WebGL1 upload shadow versus OBrush WebGL2 readback','Public saved normals are not used as display-normal oracle']};
+const audit={status:failures.length?'FAILED frozen C300 Source Drag gate; evidence retained':'COMPLETE scoped C300 Source Drag case',failures,paths:{source:sourcePath,root:rootPath},source_build_sha256:s.browser_build,obrush_wasm_sha256:r.browser_build,fixture_sha256:s.fixture.sha256,harness_sha256:s.harness_sha256,input,paired,changes,witnesses,history,preview,gpu,redoNormalMembership,limitations:['One 1089-vertex settled-camera curved-grid Drag symmetry case; full row open','Source WebGL1 upload shadow versus OBrush WebGL2 readback','Public saved normals are not used as display-normal oracle']};
 const out=path.join(path.dirname(sourcePath),'paired-audit-'+path.basename(path.dirname(rootPath))+'.json');await writeFile(out,JSON.stringify(audit,null,2)+'\n');console.log(JSON.stringify({out,status:audit.status,failures,paired_after:paired.after}));if(failures.length)process.exitCode=1;
