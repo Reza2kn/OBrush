@@ -396,6 +396,8 @@ pub struct SourceGeometrySession {
     locked_press_tracks: Option<obrush_core::SourceGeometryAlphaTracks>,
     last_locked_preview: Option<[f64; 3]>,
     drag_pass: Option<SourceGeometryPass>,
+    drag_mirror_pass: Option<SourceGeometryPass>,
+    drag_mirror_plane: Option<obrush_core::SourceMirrorPlane>,
 }
 impl SourceGeometrySession {
     pub fn begin(
@@ -476,6 +478,8 @@ impl SourceGeometrySession {
             locked_press_tracks: None,
             last_locked_preview: None,
             drag_pass: None,
+            drag_mirror_pass: None,
+            drag_mirror_plane: None,
         })))
     }
     pub fn preferences(&self) -> SourceGeometryPreferences {
@@ -665,13 +669,54 @@ impl SourceGeometrySession {
             eye_direction: projected.eye_direction,
             ..previous
         };
+        let mirrored = match (self.drag_mirror_pass, self.drag_mirror_plane) {
+            (Some(previous_mirror), Some(plane)) => {
+                let projected = obrush_core::project_source_drag_center_mirrored(
+                    previous_mirror.center,
+                    input.view,
+                    input.screen,
+                    doc.active_object_metadata().map(|m| &m.affine),
+                    plane,
+                )?;
+                Some((
+                    SourceGeometryPass {
+                        center: projected.center,
+                        eye_direction: projected.eye_direction,
+                        local_radius_squared: pass.local_radius_squared,
+                        ..previous_mirror
+                    },
+                    projected.direction,
+                ))
+            }
+            (None, None) => None,
+            _ => return Err(SourceGeometryError::StrokeBindingChanged),
+        };
         self.stroke.set_drag_direction(projected.direction)?;
-        let report = doc.apply_source_geometry_dab(
-            &mut self.stroke,
-            pass,
-            input.raw.pressure,
-            input.in_contact,
-        )?;
+        let report = if let Some((mirror_pass, mirror_direction)) = mirrored {
+            self.stroke.set_drag_mirror_direction(mirror_direction)?;
+            let controlled = doc.apply_source_geometry_controlled_dab(
+                &mut self.stroke,
+                [Some(pass), Some(mirror_pass)],
+                input.raw.pressure,
+                input.in_contact,
+                &obrush_core::SourceGeometryControls {
+                    alpha: None,
+                    mirror: true,
+                },
+                obrush_core::SourceGeometryAlphaTracks::default(),
+            )?;
+            self.drag_mirror_pass = Some(mirror_pass);
+            self.last_mirror_plane = self.drag_mirror_plane;
+            self.last_controlled = Some(controlled.clone());
+            controlled.combined
+        } else {
+            doc.apply_source_geometry_dab(
+                &mut self.stroke,
+                pass,
+                input.raw.pressure,
+                input.in_contact,
+            )?
+        };
         self.drag_pass = Some(pass);
         self.last_report = Some(report.clone());
         self.last_input = Some(input);
@@ -873,7 +918,7 @@ pub fn blocker_controls(
     plain.symmetry_x = false;
     match (plain.kind, prefs.options.tool) {
         (BrushKind::Drag, SourceGeometryTool::Drag) => {
-            if settings.alpha.is_some() || settings.symmetry_x || locked {
+            if settings.alpha.is_some() || locked {
                 return Err(SourceGeometryError::UnsupportedDomain);
             }
             doc.source_geometry_blocker(prefs.options)
@@ -921,12 +966,35 @@ impl SourceGeometrySession {
                 local_radius_squared: pass.local_radius_squared,
                 original_face_index: hit.original_face_index.unwrap_or(hit.triangle_index),
             };
+            let mirrored = if settings.symmetry_x {
+                let center = doc.source_geometry_interaction_center()?;
+                let plane =
+                    doc.source_geometry_mirror_plane(center, prefs.mirror_offset, [1.0, 0.0, 0.0])?;
+                let pass = SourceGeometryPass {
+                    center: plane.reflect(geometry.center)?,
+                    eye_direction: std::array::from_fn(|i| {
+                        if i == 0 {
+                            -geometry.eye_direction[i]
+                        } else {
+                            geometry.eye_direction[i]
+                        }
+                    }),
+                    ..geometry
+                };
+                Some((pass, plane))
+            } else {
+                None
+            };
             let shared = Self::begin_admitted(doc, prefs, input, true)?;
             {
                 let mut session = shared
                     .lock()
                     .map_err(|_| SourceGeometryError::StrokeBindingChanged)?;
                 session.drag_pass = Some(geometry);
+                if let Some((pass, plane)) = mirrored {
+                    session.drag_mirror_pass = Some(pass);
+                    session.drag_mirror_plane = Some(plane);
+                }
                 session.last_triangle = Some(hit.triangle_index);
             }
             return Ok(shared);
@@ -1309,6 +1377,54 @@ mod tests {
         assert_eq!(d.to_json().unwrap(), before);
         assert!(d.redo());
         assert_eq!(d.to_json().unwrap(), after);
+    }
+    #[test]
+    fn source_drag_symmetry_uses_two_captured_passes_and_rejects_release_after_failure() {
+        let mut d = doc();
+        let before = d.to_json().unwrap();
+        let depth = d.history_depths();
+        let mut brush = settings();
+        brush.kind = BrushKind::Drag;
+        brush.symmetry_x = true;
+        let mut prefs = SourceGeometryPreferences::drag();
+        prefs.mode = SourceGeometryMode::SourceOrdinary;
+        prefs.radius = 40.;
+        prefs.radius_factor = 0.;
+        let mut press = input();
+        press.screen = [40., 50.];
+        let session = SourceGeometrySession::begin_with_controls(
+            &mut d,
+            &brush,
+            false,
+            prefs,
+            press,
+            Arc::new(Mutex::new(SourceGeometryAlphaState::default())),
+        )
+        .unwrap();
+        let mut moved = press;
+        moved.screen = [60., 50.];
+        let samples = session.lock().unwrap().path_samples(moved).unwrap();
+        assert_eq!(samples.len(), 3);
+        for sample in samples {
+            apply_shared(&mut d, &session, sample).unwrap();
+        }
+        assert_ne!(d.to_json().unwrap(), before);
+        {
+            let guard = session.lock().unwrap();
+            let pair = guard.last_controlled.as_ref().unwrap();
+            assert!(pair.contacts[0].is_some() && pair.contacts[1].is_some());
+            assert!(guard.drag_mirror_plane.is_some());
+            assert_eq!(guard.dab_observations.total, 3);
+        }
+        let mut invalid = moved;
+        invalid.screen[0] = f64::NAN;
+        assert_eq!(
+            apply_shared(&mut d, &session, invalid).unwrap_err(),
+            SourceGeometryError::InvalidInput
+        );
+        session.lock().unwrap().finish(&mut d).unwrap();
+        assert_eq!(d.to_json().unwrap(), before);
+        assert_eq!(d.history_depths(), depth);
     }
     #[test]
     fn rejected_source_drag_after_preview_cannot_commit_on_release() {

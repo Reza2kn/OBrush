@@ -26,7 +26,10 @@ mod source_crease;
 
 #[path = "source_drag.rs"]
 mod source_drag;
-pub use source_drag::{project_center as project_source_drag_center, ProjectedSourceDragCenter};
+pub use source_drag::{
+    project_center as project_source_drag_center,
+    project_center_mirrored as project_source_drag_center_mirrored, ProjectedSourceDragCenter,
+};
 
 #[path = "source_geometry_warm.rs"]
 mod warm;
@@ -921,6 +924,8 @@ pub struct SourceGeometryStroke {
     /// One admitted Source Drag sample's projected live displacement.
     /// Ordinary brushes never read this field.
     drag_direction: Option<[f64; 3]>,
+    /// Reflected-ray displacement for the second, preselected Source Drag pass.
+    drag_mirror_direction: Option<[f64; 3]>,
 }
 impl SourceGeometryStroke {
     pub fn new(options: SourceGeometryOptions) -> Result<Self, SourceGeometryError> {
@@ -937,6 +942,7 @@ impl SourceGeometryStroke {
             history_selected: None,
             locked_preview_changed: false,
             drag_direction: None,
+            drag_mirror_direction: None,
         })
     }
     /// Read-only transient globally unique claim; never project data.
@@ -955,6 +961,20 @@ impl SourceGeometryStroke {
             return Err(SourceGeometryError::InvalidInput);
         }
         self.drag_direction = Some(direction);
+        Ok(())
+    }
+    pub fn set_drag_mirror_direction(
+        &mut self,
+        direction: [f64; 3],
+    ) -> Result<(), SourceGeometryError> {
+        if self.options.tool != SourceGeometryTool::Drag
+            || direction
+                .iter()
+                .any(|v| !v.is_finite() || v.abs() > 1_000_000.)
+        {
+            return Err(SourceGeometryError::InvalidInput);
+        }
+        self.drag_mirror_direction = Some(direction);
         Ok(())
     }
     pub fn proxy_positions(&self) -> &[Vec3] {
@@ -1618,9 +1638,12 @@ impl SourceGeometryStroke {
                         }
                         std::array::from_fn(|c| (pass.center[c] - live[c]) * weight)
                     } else if self.options.tool == SourceGeometryTool::Drag {
-                        let direction = self
-                            .drag_direction
-                            .ok_or(SourceGeometryError::InvalidInput)?;
+                        let direction = if prepared.is_some_and(|p| p.mirrored) {
+                            self.drag_mirror_direction
+                        } else {
+                            self.drag_direction
+                        }
+                        .ok_or(SourceGeometryError::InvalidInput)?;
                         let alpha_weight = if let Some(alpha) = alpha {
                             let p = prepared.ok_or(SourceGeometryError::InvalidInput)?;
                             p.track.sample(alpha, pass, p.mirrored, old[v])?
@@ -2456,6 +2479,7 @@ impl SourceGeometryStroke {
             history_selected: self.history_selected.clone(),
             locked_preview_changed: self.locked_preview_changed,
             drag_direction: self.drag_direction,
+            drag_mirror_direction: self.drag_mirror_direction,
         })
     }
     fn staged_bytes(&self) -> usize {
