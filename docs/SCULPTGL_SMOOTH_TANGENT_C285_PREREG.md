@@ -20,3 +20,10 @@ This changes UI setup order, not the effective settings, fixture, pointer
 path or acceptance tolerance. A new Source run is required so both sides
 share the same new harness hash. Preserve any failed setup or numerical
 check. No product edit before the paired baseline.
+
+Frozen C285 harness SHA-256:
+`d9bf13e086ff6c415f89321e43db6bd14165d0201c2d993cbb560aae4e02e89b`.
+Frozen audit SHA-256:
+`57c6c001949903cc9e641cbc16905af422bebdafd3434931d546faf1ab585d69`.
+The normal-browser baseline uses the current shared root `web/dist`; each
+result records exact served JS/WASM hashes and the root source commit.
