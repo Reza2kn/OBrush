@@ -69,6 +69,11 @@ OBRush GPU row checks. The wider Inflate and full parity gates stay open.
 **Current million-vertex browser baseline:** [The C264 frozen Source Brush run](SCULPTGL_MILLION_CURRENT_C264.md)
 passes independent complete Save/Undo/Redo and affected-face shape checks, but
 fails all four responsiveness gates (RAF P95 66.7 ms, release 159.0 ms).
+[The fresh C292 run](SCULPTGL_MILLION_FRESH_PROFILE_C292_RESULT.md) on the
+integrated camera build repeats all 17 file/history/shape checks successfully
+while still failing all four responsiveness gates (RAF P95 66.7 ms, release
+134.7 ms). Its overlapping geometry and viewport timings do not yet admit a
+narrow performance edit.
 [The C271 exact-row normal-witness trial](SCULPTGL_MILLION_NORMAL_WITNESS_C271.md)
 reduced one publication substage but still failed all four gates on a fresh
 million-vertex run; its product code was rejected and the failed receipt kept.

@@ -110,7 +110,11 @@ def render() -> str:
         "",
         "The [C264 current million-vertex run](SCULPTGL_MILLION_CURRENT_C264.md) "
         "passes scoped public-file and shape checks but fails all four "
-        "responsiveness gates. [C271](SCULPTGL_MILLION_NORMAL_WITNESS_C271.md) "
+        "responsiveness gates. [C292 fresh baseline]"
+        "(SCULPTGL_MILLION_FRESH_PROFILE_C292_RESULT.md) passes 17/17 file, "
+        "history and shape checks on the integrated build but still fails "
+        "all four responsiveness gates. "
+        "[C271](SCULPTGL_MILLION_NORMAL_WITNESS_C271.md) "
         "also failed all four after a narrow normal-copy optimization, so "
         "its product code was rejected. "
         "[MRP01](SCULPTGL_MILLION_ATTRIBUTE_SCAN_TRIAL.md) likewise failed "
