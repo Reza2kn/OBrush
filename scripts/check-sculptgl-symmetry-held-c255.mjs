@@ -146,8 +146,8 @@ const instrument = `(()=>{
   };
 })();`;
 const gpu = `(()=>{const s=window.__symmetryPair;return {draws:s?.draws.slice(-64)??[],gl_error:s?.gl?.getError()??null}})()`;
-const refInfo = `(()=>{const a=window.__sculptglReferenceInstance;if(!a)return null;const sm=a.getSculptManager(),tool=sm.getCurrentTool(),canvas=a.getCanvas(),r=canvas.getBoundingClientRect();return {path:window.__symmetryPairPath??null,canvas_rect:[r.left,r.top,r.right,r.bottom],tool:{index:sm.getToolIndex(),symmetry:sm.getSymmetry(),radius:tool._radius,intensity:tool._intensity,alpha:tool._idAlpha,continuous:sm._continuous,clay:tool._clay,accumulate:tool._accumulate,culling:tool._culling,negative:tool._negative,lock:tool._lockPosition},meshes:a.getMeshes().length,active:a.getMeshes().indexOf(a.getMesh()),selected:a.getSelectedMeshes().map(m=>a.getMeshes().indexOf(m)),objects:a.getMeshes().map(m=>({vertices:m.getNbVertices(),faces:m.getNbFaces(),small_positions:m.getNbVertices()<10?Array.from(m.getVertices()):null,small_faces:m.getNbFaces()<10?Array.from(m.getFaces()):null,matrix:Array.from(m.getMatrix()),center:Array.from(m._transformData._center),normal:Array.from(m.getSymmetryNormal()),offset:m.getSymmetryOffset(),loose:Array.from(m.getLocalBound()),plane:Array.from(m.getSymmetryOrigin())})),states:a.getStateManager()._undos.length,guide:a.getGui()._ctrlScene?._main?._showSymmetryLine??null}})()`;
-const ownInfo = `(()=>{const m=window.obrushBrushMetrics?.();return m?{camera:m.camera,source_geometry:m.source_geometry,brush:{kind:m.kind,alpha:m.alpha,continuous:m.continuous,pressure:m.pressure,pressure_radius:m.pressure_radius,pressure_strength:m.pressure_strength,adapt_detail:m.adaptive_detail,symmetry_x:m.symmetry_x},brush_options:m.brush_options,subtools:m.subtools.length,ids:m.subtools.map(x=>x.id),active:m.active_subtool_id,selected:m.selected_subtool_ids,controls:m.source_geometry_controls_hit_rect,mode:m.source_geometry?.per_tool?.[0]?.mode??null,offset:m.source_geometry?.active_object_symmetry_offset??null,display:m.display_flags,history:m.history,scene_error:m.scene_error,viewport:m.viewport}:null})()`;
+const refInfo = `(()=>{const a=window.__sculptglReferenceInstance;if(!a)return null;const sm=a.getSculptManager(),tool=sm.getCurrentTool(),canvas=a.getCanvas(),r=canvas.getBoundingClientRect();return {path:window.__symmetryPairPath??null,canvas_rect:[r.left,r.top,r.right,r.bottom],tool:{index:sm.getToolIndex(),symmetry:sm.getSymmetry(),radius:tool._radius,intensity:tool._intensity,alpha:tool._idAlpha,continuous:sm._continuous,clay:tool._clay,accumulate:tool._accumulate,culling:tool._culling,negative:tool._negative,lock:tool._lockPosition},meshes:a.getMeshes().length,active:a.getMeshes().indexOf(a.getMesh()),selected:a.getSelectedMeshes().map(m=>a.getMeshes().indexOf(m)),objects:a.getMeshes().map(m=>({vertices:m.getNbVertices(),faces:m.getNbFaces(),small_positions:m.getNbVertices()<10?Array.from(m.getVertices()):null,small_faces:m.getNbFaces()<10?Array.from(m.getFaces()):null,matrix:Array.from(m.getMatrix()),center:Array.from(m._transformData._center),normal:Array.from(m.getSymmetryNormal()),offset:m.getSymmetryOffset(),loose:Array.from(m.getLocalBound()),plane:Array.from(m.getSymmetryOrigin()),visible:m.isVisible()})),states:a.getStateManager()._undos.length,guide:a.getGui()._ctrlScene?._main?._showSymmetryLine??null}})()`;
+const ownInfo = `(()=>{const m=window.obrushBrushMetrics?.();return m?{camera:m.camera,source_geometry:m.source_geometry,brush:{kind:m.kind,alpha:m.alpha,continuous:m.continuous,pressure:m.pressure,pressure_radius:m.pressure_radius,pressure_strength:m.pressure_strength,adapt_detail:m.adaptive_detail,symmetry_x:m.symmetry_x},brush_options:m.brush_options,subtools:m.subtools.length,ids:m.subtools.map(x=>x.id),active:m.active_subtool_id,selected:m.selected_subtool_ids,controls:m.source_geometry_controls_hit_rect,scene_controls:m.scene_controls,solo:m.solo,mode:m.source_geometry?.per_tool?.[0]?.mode??null,offset:m.source_geometry?.active_object_symmetry_offset??null,display:m.display_flags,history:m.history,scene_error:m.scene_error,viewport:m.viewport}:null})()`;
 async function sample(name, info) {
   await pause(260);
   const row = { name, info: await evaluate(info), gpu: await evaluate(gpu) };
@@ -196,6 +196,10 @@ try {
   await until(async () => (await evaluate(refInfo))?.meshes === 1, 'reference startup');
   await fileInput('#fileopen');
   await until(async () => (await evaluate(refInfo))?.meshes === 3, 'reference imported parts');
+  await evaluate('window.__sculptglReferenceInstance.getGui()._ctrlScene.showHide(true)');
+  const isolatedReference=await evaluate(refInfo);
+  insist(isolatedReference.objects.filter(m=>m.visible).length===1 && isolatedReference.objects[isolatedReference.active].visible,'Reference active triangle was not isolated');
+  result.reference_isolation={active:isolatedReference.active,visible:isolatedReference.objects.map(m=>m.visible)};
   const referenceZero = await sample('reference-zero', refInfo);
   await evaluate('window.__sculptglReferenceInstance.getGui()._ctrlScene.onOffsetSymmetry(0.5)');
   const referenceHalf = await sample('reference-half', refInfo);
@@ -238,6 +242,12 @@ try {
   await until(async () => choosers.length > chooserCount, 'OBRush Add chooser');
   await fileInput('#source-sgl-file');
   await until(async () => (await evaluate(ownInfo))?.subtools === 3, 'OBRush imported parts');
+  const scene=await evaluate(ownInfo);
+  insist(scene.scene_controls?.['scene.solo'] && scene.scene_controls?.['scene.frame'],'OBRush visible Solo/Frame controls missing');
+  await click(scene.scene_controls['scene.solo']);
+  const isolatedOwn=await evaluate(ownInfo);insist(isolatedOwn.solo===true,'OBRush active-part solo did not enable');
+  await click(isolatedOwn.scene_controls['scene.frame']);
+  await pause(350);result.obrush_isolation={solo:(await evaluate(ownInfo)).solo,active:(await evaluate(ownInfo)).active};
   const ownZero = await sample('obrush-zero', ownInfo);
   insist(ownZero.info.scene_error === null, `OBRush imported Source guide error: ${ownZero.info.scene_error}`);
   insist(ownZero.gpu.draws.some(draw => draw.count === 3 && draw.obrush_enabled === 1 && draw.obrush_origin), 'OBRush imported active part has no guide GPU plane');
