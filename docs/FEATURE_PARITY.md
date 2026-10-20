@@ -36,6 +36,15 @@ added 850 adaptive vertices per stroke. The mirrored reference ratio used a
 GUI controller, and overlapping OBrush scene objects make screenshot quality
 uninterpretable. The full row remains open.
 
+**Single-mesh resolution images V01/V02:** [V01](SCULPTGL_RESOLUTION_SINGLE_MESH_V01_RESULT.md)
+failed Source normal-UI Symmetry setup. [V02](SCULPTGL_RESOLUTION_SINGLE_MESH_V02_RESULT.md)
+used a recorded non-visible controller step and confirmed one-mesh,
+≥24-vertex, history and within-app geometry invariance at DPR 1/2 and
+0.5/1/2×. Its frozen pixel segmentation failed because the Source Scene
+dropdown and floor grid contaminated the images. No image-quality verdict
+or full resolution-family parity follows; [V03](SCULPTGL_RESOLUTION_SINGLE_MESH_V03_PREREG.md)
+is a separate frozen UI/mask follow-up.
+
 **Current scoped additions, full rows open:** [C334](SCULPTGL_CAMERA_PICKED_PIVOT_C334_STATIC_RESULT.md)
 adds picked orbit pivots in Source framing. Authored-mesh normal-browser checks
 in OBrush and pinned SculptGL matched independent integer-pixel ray hits within
