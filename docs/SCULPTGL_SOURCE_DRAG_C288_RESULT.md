@@ -43,3 +43,24 @@ The initial strict-Clippy `type_complexity` failure is retained in task
 output. No product code from the failed trial is promoted; `SGL-BRUSH-DRAG`
 remains open. A later attempt needs a new preregistered causal fix, not a
 changed tolerance under C288.
+
+## Read-only history-normal diagnosis
+
+The redo display-normal mismatch is **on the pinned Source side**. Its
+active GPU position words are identical at After and Redo, but 31 Source
+normal rows change, with RGB ID572 changing by `1.615153160e-4` maximum.
+OBRush After and Redo active GPU position **and** normal words are each
+bit-identical. This is distinct from the small paired XYZ error: Source and
+OBRush After display normals differ by at most `1.332955435e-8`.
+
+Pinned `Drag.js` calls `mesh.updateGeometry(mesh.getFacesFromVertices(
+iVertsInRadius), iVertsInRadius)` separately for each moving-center dab.
+`StateGeometry.pushVertices` records the union of touched vertices, while
+`StateGeometry.undo`/`redo` calls `mesh.updateGeometry` once on that union;
+`Mesh.updateGeometry` refreshes the selected vertices' normals after face
+normal updates. It is therefore plausible, and consistent with the measured
+31-row difference, that later dabs change incident faces of vertices whose
+normals were last refreshed earlier, while redo refreshes the full touched
+union. The evidence establishes the route-dependent Source normal difference;
+this specific causal explanation is a source-grounded inference, not a new
+browser experiment. No C288 gate was changed or rerun.
