@@ -151,7 +151,9 @@ def render() -> str:
         "fractional-coordinate radius gate, while [C276]"
         "(SCULPTGL_BRUSH_LOCK_C276.md) passes one integer-coordinate "
         "normal-UI pair with the shared-core Lock route; the full gate "
-        "remains open.",
+        "remains open. [C278 Clay](SCULPTGL_BRUSH_CLAY_C278.md) passes one "
+        "four-run Clay on/off repeated-gesture pair; its full gate remains "
+        "open and the interrupted C277 failure is retained.",
         "",
         "| ID | Pinned reference scope | Current row-level evidence | Parity gate |",
         "| --- | --- | --- | --- |",

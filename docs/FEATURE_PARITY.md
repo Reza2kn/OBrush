@@ -20,6 +20,13 @@ IDs within `2.98e-8` per position component, restore exact public Undo/Redo,
 and pass active GPU position and paired display-normal checks. The single
 unmasked gesture does not close the complete Negative row.
 
+**Scoped Brush Clay witness:** [The C278 four-run normal-UI pair](SCULPTGL_BRUSH_CLAY_C278.md)
+matches Clay on/off and a repeated held gesture on the independent sphere:
+each side changes the same 98 IDs, with maximum paired final position error
+`5.96e-8` and matching held GPU position/display-normal checks. The earlier
+C277 test interrupted its own held stroke by clicking Save and remains a
+preserved failed receipt. The complete Clay row stays open.
+
 **Scoped Inflate witness:** [The C269 direct pinned-method report](SCULPTGL_INFLATE_PAIR_C269.md)
 records the reference's positive, negative and zero Float32 response on one
 independent masked diamond, alongside a passing shared-core arithmetic,
