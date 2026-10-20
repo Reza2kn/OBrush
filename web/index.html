@@ -32,6 +32,12 @@
     const canvas=document.getElementById('obrush_canvas');
     const input=document.getElementById('import-file');
     let handle;
+    window.addEventListener('beforeunload',event=>{
+      if(handle?.has_unsaved_changes()){
+        event.preventDefault();
+        event.returnValue='';
+      }
+    });
     // eframe's ResizeObserver may report CSS pixels as device pixels in some
     // browsers. Keep its drawing buffer physical so egui points and CSS input
     // remain aligned. The scene's Source ratio is applied separately in Rust.

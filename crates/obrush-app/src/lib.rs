@@ -489,6 +489,13 @@ impl WebHandle {
             .unwrap_or_else(|| "{}".into())
     }
 
+    /// The browser uses this cheap state check before leaving the page.
+    pub fn has_unsaved_changes(&self) -> bool {
+        self.runner
+            .app_mut::<OBrushApp>()
+            .is_some_and(|app| app.has_unsaved_changes())
+    }
+
     /// Repaint after the browser host corrects a stale canvas backing size.
     pub fn request_browser_canvas_repaint(&self) {
         if let Some(app) = self.runner.app_mut::<OBrushApp>() {

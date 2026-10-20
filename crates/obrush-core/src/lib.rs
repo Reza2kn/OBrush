@@ -1,9 +1,12 @@
 //! Portable CPU geometry and sculpting primitives for OBrush.
 //!
-//! The engine deliberately has no graphics, windowing, or filesystem dependency,
-//! so the same document and brush behavior can run on native and WebAssembly.
+//! The engine has no graphics or windowing dependency, so the same document and
+//! brush behavior can run on native and WebAssembly. Native hosts can also use
+//! the atomic file writer; that module is excluded from WebAssembly builds.
 
 mod alpha;
+#[cfg(not(target_arch = "wasm32"))]
+pub mod atomic_file;
 mod attributes;
 mod brush;
 mod decimate;

@@ -1063,6 +1063,10 @@ pub struct OBrushApp {
     unprocessed_release: Option<(Pos2, egui::Modifiers, f32)>,
     message: String,
     dirty: bool,
+    #[cfg(not(target_arch = "wasm32"))]
+    confirm_close: bool,
+    #[cfg(not(target_arch = "wasm32"))]
+    allow_close: bool,
     stroke_rejected: bool,
     show_help: bool,
     inspector_open: bool,
@@ -1190,6 +1194,37 @@ pub struct OBrushApp {
 }
 
 impl OBrushApp {
+    pub(crate) fn has_unsaved_changes(&self) -> bool {
+        self.dirty || self.stroke.is_some() || !self.pending_dabs.is_empty()
+    }
+
+    #[cfg(not(target_arch = "wasm32"))]
+    fn close_confirmation(&mut self, ctx: &egui::Context) {
+        if !self.confirm_close {
+            return;
+        }
+        egui::Modal::new(egui::Id::new("unsaved_close_confirmation")).show(ctx, |ui| {
+            ui.heading("Save your sculpture before closing?");
+            ui.label("Your changes will be lost if you close without saving.");
+            ui.horizontal(|ui| {
+                if ui.button("Keep sculpting").clicked() {
+                    self.confirm_close = false;
+                }
+                if ui.button("Save and close").clicked() {
+                    self.save_file(false);
+                    if !self.has_unsaved_changes() {
+                        self.allow_close = true;
+                        ctx.send_viewport_cmd(egui::ViewportCommand::Close);
+                    }
+                }
+                if ui.button("Close without saving").clicked() {
+                    self.allow_close = true;
+                    ctx.send_viewport_cmd(egui::ViewportCommand::Close);
+                }
+            });
+        });
+    }
+
     #[cfg(target_arch = "wasm32")]
     pub(crate) fn request_browser_canvas_repaint(&self) {
         self.egui_ctx.request_repaint();
@@ -1300,6 +1335,10 @@ impl OBrushApp {
             unprocessed_release: None,
             message: "Ready to sculpt. Drag on the surface to begin.".into(),
             dirty: false,
+            #[cfg(not(target_arch = "wasm32"))]
+            confirm_close: false,
+            #[cfg(not(target_arch = "wasm32"))]
+            allow_close: false,
             stroke_rejected: false,
             show_help: false,
             inspector_open: false,
@@ -6850,7 +6889,7 @@ impl OBrushApp {
                 .add_filter(extension, &[extension])
                 .save_file()
             {
-                match std::fs::write(&path, contents) {
+                match obrush_core::atomic_file::write_file_atomic(&path, &contents) {
                     Ok(()) => {
                         if project {
                             self.dirty = false;
@@ -6876,9 +6915,9 @@ impl OBrushApp {
             } else {
                 download_bytes(&filename, &contents);
             }
-            if project {
-                self.dirty = false;
-            }
+            // An anchor click requests a browser download; it does not prove
+            // the user accepted it or that a file reached durable storage.
+            // Keep the leave-page warning armed for edited documents.
             self.message = format!("Download requested: {filename}");
         }
     }
@@ -11916,6 +11955,15 @@ impl eframe::App for OBrushApp {
     }
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         let update_started = web_time::Instant::now();
+        #[cfg(not(target_arch = "wasm32"))]
+        if ctx.input(|input| input.viewport().close_requested())
+            && !self.allow_close
+            && self.has_unsaved_changes()
+        {
+            ctx.send_viewport_cmd(egui::ViewportCommand::CancelClose);
+            self.finish_stroke();
+            self.confirm_close = true;
+        }
         self.ui_fonts.update(ctx, self.app_preferences.locale);
         crate::ui_text::install_admitted(self.ui_fonts.capability(), &self.shortcut_resolver);
         self.region_suppressed_frame = false;
@@ -12128,6 +12176,8 @@ impl eframe::App for OBrushApp {
         self.app_viewport_timing.record(viewport_started.elapsed());
         self.help(ctx);
         self.preferences_window(ctx);
+        #[cfg(not(target_arch = "wasm32"))]
+        self.close_confirmation(ctx);
         self.ui_fonts.observe_end_update(ctx);
         self.modal_observe_end_update();
         self.app_update_timing.record(update_started.elapsed());
