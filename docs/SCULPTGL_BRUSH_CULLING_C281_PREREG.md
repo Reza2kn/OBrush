@@ -25,6 +25,16 @@ reference patch, or fixture change is permitted. The exact harness, audit,
 served build, Source bundle, fixture hashes and source revision must be
 recorded in the run.
 
+Frozen C281 harness SHA-256:
+`e2bcb2f4fc5cd7073b058836946809ef33c4679a78ff53ff7646703f1bc21561`.
+Frozen audit SHA-256:
+`4bad417fb1e2690dee6e8d1ba5ef9d98de429c4e068ecc9632e0d6d7a1f7a3ac`.
+At preregistration the current OBrush web/dist WASM and JS were exactly the
+C280 bytes (`913ed5f6ac0fd3f3e0e55788d40d7421d844820bf92f664a4c8a6b7858bd8f99`
+and `03d74bea813d209f42f0aecbabcf7a4f85d39d509ed8b65f742def4ec3d4b440`).
+If a later build replaces those bytes before the browser lane opens, report
+the change and do not call it an identical C280 rerun.
+
 The sole added observation is a read-only snapshot immediately after each
 held GPU readback: the Source public-runtime `getPicking()` face index,
 mesh-face vertex indices and RGB IDs, picked normal, intersection point,
