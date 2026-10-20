@@ -1,0 +1,10 @@
+{
+  "fixture": "independent-crease-overlap-sphere.sgl",
+  "sha256": "572bed8539b5fb2606f9362e12e94964aa24b2b232f404197b8ab930346aaa08",
+  "bytes": 951784,
+  "vertices": 18242,
+  "faces": 18432,
+  "rings": 96,
+  "sectors": 192,
+  "surface": "independent unit UV sphere, closed, triangles at poles and quads elsewhere"
+}
