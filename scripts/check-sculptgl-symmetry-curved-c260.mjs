@@ -207,7 +207,7 @@ async function sourceSceneControl(name){
   const expression=`(()=>{const c=window.__sculptglReferenceInstance?.getGui()?._ctrlScene?.[${JSON.stringify(name)}];if(!c)return null;return Object.keys(c).filter(k=>k.startsWith('dom')).map(k=>{const e=c[k],r=e?.getBoundingClientRect?.();return {key:k,tag:e?.tagName,type:e?.type,rect:r?[r.left,r.top,r.right,r.bottom]:null}})})()`;
   const controls=await evaluate(expression);
   result.reference_visible_controls??={};result.reference_visible_controls[name]=controls;
-  const control=controls?.find(q=>q.rect&&q.rect[2]>q.rect[0]&&q.rect[3]>q.rect[1]&&(name==='_ctrlOffSym'?q.tag==='INPUT'&&q.type==='number':q.tag==='LABEL'));
+  const control=controls?.find(q=>q.rect&&q.rect[2]>q.rect[0]&&q.rect[3]>q.rect[1]&&(name==='_ctrlOffSym'?q.tag==='INPUT'&&q.type==='number':q.tag==='LI'));
   insist(control,`Reference visible ${name} input missing: ${JSON.stringify(controls)}`);
   return control.rect;
 }
