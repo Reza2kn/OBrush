@@ -400,6 +400,28 @@ impl Camera {
         if !pivot.is_finite() {
             return;
         }
+        if self.source_camera.is_some() {
+            let center = self
+                .precise_target
+                .unwrap_or_else(|| self.target.as_dvec3());
+            let rotation = self.orientation().to_array().map(f64::from);
+            let source = self.source_camera.as_mut().unwrap();
+            match source.retarget_pivot(
+                center,
+                pivot.as_dvec3(),
+                glam::DQuat::from_array(rotation),
+                self.boot_source_fov
+                    .unwrap_or_else(|| f64::from(self.fov_degrees)),
+                self.orthographic,
+            ) {
+                Ok(()) => {
+                    self.target = pivot;
+                    self.precise_target = Some(pivot.as_dvec3());
+                }
+                Err(error) => source.error = Some(error),
+            }
+            return;
+        }
         let eye = self.position();
         let direction = eye - pivot;
         if direction.length_squared() <= 1e-10 {
@@ -736,6 +758,9 @@ impl Camera {
             };
             let source = crate::source_camera_host::SourceCameraController::new(zoom, viewport)?;
             self.source_camera = Some(source);
+            // The pinned SculptGL URL default for `pivot` is true. Imported
+            // SGL camera settings may override this after framing is enabled.
+            self.use_pivot = true;
         } else {
             let source = self.source_camera.as_ref().unwrap();
             let mut destination = self.clone();
@@ -794,6 +819,15 @@ impl Camera {
     pub(crate) fn source_projection_zoom(&self) -> Option<f64> {
         self.source_camera.as_ref().map(|s| s.zoom())
     }
+    pub(crate) fn source_pivot_offset(&self) -> Option<DVec3> {
+        self.source_camera.as_ref().map(|s| s.pivot_offset())
+    }
+    pub(crate) fn set_source_pivot_offset(&mut self, value: DVec3) -> Result<(), String> {
+        self.source_camera
+            .as_mut()
+            .ok_or("Source framing is not enabled")?
+            .set_pivot_offset(value)
+    }
     pub(crate) fn set_source_projection_zoom(&mut self, value: f64) -> Result<(), String> {
         self.source_camera
             .as_mut()
@@ -823,11 +857,12 @@ impl Camera {
     }
     fn accept_source_fit(
         &mut self,
-        candidate: crate::source_camera_host::SourceCameraController,
+        mut candidate: crate::source_camera_host::SourceCameraController,
         fitted: Result<DVec3, String>,
     ) {
         match fitted {
             Ok(center) if center.is_finite() && center.as_vec3().is_finite() => {
+                candidate.reset_pivot_offset();
                 self.target = center.as_vec3();
                 self.precise_target = Some(center);
                 self.source_camera = Some(candidate);
@@ -856,6 +891,7 @@ impl Camera {
             return false;
         }
         source.error = None;
+        source.reset_pivot_offset();
         self.target = Vec3::ZERO;
         self.precise_target = Some(DVec3::ZERO);
         self.rotation = Some(Quat::IDENTITY);

@@ -194,6 +194,9 @@ pub(crate) struct FramePose {
 #[derive(Clone, Debug)]
 pub(crate) struct SourceCameraController {
     zoom: ProjectionZoom,
+    /// Source `_offset` in camera-local coordinates. A picked orbit pivot
+    /// changes this together with the center so the visible view stays fixed.
+    pivot_offset: DVec3,
     viewport: ViewportDimensions,
     clip: ClipRange,
     cache: BoundsCache,
@@ -206,6 +209,7 @@ impl SourceCameraController {
     pub(crate) fn new(zoom: f64, viewport: ViewportDimensions) -> Result<Self, String> {
         Ok(Self {
             zoom: ProjectionZoom::checked(zoom)?,
+            pivot_offset: DVec3::ZERO,
             viewport,
             clip: ClipRange::initial(),
             cache: BoundsCache::default(),
@@ -220,6 +224,66 @@ impl SourceCameraController {
     }
     pub(crate) fn zoom(&self) -> f64 {
         self.zoom.value()
+    }
+    pub(crate) fn pivot_offset(&self) -> DVec3 {
+        self.pivot_offset
+    }
+    pub(crate) fn set_pivot_offset(&mut self, value: DVec3) -> Result<(), String> {
+        if !value.is_finite() {
+            return Err("Source camera pivot offset is nonfinite".into());
+        }
+        self.pivot_offset = value;
+        Ok(())
+    }
+    pub(crate) fn reset_pivot_offset(&mut self) {
+        self.pivot_offset = DVec3::ZERO;
+    }
+    /// Retarget the orbit without changing the current perspective view.
+    /// SculptGL updates `_center`, `_offset`, and perspective `_trans[2]` in
+    /// `Camera.setPivot`; no document or GPU state is touched here.
+    pub(crate) fn retarget_pivot(
+        &mut self,
+        center: DVec3,
+        pivot: DVec3,
+        camera_to_world: DQuat,
+        fov_degrees: f64,
+        orthographic: bool,
+    ) -> Result<(), String> {
+        if !center.is_finite()
+            || !pivot.is_finite()
+            || !camera_to_world.is_finite()
+            || camera_to_world.length_squared() < 1e-20
+            || !fov_degrees.is_finite()
+            || !(0.0..180.0).contains(&fov_degrees)
+            || fov_degrees == 0.0
+        {
+            return Err("Source camera pivot pose is invalid".into());
+        }
+        let rotation = camera_to_world.normalize();
+        let old_depth = self.zoom.value() * 45.0 / fov_degrees;
+        let old_local_eye = DVec3::new(
+            -self.pivot_offset.x,
+            -self.pivot_offset.y,
+            if orthographic { 1000.0 } else { old_depth } - self.pivot_offset.z,
+        );
+        let old_eye = center + rotation * old_local_eye;
+        let local_delta = rotation.conjugate() * (pivot - center);
+        let mut offset = self.pivot_offset + local_delta;
+        let mut zoom = self.zoom;
+        if orthographic {
+            // Source explicitly clears the depth offset for orthographic pivots.
+            offset.z = 0.0;
+        } else {
+            let depth = old_eye.distance(pivot);
+            zoom = ProjectionZoom::checked(depth * fov_degrees / 45.0)?;
+            offset.z += depth - old_depth;
+        }
+        if !offset.is_finite() {
+            return Err("Source camera pivot offset exceeds finite range".into());
+        }
+        self.zoom = zoom;
+        self.pivot_offset = offset;
+        Ok(())
     }
     pub(crate) fn viewport(&self) -> ViewportDimensions {
         self.viewport
@@ -247,8 +311,8 @@ impl SourceCameraController {
             SourcePose {
                 rotation: WorldToView::from_camera_to_world(pose.camera_to_world)?,
                 center: pose.target,
-                plane_translation: DVec2::ZERO,
-                offset_z: 0.0,
+                plane_translation: -candidate.pivot_offset.truncate(),
+                offset_z: candidate.pivot_offset.z,
                 zoom: self.zoom,
             },
             if pose.orthographic {
@@ -340,7 +404,7 @@ impl SourceCameraController {
         Ok(())
     }
     pub(crate) fn diagnostics(&self) -> serde_json::Value {
-        serde_json::json!({"policy":"sculptgl_static_v1","serial":self.serial,"projection_zoom":self.zoom.value(),"render_pixels":self.viewport.render_pixels,"user_points":self.viewport.user_points.to_array(),"cache_position_bytes":self.cache.bytes,"cache_limit_bytes":MAX_POSITION_CACHE_BYTES,"cache_transient_position_bytes_bound":MAX_POSITION_CACHE_TRANSIENT_BYTES,"cache_rows":self.cache.rows.len(),"cache_pointer_hits":self.cache.hits,"cache_unchanged_position_reuses":self.cache.position_reuses,"cache_scans":self.cache.scans,"clip_bounds":self.bounds.map(|b|[b.minimum.to_array(),b.maximum.to_array()]),"near":self.clip.near_distance,"far":self.clip.far_distance,"error":self.error,"frame":self.frame.as_ref().map(|f|serde_json::json!({"render_pixels":f.viewport.render_pixels,"user_points":f.viewport.user_points.to_array(),"eye64":f.eye64.to_array(),"view64":f.view64.to_cols_array(),"projection64":f.projection64.to_cols_array(),"projection_gpu":f.gpu_projection().to_cols_array(),"curvature_fov":f.curvature_fov()})),"picked_pivot_supported":false,"scope":"Exact initial loose/static box provider plus hidden reference grid; general source octree history/gizmos/animation/navigation gains unverified"})
+        serde_json::json!({"policy":"sculptgl_static_v1","serial":self.serial,"projection_zoom":self.zoom.value(),"pivot_offset":self.pivot_offset.to_array(),"render_pixels":self.viewport.render_pixels,"user_points":self.viewport.user_points.to_array(),"cache_position_bytes":self.cache.bytes,"cache_limit_bytes":MAX_POSITION_CACHE_BYTES,"cache_transient_position_bytes_bound":MAX_POSITION_CACHE_TRANSIENT_BYTES,"cache_rows":self.cache.rows.len(),"cache_pointer_hits":self.cache.hits,"cache_unchanged_position_reuses":self.cache.position_reuses,"cache_scans":self.cache.scans,"clip_bounds":self.bounds.map(|b|[b.minimum.to_array(),b.maximum.to_array()]),"near":self.clip.near_distance,"far":self.clip.far_distance,"error":self.error,"frame":self.frame.as_ref().map(|f|serde_json::json!({"render_pixels":f.viewport.render_pixels,"user_points":f.viewport.user_points.to_array(),"eye64":f.eye64.to_array(),"view64":f.view64.to_cols_array(),"projection64":f.projection64.to_cols_array(),"projection_gpu":f.gpu_projection().to_cols_array(),"curvature_fov":f.curvature_fov()})),"picked_pivot_candidate":true,"scope":"Exact initial loose/static box provider plus hidden reference grid; picked-pivot orbit candidate; general source octree history/gizmos/animation/navigation gains unverified"})
     }
 }
 

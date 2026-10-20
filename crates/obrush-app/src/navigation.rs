@@ -21,6 +21,12 @@ pub struct NavigationMotion {
     pub first: bool,
 }
 
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct NavigationPress {
+    pub button: NavigationButton,
+    pub origin: [f32; 2],
+}
+
 #[derive(Clone, Copy)]
 struct Contact {
     button: NavigationButton,
@@ -32,6 +38,7 @@ struct Contact {
 #[derive(Default)]
 pub struct NavigationCapture {
     contact: Option<Contact>,
+    presses: VecDeque<NavigationPress>,
     motions: VecDeque<NavigationMotion>,
     skipped_segments: u64,
 }
@@ -73,6 +80,14 @@ impl NavigationCapture {
             }
         }
         if let Some(button) = button {
+            if self.presses.len() == MAX_MOTIONS {
+                self.presses.pop_front();
+                self.skipped_segments = self.skipped_segments.saturating_add(1);
+            }
+            self.presses.push_back(NavigationPress {
+                button,
+                origin: point,
+            });
             self.contact = Some(Contact {
                 button,
                 origin: point,
@@ -103,7 +118,7 @@ impl NavigationCapture {
     }
 
     pub fn pending(&self) -> bool {
-        !self.motions.is_empty()
+        !self.presses.is_empty() || !self.motions.is_empty()
     }
     pub fn held(&self) -> bool {
         self.contact.is_some()
@@ -111,11 +126,15 @@ impl NavigationCapture {
     pub fn take(&mut self) -> VecDeque<NavigationMotion> {
         std::mem::take(&mut self.motions)
     }
+    pub fn take_presses(&mut self) -> VecDeque<NavigationPress> {
+        std::mem::take(&mut self.presses)
+    }
     pub fn skipped_segments(&self) -> u64 {
         self.skipped_segments
     }
     pub fn cancel(&mut self) {
         self.contact = None;
+        self.presses.clear();
         self.motions.clear();
     }
 }
@@ -143,9 +162,35 @@ mod tests {
                 first: true,
             }])
         );
+        assert_eq!(
+            capture.take_presses(),
+            VecDeque::from([NavigationPress {
+                button: NavigationButton::Pan,
+                origin: [120., 80.],
+            }])
+        );
         assert!(!capture.pending());
         capture.pointer(0, [160., 90.], false);
         assert!(!capture.pending());
+    }
+
+    #[test]
+    fn stationary_orbit_press_is_delivered_once_after_release() {
+        let mut capture = NavigationCapture::default();
+        capture.pointer(2, [240.0, 150.0], false);
+        capture.pointer(0, [240.0, 150.0], false);
+        assert!(capture.pending());
+        assert!(!capture.held());
+        assert!(capture.take().is_empty());
+        assert_eq!(
+            capture.take_presses(),
+            VecDeque::from([NavigationPress {
+                button: NavigationButton::Orbit,
+                origin: [240.0, 150.0],
+            }])
+        );
+        assert!(!capture.pending());
+        assert!(capture.take_presses().is_empty());
     }
 
     #[test]

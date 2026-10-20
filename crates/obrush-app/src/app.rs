@@ -9660,17 +9660,10 @@ impl OBrushApp {
         );
         let speed = ui.add(egui::Slider::new(&mut self.camera.speed, 0.05..=1.0).show_value(false));
         self.track_layer_control("camera.speed", &speed);
-        let source_framing = self.camera.source_enabled();
         let pivot = ui
-            .add_enabled(
-                !source_framing,
-                egui::Checkbox::new(
-                    &mut self.camera.use_pivot,
-                    crate::ui_text::caption(crate::ui_text::CaptionKey::CB591FA407121),
-                ),
-            )
-            .on_disabled_hover_text(crate::ui_text::caption(
-                crate::ui_text::CaptionKey::C9370B67E7131,
+            .add(egui::Checkbox::new(
+                &mut self.camera.use_pivot,
+                crate::ui_text::caption(crate::ui_text::CaptionKey::CB591FA407121),
             ));
         self.track_layer_control("camera.pivot", &pivot);
         if previous
@@ -9976,6 +9969,21 @@ impl OBrushApp {
         let captured = self.browser_navigation_coordinates
             || self.navigation_capture.pending()
             || self.navigation_capture.held();
+        for press in self.navigation_capture.take_presses() {
+            if press.button == NavigationButton::Orbit
+                && self.camera.source_enabled()
+                && self.camera.use_pivot
+            {
+                let origin = Pos2::from(press.origin);
+                if rect.contains(origin)
+                    && let Some(hit) = self.pick(origin, rect)
+                    && let Ok(point) =
+                        crate::scene_space::world_point(&self.document, hit.position)
+                {
+                    self.camera.set_pivot(point.as_vec3());
+                }
+            }
+        }
         for motion in self.navigation_capture.take() {
             let origin = Pos2::from(motion.origin);
             if !rect.contains(origin) {
@@ -10012,7 +10020,6 @@ impl OBrushApp {
             if secondary {
                 let point = point.unwrap_or(rect.center());
                 if !self.camera_navigation_active
-                    && !self.camera.source_enabled()
                     && self.camera.use_pivot
                     && let Some(hit) = self.pick(point, rect)
                     && let Ok(point) = crate::scene_space::world_point(&self.document, hit.position)

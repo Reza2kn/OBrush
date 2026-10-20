@@ -488,3 +488,43 @@ fn source_perspective_fit_matches_independent_float32_frustum_literal() {
     assert!((c.source_projection_zoom().unwrap() - 2.8647316583408924).abs() < 1e-12);
     assert_eq!(c.precise_target, Some(DVec3::new(0.5, 0., 0.5)));
 }
+
+#[test]
+fn picked_source_pivot_preserves_view_before_orbit_in_both_projections() {
+    // Authored off-center point on the two-triangle source fixture. Rebinding
+    // an orbit pivot must not make the model jump before pointer motion.
+    let pivot = Vec3::new(0.4, -0.2, 0.0);
+    for orthographic in [false, true] {
+        let mut camera = source(orthographic);
+        let before = camera.view64().to_cols_array();
+        let eye = camera.position64();
+        let zoom = camera.source_projection_zoom().unwrap();
+        camera.set_pivot(pivot);
+        camera.prepare_source_frame(viewport(), &objects()).unwrap();
+        let after = camera.view64().to_cols_array();
+        let maximum = before
+            .iter()
+            .zip(after)
+            .map(|(a, b)| (*a - b).abs())
+            .fold(0.0_f64, f64::max);
+        assert!(maximum < 1e-11, "pivot changed the resting view: {maximum}");
+        assert!(camera.position64().distance(eye) < 1e-11);
+        assert_eq!(camera.precise_target, Some(pivot.as_dvec3()));
+        assert!(camera.source_pivot_offset().unwrap().length() > 0.0);
+        if orthographic {
+            assert_eq!(camera.source_projection_zoom(), Some(zoom));
+        } else {
+            assert!(camera.source_projection_zoom().unwrap() > zoom);
+        }
+        camera.rotate(
+            Vec2::ZERO,
+            Vec2::new(0.1, 0.05),
+            eframe::egui::vec2(50.0, 25.0),
+        );
+        camera.prepare_source_frame(viewport(), &objects()).unwrap();
+        assert_ne!(camera.view64().to_cols_array(), after);
+        assert_eq!(camera.precise_target, Some(pivot.as_dvec3()));
+        camera.frame_scene(&objects());
+        assert_eq!(camera.source_pivot_offset(), Some(DVec3::ZERO));
+    }
+}

@@ -11,6 +11,7 @@ pub(crate) struct CameraTransitionPose {
     pub target: DVec3,
     pub distance: f64,
     pub source_zoom: Option<f64>,
+    pub source_pivot_offset: Option<DVec3>,
 }
 
 impl CameraTransitionPose {
@@ -25,6 +26,7 @@ impl CameraTransitionPose {
                 .unwrap_or_else(|| camera.target.as_dvec3()),
             distance: f64::from(camera.distance),
             source_zoom: camera.source_projection_zoom(),
+            source_pivot_offset: camera.source_pivot_offset(),
         }
     }
 
@@ -35,12 +37,17 @@ impl CameraTransitionPose {
         {
             return Err("Camera transition sample exceeds finite display coordinates".into());
         }
-        if camera.source_enabled() != self.source_zoom.is_some() {
+        if camera.source_enabled() != self.source_zoom.is_some()
+            || camera.source_enabled() != self.source_pivot_offset.is_some()
+        {
             return Err("Camera transition projection mode changed during animation".into());
         }
         // Check source zoom before mutating the visible pose.
         if let Some(zoom) = self.source_zoom {
             camera.set_source_projection_zoom(zoom)?;
+        }
+        if let Some(offset) = self.source_pivot_offset {
+            camera.set_source_pivot_offset(offset)?;
         }
         camera.rotation = Some(self.orientation.normalize());
         camera.target = self.target.as_vec3();
@@ -56,6 +63,8 @@ impl CameraTransitionPose {
             && self.distance.is_finite()
             && self.distance > 0.0
             && self.source_zoom.is_none_or(|z| z.is_finite() && z > 0.0)
+            && self.source_pivot_offset.is_none_or(|offset| offset.is_finite())
+            && self.source_zoom.is_some() == self.source_pivot_offset.is_some()
     }
 }
 
@@ -70,6 +79,7 @@ impl CameraTransition {
         if !start.valid()
             || !end.valid()
             || start.source_zoom.is_some() != end.source_zoom.is_some()
+            || start.source_pivot_offset.is_some() != end.source_pivot_offset.is_some()
         {
             return Err("Camera transition requires compatible finite poses".into());
         }
@@ -99,6 +109,11 @@ impl CameraTransition {
                 .source_zoom
                 .zip(self.end.source_zoom)
                 .map(|(a, b)| a + (b - a) * t),
+            source_pivot_offset: self
+                .start
+                .source_pivot_offset
+                .zip(self.end.source_pivot_offset)
+                .map(|(a, b)| a.lerp(b, t)),
         }
     }
 
@@ -123,12 +138,14 @@ mod tests {
                 target: DVec3::new(1.25, -0.5, 2.0),
                 distance: 8.0,
                 source_zoom: Some(8.0),
+                source_pivot_offset: Some(DVec3::ZERO),
             },
             CameraTransitionPose {
                 orientation: Quat::IDENTITY,
                 target: DVec3::new(-0.75, 1.5, 0.0),
                 distance: 4.0,
                 source_zoom: Some(4.0),
+                source_pivot_offset: Some(DVec3::ZERO),
             },
         )
         .unwrap()
@@ -171,6 +188,7 @@ mod tests {
             target: DVec3::new(3.0, 2.0, -1.0),
             distance: 6.0,
             source_zoom: Some(6.0),
+            source_pivot_offset: Some(DVec3::ZERO),
         };
         let transition = CameraTransition::new(live, next).unwrap();
         let at_start = transition.sample(0.0);
@@ -196,6 +214,7 @@ mod tests {
             target: DVec3::new(-1.0, 0.5, 2.0),
             distance: 6.0,
             source_zoom: None,
+            source_pivot_offset: None,
         };
         let middle = CameraTransition::new(source, destination)
             .unwrap()
