@@ -7,7 +7,10 @@ frozen pick-center calibration gate still failed by `2.98e-8` against a `1e-8`
 bound. The earlier [C328](SCULPTGL_SOURCE_PINCH_C328_RESULT.md) had mismatched
 dab counts and a less precise calibration. [C330's Twist pair](SCULPTGL_SOURCE_TWIST_C330_NORMAL_RESULT.md)
 matches first-held positions and active display normals within `1.5e-8` and
-`8.8e-11` on the independent fixture. Later held geometry still differs because
+`8.8e-11` on the independent fixture. A separate [C333 guard-safe two-move
+path](SCULPTGL_SOURCE_TWIST_C333_SAFE_PATH_RESULT.md) passed its full scoped
+browser gate, including positions, display normals, mask-normalized angles,
+GPU, Save and history. The earlier folded C318 path still differs because
 the reference folds faces that OBrush's guard protects. Neither full brush row
 is closed.
 
