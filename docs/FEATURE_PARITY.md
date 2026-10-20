@@ -36,6 +36,11 @@ parity claim follows.
 [C257's matched-pressure pen attempt](SCULPTGL_SYMMETRY_PRESSURE_C257_REPORT.md)
 reached full radius in pinned SculptGL but made no reference vertex edit,
 so its frozen paired-deformation gate failed before an OBrush comparison.
+[C258's original-call trace](SCULPTGL_SYMMETRY_INPUT_C258_REPORT.md)
+found why: the pinned pen route restarts at its first held move, leaving
+less than the 37.5 CSS-pixel dab spacing; a matched-pressure mouse route
+admitted a mirrored reference dab. OBrush has not yet been paired to that
+mouse route, and symmetry parity remains open.
 
 **Dense resolution-stroke R03:** [The paired browser report](SCULPTGL_RESOLUTION_DENSE_R03_RESULT.md)
 passed the frozen 24-changed-vertex minimum on an independent 18,242-vertex
