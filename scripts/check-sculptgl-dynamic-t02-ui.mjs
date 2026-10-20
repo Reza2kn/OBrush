@@ -178,6 +178,7 @@ try {
   await clickControl('object.dynamic.header');
   const preAck = await metrics();
   assert(preAck.layer_controls_enabled?.['object.dynamic.prepare'] === false, 'Prepare enabled before acknowledgement');
+  await visibleControl('object.dynamic.acknowledge');
   await screenshot('disclosure');
   await clickControl('object.dynamic.acknowledge');
   assert((await metrics()).layer_controls_enabled?.['object.dynamic.prepare'] === true, 'Prepare did not enable after acknowledgement');
@@ -188,6 +189,7 @@ try {
   }, 'converted adaptive mesh');
   const convertedMetrics = await metrics();
   assert(convertedMetrics.surface_attributes.uv_coordinates === 0 && convertedMetrics.surface_attributes.adaptive_detail_supported === true, 'Converted mesh metadata/capability mismatch');
+  assert(!convertedMetrics.layer_controls?.['object.dynamic.prepare'], 'Repeat conversion remains available after metadata removal');
   const after = await save('converted');
   const exact = exactVisible(before.project, after.project);
   assert(Object.values(exact).every(Boolean), `Visible mesh/channel words changed: ${JSON.stringify(exact)}`);
