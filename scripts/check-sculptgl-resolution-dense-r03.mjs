@@ -98,19 +98,22 @@ async function sample(name, info) {
   return record.state;
 }
 function displacement(row) {
+  assert(row.before.length%3===0&&row.after.length%3===0&&row.after.length>=row.before.length,'R03 invalid or shrinking position arrays');
   const changed=[];let total=0,max=0;
   for(let i=0;i<row.before.length;i+=3){
     const d=Math.hypot(row.after[i]-row.before[i],row.after[i+1]-row.before[i+1],row.after[i+2]-row.before[i+2]);
     if(d>1e-10){changed.push(i/3);total+=d;max=Math.max(max,d)}
   }
-  return {vertex_count:row.before.length/3,changed_vertices:changed.length,changed_ids_sha256:sha(Buffer.from(JSON.stringify(changed))),total_displacement:total,max_displacement:max,ids:changed};
+  return {vertex_count_before:row.before.length/3,vertex_count_after:row.after.length/3,added_vertices:(row.after.length-row.before.length)/3,changed_original_vertices:changed.length,changed_ids_sha256:sha(Buffer.from(JSON.stringify(changed))),total_original_displacement:total,max_original_displacement:max,ids:changed};
 }
 function comparePositions(label, baseline, candidate) {
   assert(baseline.before.length===candidate.before.length&&baseline.after.length===candidate.after.length,`${label} vertex count differs`);
   const a=displacement(baseline).ids, b=displacement(candidate).ids;
   let maxBeforeDelta=0,maxDelta=0;
-  for(let i=0;i<baseline.after.length;i++){
+  for(let i=0;i<baseline.before.length;i++){
     maxBeforeDelta=Math.max(maxBeforeDelta,Math.abs(baseline.before[i]-candidate.before[i]));
+  }
+  for(let i=0;i<baseline.after.length;i++){
     maxDelta=Math.max(maxDelta,Math.abs(baseline.after[i]-candidate.after[i]));
   }
   const record={label,changed_baseline:a.length,changed_candidate:b.length,changed_ids_equal:JSON.stringify(a)===JSON.stringify(b),max_before_coordinate_delta:maxBeforeDelta,max_after_coordinate_delta:maxDelta};
@@ -118,10 +121,12 @@ function comparePositions(label, baseline, candidate) {
   assert(a.length>=24&&b.length>=24&&record.changed_ids_equal&&maxBeforeDelta<=1e-5&&maxDelta<=1e-5,`${label} geometry differs ${JSON.stringify(record)}`);
 }
 {const sparse={before:Array(72).fill(0),after:Array(72).fill(0)};
- sparse.after[0]=1;assert(displacement(sparse).changed_vertices===1,'R03 sparse self-check failed');
+ sparse.after[0]=1;assert(displacement(sparse).changed_original_vertices===1,'R03 sparse self-check failed');
  const dense={before:Array(72).fill(0),after:Array(72).fill(0)};
  for(let i=0;i<24;i++)dense.after[i*3]=1;
- assert(displacement(dense).changed_vertices===24,'R03 dense self-check failed');}
+ assert(displacement(dense).changed_original_vertices===24,'R03 dense self-check failed');
+ const grown={before:Array(72).fill(0),after:Array(75).fill(0)};
+ assert(displacement(grown).added_vertices===1,'R03 topology-growth self-check failed');}
 if(process.argv.includes('--self-check')){console.log('R03 static preflight passed');process.exit(0)}
 async function contact(pointer) {
   await send('Input.dispatchMouseEvent',{type:'mouseMoved',x:pointer[0],y:pointer[1],button:'none',pointerType:'mouse',force:.5});
@@ -211,7 +216,7 @@ try {
     result.cases.push({contact:{...row,before:undefined,after:undefined,geometry:summary}});
     if(rows.reference.length)assert(JSON.stringify(pointer)===JSON.stringify(rows.reference[0].pointer),'Reference CSS contact changed between ratios');
     rows.reference.push(row);
-    assert(after.history===before.history+1&&after.selected_id===before.selected_id&&positionsAfter.length===positionsBefore.length&&change.changed_vertices>=24,`reference ${ratio} footprint below 24 vertices: ${JSON.stringify(summary)}`);
+    assert(after.history===before.history+1&&after.selected_id===before.selected_id&&change.changed_original_vertices>=24,`reference ${ratio} footprint below 24 vertices: ${JSON.stringify(summary)}`);
   }
   for(const ratio of [1,.5,2]){
     await send('Page.navigate', { url:`${base}/?obrushprofile=sculptgl` });
@@ -256,7 +261,7 @@ try {
     result.cases.push({contact:{...row,before:undefined,after:undefined,geometry:summary}});
     if(rows.obrush.length)assert(JSON.stringify(pointer)===JSON.stringify(rows.obrush[0].pointer),'OBRush CSS contact changed between ratios');
     rows.obrush.push(row);
-    assert(after.history.undo===before.history.undo+1&&JSON.stringify(after.selected)===JSON.stringify(before.selected)&&row.other_objects_equal&&change.changed_vertices>=24,`OBRush ${ratio} footprint below 24 vertices: ${JSON.stringify(summary)}`);
+    assert(after.history.undo===before.history.undo+1&&JSON.stringify(after.selected)===JSON.stringify(before.selected)&&row.other_objects_equal&&change.changed_original_vertices>=24,`OBRush ${ratio} footprint below 24 vertices: ${JSON.stringify(summary)}`);
     assert(after.sculpt?.released_strokes===before.sculpt?.released_strokes+1,`OBRush ${ratio} release count differs`);
   }
   for(const app of ['reference','obrush'])for(const row of rows[app].slice(1))comparePositions(`${app} ${row.ratio} vs 1 DPR${dpr}`,rows[app][0],row);
