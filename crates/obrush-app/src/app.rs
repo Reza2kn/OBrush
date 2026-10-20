@@ -526,11 +526,11 @@ fn browser_pen_ordinary_stroke(stroke: &ActiveStroke) -> bool {
 
 fn browser_pen_source_geometry_stroke(stroke: &ActiveStroke, source_locked: bool) -> bool {
     stroke.queued
+        && stroke.kind == BrushKind::Draw
         && stroke.source_geometry.is_some()
         && stroke.continuous.is_none()
         && stroke.locked_stamp.is_none()
         && !source_locked
-        && !matches!(stroke.kind, BrushKind::Drag)
 }
 
 fn camera_ray_at(camera: &Camera, screen: Pos2, rect: egui::Rect) -> Ray {
