@@ -1,9 +1,11 @@
 # OBrush feature parity contract
 
-**Pinch and Twist remain open:** [C328's Pinch pair](SCULPTGL_SOURCE_PINCH_C328_RESULT.md)
-failed its frozen Negative-off geometry and calibration gates; the Negative-on
-geometry nearly matched, but calibration still failed. Different admitted dab
-counts are a possible confounder, not a proven cause. [C323's Twist guard
+**Pinch and Twist remain open:** [C329's Pinch pair](SCULPTGL_SOURCE_PINCH_C329_RESULT.md)
+matched both Negative settings within `7.45e-9` XYZ and `8.73e-11` displayed
+normal difference on 45 changed vertices, with equal admitted dab counts. Its
+frozen pick-center calibration gate still failed by `2.98e-8` against a `1e-8`
+bound. The earlier [C328](SCULPTGL_SOURCE_PINCH_C328_RESULT.md) had mismatched
+dab counts and a less precise calibration. [C323's Twist guard
 analysis](SCULPTGL_SOURCE_TWIST_C323_CANDIDATE_PLAN.md) found a correctable
 first-held falloff difference, while the reference second-held result folds
 faces that OBrush's current guard protects. Neither full brush row is closed.
