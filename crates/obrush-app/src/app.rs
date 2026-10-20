@@ -481,6 +481,7 @@ struct CapturedDab {
 struct BrowserPenMove {
     pos: Pos2,
     pressure: f32,
+    source_raw: Option<(f64, [f64; 2])>,
 }
 
 const MAX_BROWSER_PEN_MOVES: usize = 256;
@@ -520,6 +521,15 @@ fn browser_pen_ordinary_stroke(stroke: &ActiveStroke) -> bool {
         && stroke.local_transform.is_none()
         && stroke.source_geometry.is_none()
         && stroke.source_paint.is_none()
+        && !matches!(stroke.kind, BrushKind::Drag)
+}
+
+fn browser_pen_source_geometry_stroke(stroke: &ActiveStroke, source_locked: bool) -> bool {
+    stroke.queued
+        && stroke.source_geometry.is_some()
+        && stroke.continuous.is_none()
+        && stroke.locked_stamp.is_none()
+        && !source_locked
         && !matches!(stroke.kind, BrushKind::Drag)
 }
 
@@ -1865,6 +1875,32 @@ impl OBrushApp {
         self.browser_pen_samples.push(BrowserPenMove {
             pos: Pos2::new(x, y),
             pressure,
+            source_raw: None,
+        });
+        self.egui_ctx.request_repaint();
+    }
+
+    /// Capture Source geometry's browser-number pressure and screen point
+    /// before egui collapses multiple held pen moves into its final position.
+    pub fn queue_browser_source_pen_move(&mut self, pressure: f64, x: f64, y: f64) {
+        if !self.stroke.as_ref().is_some_and(|stroke| {
+            browser_pen_source_geometry_stroke(
+                stroke,
+                self.preferences.tool(stroke.kind).lock_position,
+            )
+        }) || !pressure.is_finite()
+            || !(0.0..=1.0).contains(&pressure)
+            || !x.is_finite()
+            || !y.is_finite()
+            || x.abs() > 100_000.0
+            || y.abs() > 100_000.0
+        {
+            return;
+        }
+        self.browser_pen_samples.push(BrowserPenMove {
+            pos: Pos2::new(x as f32, y as f32),
+            pressure: pressure as f32,
+            source_raw: Some((pressure, [x, y])),
         });
         self.egui_ctx.request_repaint();
     }
@@ -10477,11 +10513,13 @@ impl OBrushApp {
             } else {
                 (kind, modifiers.alt)
             };
-            let replay = self
-                .stroke
-                .as_ref()
-                .is_some_and(browser_pen_ordinary_stroke)
-                && self.last_input_pen
+            let replay = self.stroke.as_ref().is_some_and(|stroke| {
+                browser_pen_ordinary_stroke(stroke)
+                    || browser_pen_source_geometry_stroke(
+                        stroke,
+                        self.preferences.tool(stroke.kind).lock_position,
+                    )
+            }) && self.last_input_pen
                 && !modifiers.shift
                 && !modifiers.ctrl
                 && !modifiers.alt
@@ -10489,6 +10527,20 @@ impl OBrushApp {
             if replay {
                 let (samples, overflowed) = self.browser_pen_samples.drain();
                 if overflowed {
+                    if let Some(session) = self
+                        .stroke
+                        .as_ref()
+                        .and_then(|stroke| stroke.source_geometry.clone())
+                    {
+                        self.reject_source_geometry(
+                            session,
+                            obrush_core::SourceGeometryError::InvalidInput,
+                        );
+                        self.message =
+                            "Source pen samples exceeded the per-frame limit; stroke cancelled."
+                                .into();
+                        return;
+                    }
                     if let Some(stroke) = self.stroke.as_mut() {
                         stroke.last_screen = None;
                         stroke.sampler.break_path();
@@ -10501,8 +10553,29 @@ impl OBrushApp {
                         break;
                     }
                     if rect.contains(sample.pos) {
-                        self.brush.pressure = sample.pressure;
-                        self.sample_stroke_to(sample.pos, rect, sample_kind, invert);
+                        if let Some((pressure, screen)) = sample.source_raw {
+                            if let Some(session) = self
+                                .stroke
+                                .as_ref()
+                                .and_then(|stroke| stroke.source_geometry.clone())
+                            {
+                                self.sample_source_geometry_pen_move(
+                                    session, sample.pos, rect, pressure, screen,
+                                );
+                            }
+                        } else {
+                            self.brush.pressure = sample.pressure;
+                            self.sample_stroke_to(sample.pos, rect, sample_kind, invert);
+                        }
+                    } else if self
+                        .stroke
+                        .as_ref()
+                        .and_then(|stroke| stroke.source_geometry.clone())
+                        .is_some()
+                    {
+                        self.interrupt_source_paint_tail("Source pen left its viewport");
+                        self.finish_stroke_deferred();
+                        break;
                     } else if let Some(stroke) = self.stroke.as_mut() {
                         stroke.last_screen = None;
                         stroke.sampler.break_path();
@@ -13477,6 +13550,7 @@ mod preference_host_tests {
             samples.push(BrowserPenMove {
                 pos: Pos2::new(x as f32, 12.0),
                 pressure: x as f32 / MAX_BROWSER_PEN_MOVES as f32,
+                source_raw: None,
             });
         }
         assert_eq!(samples.queued.len(), MAX_BROWSER_PEN_MOVES);
@@ -13489,6 +13563,7 @@ mod preference_host_tests {
         samples.push(BrowserPenMove {
             pos: Pos2::new(10.0, 20.0),
             pressure: 0.25,
+            source_raw: None,
         });
         samples.clear();
         assert!(samples.queued.is_empty());

@@ -553,7 +553,28 @@ impl OBrushApp {
         pos: Pos2,
         rect: egui::Rect,
     ) {
-        let result = self.capture_source_geometry_input(pos, rect).and_then(|i| {
+        let result = self.capture_source_geometry_input(pos, rect);
+        self.queue_source_geometry_input(session, result);
+    }
+    pub(super) fn sample_source_geometry_pen_move(
+        &mut self,
+        session: geometry::SharedSourceGeometry,
+        pos: Pos2,
+        rect: egui::Rect,
+        pressure: f64,
+        screen: [f64; 2],
+    ) {
+        let mut raw = crate::source_paint_host::RawPaintInput::default();
+        raw.receive(pressure, true, false, true, Some(screen));
+        let result = geometry::capture(&self.camera, pos, rect, &raw, self.egui_ctx.zoom_factor());
+        self.queue_source_geometry_input(session, result);
+    }
+    fn queue_source_geometry_input(
+        &mut self,
+        session: geometry::SharedSourceGeometry,
+        result: Result<geometry::SourceGeometryInput, SourceGeometryError>,
+    ) {
+        let result = result.and_then(|i| {
             session
                 .lock()
                 .map_err(|_| SourceGeometryError::StrokeBindingChanged)?
