@@ -53,6 +53,10 @@ gate for those inputs and Redo display normals.
 found identical mesh bounds but a Source center drift during overlapping reset
 timers; without the pre-fit near/zoom state, a camera correction was not
 qualified and Drag remains open.
+[C290's read-only normal-browser capture](SCULPTGL_SOURCE_DRAG_C290_RESULT.md)
+then confirmed the exact reference fit branch and nine delayed center updates,
+but the paired final-pick gate failed because OBrush's new camera transition
+had not settled. No Drag product correction was admitted.
 
 **Scoped Inflate witness:** [The C269 direct pinned-method report](SCULPTGL_INFLATE_PAIR_C269.md)
 records the reference's positive, negative and zero Float32 response on one
