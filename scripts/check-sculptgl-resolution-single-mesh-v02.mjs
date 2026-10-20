@@ -130,13 +130,20 @@ function comparePositions(label, baseline, candidate) {
   result.cases.push({geometry_comparison:record});
   assert(a.length>=24&&b.length>=24&&record.changed_ids_equal&&maxBeforeDelta<=1e-5&&maxDelta<=1e-5,`${label} geometry differs ${JSON.stringify(record)}`);
 }
+function maxNestedNumericDelta(a,b){
+  if(typeof a==='number'&&typeof b==='number')return Math.abs(a-b);
+  if(Array.isArray(a)&&Array.isArray(b)&&a.length===b.length)return Math.max(0,...a.map((v,i)=>maxNestedNumericDelta(v,b[i])));
+  if(a&&b&&typeof a==='object'&&typeof b==='object'&&JSON.stringify(Object.keys(a))===JSON.stringify(Object.keys(b)))return Math.max(0,...Object.keys(a).map(k=>maxNestedNumericDelta(a[k],b[k])));
+  return a===b?0:Infinity;
+}
 {const sparse={before:Array(72).fill(0),after:Array(72).fill(0)};
  sparse.after[0]=1;assert(displacement(sparse).changed_original_vertices===1,'V02 sparse self-check failed');
  const dense={before:Array(72).fill(0),after:Array(72).fill(0)};
  for(let i=0;i<24;i++)dense.after[i*3]=1;
  assert(displacement(dense).changed_original_vertices===24,'V02 dense self-check failed');
  const grown={before:Array(72).fill(0),after:Array(75).fill(0)};
- assert(displacement(grown).added_vertices===1,'V02 topology-growth self-check failed');}
+ assert(displacement(grown).added_vertices===1,'V02 topology-growth self-check failed');
+ assert(maxNestedNumericDelta({x:[1,2]},{x:[1,2+1e-14]})<1e-10,'V02 camera tolerance self-check failed');}
 if(process.argv.includes('--self-check')){console.log('V02 static preflight passed');process.exit(0)}
 async function contact(pointer) {
   await send('Input.dispatchMouseEvent',{type:'mouseMoved',x:pointer[0],y:pointer[1],button:'none',pointerType:'mouse',force:.5});
@@ -304,7 +311,9 @@ try {
   for(const app of ['reference','obrush'])for(const row of rows[app].slice(1))comparePositions(`${app} ${row.ratio} vs 1 DPR${dpr}`,rows[app][0],row);
   for(const app of ['reference','obrush'])for(const row of rows[app].slice(1)){
     assert(JSON.stringify(row.visual_before)===JSON.stringify(rows[app][0].visual_before),`${app} visual settings changed with ratio`);
-    assert(JSON.stringify(row.camera_before)===JSON.stringify(rows[app][0].camera_before),`${app} camera pose changed with ratio`);
+    const camera_delta=maxNestedNumericDelta(row.camera_before,rows[app][0].camera_before);
+    result.cases.push({camera_comparison:{app,ratio:row.ratio,max_coordinate_delta:camera_delta}});
+    assert(camera_delta<=1e-10,`${app} camera pose changed with ratio by ${camera_delta}`);
   }
   assert(rows.reference.every(x=>x.history_before===rows.reference[0].history_before),'Reference pre-contact history changed by resolution');
   assert(rows.obrush.every(x=>JSON.stringify(x.history_before)===JSON.stringify(rows.obrush[0].history_before)),'OBRush pre-contact history changed by resolution');
