@@ -49,6 +49,10 @@ paired position gate by `2.06e-6` and its Redo display-normal gate by
 position difference to captured camera/pick/radius inputs within f32 rounding;
 [C289](SCULPTGL_SOURCE_DRAG_C289_PREREG.md) freezes a separate causal repair
 gate for those inputs and Redo display normals.
+[Its read-only bounds check](SCULPTGL_SOURCE_DRAG_C289_BOUNDS_DIAGNOSTIC.md)
+found identical mesh bounds but a Source center drift during overlapping reset
+timers; without the pre-fit near/zoom state, a camera correction was not
+qualified and Drag remains open.
 
 **Scoped Inflate witness:** [The C269 direct pinned-method report](SCULPTGL_INFLATE_PAIR_C269.md)
 records the reference's positive, negative and zero Float32 response on one
