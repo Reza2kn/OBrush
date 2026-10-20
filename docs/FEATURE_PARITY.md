@@ -58,6 +58,12 @@ present adjacent-face folds above 90° in the original version-1 project,
 despite a valid closed mesh. The current fixed-topology Crease guard does not
 repair that damage, and generic local smoothing worsened minimum face quality.
 An opt-in constrained repair remains a proposed, unimplemented remedy.
+[The stationary Draw build gate](DRAW_STATIONARY_BUILD_GATE.md) reproduces
+the fresh-sphere plateau at the default 0.180/35% settings: the first
+unchanged same-point contact is 96, and picked height at contacts 128 and
+256 is identical. Two bounded salvage attempts and a tangent-only fairing
+trial still miss the frozen growth/quality gate; their source changes were
+discarded. An ignored failing regression retains this public-alpha blocker.
 [MRP10's persistent Worker trial](SCULPTGL_MILLION_WORKER_RESIDENCY_MRP10_RESULT.md)
 is isolated and query-gated. One Chrome Worker served two checked commits on a
 40,642-vertex sphere with exact public Save/Undo/Redo. Million-vertex pacing,

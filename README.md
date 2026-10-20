@@ -63,6 +63,14 @@ Crease now pinches more gently along the local surface, and geometry dabs fade a
 
 Draw raises a coherent surface patch and blends the directions where mirrored footprints overlap. Crease also blends mirrored directions, follows a coherent depression direction and relaxes small surface irregularities. Draw, Clay, Inflate, Flatten and Crease split long local edges after an accepted dab. Move prepares local detail before its first accepted displacement, then holds that topology and material influence fixed during the drag. Smooth, Mask and Paint retain their current topology. Local refinement preserves the piecewise-linear surface; continuous dabs use at most 1,024 added vertices per call and Move preparation uses at most 2,048. Automatic refinement is split-only. Manual decimation and voxel remeshing are separate operations; both replace any subdivision stack and can be undone. [DRAW_QUALITY.md](docs/DRAW_QUALITY.md) records the historical Draw experiments; [LONG_STROKES.md](docs/LONG_STROKES.md) records the sustained-input and Crease checks.
 
+**Current alpha limitation:** repeating default Draw at the same screen point
+eventually stops adding height, even on a fresh sphere. A [256-contact
+reproduction](docs/DRAW_STATIONARY_BUILD_GATE.md) first stops changing at
+contact 96. The mesh-quality guard prevents a worse triangle, but this is not
+the intended brush response; no safe fix has been shipped. Worked-area
+jaggedness and repair of previously folded geometry also remain open. See the
+[public-alpha gate](docs/PUBLIC_ALPHA_GATE.md) before inviting testers.
+
 Move captures radius, symmetry, alpha, facing and mask protection at the start of each gesture. Strength and pressure scale its absolute target. Shift/Ctrl tool changes or an Alt inversion change start a new undoable gesture on the current surface; they do not overwrite preceding edits. Movement outside the canvas is paused, and re-entry resumes without adding the outside travel. Larger brushes suit broad shape changes; extreme pulls with a tiny brush can be limited to protect the surface. Existing damaged geometry is not automatically repaired.
 
 [MOVE_QUALITY.md](docs/MOVE_QUALITY.md) records the reported settings, retained failures, measured Move correction and remaining range limits.
