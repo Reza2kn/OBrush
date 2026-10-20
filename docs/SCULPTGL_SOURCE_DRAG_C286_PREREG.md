@@ -74,3 +74,13 @@ Legacy Drag route must remain available and unchanged by default; a saved
 older project cannot silently select Source Drag. Keep any failed setup,
 geometry, GPU, history or stress receipt. A scoped pass does not close
 `SGL-BRUSH-DRAG` or its alpha/radius rows.
+
+The independently authored browser harness and frozen audit are
+`scripts/check-sculptgl-source-drag-c286-ui.mjs` (SHA-256
+`b560f3127450af59712776c6798bfe8c26cdd7aa6d4b0bc3f46f60b0a37c62d6`)
+and `scripts/audit-sculptgl-source-drag-c286-ui.mjs` (SHA-256
+`812fa8ec976daf9c1071146685ebfc5b7da02fcb8f1150587028960081663bbd`).
+The explicit distinct-neighborhood RGB witnesses are IDs 541 and 548; both
+must move, while protected ID 544 stays fixed. Their grid coordinates are
+(13,16) and (20,16), respectively. These inputs and witnesses are frozen
+before the first C286 browser capture.
