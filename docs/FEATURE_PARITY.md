@@ -21,6 +21,12 @@ but the OBrush brush footprint was about four times wider on screen and its
 measured image region changed 2,340 pixels versus 34 in pinned SculptGL.
 Five earlier failed setup receipts remain retained. This does not establish
 offset, brush, camera or mirror-guide parity.
+[The matched-camera C256 trace](SCULPTGL_SYMMETRY_RADIUS_C256_REPORT.md)
+located this fixture's fourfold footprint difference in synthetic mouse
+pressure handling: both browser events reported zero, but pinned SculptGL
+used a 0.25 radius factor while OBrush normalized contact to 0.5 and used
+factor 1. Geometry and pixels still differed, so no brush correction or
+parity claim follows.
 
 **Dense resolution-stroke R03:** [The paired browser report](SCULPTGL_RESOLUTION_DENSE_R03_RESULT.md)
 passed the frozen 24-changed-vertex minimum on an independent 18,242-vertex
