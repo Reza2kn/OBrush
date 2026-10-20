@@ -242,6 +242,8 @@ try {
     await until(async () => (await evaluate(refInfo))?.meshes===0, `reference ${ratio} normal Scene Reset`);
     await fileInput('#fileopen');
     await until(async () => (await evaluate(refInfo))?.meshes===1, `reference ${ratio} import`);
+    const cameraSettled=await until(async()=>{const first=await evaluate(refInfo);await pause(350);const second=await evaluate(refInfo);const delta=maxNestedNumericDelta(first?.camera_pose,second?.camera_pose);return delta<=1e-10?{first:first.camera_pose,second:second.camera_pose,max_delta:delta,wait_ms:350}:null},`reference ${ratio} camera settle after import`);
+    result.cases.push({reference_import_camera_settled:{ratio,...cameraSettled}});
     const sourceBeforeGrid=await evaluate(refInfo);
     assert(sourceBeforeGrid.visual?.grid===true,`reference ${ratio} initial Show grid was not on`);
     await clickVisibleText('Show grid');
