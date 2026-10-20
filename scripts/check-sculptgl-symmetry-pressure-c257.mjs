@@ -52,6 +52,7 @@ function rootRadiusChain(capture){
 if(process.argv.includes('--self-check')){
   const press=penEvent('mousePressed',10,20,1,0.5),move=penEvent('mouseMoved',12,20,1,0.5),release=penEvent('mouseReleased',12,20,0,0);
   insist([press,move].every(e=>e.pointerType==='pen'&&e.force===0.5&&e.buttons===1)&&release.force===0&&release.buttons===0,'C257 pen-event contract self-check failed');
+  insist(assertHeldPenEvents([{type:'pointermove',buttons:1,pressure:0,pointerType:'pen',trusted:true},{type:'pointerdown',buttons:1,pressure:0.5,pointerType:'pen',trusted:true},{type:'pointermove',buttons:1,pressure:0.5,pointerType:'pen',trusted:true}],'self-check').length===2,'C257 pre-contact hover was counted as a held event');
   const m=[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],vp=[0,0,100,100],world=[0.1,-0.2,0.3],p=project64(m,vp,world),again=unproject64(inverse4(m),vp,p);
   insist(world.every((v,i)=>close(v,again[i])),'C257 project/inverse self-check failed');
   const moved=unproject64(inverse4(m),vp,[p[0]+20,p[1],p[2]]);
@@ -175,7 +176,9 @@ async function heldStroke(points){
 }
 function validatePath(points,rect,label){insist(points.every(([x,y])=>Number.isFinite(x)&&Number.isFinite(y)&&x>rect[0]+2&&x<rect[2]-2&&y>rect[1]+2&&y<rect[3]-2),`${label} projected path outside sculpt canvas ${JSON.stringify({points,rect})}`);}
 function assertHeldPenEvents(events,label){
-  const held=events.filter(e=>(e.type==='pointerdown'||e.type==='pointermove')&&e.buttons===1);
+  const down=events.findIndex(e=>e.type==='pointerdown'&&e.buttons===1);
+  insist(down>=0,`${label} missing trusted held pen down`);
+  const held=events.slice(down).filter(e=>(e.type==='pointerdown'||e.type==='pointermove')&&e.buttons===1);
   insist(held.some(e=>e.type==='pointerdown')&&held.some(e=>e.type==='pointermove'),`${label} missing trusted held pen down/move`);
   insist(held.every(e=>e.trusted&&e.pointerType==='pen'&&Math.abs(e.pressure-0.5)<=1e-6),`${label} held pen was not trusted pressure 0.5: ${JSON.stringify(held)}`);
   return held.map(e=>({type:e.type,pointerType:e.pointerType,pressure:e.pressure,x:e.x,y:e.y}));
