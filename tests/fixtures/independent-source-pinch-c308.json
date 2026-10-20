@@ -1,0 +1,13 @@
+{
+  "source": "Independent Python-authored SGL v3; no SculptGL or OBrush encoder",
+  "license": "CC0",
+  "fixture": "tests/fixtures/independent-source-pinch-c308.sgl",
+  "bytes": 160324,
+  "sha256": "f864eb78bf6f280c92fcaa3debcaa406c9839a82e861d213e396233ac6269144",
+  "grid_side": 49,
+  "vertices": 2401,
+  "triangles": 4608,
+  "protected_rgb_id": 1201,
+  "half_unprotected_rgb_id": 1202,
+  "z_formula": "0.028 + 0.009*sin(8*x+2*y) + 0.006*cos(6*y-x)"
+}
