@@ -14,6 +14,8 @@ pub enum SceneGeometryFormat {
     ObjSculptGl(ObjColorOptions),
     Ply(PlyEncoding),
     PlySculptGl,
+    /// The payload SculptGL sends to Sketchfab: binary PLY with Y/Z reoriented.
+    PlySketchfab,
     Stl(StlEncoding),
     StlSculptGl,
 }
@@ -48,6 +50,7 @@ pub struct SceneGeometryReport {
     pub maximum_color_error: f64,
     pub maximum_material_error: f64,
     pub maximum_mask_error: f64,
+    pub reoriented_for_sketchfab_vertices: usize,
 }
 
 #[derive(Clone, Debug)]
@@ -307,6 +310,7 @@ fn obj_with_source_colors(
 fn ply_with_source_colors(
     parts: &[(String, Mesh)],
     report: &mut SceneGeometryReport,
+    sketchfab_axes: bool,
 ) -> Result<Vec<u8>, String> {
     let mut vertices = 0_usize;
     let mut faces = 0_usize;
@@ -373,7 +377,9 @@ fn ply_with_source_colors(
     output.extend_from_slice(header.as_bytes());
     for (_, mesh) in parts {
         for (position, color) in mesh.positions.iter().zip(&mesh.colors) {
-            for component in position.to_array() {
+            let [x, y, z] = position.to_array();
+            let coordinates = if sketchfab_axes { [x, -z, y] } else { [x, y, z] };
+            for component in coordinates {
                 output.extend_from_slice(&component.to_le_bytes());
             }
             for &component in color {
@@ -386,6 +392,9 @@ fn ply_with_source_colors(
                 (f64::from(byte(component)) / 255.0 - f64::from(component)).abs() > 0.0
             }));
         }
+    }
+    if sketchfab_axes {
+        report.reoriented_for_sketchfab_vertices = vertices;
     }
     let mut offset = 0_u32;
     for (_, mesh) in parts {
@@ -508,6 +517,7 @@ impl Document {
                 SceneGeometryFormat::Obj
                     | SceneGeometryFormat::ObjSculptGl(_)
                     | SceneGeometryFormat::PlySculptGl
+                    | SceneGeometryFormat::PlySketchfab
             );
             let preserve_uv = matches!(
                 format,
@@ -609,7 +619,12 @@ impl Document {
                 obj_with_source_colors(&parts, options, &mut report)?
             }
             SceneGeometryFormat::Ply(encoding) => joined_mesh(&parts)?.to_ply(encoding)?,
-            SceneGeometryFormat::PlySculptGl => ply_with_source_colors(&parts, &mut report)?,
+            SceneGeometryFormat::PlySculptGl => {
+                ply_with_source_colors(&parts, &mut report, false)?
+            }
+            SceneGeometryFormat::PlySketchfab => {
+                ply_with_source_colors(&parts, &mut report, true)?
+            }
             SceneGeometryFormat::Stl(encoding) => joined_mesh(&parts)?.to_stl(encoding)?,
             SceneGeometryFormat::StlSculptGl => joined_mesh(&parts)?.to_stl_sculptgl()?,
         };
@@ -628,6 +643,61 @@ mod tests {
     #[test]
     fn source_obj_quantization_uses_binary64_multiply_at_half_step() {
         assert_eq!(byte(f32::from_bits(0x3f01_0101)), 128);
+    }
+
+    #[test]
+    fn sketchfab_ply_reorients_all_parts_without_mutating_the_scene() {
+        let input = include_bytes!("../tests/fixtures/independent-sketchfab-axis.obj");
+        let mesh = Mesh::import_obj(input).unwrap().mesh;
+        let mut document = Document::new(mesh.snapshot());
+        document.add_subtool(mesh, "second").unwrap();
+        let before = document.to_json().unwrap();
+        let normal = document
+            .export_scene_geometry(
+                SglExportScope::AllScene,
+                SceneGeometryFormat::PlySculptGl,
+                AttributeExportPolicy::RejectLoss,
+            )
+            .unwrap();
+        let sketchfab = document
+            .export_scene_geometry(
+                SglExportScope::AllScene,
+                SceneGeometryFormat::PlySketchfab,
+                AttributeExportPolicy::RejectLoss,
+            )
+            .unwrap();
+        assert_eq!(sketchfab.report.parts, 2);
+        assert_eq!(sketchfab.report.reoriented_for_sketchfab_vertices, 6);
+        assert_eq!(normal.report.reoriented_for_sketchfab_vertices, 0);
+        assert_eq!(sketchfab.bytes.len(), normal.bytes.len());
+        let header_end = sketchfab
+            .bytes
+            .windows(b"end_header\n".len())
+            .position(|window| window == b"end_header\n")
+            .unwrap()
+            + b"end_header\n".len();
+        assert_eq!(&sketchfab.bytes[..header_end], &normal.bytes[..header_end]);
+        let body = &sketchfab.bytes[header_end..];
+        for (vertex, expected) in [
+            [1.0_f32, -3.0, 2.0],
+            [-4.0, 6.0, 5.0],
+            [7.0, -9.0, -8.0],
+        ]
+        .into_iter()
+        .enumerate()
+        {
+            let row = &body[vertex * 15..vertex * 15 + 12];
+            let actual = std::array::from_fn::<_, 3, _>(|axis| {
+                f32::from_le_bytes(row[axis * 4..axis * 4 + 4].try_into().unwrap())
+            });
+            assert_eq!(actual, expected);
+        }
+        assert_eq!(&body[12..15], &[255, 0, 0]);
+        assert_eq!(&body[27..30], &[0, 255, 0]);
+        assert_eq!(&body[42..45], &[0, 0, 255]);
+        assert_eq!(&body[..45], &body[45..90]);
+        assert_eq!(&sketchfab.bytes[header_end + 90..], &normal.bytes[header_end + 90..]);
+        assert_eq!(document.to_json().unwrap(), before);
     }
 
     #[test]
@@ -954,7 +1024,9 @@ mod tests {
                     assert!(!text.contains("o mesh_2\n"));
                     Mesh::import_obj(&selected.bytes).unwrap().mesh
                 }
-                SceneGeometryFormat::Ply(_) | SceneGeometryFormat::PlySculptGl => {
+                SceneGeometryFormat::Ply(_)
+                | SceneGeometryFormat::PlySculptGl
+                | SceneGeometryFormat::PlySketchfab => {
                     Mesh::import_ply(&selected.bytes).unwrap().mesh
                 }
                 SceneGeometryFormat::Stl(_) | SceneGeometryFormat::StlSculptGl => {

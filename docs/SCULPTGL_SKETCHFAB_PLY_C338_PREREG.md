@@ -1,0 +1,18 @@
+# C338: offline Sketchfab PLY payload — preregistered consumer gate
+
+Pinned source: `stephomi/sculptgl` commit `8e45dafc0f7906e5238dfffc1a2df742bd25f29d`. SHA-256: `GuiFiles.js` `d7e4055e0cb20ff47fd29da9bd8380bf8d17020197c0b19f4cc2a9364d34263a`; `ExportSketchfab.js` `c0bc503f4357371fde96bbb700c6c2a7d728b43dd48380dc401ca910258c0f0e`; `ExportPLY.js` `34ade5bd4160078be27ec51161dcc0a0f919dab63531b2189280f22e1cc9fd49`.
+
+The pinned File menu's Sketchfab action selects **all** scene meshes independently of File > Export all. Its upload constructs `yourMesh.ply` using `ExportPLY.exportBinaryPLY(main.getMeshes(), { swapXY: true })`, wraps that in `sculptglModel.zip`, authenticates, and posts to Sketchfab. The `swapXY` branch writes `(x, -z, y)` and leaves vertex colors and face indices unchanged. A normal PLY export writes `(x, y, z)`. The pinned writer has a fixed little-endian body and trailing zero allocation after face bytes. This is source evidence, not an account-upload result.
+
+OBRush candidate: the ordinary SculptGL-profile File panel gets **Export Sketchfab-ready PLY (all parts)**. It downloads a bounded `.sketchfab.ply` payload from the shared Rust `Document::export_scene_geometry(AllScene, PlySketchfab, policy)` path. It obeys the File panel's explicit attribute-loss policy, reports transformed vertex count, and leaves the scene/history untouched. It does **not** authenticate, ZIP, POST, poll or publish. The label and completion notice say to upload the local file manually. This closes only the offline payload portion of `SGL-EXTERNAL-SKETCHFAB`.
+
+Independent fixture: `crates/obrush-core/tests/fixtures/independent-sketchfab-axis.obj`, SHA-256 `40c2e631c25f2014f4ab7f2aee74a0c836e91432af682682ec86c0eae7d8097b`. Three colored vertices deliberately use all three axes and signs: `(1,2,3)` red, `(-4,5,-6)` green, `(7,-8,9)` blue. It has one triangle and is duplicated as a second scene part for the all-scene scope check. Source and OBrush must receive the **same bytes**; no stored proprietary output is a fixture.
+
+Consumer gate once the shared runtime lane is available:
+
+1. Run format, workspace tests, strict native/WASM Clippy, WASM build, and normal browser smoke. Preserve failures. Core test checks exact binary positions `(1,-3,2)`, `(-4,6,5)`, `(7,-9,-8)`, RGB bytes, face payload, output bound and exact own-project JSON before/after.
+2. In a fresh OBrush SculptGL-profile browser, File > Add the fixture twice, change the File panel's selected-only scope to on, then click **Export Sketchfab-ready PLY (all parts)** with loss allowed if the imported scene requires it. Capture the actual downloaded bytes, PLY header/counts/positions/color/face indices, filename, UI notice and before/after `.obrush` Save hash. Expected: six vertices and two faces despite selected-only; no scene/history change.
+3. For a paired pinned-source payload, load the same fixture twice through SculptGL's normal File Add, invoke the visible Sketchfab action with the OAuth/post boundary stubbed so no account or network request happens, and capture the `yourMesh.ply` member before `xhr.send`. Compare decoded vertex f32 words, RGB bytes, indices, header, padding and total length. If this browser interception cannot be demonstrated, retain the result as an OBrush-only gate and do not claim paired parity.
+4. Negative controls: zero-part scene and loss-reject case leave project/downloads unchanged. A normal PLY download from the same scene must retain original axes. Never use live credentials or attempt publication in this gate.
+
+Remaining gap: real Sketchfab login, ZIP and API upload, cancellation, processing results and service support are unverified. An account-authorized end-to-end comparison is separate.

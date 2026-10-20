@@ -6735,6 +6735,37 @@ impl OBrushApp {
         self.export_file_as(self.export_format);
     }
 
+    fn export_sketchfab_ply(&mut self) {
+        self.finish_stroke();
+        if self.stroke_rejected {
+            return;
+        }
+        let policy = if self.export_allow_attribute_loss {
+            AttributeExportPolicy::AllowAndReport
+        } else {
+            AttributeExportPolicy::RejectLoss
+        };
+        match self.document.export_scene_geometry(
+            obrush_core::SglExportScope::AllScene,
+            obrush_core::SceneGeometryFormat::PlySketchfab,
+            policy,
+        ) {
+            Ok(export) => {
+                let report = export.report;
+                self.last_export_report = Some(report.attributes.clone());
+                self.last_scene_geometry_report = Some(report.clone());
+                self.write_file_contents(export.bytes, "sketchfab.ply", false);
+                if cfg!(target_arch = "wasm32") {
+                    self.message = format!(
+                        "Exported Sketchfab-ready PLY: {} parts, {} reoriented vertices. Upload the downloaded file in your Sketchfab account.",
+                        report.parts, report.reoriented_for_sketchfab_vertices
+                    );
+                }
+            }
+            Err(error) => self.message = format!("Sketchfab PLY export failed: {error}"),
+        }
+    }
+
     fn export_file_as(&mut self, format: ExportFormat) {
         self.finish_stroke();
         if self.stroke_rejected {
@@ -9838,6 +9869,16 @@ impl OBrushApp {
         self.track_layer_control("file.export_mesh", &exports.active);
         if exports.active.clicked() {
             self.export_mesh();
+        }
+        if self.app_preferences.shortcut_profile
+            == crate::app_preferences::PreferenceProfile::SculptGl
+        {
+            let sketchfab = ui.button("Export Sketchfab-ready PLY (all parts)")
+                .on_hover_text("Downloads a color PLY with SculptGL's Sketchfab axis orientation. Upload it from your Sketchfab account; this does not publish anything.");
+            self.track_layer_control("file.export_sketchfab_ply", &sketchfab);
+            if sketchfab.clicked() {
+                self.export_sketchfab_ply();
+            }
         }
         self.uv_bake_panel(ui);
         inspector_layout::prose(
