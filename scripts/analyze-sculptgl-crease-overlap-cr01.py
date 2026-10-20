@@ -19,7 +19,9 @@ def analyze(receipt_path):
     fourth = Image.open(directory / f'{side}-stroke-4.png').convert('RGB')
     x, y = center
     bounds = (math.floor(x-radius), math.floor(y-radius), math.ceil(x+radius), math.ceil(y+radius))
-    background = baseline.getpixel((300, 500))
+    # Same renderer background sampled outside the unit sphere in the retained CR01 baseline.
+    # The CR02 close view fills the canvas, so its own (300, 500) lies on the sculpt.
+    background = (50, 50, 50) if data['frozen']['pixel_roi_radius'] == 220 else baseline.getpixel((300, 500))
     total = sum_sq = max_abs = leaks_before = leaks_after = changed = 0
     for row in range(bounds[1], bounds[3]):
         for col in range(bounds[0], bounds[2]):
