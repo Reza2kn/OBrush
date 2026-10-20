@@ -1,0 +1,5 @@
+# C319 selection-baseline browser run: harness membership failure
+
+On the unchanged integrated DPR product (`3644908`, portable WASM SHA-256 `a3a7503ced76fecf7dee2e8270a1c655b3eafad543053fb80e1887a806743967`), the frozen C319 harness passed normal sphere selection and visible Save/slider actions at DPR1/2, then failed its selection-stability assertion. It correctly compared against post-selection sphere ID1, but its `states` array still included the pre-selection imported-tetra ID3. That first member necessarily failed `ID3==ID1`. This is a harness membership error, not evidence of a product selection mutation; C319 remains failed and is not silently rescored.
+
+DPR1 receipt `.artifacts/sculptgl-dpr-input-c319/68f144ad-ae54-4648-b1e7-388f6efc46c8/result.json` SHA-256 `ade2297180d36b45960463a8813e540e037ceb4e95d03b8b40cb4d0892d37f30`; DPR2 receipt `.artifacts/sculptgl-dpr-input-c319/a5f13339-2904-4c8e-bfdd-c6c7d1b53ef0/result.json` SHA-256 `2a38624f869f7b5500996fca06ef10b1af44e00609395798215b78b0e2fca62d`. No mouse/pen geometry or complete color/depth allocation gate is claimed.
