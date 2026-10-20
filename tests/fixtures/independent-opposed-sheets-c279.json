@@ -1,0 +1,30 @@
+{
+  "source": "Independent Python-authored SGL v3; no SculptGL or OBrush encoder",
+  "license": "CC0",
+  "fixture": "tests/fixtures/independent-opposed-sheets-c279.sgl",
+  "bytes": 57512,
+  "sha256": "80b6430b152aad76fface01e9bf4890fdd525b2d9f11c60cd74e6c1b021d876b",
+  "grid_side": 21,
+  "vertices": 882,
+  "triangles": 1600,
+  "front_vertex_ids": [
+    0,
+    440
+  ],
+  "back_vertex_ids": [
+    441,
+    881
+  ],
+  "front_z": 0.02,
+  "back_z": 0.0,
+  "front_normal": [
+    0,
+    0,
+    1
+  ],
+  "back_normal": [
+    0,
+    0,
+    -1
+  ]
+}
