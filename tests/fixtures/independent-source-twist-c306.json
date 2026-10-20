@@ -1,0 +1,13 @@
+{
+  "source": "Independent Python-authored SGL v3; no SculptGL or OBrush encoder",
+  "license": "CC0",
+  "fixture": "tests/fixtures/independent-source-twist-c306.sgl",
+  "bytes": 72132,
+  "sha256": "a2d6b8a12528bc170581705f7fb270dd82ead0e2f974983c207e99b7509cae4e",
+  "grid_side": 33,
+  "vertices": 1089,
+  "triangles": 2048,
+  "protected_rgb_id": 543,
+  "half_unprotected_rgb_id": 577,
+  "z_formula": "0.02 + 0.009*sin(6*x-1.3*y) + 0.003*cos(9*y)"
+}
