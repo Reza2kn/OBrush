@@ -135,7 +135,11 @@ predicate on an opposed-sheet/zero-normal fixture, with exact core Undo/Redo.
 [The C280 pinned opposed-sheet pair](SCULPTGL_BRUSH_CULLING_C280_RESULT.md)
 confirmed back-sheet protection with Culling on, but failed its frozen paired
 front-geometry gate by `3.12e-6` at a second held move on a shared triangle
-edge. Direct picked-face evidence is pending; the full gate remains open.
+edge. [C281](SCULPTGL_BRUSH_CULLING_C281_RESULT.md) directly observed a
+different adjacent-face pick on a fresh run, and [C282's interior-face
+pair](SCULPTGL_BRUSH_CULLING_C282_RESULT.md) matched on/off geometry and
+history within `1.12e-8` but failed its frozen press/early-held pick-report
+availability gate. The full Culling row remains open.
 
 **Seed-only Source Worker state seam:** [The retained seed witness](SOURCE_WORKER_RETAINED_SEED_SEAM.md)
 checks a fixed 112-byte cross-realm packet and exact later-dab reconstruction
