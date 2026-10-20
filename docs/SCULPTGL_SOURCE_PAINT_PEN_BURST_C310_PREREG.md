@@ -22,8 +22,11 @@ including previously applied paint, pending work, color display state and its
 open history snapshot. Do not silently coalesce or commit a partial stroke.
 
 Use the same 1024×768 CSS viewport, DPR 1 and 100% UI scale for each side.
-Set normal Paint's visible RGB swatch to an authored non-default color and
-record its exact UI value. Use a 64-pixel radius and 25% intensity, with
+Use the pinned reference Paint swatch `[1.0, 0.766, 0.336]`; set those three
+values through OBrush's visible numeric color controls and record them. The
+original non-default-color proposal was corrected before the first run because
+the pinned reference has no numeric color control in this harness. Use a
+64-pixel radius and 25% intensity, with
 radius pressure factor 0 and intensity pressure factor 1. Turn mirror,
 alpha, material channels, Lock and Continuous off. Use the same view, first
 effective contact and geometry-bearing screen path in four independent
@@ -50,9 +53,16 @@ GPU/file correspondence and no post-release edits.
 
 Negative controls: a 257-move burst must report an overflow and restore exact
 pre-gesture `.obrush` bytes, Undo/Redo depths and paint display state; a
-normal mouse stroke at default pressure must match the unmodified baseline
-under the same fixture and path. If the reference fails to admit both useful
+normal mouse stroke at default pressure remains a separate regression check,
+not evidence from this paired synthetic-pen harness. If the reference fails to admit both useful
 moves, preserve the failed paired receipt and report only an OBrush input
 diagnostic. Synthetic trusted CDP pen events cannot establish physical stylus
 delivery, native pressure, arbitrary brushes, transformed canvas behavior,
 long-session responsiveness or complete SculptGL/ZBrush parity.
+
+Frozen harnesses (SHA-256, computed before first runtime check):
+
+- `scripts/check-sculptgl-source-paint-pen-burst-c310.mjs`: ee18eee4071fb378bb64810dd98c69f64681757752f830549b458ab88c0a8219
+- `scripts/audit-sculptgl-source-paint-pen-burst-c310.mjs`: a03ffeca94483d545a000e036bd6d0823ffd4af2e68d3dc4ba0391da3da4e47b
+- `scripts/source-paint-c310-webgl1-colors.js`: a3d24f1ac3e308006c887b4aa91d3add37fecb855937de774dd2066bcec1a1c8
+- `scripts/source-paint-c310-webgl2-colors.js`: 9a787401f6a0efcbd30bf63e461f9d0e0ce4d8838057bcdb9fa8b7c67058d411
