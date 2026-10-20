@@ -155,12 +155,19 @@ const importFile = async (file, expectedVertices) => {
   throw Error('Public import timeout: '+file);
 };
 const settings = async () => {
-  await click([43,291]);
+  const controls=await evaluate('window.obrushBrushMetrics().morph_controls');
+  const move=controls['brush.move'];
+  if(!move)throw Error('Visible Move tile absent from UI hit rects');
+  await click([(move[0]+move[2])/2,(move[1]+move[3])/2]);
+  if((await evaluate('window.obrushBrushMetrics().kind'))!=='Move')throw Error('Visible Move tile did not select Move');
   const radiusTarget=.037,strengthTarget=.79;
-  // Geometry of these public controls was inspected at this viewport size in
-  // the frozen 0.1.6 layout. Read the accepted app value after every click.
-  for(const [key,y,target,tolerance] of [['radius',428,radiusTarget,.00011],['strength',489,strengthTarget,.0011]]) {
-    let low=20,high=192;
+  // Use the painted egui control rectangles rather than historical fixed
+  // coordinates; the brush list grows as tools are added.
+  for(const [key,target,tolerance] of [['radius',radiusTarget,.00011],['strength',strengthTarget,.0011]]) {
+    const rect=(await evaluate('window.obrushBrushMetrics().morph_controls'))[`settings.${key}`];
+    if(!rect)throw Error(`Visible ${key} slider absent from UI hit rects`);
+    const y=(rect[1]+rect[3])/2;
+    let low=rect[0]+1,high=rect[2]-1;
     for(let attempt=0;attempt<14;attempt++) {
       await click([(low+high)/2,y]);
       const value=(await evaluate('window.obrushBrushMetrics()'))[key];
@@ -169,7 +176,7 @@ const settings = async () => {
     }
   }
   const accepted=await evaluate('window.obrushBrushMetrics()');
-  if(accepted.kind!=='Move'||Math.abs(accepted.radius-radiusTarget)>.00011||Math.abs(accepted.strength-strengthTarget)>.0011||!accepted.symmetry_x) throw Error('Actual UI settings differ: '+JSON.stringify(accepted));
+  if(accepted.kind!=='Move'||Math.abs(accepted.radius-radiusTarget)>.00011||Math.abs(accepted.strength-strengthTarget)>.0011||!accepted.symmetry_x) throw Error('Actual UI settings differ: '+JSON.stringify({kind:accepted.kind,radius:accepted.radius,strength:accepted.strength,symmetry_x:accepted.symmetry_x,controls:accepted.morph_controls}));
   await evaluate('document.getElementById("obrush_canvas").focus()');
   return accepted;
 };
