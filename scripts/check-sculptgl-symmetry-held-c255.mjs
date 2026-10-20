@@ -26,7 +26,7 @@ const result = {
   build: { base_commit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), wasm_sha256: sha(await readFile(path.join(web, 'pkg/obrush_app_bg.wasm'))) },
   fixture: { sha256: sha(fixture), bytes: fixture.length },
   harness_sha256: sha(await readFile(new URL(import.meta.url))),
-  frozen: { offset: 0.5, local_path: [[3.93,-1.95,0],[3.92,-1.96,0],[3.91,-1.97,0]], radius: 50, intensity: 0.5, pixel_channel_threshold: 4, pixel_roi_radius: 90, min_changed_pixels: 20 },
+  frozen: { offset: 0.5, local_path: [[3.93,-1.95,0],[3.92,-1.96,0],[3.91,-1.97,0]], radius: 250, intensity: 0.5, pixel_channel_threshold: 4, pixel_roi_radius: 90, min_changed_pixels: 20 },
   cases: [], screenshots: [], errors: [], status: 'running',
 };
 let server, chrome, socket, session, next = 0;
@@ -120,8 +120,8 @@ async function heldStroke(points){
   for(let i=0;i<4;i++)await frame();await pause(120);
 }
 function validatePath(points,rect,label){insist(points.every(([x,y])=>Number.isFinite(x)&&Number.isFinite(y)&&x>rect[0]+2&&x<rect[2]-2&&y>rect[1]+2&&y<rect[3]-2),`${label} projected path outside sculpt canvas ${JSON.stringify({points,rect})}`);}
-async function exactNumber(key,value){
-  const rect=await visibleControl(key);await click(rect);
+async function enterNumber(rect,value){
+  await click(rect);
   await send('Input.dispatchKeyEvent',{type:'rawKeyDown',key:'a',code:'KeyA',windowsVirtualKeyCode:65,modifiers:4,commands:['selectAll']});
   await send('Input.dispatchKeyEvent',{type:'keyUp',key:'a',code:'KeyA',windowsVirtualKeyCode:65,modifiers:4});
   await send('Input.insertText',{text:String(value)});
@@ -216,10 +216,11 @@ try {
   insist(Math.abs(result.reference_mirror_pick_half.point[0]-2.5) < 1e-5, 'Reference reflected hit X differs from authored triangle center');
   insist(!result.reference_mirror_pick_zero.hit, 'Reference zero-offset mirror ray unexpectedly hit at the fixed nonzero ray');
 
+  await sourceRadius(result.frozen.radius);
   const localPath=result.frozen.local_path;
   const refPath=await evaluate(`(()=>{const a=window.__sculptglReferenceInstance,m=a.getMesh(),cam=a.getCamera(),r=a.getCanvas().getBoundingClientRect(),p=${JSON.stringify(localPath)};return p.map(v=>{const q=m.getMatrix(),w=[q[0]*v[0]+q[4]*v[1]+q[8]*v[2]+q[12],q[1]*v[0]+q[5]*v[1]+q[9]*v[2]+q[13],q[2]*v[0]+q[6]*v[1]+q[10]*v[2]+q[14]],s=cam.project(w);return [r.left+s[0],r.top+s[1]]})})()`);
   result.reference_path=refPath;validatePath(refPath,referenceHalf.info.canvas_rect,'Reference');
-  insist(referenceHalf.info.tool.symmetry && referenceHalf.info.tool.index===0 && referenceHalf.info.tool.radius===50 && referenceHalf.info.tool.intensity===0.5 && [0,'None'].includes(referenceHalf.info.tool.alpha) && !referenceHalf.info.tool.continuous,'Reference held-stroke controls differ');
+  insist(referenceHalf.info.tool.symmetry && referenceHalf.info.tool.index===0 && (await evaluate(refInfo)).tool.radius===result.frozen.radius && referenceHalf.info.tool.intensity===0.5 && [0,'None'].includes(referenceHalf.info.tool.alpha) && !referenceHalf.info.tool.continuous,'Reference held-stroke controls differ');
   await parkCursor();const refBeforePng=await screenshot('reference-held-before');
   const refEventIndex=await evaluate('window.__symmetryPair.events.length');
   result.reference_vertices_before=Array.from((await evaluate(refInfo)).objects[referenceHalf.info.active].small_positions);
@@ -261,6 +262,7 @@ try {
     const sourceMode = await sample('obrush-source-mode', ownInfo);
     insist(sourceMode.info.mode === 'SourceOrdinary', 'OBRush Source mode could not be selected after mask conversion');
     await exactNumber('source_geometry.mirror.offset.value',0.5);
+    await exactNumber('source_geometry.radius.value',result.frozen.radius);
     const ownHalf = await sample('obrush-half', ownInfo);
     result.diagnostic = { reference: referenceHalf.info, obrush_before: ownZero.info, obrush_after: ownHalf.info, converted: converted.info };
     insist(ownHalf.info.offset === 0.5, `OBRush exact normalized offset differs: ${ownHalf.info.offset}`);
@@ -281,7 +283,7 @@ try {
     const cam=rootMetrics.camera,vp=cam.viewport;
     const rootPath=localPath.map(([x,y,z])=>{const q=cam.view_projection,p=[x,y,z+0.5,1],clip=[0,1,2,3].map(row=>q[row]*p[0]+q[4+row]*p[1]+q[8+row]*p[2]+q[12+row]*p[3]);return [vp[0]+(clip[0]/clip[3]+1)*(vp[2]-vp[0])/2,vp[1]+(1-clip[1]/clip[3])*(vp[3]-vp[1])/2]});
     result.obrush_path=rootPath;validatePath(rootPath,vp,'OBRush');
-    insist(rootMetrics.display_flags.brush_symmetry_enabled && rootMetrics.kind==='Draw' && [null,'None'].includes(rootMetrics.alpha) && !rootMetrics.continuous?.requested && ownHalf.info.mode==='SourceOrdinary' && rootMetrics.source_geometry.per_tool[0].radius===50 && rootMetrics.source_geometry.per_tool[0].options.intensity===0.5 && rootMetrics.source_geometry.per_tool[0].radius_factor===0.75,'OBRush held-stroke controls differ');
+    insist(rootMetrics.display_flags.brush_symmetry_enabled && rootMetrics.kind==='Draw' && [null,'None'].includes(rootMetrics.alpha) && !rootMetrics.continuous?.requested && ownHalf.info.mode==='SourceOrdinary' && rootMetrics.source_geometry.per_tool[0].radius===result.frozen.radius && rootMetrics.source_geometry.per_tool[0].options.intensity===0.5 && rootMetrics.source_geometry.per_tool[0].radius_factor===0.75,'OBRush held-stroke controls differ');
     await parkCursor();const ownBeforePng=await screenshot('obrush-held-before');
     const ownEventIndex=await evaluate('window.__symmetryPair.events.length');
     result.obrush_held_before=await evaluate(ownInfo);
