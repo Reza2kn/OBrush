@@ -48,6 +48,12 @@ found why: the pinned pen route restarts at its first held move, leaving
 less than the 37.5 CSS-pixel dab spacing; a matched-pressure mouse route
 admitted a mirrored reference dab. OBrush has not yet been paired to that
 mouse route, and symmetry parity remains open.
+[C259's matched mouse-pressure pair](SCULPTGL_SYMMETRY_MOUSE_PRESSURE_C259_REPORT.md)
+then admitted one held Draw dab in both normal browsers on an independent
+three-vertex fixture with SymOffset +0.5. Its maximum active-position
+component difference was 5.48e-5 local units, inside the frozen 0.005
+candidate bound, and both had a mirrored edit. This narrow geometry result
+does not score cross-app appearance or close the full symmetry/Draw rows.
 
 **Dense resolution-stroke R03:** [The paired browser report](SCULPTGL_RESOLUTION_DENSE_R03_RESULT.md)
 passed the frozen 24-changed-vertex minimum on an independent 18,242-vertex
