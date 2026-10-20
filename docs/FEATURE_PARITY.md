@@ -65,6 +65,10 @@ qualified and Drag remains open.
 then confirmed the exact reference fit branch and nine delayed center updates,
 but the paired final-pick gate failed because OBrush's new camera transition
 had not settled. No Drag product correction was admitted.
+[C293's settled-camera preflight](SCULPTGL_SOURCE_DRAG_C293_PREFLIGHT_RESULT.md)
+passes paired projection, all four rays, radius, independent picks and
+read-only Save/GPU/history checks; a held-stroke geometry and Redo-normal
+comparison is still required before a Drag candidate can be admitted.
 
 **Scoped Inflate witness:** [The C269 direct pinned-method report](SCULPTGL_INFLATE_PAIR_C269.md)
 records the reference's positive, negative and zero Float32 response on one
