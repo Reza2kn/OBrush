@@ -19,10 +19,9 @@ existing grid display settings unchanged; record them across all ratios.
 The pixel analyzer continues to save the untouched full screenshots and
 full CSS scene crops. For **Source only**, the segmentation input excludes
 the bottom 10% of the scene crop (`y >= floor(0.90 * height)`), which contains
-the observed floor-grid strip. First assert that every non-background sphere
-pixel in the central x-band (`0.30w..0.70w`) belongs to a main connected
-component whose lower bounding edge is strictly above `0.85h`, and that the
-contact center is within the retained area; otherwise V03 fails segmentation.
+the observed floor-grid strip. Require the selected main component's lower
+bounding edge to be strictly above `0.85h` and its contact center to be in
+the retained area; otherwise V03 fails segmentation.
 For OBrush, use the complete scene crop, including its grid. The Source mask
 outside its retained area is fixed false for all before/after/stable images
 at every ratio and DPR; static/color regions and silhouette distances use
