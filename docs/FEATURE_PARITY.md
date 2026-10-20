@@ -1,5 +1,11 @@
 # OBrush feature parity contract
 
+**Native consumer smoke:** [the 2026-10-20 packaged macOS run](NATIVE_UI_SMOKE_2026_10_20.md)
+verified one visible Draw gesture with 834 changed vertices, byte-exact
+public Undo/Redo saves, and byte-exact project reopen/save. This does not
+establish the native brush family, pressure, performance, SculptGL, or ZBrush
+gates.
+
 **Current scoped additions, full rows open:** [C334](SCULPTGL_CAMERA_PICKED_PIVOT_C334_STATIC_RESULT.md)
 adds picked orbit pivots in Source framing. Authored-mesh normal-browser checks
 in OBrush and pinned SculptGL matched independent integer-pixel ray hits within
