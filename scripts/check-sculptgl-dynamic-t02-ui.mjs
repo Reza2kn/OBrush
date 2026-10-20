@@ -21,7 +21,7 @@ const result = {
     || execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
   build_wasm_sha256: sha(await readFile(path.join(web, 'pkg/obrush_app_bg.wasm'))),
   fixture: { path: fixture, bytes: fixtureBytes.length, sha256: sha(fixtureBytes) },
-  status: 'running', controls: [], saves: [], screenshots: [], errors: [], exceptions: [],
+  status: 'running', controls: [], saves: [], screenshots: [], file_choosers: [], errors: [], exceptions: [],
 };
 let server, chrome, socket, session, sequence = 0;
 const pending = new Map();
@@ -88,7 +88,9 @@ async function fileInput(file) {
 }
 async function open(file, expectedVertices, requireUv = true) {
   await evaluate("document.getElementById('obrush_canvas').focus()");
+  const choosers = result.file_choosers.length;
   await chord('o');
+  await until(() => result.file_choosers.length > choosers, 'normal File Open chooser');
   await fileInput(file);
   await until(async () => {
     const state = await metrics();
@@ -149,6 +151,7 @@ try {
   });
   socket.addEventListener('message', event => {
     const message = JSON.parse(String(event.data));
+    if (message.method === 'Page.fileChooserOpened') result.file_choosers.push(message.params);
     if (message.method === 'Runtime.exceptionThrown') result.exceptions.push(message.params.exceptionDetails?.text || 'browser exception');
     if (!message.id) return;
     const row = pending.get(message.id);
@@ -159,6 +162,7 @@ try {
   const target = await send('Target.createTarget', { url: 'about:blank' }, null);
   session = (await send('Target.attachToTarget', { targetId: target.targetId, flatten: true }, null)).sessionId;
   for (const domain of ['Page', 'Runtime', 'DOM']) await send(`${domain}.enable`);
+  await send('Page.setInterceptFileChooserDialog', { enabled: true });
   await send('Emulation.setDeviceMetricsOverride', { width: 1600, height: 1000, deviceScaleFactor: 1, mobile: false });
   await send('Page.navigate', { url });
   await until(async () => (await metrics())?.vertices, 'OBRush startup');
