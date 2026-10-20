@@ -1,5 +1,13 @@
 # OBrush feature parity contract
 
+**Scoped UV JPEG import:** [C294](SCULPTGL_UV_JPEG_C294_RESULT.md)
+extends the visible session-only UV image chooser from PNG to bounded JPEG
+with a shared native/browser Rust decoder. An authored two-face UV OBJ and
+asymmetric JPEG loaded in OBrush's normal browser with correct quadrant order,
+GPU texture allocation and malformed-image retention. The pinned reference's
+normal UI could not be switched to UV mode under headless Chrome, so its
+matched-pixel gate and the complete UV import row remain open.
+
 **Scoped custom MatCap import:** [C291](SCULPTGL_MATCAP_IMPORT_C291_RESULT.md)
 adds session-only, bounded PNG/JPEG MatCap import to the ordinary viewport.
 The pinned SculptGL and OBrush normal UIs both appended and selected the same

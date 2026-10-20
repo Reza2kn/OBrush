@@ -572,6 +572,13 @@ impl WebHandle {
             .load_uv_texture_png(&name, bytes)
             .map_err(|e| JsValue::from_str(&e))
     }
+    pub fn load_uv_texture_image(&self, name: String, bytes: &[u8]) -> Result<(), JsValue> {
+        self.runner
+            .app_mut::<OBrushApp>()
+            .ok_or_else(|| JsValue::from_str("OBrush is not running"))?
+            .load_uv_texture_image(&name, bytes)
+            .map_err(|e| JsValue::from_str(&e))
+    }
     pub fn uv_texture_request_is_current(&self, id: u32) -> bool {
         self.runner
             .app_mut::<OBrushApp>()
@@ -582,7 +589,7 @@ impl WebHandle {
             app.cancel_uv_texture_request(id);
         }
     }
-    pub fn load_uv_texture_png_for_request(
+    pub fn load_uv_texture_image_for_request(
         &self,
         id: u32,
         name: String,
@@ -591,7 +598,7 @@ impl WebHandle {
         self.runner
             .app_mut::<OBrushApp>()
             .ok_or_else(|| JsValue::from_str("OBrush is not running"))?
-            .load_uv_texture_png_for_request(id, &name, bytes)
+            .load_uv_texture_image_for_request(id, &name, bytes)
             .map_err(|e| JsValue::from_str(&e))
     }
     pub fn background_request_is_current(&self, id: u32) -> bool {

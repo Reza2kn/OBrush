@@ -1418,7 +1418,7 @@ const SPECS: [CaptionSpec; 365] = [
     },
     CaptionSpec {
         id: "app.inspector_body.f3f850b891ac",
-        english: "Import UV PNG",
+        english: "Import UV image…",
         source: None,
     },
     CaptionSpec {

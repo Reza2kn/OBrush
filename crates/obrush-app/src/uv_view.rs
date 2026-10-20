@@ -76,7 +76,7 @@ pub(crate) fn decode_png(name: &str, bytes: &[u8]) -> Result<ViewTexture, String
 /// dimensions are checked before pixel conversion and against the actual decode.
 pub(crate) fn decode_jpeg(name: &str, bytes: &[u8]) -> Result<ViewTexture, String> {
     if bytes.len() > 16 * 1024 * 1024 || bytes.len() < 4 || bytes[..2] != [255, 216] {
-        return Err("Matcap requires a JPEG within the 16 MiB input limit".into());
+        return Err("Viewport JPEG requires valid bytes within the 16 MiB input limit".into());
     }
     let dimensions =
         image::ImageReader::with_format(std::io::Cursor::new(bytes), image::ImageFormat::Jpeg)
@@ -99,6 +99,14 @@ pub(crate) fn decode_jpeg(name: &str, bytes: &[u8]) -> Result<ViewTexture, Strin
         return Err("Decoded JPEG dimensions differ from header".into());
     }
     ViewTexture::from_rgba(name, dimensions.0, dimensions.1, rgba.as_raw())
+}
+
+pub(crate) fn decode_view_image(name: &str, bytes: &[u8]) -> Result<ViewTexture, String> {
+    if bytes.starts_with(&[255, 216]) {
+        decode_jpeg(name, bytes)
+    } else {
+        decode_png(name, bytes)
+    }
 }
 
 pub(crate) fn texture_storage_bytes(width: u32, height: u32) -> Option<usize> {
@@ -450,6 +458,41 @@ mod tests {
         let mut invalid = bytes.to_vec();
         invalid[16..20].copy_from_slice(&2049_u32.to_be_bytes());
         assert!(decode_png("huge", &invalid).is_err());
+    }
+    #[test]
+    fn authored_uv_jpeg_decodes_bottom_up_and_rejects_invalid_or_oversize_inputs() {
+        let jpeg = include_bytes!("../tests/fixtures/c294_uv_quadrants.jpg");
+        let png = include_bytes!("../tests/fixtures/c294_uv_quadrants.png");
+        let image = decode_view_image("quadrants.jpg", jpeg).unwrap();
+        let lossless = decode_view_image("quadrants.png", png).unwrap();
+        assert_eq!((image.width, image.height), (64, 64));
+        assert_eq!((lossless.width, lossless.height), (64, 64));
+        let pixel = |image: &ViewTexture, x: usize, y_top_down: usize| -> [u8; 4] {
+            let offset = ((63 - y_top_down) * 64 + x) * 4;
+            image.pixels_bottom_up[offset..offset + 4]
+                .try_into()
+                .expect("RGBA pixel")
+        };
+        for (x, y, expected) in [
+            (8, 8, [236, 41, 31, 255]),
+            (40, 8, [31, 211, 66, 255]),
+            (8, 40, [36, 61, 226, 255]),
+            (40, 40, [241, 216, 41, 255]),
+        ] {
+            assert_eq!(pixel(&lossless, x, y), expected);
+            for (actual, target) in pixel(&image, x, y).into_iter().zip(expected) {
+                assert!(u8::abs_diff(actual, target) <= 8);
+            }
+        }
+        assert!(decode_view_image("corrupt.jpg", &[255, 216, 0, 0]).is_err());
+        let marker = jpeg
+            .windows(2)
+            .position(|window| window == [255, 192] || window == [255, 194])
+            .expect("Authored JPEG has a SOF marker");
+        let mut oversize_header = jpeg.to_vec();
+        oversize_header[marker + 7..marker + 9].copy_from_slice(&2049_u16.to_be_bytes());
+        assert!(decode_view_image("wide.jpg", &oversize_header).is_err());
+        assert!(decode_view_image("huge.jpg", &vec![255; 16 * 1024 * 1024 + 1]).is_err());
     }
     #[test]
     fn independent_rational_curvature_fields_and_premultiplied_blend() {

@@ -1710,7 +1710,7 @@ impl OBrushApp {
             "viewport_shading":self.viewport_style.shading.name(),"flat_shading":self.viewport_style.flat_shading,"exposure":self.viewport_style.exposure,
             "curvature":self.viewport_style.curvature,"opacity":self.viewport_style.opacity,
             "uv_texture_pending_request":self.uv_texture_requests.pending(),
-            "uv_texture":self.viewport_style.uv_texture.as_ref().map(|t|serde_json::json!({"name":t.name,"width":t.width,"height":t.height,"rgba_bytes":t.pixels_bottom_up.len(),"source_rows":"bottom-up upload; PNG input decoded top-down"})),
+            "uv_texture":self.viewport_style.uv_texture.as_ref().map(|t|serde_json::json!({"name":t.name,"width":t.width,"height":t.height,"rgba_bytes":t.pixels_bottom_up.len(),"source_rows":"bottom-up upload; source image decoded top-down"})),
             "uv_render":self.renderer.lock().ok().map(|r|r.uv_render_metrics(false)),
             "surface_attributes":{"material_vertices":self.document.active_mesh().and_then(|m|m.materials.as_ref()).map_or(0,Vec::len),
                 "original_faces":self.document.active_mesh().and_then(|m|m.surface.as_ref()).map_or(0,|s|s.faces.len()),
@@ -2220,7 +2220,7 @@ impl OBrushApp {
     pub fn cancel_uv_texture_request(&mut self, id: u32) {
         self.uv_texture_requests.cancel(id);
     }
-    pub fn load_uv_texture_png_for_request(
+    pub fn load_uv_texture_image_for_request(
         &mut self,
         id: u32,
         name: &str,
@@ -2229,7 +2229,7 @@ impl OBrushApp {
         if !self.uv_texture_requests.is_current(id) {
             return Err("Texture response is stale or cancelled; previous asset kept".into());
         }
-        let texture = match crate::uv_view::decode_png(name, bytes) {
+        let texture = match crate::uv_view::decode_view_image(name, bytes) {
             Ok(texture) => texture,
             Err(error) => {
                 self.uv_texture_requests.cancel(id);
@@ -2266,7 +2266,22 @@ impl OBrushApp {
         self.uv_texture_requests.invalidate();
         self.install_view_texture(texture)
     }
+    pub fn load_uv_texture_image(&mut self, name: &str, bytes: &[u8]) -> Result<(), String> {
+        let texture = crate::uv_view::decode_view_image(name, bytes)?;
+        self.uv_texture_requests.invalidate();
+        self.install_view_texture(texture)
+    }
     fn install_view_texture(&mut self, texture: ViewTexture) -> Result<(), String> {
+        crate::uv_view::texture_gpu_storage_bytes(texture.width, texture.height)
+            .ok_or("UV texture exceeds the GPU storage limit")?;
+        let max_side = self
+            .renderer
+            .lock()
+            .map_err(|_| "Renderer unavailable; previous UV image kept")?
+            .max_view_texture_side();
+        if texture.width > max_side || texture.height > max_side {
+            return Err("UV texture exceeds this GPU's texture-size limit".into());
+        }
         self.finish_stroke();
         if self.stroke_rejected {
             return Err(
@@ -2710,15 +2725,15 @@ impl OBrushApp {
         pick_uv_texture(id);
         #[cfg(not(target_arch = "wasm32"))]
         if let Some(path) = rfd::FileDialog::new()
-            .add_filter("UV viewport PNG", &["png"])
+            .add_filter("UV viewport image", &["png", "jpg", "jpeg"])
             .pick_file()
         {
             let result = (|| {
                 if std::fs::metadata(&path).map_err(|e| e.to_string())?.len() > 16 * 1024 * 1024 {
-                    return Err("Texture PNG exceeds the 16 MiB limit".to_owned());
+                    return Err("UV image exceeds the 16 MiB input limit".to_owned());
                 }
                 let bytes = std::fs::read(&path).map_err(|e| e.to_string())?;
-                self.load_uv_texture_png_for_request(
+                self.load_uv_texture_image_for_request(
                     id,
                     &path.file_name().unwrap_or_default().to_string_lossy(),
                     &bytes,
@@ -8773,6 +8788,9 @@ impl OBrushApp {
                     .as_ref()
                     .map_or("UV checker", |t| t.name.as_str()),
             );
+            if self.viewport_style.uv_texture.is_some() {
+                ui.small("UV image is session-only; not saved in .obrush.");
+            }
             let import = ui.button(crate::ui_text::caption(
                 crate::ui_text::CaptionKey::CF3F850B891AC,
             ));

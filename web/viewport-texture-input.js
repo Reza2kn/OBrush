@@ -1,7 +1,7 @@
 // One reading file and one latest waiting selection. Request ownership lives
 // in Rust; this bridge never assigns geometry, tool or document state.
 export function createViewportTextureInput(template, getHandle, canvas, report, methods={
-  current:'uv_texture_request_is_current',cancel:'cancel_uv_texture_request',load:'load_uv_texture_png_for_request',label:'Texture PNG'
+  current:'uv_texture_request_is_current',cancel:'cancel_uv_texture_request',load:'load_uv_texture_image_for_request',label:'UV image'
 }) {
   let input = template;
   let reading = false;
