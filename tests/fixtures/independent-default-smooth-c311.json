@@ -1,0 +1,14 @@
+{
+  "source": "Independent Python-authored SGL v3; no SculptGL or OBrush encoder",
+  "license": "CC0",
+  "fixture": "tests/fixtures/independent-default-smooth-c311.sgl",
+  "bytes": 41092,
+  "sha256": "46d9e6de3587335009127dc7c15f70dd0a82db7a2c26711dbbff588514a66303",
+  "grid_side": 25,
+  "vertices": 625,
+  "triangles": 1152,
+  "protected_rgb_id": 336,
+  "half_unprotected_rgb_id": 338,
+  "spike_rgb_id": 337,
+  "z_formula": "0.018 + 0.005*sin(ix*0.57+iy*0.19) + 0.013*exp(-((x-0.035)^2+(y+0.025)^2)/0.004) + 0.011 at (12,13)"
+}
