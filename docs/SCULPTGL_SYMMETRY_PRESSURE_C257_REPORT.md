@@ -23,6 +23,18 @@ spacing threshold. The reference ROI changed only `34` pixels, bounding box
 sculpted geometry. The report records this observation without inferring that
 input admission or the brush calculation succeeded.
 
+The C256 mouse path differed by under `0.005` CSS px at each endpoint and
+deformed the right vertex by `+0.0194696635` Z. Its final local primary hit
+was `(3.9872429008,-1.9848543537,0)`, `0.0198024` local units from that
+vertex. C257's final recorded local hit was approximately
+`(3.9872263558,-1.9848323566,0)`, `0.0198299` units from the same vertex,
+well inside its `~1.3978` local-unit radius. This makes a coarse mesh or
+undersized brush footprint an insufficient explanation for the C257 no-op.
+It does **not** establish that `makeStroke`, vertex selection or `Brush.stroke`
+ran: the pen route also engages SculptGL's non-mouse Hammer pan handlers as
+well as its compatibility mouse handlers. C258 isolates those action and
+admission steps with read-only original-call traces.
+
 Two independent failed run directories are retained under
 `.artifacts/sculptgl-symmetry-pressure-c257/`:
 
