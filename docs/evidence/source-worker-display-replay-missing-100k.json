@@ -1,0 +1,13 @@
+{
+  "schema": "obrush-source-display-replay-v1",
+  "receipt": "/Users/Ajab/AI/OBrush/.artifacts/source-worker-sustained-spw01/100k-worker-588e764b-eb00-47df-89aa-2d2f0a3ef260",
+  "result_sha256": "0424c256883651b79c08ae9f3cc1b5c5ce323bfefcab6d8131ff26a237e93857",
+  "status": "missing_replay_evidence",
+  "missing": [
+    "ordered accepted dab sequence with selected vertex IDs",
+    "post-dab position rows for every accepted dab",
+    "Undo/Redo selected IDs and restored position rows",
+    "trace-to-result and build provenance"
+  ],
+  "stages": {}
+}
