@@ -140,3 +140,90 @@ fn sgl_preflight_reports_the_nonrepresentable_per_mesh_offset() {
     assert_eq!(report.omitted_symmetry_offset_objects, 1);
     assert!(report.requires_allow());
 }
+
+#[test]
+fn pinned_reference_mirror_ray_reaches_the_same_authored_face_at_half_offset() {
+    use obrush_core::{
+        prepare_source_geometry_press_contacts, MaskConversionPolicy, PaintPreparationInput,
+        PaintViewCapture, SglStageSettings,
+    };
+    // Pinned SculptGL 8e45daf, C255 owned-browser receipt: the active triangle
+    // has loose root [1,-2,-1,4,2,1], center [2.5,0,0], and at SymOffset .5
+    // its plane is X=3.8462913036346436. The fixed local near/far ray at
+    // X=5.192582607269287 reflects onto face 0 at [2.5,-2/3,0]; offset zero
+    // misses. Use the same independent SGL bytes and pose, with an authored
+    // orthographic camera chosen to produce that precise local near/far ray.
+    let mut document = Document::empty();
+    document
+        .replace_sgl_bytes(
+            include_bytes!("fixtures/independent-affine-two-mesh.sgl"),
+            &SglStageSettings::default(),
+        )
+        .unwrap();
+    assert_eq!(document.active_mesh().unwrap().positions.len(), 3);
+    document
+        .convert_active_subtool_masks(
+            MaskConvention::UnprotectedF32V1,
+            MaskConversionPolicy::AllowAndReport,
+        )
+        .unwrap();
+    let metadata = document.active_object_metadata().unwrap();
+    let center = metadata.affine.interaction_center;
+    assert_eq!(center, [2.5, 0.0, 0.0]);
+    let half = document
+        .source_geometry_mirror_plane(center, 0.5, [1.0, 0.0, 0.0])
+        .unwrap();
+    let zero = document
+        .source_geometry_mirror_plane(center, 0.0, [1.0, 0.0, 0.0])
+        .unwrap();
+    assert!((f64::from(half.origin[0]) - 3.8462913036346436).abs() < 1e-6);
+    let ray_x = 5.192582607269287;
+    let input = PaintPreparationInput {
+        view: PaintViewCapture {
+            world_to_clip: [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                -0.1,
+                0.0,
+                -ray_x,
+                2.0 / 3.0,
+                0.05,
+                1.0,
+            ],
+            viewport: [0.0, 0.0, 100.0, 100.0],
+        },
+        screen: [50.0, 50.0],
+        screen_radius: 10.0,
+        pressure: 0.5,
+        radius_factor: 0.0,
+    };
+    let half_contacts = prepare_source_geometry_press_contacts(
+        document.active_mesh().unwrap(),
+        Some(&metadata.affine),
+        input,
+        Some(half),
+    )
+    .unwrap();
+    let zero_contacts = prepare_source_geometry_press_contacts(
+        document.active_mesh().unwrap(),
+        Some(&metadata.affine),
+        input,
+        Some(zero),
+    )
+    .unwrap();
+    assert!(half_contacts.passes[0].is_none());
+    assert!(zero_contacts.passes[1].is_none());
+    let mirrored = half_contacts.passes[1].expect("half-offset mirror must hit triangle");
+    assert_eq!(mirrored.original_face_index, 0);
+    assert!((mirrored.center[0] - 2.5).abs() < 1e-6);
+    assert!((mirrored.center[1] + 2.0 / 3.0).abs() < 1e-6);
+    assert!(mirrored.center[2].abs() < 1e-6);
+}
