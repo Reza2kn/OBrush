@@ -1070,6 +1070,7 @@ pub struct OBrushApp {
     last_viewport: egui::Rect,
     primitive_detail: u32,
     subdivision_choice: SubdivisionChoice,
+    dynamic_conversion_acknowledged: bool,
     topology_job: Option<TopologyJob>,
     uv_bake_job: Option<uv_bake_host::UvBakeHostJob>,
     next_uv_bake_id: u32,
@@ -1306,6 +1307,7 @@ impl OBrushApp {
             last_viewport: egui::Rect::NOTHING,
             primitive_detail: 6,
             subdivision_choice: SubdivisionChoice::Loop,
+            dynamic_conversion_acknowledged: false,
             topology_job: None,
             uv_bake_job: None,
             next_uv_bake_id: 0,
@@ -3262,6 +3264,7 @@ impl OBrushApp {
         }
         self.revision = self.revision.wrapping_add(1);
         self.dirty = true;
+        self.dynamic_conversion_acknowledged = false;
         self.brush.adaptive_detail = self.document.supports_adaptive_detail();
     }
 
@@ -7018,6 +7021,30 @@ impl OBrushApp {
         }
     }
 
+    fn prepare_dynamic_topology(&mut self) {
+        self.modal_cancel("dynamic topology conversion");
+        self.cancel_topology();
+        self.finish_stroke();
+        if self.stroke_rejected || !self.document.active_subtool_visible() {
+            return;
+        }
+        match self.document.prepare_dynamic_topology() {
+            Ok(report) => {
+                self.changed();
+                self.message = format!(
+                    "Adaptive triangle surface ready. Removed {} retained levels, {} original faces and {} UV coordinates; Undo restores them.",
+                    report.discarded_retained_levels,
+                    report.discarded_original_faces,
+                    report.discarded_uv_coordinates
+                );
+            }
+            Err(error) => {
+                self.dynamic_conversion_acknowledged = false;
+                self.message = format!("Cannot prepare dynamic topology: {error}");
+            }
+        }
+    }
+
     fn trace_keyboard_route(&mut self, ctx: &egui::Context, phase: &'static str) {
         let data = keyboard_input_observation(ctx, phase);
         if let Some(mut data) = data {
@@ -8654,6 +8681,43 @@ impl OBrushApp {
                 .size(11.0)
                 .color(preferences_host::muted(ui)),
             );
+        }
+        let visible = self.document.active_mesh();
+        let needs_dynamic_preparation = self.document.has_retained_subdivision_hierarchy()
+            || visible.is_some_and(|mesh| mesh.surface.is_some());
+        if needs_dynamic_preparation {
+            let removed_levels = self.document.level_count().saturating_sub(1);
+            let removed_faces = visible
+                .and_then(|mesh| mesh.surface.as_ref())
+                .map_or(0, |surface| surface.faces.len());
+            let removed_uvs = visible
+                .and_then(|mesh| mesh.surface.as_ref())
+                .and_then(|surface| surface.uv.as_ref())
+                .map_or(0, |uv| uv.coordinates.len());
+            ui.add_space(8.0);
+            ui.collapsing("Adaptive topology", |ui| {
+                ui.label(format!(
+                    "Converting the visible mesh removes {removed_levels} retained levels, {removed_faces} original face records and {removed_uvs} UV coordinates. Undo restores them."
+                ));
+                let ack = ui.checkbox(
+                    &mut self.dynamic_conversion_acknowledged,
+                    "I understand the topology and UV loss",
+                );
+                self.track_layer_control("object.dynamic.acknowledge", &ack);
+                let button = ui.add_enabled(
+                    self.dynamic_conversion_acknowledged
+                        && !topology_locked
+                        && !self.document.has_morph_target(),
+                    egui::Button::new("Convert visible mesh to adaptive triangles"),
+                );
+                self.track_layer_control("object.dynamic.prepare", &button);
+                if button.clicked() {
+                    self.prepare_dynamic_topology();
+                }
+                if self.document.has_morph_target() {
+                    ui.label("Delete or restore the Morph Target before conversion.");
+                }
+            });
         }
         ui.add_space(12.0);
         let rebuild = ui.collapsing(
