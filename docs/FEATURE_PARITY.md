@@ -99,6 +99,14 @@ then passed held geometry, GPU display normals, public Save/Undo/Redo and
 selected-union Redo-normal checks on that fixture (maximum paired XYZ
 `4.80e-8`). The opt-in Source Drag route is integrated; other settings,
 topology and sustained performance leave the full row open.
+[The C305 mirror and mask pair](SCULPTGL_SOURCE_DRAG_C305_RESULT.md) also
+passes normal-browser X-symmetry off/on geometry, active GPU normals,
+public history and a masked-vertex matrix on the curved-grid fixture. Both
+apps changed the same 95 IDs with symmetry off and 136 on; maximum paired
+position-component error was `4.84e-8`. An independent replay of C295 passed.
+The earlier C300/C301/C303 and C304 setup failures remain recorded; Alpha,
+pressure, alternative cameras, dynamic topology and long sessions keep the
+full Drag gate open.
 
 **Scoped Inflate witness:** [The C269 direct pinned-method report](SCULPTGL_INFLATE_PAIR_C269.md)
 records the reference's positive, negative and zero Float32 response on one
