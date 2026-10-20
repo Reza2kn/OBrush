@@ -105,6 +105,12 @@ SHA-256 values:
 The ignored directory is
 `.artifacts/mrp03-stage/bench/actual/SP-LONG00-1m-60s-root-cda787fb-bb3c-43af-85d7-5f44eadf4d4d/`.
 
+The root checkout retains the result, audit, scalar recording, trace, parsed
+report, screenshot and Chrome logs for both cohorts. The complete 1M-vertex
+Before/After/Undo/Redo/Stable public projects remain in the isolated
+`core-perf-followup` worktree at the same relative paths; they were not copied
+into the root checkout because each project is about 368 MB.
+
 `cargo fmt --all -- --check`, full `cargo test --locked --workspace
 --all-targets`, native strict Clippy, ordinary and feature-enabled WASM strict
 Clippy, and the official `scripts/build-web.sh` completed. The first
