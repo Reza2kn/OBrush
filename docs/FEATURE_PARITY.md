@@ -69,6 +69,12 @@ coordinates themselves matched as a set, but SculptGL's import optimization
 renumbered nearly all vertices; a posthoc coordinate remap showed close
 geometry and is recorded only as a diagnosis. C261 freezes that mapping
 before a new stroke; C260 remains failed.
+[C261's separately frozen baseline-coordinate pair](SCULPTGL_SYMMETRY_CURVED_C261_REPORT.md)
+passed scoped Draw geometry gates on the curved fixture for SymOffset
++0.25 and -0.25: changed-vertex IoU was 0.9875/0.9886 and maximum
+position-delta errors were 0.000665/0.000883 local units. Normal browser
+history passed in both apps; appearance, other meshes/settings and the full
+rows remain open.
 
 **Dense resolution-stroke R03:** [The paired browser report](SCULPTGL_RESOLUTION_DENSE_R03_RESULT.md)
 passed the frozen 24-changed-vertex minimum on an independent 18,242-vertex
