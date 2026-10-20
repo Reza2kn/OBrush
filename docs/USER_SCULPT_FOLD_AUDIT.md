@@ -1,0 +1,22 @@
+# Saved-sculpt fold audit (read-only)
+
+The user's supplied `Untitled_sculpture (1).obrush` is a version-1 project, SHA-256 `4adc8aa9333903ab0684c1f2e54a995dc6a4e7a3b85fc6e911df9d7deb0c4786`. This audit did not alter it or add it to Git. `scripts/diagnose-saved-folds.py` recomputes all metrics from its positions/triangles; the output is retained in ignored `.artifacts/user-sculpt-fold-audit.json`. The supplied OBJ has the same 61,580 vertices and 123,156 face indices, with maximum coordinate formatting difference `1e-7`. The prior [topology-remesh receipt](evidence/topology-remesh.json) used the identical project hash and independently recorded the same 78 >90° folds. This is an additional spatial/guard analysis, not a new fixture or a claim that a current OBrush version produced the old damage.
+
+| Saved mesh property | Result |
+|---|---:|
+| Vertices / triangles / unique edges | 61,580 / 123,156 / 184,734 |
+| Boundary / nonmanifold edges | 0 / 0 |
+| Opposite-wound two-face edges | 184,734 / 184,734 |
+| Nonfinite positions, zero-area faces (<`1e-10`), zero stored normals | 0 / 0 / 0 |
+| Minimum / median triangle area | `6.592e-7` / `1.443e-4` |
+| Minimum equilateral quality; faces below 0.05 / 0.1 | `0.04055`; 10 / 36 |
+| Adjacent normal folds >90° / >120° / >149.9° | 78 / 58 / 16 |
+| Maximum adjacent fold | 149.999957° |
+
+The >90° edges split 39 on each X side, consistent with the visible mirrored damage. Edges above 120° lie in local X `−0.3005…+0.3005`, Y `−0.0168…+0.4718`, Z `0.9194…1.5893`, across the raised front patch rather than the untouched sphere. The mesh is topologically closed, but its geometry already contains very sharp folds and skinny faces; these can look like tears even with valid smooth normals. The project contains no stroke history identifying the tool that originally created them. The 150° cluster is **consistent with** the current Move guard's 150° allowance, while current Crease has a 90° limit, but this does not prove historical cause.
+
+In current `obrush-core`, a legacy Crease candidate passes `accept_deformation` (`crates/obrush-core/src/brush.rs`, around lines 1642 and 2055–2122). For Crease, the adjacent-face cosine floor is `min(old_cosine, 0)`: an existing fold above 90° may improve or remain, but a candidate cannot increase that fold angle beyond its old value except numerical tolerance. An initially gentler edge may bend up to 90°. The same guard requires affected faces to retain positive projected area and at least `min(old_quality, 0.1)` using its own longest-edge quality measure; it scales or rejects unsafe candidate dabs. This is a **local, fixed-topology guarantee**. It neither heals folds already in a loaded version-1 file nor rules out global self-intersections, subtle visible sharpness below 90°, or later topology-changing operations. Move uses a separate 150° fold threshold, so subsequent Move strokes may keep adding pronounced ridges.
+
+A read-only negative control tested one simultaneous 0.1 uniform-Laplacian step on the 78 bad-edge endpoints and one edge ring (340 vertices). It reduced >90° edges from 78 to 60 and >120° from 58 to 26 with no immediate face reversals, but **worsened** minimum equilateral quality from `0.04055` to `0.02990` and increased faces below 0.05 from 10 to 16. Repeating unguarded smoothing produced reversed faces in exploratory trials. This is not a safe auto-repair. The existing voxel remesher is also unsuitable as a blanket remedy: at resolution 64, the prior retained receipt increased >90° fold length from about 1.019 to 2.258 world units.
+
+A defensible product remedy is an **opt-in local fold-repair preview** in shared `obrush-core`, backed by one undoable document operation. It should identify connected >90° patches, propose fairing/repositioning with a bounded displacement, and accept a candidate only when the folded-edge length/excess falls strictly, no face reverses or becomes tiny, no affected face drops below its prior quality floor, and no new high-angle edges appear at the patch boundary. It should leave the mesh unchanged and explain why when those constraints conflict. The saved sculpt and an independently authored folded-sphere fixture should be frozen acceptance gates, with before/after mesh, screenshot and undo evidence in both hosts. The current negative controls rule out silently invoking generic Smooth or voxel remesh as that repair.
