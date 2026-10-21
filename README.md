@@ -4,7 +4,7 @@ An open-source 3D sculpting app for desktop and the browser, built in Rust.
 Sculpting runs locally. No account required.
 
 **[Try it in your browser](https://obrush.app/)** ·
-[Download the macOS alpha](https://github.com/Reza2kn/OBrush/releases/tag/v0.1.20-alpha.1) ·
+[Download the macOS alpha](https://github.com/Reza2kn/OBrush/releases) ·
 [Report a bug](https://github.com/Reza2kn/OBrush/issues/new?template=bug_report.yml)
 
 ![An organic sculpt in OBrush, with sculpting brushes on the left and object controls on the right.](docs/images/obrush-alpha-sculpting.png)
