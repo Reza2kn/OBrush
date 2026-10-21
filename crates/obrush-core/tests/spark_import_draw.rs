@@ -228,7 +228,9 @@ fn repeated_center_contacts(radius: f32, contacts: usize) {
                     mesh.positions[index].distance(current_hit.position),
                     mesh.normals[index].dot(-ray.direction),
                     mesh.masks[index],
-                    mesh.positions[index].distance(before[index]),
+                    before
+                        .get(index)
+                        .map(|old| mesh.positions[index].distance(*old)),
                 )
             });
             eprintln!("tip contact={contact} face={face} hit={:?} bary={:?} hit_normal={:?} corners={corners:?}", current_hit.position, current_hit.barycentric, current_hit.normal);
