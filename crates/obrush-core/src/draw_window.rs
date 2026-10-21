@@ -38,6 +38,19 @@ fn aabb_overlaps_box(
             && axis_overlaps(a.y, b.y, c.y, low.y, high.y)
             && axis_overlaps(a.z, b.z, c.z, low.z, high.z)
     };
+    // Reflection changes only X. Reject the shared Y/Z slabs once before
+    // testing either X interval, instead of visiting two complete boxes.
+    if symmetry
+        && primary_box.0.y == mirrored_box.0.y
+        && primary_box.1.y == mirrored_box.1.y
+        && primary_box.0.z == mirrored_box.0.z
+        && primary_box.1.z == mirrored_box.1.z
+    {
+        return axis_overlaps(a.y, b.y, c.y, primary_box.0.y, primary_box.1.y)
+            && axis_overlaps(a.z, b.z, c.z, primary_box.0.z, primary_box.1.z)
+            && (axis_overlaps(a.x, b.x, c.x, primary_box.0.x, primary_box.1.x)
+                || axis_overlaps(a.x, b.x, c.x, mirrored_box.0.x, mirrored_box.1.x));
+    }
     overlaps(primary_box) || (symmetry && overlaps(mirrored_box))
 }
 
@@ -536,6 +549,14 @@ mod tests {
                     old(first) || (mirrored && old(second))
                 );
             }
+            let shared_slabs = (
+                Vec3::new(second.0.x, first.0.y, first.0.z),
+                Vec3::new(second.1.x, first.1.y, first.1.z),
+            );
+            assert_eq!(
+                aabb_overlaps_box(&mesh, 0, first, shared_slabs, true),
+                old(first) || old(shared_slabs)
+            );
         }
         let primary = (Vec3::ZERO, Vec3::ONE);
         let mirrored = (Vec3::new(2.0, 0.0, 0.0), Vec3::new(3.0, 1.0, 1.0));
