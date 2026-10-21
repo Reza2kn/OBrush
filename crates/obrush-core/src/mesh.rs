@@ -1621,6 +1621,19 @@ impl Mesh {
         triangles: Vec<[u32; 3]>,
         added_vertices: usize,
     ) -> Result<Self, String> {
+        self.draw_window_candidate_with_triangles_budget(
+            triangles,
+            added_vertices,
+            crate::decode_limits::MAX_SCENE_STORAGE_BYTES,
+        )
+    }
+
+    fn draw_window_candidate_with_triangles_budget(
+        &self,
+        triangles: Vec<[u32; 3]>,
+        added_vertices: usize,
+        storage_budget: usize,
+    ) -> Result<Self, String> {
         if self.surface.is_some() {
             return Err("Draw window requires plain topology".into());
         }
@@ -1635,17 +1648,83 @@ impl Mesh {
             out.extend_from_slice(values);
             Ok(out)
         }
+        let final_vertices = self
+            .positions
+            .len()
+            .checked_add(added_vertices)
+            .ok_or("Draw window vertex count overflow")?;
+        if final_vertices > MAX_VERTICES {
+            return Err("Draw window vertex limit exceeded".into());
+        }
+        let future_room = (MAX_VERTICES - final_vertices).min(1_024);
+        let roomy_extra = added_vertices + future_room;
+        let copy_channels = |extra| {
+            Ok::<_, String>((
+                copy_with_room(&self.positions, extra)?,
+                copy_with_room(&self.normals, extra)?,
+                copy_with_room(&self.masks, extra)?,
+                copy_with_room(&self.colors, extra)?,
+                self.materials
+                    .as_ref()
+                    .map(|materials| copy_with_room(materials, extra))
+                    .transpose()?,
+            ))
+        };
+        if future_room > 0 {
+            if let Ok((positions, normals, masks, colors, materials)) = copy_channels(roomy_extra) {
+                let candidate = Self {
+                    positions,
+                    normals,
+                    triangles,
+                    masks,
+                    mask_convention: self.mask_convention,
+                    colors,
+                    materials,
+                    surface: None,
+                    adjacency: None,
+                    resident_normal_witness: None,
+                };
+                if candidate.approximate_bytes() <= storage_budget {
+                    return Ok(candidate);
+                }
+                // Extra reserved capacity is optional. Keep the staged face
+                // vector and retry exact capacity after dropping these copies.
+                return self.draw_window_candidate_with_triangles_exact(
+                    candidate.triangles,
+                    added_vertices,
+                );
+            }
+        }
+        self.draw_window_candidate_with_triangles_exact(triangles, added_vertices)
+    }
+
+    fn draw_window_candidate_with_triangles_exact(
+        &self,
+        triangles: Vec<[u32; 3]>,
+        added_vertices: usize,
+    ) -> Result<Self, String> {
+        fn copy<T: Copy>(values: &[T], extra: usize) -> Result<Vec<T>, String> {
+            let capacity = values
+                .len()
+                .checked_add(extra)
+                .ok_or("Draw window vertex count overflow")?;
+            let mut out = Vec::new();
+            out.try_reserve_exact(capacity)
+                .map_err(|_| "Cannot reserve Draw window candidate")?;
+            out.extend_from_slice(values);
+            Ok(out)
+        }
         Ok(Self {
-            positions: copy_with_room(&self.positions, added_vertices)?,
-            normals: copy_with_room(&self.normals, added_vertices)?,
+            positions: copy(&self.positions, added_vertices)?,
+            normals: copy(&self.normals, added_vertices)?,
             triangles,
-            masks: copy_with_room(&self.masks, added_vertices)?,
+            masks: copy(&self.masks, added_vertices)?,
             mask_convention: self.mask_convention,
-            colors: copy_with_room(&self.colors, added_vertices)?,
+            colors: copy(&self.colors, added_vertices)?,
             materials: self
                 .materials
                 .as_ref()
-                .map(|materials| copy_with_room(materials, added_vertices))
+                .map(|materials| copy(materials, added_vertices))
                 .transpose()?,
             surface: None,
             adjacency: None,
@@ -2682,5 +2761,41 @@ pub(crate) mod validation_probe {
     }
     pub fn count() -> usize {
         CALLS.with(Cell::get)
+    }
+}
+
+#[cfg(test)]
+mod draw_window_growth_tests {
+    use super::*;
+
+    #[test]
+    fn optional_growth_preserves_exact_capacity_fallback_and_source_on_error() {
+        let source = Mesh::sphere(0);
+        let before = serde_json::to_vec(&source).unwrap();
+        let exact = source
+            .draw_window_candidate_with_triangles_exact(source.triangles.clone(), 1)
+            .unwrap();
+        let roomy = source
+            .draw_window_candidate_with_triangles(source.triangles.clone(), 1)
+            .unwrap();
+        assert!(roomy.positions.capacity() >= source.positions.len() + 1 + 1_024);
+        assert!(roomy.normals.capacity() >= source.normals.len() + 1 + 1_024);
+        assert!(roomy.masks.capacity() >= source.masks.len() + 1 + 1_024);
+        assert!(roomy.colors.capacity() >= source.colors.len() + 1 + 1_024);
+        assert!(roomy.approximate_bytes() > exact.approximate_bytes());
+        let fallback = source
+            .draw_window_candidate_with_triangles_budget(
+                source.triangles.clone(),
+                1,
+                exact.approximate_bytes(),
+            )
+            .unwrap();
+        assert!(fallback.approximate_bytes() <= exact.approximate_bytes());
+        assert!(fallback.positions.capacity() < roomy.positions.capacity());
+        assert_eq!(serde_json::to_vec(&fallback).unwrap(), before);
+        assert!(source
+            .draw_window_candidate_with_triangles(source.triangles.clone(), usize::MAX)
+            .is_err());
+        assert_eq!(serde_json::to_vec(&source).unwrap(), before);
     }
 }

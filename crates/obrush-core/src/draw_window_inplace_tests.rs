@@ -123,3 +123,44 @@ fn unchanged_topology_reuses_original_triangle_buffer_and_matches_full_dab() {
     assert!(no_contact.is_none());
     assert_eq!(serde_json::to_vec(&window).unwrap(), before);
 }
+
+#[test]
+fn successive_refined_dabs_use_staged_headroom_with_exact_full_mesh_results() {
+    let mut window = Mesh::sphere(7);
+    for position in &mut window.positions {
+        *position *= 20.0;
+    }
+    let mut full = window.snapshot();
+    let settings = BrushSettings {
+        radius: 0.18,
+        strength: 0.35,
+        symmetry_x: false,
+        ..Default::default()
+    };
+    let mut refined = 0;
+    let mut first_capacity = 0;
+    for x in [0.0, 0.32, -0.32, 0.64, -0.64] {
+        let center = Vec3::new(x, 0.0, 20.0);
+        let (expected, _) =
+            full.apply_brush_dab(center, Vec3::Z, Vec3::ZERO, &settings, None, true, true);
+        let actual = window
+            .try_local_draw_window(center, Vec3::Z, Vec3::ZERO, &settings)
+            .unwrap();
+        assert_eq!(actual, expected);
+        assert_eq!(
+            serde_json::to_vec(&window).unwrap(),
+            serde_json::to_vec(&full).unwrap()
+        );
+        if actual.refined_vertices > 0 {
+            refined += 1;
+            if refined == 1 {
+                first_capacity = window.positions.capacity();
+                assert!(first_capacity >= window.positions.len() + 1_000);
+            } else {
+                assert_eq!(window.positions.capacity(), first_capacity);
+                break;
+            }
+        }
+    }
+    assert!(refined >= 2, "fixture must exercise two refined dabs");
+}
