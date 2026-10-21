@@ -126,3 +126,57 @@ pub(crate) fn install(
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    // Independent ASCII facets: one real face and one exact repeated corner.
+    const MIXED_STL: &[u8] = b"solid fixture\nfacet normal 0 0 1\nouter loop\nvertex 0 0 0\nvertex 2 0 0\nvertex 0 3 0\nendloop\nendfacet\nfacet normal 0 0 1\nouter loop\nvertex 9 9 9\nvertex 9 9 9\nvertex 10 9 9\nendloop\nendfacet\nendsolid fixture\n";
+
+    #[test]
+    fn stl_empty_facet_skip_is_undoable_for_open_and_append() {
+        for append in [false, true] {
+            let mut document = Document::new(Mesh::sphere(1));
+            let before = document.to_json().unwrap();
+            let prepared = prepare(
+                "independent.stl",
+                MIXED_STL,
+                append,
+                &ViewportStyle::default(),
+            )
+            .unwrap();
+            let report = install(&mut document, prepared).unwrap().unwrap();
+            assert_eq!(report.source_faces, 2);
+            assert_eq!(report.skipped_degenerate_faces, 1);
+            assert_eq!(report.triangulated_faces, 1);
+            let mesh = document.active_mesh().unwrap();
+            assert_eq!(mesh.positions.len(), 3);
+            assert_eq!(mesh.triangles, [[0, 1, 2]]);
+            mesh.validate().unwrap();
+            let imported = document.to_json().unwrap();
+            assert!(document.undo());
+            assert_eq!(document.to_json().unwrap(), before);
+            assert!(document.redo());
+            assert_eq!(document.to_json().unwrap(), imported);
+
+            // A malformed later facet still rejects the entire next import;
+            // neither the receiving scene nor its redo branch is consumed.
+            assert!(document.undo());
+            let malformed = std::str::from_utf8(MIXED_STL)
+                .unwrap()
+                .replace("vertex 10 9 9", "vertex NaN 9 9");
+            assert!(
+                prepare(
+                    "invalid.stl",
+                    malformed.as_bytes(),
+                    append,
+                    &ViewportStyle::default()
+                )
+                .is_err()
+            );
+            assert_eq!(document.to_json().unwrap(), before);
+            assert!(document.can_redo());
+        }
+    }
+}

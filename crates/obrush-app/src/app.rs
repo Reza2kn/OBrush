@@ -6628,6 +6628,14 @@ impl OBrushApp {
             "{} {name}. Previous scene is available in Undo.",
             if append { "Appended" } else { "Loaded" }
         );
+        if let Some(report) = &self.last_import_report
+            && report.skipped_degenerate_faces != 0
+        {
+            self.message.push_str(&format!(
+                " Skipped {} empty STL facets.",
+                report.skipped_degenerate_faces
+            ));
+        }
         self.egui_ctx.request_repaint();
         Ok(())
     }
@@ -9975,7 +9983,8 @@ impl OBrushApp {
                     "Last import: {} points / {} triangles",
                     report
                         .source_vertices
-                        .saturating_sub(report.welded_vertices),
+                        .saturating_sub(report.welded_vertices)
+                        .saturating_sub(report.skipped_degenerate_faces.saturating_mul(3)),
                     report.triangulated_faces
                 ))
                 .size(10.0)
