@@ -327,32 +327,6 @@ impl Mesh {
         if children.iter().any(Vec::is_empty) {
             return None;
         }
-        let mut candidate = self.try_snapshot().ok()?;
-        candidate.positions.try_reserve_exact(new_count).ok()?;
-        candidate.normals.try_reserve_exact(new_count).ok()?;
-        candidate.masks.try_reserve_exact(new_count).ok()?;
-        candidate.colors.try_reserve_exact(new_count).ok()?;
-        if let Some(materials) = &mut candidate.materials {
-            materials.try_reserve_exact(new_count).ok()?;
-        }
-        for (local_vertex, &global) in vertices.iter().enumerate() {
-            candidate.positions[global] = local.positions[local_vertex];
-            candidate.normals[global] = local.normals[local_vertex];
-            candidate.masks[global] = local.masks[local_vertex];
-            candidate.colors[global] = local.colors[local_vertex];
-            if let (Some(dst), Some(src)) = (&mut candidate.materials, &local.materials) {
-                dst[global] = src[local_vertex];
-            }
-        }
-        for local_vertex in old_local_count..local.positions.len() {
-            candidate.positions.push(local.positions[local_vertex]);
-            candidate.normals.push(local.normals[local_vertex]);
-            candidate.masks.push(local.masks[local_vertex]);
-            candidate.colors.push(local.colors[local_vertex]);
-            if let (Some(dst), Some(src)) = (&mut candidate.materials, &local.materials) {
-                dst.push(src[local_vertex]);
-            }
-        }
         let triangle_count = self
             .triangles
             .len()
@@ -375,8 +349,27 @@ impl Mesh {
         if selected != faces.len() || triangles.len() != triangle_count {
             return None;
         }
-        candidate.triangles = triangles;
-        candidate.clear_cache();
+        let mut candidate = self
+            .draw_window_candidate_with_triangles(triangles, new_count)
+            .ok()?;
+        for (local_vertex, &global) in vertices.iter().enumerate() {
+            candidate.positions[global] = local.positions[local_vertex];
+            candidate.normals[global] = local.normals[local_vertex];
+            candidate.masks[global] = local.masks[local_vertex];
+            candidate.colors[global] = local.colors[local_vertex];
+            if let (Some(dst), Some(src)) = (&mut candidate.materials, &local.materials) {
+                dst[global] = src[local_vertex];
+            }
+        }
+        for local_vertex in old_local_count..local.positions.len() {
+            candidate.positions.push(local.positions[local_vertex]);
+            candidate.normals.push(local.normals[local_vertex]);
+            candidate.masks.push(local.masks[local_vertex]);
+            candidate.colors.push(local.colors[local_vertex]);
+            if let (Some(dst), Some(src)) = (&mut candidate.materials, &local.materials) {
+                dst.push(src[local_vertex]);
+            }
+        }
         if !validate_spliced_counts(&candidate) {
             return None;
         }

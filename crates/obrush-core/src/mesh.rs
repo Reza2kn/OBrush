@@ -1612,6 +1612,47 @@ impl Mesh {
         })
     }
 
+    /// A Draw window has already built its complete replacement face vector.
+    /// Copy only channels that need edits/appends, leaving the validated source
+    /// untouched until the candidate passes the splice checks. This avoids
+    /// copying the old face vector immediately before discarding that copy.
+    pub(crate) fn draw_window_candidate_with_triangles(
+        &self,
+        triangles: Vec<[u32; 3]>,
+        added_vertices: usize,
+    ) -> Result<Self, String> {
+        if self.surface.is_some() {
+            return Err("Draw window requires plain topology".into());
+        }
+        fn copy_with_room<T: Copy>(values: &[T], extra: usize) -> Result<Vec<T>, String> {
+            let capacity = values
+                .len()
+                .checked_add(extra)
+                .ok_or("Draw window vertex count overflow")?;
+            let mut out = Vec::new();
+            out.try_reserve_exact(capacity)
+                .map_err(|_| "Cannot reserve Draw window candidate")?;
+            out.extend_from_slice(values);
+            Ok(out)
+        }
+        Ok(Self {
+            positions: copy_with_room(&self.positions, added_vertices)?,
+            normals: copy_with_room(&self.normals, added_vertices)?,
+            triangles,
+            masks: copy_with_room(&self.masks, added_vertices)?,
+            mask_convention: self.mask_convention,
+            colors: copy_with_room(&self.colors, added_vertices)?,
+            materials: self
+                .materials
+                .as_ref()
+                .map(|materials| copy_with_room(materials, added_vertices))
+                .transpose()?,
+            surface: None,
+            adjacency: None,
+            resident_normal_witness: None,
+        })
+    }
+
     /// Construct a compact, ascending-ID window from an already validated
     /// plain mesh. The caller proves complete incident-face coverage before
     /// using its sculpt result; this only copies the requested public fields.
