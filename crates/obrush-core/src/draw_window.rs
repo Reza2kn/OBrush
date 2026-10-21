@@ -342,3 +342,7 @@ mod tests {
         }
     }
 }
+
+#[cfg(test)]
+#[path = "draw_window_independent_tests.rs"]
+mod independent_tests;
