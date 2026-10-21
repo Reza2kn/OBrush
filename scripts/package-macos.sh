@@ -40,9 +40,11 @@ with open(output, "wb") as stream:
         "CFBundleName": "OBrush", "CFBundleDisplayName": "OBrush",
         "CFBundleIdentifier": "org.obrush.studio", "CFBundleVersion": version,
         "CFBundleShortVersionString": version, "CFBundleExecutable": "OBrush",
-        "CFBundlePackageType": "APPL", "NSHighResolutionCapable": True,
+        "CFBundlePackageType": "APPL", "CFBundleIconFile": "OBrush.icns",
+        "NSHighResolutionCapable": True,
     }, stream)
 PY
+cp assets/brand/OBRush.icns "$app/Contents/Resources/OBrush.icns"
 bash scripts/copy-asset-notices.sh "$app/Contents/Resources/licenses"
 archs="$(/usr/bin/lipo -archs "$app/Contents/MacOS/OBrush")"
 python3 - "$app/Contents/Resources/build-info.json" "$app/Contents/MacOS/OBrush" "$obrush_version" "$source_commit" "$source_tree_state" "$lock_sha" "$archs" <<'PY'

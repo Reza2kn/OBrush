@@ -33,6 +33,9 @@ mkdir -p web/dist/pkg-simd
 mkdir -p web/dist/gpu-pkg
 "$cli" --target web --out-dir web/dist/gpu-pkg --out-name resident target/wasm32-unknown-unknown/web-release/obrush_gpu.wasm
 cp web/index.html web/dist/index.html
+cp assets/brand/obrush-icon.svg web/dist/obrush-icon.svg
+cp assets/brand/favicon-32.png web/dist/favicon-32.png
+cp assets/brand/apple-touch-icon.png web/dist/apple-touch-icon.png
 cp web/topology-worker.js web/dist/topology-worker.js
 cp web/source-geometry-worker.js web/dist/source-geometry-worker.js
 cp web/source-worker-held-input.js web/dist/source-worker-held-input.js

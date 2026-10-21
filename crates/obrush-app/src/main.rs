@@ -5,9 +5,14 @@ fn main() -> eframe::Result {
     let args: Vec<String> = std::env::args().skip(1).collect();
     let startup = obrush_app::startup_options::StartupOptions::capture_native(&args)
         .map_err(|error| eframe::Error::AppCreation(Box::new(std::io::Error::other(error))))?;
+    let icon = eframe::icon_data::from_png_bytes(include_bytes!(
+        "../../../assets/brand/obrush-icon-256.png"
+    ))
+    .expect("bundled OBrush icon PNG must decode");
     let options = eframe::NativeOptions {
         viewport: eframe::egui::ViewportBuilder::default()
             .with_title("OBrush · Open sculpting studio")
+            .with_icon(icon)
             .with_inner_size([1440.0, 960.0])
             .with_min_inner_size([900.0, 620.0]),
         renderer: eframe::Renderer::Glow,
