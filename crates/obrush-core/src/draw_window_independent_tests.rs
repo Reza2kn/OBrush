@@ -29,8 +29,8 @@ fn large_authored_mesh(isolated_inside_brush: bool) -> (Mesh, usize) {
     let rear_base = SIDE * SIDE;
     for y in 0..21 {
         for x in 0..21 {
-            let px = (x as i32 - 10) as f32 * 0.025;
-            let py = (y as i32 - 10) as f32 * 0.025;
+            let px = (x - 10) as f32 * 0.025;
+            let py = (y - 10) as f32 * 0.025;
             obj.push_str(&format!("v {px} {py} -0.12\n"));
         }
     }
@@ -256,11 +256,12 @@ fn authored_large_fixture_falls_back_for_movable_orphan_without_dropping_it() {
 fn authored_large_coordinate_mirror_tangent_matches_exact_full_query() {
     let mut source = Mesh::sphere(7);
     let p = source.positions.len() as u32;
+    // These exact f32 words represent +999_999.125 and -999_999.125.
     source.positions.extend([
         Vec3::new(999_999.0, -0.04, 0.0),
-        Vec3::new(999_999.125, -0.04, 0.0),
+        Vec3::new(f32::from_bits(0x4974_23f2), -0.04, 0.0),
         Vec3::new(999_999.0, 0.04, 0.0),
-        Vec3::new(-999_999.125, -0.04, 0.0),
+        Vec3::new(f32::from_bits(0xc974_23f2), -0.04, 0.0),
         Vec3::new(-999_999.0, -0.04, 0.0),
         Vec3::new(-999_999.0, 0.04, 0.0),
     ]);
