@@ -251,3 +251,47 @@ fn authored_large_fixture_falls_back_for_movable_orphan_without_dropping_it() {
         serde_json::to_vec(&full).unwrap()
     );
 }
+
+#[test]
+fn authored_large_coordinate_mirror_tangent_matches_exact_full_query() {
+    let mut source = Mesh::sphere(7);
+    let p = source.positions.len() as u32;
+    source.positions.extend([
+        Vec3::new(999_999.0, -0.04, 0.0),
+        Vec3::new(999_999.125, -0.04, 0.0),
+        Vec3::new(999_999.0, 0.04, 0.0),
+        Vec3::new(-999_999.125, -0.04, 0.0),
+        Vec3::new(-999_999.0, -0.04, 0.0),
+        Vec3::new(-999_999.0, 0.04, 0.0),
+    ]);
+    source
+        .triangles
+        .extend([[p, p + 1, p + 2], [p + 3, p + 4, p + 5]]);
+    source.masks.resize(source.positions.len(), 0.0);
+    source
+        .colors
+        .resize(source.positions.len(), [0.5, 0.5, 0.5]);
+    source.recompute_normals();
+    source.validate().unwrap();
+    let center = Vec3::new(999_999.0, 0.0, 0.0);
+    let settings = BrushSettings {
+        kind: BrushKind::Draw,
+        radius: 0.05,
+        strength: 0.35,
+        symmetry_x: true,
+        symmetry_offset: 0.02,
+        ..BrushSettings::default()
+    };
+    let mut full = source.snapshot();
+    let (expected, _) =
+        full.apply_brush_dab(center, Vec3::Z, Vec3::ZERO, &settings, None, true, true);
+    assert!(expected.changed_vertices > 0);
+    let mut window = source.snapshot();
+    let actual = window.try_local_draw_window(center, Vec3::Z, Vec3::ZERO, &settings);
+    eprintln!("full={expected:?} window={actual:?}");
+    assert_eq!(actual, Some(expected));
+    assert_eq!(
+        serde_json::to_vec(&full).unwrap(),
+        serde_json::to_vec(&window).unwrap()
+    );
+}
