@@ -55,29 +55,29 @@ struct PatchQuery {
     draw_quality: bool,
 }
 
-impl PatchQuery {
-    fn outward_box(center: glam::DVec3, radius: f64) -> (Vec3, Vec3) {
-        // Mesh::validate limits each stored f32 coordinate to 1e6. The exact
-        // predicate below admits an AABB up to 64 f64 ulps beyond the radius;
-        // include that same worst-case slack before rounding outward to f32.
-        let scale = center.abs().max_element().max(radius).max(1_000_000.0);
-        let reach = radius + 64.0 * f64::EPSILON * scale;
-        let low = center - glam::DVec3::splat(reach);
-        let high = center + glam::DVec3::splat(reach);
-        (
-            Vec3::new(
-                (low.x as f32).next_down(),
-                (low.y as f32).next_down(),
-                (low.z as f32).next_down(),
-            ),
-            Vec3::new(
-                (high.x as f32).next_up(),
-                (high.y as f32).next_up(),
-                (high.z as f32).next_up(),
-            ),
-        )
-    }
+pub(crate) fn outward_refinement_box(center: glam::DVec3, radius: f64) -> (Vec3, Vec3) {
+    // Mesh::validate limits each stored f32 coordinate to 1e6. The exact
+    // predicate below admits an AABB up to 64 f64 ulps beyond the radius;
+    // include that same worst-case slack before rounding outward to f32.
+    let scale = center.abs().max_element().max(radius).max(1_000_000.0);
+    let reach = radius + 64.0 * f64::EPSILON * scale;
+    let low = center - glam::DVec3::splat(reach);
+    let high = center + glam::DVec3::splat(reach);
+    (
+        Vec3::new(
+            (low.x as f32).next_down(),
+            (low.y as f32).next_down(),
+            (low.z as f32).next_down(),
+        ),
+        Vec3::new(
+            (high.x as f32).next_up(),
+            (high.y as f32).next_up(),
+            (high.z as f32).next_up(),
+        ),
+    )
+}
 
+impl PatchQuery {
     fn new(
         center: Vec3,
         radius: f32,
@@ -104,8 +104,8 @@ impl PatchQuery {
         Ok(Self {
             center,
             mirrored_center,
-            primary_box: Self::outward_box(center, radius),
-            mirrored_box: Self::outward_box(mirrored_center, radius),
+            primary_box: outward_refinement_box(center, radius),
+            mirrored_box: outward_refinement_box(mirrored_center, radius),
             radius_squared: radius * radius,
             target_squared: (radius * TARGET_EDGE_RADIUS).powi(2),
             symmetry_x,

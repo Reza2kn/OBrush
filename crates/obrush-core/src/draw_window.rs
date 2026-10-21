@@ -1,7 +1,10 @@
 //! Conservative local execution for ordinary high-density Draw dabs.
 //! A failed coverage or stitch proof always runs the unchanged full-mesh path.
 
-use crate::{BrushKind, BrushResult, BrushSettings, Mesh, Vec3, MAX_TRIANGLES, MAX_VERTICES};
+use crate::{
+    refinement::outward_refinement_box, BrushKind, BrushResult, BrushSettings, Mesh, Vec3,
+    MAX_TRIANGLES, MAX_VERTICES,
+};
 
 const MIN_GLOBAL_VERTICES: usize = 100_000;
 const MAX_WINDOW_VERTICES: usize = 25_000;
@@ -22,21 +25,16 @@ fn collect_vertices(mesh: &Mesh, faces: &[usize]) -> Option<Vec<usize>> {
 fn aabb_overlaps_box(
     mesh: &Mesh,
     face: usize,
-    center: Vec3,
-    mirrored: Vec3,
-    radius: f32,
+    primary_box: (Vec3, Vec3),
+    mirrored_box: (Vec3, Vec3),
     symmetry: bool,
 ) -> bool {
     let [a, b, c] = mesh.triangles[face].map(|v| mesh.positions[v as usize]);
     let minimum = a.min(b).min(c);
     let maximum = a.max(b).max(c);
-    let overlaps = |point: Vec3| {
-        (0..3).all(|axis| {
-            f64::from(maximum[axis]) >= f64::from(point[axis]) - f64::from(radius)
-                && f64::from(minimum[axis]) <= f64::from(point[axis]) + f64::from(radius)
-        })
-    };
-    overlaps(center) || (symmetry && overlaps(mirrored))
+    let overlaps =
+        |(low, high): (Vec3, Vec3)| minimum.cmple(high).all() && maximum.cmpge(low).all();
+    overlaps(primary_box) || (symmetry && overlaps(mirrored_box))
 }
 
 fn intersect_sorted(left: &mut Vec<usize>, right: &[usize]) {
@@ -75,14 +73,35 @@ impl Mesh {
         if !radius.is_finite() || radius <= 0.0 || self.validate().is_err() {
             return None;
         }
+        if !settings.symmetry_offset.is_finite() || settings.symmetry_offset.abs() > 1_000_000.0 {
+            return None;
+        }
         let mirrored = Vec3::new(
             2.0 * settings.symmetry_offset - center.x,
             center.y,
             center.z,
         );
+        if !mirrored.is_finite() {
+            return None;
+        }
+        let primary_box = outward_refinement_box(center.as_dvec3(), f64::from(radius));
+        let mirror_f64 = glam::DVec3::new(
+            2.0 * f64::from(settings.symmetry_offset) - f64::from(center.x),
+            f64::from(center.y),
+            f64::from(center.z),
+        );
+        let mirror_exact_box = outward_refinement_box(mirror_f64, f64::from(radius));
+        let mirror_kernel_box = outward_refinement_box(mirrored.as_dvec3(), f64::from(radius));
+        let mirrored_box = (
+            mirror_exact_box.0.min(mirror_kernel_box.0),
+            mirror_exact_box.1.max(mirror_kernel_box.1),
+        );
         let mut seed_faces = Vec::new();
+        seed_faces
+            .try_reserve_exact(MAX_WINDOW_FACES.min(self.triangles.len()))
+            .ok()?;
         for face in 0..self.triangles.len() {
-            if aabb_overlaps_box(self, face, center, mirrored, radius, settings.symmetry_x) {
+            if aabb_overlaps_box(self, face, primary_box, mirrored_box, settings.symmetry_x) {
                 seed_faces.push(face);
                 if seed_faces.len() > MAX_WINDOW_FACES {
                     return None;
@@ -168,6 +187,7 @@ impl Mesh {
         // global guard star. Every recomputed old normal needs its complete
         // incident-face sum in the original ascending face order.
         let mut closure = Vec::new();
+        closure.try_reserve_exact(vertices.len()).ok()?;
         for (index, &global) in vertices.iter().enumerate() {
             if local.positions[index] != self.positions[global]
                 || local.normals[index] != self.normals[global]
@@ -302,6 +322,37 @@ impl Mesh {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn reflected_f64_refinement_contact_survives_f32_kernel_rounding() {
+        // Doubling the offset and subtracting the center in f32 shifts the
+        // reflected contact by 0.03125 here. A 0.04-radius face is then inside
+        // the refinement query but outside the rounded brush query.
+        let center = Vec3::new(-742_687.437_5, 0.0, 0.0);
+        let offset = 38_562.671_875_f32;
+        let radius = 0.04_f32;
+        let mirrored_f64 = 2.0 * f64::from(offset) - f64::from(center.x);
+        let mirrored_f32 = 2.0 * offset - center.x;
+        assert_eq!(mirrored_f64, 819_812.781_25);
+        assert_eq!(mirrored_f32, 819_812.75);
+        let exact_box =
+            outward_refinement_box(glam::DVec3::new(mirrored_f64, 0.0, 0.0), f64::from(radius));
+        let rounded_box = outward_refinement_box(
+            Vec3::new(mirrored_f32, 0.0, 0.0).as_dvec3(),
+            f64::from(radius),
+        );
+        let contact = Mesh::new(
+            vec![
+                Vec3::new(819_812.812_5, -0.01, 0.0),
+                Vec3::new(819_812.812_5, 0.01, 0.0),
+                Vec3::new(819_812.812_5, 0.0, 0.01),
+            ],
+            vec![[0, 1, 2]],
+        );
+        assert!(f64::from(contact.positions[0].x) > f64::from(mirrored_f32) + f64::from(radius));
+        assert!(f64::from(contact.positions[0].x) <= mirrored_f64 + f64::from(radius));
+        assert!(aabb_overlaps_box(&contact, 0, exact_box, rounded_box, true));
+    }
 
     #[test]
     fn authored_high_density_draw_window_matches_full_mesh_words() {
