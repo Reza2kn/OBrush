@@ -1266,6 +1266,99 @@ impl Mesh {
         }
     }
 
+    /// Retain only vertex-to-face incidence after a topology edit. A local
+    /// brush can derive its few neighbor and fold queries from this smaller
+    /// cache without building full-scene edge/face-pair CSR on every dab.
+    pub(crate) fn ensure_local_incidence(&mut self) {
+        self.ensure_normal_incidence();
+    }
+
+    /// Sorted unique neighbors of one vertex from the signature-checked
+    /// incidence cache. The order is identical to `cached_neighbors` after a
+    /// full adjacency build, including isolated vertices.
+    pub(crate) fn local_neighbors(&self, vertex: usize) -> Vec<usize> {
+        let a = self.adjacency.as_ref().expect("incidence built");
+        if vertex >= a.vertex_face_offsets.len().saturating_sub(1) {
+            return Vec::new();
+        }
+        let mut neighbors = Vec::new();
+        for &face in
+            &a.vertex_faces[a.vertex_face_offsets[vertex]..a.vertex_face_offsets[vertex + 1]]
+        {
+            let Some(&triangle) = self.triangles.get(face as usize) else {
+                continue;
+            };
+            neighbors.extend(
+                triangle
+                    .into_iter()
+                    .map(|v| v as usize)
+                    .filter(|&v| v != vertex),
+            );
+        }
+        neighbors.sort_unstable();
+        neighbors.dedup();
+        neighbors
+    }
+
+    /// Fold pairs touching the supplied affected faces, in the same global
+    /// sorted-edge order as `cached_face_pairs`. Every edge incident to an
+    /// affected face is checked against both endpoints' complete face lists,
+    /// so an unchanged neighbor or a third nonmanifold face cannot be missed.
+    /// Invalid public topology and nonmanifold patch edges fail closed.
+    pub(crate) fn local_face_pairs_for_faces(
+        &self,
+        faces: &[usize],
+    ) -> Result<Vec<[u32; 2]>, String> {
+        use std::collections::BTreeSet;
+        let a = self.adjacency.as_ref().expect("incidence built");
+        if a.invalid_indices || faces.iter().any(|&face| face >= self.triangles.len()) {
+            return Err("Local fold query requires valid mesh indices".into());
+        }
+        let selected: BTreeSet<_> = faces.iter().copied().collect();
+        let mut edges = BTreeSet::new();
+        for &face in &selected {
+            let [x, y, z] = self.triangles[face];
+            if x == y || y == z || z == x {
+                return Err("Local fold query refuses a repeated triangle corner".into());
+            }
+            for (u, v) in [(x, y), (y, z), (z, x)] {
+                edges.insert((u.min(v), u.max(v)));
+            }
+        }
+        let mut pairs = Vec::new();
+        for (u, v) in edges {
+            let u = u as usize;
+            let v = v as usize;
+            let uf = &a.vertex_faces[a.vertex_face_offsets[u]..a.vertex_face_offsets[u + 1]];
+            let vf = &a.vertex_faces[a.vertex_face_offsets[v]..a.vertex_face_offsets[v + 1]];
+            let (mut i, mut j) = (0, 0);
+            let mut incident = Vec::new();
+            while i < uf.len() && j < vf.len() {
+                match uf[i].cmp(&vf[j]) {
+                    std::cmp::Ordering::Less => i += 1,
+                    std::cmp::Ordering::Greater => j += 1,
+                    std::cmp::Ordering::Equal => {
+                        if incident.last() != Some(&uf[i]) {
+                            incident.push(uf[i]);
+                        }
+                        i += 1;
+                        j += 1;
+                    }
+                }
+            }
+            if incident.len() > 2 {
+                return Err("Local fold query refuses a nonmanifold patch edge".into());
+            }
+            if incident.len() == 2
+                && (selected.contains(&(incident[0] as usize))
+                    || selected.contains(&(incident[1] as usize)))
+            {
+                pairs.push([incident[0], incident[1]]);
+            }
+        }
+        Ok(pairs)
+    }
+
     pub(crate) fn ensure_adjacency(&mut self) {
         let signature = self.adjacency_signature();
         if self
@@ -2333,6 +2426,97 @@ mod lazy_normal_incidence_regressions {
             mesh.adjacency.as_ref().unwrap().signature,
             candidate.adjacency.as_ref().unwrap().signature
         );
+    }
+}
+
+#[cfg(test)]
+mod local_incidence_tests {
+    use super::*;
+
+    #[test]
+    fn sparse_neighbors_and_fold_pairs_match_full_cache_before_and_after_refinement() {
+        let mut mesh = Mesh::sphere(3);
+        for refined in [false, true] {
+            if refined {
+                let report = mesh
+                    .refine_brush_patch(Vec3::new(0.23, 0.09, 0.96), 0.35, false)
+                    .unwrap();
+                assert!(report.vertices_added > 0);
+            }
+            mesh.ensure_local_incidence();
+            let mut full = mesh.snapshot();
+            full.ensure_adjacency();
+            for vertex in 0..mesh.positions.len() {
+                assert_eq!(mesh.local_neighbors(vertex), full.cached_neighbors(vertex));
+            }
+            for offset in [0, 1, 19, mesh.triangles.len() / 2] {
+                let faces: Vec<_> = (offset..mesh.triangles.len())
+                    .step_by(43)
+                    .take(17)
+                    .collect();
+                let actual = mesh.local_face_pairs_for_faces(&faces).unwrap();
+                let expected: Vec<_> = full
+                    .cached_pairs_for_faces(&faces)
+                    .into_iter()
+                    .map(|pair| full.cached_face_pairs()[pair])
+                    .collect();
+                assert_eq!(actual, expected);
+            }
+        }
+    }
+
+    #[test]
+    fn sparse_fold_query_rejects_invalid_and_nonmanifold_patch_edges() {
+        let mut invalid = Mesh::sphere(1);
+        invalid.triangles[0][0] = invalid.positions.len() as u32;
+        invalid.ensure_local_incidence();
+        assert!(invalid.local_face_pairs_for_faces(&[0]).is_err());
+
+        let mut nonmanifold = Mesh::new(
+            vec![Vec3::ZERO, Vec3::X, Vec3::Y, Vec3::Z, -Vec3::Y],
+            vec![[0, 1, 2], [1, 0, 3], [0, 1, 4]],
+        );
+        nonmanifold.ensure_local_incidence();
+        assert!(nonmanifold.local_face_pairs_for_faces(&[0]).is_err());
+    }
+
+    #[test]
+    #[ignore = "requires private imported project via OBRUSH_SPARK_FIXTURE"]
+    fn private_dense_patch_sparse_query_matches_full_and_times_work() {
+        let path = std::env::var("OBRUSH_SPARK_FIXTURE").expect("fixture path");
+        let json: serde_json::Value =
+            serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
+        let mut mesh: Mesh = serde_json::from_value(json["mesh"].clone()).unwrap();
+        let center = Vec3::new(-0.775825, 3.085721, 17.645230);
+        let selected: Vec<_> = mesh
+            .positions
+            .iter()
+            .enumerate()
+            .filter_map(|(i, p)| (p.distance_squared(center) < 1.0).then_some(i))
+            .collect();
+        let start = std::time::Instant::now();
+        mesh.ensure_local_incidence();
+        let incidence_ms = start.elapsed().as_secs_f64() * 1000.0;
+        let start = std::time::Instant::now();
+        let neighbors: Vec<_> = selected.iter().map(|&v| mesh.local_neighbors(v)).collect();
+        let faces = mesh.cached_faces_for_vertices(&selected);
+        let pairs = mesh.local_face_pairs_for_faces(&faces).unwrap();
+        let local_ms = start.elapsed().as_secs_f64() * 1000.0;
+        let mut full = mesh.snapshot();
+        let start = std::time::Instant::now();
+        full.ensure_adjacency();
+        let full_ms = start.elapsed().as_secs_f64() * 1000.0;
+        let expected_pairs: Vec<_> = full
+            .cached_pairs_for_faces(&faces)
+            .into_iter()
+            .map(|pair| full.cached_face_pairs()[pair])
+            .collect();
+        assert_eq!(pairs, expected_pairs);
+        for (i, &v) in selected.iter().enumerate() {
+            assert_eq!(neighbors[i], full.cached_neighbors(v));
+        }
+        eprintln!("Spark sparse adjacency V={} F={} selected={} faces={} pairs={} incidence_ms={incidence_ms:.3} local_ms={local_ms:.3} full_ms={full_ms:.3}",
+            mesh.positions.len(),mesh.triangles.len(),selected.len(),faces.len(),pairs.len());
     }
 }
 
