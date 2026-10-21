@@ -30,10 +30,14 @@ fn aabb_overlaps_box(
     symmetry: bool,
 ) -> bool {
     let [a, b, c] = mesh.triangles[face].map(|v| mesh.positions[v as usize]);
-    let minimum = a.min(b).min(c);
-    let maximum = a.max(b).max(c);
-    let overlaps =
-        |(low, high): (Vec3, Vec3)| minimum.cmple(high).all() && maximum.cmpge(low).all();
+    let axis_overlaps = |a: f32, b: f32, c: f32, low: f32, high: f32| {
+        (a <= high || b <= high || c <= high) && (a >= low || b >= low || c >= low)
+    };
+    let overlaps = |(low, high): (Vec3, Vec3)| {
+        axis_overlaps(a.x, b.x, c.x, low.x, high.x)
+            && axis_overlaps(a.y, b.y, c.y, low.y, high.y)
+            && axis_overlaps(a.z, b.z, c.z, low.z, high.z)
+    };
     overlaps(primary_box) || (symmetry && overlaps(mirrored_box))
 }
 
@@ -502,6 +506,62 @@ impl Mesh {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn early_axis_rejection_matches_full_triangle_aabb_for_finite_inputs() {
+        let mut mesh = Mesh::new(vec![Vec3::ZERO; 3], vec![[0, 1, 2]]);
+        let mut state = 612_129_u32;
+        let mut random = || {
+            state = state.wrapping_mul(1_664_525).wrapping_add(1_013_904_223);
+            (state as f64 / f64::from(u32::MAX) * 20.0 - 10.0) as f32
+        };
+        for _ in 0..10_000 {
+            for point in &mut mesh.positions {
+                *point = Vec3::new(random(), random(), random());
+            }
+            let p = Vec3::new(random(), random(), random());
+            let q = Vec3::new(random(), random(), random());
+            let first = (p.min(q), p.max(q));
+            let p = Vec3::new(random(), random(), random());
+            let q = Vec3::new(random(), random(), random());
+            let second = (p.min(q), p.max(q));
+            let [a, b, c] = [mesh.positions[0], mesh.positions[1], mesh.positions[2]];
+            let minimum = a.min(b).min(c);
+            let maximum = a.max(b).max(c);
+            let old =
+                |(low, high): (Vec3, Vec3)| minimum.cmple(high).all() && maximum.cmpge(low).all();
+            for mirrored in [false, true] {
+                assert_eq!(
+                    aabb_overlaps_box(&mesh, 0, first, second, mirrored),
+                    old(first) || (mirrored && old(second))
+                );
+            }
+        }
+        let primary = (Vec3::ZERO, Vec3::ONE);
+        let mirrored = (Vec3::new(2.0, 0.0, 0.0), Vec3::new(3.0, 1.0, 1.0));
+        for (x, primary_hit, mirror_hit) in [
+            (0.0, true, false),
+            (1.0, true, false),
+            (1.0_f32.next_up(), false, false),
+            (2.0, false, true),
+            (3.0, false, true),
+            (3.0_f32.next_up(), false, false),
+        ] {
+            mesh.positions = vec![
+                Vec3::new(x, 0.2, 0.2),
+                Vec3::new(x, 0.8, 0.2),
+                Vec3::new(x, 0.2, 0.8),
+            ];
+            assert_eq!(
+                aabb_overlaps_box(&mesh, 0, primary, mirrored, false),
+                primary_hit
+            );
+            assert_eq!(
+                aabb_overlaps_box(&mesh, 0, primary, mirrored, true),
+                primary_hit || mirror_hit
+            );
+        }
+    }
 
     #[test]
     fn reflected_f64_refinement_contact_survives_f32_kernel_rounding() {
