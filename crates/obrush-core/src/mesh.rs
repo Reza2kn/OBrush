@@ -1688,11 +1688,19 @@ impl Mesh {
                     return Ok(candidate);
                 }
                 // Extra reserved capacity is optional. Keep the staged face
-                // vector and retry exact capacity after dropping these copies.
-                return self.draw_window_candidate_with_triangles_exact(
-                    candidate.triangles,
-                    added_vertices,
-                );
+                // vector, but release every roomy channel before allocating
+                // an exact copy so the retry does not double peak memory.
+                let Self {
+                    triangles,
+                    positions,
+                    normals,
+                    masks,
+                    colors,
+                    materials,
+                    ..
+                } = candidate;
+                drop((positions, normals, masks, colors, materials));
+                return self.draw_window_candidate_with_triangles_exact(triangles, added_vertices);
             }
         }
         self.draw_window_candidate_with_triangles_exact(triangles, added_vertices)
