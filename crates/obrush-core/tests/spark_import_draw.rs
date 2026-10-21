@@ -25,12 +25,38 @@ fn ray(screen: (f32, f32)) -> Ray {
     let forward = (target - origin).normalize();
     let right = forward.cross(Vec3::Y).normalize();
     let up = right.cross(forward).normalize();
-    let ndc_x = 2.0 * (screen.0 - 225.0) / 1045.0 - 1.0;
-    let ndc_y = 1.0 - 2.0 * (screen.1 - 57.0) / 869.0;
+    // Browser viewport [225,57,1045,869] is [left,top,right,bottom], so
+    // physical width=820 and height=812. CSS(635,463) is its exact center.
+    let ndc_x = 2.0 * (screen.0 - 225.0) / 820.0 - 1.0;
+    let ndc_y = 1.0 - 2.0 * (screen.1 - 57.0) / 812.0;
     let tangent = (40.0_f32.to_radians() * 0.5).tan();
     let direction =
-        (forward + right * ndc_x * tangent * (1045.0 / 869.0) + up * ndc_y * tangent).normalize();
+        (forward + right * ndc_x * tangent * (820.0 / 812.0) + up * ndc_y * tangent).normalize();
     Ray { origin, direction }
+}
+
+#[test]
+fn captured_viewport_center_and_corners_calibrate() {
+    let eye = Vec3::new(-2.758_769_8, 34.199_276, 20.482_391);
+    let target = Vec3::new(-0.273_416_52, -4.797_350_4, 16.926_394);
+    assert!(
+        ray((635.0, 463.0))
+            .direction
+            .distance((target - eye).normalize())
+            < 1e-6
+    );
+    assert!(
+        ray((225.0, 463.0))
+            .direction
+            .distance(ray((1045.0, 463.0)).direction)
+            > 0.5
+    );
+    assert!(
+        ray((635.0, 57.0))
+            .direction
+            .distance(ray((635.0, 869.0)).direction)
+            > 0.5
+    );
 }
 
 fn run_spark_stroke(radius: f32) {
