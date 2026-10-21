@@ -565,6 +565,43 @@ mod tests {
     }
 
     #[test]
+    fn interior_draw_preparation_keeps_a_closed_mesh_conforming() {
+        let mut mesh = Mesh::sphere(1);
+        let original_vertices = mesh.positions.len();
+        let original_triangles = mesh.triangles.len();
+        let [a, b, c] = mesh.triangles[0].map(|v| mesh.positions[v as usize]);
+        let center = (a + b + c) / 3.0;
+        let normal = (b - a).cross(c - a).normalize();
+        let settings = crate::BrushSettings {
+            radius: 0.015,
+            strength: 0.35,
+            symmetry_x: false,
+            ..Default::default()
+        };
+        let result = mesh.apply_brush_with_result(center, normal, Vec3::ZERO, &settings);
+        assert!(result.changed_vertices > 0, "{result:?}");
+        assert!(mesh.positions.len() > original_vertices);
+        assert!(mesh.triangles.len() > original_triangles);
+        let mut edges = std::collections::HashMap::new();
+        for triangle in &mesh.triangles {
+            for (a, b) in [
+                (triangle[0], triangle[1]),
+                (triangle[1], triangle[2]),
+                (triangle[2], triangle[0]),
+            ] {
+                let edge = (a.min(b), a.max(b));
+                let direction = a < b;
+                let entry = edges.entry(edge).or_insert_with(Vec::new);
+                entry.push(direction);
+            }
+        }
+        assert!(edges
+            .values()
+            .all(|directions| directions.len() == 2 && directions[0] != directions[1]));
+        mesh.validate().unwrap();
+    }
+
+    #[test]
     fn curvature_lifts_new_sphere_points_toward_reference_sphere() {
         let base = Mesh::sphere(2);
         let mut linear = base.snapshot();
