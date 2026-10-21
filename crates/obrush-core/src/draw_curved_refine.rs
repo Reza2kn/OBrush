@@ -247,6 +247,7 @@ impl Mesh {
         indices.truncate(MAX_CURVED_POINTS);
         let mut done = HashSet::new();
         let mut curved = 0;
+        let mut dirty = Vec::new();
         for i in indices {
             if !done.insert(i) {
                 continue;
@@ -275,10 +276,11 @@ impl Mesh {
             }
             if admit(&mut candidate, &changes) {
                 curved += changes.len();
+                dirty.extend(changes.iter().map(|&(vertex, _)| vertex));
             }
         }
         if curved > 0 {
-            candidate.recompute_normals();
+            candidate.recompute_normals_near_vertices_cached(&dirty);
             candidate.validate()?;
         }
         *self = candidate;
@@ -335,6 +337,9 @@ mod tests {
         {
             assert!(linear.as_dvec3().distance(curved.as_dvec3()) <= bound);
         }
+        let mut full_normals = curved.snapshot();
+        full_normals.recompute_normals();
+        assert_eq!(curved.normals, full_normals.normals);
         curved.validate().unwrap();
     }
 
