@@ -4,6 +4,9 @@ use std::collections::HashMap;
 
 #[path = "draw_cage_solver.rs"]
 mod draw_cage_solver;
+#[cfg(test)]
+#[path = "draw_cap_rounding_regression.rs"]
+mod draw_cap_rounding_regression;
 
 #[cfg(test)]
 #[path = "draw_anchor_regression.rs"]
