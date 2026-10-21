@@ -62,6 +62,55 @@ fn validate_spliced_counts(mesh: &Mesh) -> bool {
         && mesh.approximate_bytes() <= crate::decode_limits::MAX_SCENE_STORAGE_BYTES
 }
 
+/// The source and compact result have already passed complete validation.
+/// Publishing into the source is atomic only when every append fits existing
+/// capacity: reserving one live channel before a later allocation failure
+/// could leave the original mesh above its capacity-counted storage budget.
+fn can_publish_splice_in_place(
+    source: &Mesh,
+    local: &Mesh,
+    triangles: &Vec<[u32; 3]>,
+    new_count: usize,
+) -> bool {
+    let Some(vertices) = source.positions.len().checked_add(new_count) else {
+        return false;
+    };
+    if vertices == 0
+        || vertices > MAX_VERTICES
+        || triangles.is_empty()
+        || triangles.len() > MAX_TRIANGLES
+        || source.surface.is_some()
+        || source.materials.is_some() != local.materials.is_some()
+        || source.positions.capacity() < vertices
+        || source.normals.capacity() < vertices
+        || source.masks.capacity() < vertices
+        || source.colors.capacity() < vertices
+        || source
+            .materials
+            .as_ref()
+            .is_some_and(|m| m.capacity() < vertices)
+    {
+        return false;
+    }
+    let capacities = [
+        (source.positions.capacity(), std::mem::size_of::<Vec3>()),
+        (source.normals.capacity(), std::mem::size_of::<Vec3>()),
+        (triangles.capacity(), std::mem::size_of::<[u32; 3]>()),
+        (source.masks.capacity(), std::mem::size_of::<f32>()),
+        (source.colors.capacity(), std::mem::size_of::<[f32; 3]>()),
+        (
+            source.materials.as_ref().map_or(0, Vec::capacity),
+            std::mem::size_of::<[f32; 2]>(),
+        ),
+    ];
+    capacities
+        .into_iter()
+        .try_fold(std::mem::size_of::<Mesh>(), |bytes, (capacity, row)| {
+            bytes.checked_add(capacity.checked_mul(row)?)
+        })
+        .is_some_and(|bytes| bytes <= crate::decode_limits::MAX_SCENE_STORAGE_BYTES)
+}
+
 /// Scan original faces in row order. This bounded local extraction avoids a
 /// full-scene vertex-to-face CSR rebuild after every topology-changing dab.
 fn star_faces(
@@ -291,6 +340,24 @@ impl Mesh {
                 return None;
             }
         }
+        if new_count == 0 && local.triangles == old_triangles {
+            // The validated local dab changed no topology. All potentially
+            // changed positions/normals have their complete source face star,
+            // and every copied row came from the validated compact mesh.
+            // Preserve the original face buffer and its capacity exactly.
+            for (local_vertex, &global) in vertices.iter().enumerate() {
+                self.positions[global] = local.positions[local_vertex];
+                self.normals[global] = local.normals[local_vertex];
+                self.masks[global] = local.masks[local_vertex];
+                self.colors[global] = local.colors[local_vertex];
+                if let (Some(dst), Some(src)) = (&mut self.materials, &local.materials) {
+                    dst[global] = src[local_vertex];
+                }
+            }
+            self.clear_cache();
+            debug_assert!(self.validate().is_ok());
+            return Some(result);
+        }
         // Trace each generated vertex to the original local faces incident to
         // all positive-weight parents. A final child must have exactly one
         // original face. Ambiguous duplicate/nonmanifold topology falls back.
@@ -371,6 +438,35 @@ impl Mesh {
         }
         if selected != faces.len() || triangles.len() != triangle_count {
             return None;
+        }
+        if can_publish_splice_in_place(self, &local, &triangles, new_count) {
+            // Everything that can fail has finished. Local rows and new face
+            // indices are validated, the old-to-global mapping is injective,
+            // every append fits a live channel, and the final capacity budget
+            // was checked with the staged triangle allocation. No live Vec is
+            // reserved or reallocated after the first source write.
+            for (local_vertex, &global) in vertices.iter().enumerate() {
+                self.positions[global] = local.positions[local_vertex];
+                self.normals[global] = local.normals[local_vertex];
+                self.masks[global] = local.masks[local_vertex];
+                self.colors[global] = local.colors[local_vertex];
+                if let (Some(dst), Some(src)) = (&mut self.materials, &local.materials) {
+                    dst[global] = src[local_vertex];
+                }
+            }
+            for local_vertex in old_local_count..local.positions.len() {
+                self.positions.push(local.positions[local_vertex]);
+                self.normals.push(local.normals[local_vertex]);
+                self.masks.push(local.masks[local_vertex]);
+                self.colors.push(local.colors[local_vertex]);
+                if let (Some(dst), Some(src)) = (&mut self.materials, &local.materials) {
+                    dst.push(src[local_vertex]);
+                }
+            }
+            self.triangles = triangles;
+            self.clear_cache();
+            debug_assert!(self.validate().is_ok());
+            return Some(result);
         }
         let mut candidate = self
             .draw_window_candidate_with_triangles(triangles, new_count)
@@ -499,3 +595,7 @@ mod tests {
 #[cfg(test)]
 #[path = "draw_window_independent_tests.rs"]
 mod independent_tests;
+
+#[cfg(test)]
+#[path = "draw_window_inplace_tests.rs"]
+mod inplace_tests;
