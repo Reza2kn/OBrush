@@ -7530,8 +7530,6 @@ impl OBrushApp {
                 }
             });
         ui.add_space(24.0);
-        self.source_paint_panel(ui);
-        self.source_geometry_panel(ui);
         if !(self.source_geometry_requested(self.brush.kind)
             || self.brush.kind == BrushKind::Paint
                 && self.source_paint_preferences.mode
@@ -7697,6 +7695,29 @@ impl OBrushApp {
                     .color(preferences_host::muted(ui)),
                 );
             }
+        }
+        if self.source_geometry_requested(self.brush.kind)
+            || self.brush.kind == BrushKind::Paint
+                && self.source_paint_preferences.mode
+                    == crate::source_paint_host::PaintMode::SourceOrdinary
+        {
+            // Keep the active reference response and its numeric controls in
+            // the primary flow. Changing modes still goes through the panels'
+            // existing loss-acknowledgment path.
+            self.source_paint_panel(ui);
+            self.source_geometry_panel(ui);
+        } else if self.brush.kind == BrushKind::Paint
+            || self
+                .effective_source_geometry_preferences(self.brush.kind)
+                .is_some()
+        {
+            egui::CollapsingHeader::new("Reference response")
+                .id_salt("reference_response_controls")
+                .default_open(false)
+                .show(ui, |ui| {
+                    self.source_paint_panel(ui);
+                    self.source_geometry_panel(ui);
+                });
         }
         let source_paint = self.brush.kind == BrushKind::Paint
             && self.source_paint_preferences.mode
@@ -11629,15 +11650,21 @@ impl OBrushApp {
             ui.add_space(12.0);
             egui::CollapsingHeader::new("Keyboard shortcuts")
                 .id_salt("help_keyboard_shortcuts")
-                .default_open(false)
+                .default_open(true)
                 .show(ui, |ui| {
                     if source_profile {
-                        ui.label(crate::ui_text::caption(
-                            crate::ui_text::CaptionKey::C9687CB92031A,
-                        ));
-                        ui.label(crate::ui_text::caption(
-                            crate::ui_text::CaptionKey::C045BEF52111D,
-                        ));
+                        ui.label("Brush keys, navigation, and editing shortcuts follow the SculptGL profile.");
+                        egui::CollapsingHeader::new("Reference profile details")
+                            .id_salt("help_reference_profile_details")
+                            .default_open(false)
+                            .show(ui, |ui| {
+                                ui.label(crate::ui_text::caption(
+                                    crate::ui_text::CaptionKey::C9687CB92031A,
+                                ));
+                                ui.label(crate::ui_text::caption(
+                                    crate::ui_text::CaptionKey::C045BEF52111D,
+                                ));
+                            });
                     } else {
                         egui::Grid::new("help_keys")
                             .spacing([24.0, 8.0])
