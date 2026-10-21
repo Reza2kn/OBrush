@@ -431,16 +431,16 @@ impl Mesh {
         }
         let mut triangles = Vec::new();
         triangles.try_reserve_exact(triangle_count).ok()?;
-        let mut selected = 0;
-        for face in 0..self.triangles.len() {
-            if faces.get(selected) == Some(&face) {
-                triangles.extend_from_slice(&children[selected]);
-                selected += 1;
-            } else {
-                triangles.push(self.triangles[face]);
-            }
+        let mut unchanged_start = 0;
+        for (&face, replacement) in faces.iter().zip(&children) {
+            // Preserve global face order, copying distant unchanged runs in
+            // bulk instead of branching once for every face in a dense mesh.
+            triangles.extend_from_slice(self.triangles.get(unchanged_start..face)?);
+            triangles.extend_from_slice(replacement);
+            unchanged_start = face.checked_add(1)?;
         }
-        if selected != faces.len() || triangles.len() != triangle_count {
+        triangles.extend_from_slice(self.triangles.get(unchanged_start..)?);
+        if faces.len() != children.len() || triangles.len() != triangle_count {
             return None;
         }
         if can_publish_splice_in_place(self, &local, &triangles, new_count) {
