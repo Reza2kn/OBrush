@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "source_commit": "50f36181b4537ec35d443a073062ed7f5b120a7b",
+  "build_info": {
+    "cargo_lock_sha256": "1502a5e26cff2a3f6fec51b7d0a6b35ededd66834f7807144aa3e27813a78d33",
+    "gpu_wasm_sha256": "7a2da673c586ef0a1cd0c3d653f36ece627f4a65476745acdaf54a345c797702",
+    "portable_wasm_sha256": "4982f79f9963475e8571abf2ee46161c9ac715f6c56c49c0a112abd1ddf0abf2",
+    "schema_version": 1,
+    "simd_wasm_sha256": "72841866f8cf6dc9203b1fd32ada5fc60f4dabfb4c142431f403b62032a24815",
+    "source_commit": "50f36181b4537ec35d443a073062ed7f5b120a7b",
+    "source_tree_state": "clean",
+    "version": "0.1.20",
+    "wasm_bindgen_cli_version": "0.2.129"
+  },
+  "input": {
+    "filename": "Sparkdancer 2.stl",
+    "sha256": "5502a1c2ce42adbf70729cb1b00a8110eb8c5ace5d1f6f332c2ad2e1e7b9ef9c",
+    "bytes": 36945284,
+    "source_faces": 738904,
+    "asset_in_repository": false
+  },
+  "import": {
+    "retained_vertices": 369407,
+    "retained_triangles": 738900,
+    "skipped_exact_repeated_position_facets": 4,
+    "maximum_coordinate_difference": 0.0,
+    "independent_checks": {
+      "retained_facet_coordinates_and_winding_exact": true,
+      "counts_exact": true,
+      "positions_finite": true,
+      "no_new_repeated_corners": true,
+      "all_vertices_referenced": true
+    }
+  },
+  "ordinary_browser": {
+    "browser": {
+      "protocolVersion": "1.3",
+      "product": "Chrome/155.0.8059.85",
+      "revision": "@0e66b94549a8bd85f03fbdf189b752d6e7b63c32",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "jsVersion": "15.5.35.25"
+    },
+    "origin": "https://obrush.app/",
+    "backend": "simd",
+    "checks": {
+      "retained_counts": true,
+      "skip_warning": true,
+      "scene_gpu_valid": true,
+      "import_undo_restores_sphere": true,
+      "import_redo_exact": true,
+      "actual_stroke_edits": true,
+      "stroke_undo_exact": true,
+      "stroke_redo_exact": true
+    },
+    "paint_changed_vertices": 1312,
+    "paint_vertices_max_channel_delta_over_0_01": 848,
+    "paint_maximum_channel_delta": 0.15411227,
+    "paint_geometry_unchanged": true
+  },
+  "public_routes": [
+    {
+      "status": "passed",
+      "backend": "simd",
+      "checks": {
+        "build_info_exact": true,
+        "asset_index.html": true,
+        "asset_pkg/obrush_app_bg.wasm": true,
+        "asset_pkg-simd/obrush_app_bg.wasm": true,
+        "asset_gpu-pkg/resident_bg.wasm": true,
+        "asset_obrush-icon.svg": true,
+        "asset_favicon-32.png": true,
+        "asset_apple-touch-icon.png": true,
+        "png_favicon-32.png": true,
+        "png_apple-touch-icon.png": true,
+        "draw_selected": true,
+        "https_loaded": true,
+        "initial_clean": true,
+        "clean_reload_no_warning": true,
+        "draw_changed_revision": true,
+        "draw_makes_dirty": true,
+        "project_download_valid": true,
+        "requested_download_keeps_warning": true,
+        "blocked_download_keeps_warning": true,
+        "cancel_navigation_preserves_document": true,
+        "cancel_navigation_preserves_url": true
+      },
+      "source_commit": "50f36181b4537ec35d443a073062ed7f5b120a7b"
+    },
+    {
+      "status": "passed",
+      "backend": "scalar",
+      "checks": {
+        "build_info_exact": true,
+        "asset_index.html": true,
+        "asset_pkg/obrush_app_bg.wasm": true,
+        "asset_pkg-simd/obrush_app_bg.wasm": true,
+        "asset_gpu-pkg/resident_bg.wasm": true,
+        "asset_obrush-icon.svg": true,
+        "asset_favicon-32.png": true,
+        "asset_apple-touch-icon.png": true,
+        "png_favicon-32.png": true,
+        "png_apple-touch-icon.png": true,
+        "draw_selected": true,
+        "https_loaded": true,
+        "initial_clean": true,
+        "clean_reload_no_warning": true,
+        "draw_changed_revision": true,
+        "draw_makes_dirty": true,
+        "project_download_valid": true,
+        "requested_download_keeps_warning": true,
+        "blocked_download_keeps_warning": true,
+        "cancel_navigation_preserves_document": true,
+        "cancel_navigation_preserves_url": true
+      },
+      "source_commit": "50f36181b4537ec35d443a073062ed7f5b120a7b"
+    }
+  ],
+  "retained_failures": [
+    {
+      "scope": "first browser import history harness",
+      "result": "second download overwrote the same filename; new-file-only detection timed out",
+      "correction": "move completed downloads out of the next-save filename; fresh rerun passed"
+    },
+    {
+      "scope": "actual post-import Draw, radius1 strength0.35 symmetryFalse",
+      "result": "no geometry change; existing thin faces reject every guarded proposal",
+      "status": "unresolved; no guard relaxation shipped"
+    }
+  ],
+  "limitations": [
+    "Exact repeated positions only; no approximate welding or general topology repair.",
+    "No close-up surface quality, pen, dense-mesh latency or reference parity claim.",
+    "One full four-way subdivision would produce 2955600 faces, beyond the current 2000000-face mesh limit."
+  ]
+}
