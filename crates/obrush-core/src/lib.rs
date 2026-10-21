@@ -67,6 +67,7 @@ mod subtools;
 mod topology;
 mod transform;
 mod uv_bake;
+mod validated_draw_contact;
 
 pub use alpha::RasterAlpha;
 pub use attributes::{
@@ -192,6 +193,7 @@ pub use topology::{
     execute_topology_with_cancel, TopologyOperation, TopologyReport,
 };
 pub use transform::ObjectTransform;
+pub use validated_draw_contact::ValidatedDrawContact;
 
 #[cfg(test)]
 mod tests;

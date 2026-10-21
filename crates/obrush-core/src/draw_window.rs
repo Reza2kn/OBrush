@@ -110,6 +110,29 @@ impl Mesh {
         delta: Vec3,
         settings: &BrushSettings,
     ) -> Option<BrushResult> {
+        self.try_local_draw_window_inner(center, normal, delta, settings, false)
+    }
+
+    /// The caller holds the exclusive mesh borrow from a validated scene pick.
+    pub(crate) fn try_local_draw_window_from_validated_source(
+        &mut self,
+        center: Vec3,
+        normal: Vec3,
+        delta: Vec3,
+        settings: &BrushSettings,
+        _validated_source: crate::validated_draw_contact::ValidatedDrawSource,
+    ) -> Option<BrushResult> {
+        self.try_local_draw_window_inner(center, normal, delta, settings, true)
+    }
+
+    fn try_local_draw_window_inner(
+        &mut self,
+        center: Vec3,
+        normal: Vec3,
+        delta: Vec3,
+        settings: &BrushSettings,
+        source_validated: bool,
+    ) -> Option<BrushResult> {
         if self.positions.len() < MIN_GLOBAL_VERTICES
             || settings.kind != BrushKind::Draw
             || !settings.draw_accumulate
@@ -128,7 +151,7 @@ impl Mesh {
             return None;
         }
         let radius = settings.effective_radius()?;
-        if !radius.is_finite() || radius <= 0.0 || self.validate().is_err() {
+        if !radius.is_finite() || radius <= 0.0 || (!source_validated && self.validate().is_err()) {
             return None;
         }
         if !settings.symmetry_offset.is_finite() || settings.symmetry_offset.abs() > 1_000_000.0 {

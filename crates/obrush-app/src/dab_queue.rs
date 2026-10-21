@@ -449,6 +449,32 @@ impl DabQueue {
                 return;
             }
         };
+        if settings.kind == BrushKind::Draw
+            && settings.draw_accumulate
+            && footprint.is_none()
+            && delta == Vec3::ZERO
+        {
+            match document.pick_active_draw_contact(ray, policy) {
+                Ok(Some(contact)) => {
+                    self.cursor_depth_position = Some(contact.hit().position);
+                    match contact.apply(&settings) {
+                        Ok(result) => {
+                            let changed = result.changed_vertices > 0;
+                            self.applied += u64::from(changed);
+                            progress.changed |= changed;
+                        }
+                        Err(error) => {
+                            progress.error.get_or_insert(error);
+                        }
+                    }
+                }
+                Ok(None) => self.cursor_depth_position = None,
+                Err(error) => {
+                    progress.error.get_or_insert(error);
+                }
+            }
+            return;
+        }
         let picked = match document.raycast_scene(ray, policy) {
             Ok(v) => v,
             Err(e) => {

@@ -1164,6 +1164,34 @@ impl Mesh {
             .0
     }
 
+    /// Only the exclusive validated-contact owner may use this entry point.
+    pub(crate) fn apply_brush_at_validated_draw_hit(
+        &mut self,
+        hit: crate::Hit,
+        settings: &BrushSettings,
+        validated_source: crate::validated_draw_contact::ValidatedDrawSource,
+    ) -> BrushResult {
+        if let Some(result) = self.try_local_draw_window_from_validated_source(
+            hit.position,
+            hit.normal,
+            Vec3::ZERO,
+            settings,
+            validated_source,
+        ) {
+            return result;
+        }
+        self.apply_brush_dab(
+            hit.position,
+            hit.normal,
+            Vec3::ZERO,
+            settings,
+            None,
+            true,
+            true,
+        )
+        .0
+    }
+
     #[allow(clippy::too_many_arguments)]
     pub(crate) fn apply_brush_dab(
         &mut self,
