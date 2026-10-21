@@ -157,7 +157,7 @@ impl Mesh {
         symmetry_x: bool,
     ) -> Result<PatchRefinement, String> {
         self.refine_brush_patch_impl(
-            center, radius, symmetry_x, 0.0, None, MAX_ROUNDS, None, false, false,
+            center, radius, symmetry_x, 0.0, None, MAX_ROUNDS, None, false, false, false,
         )
         .map(|(report, _)| report)
     }
@@ -180,6 +180,7 @@ impl Mesh {
             Some(dirty_vertices),
             MAX_ROUNDS,
             None,
+            false,
             false,
             false,
         )
@@ -208,6 +209,7 @@ impl Mesh {
             Some(radius),
             false,
             false,
+            false,
         )
         .map(|(report, _)| report)
     }
@@ -231,6 +233,33 @@ impl Mesh {
             None,
             true,
             draw_quality,
+            false,
+        )
+    }
+
+    pub(crate) fn refine_draw_patch_curved(
+        &mut self,
+        center: Vec3,
+        radius: f32,
+        symmetry_x: bool,
+        symmetry_offset: f32,
+        dirty_vertices: &[usize],
+    ) -> Result<(PatchRefinement, Vec<RefinementParents>), String> {
+        // Live Draw defers normals until after deformation. Curvature needs
+        // current endpoint normals, so update only its already dirty patch.
+        self.validate()?;
+        self.recompute_normals_near_vertices_cached(dirty_vertices);
+        self.refine_brush_patch_impl(
+            center,
+            radius,
+            symmetry_x,
+            symmetry_offset,
+            Some(dirty_vertices),
+            MAX_ROUNDS,
+            None,
+            true,
+            true,
+            true,
         )
     }
 
@@ -249,6 +278,7 @@ impl Mesh {
             None,
             4,
             Some(radius),
+            false,
             false,
             false,
         )
@@ -270,6 +300,7 @@ impl Mesh {
         target_radius: Option<f32>,
         collect_parents: bool,
         draw_quality: bool,
+        curved_draw: bool,
     ) -> Result<(PatchRefinement, Vec<RefinementParents>), String> {
         self.validate()?;
         self.require_plain_topology("Adaptive refinement")?;
@@ -344,13 +375,25 @@ impl Mesh {
                     .into_iter()
                     .any(|(a, b)| query.contains_edge(&candidate, a, b))
         });
-        let result = PatchRefinement {
+        let mut result = PatchRefinement {
             vertices_added: candidate.positions.len() - original_vertices,
             triangles_added: candidate.triangles.len() - original_triangles,
             limited,
         };
         if result.vertices_added != 0 {
             candidate.clear_cache();
+            if curved_draw {
+                let (curved, curve_limited) = candidate.curve_new_draw_midpoints(
+                    self,
+                    &parents,
+                    center,
+                    radius,
+                    symmetry_x,
+                    symmetry_offset,
+                );
+                dirty.extend(curved);
+                result.limited |= curve_limited;
+            }
             if dirty_vertices.is_some() {
                 candidate
                     .normals

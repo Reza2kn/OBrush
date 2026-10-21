@@ -1697,6 +1697,20 @@ impl Mesh {
                         &dirty_vertices,
                     )
                     .map(|report| (report, Vec::new()))
+                } else if settings.kind == BrushKind::Draw
+                    && settings.draw_accumulate
+                    && !settings.invert
+                    && settings.alpha.is_none()
+                    && settings.hardness == 0.0
+                    && proxy_positions.is_none()
+                {
+                    self.refine_draw_patch_curved(
+                        center,
+                        radius,
+                        settings.symmetry_x,
+                        settings.symmetry_offset,
+                        &dirty_vertices,
+                    )
                 } else {
                     self.refine_brush_patch_with_options(
                         center,

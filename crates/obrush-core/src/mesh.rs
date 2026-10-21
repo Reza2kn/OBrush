@@ -1239,7 +1239,7 @@ impl Mesh {
         (vertex_face_offsets, vertex_faces, invalid_indices)
     }
 
-    fn ensure_normal_incidence(&mut self) {
+    pub(crate) fn ensure_normal_incidence(&mut self) {
         let signature = self.adjacency_signature();
         if self
             .adjacency

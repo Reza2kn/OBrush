@@ -1,5 +1,5 @@
 //! Curvature-aware, bounded Draw refinement of an already accepted surface.
-use crate::{Mesh, Vec3};
+use crate::{refinement::RefinementParents, Mesh, Vec3};
 use glam::DVec3;
 use std::collections::{HashMap, HashSet};
 
@@ -134,43 +134,19 @@ fn admit(mesh: &mut Mesh, changes: &[(usize, Vec3)]) -> bool {
 }
 
 impl Mesh {
-    /// Split with the existing Draw child-quality policy, then curve only
-    /// first-generation interior midpoints. The tangent-plane curvature offset
-    /// is capped at 1% of radius; every original vertex stays unchanged.
-    /// An exact mirrored midpoint pair moves together. An imported asymmetric
-    /// point without an exact counterpart may move independently.
-    pub fn refine_curved_draw_patch(
+    /// Offset only first-generation Draw midpoints inside the same refinement
+    /// transaction. Original positions and ancestry remain unchanged.
+    pub(crate) fn curve_new_draw_midpoints(
         &mut self,
+        original: &Mesh,
+        ancestry: &[RefinementParents],
         center: Vec3,
         radius: f32,
         symmetry_x: bool,
         symmetry_offset: f32,
-    ) -> Result<CurvedDrawRefinement, String> {
-        if !center.is_finite()
-            || !radius.is_finite()
-            || radius <= 0.0
-            || !symmetry_offset.is_finite()
-        {
-            return Err("Curved Draw refinement needs finite contact and radius".into());
-        }
-        self.validate()?;
-        self.require_plain_topology("Curved Draw refinement")?;
-        let original_count = self.positions.len();
-        let mut candidate = self.try_snapshot()?;
-        let (refined, ancestry) = candidate.refine_brush_patch_with_options(
-            center,
-            radius,
-            symmetry_x,
-            symmetry_offset,
-            &[],
-            true,
-        )?;
-        if refined.vertices_added == 0 {
-            return Ok(CurvedDrawRefinement {
-                limited: refined.limited,
-                ..Default::default()
-            });
-        }
+    ) -> (Vec<usize>, bool) {
+        let original_count = original.positions.len();
+        self.ensure_normal_incidence();
         let wanted: HashSet<_> = ancestry
             .iter()
             .filter(|p| {
@@ -181,7 +157,7 @@ impl Mesh {
             .map(|p| key(p.parents[0], p.parents[1]))
             .collect();
         let mut opposites: HashMap<(usize, usize), Vec<(usize, bool)>> = HashMap::new();
-        for &t in &self.triangles {
+        for &t in &original.triangles {
             for (a, b, c) in [(t[0], t[1], t[2]), (t[1], t[2], t[0]), (t[2], t[0], t[1])] {
                 let k = key(a as usize, b as usize);
                 if wanted.contains(&k) {
@@ -209,15 +185,15 @@ impl Mesh {
                 continue;
             }
             let [oa, ob] = [opp[0].0, opp[1].0];
-            if !same_attrs(self, [a, b, oa, ob]) {
+            if !same_attrs(original, [a, b, oa, ob]) {
                 continue;
             }
-            let na = normal(&self.positions, [a as u32, b as u32, oa as u32]);
-            let nb = normal(&self.positions, [b as u32, a as u32, ob as u32]);
+            let na = normal(&original.positions, [a as u32, b as u32, oa as u32]);
+            let nb = normal(&original.positions, [b as u32, a as u32, ob as u32]);
             if na.zip(nb).is_none_or(|(x, y)| x.dot(y) < SMOOTH_FOLD_COS) {
                 continue;
             }
-            let old = candidate.positions[p.vertex];
+            let old = self.positions[p.vertex];
             let mirrored_center = reflect(center, symmetry_offset);
             if old.distance_squared(center) > radius * radius
                 && (!symmetry_x || old.distance_squared(mirrored_center) > radius * radius)
@@ -227,10 +203,10 @@ impl Mesh {
             // Two endpoint tangent planes estimate signed curvature at the
             // edge midpoint. A plane gives zero; a convex sphere lifts above
             // its linear chord without changing existing vertex positions.
-            let pa = self.positions[a].as_dvec3();
-            let pb = self.positions[b].as_dvec3();
-            let na = self.normals[a].as_dvec3().normalize_or_zero();
-            let nb = self.normals[b].as_dvec3().normalize_or_zero();
+            let pa = original.positions[a].as_dvec3();
+            let pb = original.positions[b].as_dvec3();
+            let na = original.normals[a].as_dvec3().normalize_or_zero();
+            let nb = original.normals[b].as_dvec3().normalize_or_zero();
             let direction = (na + nb).normalize_or_zero();
             if direction == DVec3::ZERO || na.dot(nb) < SMOOTH_FOLD_COS {
                 continue;
@@ -252,25 +228,18 @@ impl Mesh {
             targets.insert(p.vertex, target);
         }
         if targets.is_empty() {
-            *self = candidate;
-            return Ok(CurvedDrawRefinement {
-                vertices_added: refined.vertices_added,
-                triangles_added: refined.triangles_added,
-                vertices_curved: 0,
-                limited: refined.limited,
-            });
+            return (Vec::new(), false);
         }
         let mut mirror_index = HashMap::new();
         if symmetry_x {
-            for v in original_count..candidate.positions.len() {
-                mirror_index.insert(bits(candidate.positions[v]), v);
+            for v in original_count..self.positions.len() {
+                mirror_index.insert(bits(self.positions[v]), v);
             }
         }
         let mut indices: Vec<_> = targets.keys().copied().collect();
         indices.sort_unstable();
         indices.truncate(MAX_CURVED_POINTS);
         let mut done = HashSet::new();
-        let mut curved = 0;
         let mut dirty = Vec::new();
         for i in indices {
             if !done.insert(i) {
@@ -278,7 +247,7 @@ impl Mesh {
             }
             let mut changes = vec![(i, targets[&i])];
             if symmetry_x {
-                let old = candidate.positions[i];
+                let old = self.positions[i];
                 if old.x == symmetry_offset {
                     changes[0].1.x = symmetry_offset;
                 } else if let Some(&j) = mirror_index.get(&bits(reflect(old, symmetry_offset))) {
@@ -294,16 +263,59 @@ impl Mesh {
             }
             if changes
                 .iter()
-                .any(|&(v, p)| p.as_dvec3().distance(candidate.positions[v].as_dvec3()) > cap)
+                .any(|&(v, p)| p.as_dvec3().distance(self.positions[v].as_dvec3()) > cap)
             {
                 continue;
             }
-            if admit(&mut candidate, &changes) {
-                curved += changes.len();
+            if admit(self, &changes) {
                 dirty.extend(changes.iter().map(|&(vertex, _)| vertex));
             }
         }
-        if curved > 0 {
+        (dirty, targets.len() > MAX_CURVED_POINTS)
+    }
+
+    /// A standalone diagnostic entry point for bounded curved refinement.
+    /// Live Draw applies the same offsets within its existing transaction.
+    pub fn refine_curved_draw_patch(
+        &mut self,
+        center: Vec3,
+        radius: f32,
+        symmetry_x: bool,
+        symmetry_offset: f32,
+    ) -> Result<CurvedDrawRefinement, String> {
+        if !center.is_finite()
+            || !radius.is_finite()
+            || radius <= 0.0
+            || !symmetry_offset.is_finite()
+        {
+            return Err("Curved Draw refinement needs finite contact and radius".into());
+        }
+        self.validate()?;
+        self.require_plain_topology("Curved Draw refinement")?;
+        let mut candidate = self.try_snapshot()?;
+        let (refined, ancestry) = candidate.refine_brush_patch_with_options(
+            center,
+            radius,
+            symmetry_x,
+            symmetry_offset,
+            &[],
+            true,
+        )?;
+        if refined.vertices_added == 0 {
+            return Ok(CurvedDrawRefinement {
+                limited: refined.limited,
+                ..Default::default()
+            });
+        }
+        let (dirty, curved_limited) = candidate.curve_new_draw_midpoints(
+            self,
+            &ancestry,
+            center,
+            radius,
+            symmetry_x,
+            symmetry_offset,
+        );
+        if !dirty.is_empty() {
             candidate.recompute_normals_near_vertices_cached(&dirty);
             candidate.validate()?;
         }
@@ -311,8 +323,8 @@ impl Mesh {
         Ok(CurvedDrawRefinement {
             vertices_added: refined.vertices_added,
             triangles_added: refined.triangles_added,
-            vertices_curved: curved,
-            limited: refined.limited || targets.len() > MAX_CURVED_POINTS,
+            vertices_curved: dirty.len(),
+            limited: refined.limited || curved_limited,
         })
     }
 }
@@ -320,6 +332,24 @@ impl Mesh {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn live_default_draw_keeps_valid_topology_and_exact_normals() {
+        let mut mesh = Mesh::sphere(2);
+        let settings = crate::BrushSettings {
+            radius: 0.8,
+            strength: 0.35,
+            symmetry_x: true,
+            ..Default::default()
+        };
+        let result = mesh.apply_brush_with_result(Vec3::Z, Vec3::Z, Vec3::ZERO, &settings);
+        assert!(result.changed_vertices > 0, "{result:?}");
+        assert!(result.refined_vertices > 0, "{result:?}");
+        mesh.validate().unwrap();
+        let mut full_normals = mesh.snapshot();
+        full_normals.recompute_normals();
+        assert_eq!(mesh.normals, full_normals.normals);
+    }
 
     #[test]
     fn curvature_lifts_new_sphere_points_toward_reference_sphere() {
