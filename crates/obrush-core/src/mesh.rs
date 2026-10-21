@@ -1269,6 +1269,7 @@ impl Mesh {
     /// Retain only vertex-to-face incidence after a topology edit. A local
     /// brush can derive its few neighbor and fold queries from this smaller
     /// cache without building full-scene edge/face-pair CSR on every dab.
+    #[allow(dead_code)] // Draw call-site integration is in the parallel brush branch.
     pub(crate) fn ensure_local_incidence(&mut self) {
         self.ensure_normal_incidence();
     }
@@ -1276,6 +1277,7 @@ impl Mesh {
     /// Sorted unique neighbors of one vertex from the signature-checked
     /// incidence cache. The order is identical to `cached_neighbors` after a
     /// full adjacency build, including isolated vertices.
+    #[allow(dead_code)] // Draw call-site integration is in the parallel brush branch.
     pub(crate) fn local_neighbors(&self, vertex: usize) -> Vec<usize> {
         let a = self.adjacency.as_ref().expect("incidence built");
         if vertex >= a.vertex_face_offsets.len().saturating_sub(1) {
@@ -1305,6 +1307,7 @@ impl Mesh {
     /// affected face is checked against both endpoints' complete face lists,
     /// so an unchanged neighbor or a third nonmanifold face cannot be missed.
     /// Invalid public topology and nonmanifold patch edges fail closed.
+    #[allow(dead_code)] // Draw call-site integration is in the parallel brush branch.
     pub(crate) fn local_face_pairs_for_faces(
         &self,
         faces: &[usize],
@@ -2487,7 +2490,7 @@ mod local_incidence_tests {
         let json: serde_json::Value =
             serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
         let mut mesh: Mesh = serde_json::from_value(json["mesh"].clone()).unwrap();
-        let center = Vec3::new(-0.775825, 3.085721, 17.645230);
+        let center = Vec3::new(-0.775825, 3.085721, 17.645_23);
         let selected: Vec<_> = mesh
             .positions
             .iter()
