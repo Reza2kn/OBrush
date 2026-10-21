@@ -2124,7 +2124,7 @@ dependencies = [
 
 [[package]]
 name = "obrush-app"
-version = "0.1.20"
+version = "0.1.21"
 dependencies = [
  "bytemuck",
  "eframe",
@@ -2142,7 +2142,7 @@ dependencies = [
 
 [[package]]
 name = "obrush-core"
-version = "0.1.20"
+version = "0.1.21"
 dependencies = [
  "base64",
  "blake3",
@@ -2158,7 +2158,7 @@ dependencies = [
 
 [[package]]
 name = "obrush-gpu"
-version = "0.1.20"
+version = "0.1.21"
 dependencies = [
  "bytemuck",
  "futures-channel",
