@@ -8,6 +8,9 @@ use std::sync::Arc;
 #[cfg(test)]
 #[path = "raycast_precision_regression.rs"]
 mod raycast_precision_regression;
+#[cfg(test)]
+#[path = "raycast_tolerance_order_regression.rs"]
+mod raycast_tolerance_order_regression;
 
 /// Explicit limits apply to imports, deserialization, and topology changes.
 pub const MAX_VERTICES: usize = 1_000_000;
@@ -880,8 +883,7 @@ impl Mesh {
             let e2 = p2.as_dvec3() - p0;
             let p = direction.cross(e2);
             let determinant = e1.dot(p);
-            let tolerance = f64::EPSILON * e1.length() * e2.length();
-            if !determinant.is_finite() || determinant.abs() <= tolerance {
+            if !determinant.is_finite() || determinant == 0.0 {
                 continue;
             }
             let inverse = determinant.recip();
@@ -893,6 +895,10 @@ impl Mesh {
             let q = t.cross(e1);
             let v = direction.dot(q) * inverse;
             if v < 0.0 || u + v > 1.0 {
+                continue;
+            }
+            let tolerance = f64::EPSILON * e1.length() * e2.length();
+            if determinant.abs() <= tolerance {
                 continue;
             }
             let distance = e2.dot(q) * inverse;
