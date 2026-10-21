@@ -43,6 +43,8 @@ struct SelectedEdges {
 struct PatchQuery {
     center: glam::DVec3,
     mirrored_center: glam::DVec3,
+    primary_box: (Vec3, Vec3),
+    mirrored_box: (Vec3, Vec3),
     radius_squared: f64,
     target_squared: f64,
     symmetry_x: bool,
@@ -52,6 +54,28 @@ struct PatchQuery {
 }
 
 impl PatchQuery {
+    fn outward_box(center: glam::DVec3, radius: f64) -> (Vec3, Vec3) {
+        // Mesh::validate limits each stored f32 coordinate to 1e6. The exact
+        // predicate below admits an AABB up to 64 f64 ulps beyond the radius;
+        // include that same worst-case slack before rounding outward to f32.
+        let scale = center.abs().max_element().max(radius).max(1_000_000.0);
+        let reach = radius + 64.0 * f64::EPSILON * scale;
+        let low = center - glam::DVec3::splat(reach);
+        let high = center + glam::DVec3::splat(reach);
+        (
+            Vec3::new(
+                (low.x as f32).next_down(),
+                (low.y as f32).next_down(),
+                (low.z as f32).next_down(),
+            ),
+            Vec3::new(
+                (high.x as f32).next_up(),
+                (high.y as f32).next_up(),
+                (high.z as f32).next_up(),
+            ),
+        )
+    }
+
     fn new(
         center: Vec3,
         radius: f32,
@@ -70,13 +94,16 @@ impl PatchQuery {
         }
         let center = center.as_dvec3();
         let radius = f64::from(radius);
+        let mirrored_center = glam::DVec3::new(
+            2.0 * f64::from(symmetry_offset) - center.x,
+            center.y,
+            center.z,
+        );
         Ok(Self {
             center,
-            mirrored_center: glam::DVec3::new(
-                2.0 * f64::from(symmetry_offset) - center.x,
-                center.y,
-                center.z,
-            ),
+            mirrored_center,
+            primary_box: Self::outward_box(center, radius),
+            mirrored_box: Self::outward_box(mirrored_center, radius),
             radius_squared: radius * radius,
             target_squared: (radius * TARGET_EDGE_RADIUS).powi(2),
             symmetry_x,
@@ -90,6 +117,18 @@ impl PatchQuery {
     /// conservative broad phase therefore retains all faces needed to detect
     /// duplicate/non-manifold incidences and produce conforming children.
     fn contains_face(self, positions: &[Vec3], triangle: [u32; 3]) -> bool {
+        let [a, b, c] = triangle.map(|vertex| positions[vertex as usize]);
+        let minimum = a.min(b).min(c);
+        let maximum = a.max(b).max(c);
+        let overlaps =
+            |(low, high): (Vec3, Vec3)| minimum.cmple(high).all() && maximum.cmpge(low).all();
+        if !overlaps(self.primary_box) && (!self.symmetry_x || !overlaps(self.mirrored_box)) {
+            return false;
+        }
+        self.contains_face_exact(positions, triangle)
+    }
+
+    fn contains_face_exact(self, positions: &[Vec3], triangle: [u32; 3]) -> bool {
         let [a, b, c] = triangle.map(|vertex| positions[vertex as usize].as_dvec3());
         if a.distance_squared(b) <= self.target_squared
             && b.distance_squared(c) <= self.target_squared
@@ -929,6 +968,79 @@ fn standard_quality(positions: &[Vec3], triangle: [u32; 3]) -> f64 {
 #[cfg(test)]
 mod normal_regressions {
     use super::*;
+
+    #[test]
+    fn face_box_prefilter_keeps_exact_predicate_on_random_and_tangent_faces() {
+        let mut state = 0x6ad4_9f31_u32;
+        let mut next = || {
+            state ^= state << 13;
+            state ^= state >> 17;
+            state ^= state << 5;
+            f64::from(state) / f64::from(u32::MAX)
+        };
+        for &scale in &[0.001_f32, 1.0, 1_000_000.0] {
+            for &radius in &[0.000_001_f32, 0.18, 1.0, 100_000.0] {
+                for &symmetry in &[false, true] {
+                    let center = Vec3::new(0.19, -0.33, 0.57) * scale;
+                    let query = PatchQuery::new(center, radius, symmetry, 0.23 * scale).unwrap();
+                    let tangent = [
+                        center + Vec3::new(radius, -scale * 0.25, 0.0),
+                        center + Vec3::new(radius, scale * 0.25, 0.0),
+                        center + Vec3::new(radius, 0.0, scale * 0.25),
+                    ];
+                    assert_eq!(
+                        query.contains_face(&tangent, [0, 1, 2]),
+                        query.contains_face_exact(&tangent, [0, 1, 2])
+                    );
+                    for _ in 0..1000 {
+                        let positions: [Vec3; 3] = std::array::from_fn(|_| {
+                            Vec3::new(
+                                (next() * 2.0 - 1.0) as f32,
+                                (next() * 2.0 - 1.0) as f32,
+                                (next() * 2.0 - 1.0) as f32,
+                            ) * scale
+                        });
+                        assert_eq!(
+                            query.contains_face(&positions, [0, 1, 2]),
+                            query.contains_face_exact(&positions, [0, 1, 2]),
+                            "scale={scale} radius={radius} symmetry={symmetry} positions={positions:?}"
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    #[test]
+    #[ignore = "requires private OBRUSH_SPARK_STL path; run with --release for timing"]
+    fn face_box_prefilter_keeps_spark_candidate_ids_and_measures_scan() {
+        let source = std::fs::read(std::env::var("OBRUSH_SPARK_STL").unwrap()).unwrap();
+        let mesh = Mesh::import_stl(&source).unwrap().mesh;
+        let center = Vec3::new(-0.775_825, 3.085_721, 17.645_23);
+        for &(radius, symmetry, offset) in
+            &[(1.0, false, 0.0), (0.18, false, 0.0), (1.0, true, 0.23)]
+        {
+            let query = PatchQuery::new(center, radius, symmetry, offset).unwrap();
+            let start = std::time::Instant::now();
+            let exact: Vec<_> = mesh
+                .triangles
+                .iter()
+                .enumerate()
+                .filter_map(|(i, &t)| query.contains_face_exact(&mesh.positions, t).then_some(i))
+                .collect();
+            let exact_time = start.elapsed();
+            let start = std::time::Instant::now();
+            let fast: Vec<_> = mesh
+                .triangles
+                .iter()
+                .enumerate()
+                .filter_map(|(i, &t)| query.contains_face(&mesh.positions, t).then_some(i))
+                .collect();
+            let fast_time = start.elapsed();
+            assert_eq!(fast, exact);
+            eprintln!("Spark face scan radius={radius} symmetry={symmetry} offset={offset} exact_faces={} exact_ms={:.3} box_ms={:.3}", exact.len(), exact_time.as_secs_f64()*1000.0, fast_time.as_secs_f64()*1000.0);
+        }
+    }
 
     #[test]
     fn draw_refinement_refuses_a_partial_split_below_its_guard_quality_floor() {
