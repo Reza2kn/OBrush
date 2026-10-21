@@ -28,6 +28,7 @@ obrush_version=$(cargo metadata --locked --no-deps --format-version 1 | python3 
 app='.artifacts/OBrush.app'
 external_info='.artifacts/OBrush-build-info.json'
 # An interrupted build must never leave a manifest that approves an older app.
+mkdir -p .artifacts
 printf '{"status":"incomplete"}\n' > "$external_info"
 mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
 cp target/release/obrush "$app/Contents/MacOS/OBrush.next"
