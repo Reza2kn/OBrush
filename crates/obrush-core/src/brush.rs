@@ -459,6 +459,7 @@ impl DrawStroke {
             settings,
             (!self.accumulate).then_some(self.proxy.as_slice()),
             false,
+            false,
         );
         if result.changed_vertices == 0 {
             return result;
@@ -1156,7 +1157,7 @@ impl Mesh {
         delta: Vec3,
         settings: &BrushSettings,
     ) -> BrushResult {
-        self.apply_brush_dab(center, normal, delta, settings, None, true)
+        self.apply_brush_dab(center, normal, delta, settings, None, true, true)
             .0
     }
 
@@ -1168,12 +1169,21 @@ impl Mesh {
         settings: &BrushSettings,
         proxy_positions: Option<&[Vec3]>,
         allow_constraint_repair: bool,
+        allow_interior_prepare: bool,
     ) -> (BrushResult, Vec<crate::refinement::RefinementParents>) {
         if settings.kind == BrushKind::Draw && settings.draw_clay {
             let mut clay = settings.clone();
             clay.kind = BrushKind::Clay;
             clay.draw_clay = false;
-            return self.apply_brush_dab(center, normal, delta, &clay, proxy_positions, false);
+            return self.apply_brush_dab(
+                center,
+                normal,
+                delta,
+                &clay,
+                proxy_positions,
+                false,
+                false,
+            );
         }
         // A target belongs to a Document and its subdivision correspondence.
         // Calling the generic mesh API cannot silently invent that target.
@@ -1656,6 +1666,38 @@ impl Mesh {
                         geometry_changed = true;
                         changed += 1;
                     }
+                }
+            }
+        }
+        if allow_interior_prepare
+            && changed == 0
+            && settings.kind == BrushKind::Draw
+            && settings.draw_accumulate
+            && settings.adaptive_detail
+            && !settings.invert
+            && settings.alpha.is_none()
+            && settings.hardness == 0.0
+            && proxy_positions.is_none()
+        {
+            if let Ok(Some(mut prepared)) = self.prepare_draw_interior_contact(
+                center,
+                normal,
+                radius,
+                settings.symmetry_x,
+                settings.symmetry_offset,
+            ) {
+                let (result, ancestry) = prepared.apply_brush_dab(
+                    center,
+                    normal,
+                    delta,
+                    settings,
+                    None,
+                    allow_constraint_repair,
+                    false,
+                );
+                if result.changed_vertices > 0 {
+                    *self = prepared;
+                    return (result, ancestry);
                 }
             }
         }

@@ -5,6 +5,8 @@ use std::collections::{HashMap, HashSet};
 const MAX_EDGES_PER_ROUND: usize = 512;
 const MAX_ROUNDS: usize = 2;
 const TARGET_EDGE_RADIUS: f64 = 0.12;
+const INTERIOR_DRAW_ROUNDS: usize = 8;
+const INTERIOR_DRAW_NEW_VERTICES: usize = 64;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct PatchRefinement {
@@ -273,6 +275,173 @@ impl Mesh {
         )
     }
 
+    /// Prepare a contact that lies inside a coarse Draw face but reaches no
+    /// vertex. Only the returned candidate may be replayed and committed; any
+    /// refusal leaves the caller's mesh byte-for-byte unchanged.
+    pub(crate) fn prepare_draw_interior_contact(
+        &self,
+        center: Vec3,
+        contact_normal: Vec3,
+        radius: f32,
+        symmetry_x: bool,
+        symmetry_offset: f32,
+    ) -> Result<Option<Mesh>, String> {
+        self.validate()?;
+        self.require_plain_topology("Interior Draw refinement")?;
+        let query = PatchQuery::new(center, radius, symmetry_x, symmetry_offset)?;
+        let mut candidate = self.try_snapshot()?;
+        let original_vertices = self.positions.len();
+        let mut origins: Vec<usize> = (0..self.triangles.len()).collect();
+        let mut touched_origins = HashSet::new();
+        let reflected_center = Vec3::new(2.0 * symmetry_offset - center.x, center.y, center.z);
+        let reflected_normal = Vec3::new(-contact_normal.x, contact_normal.y, contact_normal.z);
+        let targets = if symmetry_x && reflected_center != center {
+            vec![
+                (center, contact_normal),
+                (reflected_center, reflected_normal),
+            ]
+        } else {
+            vec![(center, contact_normal)]
+        };
+        let mut added_any = false;
+        for _ in 0..INTERIOR_DRAW_ROUNDS {
+            let prepared = |point: Vec3| {
+                candidate.positions[original_vertices..]
+                    .iter()
+                    .any(|&vertex| vertex.distance_squared(point) < (radius * 0.5).powi(2))
+            };
+            if targets.iter().all(|&(point, _)| prepared(point)) {
+                break;
+            }
+            let mut contact_faces = Vec::new();
+            for &(point, normal) in &targets {
+                if prepared(point) {
+                    continue;
+                }
+                let Some(face) = unique_interior_contact_face(&candidate, point, normal, radius)
+                else {
+                    return Ok(None);
+                };
+                if candidate.triangles[face]
+                    .iter()
+                    .all(|&vertex| candidate.fully_protected(vertex as usize))
+                {
+                    return Ok(None);
+                }
+                contact_faces.push(face);
+            }
+            contact_faces.sort_unstable();
+            contact_faces.dedup();
+            let selected: Vec<_> = contact_faces
+                .iter()
+                .flat_map(|&face| triangle_edges(candidate.triangles[face]))
+                .map(|(a, b)| (a.min(b), a.max(b)))
+                .collect::<HashSet<_>>()
+                .into_iter()
+                .collect();
+            let mut selected = selected;
+            selected.sort_unstable();
+            if selected.is_empty()
+                || candidate.positions.len() + selected.len()
+                    > original_vertices + INTERIOR_DRAW_NEW_VERTICES
+            {
+                return Ok(None);
+            }
+            let selected_set: HashSet<_> = selected.iter().copied().collect();
+            let mut candidate_faces = Vec::new();
+            let mut child_counts = Vec::new();
+            for (face, &triangle) in candidate.triangles.iter().enumerate() {
+                let slots = triangle_edges(triangle)
+                    .map(|(a, b)| selected_set.contains(&(a.min(b), a.max(b))));
+                let split_count = slots.iter().filter(|&&split| split).count();
+                let extra_center = query.symmetry_x
+                    && split_count == 2
+                    && symmetric_corner(
+                        triangle,
+                        slots.map(|split| split.then_some(())),
+                        &candidate.positions,
+                        symmetry_offset,
+                    )
+                    .is_some();
+                let child_count = 1 + split_count + usize::from(extra_center) * 2;
+                child_counts.push(child_count);
+                if split_count > 0 {
+                    candidate_faces.push(face);
+                    touched_origins.insert(origins[face]);
+                }
+            }
+            if candidate_faces.len() > 96
+                || candidate.triangles.len() + selected.len() * 4 > MAX_TRIANGLES
+            {
+                return Ok(None);
+            }
+            let old_positions = candidate.positions.clone();
+            let old_triangles = candidate.triangles.clone();
+            let mut dirty = Vec::new();
+            refine_round(
+                &mut candidate,
+                &selected,
+                &candidate_faces,
+                query,
+                &mut dirty,
+                None,
+            )?;
+            let mut next_origins = Vec::new();
+            next_origins
+                .try_reserve_exact(candidate.triangles.len())
+                .map_err(|_| "Cannot allocate interior Draw face origins")?;
+            let mut cursor = 0;
+            for (face, &children) in child_counts.iter().enumerate() {
+                let old = old_triangles[face];
+                let floor = quality(&old_positions, old).min(0.1);
+                for &child in &candidate.triangles[cursor..cursor + children] {
+                    if children > 1 && quality(&candidate.positions, child) < floor {
+                        return Ok(None);
+                    }
+                    next_origins.push(origins[face]);
+                }
+                cursor += children;
+            }
+            if cursor != candidate.triangles.len() {
+                return Ok(None);
+            }
+            origins = next_origins;
+            added_any = true;
+        }
+        if !added_any
+            || !targets.iter().all(|&(point, _)| {
+                candidate.positions[original_vertices..]
+                    .iter()
+                    .any(|&v| v.distance_squared(point) < radius * radius)
+            })
+        {
+            return Ok(None);
+        }
+        candidate.ensure_adjacency();
+        for &[a, b] in candidate.cached_face_pairs() {
+            let (a, b) = (a as usize, b as usize);
+            let (oa, ob) = (origins[a], origins[b]);
+            if !touched_origins.contains(&oa) && !touched_origins.contains(&ob) {
+                continue;
+            }
+            let old_cos = if oa == ob {
+                1.0
+            } else {
+                let na = cross(&self.positions, self.triangles[oa]).normalize_or_zero();
+                let nb = cross(&self.positions, self.triangles[ob]).normalize_or_zero();
+                na.dot(nb)
+            };
+            let na = cross(&candidate.positions, candidate.triangles[a]).normalize_or_zero();
+            let nb = cross(&candidate.positions, candidate.triangles[b]).normalize_or_zero();
+            if !na.is_finite() || !nb.is_finite() || na.dot(nb) < old_cos.min(0.5) {
+                return Ok(None);
+            }
+        }
+        candidate.recompute_normals();
+        candidate.validate()?;
+        Ok(Some(candidate))
+    }
+
     pub(crate) fn refine_move_patch_at_offset(
         &mut self,
         center: Vec3,
@@ -403,6 +572,52 @@ impl Mesh {
         }
         Ok((result, parents))
     }
+}
+
+fn unique_interior_contact_face(
+    mesh: &Mesh,
+    center: Vec3,
+    contact_normal: Vec3,
+    radius: f32,
+) -> Option<usize> {
+    let center = center.as_dvec3();
+    let contact_normal = contact_normal.as_dvec3().normalize_or_zero();
+    let scale = center.abs().max_element().max(f64::from(radius)).max(1.0);
+    let tolerance = (64.0 * f64::from(f32::EPSILON) * scale).max(1e-5 * f64::from(radius));
+    let mut found = None;
+    for (face, &triangle) in mesh.triangles.iter().enumerate() {
+        let [a, b, c] = triangle.map(|v| mesh.positions[v as usize].as_dvec3());
+        let cross = (b - a).cross(c - a);
+        let area_squared = cross.length_squared();
+        if area_squared <= 1e-24 || !cross.is_finite() {
+            continue;
+        }
+        let face_normal = cross / area_squared.sqrt();
+        if face_normal.dot(contact_normal) <= 0.0 {
+            continue;
+        }
+        let signed = (center - a).dot(face_normal);
+        if signed.abs() > tolerance {
+            continue;
+        }
+        let point = center - face_normal * signed;
+        let barycentric = [
+            (b - point).cross(c - point).dot(cross) / area_squared,
+            (c - point).cross(a - point).dot(cross) / area_squared,
+            (a - point).cross(b - point).dot(cross) / area_squared,
+        ];
+        // Inserting near an edge would birth a needle; keep this path for
+        // contacts safely inside one coarse triangle.
+        if barycentric.iter().any(|&weight| weight < 0.1) {
+            continue;
+        }
+        if found.replace(face).is_some() {
+            // Coincident front-facing sheets cannot be disambiguated from a
+            // world-space contact alone.
+            return None;
+        }
+    }
+    found
 }
 
 fn select_edges(mesh: &Mesh, faces: &[usize], query: PatchQuery) -> SelectedEdges {

@@ -415,6 +415,34 @@ mod tests {
     }
 
     #[test]
+    fn tiny_draw_inside_coarse_face_creates_a_useful_local_patch() {
+        let mut mesh = Mesh::from_obj("v -1 -1 0\nv 1 -1 0\nv 0 1 0\nf 1 2 3\n").unwrap();
+        let before = mesh.snapshot();
+        let settings = crate::BrushSettings {
+            radius: 0.015,
+            strength: 0.35,
+            symmetry_x: false,
+            ..Default::default()
+        };
+        let center = Vec3::new(0.0, -1.0 / 3.0, 0.0);
+        let result = mesh.apply_brush_with_result(center, Vec3::Z, Vec3::ZERO, &settings);
+        assert!(result.changed_vertices > 0, "{result:?}");
+        assert!(result.displacement_scale > 0.0, "{result:?}");
+        assert!(mesh.positions.len() > before.positions.len());
+        assert!(mesh.triangles.len() > before.triangles.len());
+        assert_eq!(
+            &mesh.positions[..before.positions.len()],
+            before.positions.as_slice()
+        );
+        assert_eq!(
+            &mesh.colors[..before.colors.len()],
+            before.colors.as_slice()
+        );
+        assert_eq!(&mesh.masks[..before.masks.len()], before.masks.as_slice());
+        mesh.validate().unwrap();
+    }
+
+    #[test]
     fn curvature_lifts_new_sphere_points_toward_reference_sphere() {
         let base = Mesh::sphere(2);
         let mut linear = base.snapshot();
