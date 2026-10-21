@@ -51,7 +51,7 @@ jobs:
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
           gh release create "$RELEASE_TAG" \
-            ".artifacts/release/OBRush-$RELEASE_TAG-macos-arm64.zip" \
+            ".artifacts/release/OBrush-$RELEASE_TAG-macos-arm64.zip" \
             .artifacts/release/SHA256SUMS.txt \
             --draft --verify-tag \
             --title "OBRush $RELEASE_TAG public alpha" \
