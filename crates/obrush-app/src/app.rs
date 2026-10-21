@@ -414,7 +414,7 @@ impl GizmoHandle {
 }
 
 const ACCENT: Color32 = Color32::from_rgb(243, 137, 85);
-const MUTED: Color32 = Color32::from_rgb(141, 147, 156);
+const MUTED: Color32 = Color32::from_rgb(162, 168, 178);
 const PANEL: Color32 = Color32::from_rgb(27, 29, 33);
 const BRUSHES: [(BrushKind, &str, &str); 14] = [
     (BrushKind::Draw, "Draw", "1"),
@@ -7341,15 +7341,7 @@ impl OBrushApp {
                     } else {
                         ui.label(RichText::new("O").size(27.0).strong().color(ACCENT));
                         ui.label(RichText::new("BRUSH").size(20.0).strong());
-                        ui.add_space(13.0);
-                        ui.label(
-                            RichText::new(crate::ui_text::caption(
-                                crate::ui_text::CaptionKey::C215ED96071EE,
-                            ))
-                            .size(10.0)
-                            .color(preferences_host::muted(ui)),
-                        );
-                        ui.add_space(20.0);
+                        ui.add_space(18.0);
                     }
                     if ui
                         .button(crate::ui_text::caption(
@@ -7446,8 +7438,8 @@ impl OBrushApp {
                     if ctx.content_rect().width() >= 1100.0 {
                         ui.add_space(12.0);
                         ui.label(
-                            RichText::new(concat!(env!("CARGO_PKG_VERSION"), "  /  FOUNDATION"))
-                                .size(10.0)
+                            RichText::new(concat!("v", env!("CARGO_PKG_VERSION"), "  ·  alpha"))
+                                .size(11.0)
                                 .color(preferences_host::muted(ui)),
                         );
                     }
@@ -7473,6 +7465,12 @@ impl OBrushApp {
     }
 
     fn tools_body(&mut self, ui: &mut egui::Ui) {
+        ui.style_mut()
+            .text_styles
+            .insert(egui::TextStyle::Body, egui::FontId::proportional(13.0));
+        ui.style_mut()
+            .text_styles
+            .insert(egui::TextStyle::Button, egui::FontId::proportional(13.0));
         self.modal_status(ui);
         ui.spacing_mut().slider_width = ui.available_width();
         section(
@@ -7683,7 +7681,13 @@ impl OBrushApp {
                     self.track_morph_control("settings.pressure_radius", &pressure_radius);
                 }
             }
-            self.brush_options_panel(ui);
+            let advanced = egui::CollapsingHeader::new("More brush controls")
+                .id_salt("advanced_brush_controls")
+                .default_open(false)
+                .show(ui, |ui| self.brush_options_panel(ui));
+            advanced.header_response.on_hover_text(
+                "Screen size, hardness, backface culling, symmetry offset, and brush-specific controls",
+            );
             if self.brush.kind == BrushKind::Morph {
                 ui.label(
                     RichText::new(crate::ui_text::caption(
@@ -7711,6 +7715,11 @@ impl OBrushApp {
                 .iter()
                 .map(|e| (e.id, e.name.clone()))
                 .collect();
+            ui.label(
+                RichText::new("Brush alpha")
+                    .size(11.0)
+                    .color(preferences_host::muted(ui)),
+            );
             let selector = egui::ComboBox::from_id_salt("alpha_library")
                 .selected_text(label.clone())
                 .width(ui.available_width())
@@ -11484,13 +11493,6 @@ impl OBrushApp {
                     MUTED,
                 );
                 painter.text(
-                    rect.left_bottom() + Vec2::new(22.0, -22.0),
-                    egui::Align2::LEFT_BOTTOM,
-                    crate::ui_text::caption(crate::ui_text::CaptionKey::C02F933521F03),
-                    egui::FontId::proportional(10.0),
-                    Color32::from_rgb(82, 87, 97),
-                );
-                painter.text(
                     rect.right_top() + Vec2::new(-22.0, 20.0),
                     egui::Align2::RIGHT_TOP,
                     if self.transform_mode {
@@ -11624,53 +11626,63 @@ impl OBrushApp {
             ui.label(crate::ui_text::caption(
                 crate::ui_text::CaptionKey::C18DCDB07BBF0,
             ));
-            ui.add_space(14.0);
-            if source_profile {
-                ui.label(crate::ui_text::caption(
-                    crate::ui_text::CaptionKey::C9687CB92031A,
-                ));
-                ui.label(crate::ui_text::caption(
-                    crate::ui_text::CaptionKey::C045BEF52111D,
-                ));
-            } else {
-                egui::Grid::new("help_keys")
-                    .spacing([24.0, 8.0])
-                    .show(ui, |ui| {
-                        for (key, action) in [
-                            ("1–9 / 0", "Select brush / Morph"),
-                            ("P / J / L / G", "Pinch / Twist / Local Scale / Drag"),
-                            ("Shift + drag", "Smooth"),
-                            ("Ctrl + drag", "Mask"),
-                            ("Alt + drag", "Invert brush"),
-                            ("Right drag", "Orbit camera"),
-                            ("Middle drag", "Pan camera"),
-                            ("Scroll", "Zoom"),
-                            ("F / X / W", "Frame / symmetry / wireframe"),
-                            ("T / Esc", "Transform mode / cancel preview"),
-                            ("⌘/Ctrl Z", "Undo"),
-                            ("⌘/Ctrl Shift Z", "Redo"),
-                            ("⌘/Ctrl S / O", "Save / open"),
-                            ("[ / ]", "Decrease / increase radius"),
-                        ] {
-                            ui.label(RichText::new(key).monospace().color(ACCENT));
-                            ui.label(action);
-                            ui.end_row();
-                        }
-                    });
-            }
+            ui.add_space(12.0);
+            egui::CollapsingHeader::new("Keyboard shortcuts")
+                .id_salt("help_keyboard_shortcuts")
+                .default_open(false)
+                .show(ui, |ui| {
+                    if source_profile {
+                        ui.label(crate::ui_text::caption(
+                            crate::ui_text::CaptionKey::C9687CB92031A,
+                        ));
+                        ui.label(crate::ui_text::caption(
+                            crate::ui_text::CaptionKey::C045BEF52111D,
+                        ));
+                    } else {
+                        egui::Grid::new("help_keys")
+                            .spacing([24.0, 8.0])
+                            .show(ui, |ui| {
+                                for (key, action) in [
+                                    ("1–9 / 0", "Select brush / Morph"),
+                                    ("P / J / L / G", "Pinch / Twist / Local Scale / Drag"),
+                                    ("Shift + drag", "Smooth"),
+                                    ("Ctrl + drag", "Mask"),
+                                    ("Alt + drag", "Invert brush"),
+                                    ("Right drag", "Orbit camera"),
+                                    ("Middle drag", "Pan camera"),
+                                    ("Scroll", "Zoom"),
+                                    ("F / X / W", "Frame / symmetry / wireframe"),
+                                    ("T / Esc", "Transform mode / cancel preview"),
+                                    ("⌘/Ctrl Z", "Undo"),
+                                    ("⌘/Ctrl Shift Z", "Redo"),
+                                    ("⌘/Ctrl S / O", "Save / open"),
+                                    ("[ / ]", "Decrease / increase radius"),
+                                ] {
+                                    ui.label(RichText::new(key).monospace().color(ACCENT));
+                                    ui.label(action);
+                                    ui.end_row();
+                                }
+                            });
+                    }
+                });
             let control = ui.button(crate::ui_text::caption(
                 crate::ui_text::CaptionKey::C515ED995EE97,
             ));
             preferences_clicked = control.clicked();
             let rect = control.rect;
             preferences_rect = Some([rect.min.x, rect.min.y, rect.width(), rect.height()]);
-            ui.add_space(16.0);
-            ui.label(
-                RichText::new(crate::ui_text::caption(
-                    crate::ui_text::CaptionKey::CE3B5ADDCE549,
-                ))
-                .color(preferences_host::muted(ui)),
-            );
+            ui.add_space(12.0);
+            egui::CollapsingHeader::new("About this alpha")
+                .id_salt("help_about_alpha")
+                .default_open(false)
+                .show(ui, |ui| {
+                    ui.label(
+                        RichText::new(crate::ui_text::caption(
+                            crate::ui_text::CaptionKey::CE3B5ADDCE549,
+                        ))
+                        .color(preferences_host::muted(ui)),
+                    );
+                });
         });
         if let Some(rect) = preferences_rect {
             self.app_preference_controls
@@ -12242,7 +12254,7 @@ fn configure_theme(ctx: &egui::Context) {
     style.visuals = egui::Visuals::dark();
     style.visuals.panel_fill = PANEL;
     style.visuals.window_fill = PANEL;
-    style.visuals.override_text_color = Some(Color32::from_rgb(218, 220, 225));
+    style.visuals.override_text_color = Some(Color32::from_rgb(226, 229, 233));
     style.visuals.selection.bg_fill = Color32::from_rgb(93, 55, 40);
     style.visuals.selection.stroke = Stroke::new(1.0, ACCENT);
     style.visuals.widgets.inactive.bg_fill = Color32::from_rgb(40, 43, 49);
@@ -12274,9 +12286,9 @@ fn section(ui: &mut egui::Ui, index: &str, title: &str) {
         ui.add_space(4.0);
         ui.label(
             RichText::new(title)
-                .size(10.0)
+                .size(11.5)
                 .strong()
-                .color(preferences_host::muted(ui)),
+                .color(Color32::from_rgb(212, 216, 223)),
         );
     });
 }
@@ -12285,11 +12297,11 @@ fn label_value(ui: &mut egui::Ui, label: &str, value: &str) {
     ui.horizontal(|ui| {
         ui.label(
             RichText::new(label)
-                .size(11.0)
+                .size(12.0)
                 .color(preferences_host::muted(ui)),
         );
         ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-            ui.label(RichText::new(value).size(11.0).monospace());
+            ui.label(RichText::new(value).size(12.0).monospace());
         });
     });
 }
@@ -12378,7 +12390,7 @@ fn brush_tile(
     let ink = if selected {
         ACCENT
     } else {
-        Color32::from_rgb(173, 179, 188)
+        Color32::from_rgb(194, 200, 208)
     };
     painter.circle_stroke(center, 11.0, Stroke::new(1.0, ink));
     match kind {

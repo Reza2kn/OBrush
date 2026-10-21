@@ -828,7 +828,7 @@ const SPECS: [CaptionSpec; 365] = [
     },
     CaptionSpec {
         id: "app.header.215ed96071ee",
-        english: "SCULPTING STUDIO",
+        english: "Sculpting studio",
         source: None,
     },
     CaptionSpec {
@@ -903,12 +903,12 @@ const SPECS: [CaptionSpec; 365] = [
     },
     CaptionSpec {
         id: "app.tools_body.ed1cbe18a173",
-        english: "SCULPT",
+        english: "Brushes",
         source: Some(SourceTextKey::SculptTitle),
     },
     CaptionSpec {
         id: "app.tools_body.0a9341892dd6",
-        english: "BRUSH SETTINGS",
+        english: "Brush settings",
         source: Some(SourceTextKey::SculptCommon),
     },
     CaptionSpec {
@@ -1028,7 +1028,7 @@ const SPECS: [CaptionSpec; 365] = [
     },
     CaptionSpec {
         id: "app.tools_body.e7f3367aa3c3",
-        english: "MASK",
+        english: "Mask",
         source: None,
     },
     CaptionSpec {
@@ -1038,7 +1038,7 @@ const SPECS: [CaptionSpec; 365] = [
     },
     CaptionSpec {
         id: "app.tools_body.c6a4db3ee261",
-        english: "HOLD TO MODIFY",
+        english: "While sculpting",
         source: None,
     },
     CaptionSpec {
@@ -1648,7 +1648,7 @@ const SPECS: [CaptionSpec; 365] = [
     },
     CaptionSpec {
         id: "app.viewport.02f933521f03",
-        english: "OPEN SCULPTING. NO LIMITS TO YOUR IDEAS.",
+        english: "Drag on a mesh to sculpt.",
         source: None,
     },
     CaptionSpec {
@@ -1663,7 +1663,7 @@ const SPECS: [CaptionSpec; 365] = [
     },
     CaptionSpec {
         id: "app.help.494f5f6a28a4",
-        english: "Start with a shape. Make it yours.",
+        english: "Choose a brush, then drag on a mesh to sculpt.",
         source: None,
     },
     CaptionSpec {
@@ -1688,7 +1688,7 @@ const SPECS: [CaptionSpec; 365] = [
     },
     CaptionSpec {
         id: "app.help.e3b5addce549",
-        english: "Foundation release: separate sculptable parts, persistent subdivision, layers, Morph Targets, remeshing, decimation, pressure controls and PNG alphas. OBJ, PLY, STL and OBrush projects. SculptGL comparisons and full ZBrush parity remain in development.",
+        english: "OBRush is an early alpha. Save an OBrush project to keep the full scene; Export OBJ saves the active part. Some sculpting workflows are still in development.",
         source: None,
     },
     CaptionSpec {
