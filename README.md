@@ -4,6 +4,8 @@ An open-source sculpting studio written in Rust for desktop and the browser, tar
 
 OBRush is an **open public alpha** for everyone to try and improve. Try the [browser app on OBrush.App](https://obrush.app/), [v0.1.20-alpha.1 downloads](https://github.com/Reza2kn/OBrush/releases/tag/v0.1.20-alpha.1), and [source repository](https://github.com/Reza2kn/OBrush); the [launch verification](docs/PUBLIC_ALPHA_LAUNCH.md) records the published files and hosted-app checks. Read the [alpha announcement, known issues and platform support](docs/PUBLIC_ALPHA.md) before relying on it for a project. Repeated Draw can saturate, worked surfaces can look jagged, small strong Move grabs can leave sharp triangles, and large browser meshes can lag. Save `.obrush` projects frequently: there is no autosave or crash recovery. [Report a bug](https://github.com/Reza2kn/OBrush/issues/new?template=bug_report.yml) or [request and vote on a feature](https://github.com/Reza2kn/OBrush/issues/new?template=feature_request.yml).
 
+![An organic sculpt in the OBrush public alpha, with sculpting brushes and object controls visible.](docs/images/obrush-alpha-sculpting.png)
+
 ## Run
 
 Install Rust through rustup. `rust-toolchain.toml` selects the tested Rust 1.96.0 compiler, formatter, Clippy and WASM target for reproducible build checks.
