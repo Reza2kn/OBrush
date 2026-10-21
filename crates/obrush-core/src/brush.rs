@@ -908,7 +908,7 @@ impl Mesh {
             .iter()
             .map(|influence| influence.vertex)
             .collect();
-        let guard = working.deformation_guard(&self.positions, &selected, 0.1, 0.0);
+        let guard = working.deformation_guard(&self.positions, &selected, 0.1, 0.0, false);
         Ok(LocalTransformStroke {
             original: self.snapshot(),
             working,
@@ -1305,7 +1305,17 @@ impl Mesh {
             None
         };
         let old_positions = self.positions.clone();
-        if uses_surface_detail(settings.kind)
+        let sparse_draw = allow_constraint_repair
+            && settings.kind == BrushKind::Draw
+            && settings.draw_accumulate
+            && settings.adaptive_detail
+            && !settings.invert
+            && settings.alpha.is_none()
+            && settings.hardness == 0.0
+            && proxy_positions.is_none();
+        if sparse_draw {
+            self.ensure_local_incidence();
+        } else if uses_surface_detail(settings.kind)
             || settings.kind == BrushKind::Smooth
             || (settings.kind == BrushKind::Move && settings.move_topology_check)
         {
@@ -1554,7 +1564,8 @@ impl Mesh {
                             // feeds a ridge's changing normals back into lateral
                             // motion; that behavior belongs to Inflate.
                             let direction = draw_direction.normalize_or_zero();
-                            let fairing = self.smooth_target(i, &old_positions) - position;
+                            let fairing =
+                                self.smooth_target(i, &old_positions, sparse_draw) - position;
                             direction * radius * amount * 0.075 * sign + fairing * amount * 0.3
                         }
                         BrushKind::Clay => {
@@ -1581,7 +1592,7 @@ impl Mesh {
                                 )
                         }
                         BrushKind::Smooth => {
-                            let laplacian = self.smooth_target(i, &old_positions) - position;
+                            let laplacian = self.smooth_target(i, &old_positions, false) - position;
                             let movement = if settings.smooth_tangent {
                                 laplacian - vertex_normal * laplacian.dot(vertex_normal)
                             } else {
@@ -1656,15 +1667,8 @@ impl Mesh {
             // The direct default Draw path may preserve existing fragile
             // triangles as coherent local components if its full proposal is
             // clipped. DrawStroke retains its proxy/ancestry semantics.
-            let draw_repair = (allow_constraint_repair
-                && settings.kind == BrushKind::Draw
-                && settings.draw_accumulate
-                && settings.adaptive_detail
-                && !settings.invert
-                && settings.alpha.is_none()
-                && settings.hardness == 0.0
-                && proxy_positions.is_none())
-            .then_some((settings.symmetry_x, settings.symmetry_offset));
+            let draw_repair =
+                sparse_draw.then_some((settings.symmetry_x, settings.symmetry_offset));
             let scale = self.accept_deformation(&old_positions, settings.kind, draw_repair);
             dirty_vertices = self
                 .positions
@@ -1744,8 +1748,11 @@ impl Mesh {
         )
     }
 
-    fn smooth_target(&self, vertex: usize, old: &[Vec3]) -> Vec3 {
-        let neighbors = self.cached_neighbors(vertex);
+    fn smooth_target(&self, vertex: usize, old: &[Vec3], local_incidence: bool) -> Vec3 {
+        let local_neighbors = local_incidence.then(|| self.local_neighbors(vertex));
+        let neighbors = local_neighbors
+            .as_deref()
+            .unwrap_or_else(|| self.cached_neighbors(vertex));
         if neighbors.is_empty() {
             old[vertex]
         } else {
@@ -1765,7 +1772,7 @@ impl Mesh {
         tangent_weight: f32,
         normal_weight: f32,
     ) -> Vec3 {
-        let laplacian = self.smooth_target(vertex, old) - old[vertex];
+        let laplacian = self.smooth_target(vertex, old, false) - old[vertex];
         let normal_component = normal * laplacian.dot(normal);
         let neighbors = self.cached_neighbors(vertex);
         let mean_edge_squared = if neighbors.is_empty() {
@@ -2055,7 +2062,7 @@ impl Mesh {
             .collect();
         changed_vertices.sort_unstable();
         changed_vertices.dedup();
-        let scale = match self.deformation_guard(old, &changed_vertices, 0.1, 0.5) {
+        let scale = match self.deformation_guard(old, &changed_vertices, 0.1, 0.5, false) {
             None => {
                 self.positions.copy_from_slice(old);
                 0.0
@@ -2122,6 +2129,7 @@ impl Mesh {
         changed_vertices: &[usize],
         quality_floor: f64,
         fold_cosine: f64,
+        local_incidence: bool,
     ) -> Option<DeformationGuard> {
         if self.cached_invalid_indices() {
             return None;
@@ -2149,16 +2157,24 @@ impl Mesh {
         }
         // Three or more faces on an edge have no unique adjacent fold. Avoid
         // quadratic pair allocation or silently ignoring an unchecked pair.
-        if self
-            .cached_nonmanifold_faces()
-            .iter()
-            .any(|&face| affected.binary_search(&(face as usize)).is_ok())
+        if !local_incidence
+            && self
+                .cached_nonmanifold_faces()
+                .iter()
+                .any(|&face| affected.binary_search(&(face as usize)).is_ok())
         {
             return None;
         }
         let mut folds = Vec::new();
-        for pair in self.cached_pairs_for_faces(&affected) {
-            let [a, b] = self.cached_face_pairs()[pair];
+        let pairs = if local_incidence {
+            self.local_face_pairs_for_faces(&affected).ok()?
+        } else {
+            self.cached_pairs_for_faces(&affected)
+                .into_iter()
+                .map(|pair| self.cached_face_pairs()[pair])
+                .collect()
+        };
+        for [a, b] in pairs {
             let indices = [self.triangles[a as usize], self.triangles[b as usize]];
             let normals = indices.map(|triangle| face_cross(old, triangle).normalize_or_zero());
             if normals.contains(&glam::DVec3::ZERO) {
@@ -2206,9 +2222,13 @@ impl Mesh {
             .enumerate()
             .filter_map(|(vertex, (current, previous))| (current != previous).then_some(vertex))
             .collect();
-        let Some(guard) =
-            self.deformation_guard(old, &changed_vertices, quality_floor, fold_cosine)
-        else {
+        let Some(guard) = self.deformation_guard(
+            old,
+            &changed_vertices,
+            quality_floor,
+            fold_cosine,
+            draw_repair.is_some(),
+        ) else {
             self.positions.copy_from_slice(old);
             return 0.0;
         };
@@ -2363,35 +2383,52 @@ impl Mesh {
                     if !*fixed {
                         let minimum_authored_motion = members
                             .iter()
-                            .map(|&vertex| proposed[vertex].distance(old[vertex]))
-                            .fold(f32::INFINITY, f32::min);
-                        let mut requested = (*sum / *count as f64).as_vec3();
+                            .map(|&vertex| {
+                                (proposed[vertex].as_dvec3() - old[vertex].as_dvec3()).length()
+                            })
+                            .fold(f64::INFINITY, f64::min);
+                        let mut requested = *sum / *count as f64;
                         let requested_length = requested.length();
                         if requested_length > minimum_authored_motion {
                             requested *= minimum_authored_motion / requested_length;
                         }
-                        for axis in 0..3 {
-                            let ulp = members
-                                .iter()
-                                .map(|&vertex| old[vertex][axis].next_up() - old[vertex][axis])
-                                .fold(0.0_f32, f32::max);
-                            if ulp == 0.0 || !ulp.is_finite() {
-                                continue;
+                        for _ in 0..4 {
+                            translation = Vec3::ZERO;
+                            for axis in 0..3 {
+                                let ulp = members
+                                    .iter()
+                                    .map(|&vertex| old[vertex][axis].next_up() - old[vertex][axis])
+                                    .fold(0.0_f32, f32::max);
+                                if ulp == 0.0 || !ulp.is_finite() {
+                                    continue;
+                                }
+                                let snapped = ((requested[axis] / f64::from(ulp)).trunc()
+                                    * f64::from(ulp))
+                                    as f32;
+                                if !snapped.is_finite() {
+                                    continue;
+                                }
+                                let first = f64::from(old[members[0]][axis] + snapped)
+                                    - f64::from(old[members[0]][axis]);
+                                if members.iter().all(|&vertex| {
+                                    f64::from(old[vertex][axis] + snapped)
+                                        - f64::from(old[vertex][axis])
+                                        == first
+                                }) {
+                                    translation[axis] = snapped;
+                                }
                             }
-                            let snapped = ((f64::from(requested[axis]) / f64::from(ulp)).trunc()
-                                * f64::from(ulp)) as f32;
-                            if !snapped.is_finite() {
-                                continue;
+                            let actual = (old[members[0]] + translation).as_dvec3()
+                                - old[members[0]].as_dvec3();
+                            if actual.length() <= minimum_authored_motion {
+                                break;
                             }
-                            let first = f64::from(old[members[0]][axis] + snapped)
-                                - f64::from(old[members[0]][axis]);
-                            if members.iter().all(|&vertex| {
-                                f64::from(old[vertex][axis] + snapped)
-                                    - f64::from(old[vertex][axis])
-                                    == first
-                            }) {
-                                translation[axis] = snapped;
-                            }
+                            requested *= 0.5;
+                        }
+                        let actual =
+                            (old[members[0]] + translation).as_dvec3() - old[members[0]].as_dvec3();
+                        if actual.length() > minimum_authored_motion {
+                            translation = Vec3::ZERO;
                         }
                     }
                     (group, translation)
@@ -2411,6 +2448,16 @@ impl Mesh {
             }
             if symmetry_x {
                 self.preserve_exact_sculpt_symmetry(old, symmetry_offset);
+            }
+            // The exact-mirror pass can round a paired displacement once more.
+            // Keep the authored per-vertex motion as a hard upper bound even
+            // after that final f32 realization.
+            if constrained.iter().any(|&vertex| {
+                let actual = (self.positions[vertex].as_dvec3() - old[vertex].as_dvec3()).length();
+                let authored = (proposed[vertex].as_dvec3() - old[vertex].as_dvec3()).length();
+                actual > authored
+            }) {
+                return false;
             }
             if guard.safe(&self.positions) && self.positions != old {
                 return true;
@@ -2638,7 +2685,9 @@ mod draw_constraint_component_tests {
             .enumerate()
             .filter_map(|(i, (a, b))| (a != b).then_some(i))
             .collect();
-        let guard = mesh.deformation_guard(&old, &changed, 0.1, 0.5).unwrap();
+        let guard = mesh
+            .deformation_guard(&old, &changed, 0.1, 0.5, false)
+            .unwrap();
         assert!(guard.safe(&mesh.positions));
         mesh.validate().unwrap();
     }

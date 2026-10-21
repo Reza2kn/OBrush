@@ -154,3 +154,96 @@ fn imported_spark_draw_radius_one_crossing_stroke() {
 fn imported_spark_draw_small_radius_crossing_stroke() {
     run_spark_stroke(0.18);
 }
+
+fn repeated_center_contacts(radius: f32, contacts: usize) {
+    let path = std::env::var("OBRUSH_SPARK_STL").expect("set OBRUSH_SPARK_STL to private STL");
+    let source = std::fs::read(path).unwrap();
+    let mut mesh = Mesh::import_stl(&source).unwrap().mesh;
+    let ray = ray((635.0, 463.0));
+    let start = mesh.raycast(ray).unwrap();
+    let mut settings = BrushSettings {
+        kind: BrushKind::Draw,
+        radius,
+        strength: 0.35,
+        symmetry_x: false,
+        ..BrushSettings::default()
+    };
+    settings.culling_axis = Some(-ray.direction);
+    let mut samples = vec![(0, start.position)];
+    let mut effective = 0;
+    let mut first_no_op = None;
+    let mut first_limited = None;
+    let mut late_effective = 0;
+    let mut late_start_hit = start.position;
+    for contact in 1..=contacts {
+        let hit = mesh.raycast(ray).unwrap();
+        let before = mesh.positions.clone();
+        let result = mesh.apply_brush_with_result(hit.position, hit.normal, Vec3::ZERO, &settings);
+        let max_original_motion = before
+            .iter()
+            .zip(&mesh.positions)
+            .map(|(&old, &new)| old.distance(new))
+            .fold(0.0_f32, f32::max);
+        let useful = result.changed_vertices > 0 && max_original_motion >= radius * 0.002;
+        effective += usize::from(useful);
+        if contact > contacts.saturating_sub(32) {
+            late_effective += usize::from(useful);
+        }
+        if contact == contacts.saturating_sub(32) {
+            late_start_hit = mesh.raycast(ray).unwrap().position;
+        }
+        if result.changed_vertices == 0 || max_original_motion < radius * 0.002 {
+            first_no_op.get_or_insert(contact);
+            if contact > 200 {
+                eprintln!("contact={contact} changed={} scale={} refined={} detail_limited={} max_motion={} hit={:?}", result.changed_vertices, result.displacement_scale, result.refined_vertices, result.detail_limited, max_original_motion, hit.position);
+            }
+        }
+        if result.displacement_scale < 0.5 {
+            first_limited.get_or_insert(contact);
+        }
+        if [1, 16, 64, 128, 256].contains(&contact) {
+            samples.push((contact, mesh.raycast(ray).unwrap().position));
+        }
+        if radius < 0.2 && [213, 214, 215, 224, 256].contains(&contact) {
+            let (face, current_hit) = mesh.raycast_indexed(ray).unwrap();
+            let corners = current_hit.triangle.map(|vertex| {
+                let index = vertex as usize;
+                (
+                    index,
+                    mesh.positions[index],
+                    mesh.positions[index].distance(current_hit.position),
+                    mesh.normals[index].dot(-ray.direction),
+                    mesh.masks[index],
+                    mesh.positions[index].distance(before[index]),
+                )
+            });
+            eprintln!("tip contact={contact} face={face} hit={:?} bary={:?} hit_normal={:?} corners={corners:?}", current_hit.position, current_hit.barycentric, current_hit.normal);
+        }
+    }
+    let final_hit = mesh.raycast(ray).unwrap();
+    let normal_growth = (final_hit.position - start.position).dot(start.normal);
+    let late_tip_growth = (final_hit.position - late_start_hit).dot(start.normal);
+    eprintln!("Sparkdancer repeated Draw radius={radius} contacts={contacts} effective={effective} late_effective={late_effective}/32 first_no_op={first_no_op:?} first_limited={first_limited:?} normal_growth={normal_growth} late_tip_growth={late_tip_growth} samples={samples:?} vertices={} faces={}", mesh.positions.len(), mesh.triangles.len());
+    mesh.validate().unwrap();
+    assert!(effective >= contacts * 4 / 5, "sustained Draw stalls");
+    assert!(
+        normal_growth >= radius * 0.2,
+        "sustained Draw lacks useful growth"
+    );
+    assert!(
+        late_tip_growth >= radius * 0.01,
+        "late repeated Draw strokes no longer raise the picked tip"
+    );
+}
+
+#[test]
+#[ignore = "requires private Sparkdancer STL path"]
+fn imported_spark_repeated_center_draw_radius_one() {
+    repeated_center_contacts(1.0, 128);
+}
+
+#[test]
+#[ignore = "requires private Sparkdancer STL path"]
+fn imported_spark_repeated_center_draw_small_radius() {
+    repeated_center_contacts(0.18, 256);
+}
