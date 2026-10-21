@@ -12,6 +12,7 @@ mod brush;
 mod decimate;
 mod decode_limits;
 mod document;
+mod draw_curved_refine;
 mod extract;
 mod layers;
 mod locked_accumulator;
@@ -84,6 +85,7 @@ pub use document::{
     SglAppendReport, SourcePaintLockedAction, SourcePaintLockedMode, SourcePaintLockedReport,
     SourcePaintLockedSample, SourcePaintLockedStroke, SubdivisionDeletionReport,
 };
+pub use draw_curved_refine::CurvedDrawRefinement;
 pub use extract::{MaskExtractReport, MaskExtractSelection, MaskExtractSettings};
 pub use glam::Vec3;
 pub use layers::{
