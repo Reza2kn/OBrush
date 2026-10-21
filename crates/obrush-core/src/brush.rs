@@ -1697,7 +1697,9 @@ impl Mesh {
                     allow_constraint_repair,
                     false,
                 );
-                if result.changed_vertices > 0 {
+                if result.changed_vertices > 0
+                    && result.refined_vertices + prepared_vertices <= 1_024
+                {
                     result.refined_vertices += prepared_vertices;
                     *self = prepared;
                     return (result, ancestry);
