@@ -458,6 +458,7 @@ impl DrawStroke {
             Vec3::ZERO,
             settings,
             (!self.accumulate).then_some(self.proxy.as_slice()),
+            false,
         );
         if result.changed_vertices == 0 {
             return result;
@@ -1155,7 +1156,7 @@ impl Mesh {
         delta: Vec3,
         settings: &BrushSettings,
     ) -> BrushResult {
-        self.apply_brush_dab(center, normal, delta, settings, None)
+        self.apply_brush_dab(center, normal, delta, settings, None, true)
             .0
     }
 
@@ -1166,12 +1167,13 @@ impl Mesh {
         delta: Vec3,
         settings: &BrushSettings,
         proxy_positions: Option<&[Vec3]>,
+        allow_constraint_repair: bool,
     ) -> (BrushResult, Vec<crate::refinement::RefinementParents>) {
         if settings.kind == BrushKind::Draw && settings.draw_clay {
             let mut clay = settings.clone();
             clay.kind = BrushKind::Clay;
             clay.draw_clay = false;
-            return self.apply_brush_dab(center, normal, delta, &clay, proxy_positions);
+            return self.apply_brush_dab(center, normal, delta, &clay, proxy_positions, false);
         }
         // A target belongs to a Document and its subdivision correspondence.
         // Calling the generic mesh API cannot silently invent that target.
@@ -1651,7 +1653,19 @@ impl Mesh {
             if uses_surface_detail(settings.kind) && settings.symmetry_x {
                 self.preserve_exact_sculpt_symmetry(&old_positions, settings.symmetry_offset);
             }
-            let scale = self.accept_deformation(&old_positions, settings.kind);
+            // The direct default Draw path may preserve existing fragile
+            // triangles as coherent local components if its full proposal is
+            // clipped. DrawStroke retains its proxy/ancestry semantics.
+            let draw_repair = (allow_constraint_repair
+                && settings.kind == BrushKind::Draw
+                && settings.draw_accumulate
+                && settings.adaptive_detail
+                && !settings.invert
+                && settings.alpha.is_none()
+                && settings.hardness == 0.0
+                && proxy_positions.is_none())
+            .then_some((settings.symmetry_x, settings.symmetry_offset));
+            let scale = self.accept_deformation(&old_positions, settings.kind, draw_repair);
             dirty_vertices = self
                 .positions
                 .iter()
@@ -1964,7 +1978,7 @@ impl Mesh {
         let proposed = self.positions.clone();
         // Existing smooth-tool policy: quality >= min(old quality, 0.1),
         // folds <= max(old folds, 60 degrees), with shared bounded step scaling.
-        let scale = self.accept_deformation(&old, BrushKind::Morph);
+        let scale = self.accept_deformation(&old, BrushKind::Morph, None);
         // The common guard interpolates a whole array on clipping. Restore
         // untouched component bits so protection also preserves signed zeros.
         for ((position, original), proposal) in self.positions.iter_mut().zip(&old).zip(&proposed) {
@@ -2065,7 +2079,12 @@ impl Mesh {
         scale
     }
 
-    fn accept_deformation(&mut self, old: &[Vec3], kind: BrushKind) -> f32 {
+    fn accept_deformation(
+        &mut self,
+        old: &[Vec3],
+        kind: BrushKind,
+        draw_repair: Option<(bool, f32)>,
+    ) -> f32 {
         let (quality_floor, fold_cosine) = match kind {
             BrushKind::Crease | BrushKind::Drag => (0.1, 0.0), // At most 90 degrees.
             BrushKind::Move => (0.02, -0.866_025_403_784_438_6), // Large rotations, 150 degrees.
@@ -2074,7 +2093,13 @@ impl Mesh {
         if kind == BrushKind::Move {
             self.ensure_adjacency();
         }
-        self.accept_deformation_with_limits(old, quality_floor, fold_cosine, false)
+        self.accept_deformation_with_limits_and_draw_repair(
+            old,
+            quality_floor,
+            fold_cosine,
+            false,
+            draw_repair,
+        )
     }
 
     fn deformation_guard(
@@ -2143,6 +2168,23 @@ impl Mesh {
         fold_cosine: f64,
         refine_scale: bool,
     ) -> f32 {
+        self.accept_deformation_with_limits_and_draw_repair(
+            old,
+            quality_floor,
+            fold_cosine,
+            refine_scale,
+            None,
+        )
+    }
+
+    fn accept_deformation_with_limits_and_draw_repair(
+        &mut self,
+        old: &[Vec3],
+        quality_floor: f64,
+        fold_cosine: f64,
+        refine_scale: bool,
+        draw_repair: Option<(bool, f32)>,
+    ) -> f32 {
         let changed_vertices: Vec<_> = self
             .positions
             .iter()
@@ -2160,6 +2202,18 @@ impl Mesh {
             return 1.0;
         }
         let proposed = self.positions.clone();
+        if let Some((symmetry_x, symmetry_offset)) = draw_repair {
+            if self.repair_draw_constraint_components(
+                &guard,
+                old,
+                &proposed,
+                symmetry_x,
+                symmetry_offset,
+            ) {
+                return 1.0;
+            }
+            self.positions.copy_from_slice(&proposed);
+        }
         let mut scale = 1.0;
         let mut unsafe_scale = 1.0;
         for _ in 0..12 {
@@ -2200,6 +2254,160 @@ impl Mesh {
         self.positions.copy_from_slice(old);
         0.0
     }
+
+    /// Keep pre-existing skinny triangles and sharp folds coherent instead of
+    /// scaling an entire Draw dab down to zero. Only vertices of faces that
+    /// actually reject the proposed dab are grouped. Each group receives one
+    /// exactly representable translation; its edge vectors therefore remain
+    /// unchanged despite f32 storage. Every candidate still passes the
+    /// original face and fold guard, including the transition around groups.
+    fn repair_draw_constraint_components(
+        &mut self,
+        guard: &DeformationGuard,
+        old: &[Vec3],
+        proposed: &[Vec3],
+        symmetry_x: bool,
+        symmetry_offset: f32,
+    ) -> bool {
+        use std::collections::{BTreeMap, BTreeSet};
+
+        fn root(parents: &BTreeMap<usize, usize>, mut vertex: usize) -> usize {
+            while let Some(&parent) = parents.get(&vertex) {
+                if parent == vertex {
+                    break;
+                }
+                vertex = parent;
+            }
+            vertex
+        }
+
+        fn union(parents: &mut BTreeMap<usize, usize>, a: usize, b: usize) {
+            parents.entry(a).or_insert(a);
+            parents.entry(b).or_insert(b);
+            let a = root(parents, a);
+            let b = root(parents, b);
+            if a != b {
+                parents.insert(b, a);
+            }
+        }
+
+        const MAX_CONSTRAINED: usize = 512;
+        const MAX_SWEEPS: usize = 12;
+        let mut parents = BTreeMap::<usize, usize>::new();
+        let mut constrained = BTreeSet::<usize>::new();
+        let mut previous_groups = usize::MAX;
+
+        for _ in 0..MAX_SWEEPS {
+            let previous_vertices = constrained.len();
+            for face in guard
+                .faces
+                .iter()
+                .filter(|face| !face.safe(&self.positions))
+            {
+                let [a, b, c] = face.indices.map(|v| v as usize);
+                union(&mut parents, a, b);
+                union(&mut parents, a, c);
+                constrained.extend([a, b, c]);
+            }
+            for fold in guard
+                .folds
+                .iter()
+                .filter(|fold| !fold.safe(&self.positions))
+            {
+                let ids = fold.indices.map(|face| face.map(|v| v as usize));
+                let anchor = ids[0][0];
+                for &vertex in ids.iter().flatten() {
+                    union(&mut parents, anchor, vertex);
+                    constrained.insert(vertex);
+                }
+            }
+            if constrained.is_empty() || constrained.len() > MAX_CONSTRAINED {
+                return false;
+            }
+
+            let mut groups = BTreeMap::<usize, (glam::DVec3, usize, bool, Vec<usize>)>::new();
+            for &vertex in &constrained {
+                let group = root(&parents, vertex);
+                let entry =
+                    groups
+                        .entry(group)
+                        .or_insert((glam::DVec3::ZERO, 0, false, Vec::new()));
+                entry.0 += proposed[vertex].as_dvec3() - old[vertex].as_dvec3();
+                entry.1 += 1;
+                // A group touching an unchanged or protected vertex is fixed.
+                // In particular, an edge-of-brush or masked vertex cannot be
+                // drawn beyond its authored support/paint protection.
+                entry.2 |= proposed[vertex] == old[vertex]
+                    || self.mask_influence(vertex) < 1.0 - f32::EPSILON;
+                entry.3.push(vertex);
+            }
+
+            let translations: BTreeMap<usize, Vec3> = groups
+                .iter()
+                .map(|(&group, (sum, count, fixed, members))| {
+                    let mut translation = Vec3::ZERO;
+                    if !*fixed {
+                        let minimum_authored_motion = members
+                            .iter()
+                            .map(|&vertex| proposed[vertex].distance(old[vertex]))
+                            .fold(f32::INFINITY, f32::min);
+                        let mut requested = (*sum / *count as f64).as_vec3();
+                        let requested_length = requested.length();
+                        if requested_length > minimum_authored_motion {
+                            requested *= minimum_authored_motion / requested_length;
+                        }
+                        for axis in 0..3 {
+                            let ulp = members
+                                .iter()
+                                .map(|&vertex| old[vertex][axis].next_up() - old[vertex][axis])
+                                .fold(0.0_f32, f32::max);
+                            if ulp == 0.0 || !ulp.is_finite() {
+                                continue;
+                            }
+                            let snapped = ((f64::from(requested[axis]) / f64::from(ulp)).trunc()
+                                * f64::from(ulp)) as f32;
+                            if !snapped.is_finite() {
+                                continue;
+                            }
+                            let first = f64::from(old[members[0]][axis] + snapped)
+                                - f64::from(old[members[0]][axis]);
+                            if members.iter().all(|&vertex| {
+                                f64::from(old[vertex][axis] + snapped)
+                                    - f64::from(old[vertex][axis])
+                                    == first
+                            }) {
+                                translation[axis] = snapped;
+                            }
+                        }
+                    }
+                    (group, translation)
+                })
+                .collect();
+
+            self.positions.copy_from_slice(proposed);
+            for &vertex in &constrained {
+                let translation = translations[&root(&parents, vertex)];
+                for axis in 0..3 {
+                    self.positions[vertex][axis] = if translation[axis] == 0.0 {
+                        old[vertex][axis]
+                    } else {
+                        old[vertex][axis] + translation[axis]
+                    };
+                }
+            }
+            if symmetry_x {
+                self.preserve_exact_sculpt_symmetry(old, symmetry_offset);
+            }
+            if guard.safe(&self.positions) && self.positions != old {
+                return true;
+            }
+            if constrained.len() == previous_vertices && groups.len() == previous_groups {
+                break;
+            }
+            previous_groups = groups.len();
+        }
+        false
+    }
 }
 
 struct DeformationGuard {
@@ -2209,22 +2417,8 @@ struct DeformationGuard {
 
 impl DeformationGuard {
     fn safe(&self, positions: &[Vec3]) -> bool {
-        self.faces.iter().all(|face| {
-            let points = face
-                .indices
-                .map(|vertex| positions[vertex as usize].as_dvec3());
-            let cross = (points[1] - points[0]).cross(points[2] - points[0]);
-            let edge_squared = longest_edge_squared(points);
-            let relative_tolerance = 32.0 * f64::EPSILON;
-            cross.is_finite()
-                && cross.dot(face.cross) >= face.minimum_projection
-                && cross.length_squared() * (1.0 + relative_tolerance)
-                    >= (face.minimum_quality * edge_squared).powi(2)
-        }) && self.folds.iter().all(|fold| {
-            let [a, b] = fold.indices.map(|triangle| face_cross(positions, triangle));
-            let product = a.length() * b.length();
-            a.dot(b) + 32.0 * f64::EPSILON * product >= fold.minimum_cosine * product
-        })
+        self.faces.iter().all(|face| face.safe(positions))
+            && self.folds.iter().all(|fold| fold.safe(positions))
     }
 }
 
@@ -2238,6 +2432,29 @@ struct FaceGuard {
 struct FoldGuard {
     indices: [[u32; 3]; 2],
     minimum_cosine: f64,
+}
+
+impl FaceGuard {
+    fn safe(&self, positions: &[Vec3]) -> bool {
+        let points = self
+            .indices
+            .map(|vertex| positions[vertex as usize].as_dvec3());
+        let cross = (points[1] - points[0]).cross(points[2] - points[0]);
+        let edge_squared = longest_edge_squared(points);
+        let relative_tolerance = 32.0 * f64::EPSILON;
+        cross.is_finite()
+            && cross.dot(self.cross) >= self.minimum_projection
+            && cross.length_squared() * (1.0 + relative_tolerance)
+                >= (self.minimum_quality * edge_squared).powi(2)
+    }
+}
+
+impl FoldGuard {
+    fn safe(&self, positions: &[Vec3]) -> bool {
+        let [a, b] = self.indices.map(|triangle| face_cross(positions, triangle));
+        let product = a.length() * b.length();
+        a.dot(b) + 32.0 * f64::EPSILON * product >= self.minimum_cosine * product
+    }
 }
 
 fn surface_alpha_frame(normal: Vec3, tangent: Option<Vec3>, rotation: f32) -> (Vec3, Vec3) {
@@ -2363,6 +2580,118 @@ fn uses_surface_detail(kind: BrushKind) -> bool {
             | BrushKind::Pinch
             | BrushKind::Drag
     )
+}
+
+#[cfg(test)]
+mod draw_constraint_component_tests {
+    use super::*;
+
+    fn skinny_patch() -> Mesh {
+        Mesh::new(
+            vec![
+                Vec3::new(0.0, 0.0, 0.0),
+                Vec3::new(1.0, 0.0, 0.0),
+                Vec3::new(0.2, 0.05, 0.0),
+                Vec3::new(1.0, 1.0, 0.0),
+            ],
+            vec![[0, 1, 2], [1, 3, 2]],
+        )
+    }
+
+    #[test]
+    fn coherent_draw_component_moves_despite_preexisting_skinny_face() {
+        let mut mesh = skinny_patch();
+        mesh.ensure_adjacency();
+        let old = mesh.positions.clone();
+        for position in &mut mesh.positions {
+            position.z += 0.02;
+        }
+        mesh.positions[2].y -= 0.005;
+        let proposed = mesh.positions.clone();
+        let mut clipped = mesh.snapshot();
+        clipped.ensure_adjacency();
+        let clipped_scale = clipped.accept_deformation(&old, BrushKind::Draw, None);
+        assert!(clipped_scale < 1.0, "fixture must clip the full proposal");
+
+        let scale = mesh.accept_deformation(&old, BrushKind::Draw, Some((false, 0.0)));
+        assert_eq!(scale, 1.0);
+        assert_ne!(mesh.positions, old);
+        assert_ne!(mesh.positions, proposed);
+        let changed: Vec<_> = mesh
+            .positions
+            .iter()
+            .zip(&old)
+            .enumerate()
+            .filter_map(|(i, (a, b))| (a != b).then_some(i))
+            .collect();
+        let guard = mesh.deformation_guard(&old, &changed, 0.1, 0.5).unwrap();
+        assert!(guard.safe(&mesh.positions));
+        mesh.validate().unwrap();
+    }
+
+    #[test]
+    fn zero_area_rest_face_is_not_repaired_or_moved() {
+        let mut mesh = Mesh::new(vec![Vec3::ZERO, Vec3::X, Vec3::X * 0.5], vec![[0, 1, 2]]);
+        mesh.ensure_adjacency();
+        let old = mesh.positions.clone();
+        mesh.positions[2].z = 0.1;
+        assert_eq!(
+            mesh.accept_deformation(&old, BrushKind::Draw, Some((false, 0.0))),
+            0.0
+        );
+        assert_eq!(mesh.positions, old);
+    }
+
+    #[test]
+    fn mirrored_skinny_components_keep_exact_x_pairs() {
+        let right = [
+            Vec3::new(1.0, 0.0, 0.0),
+            Vec3::new(2.0, 0.0, 0.0),
+            Vec3::new(1.2, 0.05, 0.0),
+        ];
+        for offset in [0.0, 0.25] {
+            let mut positions = right.to_vec();
+            positions.extend(right.map(|p| reflect_point(p, offset)));
+            let mut mesh = Mesh::new(positions, vec![[0, 1, 2], [3, 5, 4]]);
+            mesh.ensure_adjacency();
+            let old = mesh.positions.clone();
+            for position in &mut mesh.positions {
+                position.z += 0.02;
+            }
+            mesh.positions[2].y -= 0.005;
+            mesh.positions[5].y -= 0.005;
+            assert_eq!(
+                mesh.accept_deformation(&old, BrushKind::Draw, Some((true, offset))),
+                1.0
+            );
+            for index in 0..3 {
+                assert_eq!(
+                    mesh.positions[index],
+                    reflect_point(mesh.positions[index + 3], offset)
+                );
+            }
+            mesh.validate().unwrap();
+        }
+    }
+
+    #[test]
+    fn protected_vertex_remains_fixed_on_constraint_retry() {
+        let mut mesh = skinny_patch();
+        mesh.ensure_adjacency();
+        mesh.masks[0] = 1.0;
+        let old = mesh.positions.clone();
+        for position in &mut mesh.positions[1..] {
+            position.z += 0.02;
+        }
+        mesh.positions[2].y -= 0.005;
+        let _ = mesh.accept_deformation(&old, BrushKind::Draw, Some((false, 0.0)));
+        assert_eq!(
+            mesh.positions[0].to_array().map(f32::to_bits),
+            old[0].to_array().map(f32::to_bits)
+        );
+        assert_eq!(mesh.masks[0], 1.0);
+        mesh.validate().unwrap();
+    }
 }
 
 #[cfg(test)]

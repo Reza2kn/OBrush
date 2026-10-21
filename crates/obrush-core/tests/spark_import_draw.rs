@@ -84,24 +84,48 @@ fn run_spark_stroke(radius: f32) {
         let hit = document.active_mesh().unwrap().raycast(ray).unwrap();
         let before_positions = document.active_mesh().unwrap().positions.clone();
         settings.culling_axis = Some(-ray.direction);
+        let started = std::time::Instant::now();
         let result = document.active_mesh_mut().unwrap().apply_brush_with_result(
             hit.position,
             hit.normal,
             Vec3::ZERO,
             &settings,
         );
+        let contact_micros = started.elapsed().as_micros();
         let max_displacement = before_positions
             .iter()
             .zip(&document.active_mesh().unwrap().positions)
             .map(|(before, after)| before.distance(*after))
             .fold(0.0_f32, f32::max);
+        for (vertex, (&before, &after)) in before_positions
+            .iter()
+            .zip(&document.active_mesh().unwrap().positions)
+            .enumerate()
+        {
+            if before.distance(hit.position) > radius {
+                assert_eq!(
+                    before.to_array().map(f32::to_bits),
+                    after.to_array().map(f32::to_bits),
+                    "vertex {vertex} outside Draw support moved"
+                );
+            }
+        }
         effective += usize::from(result.changed_vertices > 0 && max_displacement >= radius * 0.002);
-        records.push((index, result, max_displacement));
+        records.push((index, result, max_displacement, contact_micros));
     }
     document.end_stroke();
     let final_anchor = document.active_mesh().unwrap().raycast(anchor_ray).unwrap();
     let normal_growth =
         (final_anchor.position - initial_anchor.position).dot(initial_anchor.normal);
+    if let Ok(output) = std::env::var("OBRUSH_SPARK_EXPORT_DIR") {
+        let output = std::path::Path::new(&output);
+        std::fs::create_dir_all(output).unwrap();
+        std::fs::write(
+            output.join(format!("spark-draw-r{radius}.obrush")),
+            document.to_json().unwrap(),
+        )
+        .unwrap();
+    }
     eprintln!("Sparkdancer Draw radius={radius} effective={effective}/12 normal_growth={normal_growth} records={records:?} vertices={} faces={}", document.active_mesh().unwrap().positions.len(), document.active_mesh().unwrap().triangles.len());
     document.active_mesh().unwrap().validate().unwrap();
     assert!(
