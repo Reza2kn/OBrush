@@ -247,3 +247,105 @@ fn imported_spark_repeated_center_draw_radius_one() {
 fn imported_spark_repeated_center_draw_small_radius() {
     repeated_center_contacts(0.18, 256);
 }
+
+// Captured from the same owned normal-browser run as the positive-Y fixture.
+// Sparkdancer is Z-up; retain this distinct front camera and viewport geometry.
+fn front_ray(screen: (f32, f32)) -> Ray {
+    let origin = Vec3::new(1.747_767_4, -43.589_294, 22.463_451);
+    let target = Vec3::new(-0.273_416_52, -4.797_350_4, 16.926_394);
+    let forward = (target - origin).normalize();
+    let right = forward.cross(Vec3::Y).normalize();
+    let up = right.cross(forward);
+    let ndc_x = 2.0 * (screen.0 - 225.0) / 820.0 - 1.0;
+    let ndc_y = 1.0 - 2.0 * (screen.1 - 57.0) / 812.0;
+    let tangent = (40.0_f32.to_radians() * 0.5).tan();
+    Ray {
+        origin,
+        direction: (forward + right * ndc_x * tangent * (820.0 / 812.0) + up * ndc_y * tangent)
+            .normalize(),
+    }
+}
+
+fn repeat_captured_front_contacts(screen: (f32, f32), radius: f32) {
+    let path = std::env::var("OBRUSH_SPARK_STL").expect("set OBRUSH_SPARK_STL to private STL");
+    let imported = Mesh::import_stl(&std::fs::read(path).unwrap()).unwrap();
+    let mut document = Document::new(imported.mesh);
+    let original = document.to_json().unwrap();
+    let ray = front_ray(screen);
+    let first = document
+        .require_active_mesh()
+        .unwrap()
+        .raycast(ray)
+        .unwrap();
+    let settings = BrushSettings {
+        kind: BrushKind::Draw,
+        radius,
+        strength: 0.35,
+        symmetry_x: false,
+        culling_axis: Some(-ray.direction),
+        ..Default::default()
+    };
+    let mut useful = 0;
+    let mut stalled = 0;
+    let mut longest_stall = 0;
+    document.begin_stroke();
+    for contact in 1..=12 {
+        let mesh = document.require_active_mesh_mut().unwrap();
+        let hit = mesh.raycast(ray).unwrap();
+        let before = mesh.positions.clone();
+        let result = mesh.apply_brush_with_result(hit.position, hit.normal, Vec3::ZERO, &settings);
+        let maximum = before
+            .iter()
+            .zip(&mesh.positions)
+            .map(|(a, b)| a.distance(*b))
+            .fold(0.0_f32, f32::max);
+        let edited = result.changed_vertices > 0 && maximum >= radius * 0.002;
+        useful += usize::from(edited);
+        stalled = if edited { 0 } else { stalled + 1 };
+        longest_stall = longest_stall.max(stalled);
+        for (&a, &b) in before.iter().zip(&mesh.positions) {
+            if a.distance(hit.position) > radius {
+                assert_eq!(
+                    a.to_array().map(f32::to_bits),
+                    b.to_array().map(f32::to_bits)
+                );
+            }
+        }
+        let current = mesh.raycast(ray).unwrap();
+        eprintln!("front={screen:?} radius={radius} contact={contact} useful={edited} changed={} refined={} max_motion={maximum} growth={}", result.changed_vertices, result.refined_vertices, (current.position-first.position).dot(first.normal));
+    }
+    document.end_stroke();
+    let mesh = document.require_active_mesh().unwrap();
+    mesh.validate().unwrap();
+    let last = mesh.raycast(ray).unwrap();
+    let growth = (last.position - first.position).dot(first.normal);
+    assert!(
+        useful >= 8,
+        "captured front Draw stalls: {useful}/12 useful contacts"
+    );
+    assert!(
+        longest_stall < 3,
+        "captured front Draw has {longest_stall} consecutive stalls"
+    );
+    assert!(
+        growth >= radius * 0.02,
+        "captured front Draw growth {growth} is too small"
+    );
+    let edited = document.to_json().unwrap();
+    assert!(document.undo());
+    assert_eq!(document.to_json().unwrap(), original);
+    assert!(document.redo());
+    assert_eq!(document.to_json().unwrap(), edited);
+}
+
+#[test]
+#[ignore = "requires private Sparkdancer STL path"]
+fn imported_spark_upper_leg_draw_radius_one() {
+    repeat_captured_front_contacts((645.0, 550.0), 1.0);
+}
+
+#[test]
+#[ignore = "requires private Sparkdancer STL path"]
+fn imported_spark_lower_leg_draw_radius_one() {
+    repeat_captured_front_contacts((750.0, 750.0), 1.0);
+}
