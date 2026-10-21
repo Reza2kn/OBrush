@@ -102,10 +102,10 @@ impl Mesh {
             .ok()?;
         for face in 0..self.triangles.len() {
             if aabb_overlaps_box(self, face, primary_box, mirrored_box, settings.symmetry_x) {
-                seed_faces.push(face);
-                if seed_faces.len() > MAX_WINDOW_FACES {
+                if seed_faces.len() == MAX_WINDOW_FACES {
                     return None;
                 }
+                seed_faces.push(face);
             }
         }
         if seed_faces.is_empty() {
