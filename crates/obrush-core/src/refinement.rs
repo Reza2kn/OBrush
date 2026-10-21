@@ -48,6 +48,7 @@ struct PatchQuery {
     symmetry_x: bool,
     symmetry_offset: f32,
     move_quality: bool,
+    draw_quality: bool,
 }
 
 impl PatchQuery {
@@ -81,6 +82,7 @@ impl PatchQuery {
             symmetry_x,
             symmetry_offset,
             move_quality: false,
+            draw_quality: false,
         })
     }
 
@@ -155,7 +157,7 @@ impl Mesh {
         symmetry_x: bool,
     ) -> Result<PatchRefinement, String> {
         self.refine_brush_patch_impl(
-            center, radius, symmetry_x, 0.0, None, MAX_ROUNDS, None, false,
+            center, radius, symmetry_x, 0.0, None, MAX_ROUNDS, None, false, false,
         )
         .map(|(report, _)| report)
     }
@@ -178,6 +180,7 @@ impl Mesh {
             Some(dirty_vertices),
             MAX_ROUNDS,
             None,
+            false,
             false,
         )
         .map(|(report, _)| report)
@@ -204,6 +207,7 @@ impl Mesh {
             4,
             Some(radius),
             false,
+            false,
         )
         .map(|(report, _)| report)
     }
@@ -215,6 +219,7 @@ impl Mesh {
         symmetry_x: bool,
         symmetry_offset: f32,
         dirty_vertices: &[usize],
+        draw_quality: bool,
     ) -> Result<(PatchRefinement, Vec<RefinementParents>), String> {
         self.refine_brush_patch_impl(
             center,
@@ -225,6 +230,7 @@ impl Mesh {
             MAX_ROUNDS,
             None,
             true,
+            draw_quality,
         )
     }
 
@@ -244,6 +250,7 @@ impl Mesh {
             4,
             Some(radius),
             false,
+            false,
         )
         .map(|(report, _)| report)
     }
@@ -262,10 +269,12 @@ impl Mesh {
         max_rounds: usize,
         target_radius: Option<f32>,
         collect_parents: bool,
+        draw_quality: bool,
     ) -> Result<(PatchRefinement, Vec<RefinementParents>), String> {
         self.validate()?;
         self.require_plain_topology("Adaptive refinement")?;
         let mut query = PatchQuery::new(center, radius, symmetry_x, symmetry_offset)?;
+        query.draw_quality = draw_quality;
         if let Some(target_radius) = target_radius {
             query.target_squared = (f64::from(target_radius) * TARGET_EDGE_RADIUS).powi(2);
             query.move_quality = true;
@@ -510,15 +519,16 @@ fn preserve_child_quality(
             if slots.iter().all(Option::is_none) {
                 continue;
             }
-            // Move's deformation guard uses cross/longest-edge-squared. Use
-            // that same metric for its newly generated faces, with headroom
-            // above the 0.1 deformation floor. Ordinary sculpt refinement
-            // retains its existing standard triangle-quality policy.
-            let triangle_quality: fn(&[Vec3], [u32; 3]) -> f64 = if query.move_quality {
-                quality
-            } else {
-                standard_quality
-            };
+            // Move and Draw guard deformation with cross/longest-edge-squared.
+            // Keep their generated children above the same local quality
+            // measure; ordinary tools retain the established standard metric.
+            let triangle_quality: fn(&[Vec3], [u32; 3]) -> f64 =
+                if query.move_quality || query.draw_quality {
+                    quality
+                } else {
+                    standard_quality
+                };
+            let floor = if query.draw_quality { 0.12 } else { 0.15 };
             let parent_quality = triangle_quality(&mesh.positions, triangle);
             // Malformed selected topology is rejected by the atomic round
             // preflight, rather than hidden by skipping its selected edges.
@@ -557,7 +567,7 @@ fn preserve_child_quality(
                 query.symmetry_offset,
             );
             if children.iter().any(|&child| {
-                triangle_quality(&local, child) < parent_quality.min(0.15) * (1.0 - 1e-5)
+                triangle_quality(&local, child) < parent_quality.min(floor) * (1.0 - 1e-5)
             }) {
                 for (a, b) in triangle_edges(triangle) {
                     if edges.contains(&(a.min(b), a.max(b))) {
@@ -920,6 +930,40 @@ fn standard_quality(positions: &[Vec3], triangle: [u32; 3]) -> f64 {
 mod normal_regressions {
     use super::*;
 
+    #[test]
+    fn draw_refinement_refuses_a_partial_split_below_its_guard_quality_floor() {
+        let authored = Mesh::from_obj("v 0 0 0\nv 1 0 0\nv 0.19 0.19 0\nf 1 2 3\n").unwrap();
+        let center = Vec3::new(0.095, 0.095, 0.0);
+        let radius = 0.04;
+        let mut ordinary = authored.snapshot();
+        let (ordinary_report, _) = ordinary
+            .refine_brush_patch_with_options(center, radius, false, 0.0, &[], false)
+            .unwrap();
+        assert_eq!(
+            ordinary_report.vertices_added, 1,
+            "old policy must admit AC"
+        );
+        let ordinary_child_min = ordinary
+            .triangles
+            .iter()
+            .map(|&face| quality(&ordinary.positions, face))
+            .fold(f64::INFINITY, f64::min);
+        assert!(
+            ordinary_child_min < 0.1,
+            "the admitted child crosses the Draw guard floor"
+        );
+        assert!(quality(&authored.positions, authored.triangles[0]) > 0.12);
+
+        let mut draw = authored.snapshot();
+        let (report, _) = draw
+            .refine_brush_patch_with_options(center, radius, false, 0.0, &[], true)
+            .unwrap();
+        assert_eq!(report.vertices_added, 0);
+        assert!(report.limited);
+        assert_eq!(draw.positions, authored.positions);
+        assert_eq!(draw.triangles, authored.triangles);
+    }
+
     fn assert_parent_contract(mesh: &Mesh, original: usize, parents: &[RefinementParents]) {
         assert_eq!(parents.len(), mesh.positions.len() - original);
         for (step, ancestry) in parents.iter().enumerate() {
@@ -947,7 +991,7 @@ mod normal_regressions {
     fn ancestry_is_complete_and_ordered_across_rounds_and_interior_samples() {
         let mut mesh = Mesh::from_obj("v -1 0 0\nv 1 0 0\nv 0 1 0\nf 1 2 3\n").unwrap();
         let (report, parents) = mesh
-            .refine_brush_patch_with_options(Vec3::Y, 0.7, true, 0.0, &[])
+            .refine_brush_patch_with_options(Vec3::Y, 0.7, true, 0.0, &[], false)
             .unwrap();
         assert!(report.vertices_added > 0);
         assert_parent_contract(&mesh, 3, &parents);
@@ -963,7 +1007,7 @@ mod normal_regressions {
     fn shifted_plane_retains_exact_reflection_area_and_ancestry() {
         let mut mesh = Mesh::from_obj("v -0.75 0 0\nv 1.25 0 0\nv 0.25 1 0\nf 1 2 3\n").unwrap();
         let (report, parents) = mesh
-            .refine_brush_patch_with_options(Vec3::new(0.25, 1.0, 0.0), 0.7, true, 0.25, &[])
+            .refine_brush_patch_with_options(Vec3::new(0.25, 1.0, 0.0), 0.7, true, 0.25, &[], false)
             .unwrap();
         assert!(report.vertices_added > 0);
         assert_parent_contract(&mesh, 3, &parents);
@@ -989,7 +1033,7 @@ mod normal_regressions {
         let mut options = established.snapshot();
         let expected = established.refine_brush_patch(Vec3::Z, 0.1, true).unwrap();
         let (actual, parents) = options
-            .refine_brush_patch_with_options(Vec3::Z, 0.1, true, 0.0, &[])
+            .refine_brush_patch_with_options(Vec3::Z, 0.1, true, 0.0, &[], false)
             .unwrap();
         assert_eq!(actual, expected);
         assert_eq!(options.positions, established.positions);
@@ -1007,7 +1051,7 @@ mod normal_regressions {
         let positions = mesh.positions.as_ptr();
         for offset in [f32::NAN, f32::INFINITY, 1_000_001.0] {
             assert!(mesh
-                .refine_brush_patch_with_options(Vec3::ZERO, 1.0, true, offset, &[])
+                .refine_brush_patch_with_options(Vec3::ZERO, 1.0, true, offset, &[], false)
                 .is_err());
             assert_eq!(mesh.positions.as_ptr(), positions);
             assert_eq!(mesh.positions, before.positions);

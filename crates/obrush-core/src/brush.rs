@@ -1690,6 +1690,7 @@ impl Mesh {
                         settings.symmetry_x,
                         settings.symmetry_offset,
                         &dirty_vertices,
+                        settings.kind == BrushKind::Draw,
                     )
                 }
             } else {
