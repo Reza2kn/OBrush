@@ -310,11 +310,24 @@ impl Mesh {
             return Err("Normals, masks, and colors must match the vertex count".into());
         }
         if !retained_geometry {
-            for (i, p) in self.positions.iter().enumerate() {
-                if !p.is_finite() || p.abs().max_element() > MAX_COORDINATE {
-                    return Err(format!(
-                        "Vertex {i} has a non-finite or excessive coordinate"
-                    ));
+            for (block_index, block) in self.positions.chunks(256).enumerate() {
+                // Aggregate a bounded block before branching so LLVM can
+                // vectorize the ordinary valid-file path. On failure retain
+                // the original first-row diagnostic and validation order.
+                let valid = bytemuck::cast_slice::<Vec3, f32>(block)
+                    .iter()
+                    .fold(true, |valid, &word| {
+                        valid & (-MAX_COORDINATE..=MAX_COORDINATE).contains(&word)
+                    });
+                if !valid {
+                    for (row, p) in block.iter().enumerate() {
+                        if !p.is_finite() || p.abs().max_element() > MAX_COORDINATE {
+                            let i = block_index * 256 + row;
+                            return Err(format!(
+                                "Vertex {i} has a non-finite or excessive coordinate"
+                            ));
+                        }
+                    }
                 }
             }
         }
@@ -324,17 +337,33 @@ impl Mesh {
                     return Err(format!("Normal {i} is not finite"));
                 }
             }
-            for (i, m) in self.masks.iter().enumerate() {
-                if !m.is_finite() || !(0.0..=1.0).contains(m) {
-                    return Err(format!("Mask {i} must be in 0–1"));
+            for (block_index, block) in self.masks.chunks(256).enumerate() {
+                let valid = block
+                    .iter()
+                    .fold(true, |valid, &word| valid & (0.0..=1.0).contains(&word));
+                if !valid {
+                    for (row, m) in block.iter().enumerate() {
+                        if !m.is_finite() || !(0.0..=1.0).contains(m) {
+                            let i = block_index * 256 + row;
+                            return Err(format!("Mask {i} must be in 0–1"));
+                        }
+                    }
                 }
             }
-            for (i, color) in self.colors.iter().enumerate() {
-                if color
+            for (block_index, block) in self.colors.chunks(256).enumerate() {
+                let valid = bytemuck::cast_slice::<[f32; 3], f32>(block)
                     .iter()
-                    .any(|c| !c.is_finite() || !(0.0..=1.0).contains(c))
-                {
-                    return Err(format!("Color {i} must have finite channels in 0–1"));
+                    .fold(true, |valid, &word| valid & (0.0..=1.0).contains(&word));
+                if !valid {
+                    for (row, color) in block.iter().enumerate() {
+                        if color
+                            .iter()
+                            .any(|c| !c.is_finite() || !(0.0..=1.0).contains(c))
+                        {
+                            let i = block_index * 256 + row;
+                            return Err(format!("Color {i} must have finite channels in 0–1"));
+                        }
+                    }
                 }
             }
         }
