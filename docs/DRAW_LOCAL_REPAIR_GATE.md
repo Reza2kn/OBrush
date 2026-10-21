@@ -45,8 +45,23 @@ at 1280×900 CSS pixels, DPR 1, the official `scripts/build-web.sh` output,
 and record its source/WASM hashes and selected backend. Use visible controls
 and trusted pointer events only. The existing local front-view control is
 `yaw ≈ 0.35`, `pitch ≈ -1.42`, distance ≈50.38; one ordinary zoom step yields
-distance ≈39.24. The prior opposite-side attempt at pitch +1.46 failed to
-edit and must not be substituted.
+distance ≈39.24. An earlier opposite-side attempt at pitch +1.46 failed to
+edit because its camera ray treated the viewport right/bottom coordinates as
+width/height. Preserve that failure; commit `c9c4d8c` calibrated a separate
+positive-pitch route, which does not replace the three front-view points.
+
+The calibrated positive-pitch route uses captured camera eye
+`(-2.7587698,34.199276,20.482391)`, target
+`(-0.27341652,-4.7973504,16.926394)`, 40° vertical field of view, and
+viewport bounds `[left=225,top=57,right=1045,bottom=869]` in CSS pixels.
+Its frozen 12-contact sequence is `(635,463), (639,463), (643,463),
+(647,463), (651,463), (647,463), (643,463), (639,463), (635,463),
+(643,459), (643,463), (643,467)`. The default-strength r=1.0 and r=0.18
+lanes start from separate fresh imports with X symmetry off. Capture picks,
+per-contact displacement and timing, saved mesh, original-resolution pixels,
+Undo/Redo and Reload under the same numerical and latency gates below. The
+exact core ray/control is `crates/obrush-core/tests/spark_import_draw.rs` at
+`c9c4d8c`; ordinary browser evidence is still required.
 
 On the front view, independently confirm actual surface picks at three fixed
 CSS points in the 1280×900 viewport: torso (575,270), upper leg (645,550),

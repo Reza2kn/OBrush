@@ -237,3 +237,47 @@ fn authored_interior_sliver_repairs_without_broad_shape_loss() {
 fn authored_sliver_remains_editable_after_many_contacts() {
     run_case(true, 0.18, 128);
 }
+
+#[test]
+#[ignore = "independent 512-contact fresh sphere endurance gate"]
+fn fresh_sphere_stationary_draw_still_builds_after_256_contacts() {
+    let mut mesh = Mesh::sphere(6);
+    let settings = BrushSettings {
+        kind: BrushKind::Draw,
+        radius: 0.18,
+        strength: 0.35,
+        symmetry_x: true,
+        ..BrushSettings::default()
+    };
+    let ray = Ray {
+        origin: Vec3::new(0.23, 0.09, 3.0),
+        direction: -Vec3::Z,
+    };
+    let mut z256 = 0.0;
+    let mut first_no_change = None;
+    let mut no_change = 0;
+    let start = std::time::Instant::now();
+    for dab in 1..=512 {
+        let hit = mesh.raycast(ray).expect("sphere remains pickable");
+        let result = mesh.apply_brush_with_result(hit.position, hit.normal, Vec3::ZERO, &settings);
+        if result.changed_vertices == 0 {
+            no_change += 1;
+            first_no_change.get_or_insert(dab);
+        }
+        if dab == 256 {
+            z256 = mesh.raycast(ray).unwrap().position.z;
+        }
+    }
+    let z512 = mesh.raycast(ray).unwrap().position.z;
+    let (min_q, max_fold) = topology_quality(&mesh);
+    eprintln!("fresh sphere 512 z256={z256:.8} z512={z512:.8} growth={:.8} first_no_change={first_no_change:?} no_change={no_change} q={min_q:.8} fold={max_fold:.5} verts={} tris={} elapsed_ms={}",
+        z512-z256,mesh.positions.len(),mesh.triangles.len(),start.elapsed().as_millis());
+    assert!(
+        z512 - z256 >= 0.05,
+        "Draw must keep raising the same sphere point after 256 contacts"
+    );
+    assert!(
+        max_fold <= 60.001,
+        "Draw must retain the 60-degree fold limit"
+    );
+}
