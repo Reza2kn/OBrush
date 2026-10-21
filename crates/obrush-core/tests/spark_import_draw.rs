@@ -192,6 +192,19 @@ fn repeated_center_contacts(radius: f32, contacts: usize) {
         if contact == contacts.saturating_sub(32) {
             late_start_hit = mesh.raycast(ray).unwrap().position;
         }
+        if std::env::var_os("OBRUSH_SPARK_TRACE_ALL").is_some() {
+            let current = mesh.raycast(ray).unwrap();
+            eprintln!("trace contact={contact} changed={} refined={} scale={} detail_limited={} max_motion={} old_hit={:?} new_hit={:?}", result.changed_vertices, result.refined_vertices, result.displacement_scale, result.detail_limited, max_original_motion, hit.position, current.position);
+        }
+        if [128, 129, 130, 214, 215].contains(&contact)
+            && let Ok(output) = std::env::var("OBRUSH_SPARK_CAPTURE_MESH_DIR")
+        {
+            std::fs::create_dir_all(&output).unwrap();
+            std::fs::write(
+                std::path::Path::new(&output).join(format!("contact-{contact}-mesh.json")),
+                serde_json::to_vec(&mesh).unwrap(),
+            ).unwrap();
+        }
         if result.changed_vertices == 0 || max_original_motion < radius * 0.002 {
             first_no_op.get_or_insert(contact);
             if contact > 200 {
