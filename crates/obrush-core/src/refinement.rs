@@ -291,11 +291,18 @@ impl Mesh {
         let query = PatchQuery::new(center, radius, symmetry_x, symmetry_offset)?;
         let mut candidate = self.try_snapshot()?;
         let original_vertices = self.positions.len();
-        let mut origins: Vec<usize> = (0..self.triangles.len()).collect();
+        let mut origins = Vec::new();
+        origins
+            .try_reserve_exact(self.triangles.len())
+            .map_err(|_| "Cannot allocate interior Draw face origins")?;
+        origins.extend(0..self.triangles.len());
         let mut touched_origins = HashSet::new();
         let reflected_center = Vec3::new(2.0 * symmetry_offset - center.x, center.y, center.z);
         let reflected_normal = Vec3::new(-contact_normal.x, contact_normal.y, contact_normal.z);
-        let targets = if symmetry_x && reflected_center != center {
+        let targets = if symmetry_x
+            && reflected_center != center
+            && has_face_aabb_near(self, reflected_center, radius)
+        {
             vec![
                 (center, contact_normal),
                 (reflected_center, reflected_normal),
@@ -350,6 +357,9 @@ impl Mesh {
             let selected_set: HashSet<_> = selected.iter().copied().collect();
             let mut candidate_faces = Vec::new();
             let mut child_counts = Vec::new();
+            child_counts
+                .try_reserve_exact(candidate.triangles.len())
+                .map_err(|_| "Cannot allocate interior Draw child counts")?;
             for (face, &triangle) in candidate.triangles.iter().enumerate() {
                 let slots = triangle_edges(triangle)
                     .map(|(a, b)| selected_set.contains(&(a.min(b), a.max(b))));
@@ -375,8 +385,8 @@ impl Mesh {
             {
                 return Ok(None);
             }
-            let old_positions = candidate.positions.clone();
-            let old_triangles = candidate.triangles.clone();
+            let old_positions = clone_interior_slice(&candidate.positions)?;
+            let old_triangles = clone_interior_slice(&candidate.triangles)?;
             let mut dirty = Vec::new();
             refine_round(
                 &mut candidate,
@@ -390,17 +400,23 @@ impl Mesh {
             next_origins
                 .try_reserve_exact(candidate.triangles.len())
                 .map_err(|_| "Cannot allocate interior Draw face origins")?;
-            let mut cursor = 0;
+            let mut cursor: usize = 0;
             for (face, &children) in child_counts.iter().enumerate() {
                 let old = old_triangles[face];
                 let floor = quality(&old_positions, old).min(0.1);
-                for &child in &candidate.triangles[cursor..cursor + children] {
+                let Some(next_cursor) = cursor.checked_add(children) else {
+                    return Ok(None);
+                };
+                let Some(child_faces) = candidate.triangles.get(cursor..next_cursor) else {
+                    return Ok(None);
+                };
+                for &child in child_faces {
                     if children > 1 && quality(&candidate.positions, child) < floor {
                         return Ok(None);
                     }
                     next_origins.push(origins[face]);
                 }
-                cursor += children;
+                cursor = next_cursor;
             }
             if cursor != candidate.triangles.len() {
                 return Ok(None);
@@ -417,8 +433,14 @@ impl Mesh {
         {
             return Ok(None);
         }
-        candidate.ensure_adjacency();
-        for &[a, b] in candidate.cached_face_pairs() {
+        let affected_faces: Vec<_> = origins
+            .iter()
+            .enumerate()
+            .filter_map(|(face, origin)| touched_origins.contains(origin).then_some(face))
+            .collect();
+        candidate.ensure_local_incidence();
+        let pairs = candidate.local_face_pairs_for_faces(&affected_faces)?;
+        for &[a, b] in &pairs {
             let (a, b) = (a as usize, b as usize);
             let (oa, ob) = (origins[a], origins[b]);
             if !touched_origins.contains(&oa) && !touched_origins.contains(&ob) {
@@ -437,7 +459,21 @@ impl Mesh {
                 return Ok(None);
             }
         }
-        candidate.recompute_normals();
+        candidate
+            .normals
+            .try_reserve_exact(candidate.positions.len() - candidate.normals.len())
+            .map_err(|_| "Cannot allocate interior Draw normals")?;
+        candidate
+            .normals
+            .resize(candidate.positions.len(), Vec3::ZERO);
+        let mut dirty = Vec::new();
+        dirty
+            .try_reserve_exact(affected_faces.len().saturating_mul(3))
+            .map_err(|_| "Cannot allocate interior Draw normal patch")?;
+        for &face in &affected_faces {
+            dirty.extend(candidate.triangles[face].map(|v| v as usize));
+        }
+        candidate.recompute_normals_near_vertices_cached(&dirty);
         candidate.validate()?;
         Ok(Some(candidate))
     }
@@ -574,6 +610,25 @@ impl Mesh {
     }
 }
 
+fn clone_interior_slice<T: Copy>(source: &[T]) -> Result<Vec<T>, String> {
+    let mut copy = Vec::new();
+    copy.try_reserve_exact(source.len())
+        .map_err(|_| "Cannot allocate interior Draw topology snapshot")?;
+    copy.extend_from_slice(source);
+    Ok(copy)
+}
+
+fn has_face_aabb_near(mesh: &Mesh, center: Vec3, radius: f32) -> bool {
+    let center = center.as_dvec3();
+    let radius_squared = f64::from(radius).powi(2);
+    mesh.triangles.iter().any(|&triangle| {
+        let [a, b, c] = triangle.map(|v| mesh.positions[v as usize].as_dvec3());
+        let minimum = a.min(b).min(c);
+        let maximum = a.max(b).max(c);
+        center.distance_squared(center.clamp(minimum, maximum)) <= radius_squared
+    })
+}
+
 fn unique_interior_contact_face(
     mesh: &Mesh,
     center: Vec3,
@@ -587,6 +642,13 @@ fn unique_interior_contact_face(
     let mut found = None;
     for (face, &triangle) in mesh.triangles.iter().enumerate() {
         let [a, b, c] = triangle.map(|v| mesh.positions[v as usize].as_dvec3());
+        let minimum = a.min(b).min(c);
+        let maximum = a.max(b).max(c);
+        if center.distance_squared(center.clamp(minimum, maximum))
+            > (f64::from(radius) + tolerance).powi(2)
+        {
+            continue;
+        }
         let cross = (b - a).cross(c - a);
         let area_squared = cross.length_squared();
         if area_squared <= 1e-24 || !cross.is_finite() {

@@ -428,6 +428,7 @@ mod tests {
         let result = mesh.apply_brush_with_result(center, Vec3::Z, Vec3::ZERO, &settings);
         assert!(result.changed_vertices > 0, "{result:?}");
         assert!(result.displacement_scale > 0.0, "{result:?}");
+        assert!(result.refined_vertices > 0, "{result:?}");
         assert!(mesh.positions.len() > before.positions.len());
         assert!(mesh.triangles.len() > before.triangles.len());
         assert_eq!(
@@ -440,6 +441,60 @@ mod tests {
         );
         assert_eq!(&mesh.masks[..before.masks.len()], before.masks.as_slice());
         mesh.validate().unwrap();
+    }
+
+    #[test]
+    fn interior_draw_preparation_keeps_an_unmatched_mirror_optional() {
+        let mut mesh = Mesh::from_obj("v 2 -1 0\nv 4 -1 0\nv 3 1 0\nf 1 2 3\n").unwrap();
+        let settings = crate::BrushSettings {
+            radius: 0.015,
+            strength: 0.35,
+            symmetry_x: true,
+            ..Default::default()
+        };
+        let result = mesh.apply_brush_with_result(
+            Vec3::new(3.0, -1.0 / 3.0, 0.0),
+            Vec3::Z,
+            Vec3::ZERO,
+            &settings,
+        );
+        assert!(result.changed_vertices > 0, "{result:?}");
+        mesh.validate().unwrap();
+    }
+
+    #[test]
+    fn interior_draw_preparation_refuses_protected_and_off_surface_contacts() {
+        let base = Mesh::from_obj("v -1 -1 0\nv 1 -1 0\nv 0 1 0\nf 1 2 3\n").unwrap();
+        let settings = crate::BrushSettings {
+            radius: 0.015,
+            strength: 0.35,
+            symmetry_x: false,
+            ..Default::default()
+        };
+        let mut protected = base.snapshot();
+        protected.masks.fill(1.0);
+        let before = protected.snapshot();
+        let result = protected.apply_brush_with_result(
+            Vec3::new(0.0, -1.0 / 3.0, 0.0),
+            Vec3::Z,
+            Vec3::ZERO,
+            &settings,
+        );
+        assert_eq!(result.changed_vertices, 0);
+        assert_eq!(protected.positions, before.positions);
+        assert_eq!(protected.triangles, before.triangles);
+        assert_eq!(protected.masks, before.masks);
+
+        let mut off_surface = base.snapshot();
+        let result = off_surface.apply_brush_with_result(
+            Vec3::new(0.0, -1.0 / 3.0, 0.1),
+            Vec3::Z,
+            Vec3::ZERO,
+            &settings,
+        );
+        assert_eq!(result.changed_vertices, 0);
+        assert_eq!(off_surface.positions, base.positions);
+        assert_eq!(off_surface.triangles, base.triangles);
     }
 
     #[test]

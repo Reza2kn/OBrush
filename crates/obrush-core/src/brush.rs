@@ -1687,7 +1687,8 @@ impl Mesh {
                 settings.symmetry_x,
                 settings.symmetry_offset,
             ) {
-                let (result, ancestry) = prepared.apply_brush_dab(
+                let prepared_vertices = prepared.positions.len() - self.positions.len();
+                let (mut result, ancestry) = prepared.apply_brush_dab(
                     center,
                     normal,
                     delta,
@@ -1697,6 +1698,7 @@ impl Mesh {
                     false,
                 );
                 if result.changed_vertices > 0 {
+                    result.refined_vertices += prepared_vertices;
                     *self = prepared;
                     return (result, ancestry);
                 }
