@@ -498,6 +498,73 @@ mod tests {
     }
 
     #[test]
+    fn interior_draw_preparation_is_one_exact_undoable_stroke() {
+        let mesh = Mesh::from_obj("v -1 -1 0\nv 1 -1 0\nv 0 1 0\nf 1 2 3\n").unwrap();
+        let mut doc = crate::Document::new(mesh);
+        let before = doc.to_json().unwrap();
+        let settings = crate::BrushSettings {
+            radius: 0.015,
+            strength: 0.35,
+            symmetry_x: false,
+            ..Default::default()
+        };
+        doc.begin_stroke();
+        let result = doc.mesh.as_mut().unwrap().apply_brush_with_result(
+            Vec3::new(0.0, -1.0 / 3.0, 0.0),
+            Vec3::Z,
+            Vec3::ZERO,
+            &settings,
+        );
+        assert!(result.changed_vertices > 0, "{result:?}");
+        doc.end_stroke();
+        let after = doc.to_json().unwrap();
+        assert_ne!(after, before);
+        assert!(doc.undo());
+        assert_eq!(doc.to_json().unwrap(), before);
+        assert!(doc.redo());
+        assert_eq!(doc.to_json().unwrap(), after);
+    }
+
+    #[test]
+    fn interior_draw_preparation_interpolates_all_editable_channels_on_original_plane() {
+        let mut mesh = Mesh::from_obj("v -1 -1 0\nv 1 -1 0\nv 0 1 0\nf 1 2 3\n").unwrap();
+        mesh.colors = vec![[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.5, 1.0, 0.0]];
+        mesh.masks = vec![0.0, 0.2, 0.4];
+        mesh.materials = Some(vec![[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]]);
+        let old = mesh.snapshot();
+        let candidate = mesh
+            .prepare_draw_interior_contact(
+                Vec3::new(0.0, -1.0 / 3.0, 0.0),
+                Vec3::Z,
+                0.015,
+                false,
+                0.0,
+            )
+            .unwrap()
+            .unwrap();
+        assert_eq!(&candidate.positions[..3], old.positions.as_slice());
+        assert_eq!(&candidate.masks[..3], old.masks.as_slice());
+        assert_eq!(&candidate.colors[..3], old.colors.as_slice());
+        assert_eq!(
+            &candidate.materials.as_ref().unwrap()[..3],
+            old.materials.as_ref().unwrap().as_slice()
+        );
+        for i in 3..candidate.positions.len() {
+            let p = candidate.positions[i];
+            let w2 = (p.y + 1.0) * 0.5;
+            let w1 = (p.x + 1.0 - w2) * 0.5;
+            assert_eq!(p.z, 0.0);
+            assert!((candidate.colors[i][0] - (p.x + 1.0) * 0.5).abs() < 1e-5);
+            assert!((candidate.colors[i][1] - w2).abs() < 1e-5);
+            assert!((candidate.masks[i] - (w1 * 0.2 + w2 * 0.4)).abs() < 1e-5);
+            let material = candidate.materials.as_ref().unwrap()[i];
+            assert!((material[0] - w1).abs() < 1e-5);
+            assert!((material[1] - w2).abs() < 1e-5);
+        }
+        candidate.validate().unwrap();
+    }
+
+    #[test]
     fn curvature_lifts_new_sphere_points_toward_reference_sphere() {
         let base = Mesh::sphere(2);
         let mut linear = base.snapshot();
