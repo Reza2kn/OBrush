@@ -166,6 +166,67 @@ fn stl_exact_welding_retains_shared_topology() {
     assert_eq!(parsed.mesh.triangles, [[0, 1, 2], [0, 2, 3]]);
     assert_eq!(parsed.report.welded_vertices, 2);
 }
+
+#[test]
+fn stl_binary_skips_exact_repeated_facets_without_orphan_vertices_or_colors() {
+    let points = [
+        [0.0, 0.0, 0.0],
+        [1.0, 0.0, 0.0],
+        [0.0, 1.0, 0.0],
+        [9.0, 9.0, 9.0],
+        [9.0, 9.0, 9.0],
+        [99.0, 99.0, 99.0],
+        [-0.0, 0.0, 0.0],
+        [0.0, 1.0, 0.0],
+        [-1.0, 0.0, 0.0],
+    ];
+    let red = 0x8000 | (31 << 10);
+    let blue = 0x8000 | 31;
+    let parsed = Mesh::import_stl(&stl_binary(&points, &[red, blue, red], None)).unwrap();
+    assert_eq!(parsed.mesh.positions.len(), 4);
+    assert_eq!(parsed.mesh.triangles, [[0, 1, 2], [0, 2, 3]]);
+    assert_eq!(parsed.mesh.colors, [[1.0, 0.0, 0.0]; 4]);
+    assert_eq!(parsed.report.source_vertices, 9);
+    assert_eq!(parsed.report.source_faces, 3);
+    assert_eq!(parsed.report.triangulated_faces, 2);
+    assert_eq!(parsed.report.skipped_degenerate_faces, 1);
+    assert_eq!(parsed.report.welded_vertices, 2);
+    assert!(parsed
+        .report
+        .warnings
+        .iter()
+        .any(|warning| warning.contains("Skipped 1 zero-area STL facet")));
+    parsed.mesh.validate().unwrap();
+}
+
+#[test]
+fn stl_ascii_skips_signed_zero_repeat_but_retains_valid_facet() {
+    let ascii = "solid exact\nfacet normal 0 0 1\nouter loop\nvertex -0 0 0\nvertex 0 0 0\nvertex 10 0 0\nendloop\nendfacet\nfacet normal 0 0 1\nouter loop\nvertex 0 0 0\nvertex 1 0 0\nvertex 0 1 0\nendloop\nendfacet\nendsolid exact\n";
+    let parsed = Mesh::import_stl(ascii.as_bytes()).unwrap();
+    assert_eq!(parsed.mesh.triangles, [[0, 1, 2]]);
+    assert_eq!(parsed.mesh.positions.len(), 3);
+    assert_eq!(parsed.report.source_faces, 2);
+    assert_eq!(parsed.report.triangulated_faces, 1);
+    assert_eq!(parsed.report.skipped_degenerate_faces, 1);
+    assert_eq!(parsed.report.welded_vertices, 0);
+}
+
+#[test]
+fn stl_all_repeated_facets_fail_and_bad_corner_is_never_skipped() {
+    let repeated = [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [1.0, 0.0, 0.0]];
+    assert!(Mesh::import_stl(&stl_binary(&repeated, &[0], None))
+        .unwrap_err()
+        .contains("no non-degenerate facets"));
+    let ascii = "solid empty\nfacet normal 0 0 1\nouter loop\nvertex 0 0 0\nvertex -0 0 0\nvertex 1 0 0\nendloop\nendfacet\nendsolid empty\n";
+    assert!(Mesh::import_stl(ascii.as_bytes())
+        .unwrap_err()
+        .contains("no non-degenerate facets"));
+    for hostile in [f32::NAN, f32::INFINITY, 1_000_001.0] {
+        let mut invalid = repeated;
+        invalid[2][2] = hostile;
+        assert!(Mesh::import_stl(&stl_binary(&invalid, &[0], None)).is_err());
+    }
+}
 #[test]
 fn stl_viscam_rgb_is_explicit_and_exact() {
     let parsed = Mesh::import_stl(&stl_binary(

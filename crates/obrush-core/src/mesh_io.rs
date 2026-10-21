@@ -52,6 +52,7 @@ pub struct MeshImportReport {
     pub source_vertices: usize,
     pub source_faces: usize,
     pub triangulated_faces: usize,
+    pub skipped_degenerate_faces: usize,
     pub welded_vertices: usize,
     pub imported_normals: bool,
     pub imported_colors: bool,
@@ -507,6 +508,7 @@ impl Mesh {
                 source_vertices: vertex.count,
                 source_faces: face.count,
                 triangulated_faces,
+                skipped_degenerate_faces: 0,
                 welded_vertices: 0,
                 imported_normals: has_normals,
                 imported_colors: has_colors,
@@ -658,6 +660,8 @@ struct StlBuilder {
     colors: Vec<[f32; 3]>,
     triangles: Vec<[u32; 3]>,
     vertices: HashMap<[u32; 6], u32>,
+    source_facets: usize,
+    skipped_degenerate_facets: usize,
 }
 impl StlBuilder {
     fn new() -> Self {
@@ -666,17 +670,39 @@ impl StlBuilder {
             colors: Vec::new(),
             triangles: Vec::new(),
             vertices: HashMap::new(),
+            source_facets: 0,
+            skipped_degenerate_facets: 0,
         }
     }
     fn facet(&mut self, points: [Vec3; 3], color: [f32; 3]) -> Result<(), String> {
-        if self.triangles.len() >= MAX_TRIANGLES {
+        if self.source_facets >= MAX_TRIANGLES {
             return Err("STL triangle limit exceeded".into());
         }
-        let mut triangle = [0_u32; 3];
-        for (slot, point) in triangle.iter_mut().zip(points) {
+        // Validate every corner before considering a skip: a degenerate facet
+        // must not hide a hostile third coordinate.
+        for point in points {
             if !point.is_finite() || point.abs().max_element() > 1_000_000.0 {
                 return Err("STL vertex is non-finite or exceeds coordinate limits".into());
             }
+        }
+        self.source_facets += 1;
+        // The weld key canonicalizes signed zero. Equal points prove zero area
+        // without an epsilon or a potentially underflowing cross product.
+        let same_position = |a: Vec3, b: Vec3| {
+            a.to_array()
+                .map(|value| if value == 0.0 { 0 } else { value.to_bits() })
+                == b.to_array()
+                    .map(|value| if value == 0.0 { 0 } else { value.to_bits() })
+        };
+        if same_position(points[0], points[1])
+            || same_position(points[1], points[2])
+            || same_position(points[2], points[0])
+        {
+            self.skipped_degenerate_facets += 1;
+            return Ok(());
+        }
+        let mut triangle = [0_u32; 3];
+        for (slot, point) in triangle.iter_mut().zip(points) {
             let mut key = [0_u32; 6];
             for (target, value) in key[..3].iter_mut().zip(point.to_array()) {
                 *target = if value == 0.0 { 0 } else { value.to_bits() };
@@ -720,8 +746,12 @@ impl StlBuilder {
         colored: bool,
         mut warnings: Vec<String>,
     ) -> Result<MeshImport, String> {
-        let source_faces = self.triangles.len();
-        let welded_vertices = source_faces * 3 - self.positions.len();
+        if self.triangles.is_empty() {
+            return Err("STL contains no non-degenerate facets".into());
+        }
+        let source_faces = self.source_facets;
+        let retained_faces = self.triangles.len();
+        let welded_vertices = retained_faces * 3 - self.positions.len();
         let mut mesh = Mesh::new(self.positions, self.triangles);
         mesh.colors = self.colors;
         mesh.validate()?;
@@ -731,6 +761,12 @@ impl StlBuilder {
         warnings.push(
             "STL does not retain masks, layers, vertex normals, units or scene structure".into(),
         );
+        if self.skipped_degenerate_facets != 0 {
+            warnings.push(format!(
+                "Skipped {} zero-area STL facets with exact repeated vertices; no tolerance-based welding or topology repair was applied",
+                self.skipped_degenerate_facets
+            ));
+        }
         Ok(MeshImport {
             mesh,
             report: MeshImportReport {
@@ -738,7 +774,8 @@ impl StlBuilder {
                 encoding: encoding.into(),
                 source_vertices: source_faces * 3,
                 source_faces,
-                triangulated_faces: 0,
+                triangulated_faces: retained_faces,
+                skipped_degenerate_faces: self.skipped_degenerate_facets,
                 welded_vertices,
                 imported_normals: false,
                 imported_colors: colored,

@@ -390,6 +390,7 @@ impl Mesh {
                 source_vertices: mesh.positions.len(),
                 source_faces: bounds.input_faces,
                 triangulated_faces: mesh.triangles.len(),
+                skipped_degenerate_faces: 0,
                 welded_vertices: 0,
                 imported_normals: false,
                 imported_colors,
