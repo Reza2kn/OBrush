@@ -1,5 +1,6 @@
 [workspace]
 members = ["crates/obrush-core", "crates/obrush-app", "crates/obrush-gpu"]
+exclude = ["third_party/slsqp-rssl"]
 resolver = "2"
 
 [workspace.package]
