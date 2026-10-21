@@ -5,6 +5,13 @@ use std::collections::{HashMap, HashSet};
 use std::fmt;
 use std::sync::Arc;
 
+#[cfg(test)]
+#[path = "raycast_precision_regression.rs"]
+mod raycast_precision_regression;
+#[cfg(test)]
+#[path = "raycast_tolerance_order_regression.rs"]
+mod raycast_tolerance_order_regression;
+
 /// Explicit limits apply to imports, deserialization, and topology changes.
 pub const MAX_VERTICES: usize = 1_000_000;
 pub const MAX_TRIANGLES: usize = 2_000_000;
@@ -310,11 +317,24 @@ impl Mesh {
             return Err("Normals, masks, and colors must match the vertex count".into());
         }
         if !retained_geometry {
-            for (i, p) in self.positions.iter().enumerate() {
-                if !p.is_finite() || p.abs().max_element() > MAX_COORDINATE {
-                    return Err(format!(
-                        "Vertex {i} has a non-finite or excessive coordinate"
-                    ));
+            for (block_index, block) in self.positions.chunks(256).enumerate() {
+                // Aggregate a bounded block before branching so LLVM can
+                // vectorize the ordinary valid-file path. On failure retain
+                // the original first-row diagnostic and validation order.
+                let valid = bytemuck::cast_slice::<Vec3, f32>(block)
+                    .iter()
+                    .fold(true, |valid, &word| {
+                        valid & (-MAX_COORDINATE..=MAX_COORDINATE).contains(&word)
+                    });
+                if !valid {
+                    for (row, p) in block.iter().enumerate() {
+                        if !p.is_finite() || p.abs().max_element() > MAX_COORDINATE {
+                            let i = block_index * 256 + row;
+                            return Err(format!(
+                                "Vertex {i} has a non-finite or excessive coordinate"
+                            ));
+                        }
+                    }
                 }
             }
         }
@@ -324,17 +344,33 @@ impl Mesh {
                     return Err(format!("Normal {i} is not finite"));
                 }
             }
-            for (i, m) in self.masks.iter().enumerate() {
-                if !m.is_finite() || !(0.0..=1.0).contains(m) {
-                    return Err(format!("Mask {i} must be in 0–1"));
+            for (block_index, block) in self.masks.chunks(256).enumerate() {
+                let valid = block
+                    .iter()
+                    .fold(true, |valid, &word| valid & (0.0..=1.0).contains(&word));
+                if !valid {
+                    for (row, m) in block.iter().enumerate() {
+                        if !m.is_finite() || !(0.0..=1.0).contains(m) {
+                            let i = block_index * 256 + row;
+                            return Err(format!("Mask {i} must be in 0–1"));
+                        }
+                    }
                 }
             }
-            for (i, color) in self.colors.iter().enumerate() {
-                if color
+            for (block_index, block) in self.colors.chunks(256).enumerate() {
+                let valid = bytemuck::cast_slice::<[f32; 3], f32>(block)
                     .iter()
-                    .any(|c| !c.is_finite() || !(0.0..=1.0).contains(c))
-                {
-                    return Err(format!("Color {i} must have finite channels in 0–1"));
+                    .fold(true, |valid, &word| valid & (0.0..=1.0).contains(&word));
+                if !valid {
+                    for (row, color) in block.iter().enumerate() {
+                        if color
+                            .iter()
+                            .any(|c| !c.is_finite() || !(0.0..=1.0).contains(c))
+                        {
+                            let i = block_index * 256 + row;
+                            return Err(format!("Color {i} must have finite channels in 0–1"));
+                        }
+                    }
                 }
             }
         }
@@ -827,11 +863,12 @@ impl Mesh {
         {
             return None;
         }
-        let direction = ray.direction.normalize_or_zero();
-        if direction == Vec3::ZERO {
+        let direction = ray.direction.as_dvec3().normalize_or_zero();
+        if direction == glam::DVec3::ZERO {
             return None;
         }
-        let mut closest: Option<(usize, Hit)> = None;
+        let origin = ray.origin.as_dvec3();
+        let mut closest: Option<(usize, [u32; 3], f64, f64, f64)> = None;
         for (row, &[a, b, c]) in self.triangles.iter().enumerate() {
             let (a, b, c) = (a as usize, b as usize, c as usize);
             let (Some(&p0), Some(&p1), Some(&p2)) = (
@@ -841,16 +878,16 @@ impl Mesh {
             ) else {
                 continue;
             };
-            let e1 = p1 - p0;
-            let e2 = p2 - p0;
+            let p0 = p0.as_dvec3();
+            let e1 = p1.as_dvec3() - p0;
+            let e2 = p2.as_dvec3() - p0;
             let p = direction.cross(e2);
             let determinant = e1.dot(p);
-            let parallel_tolerance = f32::EPSILON * e1.length() * e2.length();
-            if !determinant.is_finite() || determinant.abs() <= parallel_tolerance {
+            if !determinant.is_finite() || determinant == 0.0 {
                 continue;
             }
             let inverse = determinant.recip();
-            let t = ray.origin - p0;
+            let t = origin - p0;
             let u = t.dot(p) * inverse;
             if !(0.0..=1.0).contains(&u) {
                 continue;
@@ -860,38 +897,45 @@ impl Mesh {
             if v < 0.0 || u + v > 1.0 {
                 continue;
             }
+            let tolerance = f64::EPSILON * e1.length() * e2.length();
+            if determinant.abs() <= tolerance {
+                continue;
+            }
             let distance = e2.dot(q) * inverse;
             if !distance.is_finite()
                 || distance < 0.0
-                || closest.is_some_and(|(_, h)| h.distance <= distance)
+                || closest.is_some_and(|(_, _, d, _, _)| d <= distance)
             {
                 continue;
             }
-            let mut normal = match (
-                self.normals.get(a),
-                self.normals.get(b),
-                self.normals.get(c),
-            ) {
-                (Some(na), Some(nb), Some(nc)) => {
-                    (*na * (1.0 - u - v) + *nb * u + *nc * v).normalize_or_zero()
-                }
-                _ => Vec3::ZERO,
-            };
-            if normal == Vec3::ZERO || !normal.is_finite() {
-                normal = e1.cross(e2).normalize_or_zero();
-            }
-            closest = Some((
-                row,
-                Hit {
-                    position: ray.origin + direction * distance,
-                    normal,
-                    distance,
-                    triangle: [a as u32, b as u32, c as u32],
-                    barycentric: [1.0 - u - v, u, v],
-                },
-            ));
+            closest = Some((row, [a as u32, b as u32, c as u32], distance, u, v));
         }
-        closest
+        let (row, triangle, distance, u, v) = closest?;
+        let barycentric = [1.0 - u - v, u, v];
+        let local_position = origin + direction * distance;
+        let mut normal = match triangle.map(|id| self.normals.get(id as usize)) {
+            [Some(a), Some(b), Some(c)] => (a.as_dvec3() * barycentric[0]
+                + b.as_dvec3() * barycentric[1]
+                + c.as_dvec3() * barycentric[2])
+                .normalize_or_zero(),
+            _ => glam::DVec3::ZERO,
+        };
+        if normal == glam::DVec3::ZERO || !normal.is_finite() {
+            let [a, b, c] = triangle.map(|id| self.positions[id as usize].as_dvec3());
+            normal = (b - a).cross(c - a).normalize_or_zero();
+        }
+        let hit = Hit {
+            position: local_position.as_vec3(),
+            normal: normal.as_vec3().normalize_or_zero(),
+            distance: distance as f32,
+            triangle,
+            barycentric: barycentric.map(|weight| weight as f32),
+        };
+        (hit.position.is_finite()
+            && hit.normal.is_finite()
+            && hit.normal != Vec3::ZERO
+            && hit.distance.is_finite())
+        .then_some((row, hit))
     }
 
     pub fn from_obj(source: &str) -> Result<Self, String> {
@@ -1239,7 +1283,7 @@ impl Mesh {
         (vertex_face_offsets, vertex_faces, invalid_indices)
     }
 
-    fn ensure_normal_incidence(&mut self) {
+    pub(crate) fn ensure_normal_incidence(&mut self) {
         let signature = self.adjacency_signature();
         if self
             .adjacency
@@ -1264,6 +1308,99 @@ impl Mesh {
                 nonmanifold_faces: Vec::new(),
             }));
         }
+    }
+
+    /// Retain only vertex-to-face incidence after a topology edit. A local
+    /// brush can derive its few neighbor and fold queries from this smaller
+    /// cache without building full-scene edge/face-pair CSR on every dab.
+    pub(crate) fn ensure_local_incidence(&mut self) {
+        self.ensure_normal_incidence();
+    }
+
+    /// Sorted unique neighbors of one vertex from the signature-checked
+    /// incidence cache. The order is identical to `cached_neighbors` after a
+    /// full adjacency build, including isolated vertices.
+    pub(crate) fn local_neighbors(&self, vertex: usize) -> Vec<usize> {
+        let a = self.adjacency.as_ref().expect("incidence built");
+        if vertex >= a.vertex_face_offsets.len().saturating_sub(1) {
+            return Vec::new();
+        }
+        let mut neighbors = Vec::new();
+        for &face in
+            &a.vertex_faces[a.vertex_face_offsets[vertex]..a.vertex_face_offsets[vertex + 1]]
+        {
+            let Some(&triangle) = self.triangles.get(face as usize) else {
+                continue;
+            };
+            neighbors.extend(
+                triangle
+                    .into_iter()
+                    .map(|v| v as usize)
+                    .filter(|&v| v != vertex),
+            );
+        }
+        neighbors.sort_unstable();
+        neighbors.dedup();
+        neighbors
+    }
+
+    /// Fold pairs touching the supplied affected faces, in the same global
+    /// sorted-edge order as `cached_face_pairs`. Every edge incident to an
+    /// affected face is checked against both endpoints' complete face lists,
+    /// so an unchanged neighbor or a third nonmanifold face cannot be missed.
+    /// Invalid public topology and nonmanifold patch edges fail closed.
+    pub(crate) fn local_face_pairs_for_faces(
+        &self,
+        faces: &[usize],
+    ) -> Result<Vec<[u32; 2]>, String> {
+        use std::collections::BTreeSet;
+        let a = self.adjacency.as_ref().expect("incidence built");
+        if a.invalid_indices || faces.iter().any(|&face| face >= self.triangles.len()) {
+            return Err("Local fold query requires valid mesh indices".into());
+        }
+        let selected: BTreeSet<_> = faces.iter().copied().collect();
+        let mut edges = BTreeSet::new();
+        for &face in &selected {
+            let [x, y, z] = self.triangles[face];
+            if x == y || y == z || z == x {
+                return Err("Local fold query refuses a repeated triangle corner".into());
+            }
+            for (u, v) in [(x, y), (y, z), (z, x)] {
+                edges.insert((u.min(v), u.max(v)));
+            }
+        }
+        let mut pairs = Vec::new();
+        for (u, v) in edges {
+            let u = u as usize;
+            let v = v as usize;
+            let uf = &a.vertex_faces[a.vertex_face_offsets[u]..a.vertex_face_offsets[u + 1]];
+            let vf = &a.vertex_faces[a.vertex_face_offsets[v]..a.vertex_face_offsets[v + 1]];
+            let (mut i, mut j) = (0, 0);
+            let mut incident = Vec::new();
+            while i < uf.len() && j < vf.len() {
+                match uf[i].cmp(&vf[j]) {
+                    std::cmp::Ordering::Less => i += 1,
+                    std::cmp::Ordering::Greater => j += 1,
+                    std::cmp::Ordering::Equal => {
+                        if incident.last() != Some(&uf[i]) {
+                            incident.push(uf[i]);
+                        }
+                        i += 1;
+                        j += 1;
+                    }
+                }
+            }
+            if incident.len() > 2 {
+                return Err("Local fold query refuses a nonmanifold patch edge".into());
+            }
+            if incident.len() == 2
+                && (selected.contains(&(incident[0] as usize))
+                    || selected.contains(&(incident[1] as usize)))
+            {
+                pairs.push([incident[0], incident[1]]);
+            }
+        }
+        Ok(pairs)
     }
 
     pub(crate) fn ensure_adjacency(&mut self) {
@@ -1515,6 +1652,190 @@ impl Mesh {
             colors: copy(&self.colors)?,
             materials: self.materials.as_ref().map(|m| copy(m)).transpose()?,
             surface,
+            adjacency: None,
+            resident_normal_witness: None,
+        })
+    }
+
+    /// A Draw window has already built its complete replacement face vector.
+    /// Copy only channels that need edits/appends, leaving the validated source
+    /// untouched until the candidate passes the splice checks. This avoids
+    /// copying the old face vector immediately before discarding that copy.
+    pub(crate) fn draw_window_candidate_with_triangles(
+        &self,
+        triangles: Vec<[u32; 3]>,
+        added_vertices: usize,
+    ) -> Result<Self, String> {
+        self.draw_window_candidate_with_triangles_budget(
+            triangles,
+            added_vertices,
+            crate::decode_limits::MAX_SCENE_STORAGE_BYTES,
+        )
+    }
+
+    fn draw_window_candidate_with_triangles_budget(
+        &self,
+        triangles: Vec<[u32; 3]>,
+        added_vertices: usize,
+        storage_budget: usize,
+    ) -> Result<Self, String> {
+        if self.surface.is_some() {
+            return Err("Draw window requires plain topology".into());
+        }
+        fn copy_with_room<T: Copy>(values: &[T], extra: usize) -> Result<Vec<T>, String> {
+            let capacity = values
+                .len()
+                .checked_add(extra)
+                .ok_or("Draw window vertex count overflow")?;
+            let mut out = Vec::new();
+            out.try_reserve_exact(capacity)
+                .map_err(|_| "Cannot reserve Draw window candidate")?;
+            out.extend_from_slice(values);
+            Ok(out)
+        }
+        let final_vertices = self
+            .positions
+            .len()
+            .checked_add(added_vertices)
+            .ok_or("Draw window vertex count overflow")?;
+        if final_vertices > MAX_VERTICES {
+            return Err("Draw window vertex limit exceeded".into());
+        }
+        let future_room = (MAX_VERTICES - final_vertices).min(1_024);
+        let roomy_extra = added_vertices + future_room;
+        let copy_channels = |extra| {
+            Ok::<_, String>((
+                copy_with_room(&self.positions, extra)?,
+                copy_with_room(&self.normals, extra)?,
+                copy_with_room(&self.masks, extra)?,
+                copy_with_room(&self.colors, extra)?,
+                self.materials
+                    .as_ref()
+                    .map(|materials| copy_with_room(materials, extra))
+                    .transpose()?,
+            ))
+        };
+        if future_room > 0 {
+            if let Ok((positions, normals, masks, colors, materials)) = copy_channels(roomy_extra) {
+                let candidate = Self {
+                    positions,
+                    normals,
+                    triangles,
+                    masks,
+                    mask_convention: self.mask_convention,
+                    colors,
+                    materials,
+                    surface: None,
+                    adjacency: None,
+                    resident_normal_witness: None,
+                };
+                if candidate.approximate_bytes() <= storage_budget {
+                    return Ok(candidate);
+                }
+                // Extra reserved capacity is optional. Keep the staged face
+                // vector, but release every roomy channel before allocating
+                // an exact copy so the retry does not double peak memory.
+                let Self {
+                    triangles,
+                    positions,
+                    normals,
+                    masks,
+                    colors,
+                    materials,
+                    ..
+                } = candidate;
+                drop((positions, normals, masks, colors, materials));
+                return self.draw_window_candidate_with_triangles_exact(triangles, added_vertices);
+            }
+        }
+        self.draw_window_candidate_with_triangles_exact(triangles, added_vertices)
+    }
+
+    fn draw_window_candidate_with_triangles_exact(
+        &self,
+        triangles: Vec<[u32; 3]>,
+        added_vertices: usize,
+    ) -> Result<Self, String> {
+        fn copy<T: Copy>(values: &[T], extra: usize) -> Result<Vec<T>, String> {
+            let capacity = values
+                .len()
+                .checked_add(extra)
+                .ok_or("Draw window vertex count overflow")?;
+            let mut out = Vec::new();
+            out.try_reserve_exact(capacity)
+                .map_err(|_| "Cannot reserve Draw window candidate")?;
+            out.extend_from_slice(values);
+            Ok(out)
+        }
+        Ok(Self {
+            positions: copy(&self.positions, added_vertices)?,
+            normals: copy(&self.normals, added_vertices)?,
+            triangles,
+            masks: copy(&self.masks, added_vertices)?,
+            mask_convention: self.mask_convention,
+            colors: copy(&self.colors, added_vertices)?,
+            materials: self
+                .materials
+                .as_ref()
+                .map(|materials| copy(materials, added_vertices))
+                .transpose()?,
+            surface: None,
+            adjacency: None,
+            resident_normal_witness: None,
+        })
+    }
+
+    /// Construct a compact, ascending-ID window from an already validated
+    /// plain mesh. The caller proves complete incident-face coverage before
+    /// using its sculpt result; this only copies the requested public fields.
+    pub(crate) fn draw_window_snapshot(
+        &self,
+        vertices: &[usize],
+        faces: &[usize],
+        global_to_local: &[usize],
+    ) -> Result<Self, String> {
+        fn gather<T: Copy>(source: &[T], ids: &[usize]) -> Result<Vec<T>, String> {
+            let mut values = Vec::new();
+            values
+                .try_reserve_exact(ids.len())
+                .map_err(|_| "Cannot allocate local Draw window")?;
+            for &id in ids {
+                values.push(*source.get(id).ok_or("Invalid local Draw window index")?);
+            }
+            Ok(values)
+        }
+        let mut triangles = Vec::new();
+        triangles
+            .try_reserve_exact(faces.len())
+            .map_err(|_| "Cannot allocate local Draw window faces")?;
+        for &face in faces {
+            let triangle = *self
+                .triangles
+                .get(face)
+                .ok_or("Invalid local Draw window face")?;
+            let mut local = [0_u32; 3];
+            for (corner, global) in triangle.into_iter().enumerate() {
+                let mapped = *global_to_local
+                    .get(global as usize)
+                    .ok_or("Invalid local Draw window vertex")?;
+                local[corner] =
+                    u32::try_from(mapped).map_err(|_| "Invalid local Draw window vertex")?;
+            }
+            triangles.push(local);
+        }
+        Ok(Self {
+            positions: gather(&self.positions, vertices)?,
+            normals: gather(&self.normals, vertices)?,
+            triangles,
+            masks: gather(&self.masks, vertices)?,
+            mask_convention: self.mask_convention,
+            colors: gather(&self.colors, vertices)?,
+            materials: self
+                .materials
+                .as_ref()
+                .map(|materials| gather(materials, vertices))
+                .transpose()?,
+            surface: None,
             adjacency: None,
             resident_normal_witness: None,
         })
@@ -2337,6 +2658,97 @@ mod lazy_normal_incidence_regressions {
 }
 
 #[cfg(test)]
+mod local_incidence_tests {
+    use super::*;
+
+    #[test]
+    fn sparse_neighbors_and_fold_pairs_match_full_cache_before_and_after_refinement() {
+        let mut mesh = Mesh::sphere(3);
+        for refined in [false, true] {
+            if refined {
+                let report = mesh
+                    .refine_brush_patch(Vec3::new(0.23, 0.09, 0.96), 0.35, false)
+                    .unwrap();
+                assert!(report.vertices_added > 0);
+            }
+            mesh.ensure_local_incidence();
+            let mut full = mesh.snapshot();
+            full.ensure_adjacency();
+            for vertex in 0..mesh.positions.len() {
+                assert_eq!(mesh.local_neighbors(vertex), full.cached_neighbors(vertex));
+            }
+            for offset in [0, 1, 19, mesh.triangles.len() / 2] {
+                let faces: Vec<_> = (offset..mesh.triangles.len())
+                    .step_by(43)
+                    .take(17)
+                    .collect();
+                let actual = mesh.local_face_pairs_for_faces(&faces).unwrap();
+                let expected: Vec<_> = full
+                    .cached_pairs_for_faces(&faces)
+                    .into_iter()
+                    .map(|pair| full.cached_face_pairs()[pair])
+                    .collect();
+                assert_eq!(actual, expected);
+            }
+        }
+    }
+
+    #[test]
+    fn sparse_fold_query_rejects_invalid_and_nonmanifold_patch_edges() {
+        let mut invalid = Mesh::sphere(1);
+        invalid.triangles[0][0] = invalid.positions.len() as u32;
+        invalid.ensure_local_incidence();
+        assert!(invalid.local_face_pairs_for_faces(&[0]).is_err());
+
+        let mut nonmanifold = Mesh::new(
+            vec![Vec3::ZERO, Vec3::X, Vec3::Y, Vec3::Z, -Vec3::Y],
+            vec![[0, 1, 2], [1, 0, 3], [0, 1, 4]],
+        );
+        nonmanifold.ensure_local_incidence();
+        assert!(nonmanifold.local_face_pairs_for_faces(&[0]).is_err());
+    }
+
+    #[test]
+    #[ignore = "requires private imported project via OBRUSH_SPARK_FIXTURE"]
+    fn private_dense_patch_sparse_query_matches_full_and_times_work() {
+        let path = std::env::var("OBRUSH_SPARK_FIXTURE").expect("fixture path");
+        let json: serde_json::Value =
+            serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
+        let mut mesh: Mesh = serde_json::from_value(json["mesh"].clone()).unwrap();
+        let center = Vec3::new(-0.775825, 3.085721, 17.645_23);
+        let selected: Vec<_> = mesh
+            .positions
+            .iter()
+            .enumerate()
+            .filter_map(|(i, p)| (p.distance_squared(center) < 1.0).then_some(i))
+            .collect();
+        let start = std::time::Instant::now();
+        mesh.ensure_local_incidence();
+        let incidence_ms = start.elapsed().as_secs_f64() * 1000.0;
+        let start = std::time::Instant::now();
+        let neighbors: Vec<_> = selected.iter().map(|&v| mesh.local_neighbors(v)).collect();
+        let faces = mesh.cached_faces_for_vertices(&selected);
+        let pairs = mesh.local_face_pairs_for_faces(&faces).unwrap();
+        let local_ms = start.elapsed().as_secs_f64() * 1000.0;
+        let mut full = mesh.snapshot();
+        let start = std::time::Instant::now();
+        full.ensure_adjacency();
+        let full_ms = start.elapsed().as_secs_f64() * 1000.0;
+        let expected_pairs: Vec<_> = full
+            .cached_pairs_for_faces(&faces)
+            .into_iter()
+            .map(|pair| full.cached_face_pairs()[pair])
+            .collect();
+        assert_eq!(pairs, expected_pairs);
+        for (i, &v) in selected.iter().enumerate() {
+            assert_eq!(neighbors[i], full.cached_neighbors(v));
+        }
+        eprintln!("Spark sparse adjacency V={} F={} selected={} faces={} pairs={} incidence_ms={incidence_ms:.3} local_ms={local_ms:.3} full_ms={full_ms:.3}",
+            mesh.positions.len(),mesh.triangles.len(),selected.len(),faces.len(),pairs.len());
+    }
+}
+
+#[cfg(test)]
 pub(crate) mod validation_probe {
     use std::cell::Cell;
     thread_local! { static CALLS: Cell<usize> = const { Cell::new(0) }; }
@@ -2348,5 +2760,41 @@ pub(crate) mod validation_probe {
     }
     pub fn count() -> usize {
         CALLS.with(Cell::get)
+    }
+}
+
+#[cfg(test)]
+mod draw_window_growth_tests {
+    use super::*;
+
+    #[test]
+    fn optional_growth_preserves_exact_capacity_fallback_and_source_on_error() {
+        let source = Mesh::sphere(0);
+        let before = serde_json::to_vec(&source).unwrap();
+        let exact = source
+            .draw_window_candidate_with_triangles_exact(source.triangles.clone(), 1)
+            .unwrap();
+        let roomy = source
+            .draw_window_candidate_with_triangles(source.triangles.clone(), 1)
+            .unwrap();
+        assert!(roomy.positions.capacity() >= source.positions.len() + 1 + 1_024);
+        assert!(roomy.normals.capacity() >= source.normals.len() + 1 + 1_024);
+        assert!(roomy.masks.capacity() >= source.masks.len() + 1 + 1_024);
+        assert!(roomy.colors.capacity() >= source.colors.len() + 1 + 1_024);
+        assert!(roomy.approximate_bytes() > exact.approximate_bytes());
+        let fallback = source
+            .draw_window_candidate_with_triangles_budget(
+                source.triangles.clone(),
+                1,
+                exact.approximate_bytes(),
+            )
+            .unwrap();
+        assert!(fallback.approximate_bytes() <= exact.approximate_bytes());
+        assert!(fallback.positions.capacity() < roomy.positions.capacity());
+        assert_eq!(serde_json::to_vec(&fallback).unwrap(), before);
+        assert!(source
+            .draw_window_candidate_with_triangles(source.triangles.clone(), usize::MAX)
+            .is_err());
+        assert_eq!(serde_json::to_vec(&source).unwrap(), before);
     }
 }

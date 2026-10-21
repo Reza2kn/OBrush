@@ -2124,7 +2124,7 @@ dependencies = [
 
 [[package]]
 name = "obrush-app"
-version = "0.1.20"
+version = "0.1.21"
 dependencies = [
  "bytemuck",
  "eframe",
@@ -2142,7 +2142,7 @@ dependencies = [
 
 [[package]]
 name = "obrush-core"
-version = "0.1.20"
+version = "0.1.21"
 dependencies = [
  "base64",
  "blake3",
@@ -2153,12 +2153,13 @@ dependencies = [
  "serde",
  "serde_json",
  "sha2",
+ "slsqp-rssl",
  "web-time",
 ]
 
 [[package]]
 name = "obrush-gpu"
-version = "0.1.20"
+version = "0.1.21"
 dependencies = [
  "bytemuck",
  "futures-channel",
@@ -2746,6 +2747,10 @@ checksum = "bdd58c3c93c3d278ca835519292445cb4b0d4dc59ccfdf7ceadaab3f8aeb4038"
 dependencies = [
  "version_check",
 ]
+
+[[package]]
+name = "slsqp-rssl"
+version = "0.1.0"
 
 [[package]]
 name = "smallvec"

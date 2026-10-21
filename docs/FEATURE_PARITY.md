@@ -64,6 +64,11 @@ unchanged same-point contact is 96, and picked height at contacts 128 and
 256 is identical. Two bounded salvage attempts and a tangent-only fairing
 trial still miss the frozen growth/quality gate; their source changes were
 discarded. An ignored failing regression retains this public-alpha blocker.
+[The later Sparkdancer recovery checks](SPARK_DRAW_2026_10_21.md) pass 256
+default Draw contacts and two leg checks through the ordinary browser, with
+local refinement and exact public Undo/Redo. The separate sphere512 endurance
+test and the browser 30 fps pacing gate remain open; these scoped passes do not
+establish unlimited buildup or general tearing closure.
 [MRP10's persistent Worker trial](SCULPTGL_MILLION_WORKER_RESIDENCY_MRP10_RESULT.md)
 is isolated and query-gated. One Chrome Worker served two checked commits on a
 40,642-vertex sphere with exact public Save/Undo/Redo. Million-vertex pacing,

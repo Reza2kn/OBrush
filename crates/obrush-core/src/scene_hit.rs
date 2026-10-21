@@ -326,3 +326,96 @@ pub(crate) fn pick_object(
     }
     Ok(nearest)
 }
+
+#[cfg(test)]
+mod robust_mesh_raycast_tests {
+    use super::*;
+
+    fn layered_square(translation: f32, side: f32) -> Mesh {
+        let x = translation;
+        let y = translation;
+        let z = translation;
+        let obj = format!(
+            "v {x} {y} {z}\nv {} {y} {z}\nv {} {} {z}\nv {x} {} {z}\n\
+             v {x} {y} {}\nv {} {y} {}\nv {} {} {}\nv {x} {} {}\n\
+             f 1 2 3\nf 1 3 4\nf 1 2 3\nf 5 6 7\nf 5 7 8\n",
+            x + side,
+            x + side,
+            y + side,
+            y + side,
+            z - 5.0,
+            x + side,
+            z - 5.0,
+            x + side,
+            y + side,
+            z - 5.0,
+            y + side,
+            z - 5.0,
+        );
+        Mesh::from_obj(&obj).unwrap()
+    }
+
+    #[test]
+    fn indexed_raycast_matches_separate_f64_scene_picker_at_edges_and_far_origins() {
+        for (translation, side) in [(0.0, 1.0), (100_000.0, 16.0), (-100_000.0, 16.0)] {
+            let mesh = layered_square(translation, side);
+            let affine = ObjectAffineF32V1::from_local_points(
+                glam::Mat4::IDENTITY.to_cols_array(),
+                &mesh.positions,
+            )
+            .unwrap();
+            let metadata = SceneObjectMetadata {
+                source_center_initialized: false,
+                symmetry_offset: 0.0,
+                affine,
+                render: None,
+                picking_policy: SglPickingPolicy::WorldDistanceV1,
+                origin: None,
+            };
+            let edge = translation + side * 0.5;
+            for (x, y, direction) in [
+                (edge, edge, -Vec3::Z),
+                (edge, edge.next_down(), -Vec3::Z),
+                (edge.next_up(), edge, Vec3::new(0.0001, 0.0, -1.0)),
+                (translation + side * 3.0, edge, -Vec3::Z),
+            ] {
+                let ray = Ray {
+                    origin: Vec3::new(x, y, translation + 10.0),
+                    direction,
+                };
+                let authoritative = pick_object(9, &mesh, Some(&metadata), ray.into())
+                    .unwrap()
+                    .map(|hit| (hit.triangle_index, hit.local_brush_hit().unwrap().0));
+                let indexed = mesh.raycast_indexed(ray);
+                assert_eq!(
+                    indexed.as_ref().map(|(row, _)| *row),
+                    authoritative.as_ref().map(|(row, _)| *row)
+                );
+                match (indexed, authoritative) {
+                    (Some((_, actual)), Some((_, reference))) => {
+                        assert_eq!(actual.triangle, reference.triangle);
+                        assert_eq!(actual.position, reference.position);
+                        assert_eq!(actual.distance, reference.distance);
+                        assert_eq!(actual.barycentric, reference.barycentric);
+                        assert_eq!(actual.normal, reference.normal);
+                    }
+                    (None, None) => {}
+                    _ => panic!("f64 picker disposition differs"),
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn indexed_raycast_keeps_face_normal_fallback_for_malformed_normal_channel() {
+        let mut mesh = layered_square(0.0, 1.0);
+        mesh.normals.clear();
+        let ray = Ray {
+            origin: Vec3::new(0.25, 0.2, 10.0),
+            direction: -Vec3::Z,
+        };
+        let (_, hit) = mesh.raycast_indexed(ray).unwrap();
+        assert_eq!(hit.triangle, [0, 1, 2]);
+        assert_eq!(hit.normal, Vec3::Z);
+    }
+}

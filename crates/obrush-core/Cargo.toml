@@ -19,3 +19,4 @@ sha2 = "=0.10.9"
 blake3 = "=1.8.7"
 web-time = "=1.1.0"
 base64 = "=0.22.1"
+slsqp-rssl = { path = "../../third_party/slsqp-rssl", default-features = false }

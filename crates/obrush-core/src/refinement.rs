@@ -5,6 +5,8 @@ use std::collections::{HashMap, HashSet};
 const MAX_EDGES_PER_ROUND: usize = 512;
 const MAX_ROUNDS: usize = 2;
 const TARGET_EDGE_RADIUS: f64 = 0.12;
+const INTERIOR_DRAW_ROUNDS: usize = 8;
+const INTERIOR_DRAW_NEW_VERTICES: usize = 64;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct PatchRefinement {
@@ -43,12 +45,36 @@ struct SelectedEdges {
 struct PatchQuery {
     center: glam::DVec3,
     mirrored_center: glam::DVec3,
+    primary_box: (Vec3, Vec3),
+    mirrored_box: (Vec3, Vec3),
     radius_squared: f64,
     target_squared: f64,
     symmetry_x: bool,
     symmetry_offset: f32,
     move_quality: bool,
     draw_quality: bool,
+}
+
+pub(crate) fn outward_refinement_box(center: glam::DVec3, radius: f64) -> (Vec3, Vec3) {
+    // Mesh::validate limits each stored f32 coordinate to 1e6. The exact
+    // predicate below admits an AABB up to 64 f64 ulps beyond the radius;
+    // include that same worst-case slack before rounding outward to f32.
+    let scale = center.abs().max_element().max(radius).max(1_000_000.0);
+    let reach = radius + 64.0 * f64::EPSILON * scale;
+    let low = center - glam::DVec3::splat(reach);
+    let high = center + glam::DVec3::splat(reach);
+    (
+        Vec3::new(
+            (low.x as f32).next_down(),
+            (low.y as f32).next_down(),
+            (low.z as f32).next_down(),
+        ),
+        Vec3::new(
+            (high.x as f32).next_up(),
+            (high.y as f32).next_up(),
+            (high.z as f32).next_up(),
+        ),
+    )
 }
 
 impl PatchQuery {
@@ -70,13 +96,16 @@ impl PatchQuery {
         }
         let center = center.as_dvec3();
         let radius = f64::from(radius);
+        let mirrored_center = glam::DVec3::new(
+            2.0 * f64::from(symmetry_offset) - center.x,
+            center.y,
+            center.z,
+        );
         Ok(Self {
             center,
-            mirrored_center: glam::DVec3::new(
-                2.0 * f64::from(symmetry_offset) - center.x,
-                center.y,
-                center.z,
-            ),
+            mirrored_center,
+            primary_box: outward_refinement_box(center, radius),
+            mirrored_box: outward_refinement_box(mirrored_center, radius),
             radius_squared: radius * radius,
             target_squared: (radius * TARGET_EDGE_RADIUS).powi(2),
             symmetry_x,
@@ -90,6 +119,18 @@ impl PatchQuery {
     /// conservative broad phase therefore retains all faces needed to detect
     /// duplicate/non-manifold incidences and produce conforming children.
     fn contains_face(self, positions: &[Vec3], triangle: [u32; 3]) -> bool {
+        let [a, b, c] = triangle.map(|vertex| positions[vertex as usize]);
+        let minimum = a.min(b).min(c);
+        let maximum = a.max(b).max(c);
+        let overlaps =
+            |(low, high): (Vec3, Vec3)| minimum.cmple(high).all() && maximum.cmpge(low).all();
+        if !overlaps(self.primary_box) && (!self.symmetry_x || !overlaps(self.mirrored_box)) {
+            return false;
+        }
+        self.contains_face_exact(positions, triangle)
+    }
+
+    fn contains_face_exact(self, positions: &[Vec3], triangle: [u32; 3]) -> bool {
         let [a, b, c] = triangle.map(|vertex| positions[vertex as usize].as_dvec3());
         if a.distance_squared(b) <= self.target_squared
             && b.distance_squared(c) <= self.target_squared
@@ -234,6 +275,246 @@ impl Mesh {
         )
     }
 
+    /// Prepare a contact that lies inside a coarse Draw face but reaches no
+    /// vertex. Only the returned candidate may be replayed and committed; any
+    /// refusal leaves the caller's mesh byte-for-byte unchanged.
+    pub(crate) fn prepare_draw_interior_contact(
+        &self,
+        center: Vec3,
+        contact_normal: Vec3,
+        radius: f32,
+        symmetry_x: bool,
+        symmetry_offset: f32,
+    ) -> Result<Option<(Mesh, Vec<RefinementParents>)>, String> {
+        self.validate()?;
+        self.require_plain_topology("Interior Draw refinement")?;
+        let query = PatchQuery::new(center, radius, symmetry_x, symmetry_offset)?;
+        let mut candidate = self.try_snapshot()?;
+        let original_vertices = self.positions.len();
+        let mut origins = Vec::new();
+        origins
+            .try_reserve_exact(self.triangles.len())
+            .map_err(|_| "Cannot allocate interior Draw face origins")?;
+        origins.extend(0..self.triangles.len());
+        let mut touched_origins = HashSet::new();
+        let reflected_center = Vec3::new(2.0 * symmetry_offset - center.x, center.y, center.z);
+        let reflected_normal = Vec3::new(-contact_normal.x, contact_normal.y, contact_normal.z);
+        let targets = if symmetry_x
+            && reflected_center != center
+            && has_face_aabb_near(self, reflected_center, radius)
+        {
+            vec![
+                (center, contact_normal),
+                (reflected_center, reflected_normal),
+            ]
+        } else {
+            vec![(center, contact_normal)]
+        };
+        // An interior point stays in the descendants of its first containing
+        // face: rounds add only linear points and do not move the old surface.
+        // Initial full-scene uniqueness remains mandatory for overlapping
+        // shells; subsequent rounds inspect only those bounded children.
+        let mut target_children: Vec<Option<Vec<usize>>> = vec![None; targets.len()];
+        let mut ancestry = Vec::new();
+        let mut added_any = false;
+        for _ in 0..INTERIOR_DRAW_ROUNDS {
+            let prepared = |point: Vec3| {
+                candidate.positions[original_vertices..]
+                    .iter()
+                    .any(|&vertex| vertex.distance_squared(point) < (radius * 0.5).powi(2))
+            };
+            if targets.iter().all(|&(point, _)| prepared(point)) {
+                break;
+            }
+            let mut contact_faces = Vec::new();
+            let mut target_faces = Vec::new();
+            for (target, &(point, normal)) in targets.iter().enumerate() {
+                if prepared(point) {
+                    continue;
+                }
+                let Some(face) = unique_interior_contact_face(
+                    &candidate,
+                    point,
+                    normal,
+                    radius,
+                    target_children[target].as_deref(),
+                ) else {
+                    return Ok(None);
+                };
+                if candidate.triangles[face]
+                    .iter()
+                    .all(|&vertex| candidate.fully_protected(vertex as usize))
+                {
+                    return Ok(None);
+                }
+                contact_faces.push(face);
+                target_faces.push((target, face));
+            }
+            contact_faces.sort_unstable();
+            contact_faces.dedup();
+            let selected: Vec<_> = contact_faces
+                .iter()
+                .flat_map(|&face| triangle_edges(candidate.triangles[face]))
+                .map(|(a, b)| (a.min(b), a.max(b)))
+                .collect::<HashSet<_>>()
+                .into_iter()
+                .collect();
+            let mut selected = selected;
+            selected.sort_unstable();
+            if selected.is_empty()
+                || candidate.positions.len() + selected.len()
+                    > original_vertices + INTERIOR_DRAW_NEW_VERTICES
+            {
+                return Ok(None);
+            }
+            let selected_set: HashSet<_> = selected.iter().copied().collect();
+            let selected_vertices: Vec<_> = selected
+                .iter()
+                .flat_map(|&(a, b)| [a as usize, b as usize])
+                .collect();
+            candidate.ensure_local_incidence();
+            let mut candidate_faces = Vec::new();
+            let incident_faces = candidate.cached_faces_for_vertices(&selected_vertices);
+            let mut selected_children = Vec::new();
+            selected_children
+                .try_reserve_exact(incident_faces.len())
+                .map_err(|_| "Cannot allocate interior Draw child counts")?;
+            for face in incident_faces {
+                let triangle = candidate.triangles[face];
+                let slots = triangle_edges(triangle)
+                    .map(|(a, b)| selected_set.contains(&(a.min(b), a.max(b))));
+                let split_count = slots.iter().filter(|&&split| split).count();
+                if split_count == 0 {
+                    continue;
+                }
+                let extra_center = query.symmetry_x
+                    && split_count == 2
+                    && symmetric_corner(
+                        triangle,
+                        slots.map(|split| split.then_some(())),
+                        &candidate.positions,
+                        symmetry_offset,
+                    )
+                    .is_some();
+                let child_count = 1 + split_count + usize::from(extra_center) * 2;
+                candidate_faces.push(face);
+                selected_children.push((
+                    face,
+                    child_count,
+                    quality(&candidate.positions, triangle).min(0.1),
+                ));
+                touched_origins.insert(origins[face]);
+            }
+            if candidate_faces.len() > 96
+                || candidate.triangles.len() + selected.len() * 4 > MAX_TRIANGLES
+            {
+                return Ok(None);
+            }
+            let mut dirty = Vec::new();
+            refine_round(
+                &mut candidate,
+                &selected,
+                &candidate_faces,
+                query,
+                &mut dirty,
+                Some(&mut ancestry),
+            )?;
+            let mut next_origins = Vec::new();
+            next_origins
+                .try_reserve_exact(candidate.triangles.len())
+                .map_err(|_| "Cannot allocate interior Draw face origins")?;
+            let mut old_cursor: usize = 0;
+            let mut new_cursor: usize = 0;
+            let mut remapped_children = Vec::new();
+            for &(face, children, floor) in &selected_children {
+                next_origins.extend_from_slice(&origins[old_cursor..face]);
+                new_cursor += face - old_cursor;
+                let Some(next_cursor) = new_cursor.checked_add(children) else {
+                    return Ok(None);
+                };
+                let Some(child_faces) = candidate.triangles.get(new_cursor..next_cursor) else {
+                    return Ok(None);
+                };
+                remapped_children.push((face, new_cursor, next_cursor));
+                for &child in child_faces {
+                    if quality(&candidate.positions, child) < floor {
+                        return Ok(None);
+                    }
+                    next_origins.push(origins[face]);
+                }
+                old_cursor = face + 1;
+                new_cursor = next_cursor;
+            }
+            next_origins.extend_from_slice(&origins[old_cursor..]);
+            if next_origins.len() != candidate.triangles.len() {
+                return Ok(None);
+            }
+            for (target, old_face) in target_faces {
+                let Some(&(_, start, end)) = remapped_children
+                    .iter()
+                    .find(|&&(face, _, _)| face == old_face)
+                else {
+                    return Ok(None);
+                };
+                target_children[target] = Some((start..end).collect());
+            }
+            origins = next_origins;
+            added_any = true;
+        }
+        if !added_any
+            || !targets.iter().all(|&(point, _)| {
+                candidate.positions[original_vertices..]
+                    .iter()
+                    .any(|&v| v.distance_squared(point) < radius * radius)
+            })
+        {
+            return Ok(None);
+        }
+        let affected_faces: Vec<_> = origins
+            .iter()
+            .enumerate()
+            .filter_map(|(face, origin)| touched_origins.contains(origin).then_some(face))
+            .collect();
+        candidate.ensure_local_incidence();
+        let pairs = candidate.local_face_pairs_for_faces(&affected_faces)?;
+        for &[a, b] in &pairs {
+            let (a, b) = (a as usize, b as usize);
+            let (oa, ob) = (origins[a], origins[b]);
+            if !touched_origins.contains(&oa) && !touched_origins.contains(&ob) {
+                continue;
+            }
+            let old_cos = if oa == ob {
+                1.0
+            } else {
+                let na = cross(&self.positions, self.triangles[oa]).normalize_or_zero();
+                let nb = cross(&self.positions, self.triangles[ob]).normalize_or_zero();
+                na.dot(nb)
+            };
+            let na = cross(&candidate.positions, candidate.triangles[a]).normalize_or_zero();
+            let nb = cross(&candidate.positions, candidate.triangles[b]).normalize_or_zero();
+            if !na.is_finite() || !nb.is_finite() || na.dot(nb) < old_cos.min(0.5) {
+                return Ok(None);
+            }
+        }
+        candidate
+            .normals
+            .try_reserve_exact(candidate.positions.len() - candidate.normals.len())
+            .map_err(|_| "Cannot allocate interior Draw normals")?;
+        candidate
+            .normals
+            .resize(candidate.positions.len(), Vec3::ZERO);
+        let mut dirty = Vec::new();
+        dirty
+            .try_reserve_exact(affected_faces.len().saturating_mul(3))
+            .map_err(|_| "Cannot allocate interior Draw normal patch")?;
+        for &face in &affected_faces {
+            dirty.extend(candidate.triangles[face].map(|v| v as usize));
+        }
+        candidate.recompute_normals_near_vertices_cached(&dirty);
+        candidate.validate()?;
+        Ok(Some((candidate, ancestry)))
+    }
+
     pub(crate) fn refine_move_patch_at_offset(
         &mut self,
         center: Vec3,
@@ -364,6 +645,74 @@ impl Mesh {
         }
         Ok((result, parents))
     }
+}
+
+fn has_face_aabb_near(mesh: &Mesh, center: Vec3, radius: f32) -> bool {
+    let center = center.as_dvec3();
+    let radius_squared = f64::from(radius).powi(2);
+    mesh.triangles.iter().any(|&triangle| {
+        let [a, b, c] = triangle.map(|v| mesh.positions[v as usize].as_dvec3());
+        let minimum = a.min(b).min(c);
+        let maximum = a.max(b).max(c);
+        center.distance_squared(center.clamp(minimum, maximum)) <= radius_squared
+    })
+}
+
+fn unique_interior_contact_face(
+    mesh: &Mesh,
+    center: Vec3,
+    contact_normal: Vec3,
+    radius: f32,
+    candidates: Option<&[usize]>,
+) -> Option<usize> {
+    let center = center.as_dvec3();
+    let contact_normal = contact_normal.as_dvec3().normalize_or_zero();
+    let scale = center.abs().max_element().max(f64::from(radius)).max(1.0);
+    let tolerance = (64.0 * f64::from(f32::EPSILON) * scale).max(1e-5 * f64::from(radius));
+    let mut found = None;
+    let count = candidates.map_or(mesh.triangles.len(), <[_]>::len);
+    for index in 0..count {
+        let face = candidates.map_or(index, |faces| faces[index]);
+        let triangle = mesh.triangles[face];
+        let [a, b, c] = triangle.map(|v| mesh.positions[v as usize].as_dvec3());
+        let minimum = a.min(b).min(c);
+        let maximum = a.max(b).max(c);
+        if center.distance_squared(center.clamp(minimum, maximum))
+            > (f64::from(radius) + tolerance).powi(2)
+        {
+            continue;
+        }
+        let cross = (b - a).cross(c - a);
+        let area_squared = cross.length_squared();
+        if area_squared <= 1e-24 || !cross.is_finite() {
+            continue;
+        }
+        let face_normal = cross / area_squared.sqrt();
+        if face_normal.dot(contact_normal) <= 0.0 {
+            continue;
+        }
+        let signed = (center - a).dot(face_normal);
+        if signed.abs() > tolerance {
+            continue;
+        }
+        let point = center - face_normal * signed;
+        let barycentric = [
+            (b - point).cross(c - point).dot(cross) / area_squared,
+            (c - point).cross(a - point).dot(cross) / area_squared,
+            (a - point).cross(b - point).dot(cross) / area_squared,
+        ];
+        // Inserting near an edge would birth a needle; keep this path for
+        // contacts safely inside one coarse triangle.
+        if barycentric.iter().any(|&weight| weight < 0.1) {
+            continue;
+        }
+        if found.replace(face).is_some() {
+            // Coincident front-facing sheets cannot be disambiguated from a
+            // world-space contact alone.
+            return None;
+        }
+    }
+    found
 }
 
 fn select_edges(mesh: &Mesh, faces: &[usize], query: PatchQuery) -> SelectedEdges {
@@ -929,6 +1278,79 @@ fn standard_quality(positions: &[Vec3], triangle: [u32; 3]) -> f64 {
 #[cfg(test)]
 mod normal_regressions {
     use super::*;
+
+    #[test]
+    fn face_box_prefilter_keeps_exact_predicate_on_random_and_tangent_faces() {
+        let mut state = 0x6ad4_9f31_u32;
+        let mut next = || {
+            state ^= state << 13;
+            state ^= state >> 17;
+            state ^= state << 5;
+            f64::from(state) / f64::from(u32::MAX)
+        };
+        for &scale in &[0.001_f32, 1.0, 1_000_000.0] {
+            for &radius in &[0.000_001_f32, 0.18, 1.0, 100_000.0] {
+                for &symmetry in &[false, true] {
+                    let center = Vec3::new(0.19, -0.33, 0.57) * scale;
+                    let query = PatchQuery::new(center, radius, symmetry, 0.23 * scale).unwrap();
+                    let tangent = [
+                        center + Vec3::new(radius, -scale * 0.25, 0.0),
+                        center + Vec3::new(radius, scale * 0.25, 0.0),
+                        center + Vec3::new(radius, 0.0, scale * 0.25),
+                    ];
+                    assert_eq!(
+                        query.contains_face(&tangent, [0, 1, 2]),
+                        query.contains_face_exact(&tangent, [0, 1, 2])
+                    );
+                    for _ in 0..1000 {
+                        let positions: [Vec3; 3] = std::array::from_fn(|_| {
+                            Vec3::new(
+                                (next() * 2.0 - 1.0) as f32,
+                                (next() * 2.0 - 1.0) as f32,
+                                (next() * 2.0 - 1.0) as f32,
+                            ) * scale
+                        });
+                        assert_eq!(
+                            query.contains_face(&positions, [0, 1, 2]),
+                            query.contains_face_exact(&positions, [0, 1, 2]),
+                            "scale={scale} radius={radius} symmetry={symmetry} positions={positions:?}"
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    #[test]
+    #[ignore = "requires private OBRUSH_SPARK_STL path; run with --release for timing"]
+    fn face_box_prefilter_keeps_spark_candidate_ids_and_measures_scan() {
+        let source = std::fs::read(std::env::var("OBRUSH_SPARK_STL").unwrap()).unwrap();
+        let mesh = Mesh::import_stl(&source).unwrap().mesh;
+        let center = Vec3::new(-0.775_825, 3.085_721, 17.645_23);
+        for &(radius, symmetry, offset) in
+            &[(1.0, false, 0.0), (0.18, false, 0.0), (1.0, true, 0.23)]
+        {
+            let query = PatchQuery::new(center, radius, symmetry, offset).unwrap();
+            let start = std::time::Instant::now();
+            let exact: Vec<_> = mesh
+                .triangles
+                .iter()
+                .enumerate()
+                .filter_map(|(i, &t)| query.contains_face_exact(&mesh.positions, t).then_some(i))
+                .collect();
+            let exact_time = start.elapsed();
+            let start = std::time::Instant::now();
+            let fast: Vec<_> = mesh
+                .triangles
+                .iter()
+                .enumerate()
+                .filter_map(|(i, &t)| query.contains_face(&mesh.positions, t).then_some(i))
+                .collect();
+            let fast_time = start.elapsed();
+            assert_eq!(fast, exact);
+            eprintln!("Spark face scan radius={radius} symmetry={symmetry} offset={offset} exact_faces={} exact_ms={:.3} box_ms={:.3}", exact.len(), exact_time.as_secs_f64()*1000.0, fast_time.as_secs_f64()*1000.0);
+        }
+    }
 
     #[test]
     fn draw_refinement_refuses_a_partial_split_below_its_guard_quality_floor() {

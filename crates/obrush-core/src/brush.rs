@@ -2,6 +2,16 @@ use crate::{Mesh, RasterAlpha, Vec3, DEFAULT_VERTEX_MATERIAL, MAX_TRIANGLES, MAX
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
+#[path = "draw_cage_solver.rs"]
+mod draw_cage_solver;
+#[cfg(test)]
+#[path = "draw_cap_rounding_regression.rs"]
+mod draw_cap_rounding_regression;
+
+#[cfg(test)]
+#[path = "draw_anchor_regression.rs"]
+mod draw_anchor_regression;
+
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum BrushKind {
@@ -458,6 +468,8 @@ impl DrawStroke {
             Vec3::ZERO,
             settings,
             (!self.accumulate).then_some(self.proxy.as_slice()),
+            false,
+            false,
         );
         if result.changed_vertices == 0 {
             return result;
@@ -907,7 +919,7 @@ impl Mesh {
             .iter()
             .map(|influence| influence.vertex)
             .collect();
-        let guard = working.deformation_guard(&self.positions, &selected, 0.1, 0.0);
+        let guard = working.deformation_guard(&self.positions, &selected, 0.1, 0.0, false);
         Ok(LocalTransformStroke {
             original: self.snapshot(),
             working,
@@ -1155,23 +1167,65 @@ impl Mesh {
         delta: Vec3,
         settings: &BrushSettings,
     ) -> BrushResult {
-        self.apply_brush_dab(center, normal, delta, settings, None)
+        if let Some(result) = self.try_local_draw_window(center, normal, delta, settings) {
+            return result;
+        }
+        self.apply_brush_dab(center, normal, delta, settings, None, true, true)
             .0
     }
 
-    fn apply_brush_dab(
+    /// Only the exclusive validated-contact owner may use this entry point.
+    pub(crate) fn apply_brush_at_validated_draw_hit(
+        &mut self,
+        hit: crate::Hit,
+        settings: &BrushSettings,
+        validated_source: crate::validated_draw_contact::ValidatedDrawSource,
+    ) -> BrushResult {
+        if let Some(result) = self.try_local_draw_window_from_validated_source(
+            hit.position,
+            hit.normal,
+            Vec3::ZERO,
+            settings,
+            validated_source,
+        ) {
+            return result;
+        }
+        self.apply_brush_dab(
+            hit.position,
+            hit.normal,
+            Vec3::ZERO,
+            settings,
+            None,
+            true,
+            true,
+        )
+        .0
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    pub(crate) fn apply_brush_dab(
         &mut self,
         center: Vec3,
         normal: Vec3,
         delta: Vec3,
         settings: &BrushSettings,
         proxy_positions: Option<&[Vec3]>,
+        allow_constraint_repair: bool,
+        allow_interior_prepare: bool,
     ) -> (BrushResult, Vec<crate::refinement::RefinementParents>) {
         if settings.kind == BrushKind::Draw && settings.draw_clay {
             let mut clay = settings.clone();
             clay.kind = BrushKind::Clay;
             clay.draw_clay = false;
-            return self.apply_brush_dab(center, normal, delta, &clay, proxy_positions);
+            return self.apply_brush_dab(
+                center,
+                normal,
+                delta,
+                &clay,
+                proxy_positions,
+                false,
+                false,
+            );
         }
         // A target belongs to a Document and its subdivision correspondence.
         // Calling the generic mesh API cannot silently invent that target.
@@ -1303,7 +1357,17 @@ impl Mesh {
             None
         };
         let old_positions = self.positions.clone();
-        if uses_surface_detail(settings.kind)
+        let sparse_draw = allow_constraint_repair
+            && settings.kind == BrushKind::Draw
+            && settings.draw_accumulate
+            && settings.adaptive_detail
+            && !settings.invert
+            && settings.alpha.is_none()
+            && settings.hardness == 0.0
+            && proxy_positions.is_none();
+        if sparse_draw {
+            self.ensure_local_incidence();
+        } else if uses_surface_detail(settings.kind)
             || settings.kind == BrushKind::Smooth
             || (settings.kind == BrushKind::Move && settings.move_topology_check)
         {
@@ -1552,7 +1616,8 @@ impl Mesh {
                             // feeds a ridge's changing normals back into lateral
                             // motion; that behavior belongs to Inflate.
                             let direction = draw_direction.normalize_or_zero();
-                            let fairing = self.smooth_target(i, &old_positions) - position;
+                            let fairing =
+                                self.smooth_target(i, &old_positions, sparse_draw) - position;
                             direction * radius * amount * 0.075 * sign + fairing * amount * 0.3
                         }
                         BrushKind::Clay => {
@@ -1579,7 +1644,7 @@ impl Mesh {
                                 )
                         }
                         BrushKind::Smooth => {
-                            let laplacian = self.smooth_target(i, &old_positions) - position;
+                            let laplacian = self.smooth_target(i, &old_positions, false) - position;
                             let movement = if settings.smooth_tangent {
                                 laplacian - vertex_normal * laplacian.dot(vertex_normal)
                             } else {
@@ -1646,12 +1711,68 @@ impl Mesh {
                 }
             }
         }
+        if allow_interior_prepare
+            && changed == 0
+            && settings.kind == BrushKind::Draw
+            && settings.draw_accumulate
+            && settings.adaptive_detail
+            && !settings.invert
+            && settings.alpha.is_none()
+            && settings.hardness == 0.0
+            && proxy_positions.is_none()
+        {
+            if let Ok(Some((mut prepared, mut preparation_ancestry))) = self
+                .prepare_draw_interior_contact(
+                    center,
+                    normal,
+                    radius,
+                    settings.symmetry_x,
+                    settings.symmetry_offset,
+                )
+            {
+                let prepared_vertices = prepared.positions.len() - self.positions.len();
+                let (mut result, ancestry) = prepared.apply_brush_dab(
+                    center,
+                    normal,
+                    delta,
+                    settings,
+                    None,
+                    allow_constraint_repair,
+                    false,
+                );
+                if result.changed_vertices > 0
+                    && result.refined_vertices + prepared_vertices <= 1_024
+                {
+                    result.refined_vertices += prepared_vertices;
+                    preparation_ancestry.extend(ancestry);
+                    *self = prepared;
+                    return (result, preparation_ancestry);
+                }
+            }
+        }
         let mut dirty_vertices = Vec::new();
-        let displacement_scale = if geometry_changed {
+        let mut deferred_draw = None;
+        let mut displacement_scale = if geometry_changed {
             if uses_surface_detail(settings.kind) && settings.symmetry_x {
                 self.preserve_exact_sculpt_symmetry(&old_positions, settings.symmetry_offset);
             }
-            let scale = self.accept_deformation(&old_positions, settings.kind);
+            // The direct default Draw path may preserve existing fragile
+            // triangles as coherent local components if its full proposal is
+            // clipped. DrawStroke retains its proxy/ancestry semantics.
+            let draw_repair = sparse_draw.then_some((
+                settings.symmetry_x,
+                settings.symmetry_offset,
+                center,
+                radius,
+                normal,
+                brush_culling_axis(settings, normal),
+            ));
+            let scale = self.accept_deformation(
+                &old_positions,
+                settings.kind,
+                draw_repair,
+                Some(&mut deferred_draw),
+            );
             dirty_vertices = self
                 .positions
                 .iter()
@@ -1670,6 +1791,33 @@ impl Mesh {
         } else {
             0.0
         };
+        // Keep the accepted pre-refinement surface only when the picked ray has
+        // not advanced. An alternate cage may be compared after the ordinary
+        // refinement, without changing a productive baseline dab.
+        let cage_pre_refinement = deferred_draw.as_ref().and_then(|pending| {
+            if changed == 0 || !settings.adaptive_detail {
+                return None;
+            }
+            let old = draw_local_ray_lift(
+                &old_positions,
+                &pending.guard,
+                pending.anchor,
+                pending.center,
+                pending.camera_axis,
+                pending.radius,
+            )?;
+            let current = draw_local_ray_lift(
+                &self.positions,
+                &pending.guard,
+                pending.anchor,
+                pending.center,
+                pending.camera_axis,
+                pending.radius,
+            )?;
+            (current - old <= 0.0)
+                .then(|| self.try_snapshot().ok())
+                .flatten()
+        });
         let refinement =
             if changed > 0 && uses_surface_detail(settings.kind) && settings.adaptive_detail {
                 if proxy_positions.is_none()
@@ -1696,10 +1844,271 @@ impl Mesh {
             } else {
                 Ok((crate::PatchRefinement::default(), Vec::new()))
             };
-        let (refined_vertices, detail_limited, ancestry) = match refinement {
+        let (mut refined_vertices, mut detail_limited, mut ancestry) = match refinement {
             Ok((result, ancestry)) => (result.vertices_added, result.limited, ancestry),
             Err(_) => (0, true, Vec::new()),
         };
+        if let (Some(pending), Some(mut alternate)) = (deferred_draw.as_ref(), cage_pre_refinement)
+        {
+            if refined_vertices > 0 {
+                let old_lift = draw_local_ray_lift(
+                    &old_positions,
+                    &pending.guard,
+                    pending.anchor,
+                    pending.center,
+                    pending.camera_axis,
+                    pending.radius,
+                );
+                let baseline_lift = draw_local_ray_lift(
+                    &self.positions,
+                    &pending.guard,
+                    pending.anchor,
+                    pending.center,
+                    pending.camera_axis,
+                    pending.radius,
+                );
+                if baseline_lift
+                    .zip(old_lift)
+                    .is_some_and(|(current, old)| current - old <= 0.0)
+                {
+                    let ray = crate::Ray {
+                        origin: pending.center + pending.camera_axis * (2.0 * radius),
+                        direction: -pending.camera_axis,
+                    };
+                    let accepted_positions = alternate.positions.clone();
+                    alternate.positions.copy_from_slice(&old_positions);
+                    let old_hit = alternate.raycast(ray);
+
+                    let cage = alternate.solve_draw_one_ring_cage(
+                        &old_positions,
+                        &pending.proposed,
+                        &pending.guard,
+                        pending.anchor,
+                        pending.center,
+                        pending.camera_axis,
+                        pending.radius,
+                        pending.symmetry_x,
+                        pending.symmetry_offset,
+                        &accepted_positions,
+                    );
+                    if let Some(cage) = cage {
+                        alternate.positions.copy_from_slice(if pending.symmetry_x {
+                            &accepted_positions
+                        } else {
+                            &old_positions
+                        });
+                        for (id, position) in cage {
+                            alternate.positions[id] = position;
+                        }
+                        if pending.guard.safe(&alternate.positions) {
+                            let candidate_dirty: Vec<_> = alternate
+                                .positions
+                                .iter()
+                                .zip(&old_positions)
+                                .enumerate()
+                                .filter_map(|(id, (a, b))| (a != b).then_some(id))
+                                .collect();
+                            let candidate_refinement = alternate.refine_brush_patch_with_options(
+                                center,
+                                radius,
+                                settings.symmetry_x,
+                                settings.symmetry_offset,
+                                &candidate_dirty,
+                                true,
+                            );
+                            if let Ok((report, candidate_ancestry)) = candidate_refinement {
+                                if let (Some(old_hit), Some(baseline_hit), Some(candidate_hit)) =
+                                    (old_hit, self.raycast(ray), alternate.raycast(ray))
+                                {
+                                    let required_lift =
+                                        radius * if settings.symmetry_x { 0.001 } else { 0.002 };
+                                    if baseline_hit.distance - candidate_hit.distance
+                                        >= required_lift
+                                        && old_hit.distance - candidate_hit.distance
+                                            >= required_lift
+                                    {
+                                        if report.vertices_added == 0 {
+                                            alternate.recompute_normals_near_vertices_cached(
+                                                &candidate_dirty,
+                                            );
+                                        }
+                                        *self = alternate;
+                                        dirty_vertices = candidate_dirty;
+                                        changed = dirty_vertices.len();
+                                        displacement_scale = 1.0;
+                                        refined_vertices = report.vertices_added;
+                                        detail_limited |= report.limited;
+                                        ancestry = candidate_ancestry;
+                                        deferred_draw = None;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if let Some(pending) = deferred_draw {
+            if refined_vertices == 0 && self.positions.len() == old_positions.len() {
+                let old_ray_lift = draw_local_ray_lift(
+                    &old_positions,
+                    &pending.guard,
+                    pending.anchor,
+                    pending.center,
+                    pending.camera_axis,
+                    pending.radius,
+                );
+                let baseline_ray_lift = draw_local_ray_lift(
+                    &self.positions,
+                    &pending.guard,
+                    pending.anchor,
+                    pending.center,
+                    pending.camera_axis,
+                    pending.radius,
+                );
+                let baseline_progress = baseline_ray_lift
+                    .zip(old_ray_lift)
+                    .map(|(current, old)| current - old);
+
+                if baseline_progress.is_some_and(|progress| progress <= 0.0) {
+                    let baseline_changed = changed;
+                    let baseline_scale = displacement_scale;
+                    let baseline_detail_limited = detail_limited;
+                    let baseline_dirty = dirty_vertices.clone();
+                    let baseline_ancestry = ancestry.clone();
+                    let baseline_mesh = self.snapshot();
+                    let baseline = self.positions.clone();
+                    let ray = crate::Ray {
+                        origin: pending.center + pending.camera_axis * (2.0 * pending.radius),
+                        direction: -pending.camera_axis,
+                    };
+                    let baseline_hit = self.raycast(ray);
+                    self.positions.copy_from_slice(&old_positions);
+                    let old_hit = self.raycast(ray);
+                    self.positions.copy_from_slice(&baseline);
+                    self.positions.copy_from_slice(&pending.proposed);
+                    let mut repaired = self.repair_draw_constraint_components(
+                        &pending.guard,
+                        &old_positions,
+                        &pending.proposed,
+                        pending.symmetry_x,
+                        pending.symmetry_offset,
+                    );
+                    let mut picked_ray_lift = draw_local_ray_lift(
+                        &self.positions,
+                        &pending.guard,
+                        pending.anchor,
+                        pending.center,
+                        pending.camera_axis,
+                        pending.radius,
+                    );
+                    let mut picked_progress = picked_ray_lift
+                        .zip(old_ray_lift)
+                        .map(|(current, old)| current - old);
+                    let required_lift =
+                        f64::from(radius) * if pending.symmetry_x { 0.001 } else { 0.002 };
+                    if !repaired
+                        || !pending.guard.safe(&self.positions)
+                        || !picked_progress.is_some_and(|lift| lift >= required_lift)
+                    {
+                        let cage = self.solve_draw_one_ring_cage(
+                            &old_positions,
+                            &pending.proposed,
+                            &pending.guard,
+                            pending.anchor,
+                            pending.center,
+                            pending.camera_axis,
+                            pending.radius,
+                            pending.symmetry_x,
+                            pending.symmetry_offset,
+                            &baseline,
+                        );
+                        if let Some(cage) = cage {
+                            self.positions.copy_from_slice(if pending.symmetry_x {
+                                &baseline
+                            } else {
+                                &old_positions
+                            });
+                            for (id, position) in cage {
+                                self.positions[id] = position;
+                            }
+                            repaired = true;
+                            picked_ray_lift = draw_local_ray_lift(
+                                &self.positions,
+                                &pending.guard,
+                                pending.anchor,
+                                pending.center,
+                                pending.camera_axis,
+                                pending.radius,
+                            );
+                            picked_progress = picked_ray_lift
+                                .zip(old_ray_lift)
+                                .map(|(current, old)| current - old);
+                        }
+                    }
+
+                    let candidate_hit = self.raycast(ray);
+                    let full_ray_growth = old_hit.zip(baseline_hit).zip(candidate_hit).is_some_and(
+                        |((old, baseline), candidate)| {
+                            old.distance - candidate.distance >= required_lift as f32
+                                && baseline.distance - candidate.distance >= required_lift as f32
+                        },
+                    );
+                    if repaired
+                        && pending.guard.safe(&self.positions)
+                        && picked_progress.is_some_and(|lift| lift >= required_lift)
+                        && full_ray_growth
+                    {
+                        dirty_vertices = self
+                            .positions
+                            .iter()
+                            .zip(&old_positions)
+                            .enumerate()
+                            .filter_map(|(vertex, (current, previous))| {
+                                (current != previous).then_some(vertex)
+                            })
+                            .collect();
+                        changed = dirty_vertices.len();
+                        displacement_scale = 1.0;
+                        if settings.adaptive_detail {
+                            match self.refine_brush_patch_with_options(
+                                center,
+                                radius,
+                                settings.symmetry_x,
+                                settings.symmetry_offset,
+                                &dirty_vertices,
+                                true,
+                            ) {
+                                Ok((result, new_ancestry)) => {
+                                    refined_vertices = result.vertices_added;
+                                    detail_limited |= result.limited;
+                                    ancestry = new_ancestry;
+                                }
+                                Err(_) => detail_limited = true,
+                            }
+                        }
+                        let final_hit = self.raycast(ray);
+                        if !old_hit.zip(baseline_hit).zip(final_hit).is_some_and(
+                            |((old, baseline), final_hit)| {
+                                old.distance - final_hit.distance >= required_lift as f32
+                                    && baseline.distance - final_hit.distance
+                                        >= required_lift as f32
+                            },
+                        ) {
+                            *self = baseline_mesh;
+                            dirty_vertices = baseline_dirty;
+                            changed = baseline_changed;
+                            displacement_scale = baseline_scale;
+                            refined_vertices = 0;
+                            detail_limited = baseline_detail_limited;
+                            ancestry = baseline_ancestry;
+                        }
+                    } else {
+                        self.positions.copy_from_slice(&baseline);
+                    }
+                }
+            }
+        }
         // Refinement rebuilds normals once after its complete atomic commit.
         // Avoid an unnecessary full normal pass immediately before that work.
         if !dirty_vertices.is_empty() && refined_vertices == 0 {
@@ -1716,8 +2125,11 @@ impl Mesh {
         )
     }
 
-    fn smooth_target(&self, vertex: usize, old: &[Vec3]) -> Vec3 {
-        let neighbors = self.cached_neighbors(vertex);
+    fn smooth_target(&self, vertex: usize, old: &[Vec3], local_incidence: bool) -> Vec3 {
+        let local_neighbors = local_incidence.then(|| self.local_neighbors(vertex));
+        let neighbors = local_neighbors
+            .as_deref()
+            .unwrap_or_else(|| self.cached_neighbors(vertex));
         if neighbors.is_empty() {
             old[vertex]
         } else {
@@ -1737,7 +2149,7 @@ impl Mesh {
         tangent_weight: f32,
         normal_weight: f32,
     ) -> Vec3 {
-        let laplacian = self.smooth_target(vertex, old) - old[vertex];
+        let laplacian = self.smooth_target(vertex, old, false) - old[vertex];
         let normal_component = normal * laplacian.dot(normal);
         let neighbors = self.cached_neighbors(vertex);
         let mean_edge_squared = if neighbors.is_empty() {
@@ -1774,15 +2186,20 @@ impl Mesh {
                 .map(|value| if value == 0.0 { 0 } else { value.to_bits() })
         };
         let mut changed = HashMap::<[u32; 3], Option<usize>>::new();
+        let mut changed_vertices = Vec::new();
         for (vertex, (&before, &after)) in old.iter().zip(&self.positions).enumerate() {
             if before != after {
+                changed_vertices.push(vertex);
                 changed
                     .entry(key(before))
                     .and_modify(|entry| *entry = None)
                     .or_insert(Some(vertex));
             }
         }
-        for (vertex, &before) in old.iter().enumerate() {
+        // Keep the original ascending order and duplicate-position rule, but
+        // do not hash every unchanged vertex on a dense imported model.
+        for vertex in changed_vertices {
+            let before = old[vertex];
             if before.x <= offset || changed.get(&key(before)) != Some(&Some(vertex)) {
                 continue;
             }
@@ -1964,7 +2381,7 @@ impl Mesh {
         let proposed = self.positions.clone();
         // Existing smooth-tool policy: quality >= min(old quality, 0.1),
         // folds <= max(old folds, 60 degrees), with shared bounded step scaling.
-        let scale = self.accept_deformation(&old, BrushKind::Morph);
+        let scale = self.accept_deformation(&old, BrushKind::Morph, None, None);
         // The common guard interpolates a whole array on clipping. Restore
         // untouched component bits so protection also preserves signed zeros.
         for ((position, original), proposal) in self.positions.iter_mut().zip(&old).zip(&proposed) {
@@ -2027,7 +2444,7 @@ impl Mesh {
             .collect();
         changed_vertices.sort_unstable();
         changed_vertices.dedup();
-        let scale = match self.deformation_guard(old, &changed_vertices, 0.1, 0.5) {
+        let scale = match self.deformation_guard(old, &changed_vertices, 0.1, 0.5, false) {
             None => {
                 self.positions.copy_from_slice(old);
                 0.0
@@ -2065,7 +2482,13 @@ impl Mesh {
         scale
     }
 
-    fn accept_deformation(&mut self, old: &[Vec3], kind: BrushKind) -> f32 {
+    fn accept_deformation(
+        &mut self,
+        old: &[Vec3],
+        kind: BrushKind,
+        draw_repair: Option<(bool, f32, Vec3, f32, Vec3, Vec3)>,
+        deferred: Option<&mut Option<DrawDeferred>>,
+    ) -> f32 {
         let (quality_floor, fold_cosine) = match kind {
             BrushKind::Crease | BrushKind::Drag => (0.1, 0.0), // At most 90 degrees.
             BrushKind::Move => (0.02, -0.866_025_403_784_438_6), // Large rotations, 150 degrees.
@@ -2074,7 +2497,14 @@ impl Mesh {
         if kind == BrushKind::Move {
             self.ensure_adjacency();
         }
-        self.accept_deformation_with_limits(old, quality_floor, fold_cosine, false)
+        self.accept_deformation_with_limits_and_draw_repair(
+            old,
+            quality_floor,
+            fold_cosine,
+            false,
+            draw_repair,
+            deferred,
+        )
     }
 
     fn deformation_guard(
@@ -2083,6 +2513,7 @@ impl Mesh {
         changed_vertices: &[usize],
         quality_floor: f64,
         fold_cosine: f64,
+        local_incidence: bool,
     ) -> Option<DeformationGuard> {
         if self.cached_invalid_indices() {
             return None;
@@ -2110,16 +2541,24 @@ impl Mesh {
         }
         // Three or more faces on an edge have no unique adjacent fold. Avoid
         // quadratic pair allocation or silently ignoring an unchecked pair.
-        if self
-            .cached_nonmanifold_faces()
-            .iter()
-            .any(|&face| affected.binary_search(&(face as usize)).is_ok())
+        if !local_incidence
+            && self
+                .cached_nonmanifold_faces()
+                .iter()
+                .any(|&face| affected.binary_search(&(face as usize)).is_ok())
         {
             return None;
         }
         let mut folds = Vec::new();
-        for pair in self.cached_pairs_for_faces(&affected) {
-            let [a, b] = self.cached_face_pairs()[pair];
+        let pairs = if local_incidence {
+            self.local_face_pairs_for_faces(&affected).ok()?
+        } else {
+            self.cached_pairs_for_faces(&affected)
+                .into_iter()
+                .map(|pair| self.cached_face_pairs()[pair])
+                .collect()
+        };
+        for [a, b] in pairs {
             let indices = [self.triangles[a as usize], self.triangles[b as usize]];
             let normals = indices.map(|triangle| face_cross(old, triangle).normalize_or_zero());
             if normals.contains(&glam::DVec3::ZERO) {
@@ -2143,6 +2582,25 @@ impl Mesh {
         fold_cosine: f64,
         refine_scale: bool,
     ) -> f32 {
+        self.accept_deformation_with_limits_and_draw_repair(
+            old,
+            quality_floor,
+            fold_cosine,
+            refine_scale,
+            None,
+            None,
+        )
+    }
+
+    fn accept_deformation_with_limits_and_draw_repair(
+        &mut self,
+        old: &[Vec3],
+        quality_floor: f64,
+        fold_cosine: f64,
+        refine_scale: bool,
+        draw_repair: Option<(bool, f32, Vec3, f32, Vec3, Vec3)>,
+        mut deferred: Option<&mut Option<DrawDeferred>>,
+    ) -> f32 {
         let changed_vertices: Vec<_> = self
             .positions
             .iter()
@@ -2150,9 +2608,13 @@ impl Mesh {
             .enumerate()
             .filter_map(|(vertex, (current, previous))| (current != previous).then_some(vertex))
             .collect();
-        let Some(guard) =
-            self.deformation_guard(old, &changed_vertices, quality_floor, fold_cosine)
-        else {
+        let Some(guard) = self.deformation_guard(
+            old,
+            &changed_vertices,
+            quality_floor,
+            fold_cosine,
+            draw_repair.is_some(),
+        ) else {
             self.positions.copy_from_slice(old);
             return 0.0;
         };
@@ -2162,7 +2624,26 @@ impl Mesh {
         let proposed = self.positions.clone();
         let mut scale = 1.0;
         let mut unsafe_scale = 1.0;
+        let mut baseline_found = false;
+        if let Some((symmetry_x, symmetry_offset, _center, _radius, _normal, _camera_axis)) =
+            draw_repair
+        {
+            if self.repair_draw_constraint_components(
+                &guard,
+                old,
+                &proposed,
+                symmetry_x,
+                symmetry_offset,
+            ) {
+                baseline_found = true;
+            } else {
+                self.positions.copy_from_slice(&proposed);
+            }
+        }
         for _ in 0..12 {
+            if baseline_found {
+                break;
+            }
             scale *= 0.5;
             for ((position, &original), &candidate) in
                 self.positions.iter_mut().zip(old).zip(&proposed)
@@ -2193,12 +2674,793 @@ impl Mesh {
                         *position = original + (candidate - original) * scale;
                     }
                 }
-                return scale;
+                baseline_found = true;
+                break;
             }
             unsafe_scale = scale;
         }
-        self.positions.copy_from_slice(old);
-        0.0
+        if !baseline_found {
+            self.positions.copy_from_slice(old);
+            scale = 0.0;
+        }
+        if let (
+            Some(output),
+            Some((symmetry_x, symmetry_offset, center, radius, _normal, camera_axis)),
+        ) = (deferred.as_mut(), draw_repair)
+        {
+            if let Some(anchor) = self.draw_contact_anchor(old, center, camera_axis, radius) {
+                **output = Some(DrawDeferred {
+                    guard,
+                    proposed,
+                    anchor,
+                    symmetry_x,
+                    symmetry_offset,
+                    center,
+                    radius,
+                    camera_axis,
+                });
+            }
+        }
+        scale
+    }
+
+    /// Keep pre-existing skinny triangles and sharp folds coherent instead of
+    /// scaling an entire Draw dab down to zero. Only vertices of faces that
+    /// actually reject the proposed dab are grouped. Each group receives one
+    /// exactly representable translation; its edge vectors therefore remain
+    /// unchanged despite f32 storage. Every candidate still passes the
+    /// original face and fold guard, including the transition around groups.
+    fn repair_draw_constraint_components(
+        &mut self,
+        guard: &DeformationGuard,
+        old: &[Vec3],
+        proposed: &[Vec3],
+        symmetry_x: bool,
+        symmetry_offset: f32,
+    ) -> bool {
+        use std::collections::{BTreeMap, BTreeSet};
+
+        fn root(parents: &BTreeMap<usize, usize>, mut vertex: usize) -> usize {
+            while let Some(&parent) = parents.get(&vertex) {
+                if parent == vertex {
+                    break;
+                }
+                vertex = parent;
+            }
+            vertex
+        }
+
+        fn union(parents: &mut BTreeMap<usize, usize>, a: usize, b: usize) {
+            parents.entry(a).or_insert(a);
+            parents.entry(b).or_insert(b);
+            let a = root(parents, a);
+            let b = root(parents, b);
+            if a != b {
+                parents.insert(b, a);
+            }
+        }
+
+        const MAX_CONSTRAINED: usize = 512;
+        const MAX_SWEEPS: usize = 12;
+        let mut parents = BTreeMap::<usize, usize>::new();
+        let mut constrained = BTreeSet::<usize>::new();
+        let mut previous_groups = usize::MAX;
+
+        for _ in 0..MAX_SWEEPS {
+            let previous_vertices = constrained.len();
+            for face in guard
+                .faces
+                .iter()
+                .filter(|face| !face.safe(&self.positions))
+            {
+                let [a, b, c] = face.indices.map(|v| v as usize);
+                union(&mut parents, a, b);
+                union(&mut parents, a, c);
+                constrained.extend([a, b, c]);
+            }
+            for fold in guard
+                .folds
+                .iter()
+                .filter(|fold| !fold.safe(&self.positions))
+            {
+                let ids = fold.indices.map(|face| face.map(|v| v as usize));
+                let anchor = ids[0][0];
+                for &vertex in ids.iter().flatten() {
+                    union(&mut parents, anchor, vertex);
+                    constrained.insert(vertex);
+                }
+            }
+            if constrained.is_empty() || constrained.len() > MAX_CONSTRAINED {
+                return false;
+            }
+
+            let mut groups = BTreeMap::<usize, (glam::DVec3, usize, bool, Vec<usize>)>::new();
+            for &vertex in &constrained {
+                let group = root(&parents, vertex);
+                let entry =
+                    groups
+                        .entry(group)
+                        .or_insert((glam::DVec3::ZERO, 0, false, Vec::new()));
+                entry.0 += proposed[vertex].as_dvec3() - old[vertex].as_dvec3();
+                entry.1 += 1;
+                // A group touching an unchanged or protected vertex is fixed.
+                // In particular, an edge-of-brush or masked vertex cannot be
+                // drawn beyond its authored support/paint protection.
+                entry.2 |= proposed[vertex] == old[vertex]
+                    || self.mask_influence(vertex) < 1.0 - f32::EPSILON;
+                entry.3.push(vertex);
+            }
+
+            let translations: BTreeMap<usize, Vec3> = groups
+                .iter()
+                .map(|(&group, (sum, count, fixed, members))| {
+                    let mut translation = Vec3::ZERO;
+                    if !*fixed {
+                        let minimum_authored_motion = members
+                            .iter()
+                            .map(|&vertex| {
+                                (proposed[vertex].as_dvec3() - old[vertex].as_dvec3()).length()
+                            })
+                            .fold(f64::INFINITY, f64::min);
+                        let mut requested = *sum / *count as f64;
+                        let requested_length = requested.length();
+                        if requested_length > minimum_authored_motion {
+                            requested *= minimum_authored_motion / requested_length;
+                        }
+                        for _ in 0..4 {
+                            translation = Vec3::ZERO;
+                            for axis in 0..3 {
+                                let ulp = members
+                                    .iter()
+                                    .map(|&vertex| old[vertex][axis].next_up() - old[vertex][axis])
+                                    .fold(0.0_f32, f32::max);
+                                if ulp == 0.0 || !ulp.is_finite() {
+                                    continue;
+                                }
+                                let snapped = ((requested[axis] / f64::from(ulp)).trunc()
+                                    * f64::from(ulp))
+                                    as f32;
+                                if !snapped.is_finite() {
+                                    continue;
+                                }
+                                let first = f64::from(old[members[0]][axis] + snapped)
+                                    - f64::from(old[members[0]][axis]);
+                                if members.iter().all(|&vertex| {
+                                    f64::from(old[vertex][axis] + snapped)
+                                        - f64::from(old[vertex][axis])
+                                        == first
+                                }) {
+                                    translation[axis] = snapped;
+                                }
+                            }
+                            let actual = (old[members[0]] + translation).as_dvec3()
+                                - old[members[0]].as_dvec3();
+                            if actual.length() <= minimum_authored_motion {
+                                break;
+                            }
+                            requested *= 0.5;
+                        }
+                        let actual =
+                            (old[members[0]] + translation).as_dvec3() - old[members[0]].as_dvec3();
+                        if actual.length() > minimum_authored_motion {
+                            translation = Vec3::ZERO;
+                        }
+                    }
+                    (group, translation)
+                })
+                .collect();
+
+            self.positions.copy_from_slice(proposed);
+            for &vertex in &constrained {
+                let translation = translations[&root(&parents, vertex)];
+                for axis in 0..3 {
+                    self.positions[vertex][axis] = if translation[axis] == 0.0 {
+                        old[vertex][axis]
+                    } else {
+                        old[vertex][axis] + translation[axis]
+                    };
+                }
+            }
+            if symmetry_x {
+                self.preserve_exact_sculpt_symmetry(old, symmetry_offset);
+            }
+            // The exact-mirror pass can round a paired displacement once more.
+            // Keep the authored per-vertex motion as a hard upper bound even
+            // after that final f32 realization.
+            if constrained.iter().any(|&vertex| {
+                let actual = (self.positions[vertex].as_dvec3() - old[vertex].as_dvec3()).length();
+                let authored = (proposed[vertex].as_dvec3() - old[vertex].as_dvec3()).length();
+                actual > authored
+            }) {
+                return false;
+            }
+            if guard.safe(&self.positions) && self.positions != old {
+                return true;
+            }
+
+            if constrained.len() == previous_vertices && groups.len() == previous_groups {
+                break;
+            }
+            previous_groups = groups.len();
+        }
+        false
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn solve_draw_one_ring_cage(
+        &self,
+        old: &[Vec3],
+        proposed: &[Vec3],
+        guard: &DeformationGuard,
+        anchor: DrawContactAnchor,
+        center: Vec3,
+        camera_axis: Vec3,
+        radius: f32,
+        symmetry_x: bool,
+        symmetry_offset: f32,
+        baseline: &[Vec3],
+    ) -> Option<Vec<(usize, Vec3)>> {
+        let anchor_faces: Vec<_> = guard
+            .faces
+            .iter()
+            .filter(|face| {
+                face.indices
+                    .iter()
+                    .any(|&vertex| anchor.ids.contains(&(vertex as usize)))
+            })
+            .collect();
+        let mut ids: Vec<_> = anchor_faces
+            .iter()
+            .flat_map(|face| face.indices)
+            .map(|id| id as usize)
+            .collect();
+        ids.sort_unstable();
+        ids.dedup();
+        ids.retain(|&id| {
+            proposed[id] != old[id]
+                && self.mask_influence(id) >= 1.0 - f32::EPSILON
+                && old[id].distance(center) < radius
+        });
+
+        if ids.len() < 4 || ids.len() > 16 || !anchor.ids.iter().all(|id| ids.contains(id)) {
+            return None;
+        }
+        let mirror_ids = if symmetry_x {
+            let key = |position: Vec3| {
+                position
+                    .to_array()
+                    .map(|value| if value == 0.0 { 0 } else { value.to_bits() })
+            };
+            let mut old_lookup = HashMap::<[u32; 3], Option<usize>>::new();
+            for (id, &position) in old.iter().enumerate() {
+                old_lookup
+                    .entry(key(position))
+                    .and_modify(|entry| *entry = None)
+                    .or_insert(Some(id));
+            }
+            let mirror_center = reflect_point(center, symmetry_offset);
+            // If both ends of a unique old-surface mirror pair are selected by
+            // the same overlapping brush patch, solve one coupled DOF. Leaving
+            // both in `ids` would let the optimizer break exact X reflection.
+            let selected = ids.clone();
+            ids.retain(|&id| {
+                let partner = old_lookup
+                    .get(&key(reflect_point(old[id], symmetry_offset)))
+                    .copied()
+                    .flatten();
+                !partner.is_some_and(|other| {
+                    other < id
+                        && selected.binary_search(&other).is_ok()
+                        && self.masks[id] == self.masks[other]
+                        && old[other].distance(mirror_center) < radius
+                })
+            });
+            if ids.len() < 3 {
+                return None;
+            }
+            let mut mirrors = Vec::with_capacity(ids.len());
+            for &id in &ids {
+                let other = old_lookup
+                    .get(&key(reflect_point(old[id], symmetry_offset)))
+                    .copied()
+                    .flatten()
+                    .filter(|&other| {
+                        other != id
+                            && !ids.contains(&other)
+                            && proposed[other] != old[other]
+                            && self.mask_influence(other) >= 1.0 - f32::EPSILON
+                            && self.masks[id] == self.masks[other]
+                            && old[other].distance(mirror_center) < radius
+                    });
+                mirrors.push(other);
+            }
+            Some(mirrors)
+        } else {
+            None
+        };
+        let faces: Vec<_> = guard
+            .faces
+            .iter()
+            .filter(|face| {
+                face.indices.iter().any(|id| {
+                    ids.binary_search(&(*id as usize)).is_ok()
+                        || mirror_ids
+                            .as_ref()
+                            .is_some_and(|mirrors| mirrors.contains(&Some(*id as usize)))
+                })
+            })
+            .collect();
+        let folds: Vec<_> = guard
+            .folds
+            .iter()
+            .filter(|fold| {
+                fold.indices.iter().flatten().any(|id| {
+                    ids.binary_search(&(*id as usize)).is_ok()
+                        || mirror_ids
+                            .as_ref()
+                            .is_some_and(|mirrors| mirrors.contains(&Some(*id as usize)))
+                })
+            })
+            .collect();
+        if faces.len() > if symmetry_x { 256 } else { 128 }
+            || folds.len() > if symmetry_x { 512 } else { 256 }
+        {
+            return None;
+        }
+
+        let old_distance = draw_cage_ray_distance(old, anchor, center, camera_axis, radius, None)?;
+        let scale = f64::from(radius) / 180.0;
+        if symmetry_x {
+            return self.solve_draw_slsqp_cage(
+                old,
+                proposed,
+                baseline,
+                guard,
+                &faces,
+                &folds,
+                &ids,
+                mirror_ids.as_deref(),
+                symmetry_offset,
+                anchor,
+                center,
+                camera_axis,
+                radius,
+                old_distance,
+                scale,
+            );
+        }
+
+        let mut candidate = if symmetry_x {
+            baseline.to_vec()
+        } else {
+            old.to_vec()
+        };
+        let mut x = vec![0.0_f64; ids.len() * 3];
+        for pad_scale in [1.0, 0.5, 0.25, 0.125, 0.0625, 0.03125, 0.0] {
+            let (quality_pad, fold_pad, bary_pad) =
+                (0.0001 * pad_scale, 0.0005 * pad_scale, 0.03 * pad_scale);
+
+            let mut quality_rounding = vec![0.0_f64; faces.len()];
+            let mut orientation_rounding = vec![0.0_f64; faces.len()];
+            let mut fold_rounding = vec![0.0_f64; folds.len()];
+            let evaluate = |x: &[f64], q_round: &[f64], o_round: &[f64], f_round: &[f64]| {
+                draw_cage_values_local(
+                    old,
+                    proposed,
+                    if symmetry_x { baseline } else { old },
+                    &faces,
+                    &folds,
+                    &ids,
+                    mirror_ids.as_deref(),
+                    symmetry_offset,
+                    anchor,
+                    center,
+                    camera_axis,
+                    radius,
+                    scale,
+                    old_distance,
+                    quality_pad,
+                    fold_pad,
+                    bary_pad,
+                    q_round,
+                    o_round,
+                    f_round,
+                    x,
+                )
+            };
+            for _ in 0..16 {
+                let values =
+                    evaluate(&x, &quality_rounding, &orientation_rounding, &fold_rounding)?;
+                let mut columns = Vec::with_capacity(x.len());
+                for coordinate in 0..x.len() {
+                    let mut plus = x.clone();
+                    let mut minus = x.clone();
+                    plus[coordinate] += 0.0001;
+                    minus[coordinate] -= 0.0001;
+                    let upper = evaluate(
+                        &plus,
+                        &quality_rounding,
+                        &orientation_rounding,
+                        &fold_rounding,
+                    )?;
+                    let lower = evaluate(
+                        &minus,
+                        &quality_rounding,
+                        &orientation_rounding,
+                        &fold_rounding,
+                    )?;
+                    columns.push(
+                        upper
+                            .iter()
+                            .zip(lower)
+                            .map(|(a, b)| (a - b) / 0.0002)
+                            .collect::<Vec<_>>(),
+                    );
+                }
+                let Some(next) = solve_draw_cage_linearized(&x, &values, &columns) else {
+                    break;
+                };
+                let old_merit: f64 = values.iter().map(|v| v.min(0.0).powi(2)).sum();
+                let mut advanced = false;
+                for fraction in [1.0, 0.5, 0.25, 0.125, 0.0625] {
+                    let trial: Vec<_> = x
+                        .iter()
+                        .zip(&next)
+                        .map(|(a, b)| a + (b - a) * fraction)
+                        .collect();
+                    let Some(new_values) = evaluate(
+                        &trial,
+                        &quality_rounding,
+                        &orientation_rounding,
+                        &fold_rounding,
+                    ) else {
+                        continue;
+                    };
+                    let merit: f64 = new_values.iter().map(|v| v.min(0.0).powi(2)).sum();
+                    if merit < old_merit || merit <= 1e-16 {
+                        x = trial;
+                        advanced = true;
+                        break;
+                    }
+                }
+                if !advanced {
+                    break;
+                }
+                for (slot, &id) in ids.iter().enumerate() {
+                    candidate[id] = (old[id].as_dvec3()
+                        + glam::DVec3::new(x[3 * slot], x[3 * slot + 1], x[3 * slot + 2]) * scale)
+                        .as_vec3();
+                    if symmetry_x && old[id].x == symmetry_offset {
+                        candidate[id].x = symmetry_offset;
+                    }
+                    if let Some(Some(other)) = mirror_ids.as_ref().map(|mirrors| mirrors[slot]) {
+                        candidate[other] = reflect_point(candidate[id], symmetry_offset);
+                    }
+                }
+                if ids.iter().any(|&id| {
+                    (candidate[id].as_dvec3() - old[id].as_dvec3()).length()
+                        > (proposed[id].as_dvec3() - old[id].as_dvec3()).length()
+                }) || mirror_ids.as_ref().is_some_and(|mirrors| {
+                    mirrors.iter().flatten().any(|&id| {
+                        (candidate[id].as_dvec3() - old[id].as_dvec3()).length()
+                            > (proposed[id].as_dvec3() - old[id].as_dvec3()).length()
+                    })
+                }) {
+                    continue;
+                }
+                let progressed = draw_cage_ray_distance(
+                    &candidate,
+                    anchor,
+                    center,
+                    camera_axis,
+                    radius,
+                    Some(0.0),
+                )
+                .is_some_and(|new_distance| {
+                    old_distance - new_distance >= f64::from(radius) * 0.002
+                });
+
+                // The continuous SQP rows can be safe while the same vertex
+                // positions rounded to f32 cross a skinny face or fold limit.
+                // Tighten only rows that actually failed after realization.
+                if !guard.safe(&candidate) {
+                    for (index, face) in faces.iter().enumerate() {
+                        let [a, b, c] = face.indices.map(|id| candidate[id as usize].as_dvec3());
+                        let cross = (b - a).cross(c - a);
+                        let longest = a
+                            .distance_squared(b)
+                            .max(b.distance_squared(c))
+                            .max(c.distance_squared(a));
+                        if longest > 0.0 {
+                            let deficit = face.minimum_quality - cross.length() / longest;
+                            if deficit > 0.0 {
+                                quality_rounding[index] =
+                                    quality_rounding[index].max(deficit + 0.000002);
+                            }
+                        }
+                        let projection_deficit = (face.minimum_projection - cross.dot(face.cross))
+                            / face.cross.length_squared();
+                        if projection_deficit > 0.0 {
+                            orientation_rounding[index] =
+                                orientation_rounding[index].max(projection_deficit + 0.000002);
+                        }
+                    }
+                    for (index, fold) in folds.iter().enumerate() {
+                        let [a, b] = fold
+                            .indices
+                            .map(|triangle| face_cross(&candidate, triangle));
+                        let product = a.length() * b.length();
+                        if product > 0.0 {
+                            let deficit = fold.minimum_cosine - a.dot(b) / product;
+                            if deficit > 0.0 {
+                                fold_rounding[index] = fold_rounding[index].max(deficit + 0.00001);
+                            }
+                        }
+                    }
+                }
+                if progressed
+                    && guard.safe(&candidate)
+                    && draw_local_ray_lift(&candidate, guard, anchor, center, camera_axis, radius)
+                        .zip(draw_local_ray_lift(
+                            old,
+                            guard,
+                            anchor,
+                            center,
+                            camera_axis,
+                            radius,
+                        ))
+                        .is_some_and(|(after, before)| after - before >= f64::from(radius) * 0.002)
+                {
+                    let mut result: Vec<_> = ids.iter().map(|&id| (id, candidate[id])).collect();
+                    if let Some(mirrors) = &mirror_ids {
+                        result.extend(mirrors.iter().flatten().map(|&id| (id, candidate[id])));
+                    }
+                    return Some(result);
+                }
+            }
+        }
+        None
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn solve_draw_slsqp_cage(
+        &self,
+        old: &[Vec3],
+        proposed: &[Vec3],
+        baseline: &[Vec3],
+        guard: &DeformationGuard,
+        faces: &[&FaceGuard],
+        folds: &[&FoldGuard],
+        ids: &[usize],
+        mirrors: Option<&[Option<usize>]>,
+        symmetry_offset: f32,
+        anchor: DrawContactAnchor,
+        center: Vec3,
+        camera_axis: Vec3,
+        radius: f32,
+        old_distance: f64,
+        scale: f64,
+    ) -> Option<Vec<(usize, Vec3)>> {
+        use slsqp_rssl::{
+            fmin_slsqp_inequalities_with_derivatives, AnalyticDerivatives, Inequality,
+        };
+
+        let mirror_ids: Vec<_> = mirrors.into_iter().flatten().copied().flatten().collect();
+        let rows = faces.len() * 2 + folds.len() + ids.len() + mirror_ids.len() + 4;
+        if rows > 1024 || ids.len() > 16 {
+            return None;
+        }
+        let n = ids.len() * 3;
+        let bounds = vec![(-10.0, 10.0); n];
+        for (initial_quality_pad, initial_fold_pad, initial_bary_pad, lift_factor) in
+            [(0.00005_f64, 0.0002, 0.005, 0.0027), (0.0, 0.0, 0.0, 0.002)]
+        {
+            let initial_bary_pad: f64 = initial_bary_pad;
+            let bary_pad = initial_bary_pad
+                .min(anchor.bary.iter().copied().fold(f64::INFINITY, f64::min) * 0.25);
+            let mut quality_pad = initial_quality_pad;
+            let mut fold_pad = initial_fold_pad;
+            for _rounding_attempt in 0..4 {
+                let mirror_ids_ref = &mirror_ids;
+                let constraints: Vec<Inequality<'_>> = (0..rows)
+                    .map(|row| {
+                        Box::new(move |x: &[f64]| {
+                            draw_slsqp_row(
+                                old,
+                                proposed,
+                                baseline,
+                                faces,
+                                folds,
+                                ids,
+                                mirrors,
+                                mirror_ids_ref,
+                                symmetry_offset,
+                                anchor,
+                                center,
+                                camera_axis,
+                                radius,
+                                old_distance,
+                                scale,
+                                quality_pad,
+                                fold_pad,
+                                bary_pad,
+                                lift_factor,
+                                row,
+                                x,
+                            )
+                        }) as Inequality<'_>
+                    })
+                    .collect();
+                let jacobian = draw_cage_solver::DrawCageJacobianContext {
+                    old,
+                    baseline,
+                    faces,
+                    folds,
+                    ids,
+                    mirrors,
+                    mirror_ids: &mirror_ids,
+                    symmetry_offset,
+                    anchor,
+                    center,
+                    camera_axis,
+                    radius,
+                    scale,
+                };
+                debug_assert_eq!(jacobian.rows(), rows);
+                let result = fmin_slsqp_inequalities_with_derivatives(
+                    |x| x.iter().map(|value| value * value).sum(),
+                    &vec![0.0; n],
+                    &bounds,
+                    constraints,
+                    AnalyticDerivatives {
+                        objective: Box::new(|x, out| {
+                            for (derivative, value) in out.iter_mut().zip(x) {
+                                *derivative = 2.0 * value;
+                            }
+                        }),
+                        constraints: Box::new(|x, out| jacobian.fill(x, out)),
+                    },
+                    96,
+                    1e-10,
+                );
+
+                if result.x.len() != n || result.x.iter().any(|value| !value.is_finite()) {
+                    continue;
+                }
+                let mut candidate = baseline.to_vec();
+                for (slot, &id) in ids.iter().enumerate() {
+                    candidate[id] = (old[id].as_dvec3()
+                        + glam::DVec3::new(
+                            result.x[3 * slot],
+                            result.x[3 * slot + 1],
+                            result.x[3 * slot + 2],
+                        ) * scale)
+                        .as_vec3();
+                    if old[id].x == symmetry_offset {
+                        candidate[id].x = symmetry_offset;
+                    }
+                    if let Some(Some(other)) = mirrors.map(|items| items[slot]) {
+                        candidate[other] = reflect_point(candidate[id], symmetry_offset);
+                    }
+                }
+                if guard.safe(&candidate) {
+                    repair_draw_rounded_caps(
+                        &mut candidate,
+                        old,
+                        proposed,
+                        ids,
+                        mirrors,
+                        symmetry_offset,
+                        guard,
+                        anchor,
+                        center,
+                        camera_axis,
+                        radius,
+                    );
+                }
+
+                let cap_violated = ids.iter().chain(&mirror_ids).any(|&id| {
+                    (candidate[id].as_dvec3() - old[id].as_dvec3()).length()
+                        > (proposed[id].as_dvec3() - old[id].as_dvec3()).length()
+                });
+                let guard_safe = guard.safe(&candidate);
+                let old_lift =
+                    draw_local_ray_lift(old, guard, anchor, center, camera_axis, radius)?;
+                let new_lift =
+                    draw_local_ray_lift(&candidate, guard, anchor, center, camera_axis, radius);
+
+                if !guard_safe && result.status == 0 {
+                    let quality_deficit = faces
+                        .iter()
+                        .map(|face| {
+                            let points = face.indices.map(|id| candidate[id as usize].as_dvec3());
+                            let cross = (points[1] - points[0]).cross(points[2] - points[0]);
+                            (face.minimum_quality - cross.length() / longest_edge_squared(points))
+                                .max(0.0)
+                        })
+                        .fold(0.0_f64, f64::max);
+                    let fold_deficit = folds
+                        .iter()
+                        .map(|fold| {
+                            let [a, b] = fold
+                                .indices
+                                .map(|triangle| face_cross(&candidate, triangle));
+                            (fold.minimum_cosine - a.dot(b) / (a.length() * b.length())).max(0.0)
+                        })
+                        .fold(0.0_f64, f64::max);
+                    if quality_deficit > 0.0 || fold_deficit > 0.0 {
+                        quality_pad +=
+                            quality_deficit + (quality_deficit > 0.0) as u8 as f64 * 1e-5;
+                        fold_pad += fold_deficit + (fold_deficit > 0.0) as u8 as f64 * 2e-5;
+                        continue;
+                    }
+                }
+                if cap_violated || !guard_safe {
+                    break;
+                }
+                let Some(new_lift) = new_lift else {
+                    break;
+                };
+                if new_lift - old_lift < f64::from(radius) * 0.001 {
+                    break;
+                }
+                let mut result: Vec<_> = ids.iter().map(|&id| (id, candidate[id])).collect();
+                result.extend(mirror_ids.iter().map(|&id| (id, candidate[id])));
+                return Some(result);
+            }
+        }
+        None
+    }
+
+    /// Experimental local constrained field for a rigid component that reaches
+    /// fixed brush support. This only edits already-authored, unmasked members;
+    /// the original face/fold guard still decides whether the result may stay.
+    fn draw_contact_anchor(
+        &self,
+        old: &[Vec3],
+        center: Vec3,
+        camera_axis: Vec3,
+        radius: f32,
+    ) -> Option<DrawContactAnchor> {
+        let near_radius_squared = (radius * 0.1).powi(2);
+        let near: Vec<_> = old
+            .iter()
+            .enumerate()
+            .filter_map(|(vertex, &p)| {
+                (p.distance_squared(center) < near_radius_squared).then_some(vertex)
+            })
+            .collect();
+        if near.is_empty() || near.len() > 512 {
+            return None;
+        }
+        let candidates = self.cached_faces_for_vertices(&near);
+        if candidates.len() > 4096 {
+            return None;
+        }
+        let mut best: Option<(f64, usize, DrawContactAnchor)> = None;
+        for face in candidates {
+            let ids = self.triangles[face].map(|v| v as usize);
+            let Some((distance, bary)) = draw_cage_ray_intersection(
+                ids.map(|id| old[id].as_dvec3()),
+                center,
+                camera_axis,
+                radius,
+            ) else {
+                continue;
+            };
+            if !(distance >= 1.5 * f64::from(radius)
+                && distance <= 2.5 * f64::from(radius)
+                && bary.iter().all(|&weight| (0.0..=1.0).contains(&weight)))
+            {
+                continue;
+            }
+            if best.as_ref().is_none_or(|(previous, row, _)| {
+                distance < *previous || (distance == *previous && face < *row)
+            }) {
+                best = Some((distance, face, DrawContactAnchor { ids, bary }));
+            }
+        }
+        Some(best?.2)
     }
 }
 
@@ -2207,24 +3469,576 @@ struct DeformationGuard {
     folds: Vec<FoldGuard>,
 }
 
+#[derive(Clone, Copy)]
+struct DrawContactAnchor {
+    ids: [usize; 3],
+    bary: [f64; 3],
+}
+
+struct DrawDeferred {
+    guard: DeformationGuard,
+    proposed: Vec<Vec3>,
+    anchor: DrawContactAnchor,
+    symmetry_x: bool,
+    symmetry_offset: f32,
+    center: Vec3,
+    radius: f32,
+    camera_axis: Vec3,
+}
+
+fn draw_local_ray_lift(
+    positions: &[Vec3],
+    guard: &DeformationGuard,
+    anchor: DrawContactAnchor,
+    center: Vec3,
+    camera_axis: Vec3,
+    radius: f32,
+) -> Option<f64> {
+    let axis = camera_axis.as_dvec3().normalize_or_zero();
+    if axis == glam::DVec3::ZERO {
+        return None;
+    }
+    let start = center.as_dvec3() + axis * (2.0 * f64::from(radius));
+    let direction = -axis;
+    let mut closest = f64::INFINITY;
+    let faces = std::iter::once(anchor.ids.map(|v| v as u32))
+        .chain(guard.faces.iter().map(|face| face.indices));
+    for ids in faces {
+        let [a, b, c] = ids.map(|v| positions[v as usize].as_dvec3());
+        let e1 = b - a;
+        let e2 = c - a;
+        let cross = e1.cross(e2);
+        if cross.dot(axis) <= cross.length() * 0.05 {
+            continue;
+        }
+        let p = direction.cross(e2);
+        let determinant = e1.dot(p);
+        if determinant.abs() <= 1e-24 {
+            continue;
+        }
+        let t = start - a;
+        let u = t.dot(p) / determinant;
+        if !(0.0..=1.0).contains(&u) {
+            continue;
+        }
+        let q = t.cross(e1);
+        let v = direction.dot(q) / determinant;
+        if v < 0.0 || u + v > 1.0 {
+            continue;
+        }
+        let distance = e2.dot(q) / determinant;
+        if distance.is_finite()
+            && distance >= 1.5 * f64::from(radius)
+            && distance <= 2.5 * f64::from(radius)
+            && distance < closest
+        {
+            closest = distance;
+        }
+    }
+    closest
+        .is_finite()
+        .then_some(2.0 * f64::from(radius) - closest)
+}
+
+fn draw_cage_ray_intersection(
+    corners: [glam::DVec3; 3],
+    center: Vec3,
+    camera_axis: Vec3,
+    radius: f32,
+) -> Option<(f64, [f64; 3])> {
+    let axis = camera_axis.as_dvec3().normalize_or_zero();
+    if axis == glam::DVec3::ZERO {
+        return None;
+    }
+    let origin = center.as_dvec3() + axis * (2.0 * f64::from(radius));
+    let direction = -axis;
+    let [a, b, c] = corners;
+    let e1 = b - a;
+    let e2 = c - a;
+    let cross = e1.cross(e2);
+    if cross.dot(axis) <= cross.length() * 0.05 {
+        return None;
+    }
+    let p = direction.cross(e2);
+    let det = e1.dot(p);
+    if det.abs() <= 1e-24 {
+        return None;
+    }
+    let t = origin - a;
+    let u = t.dot(p) / det;
+    let q = t.cross(e1);
+    let v = direction.dot(q) / det;
+    let distance = e2.dot(q) / det;
+    (distance.is_finite() && u.is_finite() && v.is_finite())
+        .then_some((distance, [1.0 - u - v, u, v]))
+}
+
+fn draw_cage_ray_distance(
+    positions: &[Vec3],
+    anchor: DrawContactAnchor,
+    center: Vec3,
+    camera_axis: Vec3,
+    radius: f32,
+    minimum_bary: Option<f64>,
+) -> Option<f64> {
+    let (distance, bary) = draw_cage_ray_intersection(
+        anchor.ids.map(|id| positions[id].as_dvec3()),
+        center,
+        camera_axis,
+        radius,
+    )?;
+    (distance >= 1.5 * f64::from(radius)
+        && distance <= 2.5 * f64::from(radius)
+        && bary
+            .iter()
+            .all(|&weight| weight >= minimum_bary.unwrap_or(0.0)))
+    .then_some(distance)
+}
+
+#[allow(clippy::too_many_arguments)]
+/// Minimum-motion projection onto the current linearized cage constraints.
+/// The bounded contact cage keeps the KKT system small; all nonlinear and
+/// rounded geometry is checked separately before a candidate can be accepted.
+fn solve_draw_cage_linearized(
+    current: &[f64],
+    margins: &[f64],
+    columns: &[Vec<f64>],
+) -> Option<Vec<f64>> {
+    let count = margins.len();
+    let dimensions = current.len();
+    if dimensions == 0
+        || dimensions > 48
+        || columns.len() != dimensions
+        || columns.iter().any(|column| column.len() != count)
+    {
+        return None;
+    }
+    let rhs: Vec<_> = (0..count)
+        .map(|row| {
+            (0..dimensions)
+                .map(|coordinate| columns[coordinate][row] * current[coordinate])
+                .sum::<f64>()
+                - margins[row]
+        })
+        .collect();
+    let mut active = Vec::<usize>::new();
+    let mut result = vec![0.0_f64; dimensions];
+    for _ in 0..count.min(96) {
+        let (worst, violation) = (0..count)
+            .map(|row| {
+                let projection = (0..dimensions)
+                    .map(|coordinate| columns[coordinate][row] * result[coordinate])
+                    .sum::<f64>();
+                (row, rhs[row] - projection)
+            })
+            .max_by(|a, b| a.1.total_cmp(&b.1).then_with(|| b.0.cmp(&a.0)))?;
+        if violation < 1e-9 {
+            return Some(result);
+        }
+        if !active.contains(&worst) {
+            if active.len() == dimensions {
+                return None;
+            }
+            active.push(worst);
+        }
+        let mut solved = false;
+        for _ in 0..10 {
+            let size = active.len();
+            if size == 0 {
+                return None;
+            }
+            let mut gram = vec![vec![0.0_f64; size]; size];
+            let mut target = vec![0.0_f64; size];
+            for i in 0..size {
+                target[i] = rhs[active[i]];
+                for j in 0..size {
+                    gram[i][j] = (0..dimensions)
+                        .map(|coordinate| {
+                            columns[coordinate][active[i]] * columns[coordinate][active[j]]
+                        })
+                        .sum();
+                }
+                gram[i][i] += 1e-11 * gram[i][i];
+            }
+            let multipliers = solve_draw_cage_kkt(gram, target)?;
+            if let Some((remove, _)) = multipliers
+                .iter()
+                .enumerate()
+                .min_by(|a, b| a.1.total_cmp(b.1))
+                .filter(|(_, value)| **value < -1e-8)
+            {
+                active.remove(remove);
+                continue;
+            }
+            result = (0..dimensions)
+                .map(|coordinate| {
+                    active
+                        .iter()
+                        .zip(&multipliers)
+                        .map(|(&row, &weight)| columns[coordinate][row] * weight)
+                        .sum()
+                })
+                .collect();
+            solved = result.iter().all(|value| value.is_finite());
+            break;
+        }
+        if !solved {
+            return None;
+        }
+    }
+    None
+}
+
+fn solve_draw_cage_kkt(mut matrix: Vec<Vec<f64>>, mut rhs: Vec<f64>) -> Option<Vec<f64>> {
+    let size = rhs.len();
+    for column in 0..size {
+        let pivot = (column..size)
+            .max_by(|&a, &b| matrix[a][column].abs().total_cmp(&matrix[b][column].abs()))?;
+        if matrix[pivot][column].abs() < 1e-20 {
+            return None;
+        }
+        matrix.swap(column, pivot);
+        rhs.swap(column, pivot);
+        let inverse = 1.0 / matrix[column][column];
+        for entry in matrix[column].iter_mut().take(size).skip(column) {
+            *entry *= inverse;
+        }
+        rhs[column] *= inverse;
+        for row in 0..size {
+            if row == column {
+                continue;
+            }
+            let factor = matrix[row][column];
+            // Indexed access avoids allocating a pivot-row copy for each elimination.
+            #[allow(clippy::needless_range_loop)]
+            for entry in column..size {
+                matrix[row][entry] -= factor * matrix[column][entry];
+            }
+            rhs[row] -= factor * rhs[column];
+        }
+    }
+    rhs.iter().all(|value| value.is_finite()).then_some(rhs)
+}
+
+#[allow(clippy::too_many_arguments)]
+fn repair_draw_rounded_caps(
+    candidate: &mut [Vec3],
+    old: &[Vec3],
+    proposed: &[Vec3],
+    ids: &[usize],
+    mirrors: Option<&[Option<usize>]>,
+    symmetry_offset: f32,
+    guard: &DeformationGuard,
+    anchor: DrawContactAnchor,
+    center: Vec3,
+    camera_axis: Vec3,
+    radius: f32,
+) {
+    let excess = |positions: &[Vec3]| -> f64 {
+        ids.iter()
+            .copied()
+            .chain(mirrors.into_iter().flatten().flatten().copied())
+            .map(|id| {
+                let actual = (positions[id].as_dvec3() - old[id].as_dvec3()).length();
+                let authored = (proposed[id].as_dvec3() - old[id].as_dvec3()).length();
+                (actual - authored).max(0.0)
+            })
+            .sum()
+    };
+    let Some(old_lift) = draw_local_ray_lift(old, guard, anchor, center, camera_axis, radius)
+    else {
+        return;
+    };
+    let minimum_lift = f64::from(radius) * 0.001;
+    for _ in 0..8 {
+        let current_excess = excess(candidate);
+        if current_excess == 0.0 {
+            return;
+        }
+        type InwardStep = (f64, usize, Vec3, Option<(usize, Vec3)>);
+        let mut best: Option<InwardStep> = None;
+        for (slot, &id) in ids.iter().enumerate() {
+            let partner = mirrors.and_then(|items| items[slot]);
+            for axis in 0..3 {
+                let previous = candidate[id][axis];
+                let target = old[id][axis];
+                let inward = if previous > target {
+                    previous.next_down()
+                } else if previous < target {
+                    previous.next_up()
+                } else {
+                    continue;
+                };
+                if inward == previous || !inward.is_finite() {
+                    continue;
+                }
+                candidate[id][axis] = inward;
+                let previous_partner = partner.map(|other| (other, candidate[other]));
+                if let Some(other) = partner {
+                    candidate[other] = reflect_point(candidate[id], symmetry_offset);
+                }
+                let trial_excess = excess(candidate);
+                if trial_excess < current_excess
+                    && guard.safe(candidate)
+                    && draw_local_ray_lift(candidate, guard, anchor, center, camera_axis, radius)
+                        .is_some_and(|lift| lift - old_lift >= minimum_lift)
+                    && best
+                        .as_ref()
+                        .is_none_or(|(best_excess, _, _, _)| trial_excess < *best_excess)
+                {
+                    best = Some((
+                        trial_excess,
+                        id,
+                        candidate[id],
+                        partner.map(|other| (other, candidate[other])),
+                    ));
+                }
+                candidate[id][axis] = previous;
+                if let Some((other, original)) = previous_partner {
+                    candidate[other] = original;
+                }
+            }
+        }
+        let Some((_, id, position, partner)) = best else {
+            return;
+        };
+        candidate[id] = position;
+        if let Some((other, position)) = partner {
+            candidate[other] = position;
+        }
+    }
+}
+
+#[allow(clippy::too_many_arguments)]
+fn draw_slsqp_row(
+    old: &[Vec3],
+    proposed: &[Vec3],
+    baseline: &[Vec3],
+    faces: &[&FaceGuard],
+    folds: &[&FoldGuard],
+    ids: &[usize],
+    mirrors: Option<&[Option<usize>]>,
+    mirror_ids: &[usize],
+    symmetry_offset: f32,
+    anchor: DrawContactAnchor,
+    center: Vec3,
+    camera_axis: Vec3,
+    radius: f32,
+    old_distance: f64,
+    scale: f64,
+    quality_pad: f64,
+    fold_pad: f64,
+    bary_pad: f64,
+    lift_factor: f64,
+    row: usize,
+    x: &[f64],
+) -> f64 {
+    if x.len() != ids.len() * 3 || x.iter().any(|v| !v.is_finite()) {
+        return -1e12;
+    }
+    let point = |id: usize| -> glam::DVec3 {
+        if let Ok(slot) = ids.binary_search(&id) {
+            let mut p = old[id].as_dvec3()
+                + glam::DVec3::new(x[3 * slot], x[3 * slot + 1], x[3 * slot + 2]) * scale;
+            if old[id].x == symmetry_offset {
+                p.x = f64::from(symmetry_offset);
+            }
+            p
+        } else if let Some((slot, _)) = mirrors.and_then(|items| {
+            items
+                .iter()
+                .enumerate()
+                .find(|(_, other)| **other == Some(id))
+        }) {
+            let p = old[ids[slot]].as_dvec3()
+                + glam::DVec3::new(x[3 * slot], x[3 * slot + 1], x[3 * slot + 2]) * scale;
+            glam::DVec3::new(2.0 * f64::from(symmetry_offset) - p.x, p.y, p.z)
+        } else {
+            baseline[id].as_dvec3()
+        }
+    };
+    let mut r = row;
+    let result = if r < faces.len() {
+        let face = faces[r];
+        let [a, b, c] = face.indices.map(|id| point(id as usize));
+        let cross = (b - a).cross(c - a);
+        let longest = a
+            .distance_squared(b)
+            .max(b.distance_squared(c))
+            .max(c.distance_squared(a));
+        cross.length() / longest - face.minimum_quality - quality_pad
+    } else {
+        r -= faces.len();
+        if r < faces.len() {
+            let face = faces[r];
+            let [a, b, c] = face.indices.map(|id| point(id as usize));
+            let cross = (b - a).cross(c - a);
+            (cross.dot(face.cross) - face.minimum_projection) / face.cross.length_squared() - 1e-6
+        } else {
+            r -= faces.len();
+            if r < folds.len() {
+                let fold = folds[r];
+                let [[a, b, c], [d, e, f]] = fold
+                    .indices
+                    .map(|triangle| triangle.map(|id| point(id as usize)));
+                let first = (b - a).cross(c - a);
+                let second = (e - d).cross(f - d);
+                first.dot(second) / (first.length() * second.length())
+                    - fold.minimum_cosine
+                    - fold_pad
+            } else {
+                r -= folds.len();
+                if r < ids.len() + mirror_ids.len() {
+                    let id = if r < ids.len() {
+                        ids[r]
+                    } else {
+                        mirror_ids[r - ids.len()]
+                    };
+                    let allowed = (proposed[id].as_dvec3() - old[id].as_dvec3()).length();
+                    let interior = 1e-6_f64.min(allowed * 0.01);
+                    (allowed - (point(id) - old[id].as_dvec3()).length() - interior) * 100.0
+                } else {
+                    r -= ids.len() + mirror_ids.len();
+                    let corners = anchor.ids.map(point);
+                    match draw_cage_ray_intersection(corners, center, camera_axis, radius) {
+                        Some((_, bary)) if r < 3 => bary[r] - bary_pad,
+                        Some((distance, _)) if r == 3 => {
+                            (old_distance - distance - f64::from(radius) * lift_factor) * 100.0
+                        }
+                        _ => -1e12,
+                    }
+                }
+            }
+        }
+    };
+    if result.is_finite() {
+        result
+    } else {
+        -1e12
+    }
+}
+
+#[allow(clippy::too_many_arguments)]
+fn draw_cage_values_local(
+    old: &[Vec3],
+    proposed: &[Vec3],
+    baseline: &[Vec3],
+    faces: &[&FaceGuard],
+    folds: &[&FoldGuard],
+    ids: &[usize],
+    mirror_ids: Option<&[Option<usize>]>,
+    symmetry_offset: f32,
+    anchor: DrawContactAnchor,
+    center: Vec3,
+    camera_axis: Vec3,
+    radius: f32,
+    scale: f64,
+    old_distance: f64,
+    quality_pad: f64,
+    fold_pad: f64,
+    bary_pad: f64,
+    quality_rounding: &[f64],
+    orientation_rounding: &[f64],
+    fold_rounding: &[f64],
+    x: &[f64],
+) -> Option<Vec<f64>> {
+    if x.len() != ids.len() * 3 {
+        return None;
+    }
+    let point = |id: u32| {
+        let id = id as usize;
+        if let Ok(slot) = ids.binary_search(&id) {
+            let position = old[id].as_dvec3()
+                + glam::DVec3::new(x[3 * slot], x[3 * slot + 1], x[3 * slot + 2]) * scale;
+            if mirror_ids.is_some() && old[id].x == symmetry_offset {
+                glam::DVec3::new(f64::from(symmetry_offset), position.y, position.z)
+            } else {
+                position
+            }
+        } else if let Some((slot, _)) = mirror_ids.and_then(|mirrors| {
+            mirrors
+                .iter()
+                .enumerate()
+                .find(|(_, &mirror)| mirror == Some(id))
+        }) {
+            let position = old[ids[slot]].as_dvec3()
+                + glam::DVec3::new(x[3 * slot], x[3 * slot + 1], x[3 * slot + 2]) * scale;
+            glam::DVec3::new(
+                2.0 * f64::from(symmetry_offset) - position.x,
+                position.y,
+                position.z,
+            )
+        } else {
+            baseline[id].as_dvec3()
+        }
+    };
+    let mut values = Vec::with_capacity(faces.len() * 2 + folds.len() + ids.len() + 4);
+    for (index, face) in faces.iter().enumerate() {
+        let [a, b, c] = face.indices.map(point);
+        let cross = (b - a).cross(c - a);
+        let longest = a
+            .distance_squared(b)
+            .max(b.distance_squared(c))
+            .max(c.distance_squared(a));
+        if longest <= 0.0 || !longest.is_finite() {
+            return None;
+        }
+        values.push(
+            cross.length() / longest - face.minimum_quality - quality_pad - quality_rounding[index],
+        );
+    }
+    for (index, face) in faces.iter().enumerate() {
+        let [a, b, c] = face.indices.map(point);
+        let cross = (b - a).cross(c - a);
+        values.push(
+            (cross.dot(face.cross) - face.minimum_projection) / face.cross.length_squared()
+                - orientation_rounding[index],
+        );
+    }
+    for (index, fold) in folds.iter().enumerate() {
+        let [[a, b, c], [d, e, f]] = fold.indices.map(|triangle| triangle.map(point));
+        let first = (b - a).cross(c - a);
+        let second = (e - d).cross(f - d);
+        let product = first.length() * second.length();
+        if product <= 0.0 || !product.is_finite() {
+            return None;
+        }
+        values.push(
+            first.dot(second) / product - fold.minimum_cosine - fold_pad - fold_rounding[index],
+        );
+    }
+    for &id in ids {
+        let allowed = (proposed[id].as_dvec3() - old[id].as_dvec3()).length();
+        let actual = (point(id as u32) - old[id].as_dvec3()).length();
+        let rounding_margin =
+            (f64::from(f32::EPSILON) * f64::from(old[id].abs().max_element()) * 0.5)
+                .min(allowed * 0.25);
+        values.push((allowed - rounding_margin - actual) * 100.0);
+    }
+    if let Some(mirrors) = mirror_ids {
+        for &id in mirrors.iter().flatten() {
+            let allowed = (proposed[id].as_dvec3() - old[id].as_dvec3()).length();
+            let actual = (point(id as u32) - old[id].as_dvec3()).length();
+            let rounding_margin =
+                (f64::from(f32::EPSILON) * f64::from(old[id].abs().max_element()) * 0.5)
+                    .min(allowed * 0.25);
+            values.push((allowed - rounding_margin - actual) * 100.0);
+        }
+    }
+    let corners = anchor.ids.map(|id| point(id as u32));
+    let (distance, bary) = draw_cage_ray_intersection(corners, center, camera_axis, radius)?;
+    values.extend(bary.map(|weight| weight - bary_pad));
+    values.push((old_distance - distance - f64::from(radius) / 400.0) * 100.0);
+    values
+        .iter()
+        .all(|value| value.is_finite())
+        .then_some(values)
+}
+
 impl DeformationGuard {
     fn safe(&self, positions: &[Vec3]) -> bool {
-        self.faces.iter().all(|face| {
-            let points = face
-                .indices
-                .map(|vertex| positions[vertex as usize].as_dvec3());
-            let cross = (points[1] - points[0]).cross(points[2] - points[0]);
-            let edge_squared = longest_edge_squared(points);
-            let relative_tolerance = 32.0 * f64::EPSILON;
-            cross.is_finite()
-                && cross.dot(face.cross) >= face.minimum_projection
-                && cross.length_squared() * (1.0 + relative_tolerance)
-                    >= (face.minimum_quality * edge_squared).powi(2)
-        }) && self.folds.iter().all(|fold| {
-            let [a, b] = fold.indices.map(|triangle| face_cross(positions, triangle));
-            let product = a.length() * b.length();
-            a.dot(b) + 32.0 * f64::EPSILON * product >= fold.minimum_cosine * product
-        })
+        self.faces.iter().all(|face| face.safe(positions))
+            && self.folds.iter().all(|fold| fold.safe(positions))
     }
 }
 
@@ -2238,6 +4052,29 @@ struct FaceGuard {
 struct FoldGuard {
     indices: [[u32; 3]; 2],
     minimum_cosine: f64,
+}
+
+impl FaceGuard {
+    fn safe(&self, positions: &[Vec3]) -> bool {
+        let points = self
+            .indices
+            .map(|vertex| positions[vertex as usize].as_dvec3());
+        let cross = (points[1] - points[0]).cross(points[2] - points[0]);
+        let edge_squared = longest_edge_squared(points);
+        let relative_tolerance = 32.0 * f64::EPSILON;
+        cross.is_finite()
+            && cross.dot(self.cross) >= self.minimum_projection
+            && cross.length_squared() * (1.0 + relative_tolerance)
+                >= (self.minimum_quality * edge_squared).powi(2)
+    }
+}
+
+impl FoldGuard {
+    fn safe(&self, positions: &[Vec3]) -> bool {
+        let [a, b] = self.indices.map(|triangle| face_cross(positions, triangle));
+        let product = a.length() * b.length();
+        a.dot(b) + 32.0 * f64::EPSILON * product >= self.minimum_cosine * product
+    }
 }
 
 fn surface_alpha_frame(normal: Vec3, tangent: Option<Vec3>, rotation: f32) -> (Vec3, Vec3) {
@@ -2363,6 +4200,140 @@ fn uses_surface_detail(kind: BrushKind) -> bool {
             | BrushKind::Pinch
             | BrushKind::Drag
     )
+}
+
+#[cfg(test)]
+mod draw_constraint_component_tests {
+    use super::*;
+
+    fn skinny_patch() -> Mesh {
+        Mesh::new(
+            vec![
+                Vec3::new(0.0, 0.0, 0.0),
+                Vec3::new(1.0, 0.0, 0.0),
+                Vec3::new(0.2, 0.05, 0.0),
+                Vec3::new(1.0, 1.0, 0.0),
+            ],
+            vec![[0, 1, 2], [1, 3, 2]],
+        )
+    }
+
+    #[test]
+    fn coherent_draw_component_moves_despite_preexisting_skinny_face() {
+        let mut mesh = skinny_patch();
+        mesh.ensure_adjacency();
+        let old = mesh.positions.clone();
+        for position in &mut mesh.positions {
+            position.z += 0.02;
+        }
+        mesh.positions[2].y -= 0.005;
+        let proposed = mesh.positions.clone();
+        let mut clipped = mesh.snapshot();
+        clipped.ensure_adjacency();
+        let clipped_scale = clipped.accept_deformation(&old, BrushKind::Draw, None, None);
+        assert!(clipped_scale < 1.0, "fixture must clip the full proposal");
+
+        let scale = mesh.accept_deformation(
+            &old,
+            BrushKind::Draw,
+            Some((false, 0.0, Vec3::ZERO, 1.0, Vec3::Z, Vec3::Z)),
+            None,
+        );
+        assert_eq!(scale, 1.0);
+        assert_ne!(mesh.positions, old);
+        assert_ne!(mesh.positions, proposed);
+        let changed: Vec<_> = mesh
+            .positions
+            .iter()
+            .zip(&old)
+            .enumerate()
+            .filter_map(|(i, (a, b))| (a != b).then_some(i))
+            .collect();
+        let guard = mesh
+            .deformation_guard(&old, &changed, 0.1, 0.5, false)
+            .unwrap();
+        assert!(guard.safe(&mesh.positions));
+        mesh.validate().unwrap();
+    }
+
+    #[test]
+    fn zero_area_rest_face_is_not_repaired_or_moved() {
+        let mut mesh = Mesh::new(vec![Vec3::ZERO, Vec3::X, Vec3::X * 0.5], vec![[0, 1, 2]]);
+        mesh.ensure_adjacency();
+        let old = mesh.positions.clone();
+        mesh.positions[2].z = 0.1;
+        assert_eq!(
+            mesh.accept_deformation(
+                &old,
+                BrushKind::Draw,
+                Some((false, 0.0, Vec3::ZERO, 1.0, Vec3::Z, Vec3::Z)),
+                None
+            ),
+            0.0
+        );
+        assert_eq!(mesh.positions, old);
+    }
+
+    #[test]
+    fn mirrored_skinny_components_keep_exact_x_pairs() {
+        let right = [
+            Vec3::new(1.0, 0.0, 0.0),
+            Vec3::new(2.0, 0.0, 0.0),
+            Vec3::new(1.2, 0.05, 0.0),
+        ];
+        for offset in [0.0, 0.25] {
+            let mut positions = right.to_vec();
+            positions.extend(right.map(|p| reflect_point(p, offset)));
+            let mut mesh = Mesh::new(positions, vec![[0, 1, 2], [3, 5, 4]]);
+            mesh.ensure_adjacency();
+            let old = mesh.positions.clone();
+            for position in &mut mesh.positions {
+                position.z += 0.02;
+            }
+            mesh.positions[2].y -= 0.005;
+            mesh.positions[5].y -= 0.005;
+            assert_eq!(
+                mesh.accept_deformation(
+                    &old,
+                    BrushKind::Draw,
+                    Some((true, offset, Vec3::ZERO, 1.0, Vec3::Z, Vec3::Z)),
+                    None
+                ),
+                1.0
+            );
+            for index in 0..3 {
+                assert_eq!(
+                    mesh.positions[index],
+                    reflect_point(mesh.positions[index + 3], offset)
+                );
+            }
+            mesh.validate().unwrap();
+        }
+    }
+
+    #[test]
+    fn protected_vertex_remains_fixed_on_constraint_retry() {
+        let mut mesh = skinny_patch();
+        mesh.ensure_adjacency();
+        mesh.masks[0] = 1.0;
+        let old = mesh.positions.clone();
+        for position in &mut mesh.positions[1..] {
+            position.z += 0.02;
+        }
+        mesh.positions[2].y -= 0.005;
+        let _ = mesh.accept_deformation(
+            &old,
+            BrushKind::Draw,
+            Some((false, 0.0, Vec3::ZERO, 1.0, Vec3::Z, Vec3::Z)),
+            None,
+        );
+        assert_eq!(
+            mesh.positions[0].to_array().map(f32::to_bits),
+            old[0].to_array().map(f32::to_bits)
+        );
+        assert_eq!(mesh.masks[0], 1.0);
+        mesh.validate().unwrap();
+    }
 }
 
 #[cfg(test)]

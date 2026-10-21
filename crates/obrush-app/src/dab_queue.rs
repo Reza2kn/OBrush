@@ -82,6 +82,7 @@ pub(crate) struct DabQueue {
     releases: u64,
     draw_proxy: Option<DrawStroke>,
     drag: Option<DragPatch>,
+    cursor_depth_position: Option<Vec3>,
     ordinary_timing: DabTiming,
     source_paint_timing: DabTiming,
     source_geometry_timing: DabTiming,
@@ -110,6 +111,12 @@ pub(crate) struct Progress {
 }
 
 impl DabQueue {
+    /// Depth for the held, screen-space brush ring, from the last authoritative
+    /// ordinary dab. This is not used for picking or geometry deformation.
+    pub fn cursor_depth_position(&self) -> Option<Vec3> {
+        self.cursor_depth_position
+    }
+
     pub fn source_geometry_dab(
         &mut self,
         session: crate::source_geometry_host::SharedSourceGeometry,
@@ -363,6 +370,7 @@ impl DabQueue {
         footprint: Option<ScreenFootprint>,
         progress: &mut Progress,
     ) {
+        self.cursor_depth_position = None;
         self.pending -= 1;
         self.processed += 1;
         progress.dabs += 1;
@@ -441,6 +449,32 @@ impl DabQueue {
                 return;
             }
         };
+        if settings.kind == BrushKind::Draw
+            && settings.draw_accumulate
+            && footprint.is_none()
+            && delta == Vec3::ZERO
+        {
+            match document.pick_active_draw_contact(ray, policy) {
+                Ok(Some(contact)) => {
+                    self.cursor_depth_position = Some(contact.hit().position);
+                    match contact.apply(&settings) {
+                        Ok(result) => {
+                            let changed = result.changed_vertices > 0;
+                            self.applied += u64::from(changed);
+                            progress.changed |= changed;
+                        }
+                        Err(error) => {
+                            progress.error.get_or_insert(error);
+                        }
+                    }
+                }
+                Ok(None) => self.cursor_depth_position = None,
+                Err(error) => {
+                    progress.error.get_or_insert(error);
+                }
+            }
+            return;
+        }
         let picked = match document.raycast_scene(ray, policy) {
             Ok(v) => v,
             Err(e) => {
@@ -459,6 +493,7 @@ impl DabQueue {
                     return;
                 }
             };
+            self.cursor_depth_position = Some(hit.position);
             if let Some(footprint) = footprint {
                 let Some(radius) = footprint.radius_at_world(document, hit.position) else {
                     progress.error.get_or_insert(
@@ -560,11 +595,13 @@ impl DabQueue {
         while let Some(work) = self.work.pop_front() {
             match work {
                 Work::Begin => {
+                    self.cursor_depth_position = None;
                     self.draw_proxy = None;
                     self.drag = None;
                     document.begin_stroke();
                 }
                 Work::BeginDrag { center, normal } => {
+                    self.cursor_depth_position = None;
                     self.draw_proxy = None;
                     self.drag = Some(DragPatch {
                         center,
@@ -574,6 +611,7 @@ impl DabQueue {
                     document.begin_stroke();
                 }
                 Work::End => {
+                    self.cursor_depth_position = None;
                     document.end_stroke();
                     self.draw_proxy = None;
                     self.drag = None;
@@ -611,6 +649,7 @@ impl DabQueue {
     /// The document owner rolls its open snapshot back separately. Drop every
     /// pending sample and marker from the cancelled active gesture first.
     pub fn discard_active_stroke(&mut self) {
+        self.cursor_depth_position = None;
         self.coalesced = self.coalesced.saturating_add(self.pending as u64);
         self.work.clear();
         self.pending = 0;
@@ -648,11 +687,13 @@ impl DabQueue {
             }
             match self.work.pop_front().expect("front exists") {
                 Work::Begin => {
+                    self.cursor_depth_position = None;
                     self.draw_proxy = None;
                     self.drag = None;
                     document.begin_stroke();
                 }
                 Work::BeginDrag { center, normal } => {
+                    self.cursor_depth_position = None;
                     self.draw_proxy = None;
                     self.drag = Some(DragPatch {
                         center,
@@ -662,6 +703,7 @@ impl DabQueue {
                     document.begin_stroke();
                 }
                 Work::End => {
+                    self.cursor_depth_position = None;
                     document.end_stroke();
                     self.draw_proxy = None;
                     self.drag = None;
@@ -691,6 +733,65 @@ impl DabQueue {
 mod tests {
     use super::*;
     use obrush_core::Mesh;
+
+    #[test]
+    fn held_cursor_contact_is_cleared_on_miss_release_and_cancel() {
+        let mut document = Document::new(Mesh::sphere(2));
+        let before = document.to_json().unwrap();
+        let positions = document.require_active_mesh().unwrap().positions.clone();
+        let mut queue = DabQueue::default();
+        let settings = BrushSettings {
+            kind: BrushKind::Paint,
+            radius: 0.5,
+            color: [1.0, 0.0, 0.0],
+            symmetry_x: false,
+            ..Default::default()
+        };
+        let hit_ray = Ray {
+            origin: Vec3::new(0.0, 0.0, 3.0),
+            direction: -Vec3::Z,
+        };
+        let expected = document
+            .require_active_mesh()
+            .unwrap()
+            .raycast(hit_ray)
+            .unwrap();
+        queue.begin();
+        queue.dab(hit_ray, settings.clone(), Vec3::ZERO);
+        assert!(queue.process(&mut document, 1, None).changed);
+        assert_eq!(queue.cursor_depth_position(), Some(expected.position));
+        assert_eq!(document.require_active_mesh().unwrap().positions, positions);
+
+        queue.dab(
+            Ray {
+                origin: Vec3::new(3.0, 3.0, 3.0),
+                direction: Vec3::Z,
+            },
+            settings.clone(),
+            Vec3::ZERO,
+        );
+        assert!(!queue.process(&mut document, 1, None).changed);
+        assert_eq!(queue.cursor_depth_position(), None);
+        queue.dab(hit_ray, settings.clone(), Vec3::ZERO);
+        queue.process(&mut document, 1, None);
+        assert!(queue.cursor_depth_position().is_some());
+        queue.release(&mut document);
+        assert_eq!(queue.cursor_depth_position(), None);
+        let edited = document.to_json().unwrap();
+        assert!(document.undo());
+        assert_eq!(document.to_json().unwrap(), before);
+        assert!(document.redo());
+        assert_eq!(document.to_json().unwrap(), edited);
+
+        queue.begin();
+        queue.dab(hit_ray, settings, Vec3::ZERO);
+        queue.process(&mut document, 1, None);
+        assert!(queue.cursor_depth_position().is_some());
+        queue.discard_active_stroke();
+        assert_eq!(queue.cursor_depth_position(), None);
+        assert!(document.cancel_stroke());
+        assert_eq!(document.to_json().unwrap(), edited);
+    }
 
     #[test]
     fn discard_clears_pending_samples_without_committing_an_open_stroke() {

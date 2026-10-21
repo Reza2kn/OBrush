@@ -12,6 +12,8 @@ mod brush;
 mod decimate;
 mod decode_limits;
 mod document;
+mod draw_curved_refine;
+mod draw_window;
 mod extract;
 mod layers;
 mod locked_accumulator;
@@ -65,6 +67,7 @@ mod subtools;
 mod topology;
 mod transform;
 mod uv_bake;
+mod validated_draw_contact;
 
 pub use alpha::RasterAlpha;
 pub use attributes::{
@@ -84,6 +87,7 @@ pub use document::{
     SglAppendReport, SourcePaintLockedAction, SourcePaintLockedMode, SourcePaintLockedReport,
     SourcePaintLockedSample, SourcePaintLockedStroke, SubdivisionDeletionReport,
 };
+pub use draw_curved_refine::CurvedDrawRefinement;
 pub use extract::{MaskExtractReport, MaskExtractSelection, MaskExtractSettings};
 pub use glam::Vec3;
 pub use layers::{
@@ -189,6 +193,7 @@ pub use topology::{
     execute_topology_with_cancel, TopologyOperation, TopologyReport,
 };
 pub use transform::ObjectTransform;
+pub use validated_draw_contact::ValidatedDrawContact;
 
 #[cfg(test)]
 mod tests;

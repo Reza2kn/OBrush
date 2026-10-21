@@ -10177,6 +10177,22 @@ impl OBrushApp {
             .ok()
             .map(|(h, _)| h)
     }
+    fn brush_cursor_depth_position(&self, screen: Pos2, rect: egui::Rect) -> Option<Vec3> {
+        if !self.camera.source_enabled()
+            && !self.source_shortcut_profile()
+            && self.stroke.as_ref().is_some_and(|stroke| {
+                stroke.queued && stroke.source_geometry.is_none() && stroke.source_paint.is_none()
+            })
+            && let Some(position) = self.pending_dabs.cursor_depth_position()
+        {
+            // The ring is centered on the current pointer and needs only a
+            // surface depth. Reuse the current contact rather than scanning
+            // the entire scene again after the actual queued dab just picked it.
+            // Idle hover and every geometry dab retain their ordinary pick.
+            return Some(position);
+        }
+        self.pick(screen, rect).map(|hit| hit.position)
+    }
     fn screen_ray(&self, screen: Pos2, rect: egui::Rect) -> Ray {
         camera_ray_at(&self.camera, screen, rect)
     }
@@ -11569,9 +11585,9 @@ impl OBrushApp {
                 } else if !self.transform_mode
                     && !self.region_masking_context(ctx)
                     && let Some(pos) = response.hover_pos()
-                    && let Some(hit) = self.pick(pos, rect)
+                    && let Some(position) = self.brush_cursor_depth_position(pos, rect)
                 {
-                    let depth = self.local_depth(hit.position).unwrap_or(0.0001);
+                    let depth = self.local_depth(position).unwrap_or(0.0001);
                     let modifiers = ctx.input(|input| input.modifiers);
                     let preview = self.preferences.preview(
                         PreferenceModifiers {
