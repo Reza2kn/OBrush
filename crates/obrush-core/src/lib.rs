@@ -13,6 +13,7 @@ mod decimate;
 mod decode_limits;
 mod document;
 mod draw_curved_refine;
+mod draw_window;
 mod extract;
 mod layers;
 mod locked_accumulator;

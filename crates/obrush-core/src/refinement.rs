@@ -285,7 +285,7 @@ impl Mesh {
         radius: f32,
         symmetry_x: bool,
         symmetry_offset: f32,
-    ) -> Result<Option<Mesh>, String> {
+    ) -> Result<Option<(Mesh, Vec<RefinementParents>)>, String> {
         self.validate()?;
         self.require_plain_topology("Interior Draw refinement")?;
         let query = PatchQuery::new(center, radius, symmetry_x, symmetry_offset)?;
@@ -315,6 +315,7 @@ impl Mesh {
         // Initial full-scene uniqueness remains mandatory for overlapping
         // shells; subsequent rounds inspect only those bounded children.
         let mut target_children: Vec<Option<Vec<usize>>> = vec![None; targets.len()];
+        let mut ancestry = Vec::new();
         let mut added_any = false;
         for _ in 0..INTERIOR_DRAW_ROUNDS {
             let prepared = |point: Vec3| {
@@ -416,7 +417,7 @@ impl Mesh {
                 &candidate_faces,
                 query,
                 &mut dirty,
-                None,
+                Some(&mut ancestry),
             )?;
             let mut next_origins = Vec::new();
             next_origins
@@ -511,7 +512,7 @@ impl Mesh {
         }
         candidate.recompute_normals_near_vertices_cached(&dirty);
         candidate.validate()?;
-        Ok(Some(candidate))
+        Ok(Some((candidate, ancestry)))
     }
 
     pub(crate) fn refine_move_patch_at_offset(

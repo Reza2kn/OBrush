@@ -532,7 +532,7 @@ mod tests {
         mesh.masks = vec![0.0, 0.2, 0.4];
         mesh.materials = Some(vec![[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]]);
         let old = mesh.snapshot();
-        let candidate = mesh
+        let (candidate, ancestry) = mesh
             .prepare_draw_interior_contact(
                 Vec3::new(0.0, -1.0 / 3.0, 0.0),
                 Vec3::Z,
@@ -542,6 +542,10 @@ mod tests {
             )
             .unwrap()
             .unwrap();
+        assert_eq!(
+            ancestry.len(),
+            candidate.positions.len() - old.positions.len()
+        );
         assert_eq!(&candidate.positions[..3], old.positions.as_slice());
         assert_eq!(&candidate.masks[..3], old.masks.as_slice());
         assert_eq!(&candidate.colors[..3], old.colors.as_slice());

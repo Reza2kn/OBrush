@@ -1157,12 +1157,15 @@ impl Mesh {
         delta: Vec3,
         settings: &BrushSettings,
     ) -> BrushResult {
+        if let Some(result) = self.try_local_draw_window(center, normal, delta, settings) {
+            return result;
+        }
         self.apply_brush_dab(center, normal, delta, settings, None, true, true)
             .0
     }
 
     #[allow(clippy::too_many_arguments)]
-    fn apply_brush_dab(
+    pub(crate) fn apply_brush_dab(
         &mut self,
         center: Vec3,
         normal: Vec3,
@@ -1680,13 +1683,15 @@ impl Mesh {
             && settings.hardness == 0.0
             && proxy_positions.is_none()
         {
-            if let Ok(Some(mut prepared)) = self.prepare_draw_interior_contact(
-                center,
-                normal,
-                radius,
-                settings.symmetry_x,
-                settings.symmetry_offset,
-            ) {
+            if let Ok(Some((mut prepared, mut preparation_ancestry))) = self
+                .prepare_draw_interior_contact(
+                    center,
+                    normal,
+                    radius,
+                    settings.symmetry_x,
+                    settings.symmetry_offset,
+                )
+            {
                 let prepared_vertices = prepared.positions.len() - self.positions.len();
                 let (mut result, ancestry) = prepared.apply_brush_dab(
                     center,
@@ -1701,8 +1706,9 @@ impl Mesh {
                     && result.refined_vertices + prepared_vertices <= 1_024
                 {
                     result.refined_vertices += prepared_vertices;
+                    preparation_ancestry.extend(ancestry);
                     *self = prepared;
-                    return (result, ancestry);
+                    return (result, preparation_ancestry);
                 }
             }
         }

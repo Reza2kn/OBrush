@@ -1612,6 +1612,62 @@ impl Mesh {
         })
     }
 
+    /// Construct a compact, ascending-ID window from an already validated
+    /// plain mesh. The caller proves complete incident-face coverage before
+    /// using its sculpt result; this only copies the requested public fields.
+    pub(crate) fn draw_window_snapshot(
+        &self,
+        vertices: &[usize],
+        faces: &[usize],
+        global_to_local: &[usize],
+    ) -> Result<Self, String> {
+        fn gather<T: Copy>(source: &[T], ids: &[usize]) -> Result<Vec<T>, String> {
+            let mut values = Vec::new();
+            values
+                .try_reserve_exact(ids.len())
+                .map_err(|_| "Cannot allocate local Draw window")?;
+            for &id in ids {
+                values.push(*source.get(id).ok_or("Invalid local Draw window index")?);
+            }
+            Ok(values)
+        }
+        let mut triangles = Vec::new();
+        triangles
+            .try_reserve_exact(faces.len())
+            .map_err(|_| "Cannot allocate local Draw window faces")?;
+        for &face in faces {
+            let triangle = *self
+                .triangles
+                .get(face)
+                .ok_or("Invalid local Draw window face")?;
+            let mut local = [0_u32; 3];
+            for (corner, global) in triangle.into_iter().enumerate() {
+                let mapped = *global_to_local
+                    .get(global as usize)
+                    .ok_or("Invalid local Draw window vertex")?;
+                local[corner] =
+                    u32::try_from(mapped).map_err(|_| "Invalid local Draw window vertex")?;
+            }
+            triangles.push(local);
+        }
+        Ok(Self {
+            positions: gather(&self.positions, vertices)?,
+            normals: gather(&self.normals, vertices)?,
+            triangles,
+            masks: gather(&self.masks, vertices)?,
+            mask_convention: self.mask_convention,
+            colors: gather(&self.colors, vertices)?,
+            materials: self
+                .materials
+                .as_ref()
+                .map(|materials| gather(materials, vertices))
+                .transpose()?,
+            surface: None,
+            adjacency: None,
+            resident_normal_witness: None,
+        })
+    }
+
     /// Resident position commits retain immutable, signature-checked topology
     /// across same-topology strokes. The ordinary history snapshot still drops
     /// derived caches, and a public topology edit invalidates this on use.
