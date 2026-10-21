@@ -1,5 +1,5 @@
 // Owns a disposable headless Chrome profile. Never touches a user's browser tab.
-// Run only after deploying: node scripts/check-public-browser.mjs https://obrush.app/ web/dist
+// Run after deploying: node scripts/check-public-browser.mjs https://obrush.app/ web/dist [auto|scalar]
 import { spawn } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
@@ -9,7 +9,9 @@ const origin = new URL(process.argv[2] || 'https://obrush.app/');
 if (origin.protocol !== 'https:' || origin.username || origin.password || origin.search || origin.hash) {
   throw Error('Expected a plain HTTPS site URL');
 }
-const url = new URL('./?wasm-scalar', origin).href;
+const mode = process.argv[4] || 'auto';
+if (!['auto', 'scalar'].includes(mode)) throw Error('Expected auto or scalar backend mode');
+const url = new URL(mode === 'scalar' ? './?wasm-scalar' : './', origin).href;
 const web = path.resolve(process.argv[3] || 'web/dist');
 const out = path.resolve(`.artifacts/public-browser/${randomUUID()}`);
 const profile = path.join(out, 'profile');
@@ -18,7 +20,7 @@ await mkdir(profile, { recursive: true });
 await mkdir(downloads);
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
-const result = { status: 'running', url, web, out, checks: {}, assets: {}, dialogs: [], errors: [] };
+const result = { status: 'running', url, mode, web, out, checks: {}, assets: {}, dialogs: [], errors: [] };
 
 async function served(relative) {
   const response = await fetch(new URL(relative, origin), { redirect: 'error', signal: AbortSignal.timeout(30000) });

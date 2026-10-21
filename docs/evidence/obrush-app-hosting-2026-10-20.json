@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "scope": "Public VPS deployment, asset integrity, O branding and short browser save-safety smoke. Does not establish extended brush quality, performance or reference parity.",
+  "source_commit": "a115aac55bf300c98866ad5ba7f992aa52117705",
+  "build_info": {
+    "cargo_lock_sha256": "1502a5e26cff2a3f6fec51b7d0a6b35ededd66834f7807144aa3e27813a78d33",
+    "gpu_wasm_sha256": "53f4073ff0940a502f527c7ee08a6f319b1e5ed869d9a750e6260a32f4fb7fa6",
+    "portable_wasm_sha256": "f4c005e29f7963ac2df6e29771a3141f1dc427c5b8966ec2506f27b042ef04cf",
+    "schema_version": 1,
+    "simd_wasm_sha256": "638ccf4b38710c375d1bcb77148490bcb2e110e83f3943d66911ce33e325cdb3",
+    "source_commit": "a115aac55bf300c98866ad5ba7f992aa52117705",
+    "source_tree_state": "clean",
+    "version": "0.1.20",
+    "wasm_bindgen_cli_version": "0.2.129"
+  },
+  "assets": {
+    "build-info.json": {
+      "bytes": 549,
+      "sha256": "e530b804a6d8ae4ecd684c102102552b348f4e825bd7bfee3ecf80551ed7ab26",
+      "content_type": "application/json"
+    },
+    "index.html": {
+      "bytes": 18646,
+      "sha256": "f684e39bb2f4b243b8941fe1b4ad6b1b170ee69c8579e64f14924c9c761c23b3",
+      "content_type": "text/html; charset=utf-8",
+      "local_sha256": "f684e39bb2f4b243b8941fe1b4ad6b1b170ee69c8579e64f14924c9c761c23b3"
+    },
+    "pkg/obrush_app_bg.wasm": {
+      "bytes": 24194800,
+      "sha256": "f4c005e29f7963ac2df6e29771a3141f1dc427c5b8966ec2506f27b042ef04cf",
+      "content_type": "application/wasm",
+      "local_sha256": "f4c005e29f7963ac2df6e29771a3141f1dc427c5b8966ec2506f27b042ef04cf"
+    },
+    "pkg-simd/obrush_app_bg.wasm": {
+      "bytes": 24209684,
+      "sha256": "638ccf4b38710c375d1bcb77148490bcb2e110e83f3943d66911ce33e325cdb3",
+      "content_type": "application/wasm",
+      "local_sha256": "638ccf4b38710c375d1bcb77148490bcb2e110e83f3943d66911ce33e325cdb3"
+    },
+    "gpu-pkg/resident_bg.wasm": {
+      "bytes": 1442584,
+      "sha256": "53f4073ff0940a502f527c7ee08a6f319b1e5ed869d9a750e6260a32f4fb7fa6",
+      "content_type": "application/wasm",
+      "local_sha256": "53f4073ff0940a502f527c7ee08a6f319b1e5ed869d9a750e6260a32f4fb7fa6"
+    },
+    "obrush-icon.svg": {
+      "bytes": 289,
+      "sha256": "47387f51417623e6787303f9202b7333c04e2f938c1f48a3f34ceb3a1bae46c7",
+      "content_type": "image/svg+xml",
+      "local_sha256": "47387f51417623e6787303f9202b7333c04e2f938c1f48a3f34ceb3a1bae46c7"
+    },
+    "favicon-32.png": {
+      "bytes": 365,
+      "sha256": "7f5a9ba425dbaddb614907ce3fed3bc38b14b56f4139afd0f7e19ca400ec0243",
+      "content_type": "image/png",
+      "local_sha256": "7f5a9ba425dbaddb614907ce3fed3bc38b14b56f4139afd0f7e19ca400ec0243"
+    },
+    "apple-touch-icon.png": {
+      "bytes": 2243,
+      "sha256": "626b34db0bd4caf5d42462a9f4dc075a1deaad6328bdeb366a71df37d7f52077",
+      "content_type": "image/png",
+      "local_sha256": "626b34db0bd4caf5d42462a9f4dc075a1deaad6328bdeb366a71df37d7f52077"
+    }
+  },
+  "normal_browser": {
+    "url": "https://obrush.app/",
+    "status": "passed",
+    "selected_backend": "simd",
+    "browser": "Chrome/155.0.8059.85",
+    "checks": {
+      "build_info_exact": true,
+      "asset_index.html": true,
+      "asset_pkg/obrush_app_bg.wasm": true,
+      "asset_pkg-simd/obrush_app_bg.wasm": true,
+      "asset_gpu-pkg/resident_bg.wasm": true,
+      "asset_obrush-icon.svg": true,
+      "asset_favicon-32.png": true,
+      "asset_apple-touch-icon.png": true,
+      "png_favicon-32.png": true,
+      "png_apple-touch-icon.png": true,
+      "draw_selected": true,
+      "https_loaded": true,
+      "initial_clean": true,
+      "clean_reload_no_warning": true,
+      "draw_changed_revision": true,
+      "draw_makes_dirty": true,
+      "project_download_valid": true,
+      "requested_download_keeps_warning": true,
+      "blocked_download_keeps_warning": true,
+      "cancel_navigation_preserves_document": true,
+      "cancel_navigation_preserves_url": true
+    },
+    "errors": [],
+    "saved_project": {
+      "sha256": "4e2d439e88c41e227b15a70b07067d9db44327fe55e70374cb61fb15096c81ac",
+      "bytes": 5317475,
+      "vertices": 40962
+    },
+    "receipt_path": ".artifacts/public-browser/d746a5fd-58c5-4365-b133-7fc83ddceba8/result.json",
+    "receipt_sha256": "9d7fb263ef0e29c1503982a0c31b1578225a309d233f36c262eb5a5dd51d5386"
+  },
+  "scalar_browser": {
+    "url": "https://obrush.app/?wasm-scalar",
+    "status": "passed",
+    "selected_backend": "scalar",
+    "browser": "Chrome/155.0.8059.85",
+    "checks": {
+      "build_info_exact": true,
+      "asset_index.html": true,
+      "asset_pkg/obrush_app_bg.wasm": true,
+      "asset_pkg-simd/obrush_app_bg.wasm": true,
+      "asset_gpu-pkg/resident_bg.wasm": true,
+      "asset_obrush-icon.svg": true,
+      "asset_favicon-32.png": true,
+      "asset_apple-touch-icon.png": true,
+      "png_favicon-32.png": true,
+      "png_apple-touch-icon.png": true,
+      "draw_selected": true,
+      "https_loaded": true,
+      "initial_clean": true,
+      "clean_reload_no_warning": true,
+      "draw_changed_revision": true,
+      "draw_makes_dirty": true,
+      "project_download_valid": true,
+      "requested_download_keeps_warning": true,
+      "blocked_download_keeps_warning": true,
+      "cancel_navigation_preserves_document": true,
+      "cancel_navigation_preserves_url": true
+    },
+    "errors": [],
+    "saved_project": {
+      "sha256": "4e2d439e88c41e227b15a70b07067d9db44327fe55e70374cb61fb15096c81ac",
+      "bytes": 5317475,
+      "vertices": 40962
+    },
+    "receipt_path": ".artifacts/public-browser/0b8193c5-e3ba-450b-9f6d-9678d1dd6f51/result.json",
+    "receipt_sha256": "cbb8cec55ffe790e4e0eeb37bb6681c4c4ca335034a128cafbc20a1e71538cba"
+  },
+  "https": {
+    "apex_status": 200,
+    "www_status": 200,
+    "certificate_verification_passed": true,
+    "initial_local_curl_apex_dns_failure": "First local curl could not resolve apex; normal retry and both fresh Chrome checks passed. Initial failure remains in tool history."
+  },
+  "server": {
+    "managed_site": "/etc/caddy/sites-enabled/obrush.caddy",
+    "release": "/var/www/obrush/releases/a115aac55bf3-440a9e9fcdfb",
+    "caddy_after": "active",
+    "removed_journals_scope": "User-approved archived system journals older than 14 days only",
+    "journal_free_space_gain_bytes": 654180352,
+    "previous_applications_restarted": false
+  },
+  "native_icon_package": {
+    "bundle_icon": "OBrush.icns",
+    "icon_matches_source": true,
+    "bundle_version": "0.1.20",
+    "source_commit": "a115aac55bf300c98866ad5ba7f992aa52117705",
+    "binary_hash_matches": true,
+    "signature_exit": 0
+  },
+  "limits": [
+    "Draw plateau and worked-surface jaggedness remain open in this deployed build.",
+    "Public v0.1.20-alpha.1 archives were not replaced.",
+    "No physical-tablet, native GUI or dense sculpting claim from this hosting check."
+  ]
+}

@@ -4,6 +4,17 @@ The browser build is a static application. Sculpting and file processing run on
 the visitor's device; the web server serves the Rust/WASM bundle and assets.
 Hosting this bundle does not add a remote model upload endpoint.
 
+The public application is live at [OBrush.App](https://obrush.app/) and
+[www.obrush.app](https://www.obrush.app/). The initial VPS deployment uses clean
+source `a115aac55bf300c98866ad5ba7f992aa52117705` and the O icon. The
+[retained hosting evidence](evidence/obrush-app-hosting-2026-10-20.json) records
+exact asset hashes and fresh Chrome checks for the normal SIMD route and the
+portable scalar fallback: startup, a short default Draw stroke, valid project
+download, blocked-download warning and canceled leave-page navigation passed.
+Both domains returned HTTPS 200 with certificate verification. This deployment
+does not resolve the existing Draw plateau, worked-surface quality or dense-mesh
+latency issues. The public `v0.1.20-alpha.1` archives remain unchanged.
+
 ## DNS and server prerequisites
 
 Point the apex `obrush.app` A record at the chosen VPS IPv4 address, and set
