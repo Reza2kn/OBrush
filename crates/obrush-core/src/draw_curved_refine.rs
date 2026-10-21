@@ -302,7 +302,8 @@ impl Mesh {
     }
 
     /// A standalone diagnostic entry point for bounded curved refinement.
-    /// Live Draw applies the same offsets within its existing transaction.
+    /// Ordinary Draw retains linear refinement: applying these offsets during
+    /// every contact currently regresses sustained stationary buildup.
     pub fn refine_curved_draw_patch(
         &mut self,
         center: Vec3,
