@@ -1161,6 +1161,7 @@ impl Mesh {
             .0
     }
 
+    #[allow(clippy::too_many_arguments)]
     fn apply_brush_dab(
         &mut self,
         center: Vec3,
