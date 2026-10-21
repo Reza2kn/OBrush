@@ -46,6 +46,17 @@ fn bits(p: Vec3) -> [u32; 3] {
 fn reflect(p: Vec3, offset: f32) -> Vec3 {
     Vec3::new(2.0 * offset - p.x, p.y, p.z)
 }
+fn unique_new_position_index(positions: &[Vec3], start: usize) -> HashMap<[u32; 3], Option<usize>> {
+    let mut index = HashMap::new();
+    for (vertex, &position) in positions.iter().enumerate().skip(start) {
+        let key = bits(position);
+        index
+            .entry(key)
+            .and_modify(|match_vertex| *match_vertex = None)
+            .or_insert(Some(vertex));
+    }
+    index
+}
 fn same_attrs(mesh: &Mesh, v: [usize; 4]) -> bool {
     let x = v[0];
     v.into_iter().all(|i| {
@@ -136,6 +147,7 @@ fn admit(mesh: &mut Mesh, changes: &[(usize, Vec3)]) -> bool {
 impl Mesh {
     /// Offset only first-generation Draw midpoints inside the same refinement
     /// transaction. Original positions and ancestry remain unchanged.
+    #[allow(clippy::too_many_arguments)]
     pub(crate) fn curve_new_draw_midpoints(
         &mut self,
         original: &Mesh,
@@ -144,9 +156,12 @@ impl Mesh {
         radius: f32,
         symmetry_x: bool,
         symmetry_offset: f32,
+        active_vertices: Option<&[usize]>,
     ) -> (Vec<usize>, bool) {
         let original_count = original.positions.len();
         self.ensure_normal_incidence();
+        let active: Option<HashSet<_>> =
+            active_vertices.map(|vertices| vertices.iter().copied().collect());
         let wanted: HashSet<_> = ancestry
             .iter()
             .filter(|p| {
@@ -185,6 +200,12 @@ impl Mesh {
                 continue;
             }
             let [oa, ob] = [opp[0].0, opp[1].0];
+            if active
+                .as_ref()
+                .is_some_and(|vertices| ![a, b, oa, ob].into_iter().any(|v| vertices.contains(&v)))
+            {
+                continue;
+            }
             if !same_attrs(original, [a, b, oa, ob]) {
                 continue;
             }
@@ -230,12 +251,11 @@ impl Mesh {
         if targets.is_empty() {
             return (Vec::new(), false);
         }
-        let mut mirror_index = HashMap::new();
-        if symmetry_x {
-            for v in original_count..self.positions.len() {
-                mirror_index.insert(bits(self.positions[v]), v);
-            }
-        }
+        let mirror_index = if symmetry_x {
+            unique_new_position_index(&self.positions, original_count)
+        } else {
+            HashMap::new()
+        };
         let mut indices: Vec<_> = targets.keys().copied().collect();
         indices.sort_unstable();
         indices.truncate(MAX_CURVED_POINTS);
@@ -248,9 +268,14 @@ impl Mesh {
             let mut changes = vec![(i, targets[&i])];
             if symmetry_x {
                 let old = self.positions[i];
+                if mirror_index.get(&bits(old)) != Some(&Some(i)) {
+                    continue;
+                }
                 if old.x == symmetry_offset {
                     changes[0].1.x = symmetry_offset;
-                } else if let Some(&j) = mirror_index.get(&bits(reflect(old, symmetry_offset))) {
+                } else if let Some(&Some(j)) =
+                    mirror_index.get(&bits(reflect(old, symmetry_offset)))
+                {
                     if j != i {
                         done.insert(j);
                         let Some(&other) = targets.get(&j) else {
@@ -259,6 +284,8 @@ impl Mesh {
                         let average = (targets[&i] + reflect(other, symmetry_offset)) * 0.5;
                         changes = vec![(i, average), (j, reflect(average, symmetry_offset))];
                     }
+                } else if mirror_index.contains_key(&bits(reflect(old, symmetry_offset))) {
+                    continue;
                 }
             }
             if changes
@@ -314,6 +341,7 @@ impl Mesh {
             radius,
             symmetry_x,
             symmetry_offset,
+            None,
         );
         if !dirty.is_empty() {
             candidate.recompute_normals_near_vertices_cached(&dirty);
@@ -332,6 +360,40 @@ impl Mesh {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn duplicate_new_position_cannot_be_chosen_as_mirror() {
+        let positions = [
+            Vec3::new(0.2, 0.3, 0.4),
+            Vec3::new(-0.2, 0.3, 0.4),
+            Vec3::new(-0.2, 0.3, 0.4),
+        ];
+        let index = unique_new_position_index(&positions, 0);
+        assert_eq!(index.get(&bits(positions[0])), Some(&Some(0)));
+        assert_eq!(index.get(&bits(reflect(positions[0], 0.0))), Some(&None));
+    }
+
+    #[test]
+    fn live_curvature_requires_a_changed_vertex_near_its_edge() {
+        let original = Mesh::sphere(2);
+        let center = Vec3::Z;
+        let mut candidate = original.snapshot();
+        let (_, ancestry) = candidate
+            .refine_brush_patch_with_options(center, 0.8, false, 0.0, &[], true)
+            .unwrap();
+        let linear_positions = candidate.positions.clone();
+        let (curved, _) = candidate.curve_new_draw_midpoints(
+            &original,
+            &ancestry,
+            center,
+            0.8,
+            false,
+            0.0,
+            Some(&[]),
+        );
+        assert!(curved.is_empty());
+        assert_eq!(candidate.positions, linear_positions);
+    }
 
     #[test]
     fn live_default_draw_keeps_valid_topology_and_exact_normals() {

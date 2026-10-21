@@ -390,6 +390,7 @@ impl Mesh {
                     radius,
                     symmetry_x,
                     symmetry_offset,
+                    dirty_vertices,
                 );
                 dirty.extend(curved);
                 result.limited |= curve_limited;
