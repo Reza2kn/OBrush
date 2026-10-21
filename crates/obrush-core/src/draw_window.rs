@@ -41,6 +41,27 @@ fn intersect_sorted(left: &mut Vec<usize>, right: &[usize]) {
     left.retain(|face| right.binary_search(face).is_ok());
 }
 
+/// The source was fully validated, and the compact result is fully validated
+/// before its rows are spliced. Old rows outside the window are copied without
+/// alteration; every new row comes from the compact result. The splice maps
+/// old local vertices to distinct original IDs and new local vertices to
+/// distinct append-only IDs. Every emitted face is either an unchanged valid
+/// source face or an injectively remapped valid compact face. Recheck the
+/// properties that can change merely from concatenating those valid parts.
+fn validate_spliced_counts(mesh: &Mesh) -> bool {
+    let vertices = mesh.positions.len();
+    vertices > 0
+        && vertices <= MAX_VERTICES
+        && !mesh.triangles.is_empty()
+        && mesh.triangles.len() <= MAX_TRIANGLES
+        && mesh.normals.len() == vertices
+        && mesh.masks.len() == vertices
+        && mesh.colors.len() == vertices
+        && mesh.materials.as_ref().is_none_or(|m| m.len() == vertices)
+        && mesh.surface.is_none()
+        && mesh.approximate_bytes() <= crate::decode_limits::MAX_SCENE_STORAGE_BYTES
+}
+
 /// Scan original faces in row order. This bounded local extraction avoids a
 /// full-scene vertex-to-face CSR rebuild after every topology-changing dab.
 fn star_faces(
@@ -223,6 +244,7 @@ impl Mesh {
         if new_count != ancestry.len() || new_count != result.refined_vertices {
             return None;
         }
+        local.validate().ok()?;
         // Every old position touched by the local kernel needs its complete
         // global guard star. Every recomputed old normal needs its complete
         // incident-face sum in the original ascending face order.
@@ -355,6 +377,10 @@ impl Mesh {
         }
         candidate.triangles = triangles;
         candidate.clear_cache();
+        if !validate_spliced_counts(&candidate) {
+            return None;
+        }
+        #[cfg(debug_assertions)]
         candidate.validate().ok()?;
         *self = candidate;
         Some(result)
@@ -428,11 +454,29 @@ mod tests {
             let local_result = local.try_local_draw_window(center, normal, Vec3::ZERO, &settings);
             assert!(full_result.changed_vertices > 0);
             assert_eq!(Some(full_result), local_result);
+            local.validate().unwrap();
             assert_eq!(
                 serde_json::to_vec(&full).unwrap(),
                 serde_json::to_vec(&local).unwrap()
             );
         }
+    }
+
+    #[test]
+    fn window_requires_valid_source_and_splice_lengths() {
+        let settings = BrushSettings::default();
+        let mut invalid = Mesh::sphere(7);
+        let last = invalid.positions.len() - 1;
+        invalid.positions[last] = Vec3::splat(f32::NAN);
+        assert!(invalid
+            .try_local_draw_window(Vec3::Z, Vec3::Z, Vec3::ZERO, &settings)
+            .is_none());
+        let mut malformed = Mesh::sphere(0);
+        malformed.normals.pop();
+        assert!(!validate_spliced_counts(&malformed));
+        malformed.normals.push(Vec3::Z);
+        malformed.materials = Some(Vec::new());
+        assert!(!validate_spliced_counts(&malformed));
     }
 }
 
