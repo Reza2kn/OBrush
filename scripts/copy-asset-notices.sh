@@ -1,10 +1,21 @@
 #!/usr/bin/env bash
-# Copy licenses/provenance for bundled, pinned public rendering assets.
+# Copy licenses/provenance for bundled third-party code and public assets.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 destination="${1:?Pass the distribution licenses directory}"
 mkdir -p "$destination"
 cp LICENSE-MIT LICENSE-APACHE "$destination/"
+solver_root='third_party/slsqp-rssl'
+if [[ -d "$solver_root" ]]; then
+  mkdir -p "$destination/slsqp-rssl"
+  for notice in LICENSE PROVENANCE.md SCIPY-BSD-LICENSE.txt SLSQP-BSD-NOTICE.txt; do
+    if [[ ! -f "$solver_root/$notice" ]]; then
+      echo 'Bundled Draw solver license/provenance is missing.' >&2
+      exit 1
+    fi
+    cp "$solver_root/$notice" "$destination/slsqp-rssl/"
+  done
+fi
 asset_root='crates/obrush-app/assets/sculptgl'
 if [[ -d "$asset_root" ]]; then
   mkdir -p "$destination/sculptgl"
