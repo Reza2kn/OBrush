@@ -5,6 +5,10 @@ use std::collections::{HashMap, HashSet};
 use std::fmt;
 use std::sync::Arc;
 
+#[cfg(test)]
+#[path = "raycast_precision_regression.rs"]
+mod raycast_precision_regression;
+
 /// Explicit limits apply to imports, deserialization, and topology changes.
 pub const MAX_VERTICES: usize = 1_000_000;
 pub const MAX_TRIANGLES: usize = 2_000_000;
@@ -856,11 +860,12 @@ impl Mesh {
         {
             return None;
         }
-        let direction = ray.direction.normalize_or_zero();
-        if direction == Vec3::ZERO {
+        let direction = ray.direction.as_dvec3().normalize_or_zero();
+        if direction == glam::DVec3::ZERO {
             return None;
         }
-        let mut closest: Option<(usize, Hit)> = None;
+        let origin = ray.origin.as_dvec3();
+        let mut closest: Option<(usize, [u32; 3], f64, f64, f64)> = None;
         for (row, &[a, b, c]) in self.triangles.iter().enumerate() {
             let (a, b, c) = (a as usize, b as usize, c as usize);
             let (Some(&p0), Some(&p1), Some(&p2)) = (
@@ -870,15 +875,17 @@ impl Mesh {
             ) else {
                 continue;
             };
-            let e1 = p1 - p0;
-            let e2 = p2 - p0;
+            let p0 = p0.as_dvec3();
+            let e1 = p1.as_dvec3() - p0;
+            let e2 = p2.as_dvec3() - p0;
             let p = direction.cross(e2);
             let determinant = e1.dot(p);
-            if !determinant.is_finite() || ray_triangle_parallel(determinant, e1, e2) {
+            let tolerance = f64::EPSILON * e1.length() * e2.length();
+            if !determinant.is_finite() || determinant.abs() <= tolerance {
                 continue;
             }
             let inverse = determinant.recip();
-            let t = ray.origin - p0;
+            let t = origin - p0;
             let u = t.dot(p) * inverse;
             if !(0.0..=1.0).contains(&u) {
                 continue;
@@ -891,35 +898,38 @@ impl Mesh {
             let distance = e2.dot(q) * inverse;
             if !distance.is_finite()
                 || distance < 0.0
-                || closest.is_some_and(|(_, h)| h.distance <= distance)
+                || closest.is_some_and(|(_, _, d, _, _)| d <= distance)
             {
                 continue;
             }
-            let mut normal = match (
-                self.normals.get(a),
-                self.normals.get(b),
-                self.normals.get(c),
-            ) {
-                (Some(na), Some(nb), Some(nc)) => {
-                    (*na * (1.0 - u - v) + *nb * u + *nc * v).normalize_or_zero()
-                }
-                _ => Vec3::ZERO,
-            };
-            if normal == Vec3::ZERO || !normal.is_finite() {
-                normal = e1.cross(e2).normalize_or_zero();
-            }
-            closest = Some((
-                row,
-                Hit {
-                    position: ray.origin + direction * distance,
-                    normal,
-                    distance,
-                    triangle: [a as u32, b as u32, c as u32],
-                    barycentric: [1.0 - u - v, u, v],
-                },
-            ));
+            closest = Some((row, [a as u32, b as u32, c as u32], distance, u, v));
         }
-        closest
+        let (row, triangle, distance, u, v) = closest?;
+        let barycentric = [1.0 - u - v, u, v];
+        let local_position = origin + direction * distance;
+        let mut normal = match triangle.map(|id| self.normals.get(id as usize)) {
+            [Some(a), Some(b), Some(c)] => (a.as_dvec3() * barycentric[0]
+                + b.as_dvec3() * barycentric[1]
+                + c.as_dvec3() * barycentric[2])
+                .normalize_or_zero(),
+            _ => glam::DVec3::ZERO,
+        };
+        if normal == glam::DVec3::ZERO || !normal.is_finite() {
+            let [a, b, c] = triangle.map(|id| self.positions[id as usize].as_dvec3());
+            normal = (b - a).cross(c - a).normalize_or_zero();
+        }
+        let hit = Hit {
+            position: local_position.as_vec3(),
+            normal: normal.as_vec3().normalize_or_zero(),
+            distance: distance as f32,
+            triangle,
+            barycentric: barycentric.map(|weight| weight as f32),
+        };
+        (hit.position.is_finite()
+            && hit.normal.is_finite()
+            && hit.normal != Vec3::ZERO
+            && hit.distance.is_finite())
+        .then_some((row, hit))
     }
 
     pub fn from_obj(source: &str) -> Result<Self, String> {
@@ -1918,60 +1928,6 @@ impl Mesh {
             + self.masks.capacity() * std::mem::size_of::<f32>()
             + self.colors.capacity() * std::mem::size_of::<[f32; 3]>()
             + self.attribute_bytes()
-    }
-}
-
-fn ray_triangle_parallel(determinant: f32, e1: Vec3, e2: Vec3) -> bool {
-    let a = e1.length_squared();
-    let b = e2.length_squared();
-    // AM-GM bounds sqrt(a)*sqrt(b) by (a+b)/2. This deliberately
-    // looser bound avoids two square roots on ordinary nonparallel faces.
-    // Near the threshold (including overflow), keep the original exact test.
-    let upper = 2.0 * (f32::EPSILON * (a + b));
-    if determinant.abs() > upper {
-        false
-    } else {
-        determinant.abs() <= f32::EPSILON * a.sqrt() * b.sqrt()
-    }
-}
-
-#[cfg(test)]
-mod ray_parallel_bound_tests {
-    use super::*;
-
-    #[test]
-    fn conservative_skip_matches_original_parallel_threshold() {
-        let mut state = 1977_u32;
-        let mut next = || {
-            state = state.wrapping_mul(1_664_525).wrapping_add(1_013_904_223);
-            (state as f64 / f64::from(u32::MAX) * 2.0 - 1.0) as f32
-        };
-        for scale in [1e-18, 0.001, 1.0, 1_000_000.0, 1e20] {
-            for _ in 0..2048 {
-                let a = Vec3::new(next(), next(), next()) * scale;
-                let b = Vec3::new(next(), next(), next()) * scale;
-                let tolerance = f32::EPSILON * a.length() * b.length();
-                for determinant in [
-                    0.0,
-                    tolerance.next_down(),
-                    tolerance,
-                    tolerance.next_up(),
-                    tolerance * 4.0,
-                    a.cross(b).x,
-                    f32::INFINITY,
-                    f32::NAN,
-                ] {
-                    for sign in [-1.0, 1.0] {
-                        let determinant = determinant * sign;
-                        assert_eq!(
-                            ray_triangle_parallel(determinant, a, b),
-                            determinant.abs() <= tolerance,
-                            "scale={scale} det={determinant} tolerance={tolerance}"
-                        );
-                    }
-                }
-            }
-        }
     }
 }
 
