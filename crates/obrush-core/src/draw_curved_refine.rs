@@ -55,13 +55,39 @@ fn same_attrs(mesh: &Mesh, v: [usize; 4]) -> bool {
             && mesh.materials.as_ref().is_none_or(|m| m[i] == m[x])
     })
 }
+fn local_fold_pairs(mesh: &Mesh, faces: &[usize]) -> Option<Vec<(usize, usize)>> {
+    let mut pairs = HashSet::new();
+    for &face in faces {
+        let t = mesh.triangles[face];
+        for (a, b) in [(t[0], t[1]), (t[1], t[2]), (t[2], t[0])] {
+            let incident: Vec<_> = mesh
+                .cached_faces_for_vertices(&[a as usize])
+                .into_iter()
+                .filter(|&other| {
+                    mesh.triangles[other].contains(&b) && mesh.triangles[other].contains(&a)
+                })
+                .collect();
+            if incident.len() > 2 || !incident.contains(&face) {
+                return None;
+            }
+            if let [first, second] = incident.as_slice() {
+                pairs.insert((*first, *second));
+            }
+        }
+    }
+    let mut pairs: Vec<_> = pairs.into_iter().collect();
+    pairs.sort_unstable();
+    Some(pairs)
+}
 fn admit(mesh: &mut Mesh, changes: &[(usize, Vec3)]) -> bool {
     let vertices: Vec<_> = changes.iter().map(|&(v, _)| v).collect();
     let faces = mesh.cached_faces_for_vertices(&vertices);
     if faces.len() > MAX_VALENCE * changes.len() {
         return false;
     }
-    let pairs = mesh.cached_pairs_for_faces(&faces);
+    let Some(pairs) = local_fold_pairs(mesh, &faces) else {
+        return false;
+    };
     if pairs.len() > MAX_PAIR_CHECKS * changes.len() {
         return false;
     }
@@ -74,10 +100,9 @@ fn admit(mesh: &mut Mesh, changes: &[(usize, Vec3)]) -> bool {
         .collect();
     let old_folds: Vec<_> = pairs
         .iter()
-        .map(|&pair| {
-            let [a, b] = mesh.cached_face_pairs()[pair];
-            let n0 = normal(&mesh.positions, mesh.triangles[a as usize]).unwrap_or(DVec3::ZERO);
-            let n1 = normal(&mesh.positions, mesh.triangles[b as usize]).unwrap_or(DVec3::ZERO);
+        .map(|&(a, b)| {
+            let n0 = normal(&mesh.positions, mesh.triangles[a]).unwrap_or(DVec3::ZERO);
+            let n1 = normal(&mesh.positions, mesh.triangles[b]).unwrap_or(DVec3::ZERO);
             (a, b, n0.dot(n1))
         })
         .collect();
@@ -94,8 +119,8 @@ fn admit(mesh: &mut Mesh, changes: &[(usize, Vec3)]) -> bool {
             && new_q > 0.0
     });
     let safe_folds = old_folds.iter().all(|&(a, b, old_cos)| {
-        let n0 = normal(&mesh.positions, mesh.triangles[a as usize]).unwrap_or(DVec3::ZERO);
-        let n1 = normal(&mesh.positions, mesh.triangles[b as usize]).unwrap_or(DVec3::ZERO);
+        let n0 = normal(&mesh.positions, mesh.triangles[a]).unwrap_or(DVec3::ZERO);
+        let n1 = normal(&mesh.positions, mesh.triangles[b]).unwrap_or(DVec3::ZERO);
         n0 != DVec3::ZERO && n1 != DVec3::ZERO && n0.dot(n1) >= old_cos.min(DRAW_FOLD_COS)
     });
     if safe_faces && safe_folds {
@@ -235,7 +260,6 @@ impl Mesh {
                 limited: refined.limited,
             });
         }
-        candidate.ensure_adjacency();
         let mut mirror_index = HashMap::new();
         if symmetry_x {
             for v in original_count..candidate.positions.len() {
