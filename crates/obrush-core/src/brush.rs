@@ -1842,15 +1842,20 @@ impl Mesh {
                 .map(|value| if value == 0.0 { 0 } else { value.to_bits() })
         };
         let mut changed = HashMap::<[u32; 3], Option<usize>>::new();
+        let mut changed_vertices = Vec::new();
         for (vertex, (&before, &after)) in old.iter().zip(&self.positions).enumerate() {
             if before != after {
+                changed_vertices.push(vertex);
                 changed
                     .entry(key(before))
                     .and_modify(|entry| *entry = None)
                     .or_insert(Some(vertex));
             }
         }
-        for (vertex, &before) in old.iter().enumerate() {
+        // Keep the original ascending order and duplicate-position rule, but
+        // do not hash every unchanged vertex on a dense imported model.
+        for vertex in changed_vertices {
+            let before = old[vertex];
             if before.x <= offset || changed.get(&key(before)) != Some(&Some(vertex)) {
                 continue;
             }
