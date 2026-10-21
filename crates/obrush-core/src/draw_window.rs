@@ -41,6 +41,43 @@ fn intersect_sorted(left: &mut Vec<usize>, right: &[usize]) {
     left.retain(|face| right.binary_search(face).is_ok());
 }
 
+/// Scan original faces in row order. This bounded local extraction avoids a
+/// full-scene vertex-to-face CSR rebuild after every topology-changing dab.
+fn star_faces(
+    mesh: &Mesh,
+    vertices: &[usize],
+    marked: &mut Vec<usize>,
+    flags: &mut [bool],
+) -> Option<Vec<usize>> {
+    for &vertex in marked.iter() {
+        flags[vertex] = false;
+    }
+    marked.clear();
+    marked.try_reserve_exact(vertices.len()).ok()?;
+    for &vertex in vertices {
+        if vertex >= flags.len() {
+            return None;
+        }
+        if !flags[vertex] {
+            flags[vertex] = true;
+            marked.push(vertex);
+        }
+    }
+    let mut faces = Vec::new();
+    faces
+        .try_reserve_exact(MAX_WINDOW_FACES.min(mesh.triangles.len()))
+        .ok()?;
+    for (face, triangle) in mesh.triangles.iter().enumerate() {
+        if triangle.iter().any(|&vertex| flags[vertex as usize]) {
+            if faces.len() == MAX_WINDOW_FACES {
+                return None;
+            }
+            faces.push(face);
+        }
+    }
+    Some(faces)
+}
+
 impl Mesh {
     /// Returns `None` on any uncertainty; the caller then executes the original
     /// whole-mesh dab. It commits only after complete local closure and a valid
@@ -111,12 +148,15 @@ impl Mesh {
         if seed_faces.is_empty() {
             return None;
         }
-        self.ensure_local_incidence();
+        let mut flags = Vec::new();
+        flags.try_reserve_exact(self.positions.len()).ok()?;
+        flags.resize(self.positions.len(), false);
+        let mut marked = Vec::new();
         let seed_vertices = collect_vertices(self, &seed_faces)?;
         if seed_vertices.len() > MAX_WINDOW_VERTICES {
             return None;
         }
-        let first_faces = self.cached_faces_for_vertices(&seed_vertices);
+        let first_faces = star_faces(self, &seed_vertices, &mut marked, &mut flags)?;
         if first_faces.len() > MAX_WINDOW_FACES {
             return None;
         }
@@ -124,7 +164,7 @@ impl Mesh {
         if first_vertices.len() > MAX_WINDOW_VERTICES {
             return None;
         }
-        let second_faces = self.cached_faces_for_vertices(&first_vertices);
+        let second_faces = star_faces(self, &first_vertices, &mut marked, &mut flags)?;
         if second_faces.len() > MAX_WINDOW_FACES {
             return None;
         }
@@ -132,7 +172,7 @@ impl Mesh {
         if second_vertices.len() > MAX_WINDOW_VERTICES {
             return None;
         }
-        let faces = self.cached_faces_for_vertices(&second_vertices);
+        let faces = star_faces(self, &second_vertices, &mut marked, &mut flags)?;
         if faces.len() > MAX_WINDOW_FACES {
             return None;
         }
@@ -195,12 +235,14 @@ impl Mesh {
                 closure.push(global);
             }
         }
+        for &vertex in &marked {
+            flags[vertex] = false;
+        }
         for global in closure {
-            if self
-                .cached_faces_for_vertices(&[global])
-                .iter()
-                .any(|&face| !face_selected[face])
-            {
+            flags[global] = true;
+        }
+        for (face, triangle) in self.triangles.iter().enumerate() {
+            if triangle.iter().any(|&vertex| flags[vertex as usize]) && !face_selected[face] {
                 return None;
             }
         }
@@ -328,8 +370,8 @@ mod tests {
         // Doubling the offset and subtracting the center in f32 shifts the
         // reflected contact by 0.03125 here. A 0.04-radius face is then inside
         // the refinement query but outside the rounded brush query.
-        let center = Vec3::new(-742_687.437_5, 0.0, 0.0);
-        let offset = 38_562.671_875_f32;
+        let center = Vec3::new(f32::from_bits(0xc935_51f7), 0.0, 0.0);
+        let offset = f32::from_bits(0x4716_a2ac);
         let radius = 0.04_f32;
         let mirrored_f64 = 2.0 * f64::from(offset) - f64::from(center.x);
         let mirrored_f32 = 2.0 * offset - center.x;
@@ -343,9 +385,9 @@ mod tests {
         );
         let contact = Mesh::new(
             vec![
-                Vec3::new(819_812.812_5, -0.01, 0.0),
-                Vec3::new(819_812.812_5, 0.01, 0.0),
-                Vec3::new(819_812.812_5, 0.0, 0.01),
+                Vec3::new(f32::from_bits(0x4948_264d), -0.01, 0.0),
+                Vec3::new(f32::from_bits(0x4948_264d), 0.01, 0.0),
+                Vec3::new(f32::from_bits(0x4948_264d), 0.0, 0.01),
             ],
             vec![[0, 1, 2]],
         );
