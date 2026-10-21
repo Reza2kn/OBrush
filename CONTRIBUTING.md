@@ -22,7 +22,7 @@ is useful input, not a promise or a parity score.
 
 ## Build and change the code
 
-Install a current Rust toolchain, then run:
+Install Rust through rustup; `rust-toolchain.toml` selects the tested Rust 1.96.0 toolchain. Then run:
 
 ```sh
 cargo fmt --all --check

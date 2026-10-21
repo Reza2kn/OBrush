@@ -1,11 +1,11 @@
 name: Rust checks
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 jobs:
   core:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@1.96.0
         with:
           components: rustfmt, clippy
       - uses: Swatinem/rust-cache@v2
@@ -17,7 +17,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@1.96.0
         with:
           components: clippy
           targets: wasm32-unknown-unknown

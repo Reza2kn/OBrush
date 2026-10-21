@@ -4,6 +4,10 @@
 
 ## What is ready, and what is not
 
+The public repository, alpha downloads, browser preview and feedback discussion
+are live. [Launch verification](PUBLIC_ALPHA_LAUNCH.md) records the checked
+source/artifact identities and consumer test; the remaining limits below still apply.
+
 - Source is dual MIT/Apache-2.0 licensed with bundled dependency notices. [README.md](../README.md) documents local macOS packaging and localhost browser builds. `scripts/package-macos.sh` builds an arm64 host app and ad-hoc signs it for local use; it does not produce a Developer ID signed/notarized public installer. Official builds record their source commit, lockfile hash and artifact hashes in build metadata; use the final release's metadata rather than an older local artifact's hash. A local package is not a public release or clean-machine installation proof. Windows/Linux execution and physical tablet delivery remain unverified.
 - A [packaged native consumer smoke](NATIVE_UI_SMOKE_2026_10_20.md) made one Draw edit on a fresh 40,962-vertex sphere, then recovered byte-exact public Undo/Redo and project reopen/save. Browser checks cover many smaller, scoped workflows and malformed asset rejection, including a [v8 project image round trip](SCULPTGL_PROJECT_ASSETS_C298_RESULT.md). This is evidence for an early testable foundation, not for all brushes or long sessions.
 - The [public-alpha save-safety check](PUBLIC_ALPHA_SAFETY_2026_10_20.md) verifies the browser leave warning after both accepted and blocked project downloads and retention of the document revision and URL when navigation is canceled. Native file writes now preserve the previous file until atomic replacement succeeds; injected failure tests pass. The native close dialog is implemented but its GUI check was blocked by the locked Mac and remains unverified.
