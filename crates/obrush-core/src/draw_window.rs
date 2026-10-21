@@ -659,3 +659,7 @@ mod independent_tests;
 #[cfg(test)]
 #[path = "draw_window_inplace_tests.rs"]
 mod inplace_tests;
+
+#[cfg(test)]
+#[path = "draw_window_spark_trace_tests.rs"]
+mod spark_trace_tests;
