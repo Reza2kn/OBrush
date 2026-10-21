@@ -845,8 +845,7 @@ impl Mesh {
             let e2 = p2 - p0;
             let p = direction.cross(e2);
             let determinant = e1.dot(p);
-            let parallel_tolerance = f32::EPSILON * e1.length() * e2.length();
-            if !determinant.is_finite() || determinant.abs() <= parallel_tolerance {
+            if !determinant.is_finite() || ray_triangle_parallel(determinant, e1, e2) {
                 continue;
             }
             let inverse = determinant.recip();
@@ -1706,6 +1705,60 @@ impl Mesh {
             + self.masks.capacity() * std::mem::size_of::<f32>()
             + self.colors.capacity() * std::mem::size_of::<[f32; 3]>()
             + self.attribute_bytes()
+    }
+}
+
+fn ray_triangle_parallel(determinant: f32, e1: Vec3, e2: Vec3) -> bool {
+    let a = e1.length_squared();
+    let b = e2.length_squared();
+    // AM-GM bounds sqrt(a)*sqrt(b) by (a+b)/2. This deliberately
+    // looser bound avoids two square roots on ordinary nonparallel faces.
+    // Near the threshold (including overflow), keep the original exact test.
+    let upper = 2.0 * (f32::EPSILON * (a + b));
+    if determinant.abs() > upper {
+        false
+    } else {
+        determinant.abs() <= f32::EPSILON * a.sqrt() * b.sqrt()
+    }
+}
+
+#[cfg(test)]
+mod ray_parallel_bound_tests {
+    use super::*;
+
+    #[test]
+    fn conservative_skip_matches_original_parallel_threshold() {
+        let mut state = 1977_u32;
+        let mut next = || {
+            state = state.wrapping_mul(1_664_525).wrapping_add(1_013_904_223);
+            (state as f64 / f64::from(u32::MAX) * 2.0 - 1.0) as f32
+        };
+        for scale in [1e-18, 0.001, 1.0, 1_000_000.0, 1e20] {
+            for _ in 0..2048 {
+                let a = Vec3::new(next(), next(), next()) * scale;
+                let b = Vec3::new(next(), next(), next()) * scale;
+                let tolerance = f32::EPSILON * a.length() * b.length();
+                for determinant in [
+                    0.0,
+                    tolerance.next_down(),
+                    tolerance,
+                    tolerance.next_up(),
+                    tolerance * 4.0,
+                    a.cross(b).x,
+                    f32::INFINITY,
+                    f32::NAN,
+                ] {
+                    for sign in [-1.0, 1.0] {
+                        let determinant = determinant * sign;
+                        assert_eq!(
+                            ray_triangle_parallel(determinant, a, b),
+                            determinant.abs() <= tolerance,
+                            "scale={scale} det={determinant} tolerance={tolerance}"
+                        );
+                    }
+                }
+            }
+        }
     }
 }
 
